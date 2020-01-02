@@ -29,10 +29,11 @@
                 </a>
                 <ul class="collapse in">
                     <li><a href="./layout-one-column.html"> Project 1 </a></li>
-                    <li><a href="./layout-two-column.html"> Project 2 </a></li>
+                    <li><a href="Drive.do"> Project 2 </a></li>
                     <li><a href="./layout-compact-nav.html"> Project 3</a></li>
                 </ul>
             </li>
+             <li><a href="kanbanMain.do"> kanban </a></li>
         </ul>
     </div>
 </div>

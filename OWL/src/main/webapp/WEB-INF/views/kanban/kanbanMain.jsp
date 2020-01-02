@@ -16,22 +16,29 @@
     <link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
     <!-- Custom Stylesheet -->
     <link href="resources/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
+
     <div id="main-wrapper">
+
         <!-- Top -->
-        <jsp:include page="../include/top.jsp"/> 
+        <jsp:include page="../include/top.jsp"/>
+       
  		<!-- SideBar -->
-        <jsp:include page="../include/sideBar.jsp"/> 
+        <jsp:include page="../include/sideBar.jsp"/>
+         
         <!-- Content -->
         <div class="content-body">
-            <div class="container-fluid mt-3">대시보드
+            <div class="container-fluid mt-3">칸반
             </div>
-        </div>        
+        </div>
+        
         <!-- Bottom -->
 		<jsp:include page="../include/bottom.jsp"/>
     </div>
+
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
     <script src="resources/js/custom.min.js"></script>
