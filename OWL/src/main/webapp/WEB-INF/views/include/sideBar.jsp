@@ -8,8 +8,8 @@
                     <i class="icon-speedometer menu-icon"></i><span class="nav-text">MY</span>
                 </a>
                 <ul aria-expanded="false">
-                     <li><a href="./index-2.html">DASHBOARD</a></li>
-                    <li><a href="Index.do">ALARM</a></li>
+                     <li><a href="Index.do">DASHBOARD</a></li>
+                     <li><a href="Calendar.do">Calendar</a></li>
                 </ul>
             </li>
             <li class="mega-menu mega-menu-sm">
@@ -29,7 +29,7 @@
                 </a>
                 <ul class="collapse in">
                     <li><a href="./layout-one-column.html"> Project 1 </a></li>
-                    <li><a href="./layout-two-column.html"> Project 2 </a></li>
+                    <li><a href="Drive.do"> Project 2 </a></li>
                     <li><a href="./layout-compact-nav.html"> Project 3</a></li>
                 </ul>
             </li>
