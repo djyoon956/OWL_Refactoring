@@ -70,4 +70,11 @@ public class LoginController {
         /* 네이버 로그인 성공 페이지 View 호출 */
 		return "login/main";
 	}
+	
+	//임시로 만든 칸반 링크 
+	//나중에 옮기자
+	@RequestMapping("kanbanMain.do")
+	public String kanban() {
+		return "kanban/kanbanMain";
+	}
 }

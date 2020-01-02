@@ -33,6 +33,7 @@
                     <li><a href="./layout-compact-nav.html"> Project 3</a></li>
                 </ul>
             </li>
+             <li><a href="kanbanMain.do"> kanban </a></li>
         </ul>
     </div>
 </div>
