@@ -8,8 +8,8 @@
                     <i class="icon-speedometer menu-icon"></i><span class="nav-text">MY</span>
                 </a>
                 <ul aria-expanded="false">
-                     <li><a href="./index-2.html">DASHBOARD</a></li>
-                    <li><a href="Index.do">ALARM</a></li>
+                     <li><a href="Index.do">DASHBOARD</a></li>
+                     <li><a href="Calendar.do">Calendar</a></li>
                 </ul>
             </li>
             <li class="mega-menu mega-menu-sm">
