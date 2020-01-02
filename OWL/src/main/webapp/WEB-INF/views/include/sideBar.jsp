@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="nk-sidebar" >           
+<div class="nk-sidebar" style="border-right: 1px double #326295;">           
     <div class="nk-nav-scroll" >
         <ul class="metismenu" id="menu" >
             <li>
