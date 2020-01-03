@@ -259,12 +259,6 @@ $(function(){
                              <button type="button" id="loginBtn"  class="btn mb-1 btn-primary">Login / Register</button>
                          </a>
 	                 </li>
-	                 
-	               <li class="icons dropdown d-none d-md-flex">
-                         <a href="#" data-toggle="modal" data-target="#createIssueModal">
-                             <button type="button" class="btn mb-1 btn-primary">Test</button>
-                         </a>
-	                 </li>
 	             </ul>
 	         </div>
      </div>
@@ -284,9 +278,9 @@ $(function(){
     </div>
 
 	<jsp:include page="login/modal/login.jsp"/>
+
 	<jsp:include page="login/modal/register.jsp"/>
-	<jsp:include page="login/modal/createIssue.jsp"/>
-	
+
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
     <script src="resources/js/custom.min.js"></script>

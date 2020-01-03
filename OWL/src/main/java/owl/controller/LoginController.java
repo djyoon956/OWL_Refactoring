@@ -75,6 +75,6 @@ public class LoginController {
 	//나중에 옮기자
 	@RequestMapping("kanbanMain.do")
 	public String kanban() {
-		return "kanban/kanbanMain";
+		return "kanban/kanbanMain_chung";
 	}
 }
