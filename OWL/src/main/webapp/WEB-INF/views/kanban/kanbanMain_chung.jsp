@@ -5,16 +5,15 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta  name = "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
+    <meta name= "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
     <title>Main</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="resources/images/favicon.png">
     <!-- Pignose Calender -->
     <link href="resources/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
     <!-- Chartist -->
-    <link rel="stylesheet" href="resources/plugins/chartist/css/chartist.min.css">
-    <link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+<!--     <link rel="stylesheet" href="resources/plugins/chartist/css/chartist.min.css">
+    <link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css"> -->
     <!-- Custom Stylesheet -->
     <link href="resources/css/style.css" rel="stylesheet">
     <!--  칸반 -->
@@ -22,9 +21,12 @@
 	<!-- css files -->
 	<link rel="stylesheet" href="resources/webix/webix.css" type="text/css">
 	<link rel="stylesheet" href="resources/webix/kanban.css" type="text/css" >
-    <style>
-
-    </style>
+    	<!--  칸반  -->
+	<script src="resources/webix/data.js?v=7.1.1"></script>
+    
+	<!-- webix -->
+	<script src="resources/webix/webix.js"></script>
+	<script src="resources/webix/kanban.js"></script>
 </head>
 
 <body>
@@ -41,11 +43,8 @@
         <div class="content-body">
             <div class="container-fluid mt-3">
             <!--  칸반 시작 -->
-	<!--  칸반  -->
-	<script src="resources/webix/data.js?v=7.1.1"></script>
-	<!-- js files -->
-	<script src="resources/webix/webix.js" type="text/javascript"></script>
-	<script src="resources/webix/kanban.js" type="text/javascript"></script>
+
+
 	<script type="text/javascript">
 	webix.ready(function(){
 
@@ -78,11 +77,8 @@
         <!-- Bottom -->
 		<jsp:include page="../include/bottom.jsp"/>
     </div>
+    
 
-<!--  칸반 스크립트  -->
- <script>
-   
-    </script>
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
     <script src="resources/js/custom.min.js"></script>
