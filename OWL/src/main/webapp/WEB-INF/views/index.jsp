@@ -263,8 +263,8 @@
     </div>
 
 	<jsp:include page="login/modal/login.jsp"/>
-	<jsp:include page="login/modal/createIssue.jsp"/>
-	
+<%-- 	<jsp:include page="login/modal/createIssue.jsp"/>
+ --%>	
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
     <script src="resources/js/custom.min.js"></script>
