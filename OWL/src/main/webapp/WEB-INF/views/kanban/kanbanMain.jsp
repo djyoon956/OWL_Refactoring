@@ -71,15 +71,36 @@
 	box-shadow: 2px 2px 2px #eee;
 }
 
+body {
+	font-family: "Lato";
+	margin: 0;
+	padding: 0;
+}
 
-body{font-family: "Lato"; margin:0; padding: 0;}
-#myKanban{overflow-x: auto; padding:20px 0;}
+#myKanban {
+	overflow-x: auto;
+	padding: 20px 0;
+}
 
-.success{background: #00B961; color:#fff}
-.info{background: #2A92BF; color:#fff}
-.warning{background: #F4CE46; color:#fff}
-.error{background: #FB7D44; color:#fff}
+.success {
+	background: #00B961;
+	color: #fff
+}
 
+.info {
+	background: #2A92BF;
+	color: #fff
+}
+
+.warning {
+	background: #F4CE46;
+	color: #fff
+}
+
+.error {
+	background: #FB7D44;
+	color: #fff
+}
 
 #tab-menu {
 	width: 100%;
@@ -110,7 +131,6 @@ body{font-family: "Lato"; margin:0; padding: 0;}
 	border-bottom: 3px solid #326295;
 	color: #326295;
 }
-
 </style>
 
 <script type="text/javascript">
@@ -136,17 +156,17 @@ body{font-family: "Lato"; margin:0; padding: 0;}
 		<!-- Content -->
 
 		<div class="content-body">
-		
-					<div id="tab-menu">
+
+			<div id="tab-menu">
 				<div id="tab-btn">
 					<ul>
-						<li ><a href="#">Dash Board</a></li>
+						<li><a href="#">Dash Board</a></li>
 						<li><a href="#">Kanban Board</a></li>
 						<li><a href="#">Schedule</a></li>
 						<li class="active"><a href="#">Drive</a></li>
 					</ul>
 				</div>
-			</div>	
+			</div>
 			<div class="container-fluid mt-3">
 
 				<button class="btn btn-default" id="addColumn">
