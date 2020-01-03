@@ -9,6 +9,16 @@
     <link rel="stylesheet" type="text/css" href="resources/plugins/toast-calendar/dist/tui-calendar.css">
     <link rel="stylesheet" type="text/css" href="resources/plugins/toast-calendar/css/default.css">
     <link rel="stylesheet" type="text/css" href="resources/plugins/toast-calendar/css/icons.css">
+    <style type="text/css">
+/*     head,body{
+    width: 100%;
+    } */
+    
+    body {
+    	overflow-x:hidden; 
+    }
+    
+    </style>
 </head>
 <body>
 	<div class="row">
