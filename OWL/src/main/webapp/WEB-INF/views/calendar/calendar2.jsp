@@ -23,7 +23,7 @@
                     </label>
                 </div>
             </div>
-            <div id="calendarList" class="lnb-calendars-d1">
+            <div id="calendarList">
             </div>
         </div>
         </div>
@@ -96,8 +96,7 @@
             </span>
             <span id="renderRange" class="render-range"></span>
         </div>
-        <div id="calendar">
-        </div>
+        <div id="calendar">  </div>
     </div>
 		</div> 
 	</div>

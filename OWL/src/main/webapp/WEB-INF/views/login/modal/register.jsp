@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="joinModal" tabindex="-2" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -20,9 +20,9 @@
             <div class="form-group">
                 <input type="password" name="pwd" class="form-control" placeholder="Password">
             </div>
-            <input type="submit" class="btn login-form__btn submit w-100" value="Sign in">
+            <input type="submit" class="btn login-form__btn submit w-100" value="JOIN IN">
         </form>
-        <p class="mt-5 login-form__footer">Don't have account? <a href="page-register.html" class="text-primary">Sign Up</a> now</p>
+        <p class="mt-5 login-form__footer">Don you have account? <a href="#" data-toggle="modal" data-target="#loginModal" class="text-primary">Login</a> now</p>
       </div>
     </div>
   </div>
