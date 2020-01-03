@@ -43,7 +43,7 @@ function Returncheck(){
 </script>
 <style>
 .box {
-	width: 220px;
+	width: 100%;
 	background: #fff;
 	padding: 30px;
 	float: left;
@@ -168,6 +168,17 @@ function Returncheck(){
 	margin-top: 5px; 
 	color:#326295;
 }
+
+.filebox input[type="file"] {  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+}
 </style>
 </head>
 <body>
@@ -189,14 +200,19 @@ function Returncheck(){
 						<li class="active"><a href="#">Drive</a></li>
 					</ul>
 				</div>
-			</div>
-			
+			</div>		
+			<div class="drive">
 			<!-- 드라이브 사이드 바 -->
+			<div class="row">
+			<div class="col-md-3" style="padding-right: 0;">
 			<div class="box">
 				<br>
 				<h2 style="padding-left: 25px;"><b>D r i v e</b></h2>
 				<hr>
-				<a href="#" style="float:right;"><i class="fas fa-plus"></i></a>
+				<div class="filebox" style="float:right;">
+				<label for="driveFolder" style=" cursor: pointer;"><i class="fas fa-plus"></i></label>
+				<input type="file" id="driveFolder">
+				</div>
 				<br>
 				<ul class="directory-list">
 					<li class="folder">Project 1 
@@ -215,7 +231,9 @@ function Returncheck(){
 					</li>
 				</ul>
 			</div> 
-
+		</div>
+		
+			<div class="col-md-9" style="padding-left: 0;">		
 			<div class="drivemenu">
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<button type="button" class="btn">업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -227,9 +245,16 @@ function Returncheck(){
 			    <a><i class="fas fa-th-large fa-2x"></i></a>
 				</div>
 			</div>
+
+		
+		<div class="innerFolder">
+			<span><i class="far fa-folder fa-5x"></i></span>
+			<p>css</p>	
 		</div>
-		
-		
+				</div>
+		</div>
+		</div>
+		 </div>
 		<!-- Bottom -->
 		<jsp:include page="../include/bottom.jsp" />
 	</div>

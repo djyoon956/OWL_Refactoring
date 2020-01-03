@@ -19,7 +19,7 @@
   border-radius: 20px;
 }
 </style>
-<div class="nav-header" style="background-color: #f1ebe5;">
+<div class="nav-header" style="background-color: #fcf9f5;">
      <div class="brand-logo">
          <a href="Index.do">
              <b class="logo-abbr"><img src="resources/images/logo.png" alt=""> </b>
@@ -28,7 +28,7 @@
      </div>
  </div>
 
- <div class="header" style="background-color: #f1ebe5;">    
+ <div class="header" style="background-color: #fcf9f5;">    
      <div class="header-content clearfix">
          
          <div class="nav-control">
