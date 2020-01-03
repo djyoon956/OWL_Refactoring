@@ -53,7 +53,7 @@
 		
 		<div class="col-sm-10">
 		<div >
-        <div id="toast-menu">
+        <div id="menu">
             <span class="dropdown">
                 <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="true">
@@ -61,29 +61,29 @@
                     <span id="calendarTypeName">Dropdown</span>&nbsp;
                     <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
                 </button>
-                <ul class="toast-dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
                     <li role="presentation">
-                        <a class="toast-dropdown-menu-title" role="menuitem" data-action="toggle-daily">
+                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
                             <i class="calendar-icon ic_view_day"></i>Daily
                         </a>
                     </li>
                     <li role="presentation">
-                        <a class="toast-dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
+                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
                             <i class="calendar-icon ic_view_week"></i>Weekly
                         </a>
                     </li>
                     <li role="presentation">
-                        <a class="toast-dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
+                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
                             <i class="calendar-icon ic_view_month"></i>Month
                         </a>
                     </li>
                     <li role="presentation">
-                        <a class="toast-dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
+                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
                             <i class="calendar-icon ic_view_week"></i>2 weeks
                         </a>
                     </li>
                     <li role="presentation">
-                        <a class="toast-dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
+                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
                             <i class="calendar-icon ic_view_week"></i>3 weeks
                         </a>
                     </li>
@@ -119,8 +119,8 @@
             </span>
             <span id="renderRange" class="render-range"></span>
         </div>
-        <div id="calendar">
-        </div>
+        <div id="calendar"></div>
+
     </div>
 		</div> 
 	</div>

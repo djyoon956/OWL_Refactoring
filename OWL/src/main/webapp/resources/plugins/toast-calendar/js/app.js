@@ -294,7 +294,6 @@
     }
 
     function onChangeCalendars(e) {
-    	console.log("onChangeCalendars");
         var calendarId = e.target.value;
         var checked = e.target.checked;
         var viewAll = document.querySelector('.lnb-calendars-item input');
@@ -405,7 +404,7 @@
 
     function setEventListener() {
         $('#menu-navi').on('click', onClickNavi);
-        $('.toast-dropdown-menu a[role="menuitem"]').on('click', onClickMenu);
+        $('.dropdown-menu a[role="menuitem"]').on('click', onClickMenu);
         $('#lnb-calendars').on('change', onChangeCalendars);
 
         $('#btn-save-schedule').on('click', onNewSchedule);
@@ -435,13 +434,8 @@
 // set calendars
 (function() {
     var calendarList = document.getElementById('calendarList');
-    console.log("list");
-    console.log(calendarList);
-   
     var html = [];
     CalendarList.forEach(function(calendar) {
-    	console.log(calendar.id );
-    	console.log(calendar.name );
         html.push('<div class="lnb-calendars-item"><label>' +
             '<input type="checkbox" class="tui-full-calendar-checkbox-round" value="' + calendar.id + '" checked>' +
             '<span style="border-color: ' + calendar.borderColor + '; background-color: ' + calendar.borderColor + ';"></span>' +

@@ -163,7 +163,7 @@ resizeThrottled = tui.util.throttle(function() {
 }, 50);
 
 function setEventListener() {
-  $('.toast-dropdown-menu a[role="menuitem"]').on('click', onClickMenu);
+  $('.dropdown-menu a[role="menuitem"]').on('click', onClickMenu);
   $('#menu-navi').on('click', onClickNavi);
   window.addEventListener('resize', resizeThrottled);
 }
