@@ -39,7 +39,6 @@ function Returncheck(){
     button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
    $('.drivemenu').append(button);   
 }
-<<<<<<< HEAD
 
 $(function() {
 $("input:checkbox[name='check']").each(function(){
@@ -64,9 +63,6 @@ $("input:checkbox[name='check']").each(function(){
       selectBox.style.backgroundColor = "#214973";      
     } */
 
-
-=======
->>>>>>> f67a3f762a4cfea1dcc65894e038a7c6c6075310
 </script>
 <style>
 .box {
