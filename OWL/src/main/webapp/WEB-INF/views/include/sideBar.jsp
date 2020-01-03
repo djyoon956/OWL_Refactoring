@@ -35,7 +35,7 @@
             </li>
              <li><a href="kanbanMain.do"> kanban </a></li>
              <li><a href="kanbanMain2.do"> kanban2 </a></li>
-             
+              <li><a href="kanbanMainChung.do"> kanban_chung </a></li>
         </ul>
     </div>
 </div>

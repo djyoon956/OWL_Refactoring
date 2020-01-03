@@ -19,4 +19,8 @@ public class KanbanController {
 		return "kanban/kanbanMain_jKanban";
 	}	
 	
+	@RequestMapping("kanbanMainChung.do")
+	public String kanbanChung() {
+		return "kanban/kanban_chung";
+	}	
 }
