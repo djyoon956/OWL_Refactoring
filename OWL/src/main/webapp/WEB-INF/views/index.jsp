@@ -47,6 +47,33 @@
 	        }
 	      });
 	    };
+
+$(function(){
+
+		let joinModalOpen = false;
+	    $("#joinModal").on('show.bs.modal', function () {
+	        $("#loginModal").modal("hide");
+	        joinModalOpen=true;
+	        $('body').css({'overflow': 'hidden', 'height': '100%'}); 
+	      }); 
+      	
+	    $("#joinModal").on('hide.bs.modal', function () {
+	    	 joinModalOpen = false;
+	        $('html, body').css({'overflow': 'auto', 'height': '100%'}); 
+      	}); 
+  
+	    $("#loginModal").on('show.bs.modal', function () {
+		    if( joinModalOpen ){
+		    	 $("#joinModal").modal("hide");
+		    	 $('html, body').css({'overflow': 'hidden', 'height': '100%'}); 
+		    	 joinModalOpen = false;
+		    	}
+	      }); 
+	      
+	    $("#loginModal").on('hide.bs.modal', function () {
+	        $('html, body').css({'overflow': 'auto', 'height': '100%'}); 
+      	}); 
+})
 	</script>
 </head>
 
@@ -229,19 +256,7 @@
 	                 </li>
 	                 <li class="icons dropdown d-none d-md-flex" >
                          <a href="#" data-toggle="modal" data-target="#loginModal">
-                             <button type="button" id="loginBtn"  class="btn mb-1 btn-primary">Login</button>
-                         </a>
-
-	                 </li>
-	                 <li class="icons dropdown d-none d-md-flex">
-                         <a href="javascript:void()">
-                             <button type="button" class="btn mb-1 btn-primary">Try for free</button>
-                         </a>
-	                 </li>
-	                 
-	               <li class="icons dropdown d-none d-md-flex">
-                         <a href="#" data-toggle="modal" data-target="#createIssueModal">
-                             <button type="button" class="btn mb-1 btn-primary">Test</button>
+                             <button type="button" id="loginBtn"  class="btn mb-1 btn-primary">Login / Register</button>
                          </a>
 	                 </li>
 	             </ul>
@@ -263,8 +278,9 @@
     </div>
 
 	<jsp:include page="login/modal/login.jsp"/>
-	<jsp:include page="login/modal/createIssue.jsp"/>
-	
+
+	<jsp:include page="login/modal/register.jsp"/>
+
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
     <script src="resources/js/custom.min.js"></script>
