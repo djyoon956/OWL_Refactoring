@@ -31,6 +31,38 @@ body{font-family: "Lato"; margin:0; padding: 0;}
 .info{background: #2A92BF; color:#fff}
 .warning{background: #F4CE46; color:#fff}
 .error{background: #FB7D44; color:#fff}
+
+
+#tab-menu {
+	width: 100%;
+	background: white;
+	border-bottom: 1px double #326295;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+#tab-btn ul {
+	overflow: hidden;
+	margin-bottom: 0px;
+}
+
+#tab-btn li {
+	float: left;
+	width: 150px;
+	text-align: center;
+}
+
+#tab-btn li a {
+	display: block;
+	color: #326295;
+	padding: 15px 20px;
+	font-weight: bold;
+}
+
+#tab-btn li.active a {
+	border-bottom: 3px solid #326295;
+	color: #326295;
+}
+
 </style>
     <script type="text/javascript">
 $(function() {
@@ -139,21 +171,37 @@ $(function() {
  		<!-- SideBar -->
         <jsp:include page="../include/sideBar.jsp"/>
          
+         
         <!-- Content -->
         <div class="content-body">
+
+        
             <div class="container-fluid mt-3">
+                    		<!-- Project 상단 바 -->
+			<div id="tab-menu">
+				<div id="tab-btn">
+					<ul>
+						<li ><a href="#">Dash Board</a></li>
+						<li><a href="#">Kanban Board</a></li>
+						<li><a href="#">Schedule</a></li>
+						<li class="active"><a href="#">Drive</a></li>
+					</ul>
+				</div>
+			</div>	
+            
             <!--  칸반 시작 -->
 
    <div class="row">
       <div class="col-md-12">
          <h1>jKanban</h1>
          <p>jKanban allow you to create and manage Kanban Board in your project! Try It!</p>
+                  <button class="btn btn-success" id="addDefault">Add "Default" board</button>
+         <button class="btn btn-success" id="addToDo">Add element in "To Do" Board</button>
+         <button class="btn btn-danger" id="removeBoard">Remove "Done" Board</button>
            
          <hr>
          <div id="myKanban"></div>
-         <button class="btn btn-success" id="addDefault">Add "Default" board</button>
-         <button class="btn btn-success" id="addToDo">Add element in "To Do" Board</button>
-         <button class="btn btn-danger" id="removeBoard">Remove "Done" Board</button>
+
       </div>
    </div>
 
