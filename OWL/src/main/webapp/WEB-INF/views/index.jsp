@@ -19,6 +19,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
  	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+ 	<!-- fontawesome -->
+ 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <!-- Kakao -->
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
  	<style type="text/css">
@@ -235,7 +237,12 @@
                          <a href="javascript:void()">
                              <button type="button" class="btn mb-1 btn-primary">Try for free</button>
                          </a>
-
+	                 </li>
+	                 
+	               <li class="icons dropdown d-none d-md-flex">
+                         <a href="#" data-toggle="modal" data-target="#createIssueModal">
+                             <button type="button" class="btn mb-1 btn-primary">Test</button>
+                         </a>
 	                 </li>
 	             </ul>
 	         </div>
@@ -256,6 +263,8 @@
     </div>
 
 	<jsp:include page="login/modal/login.jsp"/>
+	<jsp:include page="login/modal/createIssue.jsp"/>
+	
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
     <script src="resources/js/custom.min.js"></script>
