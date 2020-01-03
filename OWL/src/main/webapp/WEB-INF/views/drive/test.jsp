@@ -18,6 +18,7 @@
 function Allcheck(){ //전체선택 onclick
 	$('.drivemenu').empty();	
     var button = "";
+    button += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -31,6 +32,7 @@ function Allcheck(){ //전체선택 onclick
 function Returncheck(){
 	$('.drivemenu').empty();	
     var button = "";
+    button += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn' onclick='Allcheck()'>전체선택</button>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -151,9 +153,8 @@ function Returncheck(){
 	border: 1px double #326295;
 	background-color: #fff;
 	cursor: pointer;
-	font-weight: bold;
 	color: #326295;
-
+	font-weight: bold;
 }
 
 .btn:hover{
@@ -178,19 +179,6 @@ function Returncheck(){
   clip:rect(0,0,0,0);
   border: 0;
 }
-
-.card{
-	border: 3px solid #326295;
-}
-.card:hover .more{
-	visibility: visible;
-	opacity: 1;
-	cursor: pointer;
-}
-.more{
-	visibility: hidden;
-}
-
 </style>
 </head>
 <body>
@@ -201,113 +189,72 @@ function Returncheck(){
 		<jsp:include page="../include/sideBar.jsp" />
 		<!-- Content -->
 		<div class="content-body">
-
-			<!-- Project 상단 바 -->
+		
+		<!-- Project 상단 바 -->
 			<div id="tab-menu">
 				<div id="tab-btn">
 					<ul>
-						<li><a href="#">Dash Board</a></li>
+						<li ><a href="#">Dash Board</a></li>
 						<li><a href="#">Kanban Board</a></li>
 						<li><a href="#">Schedule</a></li>
 						<li class="active"><a href="#">Drive</a></li>
 					</ul>
 				</div>
-			</div>
+			</div>		
 			<div class="drive">
-				<!-- 드라이브 사이드 바 -->
-				<div class="row">
-					<div class="col-md-3" style="padding-right: 0;">
-						<div class="box">
-							<h2 style="padding-left: 25px;">
-								<b>D r i v e</b>
-							</h2>
-							<hr>
-							<div class="filebox" style="float: right;">
-								<label for="driveFolder" style="cursor: pointer;"><i
-									class="fas fa-plus"></i></label> <input type="file" id="driveFolder">
-							</div>
-							<br>
-							<ul class="directory-list">
-								<li class="folder">Project 1
-									<ul>
-										<li class="folder">css</li>
-										<li class="folder">js</li>
-										<li class="folder">images</li>
-									</ul>
-								</li>
-								<li class="folder">assets
-									<ul>
-										<li class="folder">css</li>
-										<li class="folder">js</li>
-										<li class="folder">images</li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col-md-9" style="padding-left: 0;">
-						<div class="drivemenu">
-							<button type="button" class="btn btn-primary">업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary">새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="button" class="btn btn-primary" onclick="Allcheck()">전체선택</button>	&nbsp;&nbsp;&nbsp;&nbsp;						
-							<div class="drivegroup">
-								<a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
-								<a><i class="fas fa-th-large fa-2x"></i></a>
-							</div>
-						</div>
-
-					<div class="row"  style="margin : 10px 10px;">
-					<div class="col-sm-4">
-							<div class="card">			
-							<div class="more" style="margin-top: 10px;">
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="checkbox" name="check" value="check" style="width:18px; height:18px;" >	
-							<span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
-							</div>
-							<br>				
-								<div class="card-body text-center">
-									<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-									<br><br>
-									<h4 style="text-align: center;">css</h4>
-								</div>
-							</div>
-							</div>
-							<div class="col-sm-4">
-							<div class="card">
-							<div class="more" style="margin-top: 10px;">
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="checkbox" name="check" value="check" style="width:18px; height:18px;" >	
-							<span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
-							</div>
-							<br>
-								<div class="card-body text-center">
-									<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-									<br><br>
-									<h4 style="text-align: center;">js</h4>
-								</div>
-							</div>
-							</div>
-							<div class="col-sm-4" >
-							<div class="card">
-							<div class="more" style="margin-top: 10px;">
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="checkbox" name="check" value="check" style="width:18px; height:18px;" >	
-							<span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
-							</div>
-							<br>
-								<div class="card-body text-center">
-									<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-									<br><br>
-									<h4 style="text-align: center;">images</h4>
-								</div>
-							</div>
-							</div>
-						</div>
-					</div>
+			<!-- 드라이브 사이드 바 -->
+			<div class="row">
+			<div class="col-md-3" style="padding-right: 0;">
+			<div class="box">
+				<br>
+				<h2 style="padding-left: 25px;"><b>D r i v e</b></h2>
+				<hr>
+				<div class="filebox" style="float:right;">
+				<label for="driveFolder" style=" cursor: pointer;"><i class="fas fa-plus"></i></label>
+				<input type="file" id="driveFolder">
+				</div>
+				<br>
+				<ul class="directory-list">
+					<li class="folder">Project 1 
+						<ul>
+							<li class="folder">css</li>
+							<li class="folder">js</li>
+							<li class="folder">images</li>
+						</ul>
+					</li>
+					<li class="folder">assets
+						<ul>
+							<li class="folder">css</li>
+							<li class="folder">js</li>
+							<li class="folder">images</li>
+						</ul>
+					</li>
+				</ul>
+			</div> 
+		</div>
+		
+			<div class="col-md-9" style="padding-left: 0;">		
+			<div class="drivemenu">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn">업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn">새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn" onclick="Allcheck()">전체선택</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<div class="drivegroup">
+				<a><i class="fas fa-list fa-2x"></i></a>			
+			    <span>&nbsp;&nbsp;</span>
+			    <a><i class="fas fa-th-large fa-2x"></i></a>
 				</div>
 			</div>
+
+		
+		<div class="innerFolder">
+			<span><i class="far fa-folder fa-5x"></i></span>
+			<p>css</p>	
 		</div>
+				</div>
+		</div>
+		</div>
+		 </div>
 		<!-- Bottom -->
 		<jsp:include page="../include/bottom.jsp" />
 	</div>

@@ -77,9 +77,4 @@ public class LoginController {
 	public String kanban() {
 		return "kanban/kanbanMain";
 	}
-	
-	@RequestMapping("kanbanMain2.do")
-	public String kanban2() {
-		return "kanban/kanbanMain_jKanban";
-	}
 }
