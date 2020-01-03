@@ -34,6 +34,8 @@
                 </ul>
             </li>
              <li><a href="kanbanMain.do"> kanban </a></li>
+             <li><a href="kanbanMain2.do"> kanban2 </a></li>
+             
         </ul>
     </div>
 </div>
