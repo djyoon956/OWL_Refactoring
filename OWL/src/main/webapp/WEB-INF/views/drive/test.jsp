@@ -38,17 +38,6 @@ function Returncheck(){
     button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
 	$('.drivemenu').append(button);	
 }
-
-$('input:checkbox[name="check"]').each(function() {
-    this.checked = true;
-    var selectBox = document.getElementsByClassName("card");
-    if(this.checked){//checked 처리된 항목의 값
-		selectBox.style.opacity = "0.3";
-		selectBox.style.backgroundColor = "#214973";		
-    }
-
-});
-
 </script>
 <style>
 .box {
@@ -273,7 +262,7 @@ $('input:checkbox[name="check"]').each(function() {
 							<div class="card">			
 							<div class="more" style="margin-top: 10px;">
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="checkbox" name="check"  style="width:18px; height:18px;" >	
+							<input type="checkbox" name="check" value="check" style="width:18px; height:18px;" >	
 							<span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
 							</div>
 							<br>				
