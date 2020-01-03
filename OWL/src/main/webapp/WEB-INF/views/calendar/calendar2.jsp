@@ -13,27 +13,20 @@
 <body>
 	<div class="row">
 		 <div class="col-sm-2">
-			<div  class="lnb-calendars">
-            <div  class="lnb-calendars-d1">
-            	<div class="lnb-calendars-item">
-	            	<label>
+            <div id="lnb-calendars" class="lnb-calendars">
+            <div>
+                <div class="lnb-calendars-item">
+                    <label>
                         <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
                         <span></span>
                         <strong>View all</strong>
                     </label>
-            	</div>
-            	<div class="lnb-calendars-item"><label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="1" checked=""><span style="border-color: rgb(158, 95, 255); background-color: rgb(158, 95, 255);"></span><span>My Calendar</span></label></div>
-            	<div class="lnb-calendars-item"><label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="1" checked=""><span style="border-color: rgb(158, 95, 255); background-color: rgb(158, 95, 255);"></span><span>My Calendar</span></label></div>
-				<div class="lnb-calendars-item"><label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="2" checked=""><span style="border-color: rgb(0, 169, 255); background-color: rgb(0, 169, 255);"></span><span>Company</span></label></div>
-				<div class="lnb-calendars-item"><label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="3" checked=""><span style="border-color: rgb(255, 85, 131); background-color: rgb(255, 85, 131);"></span><span>Family</span></label></div>
-				<div class="lnb-calendars-item"><label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="4" checked=""><span style="border-color: rgb(3, 189, 158); background-color: rgb(3, 189, 158);"></span><span>Friend</span></label></div>
-				<div class="lnb-calendars-item"><label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="5" checked=""><span style="border-color: rgb(187, 220, 0); background-color: rgb(187, 220, 0);"></span><span>Travel</span></label></div>
-				<div class="lnb-calendars-item"><label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="6" checked=""><span style="border-color: rgb(157, 157, 157); background-color: rgb(157, 157, 157);"></span><span>etc</span></label></div>
-				<div class="lnb-calendars-item"><label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="7" checked=""><span style="border-color: rgb(255, 187, 59); background-color: rgb(255, 187, 59);"></span><span>Birthdays</span></label></div>
-				<div class="lnb-calendars-item"><label style=""><input type="checkbox" class="tui-full-calendar-checkbox-round" value="8" checked=""><span style="border-color: rgb(255, 64, 64); background-color: rgb(255, 64, 64);"></span><span>National Holidays</span></label></div>
-			</div>
+                </div>
+            </div>
+            <div id="calendarList" class="lnb-calendars-d1">
+            </div>
         </div>
-		</div>
+        </div>
 		
 		<div class="col-sm-10">
 		<div >
@@ -103,12 +96,11 @@
             </span>
             <span id="renderRange" class="render-range"></span>
         </div>
-        <div id="calendar"></div>
+        <div id="calendar">
+        </div>
     </div>
 		</div> 
 	</div>
-
-    
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -122,7 +114,7 @@
      <script src="resources/plugins/toast-calendar/dist/tui-calendar.js"></script>
     <script src="resources/plugins/toast-calendar/js/data/calendars.js"></script>
     <script src="resources/plugins/toast-calendar/js/data/schedules.js"></script>
-    <script src="./js/theme/dooray.js"></script>
+   
     <script src="resources/plugins/toast-calendar/js/app.js"></script>
 </body>
 </html>

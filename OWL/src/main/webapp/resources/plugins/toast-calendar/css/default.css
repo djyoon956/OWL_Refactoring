@@ -1,11 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Noto+Sans);
 
-body {
-  font-family: 'Noto Sans', sans-serif;
-  color: '#333';
-  font-size: 12px;
-}
-
 /**  custom bootstrap - start */
 .btn {
   border-radius: 25px;
@@ -33,23 +27,23 @@ body {
   outline: none;
 }
 
-.open > .dropdown-toggle.btn-default {
+.open > .toast-dropdown-toggle.btn-default {
   background-color: #fff;
 }
 
-.dropdown-menu {
+.toast-dropdown-menu {
   top: 25px;
   padding: 3px 0;
   border-radius: 2px;
   border: 1px solid #bbb;
 }
 
-.dropdown-menu > li > a {
+.toast-dropdown-menu > li > a {
   padding: 9px 12px;
   cursor: pointer;
 }
 
-.dropdown-menu > li > a:hover {
+.toast-dropdown-menu > li > a:hover {
   background-color: rgba(81, 92, 230, 0.05);
   color: #333;
 }
@@ -161,7 +155,7 @@ body {
   padding-left: 16px;
 }
 
-#menu {
+#toast-menu {
   padding: 16px;
 }
 
@@ -192,7 +186,7 @@ body {
   vertical-align: middle;
 }
 
-.dropdown-menu-title .calendar-icon {
+.toast-dropdown-menu-title .calendar-icon {
   margin-right: 8px;
 }
 
