@@ -333,7 +333,7 @@ cursor: pointer;
                            </ul>
                         </li>
                      </ul>
-                     <a href="Trash.do" id="trash" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;"><i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;휴지통</a>
+                     <h5 id="trash" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;"><i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;휴지통</h5>
                   </div>
                </div>
 
@@ -351,87 +351,19 @@ cursor: pointer;
                      </div>
                   </div>
 
-               <div class="row"  style="margin : 10px 10px;">
-               <div class="col-sm-4">
-                     <div class="card"  id="css">         
-                     <div class="more" style="margin-top: 10px;">
-                     &nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;" >   
-                     <a style="float:right;" data-toggle="collapse" href="#detail"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
-                     </div>
-                     <div style="margin-left: 60%;">
-				     <ul id="detail" class="collapse">
-				        <li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
-				        <li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
-				      </ul>
-				      </div>
-                     <br>            
-                        <div class="card-body text-center">
-                           <span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-                           <br><br>
-                           <h4 style="text-align: center;">css</h4>
-                        </div>
-                     </div>
-                     </div>
-                     <div class="col-sm-4">
-                     <div class="card">
-                     <div class="more" style="margin-top: 10px;">
-                     &nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="checkbox" value="js" onclick="checkBox(this)" style="width:18px; height:18px;" >   
-                     <span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                     </div>
-                     <br>
-                        <div class="card-body text-center">
-                           <span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-                           <br><br>
-                           <h4 style="text-align: center;">js</h4>
-                        </div>
-                     </div>
-                     </div>
-                     <div class="col-sm-4" >
-                     <div class="card">
-                     <div class="more" style="margin-top: 10px;">
-                     &nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="checkbox" value="images" onclick="checkBox(this)" style="width:18px; height:18px;" >   
-                     <span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                     </div>
-                     <br>
-                        <div class="card-body text-center">
-                           <span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-                           <br><br>
-                           <h4 style="text-align: center;">images</h4>
-                        </div>
-                     </div>
-                     </div>
-                  </div>
+
+
+
+
+
+
+
+
                </div>
             </div>
          </div>
       </div>
-      
-           <!-- Modal -->
-     <div class="modal fade" id="newFolder">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-             <div class="modal-content">
-                 <div class="modal-header" style="text-align: center;">
-                     <h4 class="modal-title"><b>폴더 생성</b></h4>
-                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                     </button>
-                 </div>
-                 <div class="modal-body">
-                     <h5>생성할 폴더명을 입력하세요.</h5>
-                     <input type="text" id="countingTitle" style="width:100%; height: 30px;">
-                     <br>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                     <button type="button" class="btn btn-primary">생성하기</button>
-                 </div>
-             </div>
-         </div>
-     </div>
 
-    
       <!-- Bottom -->
       <jsp:include page="../include/bottom.jsp" />
    </div>
