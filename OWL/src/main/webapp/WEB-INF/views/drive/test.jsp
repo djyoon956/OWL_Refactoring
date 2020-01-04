@@ -17,6 +17,14 @@
 <script   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+function Search(){
+	$('.drivemenu').empty();   
+	var searchfile = "";
+	searchfile += "<input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>";
+	searchfile += "<a href='#' onclick='Returncheck()'><i class='fas fa-times'></i></a>";
+	$('.drivemenu').append(searchfile);
+}
+
 function Allcheck(){ //전체선택 onclick
    $( 'div.more' ).parent( 'div.card' ).css('background', 'rgba(161, 163, 166, 0.3)');
    $("input[type=checkbox]").prop("checked", true);
@@ -39,6 +47,7 @@ function Returncheck(){
    
    $('.drivemenu').empty();   
     var button = "";
+    button +="<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
     button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn' onclick='Allcheck()'>전체선택</button>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -54,6 +63,7 @@ function checkBox(box){
 
 		   $('.drivemenu').empty();   
 		    var button = "";
+		    button +="<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
 		    button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 		    button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 		    button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -281,6 +291,14 @@ background-color: #fff;
 background-color: #f0f3f7;
 cursor: pointer;
 }
+
+#searchText{
+border-right:0px; 
+border-top:0px; 
+boder-left:0px; 
+boder-bottom:3px solid #326295;
+
+}
 </style>
 </head>
 <body>
@@ -339,6 +357,7 @@ cursor: pointer;
 
                <div class="col-md-9" style="padding-left: 0;">
                   <div class="drivemenu">
+                  <button type="button" class="btn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;&nbsp;&nbsp;
                   	<div class="filebox" style="display:inline;">
                   	 <input type="file" id="driveFile">
                      <label for="driveFile" style="cursor: pointer; margin-bottom: 0px;" class="btn btn-primary">업로드</label>&nbsp;&nbsp;&nbsp;&nbsp;

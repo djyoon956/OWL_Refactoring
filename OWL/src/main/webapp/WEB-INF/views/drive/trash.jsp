@@ -18,56 +18,25 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 function Allcheck(){ //전체선택 onclick
-   $( 'div.more' ).parent( 'div.card' ).css('background', 'rgba(161, 163, 166, 0.3)');
-   $("input[type=checkbox]").prop("checked", true);
-   
+   /* $("input[type=checkbox]").prop("checked", true); */	   
    $('.drivemenu').empty();   
     var button = "";
-    button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+    button += "<button type='button' class='btn'>복구</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+    button += "<button type='button' class='btn'>완전 삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button +="<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-    button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
    $('.drivemenu').append(button);   
 }
 
 function Returncheck(){
-   $( 'div.more' ).parent( 'div.card' ).css('background', '');
-   $("input[type=checkbox]").prop("checked", false);
+   /* $("input[type=checkbox]").prop("checked", false); */
    
    $('.drivemenu').empty();   
     var button = "";
-    button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn' onclick='Allcheck()'>전체선택</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button +="<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-    button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
    $('.drivemenu').append(button);   
 }
 
-function checkBox(box){
-		var cardId = document.getElementById('css');
-	if(box.checked == true){
-		$( 'div.more' ).parent( 'div#css' ).css('background', 'rgba(161, 163, 166, 0.3)');
 
-		   $('.drivemenu').empty();   
-		    var button = "";
-		    button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button +="<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-		    button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
-		   $('.drivemenu').append(button);  
-		
-	}else{
-		$( 'div.more' ).parent( 'div#css' ).css('background', '');
-		Returncheck();		
-	}
-}
 $.noConflict();
 jQuery(document).ready(function( $ ) {
     $( "#sortable" ).sortable({
@@ -242,44 +211,11 @@ jQuery(document).ready(function( $ ) {
   clip:rect(0,0,0,0);
   border: 0;
 }
-#driveFile input[type="file"] {  /* 파일 필드 숨기기 */
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip:rect(0,0,0,0);
-  border: 0;
-}
-.card{
-   border: 3px solid #326295;
-}
-.card:hover .more{
-   visibility: visible;
-   opacity: 1;
-   cursor: pointer;
-}
-.more{
-   visibility: hidden;
-}
 
 #trash{
 	position: absolute;
     top: 880px;
     font-weight: bold;
-}
-#detail{
-position: absolute; 
-z-index: 1;
-border: 2px solid #e8ebed;
-padding: 10px 10px;
-background-color: #fff;
-}
-
-#detail li:hover{
-background-color: #f0f3f7;
-cursor: pointer;
 }
 </style>
 </head>
@@ -299,7 +235,7 @@ cursor: pointer;
                   <li><a href="#">Dash Board</a></li>
                   <li><a href="#">Kanban Board</a></li>
                   <li><a href="#">Schedule</a></li>
-                  <li class="active"><a href="#">Drive</a></li>
+                  <li class="active"><a href="Drive.do">Drive</a></li>
                </ul>
             </div>
          </div>
@@ -338,26 +274,9 @@ cursor: pointer;
                </div>
 
                <div class="col-md-9" style="padding-left: 0;">
-                  <div class="drivemenu">
-                  	<div class="filebox" style="display:inline;">
-                  	 <input type="file" id="driveFile">
-                     <label for="driveFile" style="cursor: pointer; margin-bottom: 0px;" class="btn btn-primary">업로드</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                     </div>
-                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newFolder">새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <div class="drivemenu">                  	
                      <button type="button" class="btn btn-primary" onclick="Allcheck()">전체선택</button>   &nbsp;&nbsp;&nbsp;&nbsp;                  
-                     <div class="drivegroup">
-                        <a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
-                        <a><i class="fas fa-th-large fa-2x"></i></a>
-                     </div>
                   </div>
-
-
-
-
-
-
-
-
 
                </div>
             </div>
