@@ -249,7 +249,7 @@ $(function() {
 					<div class="col-md-12">
 					
 
-						<button class="btn columncolor" id="addDefault">Add Column</button>
+						<button class="btn columncolor" id="addDefault">Add Column+</button>
 						
 						<a href="#" data-toggle="modal" data-target="#addIssueModal">
 						<button class="btn columncolor" id="addToDo">Add Issue</button>
