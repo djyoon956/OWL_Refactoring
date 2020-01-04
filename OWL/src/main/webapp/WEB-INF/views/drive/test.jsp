@@ -15,8 +15,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 <script   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 function Allcheck(){ //전체선택 onclick
+   $( 'div.more' ).parent( 'div.card' ).css('background', 'rgba(161, 163, 166, 0.3)');
+   $("input[type=checkbox]").prop("checked", true);
+   
    $('.drivemenu').empty();   
     var button = "";
     button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -30,6 +34,9 @@ function Allcheck(){ //전체선택 onclick
 }
 
 function Returncheck(){
+   $( 'div.more' ).parent( 'div.card' ).css('background', '');
+   $("input[type=checkbox]").prop("checked", false);
+   
    $('.drivemenu').empty();   
     var button = "";
     button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -40,28 +47,48 @@ function Returncheck(){
    $('.drivemenu').append(button);   
 }
 
-$(function() {
-$("input:checkbox[name='check']").each(function(){
-   var selectBox = document.getElementsByClassName("card");
-   if($(this).is("checked") == true) {
-      console.log($(this).is("checked"));
-      selectBox.style.opacity = "0.3";
-      selectBox.style.backgroundColor = "#214973";   
-      }
-   });
-});
+function checkBox(box){
+		var cardId = document.getElementById('css');
+	if(box.checked == true){
+		$( 'div.more' ).parent( 'div#css' ).css('background', 'rgba(161, 163, 166, 0.3)');
+
+		   $('.drivemenu').empty();   
+		    var button = "";
+		    button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+		    button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+		    button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+		    button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+		    button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+		    button +="<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+		    button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
+		   $('.drivemenu').append(button);  
+		
+	}else{
+		$( 'div.more' ).parent( 'div#css' ).css('background', '');
+		Returncheck();		
+	}
+}
+$.noConflict();
+jQuery(document).ready(function( $ ) {
+    $( "#sortable" ).sortable({
+      revert: true
+    });
+    
+    $( ".topFolder" ).draggable({
+      connectToSortable: "#sortable",
+      helper: "clone",
+      revert: "invalid"
+    });
+    $( "ul, li" ).disableSelection();
+   
+  });
 
 
 
 
-
-/* $('input:checkbox[name="check"]').each(function() {
-    var selectBox = document.getElementsByClassName("card");
-   console.log(checkbox);
-    if(this.checked ==true){//checked 처리된 항목의 값
-      selectBox.style.opacity = "0.3";
-      selectBox.style.backgroundColor = "#214973";      
-    } */
+/* $('.modal').on('hidden', function( ) {
+    $('#countingTitle').val(' ');
+}); */
 
 </script>
 <style>
@@ -81,8 +108,8 @@ $("input:checkbox[name='check']").each(function(){
    padding-left: 20px;
    padding-bottom: 7px;
    border-left: 1px dashed #ddd;
-   font-size: 22px;
    padding-bottom: 7px;
+   cursor: pointer;
 }
 
 .directory-list li {
@@ -109,6 +136,10 @@ $("input:checkbox[name='check']").each(function(){
    font-weight: bold;
 }
 
+.directory-list .topFolder, .directory-list .topFolder>a {
+   color: #777;
+   font-weight: bold;
+}
 /* The icons
 -------------------------------------------------------------- */
 .directory-list li:before {
@@ -134,6 +165,13 @@ $("input:checkbox[name='check']").each(function(){
    background-size: 75% auto;
 }
 
+.directory-list li.topFolder:before {
+   /* folder icon if folder class is specified */
+   background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='steelblue' d='M96.429,37.5v39.286c0,3.423-1.228,6.361-3.684,8.817c-2.455,2.455-5.395,3.683-8.816,3.683H16.071 c-3.423,0-6.362-1.228-8.817-3.683c-2.456-2.456-3.683-5.395-3.683-8.817V23.214c0-3.422,1.228-6.362,3.683-8.817 c2.455-2.456,5.394-3.683,8.817-3.683h17.857c3.422,0,6.362,1.228,8.817,3.683c2.455,2.455,3.683,5.395,3.683,8.817V25h37.5 c3.422,0,6.361,1.228,8.816,3.683C95.201,31.138,96.429,34.078,96.429,37.5z' /></svg>");
+   background-position: center top;
+   background-size: 75% auto;
+}
 #tab-menu {
    width: 100%;
    background: white;
@@ -184,6 +222,7 @@ $("input:checkbox[name='check']").each(function(){
 .btn:hover{
    color:#fff;
    background-color: #326295;
+   border-color: #326295;
    box-shadow:200px 0 0 0 rgba(0,0,0,0.5) inset;
 }
 
@@ -203,7 +242,16 @@ $("input:checkbox[name='check']").each(function(){
   clip:rect(0,0,0,0);
   border: 0;
 }
-
+#driveFile input[type="file"] {  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+}
 .card{
    border: 3px solid #326295;
 }
@@ -216,6 +264,18 @@ $("input:checkbox[name='check']").each(function(){
    visibility: hidden;
 }
 
+#trash{
+	position: absolute;
+    top: 880px;
+    font-weight: bold;
+}
+#detail{
+position: absolute; 
+z-index: 1;
+border: 2px solid #4075ad;
+padding: 10px 10px;
+background-color: #d3e3f5;
+}
 </style>
 </head>
 <body>
@@ -248,33 +308,37 @@ $("input:checkbox[name='check']").each(function(){
                      </h2>
                      <hr>
                      <div class="filebox" style="float: right;">
-                        <label for="driveFolder" style="cursor: pointer;"><i
-                           class="fas fa-plus"></i></label> <input type="file" id="driveFolder">
+                        <label for="driveFolder" style="cursor: pointer;"><i class="fas fa-plus"></i></label> 
+                        <input type="file" id="driveFolder">
                      </div>
                      <br>
                      <ul class="directory-list">
-                        <li class="folder">Project 1
-                           <ul>
+                        <li class="topFolder">Project 1
+                           <ul id="sortable">
                               <li class="folder">css</li>
                               <li class="folder">js</li>
                               <li class="folder">images</li>
                            </ul>
                         </li>
-                        <li class="folder">assets
-                           <ul>
+                        <li class="topFolder">assets
+                           <ul id="sortable">
                               <li class="folder">css</li>
                               <li class="folder">js</li>
                               <li class="folder">images</li>
                            </ul>
                         </li>
                      </ul>
+                     <h5 id="trash" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;"><i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;휴지통</h5>
                   </div>
                </div>
 
                <div class="col-md-9" style="padding-left: 0;">
                   <div class="drivemenu">
-                     <button type="button" class="btn btn-primary">업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                     <button type="button" class="btn btn-primary">새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  	<div class="filebox" style="display:inline;">
+                  	 <input type="file" id="driveFile">
+                     <label for="driveFile" style="cursor: pointer; margin-bottom: 0px;" class="btn btn-primary">업로드</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                     </div>
+                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newFolder">새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;
                      <button type="button" class="btn btn-primary" onclick="Allcheck()">전체선택</button>   &nbsp;&nbsp;&nbsp;&nbsp;                  
                      <div class="drivegroup">
                         <a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
@@ -284,12 +348,19 @@ $("input:checkbox[name='check']").each(function(){
 
                <div class="row"  style="margin : 10px 10px;">
                <div class="col-sm-4">
-                     <div class="card">         
+                     <div class="card"  id="css">         
                      <div class="more" style="margin-top: 10px;">
                      &nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="checkbox" name="check" value="check" style="width:18px; height:18px;" >   
-                     <span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
+                     <input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;" >   
+                     <a style="float:right;" data-toggle="collapse" href="#detail"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
                      </div>
+                     <div style="margin-left: 45%;">
+				     <div id="detail" class="collapse">
+				        <a>Drummer</a><br>
+				        <a>Loves drummin'</a><br>
+				        <a>Member since 1988</a>
+				      </div>
+				      </div>
                      <br>            
                         <div class="card-body text-center">
                            <span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
@@ -302,7 +373,7 @@ $("input:checkbox[name='check']").each(function(){
                      <div class="card">
                      <div class="more" style="margin-top: 10px;">
                      &nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="checkbox" name="check" value="check" style="width:18px; height:18px;" >   
+                     <input type="checkbox" value="js" onclick="checkBox(this)" style="width:18px; height:18px;" >   
                      <span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
                      </div>
                      <br>
@@ -317,7 +388,7 @@ $("input:checkbox[name='check']").each(function(){
                      <div class="card">
                      <div class="more" style="margin-top: 10px;">
                      &nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="checkbox" name="check" value="check" style="width:18px; height:18px;" >   
+                     <input type="checkbox" value="images" onclick="checkBox(this)" style="width:18px; height:18px;" >   
                      <span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
                      </div>
                      <br>
@@ -333,6 +404,30 @@ $("input:checkbox[name='check']").each(function(){
             </div>
          </div>
       </div>
+      
+           <!-- Modal -->
+     <div class="modal fade" id="newFolder">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+             <div class="modal-content">
+                 <div class="modal-header" style="text-align: center;">
+                     <h4 class="modal-title"><b>폴더 생성</b></h4>
+                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                     </button>
+                 </div>
+                 <div class="modal-body">
+                     <h5>생성할 폴더명을 입력하세요.</h5>
+                     <input type="text" id="countingTitle" style="width:100%; height: 30px;">
+                     <br>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                     <button type="button" class="btn btn-primary">생성하기</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+    
       <!-- Bottom -->
       <jsp:include page="../include/bottom.jsp" />
    </div>
