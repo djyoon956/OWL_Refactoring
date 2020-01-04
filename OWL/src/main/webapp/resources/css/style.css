@@ -1240,21 +1240,21 @@ pre {
   background-color: #d8d7fd; }
 
 .table-hover .table-primary:hover {
-  background-color: #c0bffc; }
+  background-color: #f0f3f7; }
   .table-hover .table-primary:hover > td,
   .table-hover .table-primary:hover > th {
-    background-color: #c0bffc; }
+    background-color: #f0f3f7; }
 
 .table-secondary,
 .table-secondary > th,
 .table-secondary > td {
-  background-color: #e0e2ee; }
+  background-color: #f0f3f7; }
 
 .table-hover .table-secondary:hover {
-  background-color: #d0d3e5; }
+  background-color: #f0f3f7; }
   .table-hover .table-secondary:hover > td,
   .table-hover .table-secondary:hover > th {
-    background-color: #d0d3e5; }
+    background-color: #f0f3f7; }
 
 .table-success,
 .table-success > th,
@@ -1303,13 +1303,13 @@ pre {
 .table-light,
 .table-light > th,
 .table-light > td {
-  background-color: #fdfdfe; }
+  background-color: #f0f3f7; }
 
 .table-hover .table-light:hover {
-  background-color: #ececf6; }
+  background-color: #f0f3f7; }
   .table-hover .table-light:hover > td,
   .table-hover .table-light:hover > th {
-    background-color: #ececf6; }
+    background-color: #f0f3f7; }
 
 .table-dark,
 .table-dark > th,
@@ -3839,7 +3839,7 @@ input[type="button"].btn-block {
   background-color: #d8d7fd; }
   .list-group-item-primary.list-group-item-action:hover, .list-group-item-primary.list-group-item-action:focus {
     color: #336699;
-    background-color: #c0bffc; }
+    background-color: #f0f3f7; }
   .list-group-item-primary.list-group-item-action.active {
     color: #fff;
     background-color: #336699;
@@ -3850,7 +3850,7 @@ input[type="button"].btn-block {
   background-color: #e0e2ee; }
   .list-group-item-secondary.list-group-item-action:hover, .list-group-item-secondary.list-group-item-action:focus {
     color: #4b4f66;
-    background-color: #d0d3e5; }
+    background-color: #f0f3f7; }
   .list-group-item-secondary.list-group-item-action.active {
     color: #fff;
     background-color: #4b4f66;
@@ -3869,10 +3869,10 @@ input[type="button"].btn-block {
 
 .list-group-item-info {
   color: #284085;
-  background-color: #cddaff; }
+  background-color: #f0f3f7; }
   .list-group-item-info.list-group-item-action:hover, .list-group-item-info.list-group-item-action:focus {
     color: #284085;
-    background-color: #b4c7ff; }
+    background-color: #f0f3f7; }
   .list-group-item-info.list-group-item-action.active {
     color: #fff;
     background-color: #284085;
@@ -8197,10 +8197,10 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
       .nk-sidebar .metismenu > li:hover span, .nk-sidebar .metismenu > li:focus span, .nk-sidebar .metismenu > li.active span {
         color: #464a53; }
       .nk-sidebar .metismenu > li:hover > a {
-        background: #F3F1FA;
+        background: #f0f3f7;
         color: #326295; }
       .nk-sidebar .metismenu > li.active > a {
-        background: #F3F1FA;
+        background: #f0f3f7;
         color: #464a53; }
       .nk-sidebar .metismenu > li.active ul a {
         color: #464a53; }
@@ -8227,7 +8227,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
       transition: all 0.4s ease-in-out; }
       .nk-sidebar .metismenu a:hover, .nk-sidebar .metismenu a:active, .nk-sidebar .metismenu a.active {
         text-decoration: none;
-        background-color: #F3F1FA; }
+        background-color: #f0f3f7; }
     .nk-sidebar .metismenu .has-arrow:after {
       position: absolute;
       content: "";
