@@ -82,6 +82,10 @@ body {
 	padding: 20px 0;
 }
 
+#addIssueModal {
+	overflow: auto;
+}
+
 .success {
 	background: #00B961;
 	color: #fff
@@ -181,7 +185,6 @@ body {
 
 				<!-- Kanban Start -->
 				<div id="board">
-
 					<div id="issue" class="section">
 						<div class="row">
 							<div class="col-6">
@@ -199,8 +202,6 @@ body {
 					</div>
 
 
-
-
 					<div id="todo" class="section">
 						<div class="row">
 							<div class="col-9">
@@ -215,7 +216,6 @@ body {
 						<div id="c2" class="card">Make Killer App</div>
 						<div id="c3" class="card">Retire!</div>
 					</div>
-
 
 					<div id="doing" class="section">
 						<div class="row">
@@ -253,8 +253,6 @@ body {
 						</div>
 						<div id="c5" class="card">Learn HTML</div>
 					</div>
-
-
 				</div>
 				<!--  칸반 끝  -->
 			</div>
