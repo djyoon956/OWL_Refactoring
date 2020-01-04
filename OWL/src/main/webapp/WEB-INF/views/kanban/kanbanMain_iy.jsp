@@ -6,10 +6,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>Main</title>
 <!-- Favicon icon -->
-<link rel="icon" type="image/png" sizes="16x16" href="resources/images/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16"
+	href="resources/images/favicon.png">
 <!-- Pignose Calender -->
 <link href="resources/plugins/pg-calendar/css/pignose.calendar.min.css"
 	rel="stylesheet">
@@ -20,18 +20,59 @@
 	href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
 <!-- Custom Stylesheet -->
 <link href="resources/css/style.css" rel="stylesheet">
-<!--  칸반 -->
+<!-- fontawesome -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<!-- jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- kanban board -->
+<script src="https://gitcdn.xyz/repo/riktar/jkanban/master/dist/jkanban.min.js"></script>
+<link href="https://www.riccardotartaglia.it/jkanban/dist/jkanban.min.css" rel="stylesheet">
 
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="https://www.riccardotartaglia.it/jkanban/dist/jkanban.min.css"
-	rel="stylesheet">
-<script
-	src="https://gitcdn.xyz/repo/riktar/jkanban/master/dist/jkanban.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
+#board {
+	display: table;
+	margin: 0;
+	padding: 0;
+	border-spacing: 5px;
+	background-color: #CDCDC9;
+}
+
+.section {
+	display: table-cell;
+	margin: 0;
+	border: 1px solid #666;
+	padding: 5px;
+	width: 300px;
+}
+
+.section.droppable {
+	border: 1px dashed #666;
+}
+
+/*  h5 {
+	margin: 0;
+	border-bottom: 1px solid #999;
+	padding: 0;
+	font-size: 12pt;
+	text-align: center;
+} */
+.card {
+	display: inline-block;
+	vertical-align: top;
+	margin: 10px 5px;
+	padding: 5px;
+	width: 95%;
+	height: 100px;
+	color: black;
+	background: #EFEEE6;
+	cursor: move;
+	text-align: center;
+	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande",
+		sans-serif;
+	box-shadow: 2px 2px 2px #eee;
+}
+
 body {
 	font-family: "Lato";
 	margin: 0;
@@ -63,6 +104,12 @@ body {
 	color: #fff
 }
 
+.columncolor {
+	background-color: #336699;
+	color : #fff
+}
+
+
 #tab-menu {
 	width: 100%;
 	background: white;
@@ -92,8 +139,8 @@ body {
 	border-bottom: 3px solid #326295;
 	color: #326295;
 }
-
 </style>
+
 <script type="text/javascript">
 $(function() {
 	
@@ -108,7 +155,7 @@ $(function() {
             {
                 'id' : '_todo',
                 'title'  : 'To Do (drag me)',
-                'class' : 'info',
+                'class' : 'columncolor',
                 'item'  : [
                     {
                        'id':'task-1',
@@ -123,7 +170,7 @@ $(function() {
             {
                 'id' : '_working',
                 'title'  : 'Working',
-                'class' : 'warning',
+                'class' : 'columncolor',
                 'item'  : [
                     {
                         'title':'Do Something!',
@@ -136,8 +183,8 @@ $(function() {
             {
                 'id' : '_done',
                 'dragTo' : ['_working'],
-                'title'  : 'Done (Drag only in Working)',
-                'class' : 'success',
+                'title'  : 'Done',
+                'class' : 'columncolor',
                 'item'  : [
                     {
                         'title':'All right',
@@ -167,7 +214,7 @@ $(function() {
                 'id' : '_default',
                 'title'  : 'Default (Can\'t drop in Done)',
                 'dragTo':['_todo','_working'],
-                'class' : 'error',
+                'class' : 'columncolor',
                 'item'  : [
                     {
                         'title':'Default Item',
@@ -188,7 +235,7 @@ $(function() {
         KanbanTest.removeBoard('_done');
     });
 });
-    </script>
+</script>
 </head>
 
 <body>
@@ -200,44 +247,36 @@ $(function() {
 
 		<!-- SideBar -->
 		<jsp:include page="../include/sideBar.jsp" />
-
-
 		<!-- Content -->
+
 		<div class="content-body">
 
-
-				<!-- Project 상단 바 -->
-				<div id="tab-menu">
-					<div id="tab-btn">
-						<ul>
-							<li><a href="#">Dash Board</a></li>
-							<li><a href="#">Kanban Board</a></li>
-							<li><a href="#">Schedule</a></li>
-							<li class="active"><a href="#">Drive</a></li>
-						</ul>
-					</div>
+			<div id="tab-menu">
+				<div id="tab-btn">
+					<ul>
+						<li><a href="#">Dash Board</a></li>
+						<li><a href="#">Kanban Board</a></li>
+						<li><a href="#">Schedule</a></li>
+						<li class="active"><a href="#">Drive</a></li>
+					</ul>
 				</div>
-
-				<!--  칸반 시작 -->
+			</div>
 			<div class="container-fluid mt-3">
 
+				<!-- Kanban Start -->
 				<div class="row">
 					<div class="col-md-12">
-						<h1>jKanban</h1>
-						<p>jKanban allow you to create and manage Kanban Board in your
-							project! Try It!</p>
-						<button class="btn btn-success" id="addDefault">Add
-							"Default" board</button>
-						<button class="btn btn-success" id="addToDo">Add element
-							in "To Do" Board</button>
-						<button class="btn btn-danger" id="removeBoard">Remove
-							"Done" Board</button>
+						
+						<button class="btn columncolor" id="addDefault">Add Column</button>
+						<button class="btn columncolor" id="addToDo">Add Issue</button>
+						<button class="btn columncolor" id="removeBoard">Remove Column</button>
 
 						<hr>
 						<div id="myKanban"></div>
 
 					</div>
 				</div>
+
 
 				<!--  칸반 끝  -->
 			</div>
@@ -247,10 +286,96 @@ $(function() {
 		<jsp:include page="../include/bottom.jsp" />
 	</div>
 
+	<!-- add issue modal -->
+	<jsp:include page="modal/createIssue.jsp" />
+
+
 	<!--  칸반 스크립트  -->
 	<script>
-   
-    </script>
+		var cards = document.querySelectorAll('.card');
+		for (var i = 0, n = cards.length; i < n; i++) {
+			var card = cards[i];
+			card.draggable = true;
+		};
+		var board = document.getElementById('board');
+		var hideMe;
+		board.onselectstart = function(e) {
+			e.preventDefault();
+		}
+		board.ondragstart = function(e) {
+			console.log('dragstart');
+			hideMe = e.target;
+			e.dataTransfer.setData('card', e.target.id);
+			e.dataTransfer.effectAllowed = 'move';
+		};
+		board.ondragend = function(e) {
+			e.target.style.visibility = 'visible';
+		};
+		var lastEneterd;
+		board.ondragenter = function(e) {
+			console.log('dragenter');
+			if (hideMe) {
+				hideMe.style.visibility = 'hidden';
+				hideMe = null;
+			}
+			// Save this to check in dragleave.
+			lastEntered = e.target;
+			var section = closestWithClass(e.target, 'section');
+			// TODO: Check that it's not the original section.
+			if (section) {
+				section.classList.add('droppable');
+				e.preventDefault(); // Not sure if these needs to be here. Maybe for IE?
+				return false;
+			}
+		};
+		board.ondragover = function(e) {
+			// TODO: Check data type.
+			// TODO: Check that it's not the original section.
+			if (closestWithClass(e.target, 'section')) {
+				e.preventDefault();
+			}
+		};
+		board.ondragleave = function(e) {
+			// FF is raising this event on text nodes so only check elements.
+			if (e.target.nodeType === 1) {
+				// dragleave for outer elements can trigger after dragenter for inner elements
+				// so make sure we're really leaving by checking what we just entered.
+				// relatedTarget is missing in WebKit: https://bugs.webkit.org/show_bug.cgi?id=66547
+				var section = closestWithClass(e.target, 'section');
+				if (section && !section.contains(lastEntered)) {
+					section.classList.remove('droppable');
+				}
+			}
+			lastEntered = null; // No need to keep this around.
+		};
+		board.ondrop = function(e) {
+			var section = closestWithClass(e.target, 'section');
+			var id = e.dataTransfer.getData('card');
+			if (id) {
+				var card = document.getElementById(id);
+				// Might be a card from another window.
+				if (card) {
+					if (section !== card.parentNode) {
+						section.appendChild(card);
+					}
+				} else {
+					alert('couldn\'t find card #' + id);
+				}
+			}
+			section.classList.remove('droppable');
+			e.preventDefault();
+		};
+		function closestWithClass(target, className) {
+			while (target) {
+				if (target.nodeType === 1
+						&& target.classList.contains(className)) {
+					return target;
+				}
+				target = target.parentNode;
+			}
+			return null;
+		}
+	</script>
 	<!--Scripts-->
 	<script src="resources/plugins/common/common.min.js"></script>
 	<script src="resources/js/custom.min.js"></script>
@@ -277,8 +402,5 @@ $(function() {
 	<script
 		src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 	<script src="resources/js/dashboard/dashboard-1.js"></script>
-
-
-
 </body>
 </html>
