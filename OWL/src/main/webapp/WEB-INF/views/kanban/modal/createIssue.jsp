@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div class="modal fade bd-example-modal-lg" id="addIssueModal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bd-example-modal-lg" id="addIssueModal"
+	tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header text-center">
@@ -71,7 +72,7 @@
 				<hr />
 
 
-				<div class="container-fluid" >
+				<div class="container-fluid">
 					<!-- row -->
 					<div class="row">
 						<div class="col-lg-12">
@@ -85,27 +86,25 @@
 											<div class="media-body">
 												<h5 class="mt-0">Cathy</h5>
 												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-												scelerisque ante sollicitudin. 
+												scelerisque ante sollicitudin.
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label>Comment:</label>
-									<textarea class="form-control h-150px " rows="6" id="comment" placeholder="Ask a question or post an update">
+									<textarea class="form-control h-150px " rows="6" id="comment"
+										placeholder="Ask a question or post an update">
 						</textarea>
-									<button type="button" class="btn mb-1 btn-primary" style="text-align: right">Comment</button>
+									<button type="button" class="btn mb-1 btn-primary"
+										style="text-align: right">Comment</button>
 								</div>
 							</div>
 
-
-
-
 						</div>
-
-
-
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</div>

@@ -57,6 +57,7 @@
 	font-size: 12pt;
 	text-align: center;
 } */
+
 .card {
 	display: inline-block;
 	vertical-align: top;
@@ -68,8 +69,7 @@
 	background: #EFEEE6;
 	cursor: move;
 	text-align: center;
-	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande",
-		sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	box-shadow: 2px 2px 2px #eee;
 }
 
@@ -81,27 +81,7 @@ body {
 
 #myKanban {
 	overflow-x: auto;
-	padding: 20px 0;
-}
-
-.success {
-	background: #00B961;
-	color: #fff
-}
-
-.info {
-	background: #2A92BF;
-	color: #fff
-}
-
-.warning {
-	background: #F4CE46;
-	color: #fff
-}
-
-.error {
-	background: #FB7D44;
-	color: #fff
+	padding: 10px 0;
 }
 
 .columncolor {
@@ -152,9 +132,10 @@ $(function() {
             alert(el.dataset.eid)
         },
         boards  :[
+            
             {
                 'id' : '_todo',
-                'title'  : 'To Do (drag me)',
+                'title'  : 'To Do',
                 'class' : 'columncolor',
                 'item'  : [
                     {
@@ -212,11 +193,11 @@ $(function() {
         KanbanTest.addBoards(
             [{
                 'id' : '_default',
-                'title'  : 'Default (Can\'t drop in Done)',
+                'title'  : 'Default',
                 'dragTo':['_todo','_working'],
                 'class' : 'columncolor',
                 'item'  : [
-                    {
+                    /* {
                         'title':'Default Item',
                     },
                     {
@@ -224,7 +205,7 @@ $(function() {
                     },
                     {
                         'title':'Default Item 3',
-                    }
+                    } */
                 ]
             }]
         )
@@ -255,9 +236,9 @@ $(function() {
 				<div id="tab-btn">
 					<ul>
 						<li><a href="#">Dash Board</a></li>
-						<li><a href="#">Kanban Board</a></li>
+						<li class="active"><a href="#">Kanban Board</a></li>
 						<li><a href="#">Schedule</a></li>
-						<li class="active"><a href="#">Drive</a></li>
+						<li><a href="#">Drive</a></li>
 					</ul>
 				</div>
 			</div>
@@ -266,13 +247,19 @@ $(function() {
 				<!-- Kanban Start -->
 				<div class="row">
 					<div class="col-md-12">
-						
+					
+
 						<button class="btn columncolor" id="addDefault">Add Column</button>
+						
+						<a href="#" data-toggle="modal" data-target="#addIssueModal">
 						<button class="btn columncolor" id="addToDo">Add Issue</button>
+						</a>
 						<button class="btn columncolor" id="removeBoard">Remove Column</button>
 
 						<hr>
-						<div id="myKanban"></div>
+						<div id="myKanban">
+						
+						</div>
 
 					</div>
 				</div>
