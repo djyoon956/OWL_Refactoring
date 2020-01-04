@@ -252,7 +252,7 @@ $(function() {
 						<button class="btn columncolor" id="addDefault">Add Column+</button>
 						
 						<a href="#" data-toggle="modal" data-target="#addIssueModal">
-						<button class="btn columncolor" id="addToDo">Add Issue</button>
+						<button class="btn columncolor" id="addToDo">Add Issue+</button>
 						</a>
 						<button class="btn columncolor" id="removeBoard">Remove Column</button>
 
@@ -386,8 +386,7 @@ $(function() {
 	<script src="resources/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
 	<!-- ChartistJS -->
 	<script src="resources/plugins/chartist/js/chartist.min.js"></script>
-	<script
-		src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+	<script src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 	<script src="resources/js/dashboard/dashboard-1.js"></script>
 </body>
 </html>
