@@ -3,21 +3,15 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
     <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
     <link rel="stylesheet" type="text/css" href="resources/plugins/toast-calendar/dist/tui-calendar.css">
     <link rel="stylesheet" type="text/css" href="resources/plugins/toast-calendar/css/default.css">
     <link rel="stylesheet" type="text/css" href="resources/plugins/toast-calendar/css/icons.css">
     <style type="text/css">
-/*     head,body{
-    width: 100%;
-    } */
-    
     body {
     	overflow-x:hidden; 
     }
-    
     </style>
 </head>
 <body>
@@ -40,7 +34,7 @@
 		
 		<div class="col-sm-10">
 		<div >
-        <div id="menu">
+        <div id="tui-menu">
             <span class="dropdown">
                 <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="true">
@@ -76,21 +70,21 @@
                     </li>
                     <li role="presentation" class="dropdown-divider"></li>
                     <li role="presentation">
-                        <a role="menuitem" data-action="toggle-workweek">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
-                            <span class="checkbox-title"></span>Show weekends
+                        <a role="menuitem" data-action="toggle-start-day-1">
+                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
+                            <span class="checkbox-title"></span>월요일부터 표현
                         </a>
                     </li>
                     <li role="presentation">
-                        <a role="menuitem" data-action="toggle-start-day-1">
-                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
-                            <span class="checkbox-title"></span>Start Week on Monday
+                        <a role="menuitem" data-action="toggle-workweek">
+                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
+                            <span class="checkbox-title"></span>주말 표현
                         </a>
                     </li>
                     <li role="presentation">
                         <a role="menuitem" data-action="toggle-narrow-weekend">
                             <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
-                            <span class="checkbox-title"></span>Narrower than weekdays
+                            <span class="checkbox-title"></span>주말 최소화 표현
                         </a>
                     </li>
                 </ul>
@@ -111,9 +105,7 @@
 		</div> 
 	</div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
     <script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
     <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>

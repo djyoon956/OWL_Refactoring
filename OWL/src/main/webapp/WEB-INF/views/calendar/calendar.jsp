@@ -9,10 +9,9 @@
     <title>Main</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="resources/images/favicon.png">
-
-    <!-- Custom Stylesheet -->
     <link href="resources/css/style.css" rel="stylesheet">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
 </head>
 
 <body>
@@ -27,9 +26,8 @@
          
         <!-- Content -->
         <div class="content-body">
-            <div class="container-fluid mt-3">대시보드
-            <a href="#" data-toggle="modal" data-target="#projectModal"> 어쩌구
-            </a>
+            <div class="container-fluid mt-3">	
+            	<jsp:include page="calendar2.jsp"/>
             </div>
         </div>
         
@@ -37,7 +35,7 @@
 		<jsp:include page="../include/bottom.jsp"/>
     </div>
 	
-	<jsp:include page="../login/modal/createProject.jsp"/>
+	<jsp:include page="../project/modal/createProject.jsp"/>
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
     <script src="resources/js/custom.min.js"></script>
@@ -47,5 +45,6 @@
     <!-- Circle progress -->
     <script src="resources/plugins/circle-progress/circle-progress.min.js"></script>
 
+	
 </body>
 </html>
