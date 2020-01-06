@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<!--  은아 수정중 1/6 -->
 <html>
 <head>
 <meta charset="utf-8">
@@ -119,6 +120,49 @@ body {
 	border-bottom: 3px solid #326295;
 	color: #326295;
 }
+/* .nav{
+    position: fixed;
+    right:0;
+    top: 70px;
+    width: 250px;
+    height: calc(100vh - 70px);
+    background-color: #333;
+    
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+
+}
+.nav-view{
+    transform: translateX(0);
+} */
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.slideout-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  width: 256px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  display: none;
+}
+
+.slideout-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.slideout-open,
+.slideout-open body { overflow: hidden; }
+
+.slideout-open .slideout-menu { display: block; }
 </style>
 
 <script type="text/javascript">
@@ -228,8 +272,27 @@ $(function() {
     var removeBoard = document.getElementById('removeBoard');
     removeBoard.addEventListener('click',function(){
         KanbanTest.removeBoard('_done');
-    });
+    });   
+
+    var slideoutRight = new Slideout({
+    	  'panel': document.getElementById('main'),
+    	  'menu': document.getElementById('menu'),
+    	  'padding': 256,
+    	  'tolerance': 70,
+    	  'side': 'right'
+    	});
+
+    	document.querySelector('.js-slideout-toggle').addEventListener('click', function() {
+    		 slideoutRight.toggle();
+    	});	
 });
+/* $(document).ready(function(){
+
+	  $('a#click-a').click(function(){
+		  console.log("되나333");
+	    $('.nav').toggleClass('nav-view');
+	  });
+	}); */
 </script>
 </head>
 
@@ -278,13 +341,33 @@ $(function() {
 						<button class="btn columncolor" id="removeBoard">Remove Column</button>
 
 						<hr>
-						<div id="myKanban" class="row">
+						<div class="row">
+						<div class="col-md-11">
+						<main id="main" class="panel">
+						<div class="row">
+						<div class="col-md-11">
+						
+						<div id="myKanban" >
 						
 						</div>
-
+						</div>
+						<div class="col-md-1">
+						
+						<button class="js-slideout-toggle">
+							    Open slideout
+							  </button>
+						</div>
+						</div>
+						</main>
+						
+						</div>
+						
+						<nav id="menu" class="menu">
+						 
+						</nav>
+									
 					</div>
-					<div class="col-md-1">
-					closed 
+					
 					</div>
 				</div>
 
@@ -327,5 +410,7 @@ $(function() {
 	<script src="resources/plugins/chartist/js/chartist.min.js"></script>
 	<script src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 	<script src="resources/js/dashboard/dashboard-1.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
 </body>
 </html>
