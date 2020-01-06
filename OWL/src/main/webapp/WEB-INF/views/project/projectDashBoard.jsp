@@ -46,7 +46,7 @@
    border-bottom: 3px solid #326295;
    color: #326295;
 }
-#settingIcon {
+.iconSize {
     font-size: 1.4rem;
     line-height: 2rem;
     color:  #326295; 
@@ -85,7 +85,7 @@
 							<i class="icon-settings" id="settingIcon"></i>
 						</div> -->
 				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-                         <i class="icon-settings" id="settingIcon"></i>
+                         <i class="icon-settings iconSize"></i>
                   </a>
                      <div class=" dropdown-menu">
                      <!-- fadeIn animated   dropdown-notfication  상관 없음 // drop-down -->
@@ -94,8 +94,8 @@
                          </div> -->
                          <div class="dropdown-content-body">
                              <ul>
-                                 <li><a href="#">프로젝트멤버 설정</a></li>
-                                 <li><a href="#">라벨 추가</a></li>
+                                 <li><a href="#memberEditModal" data-toggle="modal">프로젝트멤버  설정</a></li>
+                                 <li><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
                              </ul>
                          </div>
                      </div>
@@ -110,6 +110,10 @@
         
         <!-- Bottom -->
 		<jsp:include page="../include/bottom.jsp"/>
+		
+		<!--  modal -->
+	    <jsp:include page="modal/projectMemberEdit.jsp" />
+	    <jsp:include page="modal/labelEdit.jsp" />
     </div>
 
     <!--Scripts-->
