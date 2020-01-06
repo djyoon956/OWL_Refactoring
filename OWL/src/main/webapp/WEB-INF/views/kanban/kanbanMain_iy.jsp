@@ -25,10 +25,14 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <!-- jquery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- kanban board -->
-<script src="https://gitcdn.xyz/repo/riktar/jkanban/master/dist/jkanban.min.js"></script>
-<link href="https://www.riccardotartaglia.it/jkanban/dist/jkanban.min.css" rel="stylesheet">
+<script
+	src="https://gitcdn.xyz/repo/riktar/jkanban/master/dist/jkanban.min.js"></script>
+<link
+	href="https://www.riccardotartaglia.it/jkanban/dist/jkanban.min.css"
+	rel="stylesheet">
 
 <style>
 #board {
@@ -58,7 +62,6 @@
 	font-size: 12pt;
 	text-align: center;
 } */
-
 .card {
 	display: inline-block;
 	vertical-align: top;
@@ -70,7 +73,8 @@
 	background: #EFEEE6;
 	cursor: move;
 	text-align: center;
-	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande",
+		sans-serif;
 	box-shadow: 2px 2px 2px #eee;
 }
 
@@ -87,9 +91,8 @@ body {
 
 .columncolor {
 	background-color: #336699;
-	color : #fff
+	color: #fff
 }
-
 
 #tab-menu {
 	width: 100%;
@@ -135,34 +138,36 @@ body {
 .nav-view{
     transform: translateX(0);
 } */
-html,
-body {
-  width: 100%;
-  height: 100%;
+html, body {
+	width: 100%;
+	height: 100%;
 }
 
 .slideout-menu {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 0;
-  width: 256px;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  display: none;
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 0;
+	width: 256px;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+	display: none;
 }
 
 .slideout-panel {
-  position: relative;
-  z-index: 1;
+	position: relative;
+	z-index: 1;
 }
 
-.slideout-open,
-.slideout-open body { overflow: hidden; }
+.slideout-open, .slideout-open body {
+	overflow: hidden;
+}
 
-.slideout-open .slideout-menu { display: block; }
+.slideout-open .slideout-menu {
+	display: block;
+}
 </style>
 
 <script type="text/javascript">
@@ -321,53 +326,49 @@ $(function() {
 			</div>
 			<div class="container-fluid mt-3">
 
- 							<form class="form-inline">
-                                        <div class="form-group mx-sm-3 mb-2">
-                                            <label class="sr-only">search</label>
-                                            <input type="text" class="form-control" placeholder="search">
-                                        </div>
-                                        <button type="submit" class="btn columncolor mb-2">검색</button>
-                               </form>
+				<form class="form-inline">
+					<div class="form-group mx-sm-3 mb-2">
+						<label class="sr-only">search</label> <input type="text"
+							class="form-control" placeholder="search">
+					</div>
+					<button type="submit" class="btn columncolor mb-2">검색</button>
+				</form>
 				<!-- Kanban Start -->
 				<div class="row">
 					<div class="col-md-12">
-					
 
-						<button class="btn columncolor" id="addDefault">Add Column+</button>
-						
+
+						<button class="btn columncolor" id="addDefault">Add
+							Column+</button>
+
 						<a href="#" data-toggle="modal" data-target="#addIssueModal">
-						<button class="btn columncolor" id="addToDo">Add Issue++</button>
+							<button class="btn columncolor" id="addToDo">Add Issue++</button>
 						</a>
-						<button class="btn columncolor" id="removeBoard">Remove Column</button>
+						<button class="btn columncolor" id="removeBoard">Remove
+							Column</button>
 
 						<hr>
 						<div class="row">
-						<div class="col-md-11">
-						<main id="main" class="panel">
-						<div class="row">
-						<div class="col-md-11">
-						
-						<div id="myKanban" >
-						
+							<div class="col-md-11">
+								<main id="main" class="panel">
+								<div class="row">
+									<div class="col-md-11">
+
+										<div id="myKanban"></div>
+									</div>
+									<div class="col-md-1">
+
+										<button class="js-slideout-toggle">Open slideout</button>
+									</div>
+								</div>
+								</main>
+
+							</div>
+
+							<nav id="menu" class="menu"></nav>
+
 						</div>
-						</div>
-						<div class="col-md-1">
-						
-						<button class="js-slideout-toggle">
-							    Open slideout
-							  </button>
-						</div>
-						</div>
-						</main>
-						
-						</div>
-						
-						<nav id="menu" class="menu">
-						 
-						</nav>
-									
-					</div>
-					
+
 					</div>
 				</div>
 
@@ -408,9 +409,11 @@ $(function() {
 	<script src="resources/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
 	<!-- ChartistJS -->
 	<script src="resources/plugins/chartist/js/chartist.min.js"></script>
-	<script src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+	<script
+		src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 	<script src="resources/js/dashboard/dashboard-1.js"></script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/slideout/1.0.1/slideout.min.js"></script>
 </body>
 </html>

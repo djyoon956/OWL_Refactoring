@@ -1,32 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap" rel="stylesheet">
-<style>
-/* .logo {
-  font-family: 'Kalam', cursive;
-  text-transform: uppercase;
-  display: block;
-  font-size: 92px;
-  color: #326295;
-  text-shadow: 0 8px 9px #c4b59d, 0px -2px 1px #fff;
-  font-weight: bold;
-  letter-spacing: -4px;
-  text-align: center;
-  position: absolute;
-  padding: 100px 200px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  border-radius: 20px;
-} */
-</style>
-<div class="nav-header" style="background-color: #fcf9f5;">
-     <div class="brand-logo">
-         <a href="Index.do">
-             <b class="logo-abbr"><img src="resources/images/logo.png" alt=""> </b>
-			 <span class="logo"><img src="resources/images/owl_logo_another.png" alt=""></span>
-         </a>
-     </div>
- </div>
+
+ 
+        <div class="nav-header" style="background-color: #fcf9f5;">
+            <div class="brand-logo">
+                <a href="index.html">
+                    <b class="logo-abbr"><img src="resources/images/owl_logo_medium.png" alt=""> </b>
+                    <span class="logo-compact"><img src="resources/images/owl_logo_another.png" alt=""></span>
+                    <span class="brand-title">
+                        <img src="resources/images/owl_logo_another.png" alt="">
+                    </span>
+                </a>
+            </div>
+        </div>
+ 
 
  <div class="header" style="background-color: #fcf9f5;">    
      <div class="header-content clearfix">
@@ -39,6 +26,8 @@
 
          <div class="header-right">
              <ul class="clearfix">
+             
+             <!-- User info  -->
                  <li class="icons dropdown">
                      <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                          <span class="activity active"></span>
@@ -50,11 +39,6 @@
                                  <li>
                                      <a href="app-profile.html"><i class="icon-user"></i> <span>Profile</span></a>
                                  </li>
-                                 <li>
-                                     <a href="javascript:void()">
-                                         <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill gradient-1">3</div>
-                                     </a>
-                                 </li>
                                  
                                  <hr class="my-2">
                                  <li>
@@ -64,7 +48,9 @@
                              </ul>
                          </div>
                      </div>
-                 </li>             
+                 </li>         
+                 
+                 <!-- Chatting -->    
                  <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                          <i class="mdi mdi-email-outline"></i>
                          <span class="badge badge-pill gradient-1">3</span>
@@ -98,31 +84,12 @@
                                          </div>
                                      </a>
                                  </li>
-                                 <li>
-                                     <a href="javascript:void()">
-                                         <img class="float-left mr-3 avatar-img" src="resources/images/avatar/3.jpg" alt="">
-                                         <div class="notification-content">
-                                             <div class="notification-heading">Barak Obama</div>
-                                             <div class="notification-timestamp">08 Hours ago</div>
-                                             <div class="notification-text">Hi Teddy, Just wanted to let you ...</div>
-                                         </div>
-                                     </a>
-                                 </li>
-                                 <li>
-                                     <a href="javascript:void()">
-                                         <img class="float-left mr-3 avatar-img" src="resources/images/avatar/4.jpg" alt="">
-                                         <div class="notification-content">
-                                             <div class="notification-heading">Hilari Clinton</div>
-                                             <div class="notification-timestamp">08 Hours ago</div>
-                                             <div class="notification-text">Hello</div>
-                                         </div>
-                                     </a>
-                                 </li>
                              </ul>
-                             
                          </div>
                      </div>
                  </li>
+                 
+                 <!-- Alram -->
                  <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                          <i class="mdi mdi-bell-outline"></i>
                          <span class="badge badge-pill gradient-2">3</span>
@@ -154,12 +121,31 @@
                                          </div>
                                      </a>
                                  </li>
+                             </ul>
+                         </div>
+                     </div>
+                 </li>
+                 
+                 <!-- Setting - customizing -->
+                 <li class="icons toggle-icon">
+                 <a href="javascript:void(0)" data-toggle="dropdown">
+                         <i class="mdi mdi-settings"></i>
+                     </a>
+                      <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
+                         <div class="dropdown-content-heading d-flex justify-content-between">
+                             <span class="">2 New Notifications</span>  
+                             <a href="javascript:void()" class="d-inline-block">
+                                 <span class="badge badge-pill gradient-2">5</span>
+                             </a>
+                         </div>
+                         <div class="dropdown-content-body">
+                             <ul>
                                  <li>
                                      <a href="javascript:void()">
                                          <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
                                          <div class="notification-content">
-                                             <h6 class="notification-heading">Event Ended Successfully</h6>
-                                             <span class="notification-text">One hour ago</span>
+                                             <h6 class="notification-heading">Events near you</h6>
+                                             <span class="notification-text">Within next 5 days</span> 
                                          </div>
                                      </a>
                                  </li>
@@ -167,17 +153,19 @@
                                      <a href="javascript:void()">
                                          <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
                                          <div class="notification-content">
-                                             <h6 class="notification-heading">Events to Join</h6>
-                                             <span class="notification-text">After two days</span> 
+                                             <h6 class="notification-heading">Event Started</h6>
+                                             <span class="notification-text">One hour ago</span> 
                                          </div>
                                      </a>
                                  </li>
                              </ul>
-                             
                          </div>
-                     </div>
+                     </div> 
                  </li>
+
              </ul>
+             
+
          </div>
      </div>
  </div>

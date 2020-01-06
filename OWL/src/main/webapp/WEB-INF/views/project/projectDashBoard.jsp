@@ -18,6 +18,12 @@
     <link href="resources/css/style.css" rel="stylesheet">
 
 <style type="text/css">
+#tab-menu {
+	width: 100%;
+	background: white;
+	border-bottom: 1px double #326295;
+	font-family: 'Source Sans Pro', sans-serif;
+}
 #tab-btn ul {
    overflow: hidden;
    margin-bottom: 0px;
@@ -40,6 +46,11 @@
    border-bottom: 3px solid #326295;
    color: #326295;
 }
+.iconSize {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color:  #326295; 
+}
 </style>
 </head>
 
@@ -56,24 +67,53 @@
         <!-- Content -->
         <div class="content-body">
        <!-- Project 상단 바 -->
-         <div id="tab-menu">
-            <div id="tab-btn">
-               <ul>
-                  <li><a href="#">Dash Board</a></li>
-                  <li><a href="#">Calendar</a></li>
-                  <li><a href="#">Kanban Board</a></li>
-                  <li><a href="#">Notice</a></li>
-                  <li class="active"><a href="#">Drive</a></li>
-               </ul>
-            </div>
-         </div>
-        
-            <div class="container-fluid mt-3"> 프로젝트 대시보드
+			<div id="tab-menu">
+				<div class="row">
+					<div class="col-md-11">
+						<div id="tab-btn">
+							<ul>
+								<li class="active"><a href="#">Dash Board</a></li>
+								<li><a href="Calendar.do">Calendar</a></li>
+								<li><a href="kanbanMainiy.do">Kanban Board</a></li>
+								<li><a href="#">Notice</a></li>
+								<li><a href="Drive.do">Drive</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-1 mt-2"  style="text-align: center">
+						<!-- <div class="mt-2" style="text-align: center">
+							<i class="icon-settings" id="settingIcon"></i>
+						</div> -->
+				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                         <i class="icon-settings iconSize"></i>
+                  </a>
+                     <div class=" dropdown-menu">
+                     <!-- fadeIn animated   dropdown-notfication  상관 없음 // drop-down -->
+                        <!--  <div class="dropdown-content-heading d-flex justify-content-between">
+                             <span class="">프로젝트 멤버 설정</span>  
+                         </div> -->
+                         <div class="dropdown-content-body">
+                             <ul>
+                                 <li><a href="#memberEditModal" data-toggle="modal">프로젝트멤버  설정</a></li>
+                                 <li><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
+                             </ul>
+                         </div>
+                     </div>
+                 </li>
+					</div>
+				</div>
+			</div>
+
+			<div class="container-fluid mt-3"> 프로젝트 대시보드
             </div>
         </div>
         
         <!-- Bottom -->
 		<jsp:include page="../include/bottom.jsp"/>
+		
+		<!--  modal -->
+	    <jsp:include page="modal/projectMemberEdit.jsp" />
+	    <jsp:include page="modal/labelEdit.jsp" />
     </div>
 
     <!--Scripts-->
