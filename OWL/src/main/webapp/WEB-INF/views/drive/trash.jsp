@@ -17,67 +17,26 @@
 <script   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-function Search(){
-	$('.drivemenu').empty();   
-	var searchfile = "";
-	searchfile += "<input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>";
-	searchfile += "<a href='#' onclick='Returncheck()'><i class='fas fa-times'></i></a>";
-	$('.drivemenu').append(searchfile);
-}
-
 function Allcheck(){ //전체선택 onclick
-   $( 'div.more' ).parent( 'div.card' ).css('background', 'rgba(161, 163, 166, 0.3)');
-   $("input[type=checkbox]").prop("checked", true);
-   
+   /* $("input[type=checkbox]").prop("checked", true); */	   
    $('.drivemenu').empty();   
     var button = "";
-    button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+    button += "<button type='button' class='btn'>복구</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+    button += "<button type='button' class='btn'>완전 삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button +="<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-    button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
    $('.drivemenu').append(button);   
 }
 
 function Returncheck(){
-   $( 'div.more' ).parent( 'div.card' ).css('background', '');
-   $("input[type=checkbox]").prop("checked", false);
+   /* $("input[type=checkbox]").prop("checked", false); */
    
    $('.drivemenu').empty();   
     var button = "";
-    button +="<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
-    button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
     button += "<button type='button' class='btn' onclick='Allcheck()'>전체선택</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-    button +="<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-    button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
    $('.drivemenu').append(button);   
 }
 
-function checkBox(box){
-		var cardId = document.getElementById('css');
-	if(box.checked == true){
-		$( 'div.more' ).parent( 'div#css' ).css('background', 'rgba(161, 163, 166, 0.3)');
 
-		   $('.drivemenu').empty();   
-		    var button = "";
-		    button +="<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
-		    button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		    button +="<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-		    button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
-		   $('.drivemenu').append(button);  
-		
-	}else{
-		$( 'div.more' ).parent( 'div#css' ).css('background', '');
-		Returncheck();		
-	}
-}
 $.noConflict();
 jQuery(document).ready(function( $ ) {
     $( "#sortable" ).sortable({
@@ -252,52 +211,11 @@ jQuery(document).ready(function( $ ) {
   clip:rect(0,0,0,0);
   border: 0;
 }
-#driveFile input[type="file"] {  /* 파일 필드 숨기기 */
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip:rect(0,0,0,0);
-  border: 0;
-}
-.card{
-   border: 3px solid #326295;
-}
-.card:hover .more{
-   visibility: visible;
-   opacity: 1;
-   cursor: pointer;
-}
-.more{
-   visibility: hidden;
-}
 
 #trash{
 	position: absolute;
     top: 880px;
     font-weight: bold;
-}
-#detail{
-position: absolute; 
-z-index: 1;
-border: 2px solid #e8ebed;
-padding: 10px 10px;
-background-color: #fff;
-}
-
-#detail li:hover{
-background-color: #f0f3f7;
-cursor: pointer;
-}
-
-#searchText{
-border-right:0px; 
-border-top:0px; 
-boder-left:0px; 
-boder-bottom:3px solid #326295;
-
 }
 </style>
 </head>
@@ -317,7 +235,7 @@ boder-bottom:3px solid #326295;
                   <li><a href="#">Dash Board</a></li>
                   <li><a href="#">Kanban Board</a></li>
                   <li><a href="#">Schedule</a></li>
-                  <li class="active"><a href="#">Drive</a></li>
+                  <li class="active"><a href="Drive.do">Drive</a></li>
                </ul>
             </div>
          </div>
@@ -351,106 +269,20 @@ boder-bottom:3px solid #326295;
                            </ul>
                         </li>
                      </ul>
-                     <a href="Trash.do" id="trash" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;"><i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;휴지통</a>
+                     <h5 id="trash" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;"><i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;휴지통</h5>
                   </div>
                </div>
 
                <div class="col-md-9" style="padding-left: 0;">
-                  <div class="drivemenu">
-                  <button type="button" class="btn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                  	<div class="filebox" style="display:inline;">
-                  	 <input type="file" id="driveFile">
-                     <label for="driveFile" style="cursor: pointer; margin-bottom: 0px;" class="btn btn-primary">업로드</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                     </div>
-                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newFolder">새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                  <div class="drivemenu">                  	
                      <button type="button" class="btn btn-primary" onclick="Allcheck()">전체선택</button>   &nbsp;&nbsp;&nbsp;&nbsp;                  
-                     <div class="drivegroup">
-                        <a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
-                        <a><i class="fas fa-th-large fa-2x"></i></a>
-                     </div>
                   </div>
 
-               <div class="row"  style="margin : 10px 10px;">
-               <div class="col-sm-4">
-                     <div class="card"  id="css">         
-                     <div class="more" style="margin-top: 10px;">
-                     &nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;" >   
-                     <a style="float:right;" data-toggle="collapse" href="#detail"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
-                     </div>
-                     <div style="margin-left: 60%;">
-				     <ul id="detail" class="collapse">
-				        <li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
-				        <li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
-				      </ul>
-				      </div>
-                     <br>            
-                        <div class="card-body text-center">
-                           <span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-                           <br><br>
-                           <h4 style="text-align: center;">css</h4>
-                        </div>
-                     </div>
-                     </div>
-                     <div class="col-sm-4">
-                     <div class="card">
-                     <div class="more" style="margin-top: 10px;">
-                     &nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="checkbox" value="js" onclick="checkBox(this)" style="width:18px; height:18px;" >   
-                     <span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                     </div>
-                     <br>
-                        <div class="card-body text-center">
-                           <span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-                           <br><br>
-                           <h4 style="text-align: center;">js</h4>
-                        </div>
-                     </div>
-                     </div>
-                     <div class="col-sm-4" >
-                     <div class="card">
-                     <div class="more" style="margin-top: 10px;">
-                     &nbsp;&nbsp;&nbsp;&nbsp;
-                     <input type="checkbox" value="images" onclick="checkBox(this)" style="width:18px; height:18px;" >   
-                     <span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</span>
-                     </div>
-                     <br>
-                        <div class="card-body text-center">
-                           <span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-                           <br><br>
-                           <h4 style="text-align: center;">images</h4>
-                        </div>
-                     </div>
-                     </div>
-                  </div>
                </div>
             </div>
          </div>
       </div>
-      
-           <!-- Modal -->
-     <div class="modal fade" id="newFolder">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-             <div class="modal-content">
-                 <div class="modal-header" style="text-align: center;">
-                     <h4 class="modal-title"><b>폴더 생성</b></h4>
-                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                     </button>
-                 </div>
-                 <div class="modal-body">
-                     <h5>생성할 폴더명을 입력하세요.</h5>
-                     <input type="text" id="countingTitle" style="width:100%; height: 30px;">
-                     <br>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                     <button type="button" class="btn btn-primary">생성하기</button>
-                 </div>
-             </div>
-         </div>
-     </div>
 
-    
       <!-- Bottom -->
       <jsp:include page="../include/bottom.jsp" />
    </div>

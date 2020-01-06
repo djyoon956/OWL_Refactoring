@@ -10,4 +10,9 @@ public class driveController {
 		public String showview() {
 			return "drive/test";
 		}
+		
+		@RequestMapping("Trash.do")
+		public String showTrashview() {
+			return "drive/trash";
+		}
 }

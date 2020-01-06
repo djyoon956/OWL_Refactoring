@@ -8,6 +8,7 @@ public class CalendarController {
 
 	@RequestMapping("Calendar.do")
 	public String showview() {
+		
 		return "calendar/calendar";
 	}
 }
