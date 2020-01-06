@@ -51,6 +51,11 @@
     line-height: 2rem;
     color:  #326295; 
 }
+.iconSizeBig {
+    font-size: 2rem;
+    line-height: 2rem;
+    color:  #326295; 
+}
 </style>
 </head>
 
