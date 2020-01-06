@@ -1,4 +1,4 @@
-package com.owl.controller;
+package com.owl.member.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CommonRestController {
+public class MemberRestController {
 
 	@RequestMapping(value = "/FindPassword.do")
 	public Map<String, Object> texttest(String email) throws Exception {
