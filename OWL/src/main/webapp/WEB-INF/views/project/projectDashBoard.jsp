@@ -16,8 +16,31 @@
     <link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
     <!-- Custom Stylesheet -->
     <link href="resources/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
+<style type="text/css">
+#tab-btn ul {
+   overflow: hidden;
+   margin-bottom: 0px;
+}
+
+#tab-btn li {
+   float: left;
+   width: 150px;
+   text-align: center;
+}
+
+#tab-btn li a {
+   display: block;
+   color: #326295;
+   padding: 15px 20px;
+   font-weight: bold;
+}
+
+#tab-btn li.active a {
+   border-bottom: 3px solid #326295;
+   color: #326295;
+}
+</style>
 </head>
 
 <body>
@@ -32,8 +55,20 @@
          
         <!-- Content -->
         <div class="content-body">
-            <div class="container-fluid mt-3">
-          INDEX 페이지
+       <!-- Project 상단 바 -->
+         <div id="tab-menu">
+            <div id="tab-btn">
+               <ul>
+                  <li><a href="#">Dash Board</a></li>
+                  <li><a href="#">Calendar</a></li>
+                  <li><a href="#">Kanban Board</a></li>
+                  <li><a href="#">Notice</a></li>
+                  <li class="active"><a href="#">Drive</a></li>
+               </ul>
+            </div>
+         </div>
+        
+            <div class="container-fluid mt-3"> 프로젝트 대시보드
             </div>
         </div>
         
