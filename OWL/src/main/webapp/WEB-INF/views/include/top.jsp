@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript" ></script>
 
  
         <div class="nav-header" style="background-color: #fcf9f5;">
@@ -53,6 +54,8 @@
                  <!-- Chatting -->    
                  <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                          <i class="mdi mdi-email-outline"></i>
+                         <i class="mdi mdi-email-outline" style="display:none;"></i>
+                         
                          <span class="badge badge-pill gradient-1">3</span>
                      </a>
                      <div class="drop-down animated fadeIn dropdown-menu">
@@ -127,6 +130,61 @@
                  </li>
                  
                  <!-- Setting - customizing -->
+                 <li class="icons toggle-icon siteMapBtn">
+                 <a href="javascript:void(0)">
+                         <i class="mdi mdi-settings"></i>
+                     </a>
+                 </li>
+
+             </ul>
+             
+
+         </div>
+     </div>
+ </div>
+ 
+ <div id="leftmenuArea" style="text-align: right"> </div>
+ 
+ 
+ <style>
+ #leftmenuArea{height:900px; width:500px; background-color:#3e3d3d; font-family:'Malgun Gothic',Dotum,AppleGothic,sans-serif;}
+ .siteMapBtn i {
+   position: absolute;
+   top: 10px;
+   right: 40px;
+   z-index: 1;
+   display: block;
+   font-size:3em;
+   color: #444;
+   cursor: pointer;
+   transform: translate3d(0, 0, 0);
+   transition: transform .10s;
+}
+ </style>
+ 
+ <script>
+$(document).ready(function(){
+    $("#leftmenuArea").show();
+    $(".siteMapBtn").click(function(){
+       $(".siteMapBtn i").toggle();
+    $('#leftmenuArea').animate({width:'toggle'});
+    })
+
+})
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+             Setting - customizing
                  <li class="icons toggle-icon">
                  <a href="javascript:void(0)" data-toggle="dropdown">
                          <i class="mdi mdi-settings"></i>
@@ -161,12 +219,5 @@
                              </ul>
                          </div>
                      </div> 
-                 </li>
-
-             </ul>
-             
-
-         </div>
-     </div>
- </div>
+                 </li> -->
  
