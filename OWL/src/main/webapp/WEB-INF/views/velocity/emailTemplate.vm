@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${title}</title>
+</head>
+<body>
+<div style='font-family: \"Apple SD Gothic Neo\", \"sans-serif\" !important; width: 540px; height: 340px; border-top: 4px solid #346294; border-bottom: 4px solid #346294; margin: 30px auto; padding: 30px 0; box-sizing: border-box;'>
+	<h1 style='margin: 0; padding: 0 5px; font-size: 28px; font-weight: 400;'>                                                                                                                                                        
+		<span style='color: #346294;'>이메일 인증</span> 안내입니다.                                                                                                                                                                          
+	</h1>       
+	<h3>${title}</h3>                                                                                                                                                                                                                      
+	<p style='font-size: 16px; line-height: 26px; margin-top: 20px; padding: 0 5px;'>                                                                                                                                                 
+		안녕하세요.<br/>                                                                                                                                                                                                                   
+		이곳저곳에 가입해 주셔서 진심으로 감사드립니다.<br/>                                                                                                                                                                                               
+		아래 <b style='color: #346294;'>'메일 인증 번호'</b> 를 입력하여 회원가입을 완료해 주세요.<br />                                                                                                                                                      
+		감사합니다.                                                                                                                                                                                                                        
+	</p>         
+	<a href="http://localhost:8090/OWL/EmailConfirm.do?memberId=${memberId}" target="_blank" >Verify email address
+	</a>                                                                                                                                                                                                                                                                                                                                                                                                                                          
+</div>                                                                                                                                                                                                                           
+</body>
+</html>

@@ -21,7 +21,8 @@ public class CommonRestController {
 		// 회원 경우
 		if (isMember) {
 			isMember = true;
-			message = "이메일을 전송했습니다.";
+			message = "이메일을 전송했습니다."
+						+ "\n이메일을 확인해주세요.";
 		}
 		// 비회원 경우
 		else {
