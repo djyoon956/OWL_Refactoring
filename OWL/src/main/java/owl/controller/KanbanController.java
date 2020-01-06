@@ -24,4 +24,11 @@ public class KanbanController {
 		return "kanban/kanbanMain_iy_iy";
 	}	
 	
+	
+	@RequestMapping("kanbanMaintest.do")      // testing
+	public String kanbantestiy() {
+		return "kanban/iytest";
+	}	
+	
+	
 }
