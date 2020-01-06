@@ -34,7 +34,10 @@
 				<img src='resources/images/login/google.png' style="width: 50px;">
 			</button>
 		</div>
-        <p class="mt-5 login-form__footer">Dont have account? <a href="#" data-toggle="modal" data-target="#joinModal" class="text-primary">Sign Up</a> now</p>
+		<div class="login-form__footer mt-5 text-center">
+	        <b class="mt-5 login-form__footer"> <a href="#" data-toggle="modal" data-target="#findPwdModal" class="text-secondary">Forgot password?</a></b>
+	        <p>Don't have account? <a href="#" data-toggle="modal" data-target="#joinModal" class="text-primary">Sign Up</a> now</p>
+		</div>
       </div>
     </div>
   </div>

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
     <!-- Custom Stylesheet -->
     <link href="resources/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 </head>
 
@@ -31,7 +32,8 @@
          
         <!-- Content -->
         <div class="content-body">
-            <div class="container-fluid mt-3">대시보드
+            <div class="container-fluid mt-3">
+          INDEX 페이지
             </div>
         </div>
         
