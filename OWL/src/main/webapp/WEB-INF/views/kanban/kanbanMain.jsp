@@ -48,13 +48,18 @@
 	border: 1px dashed #666;
 }
 
-/*  h5 {
+ h5 {
 	margin: 0;
 	border-bottom: 1px solid #999;
 	padding: 0;
 	font-size: 12pt;
 	text-align: center;
-} */
+} 
+
+.boldselect {
+	font-weight: bold;
+}
+
 .card {
 	display: inline-block;
 	vertical-align: top;

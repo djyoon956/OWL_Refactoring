@@ -14,14 +14,14 @@ public class KanbanController {
 	}	
 	
 	
-	@RequestMapping("kanbanMainChung.do")   //은아가 한 것 
-	public String kanbanChung() {
-		return "kanban/kanban_chung";
-	}	
-	
-	@RequestMapping("kanbanMainiy.do")      // 2번 수정 됨 
+	@RequestMapping("kanbanMainiy.do")      // 은아 수정중
 	public String kanbanIy() {
 		return "kanban/kanbanMain_iy";
+	}	
+	
+	@RequestMapping("kanbanMainiyiy.do")      // 인영수정중
+	public String kanbanIyiy() {
+		return "kanban/kanbanMain_iy_iy";
 	}	
 	
 }
