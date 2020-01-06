@@ -3,13 +3,14 @@
 <div class="nk-sidebar" style="border-right: 1px double #326295;">           
     <div class="nk-nav-scroll" >
         <ul class="metismenu" id="menu" >
-            <li>
-                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="icon-speedometer menu-icon"></i><span class="nav-text">MY</span>
+        <!-- My Part -->
+        <li class="mega-menu mega-menu-sm">
+                <a  href="javascript:void()" aria-expanded="false">
+                    <i class="fas fa-user-alt menu-icon"></i><span class="nav-text"> MY</span>
                 </a>
-                <ul aria-expanded="false">
-                     <li><a href="Index.do">DASHBOARD</a></li>
-                     <li><a href="Calendar.do">Calendar</a></li>
+                <ul class="collapse in">
+                     <li><a href="MyDashboard.do">DASHBOARD</a></li>
+                     <li><a href="Calendar.do">CALENDAR</a></li>
                 </ul>
             </li>
             <li class="mega-menu mega-menu-sm">
