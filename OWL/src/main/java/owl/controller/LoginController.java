@@ -1,77 +1,122 @@
 package owl.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.velocity.VelocityEngineFactory;
+import org.springframework.ui.velocity.VelocityEngineFactoryBean;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
 import owl.dto.Member;
 import owl.service.KaKaoService;
 import owl.service.NaverService;
-
 
 @Controller
 public class LoginController {
 
 	@Autowired
-	private KaKaoService  kaKaoService;
-	
+	private JavaMailSender mailSender;
+
 	@Autowired
-	private NaverService  naverService;
-	 
+	private VelocityEngineFactoryBean velocityEngineFactoryBean;
+
+	@Autowired
+	private KaKaoService kaKaoService;
+
+	@Autowired
+	private NaverService naverService;
+
 	@RequestMapping(value = "Login.do", method = RequestMethod.GET)
 	public String showView() {
 		return "login/modal/login";
 	}
-	
+
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
 	public String login() {
-		
+
 		System.out.println("login");
 		return "login/main";
 	}
-	
+
 	@RequestMapping(value = "kakaoLogin.do", produces = "application/json")
-	public String kakaoLogin(@RequestParam("code") String code , HttpSession session) throws Exception{
-		System.out.println("kakaoLoign");		
+	public String kakaoLogin(@RequestParam("code") String code, HttpSession session) throws Exception {
+		System.out.println("kakaoLoign");
 		System.out.println(naverService.getAuthorizationUrl(session));
-		String accessToken=kaKaoService.getAccessToken(code);
+		String accessToken = kaKaoService.getAccessToken(code);
 		Member member = kaKaoService.getUserInfo(accessToken);
-		
+
 		// id 체크 후 db에 없으면 insert
-		
+
 		session.setAttribute("memberName", member.getName());
 		return "login/main";
 	}
-	
-	//kakaoLoginCallback.do
+
+	// kakaoLoginCallback.do
 	@RequestMapping("naverLogin.do")
-	public String naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session,Model model)
+	public String naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session, Model model)
 			throws IOException {
 		System.out.println("naverLogin");
-		System.out.println("naverLogin : "+code);
-		System.out.println("naverLogin : "+state);
+		System.out.println("naverLogin : " + code);
+		System.out.println("naverLogin : " + state);
 		OAuth2AccessToken oauthToken;
-        oauthToken = naverService.getAccessToken(session, code, state);
-        //로그인 사용자 정보를 읽어온다.
-	    String apiResult = naverService.getUserProfile(oauthToken);
-	    System.out.println("apiResult"+apiResult);
+		oauthToken = naverService.getAccessToken(session, code, state);
+		// 로그인 사용자 정보를 읽어온다.
+		String apiResult = naverService.getUserProfile(oauthToken);
+		System.out.println("apiResult" + apiResult);
 		model.addAttribute("result", apiResult);
 
-        /* 네이버 로그인 성공 페이지 View 호출 */
+		/* 네이버 로그인 성공 페이지 View 호출 */
 		return "login/main";
 	}
-	
+
 	@RequestMapping("Lock.do")
 	public String showLockView() {
 		return "login/lock";
+	}
+ 
+	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
+	public String showEmailConfirmView(Member member) {
+		System.out.println("EmailConfirm post");
+		System.out.println(member.toString());
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+			Map<String, Object> model = new HashMap();
+			model.put("memberId", member.getEmail());
+			
+			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
+					velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate.vm", "UTF-8", model);
+			messageHelper.setSubject("[OWL] 가입을 환영합니다.");
+			messageHelper.setFrom("bit_team2@naver.com");
+			messageHelper.setTo(member.getEmail());
+			messageHelper.setText(mailBody, true);
+			mailSender.send(message);
+
+		} catch (Exception e) {
+			System.out.println("이거 에러..>" + e.getMessage());
+		}
+		
+		return "login/emailConfirm";
+	}
+	
+	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
+	public String emailConfirmOK(String memberId) {
+		
+		return "login/emailConfirmOk";
 	}
 }

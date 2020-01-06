@@ -10,7 +10,7 @@
         </button>
       </div>
       <div class="modal-body mx-3">
-        <form action="Register.do" method="post" class="mt-3 mb-3 login-input">
+        <form action="EmailConfirm.do" method="post" class="mt-3 mb-3 login-input">
             <div class="form-group">
                 <input type="text" name="name" class="form-control" placeholder="Name">
             </div>

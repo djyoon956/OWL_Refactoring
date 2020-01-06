@@ -89,11 +89,12 @@ $(function(){
 				url : "FindPassword.do",
 				data : { email : $("#email").val()},
 				success : function(data){
-					console.log(data);
-					if(data == 'true'){
-						successAlert('임시 비밀번호가 메일로 발송되었습니다.');
+					console.log("success");
+					if(data.result){
+						$("#findPwdModal").modal("hide");
+						$("#confirmModal").modal();
 					}else{
-						warningAlert(data);
+						warningAlert(data.message);
 					}
 				},
 				error:function(){
@@ -318,6 +319,7 @@ $(function(){
 	<jsp:include page="login/modal/login.jsp"/>
 	<jsp:include page="login/modal/register.jsp"/>
 	<jsp:include page="login/modal/findPassword.jsp"/>
+	<jsp:include page="login/modal/emailConfirm.jsp"/>
 
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
