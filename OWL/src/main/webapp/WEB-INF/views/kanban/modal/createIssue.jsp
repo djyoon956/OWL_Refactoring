@@ -1,19 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div class="modal fade bd-example-modal-lg" id="addIssueModal"
+<div id="addIssueModal" class="modal fade bd-example-modal-lg"
 	tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div class="modal-header text-center">
-				<h4 class="modal-title w-100 font-weight-bold">I S S U E</h4>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
+			<div class="modal-header">
+				<h4 class="modal-title boldselect">
+					<i class="far fa-sticky-note"></i> &nbsp;&nbsp;I s s u e
+				</h4>
+				<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
 				</button>
 			</div>
-			<div class="modal-body mx-3">
-				<form action="Login.do" method="post" class="mt-5 mb-3 login-input">
+			<div class="modal-body">
+				<form action="Login.do" method="post" class=" mb-3 login-input">
 					<div class="form-group row">
 						<div class="col-2">Issue name</div>
 						<div class="col-10">
@@ -64,45 +65,80 @@
 							</select>
 						</div>
 					</div>
-
-
 					<input type="submit" class="btn login-form__btn submit w-100"
 						value="Enroll">
 				</form>
-				<hr />
+
+				<div class="modal-content" style="background-color: #f0f3f7">
+					<div class="modal-header">
+						<h5 class="modal-title" style="color: #336699">
+							<i class="far fa-comment"></i>&nbsp;&nbsp;message
+						</h5>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="message-text" class="col-form-label boldselect">Message:</label>
+								<textarea class="form-control" id="message-text"
+									style="overflow-y: scroll; width: 100%"
+									placeholder="Ask a question or post an update.."></textarea>
+								<input type="file">
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary">Comment</button>
+							</div>
 
 
-				<div class="container-fluid">
-					<!-- row -->
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="card">
-								<div class="card-body">
-									<h4 class="card-title">Add Comment</h4>
-									<div class="bootstrap-media">
-										<div class="media">
-											<img class="mr-3 img-fluid" src="images/avatar/1.jpg"
-												alt="Generic placeholder image">
-											<div class="media-body">
-												<h5 class="mt-0">Cathy</h5>
-												Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-												scelerisque ante sollicitudin.
+							<div class="card-body" style="overflow-y: scroll" id="infolist">
+								<div class="media media-reply">
+									<div class="media mt-3">
+										<img class="mr-3 circle-rounded circle-rounded" src="/src/main/webapp/resources/images/avatar/4.jpg" width="50" height="50"
+											alt="Generic image">
+										<div class="media-body">
+											<div class="d-sm-flex justify-content-between mb-2">
+												<h5 class="mb-sm-0">Cindy
+												<small class="text-muted ml-3">about 3 days ago</small>
+												</h5>
 											</div>
+											<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+												metus scelerisque ante sollicitudin. Cras purus odio,
+												vestibulum in vulputate at, tempus viverra turpis. </p>
 										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<label>Comment:</label>
-									<textarea class="form-control h-150px " rows="6" id="comment"
-										placeholder="Ask a question or post an update">
-						</textarea>
-									<button type="button" class="btn mb-1 btn-primary"
-										style="text-align: right">Comment</button>
+								
+								
+								
+								<div class="media media-reply">
+									<div class="media mt-3">
+										<img class="mr-3 circle-rounded circle-rounded"
+											src="main/webapp/images/avatar/4.jpg" width="50" height="50"
+											alt="Generic image">
+										<div class="media-body">
+											<div class="d-sm-flex justify-content-between mb-2">
+												<h5 class="mb-sm-0">Cindy
+												<small class="text-muted ml-3">about 3 days ago</small>
+												</h5>
+											</div>
+											<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
+												metus scelerisque ante sollicitudin. Cras purus odio,
+												vestibulum in vulputate at, tempus viverra turpis. Fusce
+												condimentum nunc ac nisi vulputate fringilla. Donec lacinia
+												congue felis in faucibus.</p>
+										</div>
+									</div>
 								</div>
-							</div>
+								
+								
+								
 
-						</div>
+								
+		
+								
+							</div>
+						</form>
 					</div>
+
 				</div>
 			</div>
 		</div>
