@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+	<!-- 인영수정중  1/6  -->
 <!DOCTYPE html>
 <html>
 <head>
