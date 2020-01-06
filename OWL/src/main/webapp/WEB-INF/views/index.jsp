@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>OWL</title>
+    <jsp:include page="include/headTag.jsp"/>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="resources/images/favicon.png">
     <!-- Pignose Calender -->
@@ -23,6 +24,7 @@
  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <!-- Kakao -->
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<script type="text/javascript" src="resources/js/commonSweetAlert.js"></script>
  	<style type="text/css">
  		.snsLoginButton {
  			background-color : transparent;
@@ -49,7 +51,6 @@
 	    };
 
 $(function(){
-
 		let joinModalOpen = false;
 	    $("#joinModal").on('show.bs.modal', function () {
 	        $("#loginModal").modal("hide");
@@ -73,6 +74,33 @@ $(function(){
 	    $("#loginModal").on('hide.bs.modal', function () {
 	        $('html, body').css({'overflow': 'auto', 'height': '100%'}); 
       	}); 
+      	
+	    $("#findPwdModal").on('show.bs.modal', function () {
+	    	 $("#loginModal").modal("hide");
+	    	 $('html, body').css({'overflow': 'hidden', 'height': '100%'}); 
+	      }); 
+	      
+	    $("#findPwdModal").on('hide.bs.modal', function () {
+	        $('html, body').css({'overflow': 'auto', 'height': '100%'}); 
+      	}); 
+
+	    $("#sendPwd").click(function() { 
+			$.ajax({
+				url : "FindPassword.do",
+				data : { email : $("#email").val()},
+				success : function(data){
+					console.log(data);
+					if(data == 'true'){
+						successAlert('임시 비밀번호가 메일로 발송되었습니다.');
+					}else{
+						warningAlert(data);
+					}
+				},
+				error:function(){
+					errorAlert("메일발송에 실패했습니다.");
+				}
+			})
+		})
 })
 	</script>
 </head>
@@ -277,9 +305,10 @@ $(function(){
 		<jsp:include page="include/bottom.jsp"/>
     </div>
 
+	<!--  Modal  -->
 	<jsp:include page="login/modal/login.jsp"/>
-
 	<jsp:include page="login/modal/register.jsp"/>
+	<jsp:include page="login/modal/findPassword.jsp"/>
 
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>

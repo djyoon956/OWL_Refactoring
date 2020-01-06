@@ -10,12 +10,12 @@
         </button>
       </div>
       <div class="modal-body mx-3">
-        <form action="Register.do" method="post" class="mt-3 mb-3 login-input">
+        <div class="mt-3 mb-3 login-input">
             <div class="form-group">
                 <input type="email" name="email" class="form-control" placeholder="Email">
             </div>
-            <input type="submit" class="btn login-form__btn submit w-100" value="SEND">
-        </form>
+            <input type="button" class="btn login-form__btn submit w-100" id="sendPwd" value="SEND">
+        </div>
       </div>
     </div>
   </div>
