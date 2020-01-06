@@ -12,25 +12,39 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body mx-3">
-    
-        <form action="" method="post" class="mt-3 mb-3 login-input">
-            <div class="form-group">
-                <input type="text" name="name" class="form-control" placeholder="프로젝트 명을 입력해주세요.">
-            </div>
-           
-       	   
-             
-             <label class="m-t-20">색상 설정</label>
-             <div class="form-group">
-                    <div class="col-md-4 m-b-30">
-                            <input type="text" class="complex-colorpicker form-control" value="#fa7a7a">
-                     </div>
-             </div>
-       
-            <input type="submit" class="btn login-form__btn submit w-100" value="프로젝트 생성">
-        </form>
-      </div>
-    </div>
+			<div class="modal-body mx-3">
+			<!--  라벨 추가  -->
+				<div class="form-row">
+				<div class="form-group col-md-2" style="text-align:center">
+				<!--  fas fa-circle -->
+					  <span style="color: #ff9933 !important;"><i class="ion-bookmark iconSizeBig"></i></span>
+				</div>
+					<div class="form-group col-md-8 pr-0">
+						<input type="email" name="" class="form-control"
+							placeholder="라벨명을 설정해주세요">
+					</div>
+					<div class="form-group col-md-2 pl-0">
+						<input type="button" class="form-control btn btn-primary"
+							value="추가">
+					</div>
+				</div>
+				
+				<!--  라벨 추가  -->
+				<div class="form-row">
+				<div class="form-group col-md-2" style="text-align:center">
+					  <span style="color: #993366 !important;"><i class="fas fa-circle iconSize"></i></span>
+				</div>
+					<div class="form-group col-md-8 pr-0">
+						<input type="email" name="" class="form-control"
+							placeholder="라벨명을 설정해주세요">
+					</div>
+					<div class="form-group col-md-2 pl-0">
+						<input type="button" class="form-control btn btn-primary"
+							value="추가">
+					</div>
+				</div>
+				
+			</div>
+		</div>
   </div>
 </div>    
