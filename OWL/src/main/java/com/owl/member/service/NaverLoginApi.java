@@ -1,4 +1,4 @@
-package owl.service;
+package com.owl.member.service;
 
 import com.github.scribejava.core.builder.api.DefaultApi20;
 

@@ -1,4 +1,4 @@
-package owl.service;
+package com.owl.member.service;
 import java.io.IOException;
 import java.util.UUID;
 

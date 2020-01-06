@@ -1,13 +1,13 @@
-package owl.controller;
+package com.owl.dashBoard.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController {
+public class MyDashboardController {
 
-	@RequestMapping("Index.do")
+	@RequestMapping("MyDashboard.do")
 	public String showview() {
-		return "index";
+		return "dashboard/myDashboard";
 	}
 }

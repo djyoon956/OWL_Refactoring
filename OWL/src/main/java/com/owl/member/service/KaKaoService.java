@@ -1,4 +1,4 @@
-package owl.service;
+package com.owl.member.service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,7 +12,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import owl.dto.Member;
+import com.owl.member.dto.Member;
 
 @Service
 public class KaKaoService {
