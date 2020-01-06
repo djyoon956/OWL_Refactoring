@@ -74,7 +74,12 @@ color: #a6a6a6;
                 <a href="javascript:void()" onclick="location.href='kanbanMainiyiy.do'"> 
                     <span style="color: #ff9933 !important;"><i class="fas fa-circle"></i></span>&emsp;&emsp;<span class="nav-text">kanban_iyiy</span>
                 </a>
-            </li>                                                   
+            </li>   
+            <li class="mega-menu mega-menu-sm">
+                <a href="javascript:void()" onclick="location.href='kanbanMaintest.do'"> 
+                    <span style="color: #ff9933 !important;"><i class="fas fa-circle"></i></span>&emsp;&emsp;<span class="nav-text">testing_iy</span>
+                </a>
+            </li>                                                  
         </ul>
     </div>
 </div>
