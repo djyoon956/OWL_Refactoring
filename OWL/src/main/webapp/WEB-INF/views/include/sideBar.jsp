@@ -29,7 +29,7 @@
                     <i class="icon-globe-alt menu-icon"></i><span class="nav-text"> OWL </span>
                 </a>
                 <ul class="collapse in">
-                    <li><a href="./layout-one-column.html"> Project 1 </a></li>
+                    <li><a href="ProjectDashBoard.do"> Project 1 </a></li>
                     <li><a href="Drive.do"> Project 2 </a></li>
                     <li><a href="./layout-compact-nav.html"> Project 3</a></li>
                 </ul>
