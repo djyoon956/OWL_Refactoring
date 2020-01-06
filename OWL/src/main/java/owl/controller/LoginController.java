@@ -70,5 +70,8 @@ public class LoginController {
 		return "login/main";
 	}
 	
-
+	@RequestMapping("Lock.do")
+	public String showLockView() {
+		return "login/lock";
+	}
 }
