@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap" rel="stylesheet">
 <style>
-.logo {
+/* .logo {
   font-family: 'Kalam', cursive;
   text-transform: uppercase;
   display: block;
@@ -17,13 +17,13 @@
   left: 50%;
   transform: translate(-50%,-50%);
   border-radius: 20px;
-}
+} */
 </style>
 <div class="nav-header" style="background-color: #fcf9f5;">
      <div class="brand-logo">
          <a href="Index.do">
              <b class="logo-abbr"><img src="resources/images/logo.png" alt=""> </b>
-			 <span class="logo" style="font-size: 30px; color: #326295;">OWL</span>
+			 <span class="logo"><img src="resources/images/owl_logo_another.png" alt=""></span>
          </a>
      </div>
  </div>
