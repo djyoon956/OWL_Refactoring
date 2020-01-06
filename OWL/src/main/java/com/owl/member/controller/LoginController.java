@@ -111,12 +111,12 @@ public class LoginController {
 			System.out.println("이거 에러..>" + e.getMessage());
 		}
 		
-		return "login/emailConfirm";
+		return "member/emailConfirm";
 	}
 	
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
 	public String emailConfirmOK(String memberId) {
 		
-		return "login/emailConfirmOk";
+		return "member/emailConfirmOk";
 	}
 }
