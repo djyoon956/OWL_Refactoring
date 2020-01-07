@@ -131,8 +131,8 @@ $(function(){
 </head>
 
 <body>
-
-<!-- 	<!-- ProgressBar -->
+<!-- ProgressBar -->
+<!-- 	
 	<div id="preloader">
 		<div class="loader">
 			<svg class="circular" viewBox="25 25 50 50">
@@ -154,7 +154,7 @@ $(function(){
 
 				<div class="header-left">
 
-					<div class="nav-header" style="padding-left: 200px;">
+					<div class="nav-header" style="padding-left: 200px;background-color: black">
 
 						<a href="Index.do" > 
 					<!-- 	<b class="logo-abbr"><img src="resources/images/logo.png" alt="">	</b> -->
