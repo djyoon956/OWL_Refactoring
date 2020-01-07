@@ -19,7 +19,8 @@
     <link href="resources/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="resources/css/style.css" rel="stylesheet">
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
 #tab-menu {
 	width: 100%;
@@ -63,7 +64,32 @@
     max-height: calc(100vh - 200px);
     overflow-y: auto;
 }
+
+  #toggle {
+    width: 400px;
+    height: 400px;
+    background: #ccc;
+  }
+#toggleOut {
+position: absolute;
+}
 </style>
+<script type="text/javascript">
+$(function() {
+
+
+	$('#toggleBtn').click(function () {  
+		console.log("토글 안");
+	if($("#toggle").css("display") == "none"){   
+		console.log("토글 안");
+        $('#toggle').show();
+        $( "#toggle" ).wrap( "<div class='new'></div>" );  
+    } else {  
+        $('#toggle').hide();  
+    }  
+	});
+});
+</script>
 </head>
 
 <body>
@@ -110,6 +136,14 @@
 			</div>
 
 			<div class="container-fluid mt-3"> 프로젝트 대시보드
+			<button id="toggleBtn">버튼</button>
+			<div id="toggle" style="display: none;">
+			토글 안 내용
+			</div>
+			<div id="toggleOut">
+			
+  <h1>  덮이나 안덮이나 아무글씨  </h1> 
+</div>
             </div>
         </div>
         
@@ -150,7 +184,9 @@
 	<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
 	<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
 	<script src="resources/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
-	
+
+
+
 
 </body>
 </html>
