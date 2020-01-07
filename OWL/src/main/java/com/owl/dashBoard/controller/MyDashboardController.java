@@ -1,14 +1,13 @@
-package owl.controller;
+package com.owl.dashBoard.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class CalendarController {
+public class MyDashboardController {
 
-	@RequestMapping("Calendar.do")
+	@RequestMapping("MyDashboard.do")
 	public String showview() {
-		
-		return "calendar/calendar";
+		return "dashboard/myDashboard";
 	}
 }
