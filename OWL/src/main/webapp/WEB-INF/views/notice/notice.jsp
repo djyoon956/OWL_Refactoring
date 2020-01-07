@@ -11,7 +11,13 @@
     <!-- Custom Stylesheet -->
     <link href="./plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#noticeLi").addClass("active");
+}); 
+</script>
 <body>
     <div id="main-wrapper">
 
@@ -23,7 +29,7 @@
          
         <!-- Content -->
         <div class="content-body">
-             <!-- Project 상단 바 -->
+        <!-- Project 상단 바 -->
         <jsp:include page="../include/projectTab.jsp"/>
         
             <div class="container-fluid mt-3">

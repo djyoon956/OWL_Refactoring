@@ -305,6 +305,9 @@ $(function() {
 	    $('.nav').toggleClass('nav-view');
 	  });
 	}); */
+	$(function() {
+		$("#kanbanLi").addClass("active");
+	}); 
 </script>
 </head>
 
