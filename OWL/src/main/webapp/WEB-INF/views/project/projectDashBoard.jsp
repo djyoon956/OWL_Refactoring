@@ -74,22 +74,7 @@
 position: absolute;
 }
 </style>
-<script type="text/javascript">
-$(function() {
 
-
-	$('#toggleBtn').click(function () {  
-		console.log("토글 안");
-	if($("#toggle").css("display") == "none"){   
-		console.log("토글 안");
-        $('#toggle').show();
-        $( "#toggle" ).wrap( "<div class='new'></div>" );  
-    } else {  
-        $('#toggle').hide();  
-    }  
-	});
-});
-</script>
 </head>
 
 <body>
@@ -113,7 +98,7 @@ $(function() {
 								<li class="active"><a href="#">Dash Board</a></li>
 								<li><a href="Calendar.do">Calendar</a></li>
 								<li><a href="kanbanMainiy.do">Kanban Board</a></li>
-								<li><a href="#">Notice</a></li>
+								<li><a href="Notice.do">Notice</a></li>
 								<li><a href="Drive.do">Drive</a></li>
 							</ul>
 						</div>
@@ -136,14 +121,8 @@ $(function() {
 			</div>
 
 			<div class="container-fluid mt-3"> 프로젝트 대시보드
-			<button id="toggleBtn">버튼</button>
-			<div id="toggle" style="display: none;">
-			토글 안 내용
-			</div>
-			<div id="toggleOut">
-			
-  <h1>  덮이나 안덮이나 아무글씨  </h1> 
-</div>
+
+
             </div>
         </div>
         
