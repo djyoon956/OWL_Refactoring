@@ -4,14 +4,17 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header text-center" style="border-bottom: 0px">
+	      <div class="text-center" style="width: 100%">
+		      	<img class="mb-3" src="resources/images/owl_logo_real.png" style="width: 100px">
+	      </div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body mx-3">
-      <div class="text-center">
-           <img class="mb-3" src="resources/images/login/tick.png" style="width: 100px">
-           <h3 class="mt-3 mb-3">dbsekwjdaa@naver.com</h3>
+      <div class="text-center" >
+           <img class="mb-3" src="resources/images/login/mailbox.png" style="width: 150px">
+           <h3 class="mt-3 mb-3"> ${mail} </h3>
            <p class="m-0">위 메일 주소로 인증메일이 발송되었습니다.</p>
            <p class="m-0">발송된 메일을 통해 계정을 인증해주세요.</p>
            <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->

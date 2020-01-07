@@ -5,23 +5,25 @@
 <link href="resources/css/style.css" rel="stylesheet">
 </head>
 <body>
-<div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center" style="border-bottom: 0px"></div>
-      <div class="modal-body mx-3">
-      <div class="text-center">
-           <img class="mb-3" src="resources/images/login/tick.png" style="width: 100px">
-           <h3 class="mt-3 mb-3">dbsekwjdaa@naver.com</h3>
-           <p class="m-0">위 메일 주소로 인증메일이 발송되었습니다.</p>
-           <p class="m-0">발송된 메일을 통해 계정을 인증해주세요.</p>
-           <button class="btn-lg" style="background-color:#326295;color:#fff; border:1px double #326295;font-weight:bold;margin:30px 0px;">Send Message</button>
-       </div>
-        <div class="mt-5 text-center">
-        	<p class="m-0">본 메일은 발신 전용입니다.<p>
-        	<p class="m-0">Copyright ⓒ OWL All Right Reserved <p>
-        </div>
-      </div>
-    </div>
-  </div>                                                                                                                                                                                                             
+	<div style='text-align:center !important;font-family: \"Apple SD Gothic Neo\", \"sans-serif\" !important; border:2px solid #326295;border-radius:0.3rem; width: 540px; height: 670px;  margin: 30px auto; box-sizing: border-box;'>
+	      <div style="margin: 20px">
+	      <div > 
+				 <img src="https://i.imgur.com/qp2DjkW.png" style="width: 130px;">
+		 </div>
+		 
+	      <div style="margin-top: 40px">
+	           <img src="https://i.imgur.com/yz4OA2B.png" style="width: 150px;">
+	           <h2 class="mt-3 mb-3">WELCOME</h2>
+	           <span>가입을 위한 인증을 진행해주세요.</span><br>
+	           <p>인증을 완료하려면 아래 <span style="color:#326295; font-weight: bold;"> 메일 인증하기 </span> 버튼을 눌러주세요.</p>
+	           <button style=" border-radius: 0.3rem; cursor: pointer;font-weight: 900; text-align: center; background-color:#326295;color:#fff;  width:250px; height:50px;  border: 1px solid transparent;font-weight:bold;margin:30px 0px; font-size: large; ">메일 인증하기</button>
+	       </div>
+	
+	        <div style="margin-top: 40px">
+	        	<span style="color: #76838f; ">본 메일은 발신 전용입니다.</span><br>
+	        	<span style="color:#76838f;">Copyright ⓒ OWL All Right Reserved</span>
+	        </div>         
+	      </div>                                                                                                                                                                                                    
+	</div>                                                                                                                                                                                                         
 </body>
 </html>
