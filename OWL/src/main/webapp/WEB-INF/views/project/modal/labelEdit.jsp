@@ -7,7 +7,7 @@
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold"><i class="ion-bookmark mr-2"></i> 라벨 추가 </h4>
+        <h4 class="modal-title w-100 font-weight-bold"><i class="fas fa-bookmark mr-2"></i> 라벨 추가 </h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -15,32 +15,28 @@
 			<div class="modal-body mx-3">
 			<!--  라벨 추가  -->
 				<div class="form-row">
-				<div class="form-group col-md-2" style="text-align:center">
+				<div class="form-group col-md-2 pt-1 text-center">
 				<!--  fas fa-circle -->
-					  <span ><i class="fa-tag iconSizeBig" style="color: #ff9933 !important;"></i></span>
+					 <i class="fas fa-bookmark iconSizeBig" style="color: #ff9933 !important;"></i>
 				</div>
 					<div class="form-group col-md-8 pr-0">
-						<input type="email" name="" class="form-control"
-							placeholder="라벨명을 설정해주세요">
+						<input type="email" name="" class="form-control" placeholder="라벨명을 설정해주세요">
 					</div>
 					<div class="form-group col-md-2 pl-0">
-						<input type="button" class="form-control btn btn-primary"
-							value="추가">
+						<input type="button" class="form-control btn btn-primary" value="추가">
 					</div>
 				</div>
 				
 				<!--  라벨 추가  -->
 				<div class="form-row">
-				<div class="form-group col-md-2" style="text-align:center">
-					  <span ><i class="fas fa-circle iconSize" style="color: #993366 !important;"></i></span>
+				<div class="form-group col-md-2 pt-1 text-center">
+					  <i class="fas fa-bookmark iconSizeBig" style="color: #993366 !important;"></i>
 				</div>
 					<div class="form-group col-md-8 pr-0">
-						<input type="email" name="" class="form-control"
-							placeholder="라벨명을 설정해주세요">
+						<input type="text" name="" class="form-control"placeholder="라벨명을 설정해주세요">
 					</div>
 					<div class="form-group col-md-2 pl-0">
-						<input type="button" class="form-control btn btn-primary"
-							value="추가">
+						<input type="button" class="form-control btn btn-primary" value="추가">
 					</div>
 				</div>
 				
