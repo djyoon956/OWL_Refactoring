@@ -1,4 +1,4 @@
-package owl.controller;
+package com.owl.member.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,9 +22,9 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-import owl.dto.Member;
-import owl.service.KaKaoService;
-import owl.service.NaverService;
+import com.owl.member.dto.Member;
+import com.owl.member.service.KaKaoService;
+import com.owl.member.service.NaverService;
 
 @Controller
 public class LoginController {
@@ -43,14 +43,14 @@ public class LoginController {
 
 	@RequestMapping(value = "Login.do", method = RequestMethod.GET)
 	public String showView() {
-		return "login/modal/login";
+		return "member/modal/login";
 	}
 
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
 	public String login() {
 
 		System.out.println("login");
-		return "login/main";
+		return "member/main";
 	}
 
 	@RequestMapping(value = "kakaoLogin.do", produces = "application/json")
@@ -63,7 +63,7 @@ public class LoginController {
 		// id 체크 후 db에 없으면 insert
 
 		session.setAttribute("memberName", member.getName());
-		return "login/main";
+		return "member/main";
 	}
 
 	// kakaoLoginCallback.do
@@ -81,12 +81,12 @@ public class LoginController {
 		model.addAttribute("result", apiResult);
 
 		/* 네이버 로그인 성공 페이지 View 호출 */
-		return "login/main";
+		return "member/main";
 	}
 
 	@RequestMapping("Lock.do")
 	public String showLockView() {
-		return "login/lock";
+		return "member/lock";
 	}
  
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
@@ -111,12 +111,12 @@ public class LoginController {
 			System.out.println("이거 에러..>" + e.getMessage());
 		}
 		
-		return "login/emailConfirm";
+		return "member/emailConfirm";
 	}
 	
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
 	public String emailConfirmOK(String memberId) {
 		
-		return "login/emailConfirmOk";
+		return "member/emailConfirmOk";
 	}
 }

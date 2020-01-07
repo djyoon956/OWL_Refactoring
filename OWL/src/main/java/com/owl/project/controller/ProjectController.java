@@ -1,4 +1,4 @@
-package owl.controller;
+package com.owl.project.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

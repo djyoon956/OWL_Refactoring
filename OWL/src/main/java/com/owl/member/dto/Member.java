@@ -1,4 +1,4 @@
-package owl.dto;
+package com.owl.member.dto;
 
 public class Member {
 	private String name;
