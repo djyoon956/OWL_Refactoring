@@ -10,7 +10,7 @@
 <script src="resources/plugins/common/common.min.js"></script>
 <!-- Custom Stylesheet -->
 <link href="resources/css/style.css" rel="stylesheet">
-<jsp:include page="WEB-INF/views/include/headTag.jsp"/>
+<%-- <jsp:include page="include/headTag.jsp"/> --%>
 <script type="text/javascript">
 	$(function(){
 		 $("#opneModal").click();
