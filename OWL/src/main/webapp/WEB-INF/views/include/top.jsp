@@ -5,11 +5,11 @@
  
         <div class="nav-header" style="background-color: #fcf9f5;">
             <div class="brand-logo">
-                <a href="index.html">
+                <a href="index.html" style="padding: 0">
                     <b class="logo-abbr"><img src="resources/images/owl_logo_medium.png" alt=""> </b>
-                    <span class="logo-compact"><img src="resources/images/owl_logo_another.png" alt=""></span>
+                    <span class="logo-compact"><img src="resources/images/owl_logo_real.png" alt=""></span>
                     <span class="brand-title">
-                        <img src="resources/images/owl_logo_another.png" alt="">
+                        <img src="resources/images/owl_logo_real.png" alt="">
                     </span>
                 </a>
             </div>
