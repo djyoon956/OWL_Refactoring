@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,17 +91,20 @@ public class LoginController {
 	}
  
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
-	public String showEmailConfirmView(Member member) {
+	public String showEmailConfirmView(Member member, Model model) {
 		System.out.println("EmailConfirm post");
 		System.out.println(member.toString());
 		try {
+			// DB insert 해야함
+			
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-			Map<String, Object> model = new HashMap();
-			model.put("memberId", member.getEmail());
+			Map<String, Object> models = new HashMap<String, Object>();
+			models.put("email", member.getEmail());
+			models.put("name", member.getName());
 			
 			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
-					velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate.vm", "UTF-8", model);
+					velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate.vm", "UTF-8", models);
 			messageHelper.setSubject("[OWL] 가입을 환영합니다.");
 			messageHelper.setFrom("bit_team2@naver.com");
 			messageHelper.setTo(member.getEmail());
@@ -111,7 +115,9 @@ public class LoginController {
 			System.out.println("이거 에러..>" + e.getMessage());
 		}
 		
-		return "member/emailConfirm";
+		model.addAttribute("mail", member.getEmail());
+		
+		return "member/test";
 	}
 	
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)

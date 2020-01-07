@@ -112,24 +112,6 @@ $(function(){
 			})
 		})
 		
-	    $("#sendPwd").click(function() { 
-			$.ajax({
-				url : "FindPassword.do",
-				data : { email : $("#email").val()},
-				success : function(data){
-					if(data.result){
-						successAlert(data.message);
-						$("#findPwdModal").modal("hide");
-					}else{
-						warningAlert(data.message);
-					}
-				},
-				error:function(){
-					errorAlert("메일발송에 실패했습니다.");
-				}
-			})
-		})
-
 		$("#profileImage").click(function(){
 			$("#profileFile").click();
 		})
@@ -157,7 +139,6 @@ $(function(){
 				$( "#name").siblings( ".text-danger" ).css( "display", "none" );
 		})
 		 $("#joinModal  #email").keyup(function(event){
-			 console.log("email" +$("#email").val());
 			let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 			if ($("#email").val().match(regExp) != null) 
 				$( "#email").siblings( ".text-danger" ).css( "display", "none" );
@@ -239,7 +220,7 @@ $(function(){
 	<jsp:include page="member/modal/login.jsp" />
 	<jsp:include page="member/modal/register.jsp" />
 	<jsp:include page="member/modal/findPassword.jsp" />
-	<jsp:include page="member/modal/emailConfirm.jsp" />
+	<jsp:include page="member/modal/joinEmail.jsp" />
 
 	<!--Scripts-->
 	<script src="resources/plugins/common/common.min.js"></script>
