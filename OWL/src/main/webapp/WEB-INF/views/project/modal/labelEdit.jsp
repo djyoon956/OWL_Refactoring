@@ -17,7 +17,7 @@
 				<div class="form-row">
 				<div class="form-group col-md-2" style="text-align:center">
 				<!--  fas fa-circle -->
-					  <span style="color: #ff9933 !important;"><i class="ion-bookmark iconSizeBig"></i></span>
+					  <span style="color: #ff9933 !important;"><i class="fa-tag iconSizeBig"></i></span>
 				</div>
 					<div class="form-group col-md-8 pr-0">
 						<input type="email" name="" class="form-control"
