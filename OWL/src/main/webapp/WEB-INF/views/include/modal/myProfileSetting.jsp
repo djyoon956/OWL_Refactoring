@@ -68,7 +68,7 @@
                         </div>
                     </div>
 
-
+<!-- 탈퇴시 탈퇴정보 적어주고, 마지막에 비밀번호 확인 후 탈퇴 ok  -->
                     <div class="col-lg-12 tab-pane fade" id="deleteAccount">
                         <div class="card">
                             <div class="card-body">
