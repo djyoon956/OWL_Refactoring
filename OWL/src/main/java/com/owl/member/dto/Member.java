@@ -9,7 +9,7 @@ public class Member {
 	private String email;
 	private String password;
 	private int enabled;
-	private String userName;
+	private String name;
 	private String profilePic;
 	private String signFrom;
 	private HashMap<Integer, Project> projects;
