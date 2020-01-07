@@ -174,14 +174,6 @@ $(document).ready(function(){
 </script>
 
 
-
-
-
-
-
-
-
-
 <!-- 
 
              Setting - customizing

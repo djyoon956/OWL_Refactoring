@@ -150,7 +150,7 @@ $(function(){
 
          <a href="Index.do" style="background-color: #ffffff">
              <b class="logo-abbr"><img src="resources/images/logo.png" alt=""> </b>
-			 <span class="logo"><img src="resources/images/owl_logo_another1.png" alt=""></span>
+			 <span class="logo"><img src="resources/images/owl_logo_real.png" alt=""></span>
          </a>
      
  </div>
