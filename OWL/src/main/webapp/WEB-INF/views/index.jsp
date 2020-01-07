@@ -133,7 +133,7 @@ $(function(){
 		})
 
 		$("#joinModal  #name").keyup(function(event){
-			if($("#name").val().length < 4)
+			if($("#name").val().length < 1)
 				$( "#name").siblings( ".text-danger" ).css( "display", "block" );
 			else
 				$( "#name").siblings( ".text-danger" ).css( "display", "none" );
@@ -147,12 +147,22 @@ $(function(){
 		})
 		 
 		$("#joinModal  #pwd").keyup(function(event){
+			console.log("in pwd");
 			if($("#pwd").val().length < 8)
 				$( "#pwd").siblings( ".text-danger" ).css( "display", "block" );
 			else
 				$( "#pwd").siblings( ".text-danger" ).css( "display", "none" );
 		})
+
+		openDialog();
 })
+
+function openDialog() {
+	let type="${show}";
+	if(!type) return;
+	else if(type === "joinEmail") $("#opneJoinEmailModal").click();
+	else if(type === "joinOk") $("#opneJoinOkModal").click();
+}
 
 	</script>
 </head>
@@ -221,6 +231,7 @@ $(function(){
 	<jsp:include page="member/modal/register.jsp" />
 	<jsp:include page="member/modal/findPassword.jsp" />
 	<jsp:include page="member/modal/joinEmail.jsp" />
+	<jsp:include page="member/modal/joinOk.jsp" />
 
 	<!--Scripts-->
 	<script src="resources/plugins/common/common.min.js"></script>

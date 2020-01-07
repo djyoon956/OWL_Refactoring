@@ -92,7 +92,6 @@ public class LoginController {
  
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
 	public String showEmailConfirmView(Member member, Model model) {
-		System.out.println("EmailConfirm post");
 		System.out.println(member.toString());
 		try {
 			// DB insert 해야함
@@ -116,13 +115,15 @@ public class LoginController {
 		}
 		
 		model.addAttribute("mail", member.getEmail());
+		model.addAttribute("show", "joinEmail");
 		
-		return "member/test";
+		return "index";
 	}
 	
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
-	public String emailConfirmOK(String memberId) {
-		
-		return "member/emailConfirmOk";
+	public String emailConfirmOK(String memberId, Model model) {
+		System.out.println("EmailConfirm");
+		model.addAttribute("show", "joinOk");
+		return "index";
 	}
 }
