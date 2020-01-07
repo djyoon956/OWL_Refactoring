@@ -57,8 +57,3 @@
 		</div>
   </div>
 </div>    
-
-<!-- Color Picker Plugin JavaScript -->
-<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
-<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
-<script src="resources/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>

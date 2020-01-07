@@ -146,7 +146,10 @@
     <script src="resources/plugins/chartist/js/chartist.min.js"></script>
     <script src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
     <script src="resources/js/dashboard/dashboard-1.js"></script>
-
+	<!-- Color Picker Plugin JavaScript -->
+	<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
+	<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
+	<script src="resources/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
 	
 
 </body>
