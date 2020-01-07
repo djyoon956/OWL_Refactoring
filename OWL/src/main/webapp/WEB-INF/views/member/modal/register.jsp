@@ -11,14 +11,22 @@
       </div>
       <div class="modal-body mx-3">
         <form action="EmailConfirm.do" method="post" class="mt-3 mb-3 login-input">
+        	<div class="text-center mb-4">
+        		<img id="profileImage" src="resources/images/login/profile.png" style="width:150px; height:150px; cursor: pointer;"
+        				data-toggle="tooltip" data-placement="top" title="Please upload image.">
+   				<input type="file" id="profileFile" accept="image/*" style="display: none;" onchange="previewProfile()" />
+        	</div>
             <div class="form-group">
-                <input type="text" name="name" class="form-control" placeholder="Name">
+                <input type="text" name="name" id="name" class="form-control" placeholder="Name">
+                <span class="text-danger" style="display: none;">Please enter your name at least 4.</span>
             </div>
             <div class="form-group">
-                <input type="email" name="email" class="form-control" placeholder="Email">
+                <input type="email" name="email" id="email"  class="form-control" placeholder="Email">
+                <span class="text-danger" style="display: none;">Please enter your email.</span>
             </div>
             <div class="form-group">
-                <input type="password" name="pwd" class="form-control" placeholder="Password">
+                <input type="password" name="pwd" name="pwd"  class="form-control" placeholder="Password">
+                <span class="text-danger" style="display: none;">Please enter your password at least 8.</span>
             </div>
             <input type="submit" class="btn login-form__btn submit w-100" value="JOIN IN">
         </form>

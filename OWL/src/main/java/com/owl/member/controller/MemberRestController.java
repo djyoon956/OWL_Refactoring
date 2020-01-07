@@ -3,14 +3,24 @@ package com.owl.member.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.ui.velocity.VelocityEngineFactoryBean;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.owl.member.dto.Member;
 
 @RestController
 public class MemberRestController {
-
+	
 	@RequestMapping(value = "/FindPassword.do")
-	public Map<String, Object> texttest(String email) throws Exception {
+	public Map<String, Object> findPassword(String email) throws Exception {
 		System.out.println("in FindPassword");
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean isMember = false;

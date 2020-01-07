@@ -182,35 +182,6 @@ jQuery(document).ready(function( $ ) {
    background-position: center top;
    background-size: 75% auto;
 }
-#tab-menu {
-   width: 100%;
-   background: white;
-   border-bottom: 1px double #326295;
-   font-family: 'Source Sans Pro', sans-serif;
-}
-
-#tab-btn ul {
-   overflow: hidden;
-   margin-bottom: 0px;
-}
-
-#tab-btn li {
-   float: left;
-   width: 150px;
-   text-align: center;
-}
-
-#tab-btn li a {
-   display: block;
-   color: #326295;
-   padding: 15px 20px;
-   font-weight: bold;
-}
-
-#tab-btn li.active a {
-   border-bottom: 3px solid #326295;
-   color: #326295;
-}
 
 .drivemenu {
    width: 100%;
@@ -311,17 +282,7 @@ boder-bottom:3px solid #326295;
       <div class="content-body">
 
          <!-- Project 상단 바 -->
-         <div id="tab-menu">
-            <div id="tab-btn">
-               <ul>
-                  <li><a href="#">Dash Board</a></li>
-                  <li><a href="#">Kanban Board</a></li>
-                  <li><a href="#">Schedule</a></li>
-                  <li class="active"><a href="#">Drive</a></li>
-               </ul>
-            </div>
-         </div>
-         <div class="drive">
+        <jsp:include page="../include/projectTab.jsp"/>
             <!-- 드라이브 사이드 바 -->
             <div class="row">
                <div class="col-md-3" style="padding-right: 0;">
