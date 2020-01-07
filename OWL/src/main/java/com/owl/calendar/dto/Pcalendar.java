@@ -2,7 +2,7 @@ package com.owl.calendar.dto;
 
 import java.util.Date;
 
-public class Calender {
+public class Pcalendar {
 	private int calIdx;
 	private String type;
 	private String title;
@@ -10,4 +10,7 @@ public class Calender {
 	private Date startDate;
 	private Date endDate;
 	private String alarm;
+	private int projectIdx;
+	
+	
 }
