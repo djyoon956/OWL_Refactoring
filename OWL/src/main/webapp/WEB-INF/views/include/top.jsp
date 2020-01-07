@@ -4,9 +4,9 @@
 
  
         <div class="nav-header" style="background-color: #fcf9f5;">
-            <div class="brand-logo">
+            <div >
                 <a href="index.html" style="padding: 0">
-                    <b class="logo-abbr"><img src="resources/images/owl_logo_medium.png" alt=""> </b>
+                    <b><img src="resources/images/owl_logo_medium.png" alt=""> </b>
                     <span class="logo-compact"><img src="resources/images/owl_logo_real.png" alt=""></span>
                     <span class="brand-title">
                         <img src="resources/images/owl_logo_real.png" alt="">
@@ -129,13 +129,42 @@
                      </div>
                  </li>
                  
-                 <!-- Setting - customizing -->
-                 <li class="icons toggle-icon siteMapBtn">
-                 <a href="javascript:void(0)">
+                   Setting - customizing
+                 <li class="icons toggle-icon">
+                 <a href="javascript:void(0)" data-toggle="dropdown">
                          <i class="mdi mdi-settings"></i>
                      </a>
+                      <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
+                         <div class="dropdown-content-heading d-flex justify-content-between">
+                             <span class="">2 New Notifications</span>  
+                             <a href="javascript:void()" class="d-inline-block">
+                                 <span class="badge badge-pill gradient-2">5</span>
+                             </a>
+                         </div>
+                         <div class="dropdown-content-body">
+                             <ul>
+                                 <li>
+                                     <a href="javascript:void()">
+                                         <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
+                                         <div class="notification-content">
+                                             <h6 class="notification-heading">Events near you</h6>
+                                             <span class="notification-text">Within next 5 days</span> 
+                                         </div>
+                                     </a>
+                                 </li>
+                                 <li>
+                                     <a href="javascript:void()">
+                                         <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
+                                         <div class="notification-content">
+                                             <h6 class="notification-heading">Event Started</h6>
+                                             <span class="notification-text">One hour ago</span> 
+                                         </div>
+                                     </a>
+                                 </li>
+                             </ul>
+                         </div>
+                     </div> 
                  </li>
-
              </ul>
              
 
@@ -143,35 +172,7 @@
      </div>
  </div>
  
- <div id="leftmenuArea" style="text-align: right"> </div>
- 
- 
- <style>
- #leftmenuArea{height:900px; width:500px; background-color:#3e3d3d; font-family:'Malgun Gothic',Dotum,AppleGothic,sans-serif;}
- .siteMapBtn i {
-   position: absolute;
-   top: 10px;
-   right: 40px;
-   z-index: 1;
-   display: block;
-   font-size:3em;
-   color: #444;
-   cursor: pointer;
-   transform: translate3d(0, 0, 0);
-   transition: transform .10s;
-}
- </style>
- 
- <script>
-$(document).ready(function(){
-    $("#leftmenuArea").show();
-    $(".siteMapBtn").click(function(){
-       $(".siteMapBtn i").toggle();
-    $('#leftmenuArea').animate({width:'toggle'});
-    })
 
-})
-</script>
 
 
 <!-- 
