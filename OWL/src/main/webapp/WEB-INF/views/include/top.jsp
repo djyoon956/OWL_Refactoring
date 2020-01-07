@@ -11,15 +11,19 @@
 	width: 25px;
 	height: 25px;
 	margin-right: 15px;
-	border: 2px solid gray;
+	border: 2px solid #BDBDBD;
+	
 }
 
+.coloricon:hover {
+
+}
 .setting-box {
 	margin-top: 50px;
 }
 
 
-#userImg:hover {
+#userImg:hover, .coloricon:hover {
 	border: 6px solid #BDBDBD;
 }
 
@@ -88,7 +92,7 @@
 
 <div class="nav-header" style="background-color: #fcf9f5;">
 	<div>
-		<a href="index.html" style="padding: 0"> <b><img
+		<a href="Index.do" style="padding: 0"> <b><img
 				src="resources/images/owl_logo_medium.png" alt=""> </b> <span
 			class="logo-compact"><img
 				src="resources/images/owl_logo_real.png" alt=""></span> <span
@@ -160,7 +164,9 @@
 				</div>
 				<div class="text-center setting-box">
 					<div class="user-img c-pointer position-relative">
+					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
 						<img src="resources/images/users/8.jpg" class="rounded-circle" alt="" id="userImg">
+						</a>
 					</div>
 					<h5 class="mt-3 mb-1">Name</h5>
 					<p class="m-0">E-mail Address</p>
@@ -189,22 +195,22 @@
 				<div class="text-center setting-box">
 					<h5 class="mt-3 mb-1">SIDEBAR BACKGROUND</h5>
 					<hr>
-					<span class="badge coloricon" style="background-color: white;">&nbsp;&nbsp;&nbsp;</span>
-					<span class="badge coloricon" style="background-color: gray;">&nbsp;&nbsp;&nbsp;</span>
+					<span class="badge coloricon" style="background-color: white; display: inline-block;"></span>
+					<span class="badge coloricon" style="background-color: gray; display: inline-block;"></span>
 
 
 				</div>
 				<div class="text-center setting-box">
 					<h5 class="mt-3 mb-1">SIDEBAR ACTIVE COLOR</h5>
 					<hr>
-					<span class="badge coloricon" style="background-color: white;">&nbsp;&nbsp;&nbsp;</span>
-					<span class="badge coloricon" style="background-color: #f7c9c9;">&nbsp;&nbsp;&nbsp;</span>
-					<span class="badge coloricon" style="background-color: #e0d8cd;">&nbsp;&nbsp;&nbsp;</span>
-					<span class="badge coloricon" style="background-color: #91a8d1;">&nbsp;&nbsp;&nbsp;</span>
-					<span class="badge coloricon" style="background-color: #c4d7a4;">&nbsp;&nbsp;&nbsp;</span>
+					<span class="badge coloricon" style="background-color: white; display: inline-block;"></span>
+					<span class="badge coloricon" style="background-color: #f7c9c9;display: inline-block;"></span>
+					<span class="badge coloricon" style="background-color: #e0d8cd; display: inline-block;"></span>
+					<span class="badge coloricon" style="background-color: #91a8d1; display: inline-block;"></span>
+					<span class="badge coloricon" style="background-color: #c4d7a4; display: inline-block;"></span>
 				</div>
 
-
+  <!-- 처음에는 기본된 폰트로 둘까? -->
 				<div class="text-center setting-box">
 					<h5 class="mt-3 mb-1">SELECT FONT</h5>
 					<hr>
@@ -227,4 +233,5 @@
 
 
 
-
+<!-- MyProfile Modal -->
+	<jsp:include page="modal/myProfileSetting.jsp" />
