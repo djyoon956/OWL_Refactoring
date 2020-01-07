@@ -16,7 +16,10 @@
     <link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
     <!-- Custom Stylesheet -->
     <link href="resources/css/style.css" rel="stylesheet">
-
+	<!--  Color picker plugins css -->
+<!--<link href="resources/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet"> -->
+    <!-- Color picker plugins css -->
+    <link href="resources/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
 <style type="text/css">
 #tab-menu {
 	width: 100%;
