@@ -39,36 +39,8 @@
          
         <!-- Content -->
         <div class="content-body">
-       <!-- Project 상단 바 -->
-			<div id="tab-menu">
-				<div class="row">
-					<div class="col-md-11">
-						<div id="tab-btn">
-							<ul>
-								<li class="active"><a href="#">Dash Board</a></li>
-								<li><a href="Calendar.do">Calendar</a></li>
-								<li><a href="kanbanMainiy.do">Kanban Board</a></li>
-								<li><a href="Notice.do">Notice</a></li>
-								<li><a href="Drive.do">Drive</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-1 mt-2 text-center">
-				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-                         <i class="icon-settings iconSize"></i>
-                  </a>
-                     <div class=" dropdown-menu">
-                         <div class="dropdown-content-body">
-                             <ul>
-                                 <li><a href="#memberEditModal" data-toggle="modal">프로젝트멤버  설정</a></li>
-                                 <li><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
-                             </ul>
-                         </div>
-                     </div>
-                 </li>
-					</div>
-				</div>
-			</div>
+   		<!-- Tab -->
+        <jsp:include page="../include/projectTab.jsp"/>
 
 			<div class="container-fluid mt-3"> 프로젝트 대시보드
 

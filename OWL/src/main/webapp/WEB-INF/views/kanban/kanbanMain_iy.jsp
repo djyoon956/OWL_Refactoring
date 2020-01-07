@@ -314,16 +314,9 @@ $(function() {
 
 		<div class="content-body">
 
-			<div id="tab-menu">
-				<div id="tab-btn">
-					<ul>
-						<li><a href="#">Dash Board</a></li>
-						<li class="active"><a href="#">Kanban Board</a></li>
-						<li><a href="#">Schedule</a></li>
-						<li><a href="#">Drive</a></li>
-					</ul>
-				</div>
-			</div>
+         <!-- Project 상단 바 -->
+        <jsp:include page="../include/projectTab.jsp"/>
+        
 			<div class="container-fluid mt-3">
 
 				<form class="form-inline">
