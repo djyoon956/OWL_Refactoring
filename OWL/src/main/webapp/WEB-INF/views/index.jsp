@@ -66,6 +66,7 @@ $(function(){
 	      }); 
       	
 	    $("#joinModal").on('hide.bs.modal', function () {
+	    	$(this).find('form').trigger('reset');
 	    	 joinModalOpen = false;
 	        $('html, body').css({'overflow': 'auto', 'height': '100%'}); 
       	}); 
@@ -79,6 +80,7 @@ $(function(){
 	      }); 
 	      
 	    $("#loginModal").on('hide.bs.modal', function () {
+	    	$(this).find('form').trigger('reset');
 	        $('html, body').css({'overflow': 'auto', 'height': '100%'}); 
       	}); 
       	
@@ -88,6 +90,7 @@ $(function(){
 	      }); 
 	      
 	    $("#findPwdModal").on('hide.bs.modal', function () {
+	    	$(this).find('form').trigger('reset');
 	        $('html, body').css({'overflow': 'auto', 'height': '100%'}); 
       	}); 
 
@@ -126,7 +129,50 @@ $(function(){
 				}
 			})
 		})
+
+		$("#profileImage").click(function(){
+			$("#profileFile").click();
+		})
+
+		$("#profileFile").change(function(){
+			console.log("chagne");
+			 let file    = document.querySelector('input[type=file]').files[0];
+			 let reader  = new FileReader();
+
+			  reader.onloadend = function () {
+				  $("#profileImage").attr("src",reader.result)
+			  }
+
+			  if (file) {
+			    reader.readAsDataURL(file);
+			  } else {
+			    preview.src = "resources/images/login/profile.png";
+			  }
+		})
+
+		$("#joinModal  #name").keyup(function(event){
+			if($("#name").val().length < 4)
+				$( "#name").siblings( ".text-danger" ).css( "display", "block" );
+			else
+				$( "#name").siblings( ".text-danger" ).css( "display", "none" );
+		})
+		 $("#joinModal  #email").keyup(function(event){
+			 console.log("email" +$("#email").val());
+			let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			if ($("#email").val().match(regExp) != null) 
+				$( "#email").siblings( ".text-danger" ).css( "display", "none" );
+			else
+				$( "#email").siblings( ".text-danger" ).css( "display", "block" );
+		})
+		 
+		$("#joinModal  #pwd").keyup(function(event){
+			if($("#pwd").val().length < 8)
+				$( "#pwd").siblings( ".text-danger" ).css( "display", "block" );
+			else
+				$( "#pwd").siblings( ".text-danger" ).css( "display", "none" );
+		})
 })
+
 	</script>
 </head>
 
