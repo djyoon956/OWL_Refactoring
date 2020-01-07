@@ -85,18 +85,11 @@
 							</ul>
 						</div>
 					</div>
-					<div class="col-md-1 mt-2"  style="text-align: center">
-						<!-- <div class="mt-2" style="text-align: center">
-							<i class="icon-settings" id="settingIcon"></i>
-						</div> -->
+					<div class="col-md-1 mt-2 text-center">
 				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                          <i class="icon-settings iconSize"></i>
                   </a>
                      <div class=" dropdown-menu">
-                     <!-- fadeIn animated   dropdown-notfication  상관 없음 // drop-down -->
-                        <!--  <div class="dropdown-content-heading d-flex justify-content-between">
-                             <span class="">프로젝트 멤버 설정</span>  
-                         </div> -->
                          <div class="dropdown-content-body">
                              <ul>
                                  <li><a href="#memberEditModal" data-toggle="modal">프로젝트멤버  설정</a></li>

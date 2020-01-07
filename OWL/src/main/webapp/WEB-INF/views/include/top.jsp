@@ -4,9 +4,9 @@
 
  
         <div class="nav-header" style="background-color: #fcf9f5;">
-            <div class="brand-logo">
+            <div >
                 <a href="index.html" style="padding: 0">
-                    <b class="logo-abbr"><img src="resources/images/owl_logo_medium.png" alt=""> </b>
+                    <b><img src="resources/images/owl_logo_medium.png" alt=""> </b>
                     <span class="logo-compact"><img src="resources/images/owl_logo_real.png" alt=""></span>
                     <span class="brand-title">
                         <img src="resources/images/owl_logo_real.png" alt="">
@@ -129,54 +129,7 @@
                      </div>
                  </li>
                  
-                 <!-- Setting - customizing -->
-                 <li class="icons toggle-icon siteMapBtn">
-                 <a href="javascript:void(0)">
-                         <i class="mdi mdi-settings"></i>
-                     </a>
-                 </li>
-
-             </ul>
-             
-
-         </div>
-     </div>
- </div>
- 
- <div id="leftmenuArea" style="text-align: right"> </div>
- 
- 
- <style>
- #leftmenuArea{height:900px; width:500px; background-color:#3e3d3d; font-family:'Malgun Gothic',Dotum,AppleGothic,sans-serif;}
- .siteMapBtn i {
-   position: absolute;
-   top: 10px;
-   right: 40px;
-   z-index: 1;
-   display: block;
-   font-size:3em;
-   color: #444;
-   cursor: pointer;
-   transform: translate3d(0, 0, 0);
-   transition: transform .10s;
-}
- </style>
- 
- <script>
-$(document).ready(function(){
-    $("#leftmenuArea").show();
-    $(".siteMapBtn").click(function(){
-       $(".siteMapBtn i").toggle();
-    $('#leftmenuArea').animate({width:'toggle'});
-    })
-
-})
-</script>
-
-
-<!-- 
-
-             Setting - customizing
+                  <!--  Setting - customizing -->
                  <li class="icons toggle-icon">
                  <a href="javascript:void(0)" data-toggle="dropdown">
                          <i class="mdi mdi-settings"></i>
@@ -211,5 +164,11 @@ $(document).ready(function(){
                              </ul>
                          </div>
                      </div> 
-                 </li> -->
+                 </li>
+             </ul>
+             
+
+         </div>
+     </div>
+ </div>
  
