@@ -6,10 +6,10 @@ import com.owl.calendar.dto.Pcalendar;
 import com.owl.project.dto.Project;
 
 public class Member {
-	private String userName;
+	private String email;
 	private String password;
 	private int enabled;
-	private String name;
+	private String userName;
 	private String profilePic;
 	private String signFrom;
 	private HashMap<Integer, Project> projects;
@@ -18,6 +18,17 @@ public class Member {
 	private Boolean authOk;
 	private String authority;
 	private String role;
+	
+	
+	
+	
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -36,12 +47,9 @@ public class Member {
 	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
+	
+	
 	public String getProfilePic() {
 		return profilePic;
 	}
@@ -92,7 +100,7 @@ public class Member {
 	}
 	@Override
 	public String toString() {
-		return "Member [userName=" + userName + ", password=" + password + ", enabled=" + enabled + ", name=" + name
+		return "Member [email=" + email + ", password=" + password + ", enabled=" + enabled + ", userName=" + userName
 				+ ", profilePic=" + profilePic + ", signFrom=" + signFrom + ", projects=" + projects + ", setting="
 				+ setting + ", pCalendars=" + pCalendars + ", authOk=" + authOk + ", authority=" + authority + ", role="
 				+ role + "]";
