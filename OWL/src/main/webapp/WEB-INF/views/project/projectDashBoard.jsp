@@ -14,12 +14,12 @@
     <!-- Chartist -->
     <link rel="stylesheet" href="resources/plugins/chartist/css/chartist.min.css">
     <link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
-    <!-- Custom Stylesheet -->
-    <link href="resources/css/style.css" rel="stylesheet">
-	<!--  Color picker plugins css -->
-<!--<link href="resources/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet"> -->
+    
     <!-- Color picker plugins css -->
     <link href="resources/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link href="resources/css/style.css" rel="stylesheet">
+
 <style type="text/css">
 #tab-menu {
 	width: 100%;
@@ -58,6 +58,10 @@
     font-size: 2rem;
     line-height: 2rem;
     color:  #326295; 
+}
+.modal-scroll{
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
 }
 </style>
 </head>

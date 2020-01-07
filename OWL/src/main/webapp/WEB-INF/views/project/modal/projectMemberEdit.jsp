@@ -12,7 +12,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body mx-3">
+			<div class="modal-body modal-scroll mx-3">
 				<!--  멤버 추가  -->
 				<form action="" method="post">
 					<div class="form-row">
