@@ -22,57 +22,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
-#tab-menu {
-	width: 100%;
-	background: white;
-	border-bottom: 1px double #326295;
-	font-family: 'Source Sans Pro', sans-serif;
-}
-#tab-btn ul {
-   overflow: hidden;
-   margin-bottom: 0px;
-}
 
-#tab-btn li {
-   float: left;
-   width: 150px;
-   text-align: center;
-}
-
-#tab-btn li a {
-   display: block;
-   color: #326295;
-   padding: 15px 20px;
-   font-weight: bold;
-}
-
-#tab-btn li.active a {
-   border-bottom: 3px solid #326295;
-   color: #326295;
-}
-.iconSize {
-    font-size: 1.4rem;
-    line-height: 2rem;
-    color:  #326295; 
-}
-.iconSizeBig {
-    font-size: 2rem;
-    line-height: 2rem;
-    color:  #326295; 
-}
-.modal-scroll{
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
-}
-
-  #toggle {
-    width: 400px;
-    height: 400px;
-    background: #ccc;
-  }
-#toggleOut {
-position: absolute;
-}
 </style>
 
 </head>
