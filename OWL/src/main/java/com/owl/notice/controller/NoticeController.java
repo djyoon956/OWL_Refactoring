@@ -10,4 +10,8 @@ public class NoticeController {
 	public String showview() {
 		return "notice/notice";
 	}
+	@RequestMapping("NoticeWrite.do")
+	public String write() {
+		return "notice/noticeWrite";
+	}
 }

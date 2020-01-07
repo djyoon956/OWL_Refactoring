@@ -24,7 +24,11 @@
 <style type="text/css">
 
 </style>
-
+<script type="text/javascript">
+$(function() {
+	$("#dashLi").addClass("active");
+}); 
+</script>
 </head>
 
 <body>
@@ -85,9 +89,5 @@
 	<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
 	<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
 	<script src="resources/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
-
-
-
-
 </body>
 </html>
