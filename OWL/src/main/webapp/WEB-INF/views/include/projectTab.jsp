@@ -2,23 +2,7 @@
     pageEncoding="UTF-8"%>
 <script   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-<script>
-/* var tabBtn = $("#tab-btn > ul > li");     //각각의 버튼을 변수에 저장
-var tabCont = $("#tab-cont > div");       //각각의 콘텐츠를 변수에 저장
-
-//컨텐츠 내용을 숨겨주세요!
-tabCont.hide().eq(0).show();
-
-tabBtn.click(function(){
-  var target = $(this);         //버튼의 타겟(순서)을 변수에 저장
-  var index = target.index(); 
-  console.log("클릭됨");  //버튼의 순서를 변수에 저장
- // tabBtn.removeClass("active");    //버튼의 클래스를 삭제
-  target.addClass("active");       //타겟의 클래스를 추가
-  tabCont.css("display","none");
-  tabCont.eq(index).css("display","block");
-}); */
-</script>  
+  
      <!-- Project 상단 바 -->
 			<div id="tab-menu">
 				<div class="row">

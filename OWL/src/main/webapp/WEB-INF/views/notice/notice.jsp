@@ -9,7 +9,7 @@
     <link href="resources/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <!-- Custom Stylesheet -->
-    <link href="./plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="resources/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -33,7 +33,52 @@ $(function() {
         <jsp:include page="../include/projectTab.jsp"/>
         
             <div class="container-fluid mt-3">
-           공지사항 게시판 
+                 <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">&emsp;&nbsp;&nbsp;Notice</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered zero-configuration text-center">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">글번호</th>
+                                                <th width="60%">제목</th>
+                                                <th width="20%">작성일</th>
+                                                <th width="10%">조회</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>쉬지 말고 일하세요</td>
+                                                <td>2020-01-07</td>
+                                                <td>1</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>프로젝트가 얼마 안남았어요</td>
+                                                <td>2020-01-08</td>
+                                                <td>1</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>화이팅합시다</td>
+                                                <td>2020-01-09</td>
+                                                <td>1</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                             <div class="text-right mt-3 ">
+                            	<a href="NoticeWrite.do">
+								 <input type="button" class="btn btn-primary" value="글쓰기" id="notice" name="">&emsp;&emsp;
+								</a>
+							  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -47,5 +92,9 @@ $(function() {
     <script src="resources/js/settings.js"></script>
     <script src="resources/js/gleek.js"></script>
     <script src="resources/js/styleSwitcher.js"></script>
+    <!-- data table -->
+    <script src="resources/plugins/tables/js/jquery.dataTables.min.js"></script>
+    <script src="resources/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="resources/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
 </body>
 </html>
