@@ -17,7 +17,7 @@
 				<div class="form-row">
 				<div class="form-group col-md-2" style="text-align:center">
 				<!--  fas fa-circle -->
-					  <span style="color: #ff9933 !important;"><i class="fa-tag iconSizeBig"></i></span>
+					  <span ><i class="fa-tag iconSizeBig" style="color: #ff9933 !important;"></i></span>
 				</div>
 					<div class="form-group col-md-8 pr-0">
 						<input type="email" name="" class="form-control"
@@ -32,7 +32,7 @@
 				<!--  라벨 추가  -->
 				<div class="form-row">
 				<div class="form-group col-md-2" style="text-align:center">
-					  <span style="color: #993366 !important;"><i class="fas fa-circle iconSize"></i></span>
+					  <span ><i class="fas fa-circle iconSize" style="color: #993366 !important;"></i></span>
 				</div>
 					<div class="form-group col-md-8 pr-0">
 						<input type="email" name="" class="form-control"
