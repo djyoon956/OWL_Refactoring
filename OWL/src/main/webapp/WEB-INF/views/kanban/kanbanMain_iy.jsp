@@ -159,15 +159,22 @@ html, body {
 .slideout-panel {
 	position: relative;
 	z-index: 1;
+	
+	
+	
 }
 
 .slideout-open, .slideout-open body {
 	overflow: hidden;
+	
 }
 
 .slideout-open .slideout-menu {
 	display: block;
 }
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -358,7 +365,7 @@ $(function() {
 
 							</div>
 
-							<nav id="menu" class="menu"></nav>
+							<nav id="rightbar" class="menu"></nav>
 
 						</div>
 
