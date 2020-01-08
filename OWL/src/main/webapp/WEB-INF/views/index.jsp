@@ -229,7 +229,7 @@ function openDialog() {
 
       <!-- Content -->
       <div class="content-main">
-         <div class="container-fluid mt-3">
+         <div class="container-fluid">
 메인 부분 
 
   
