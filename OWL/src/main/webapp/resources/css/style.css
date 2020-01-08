@@ -8192,8 +8192,6 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
       color: #464a53; }
       .nk-sidebar .metismenu > li > a {
         transition: none; }
-      .nk-sidebar .metismenu > li:hover i, .nk-sidebar .metismenu > li:focus i, .nk-sidebar .metismenu > li.active i {
-        color: #464a53}
       .nk-sidebar .metismenu > li:hover span, .nk-sidebar .metismenu > li:focus span, .nk-sidebar .metismenu > li.active span {
         color: #464a53; }
       .nk-sidebar .metismenu > li:hover > a {
