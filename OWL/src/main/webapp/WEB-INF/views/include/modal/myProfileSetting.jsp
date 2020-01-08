@@ -81,15 +81,15 @@ margin-bottom: 10px;
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
-										<form action="Login.do" method="post">
+										<form action="DeleteAccount.do" method="get">
 											<div class="modal-body">
 											<h5 class="mt-3 mb-1 "><img class="" src="resources/images/owl_logo_fit.png" style="width: 60px"> &nbsp;&nbsp; Please check before deleting your account.</h5>
 												<br>
 												<div class="text-justify">
 													<ul class="list-icons">
-													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;회원 탈퇴후 다시 가입은 가능합니다.</li>
+													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;회원 탈퇴 후 다시 가입은 가능합니다.</li>
 														<li><i class="fa fa-check text-info list-margin"></i>&nbsp;회원 탈퇴시 다시 복원이 불가능합니다.</li>
-														<li><i class="fa fa-check text-info list-margin"></i>&nbsp;탈퇴된 계정의 정보나 게시물은 완전히 삭제된다는 점을 기억해주세요.</li>
+														<li><i class="fa fa-check text-info list-margin"></i>&nbsp;탈퇴된 계정의 정보나 게시물은 완전히 삭제됩니다.</li>
 													</ul>
 												</div>
 <br><br>			

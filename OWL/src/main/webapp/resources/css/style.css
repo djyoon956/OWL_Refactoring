@@ -7326,12 +7326,6 @@ body {
   opacity: 1; }
 
 
-#footer {
-position:fixed;
-bottom:0;
-width: 100%;
-
-}
 
 
 .page-heading {
@@ -7574,7 +7568,8 @@ sub {
 
 .footer {
  /*  padding-left: 15.1875rem; */
-  background-color: #fff; }
+  background-color: #fff; 
+}
   .footer .copyright {
     padding: 0.9375rem;
     background: white; }
@@ -8162,7 +8157,6 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   z-index: 0; }
   
 .content-main {
-	min-height: 619px;
   z-index: 0; }  
   
   @media only screen and (min-width: 1200px) and (max-width: 1350px) {
@@ -14777,11 +14771,4 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     overflow-y: auto;
 }
 
-  #toggle {
-    width: 400px;
-    height: 400px;
-    background: #ccc;
-  }
-#toggleOut {
-position: absolute;
-}
+
