@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link
-	href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-latest.min.js"
 	type="text/javascript"></script>
 <style>
@@ -10,22 +8,25 @@
 	padding: 15px;
 	width: 25px;
 	height: 25px;
-	margin-right: 15px;
+	margin-right: 10px;
 	border: 2px solid #BDBDBD;
-	
 }
 
-.coloricon:hover {
-
-}
 .setting-box {
 	margin-top: 50px;
 }
 
+#userImg, .coloricon {
+	border: 3px solid #fcf9f5;
+    box-shadow: 1px 1px 1px 1px #BDBDBD;
+}
 
 #userImg:hover, .coloricon:hover {
-	border: 6px solid #BDBDBD;
+	border: 3px solid #BDBDBD;
 }
+
+
+
 
 #settingToggle, #alarmToggle, #chatToggle, #userToggle {
 	padding-left: 1%;
@@ -192,7 +193,7 @@
 					<i class="fas fa-cog fa-2x"></i> CUSTOMIZING
 				</div>
 
-				<div class="text-center setting-box">
+				<div class="text-center setting-box c-pointer">
 					<h5 class="mt-3 mb-1">SIDEBAR BACKGROUND</h5>
 					<hr>
 					<span class="badge coloricon" style="background-color: white; display: inline-block;"></span>
@@ -200,7 +201,7 @@
 
 
 				</div>
-				<div class="text-center setting-box">
+				<div class="text-center setting-box c-pointer">
 					<h5 class="mt-3 mb-1">SIDEBAR ACTIVE COLOR</h5>
 					<hr>
 					<span class="badge coloricon" style="background-color: white; display: inline-block;"></span>
