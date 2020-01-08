@@ -143,7 +143,7 @@ function Cancle(){
 }
 
 
-$("#chatroom").mousedown(function(e) { 
+$(".list-group-item").mousedown(function(e) { 
 	alert(e.which); // 1:좌클릭, 2:휠클릭, 3:우클릭 
 });
 
@@ -333,6 +333,13 @@ $("#chatroom").mousedown(function(e) {
                        </li>
                     </ul>
 				
+				<ul class="contextmenu">
+					  <li><a href="#">채팅방 상단고정</a></li>
+					  <li><a href="#">Link to somewhere</a></li>
+					  <li><a href="#">Another link</a></li>
+					  <li><a href="#">Link to nowhere</a></li>
+					  <li><a href="#">Random link</a></li>
+				</ul>
 				</div>
 		</div>
 
