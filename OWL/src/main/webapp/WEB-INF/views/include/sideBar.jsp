@@ -236,7 +236,7 @@ z
 						 <a type="button" id="tools" data-toggle="modal" data-target="#editProject"><i class="far fa-sun"></i></a>					
 						</li>
 	                    <li><a href="Drive.do"><span style="color: #f0cc96 !important;"><i class="fas fa-circle"></i></span>&emsp; Project 2</a></li>
-	                    <li><a href="kanbanMainiy.do"><span style="color: lavender !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iy</a></li>
+	                    <li><a href="kanbanMainiy.do"><span style="color: #ccccff !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iy</a></li>
 	                    <li><a href="kanbanMainiyiy.do"><span style="color: lightgrey !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iyiy</a></li>
                         </ul>
                     </li>

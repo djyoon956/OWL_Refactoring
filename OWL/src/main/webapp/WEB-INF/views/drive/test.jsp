@@ -90,7 +90,6 @@ jQuery(document).ready(function( $ ) {
       revert: "invalid"
     });
     $( "ul, li" ).disableSelection();
-    console.log("읽나");
     $("#driveLi").addClass("active");
   });
 
