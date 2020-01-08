@@ -44,7 +44,7 @@ public class LoginController {
 
 	@RequestMapping(value = "Login.do", method = RequestMethod.GET)
 	public String showView() {
-		return "member/newlogin";
+		return "member/login";
 	}
 
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
