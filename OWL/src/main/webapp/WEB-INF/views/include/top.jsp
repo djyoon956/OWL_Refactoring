@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap" rel="stylesheet">
-<script src="http://code.jquery.com/jquery-latest.min.js"
-	type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"	type="text/javascript"></script>
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 <style>
 .coloricon {
 	padding: 15px;
@@ -25,9 +25,6 @@
 	border: 3px solid #BDBDBD;
 }
 
-
-
-
 #settingToggle, #alarmToggle, #chatToggle, #userToggle {
 	padding-left: 1%;
 	padding-right: 1%;
@@ -39,6 +36,42 @@
 	height: 1185%;
 	width: 310px;
 	position: absolute;
+}
+
+
+.enter {
+	margin-right: 100
+	display: inline
+}
+#searchChat{
+border-right:0px; 
+border-top:0px; 
+boder-left:0px; 
+boder-bottom:3px solid #326295;
+background-color: rgba(255, 255, 255, 0);
+border-left-width: 0px;
+color: #326295;
+}
+#searchChatname{
+cursor: pointer; float: right;
+}
+#searchChatname:hover{
+color: #326295;
+}
+#chatTitle img{
+margin-top: 10px;
+width: 40px;
+height: 40px;
+margin-right: 10px;
+}
+.media h5{
+font-size: 15px;
+font-weight: bold;
+}
+
+.setting-box{
+	margin-top: 20px;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 </style>
 <script>
@@ -84,13 +117,23 @@
 			});
 		});
 	});
-</script>
-<style>
-.enter {
-	margin-right: 100
-}
-</style>
 
+function Search(){
+	$('.ChatList').empty();   
+	var plus = "";
+	plus += "<input type='text' id='searchChat' style='width: 70%; height:30px; float:left; margin-top: 10px;'>&emsp; <span style='cursor:pointer;' onclick='Cancle()'><i class='fas fa-times'></i></span>";
+	plus += "<span style='float:right'>&emsp;<i class='fas fa-comment-medical'></i>&emsp;<i class='fas fa-cog'></i></span>";
+	$('.ChatList').append(plus);
+}
+
+function Cancle(){
+	$('.ChatList').empty();   
+	var plus = "";	
+	plus += "<span style='float: right;'>&emsp;<i class='fas fa-comment-medical'></i>&emsp;<i class='fas fa-cog'></i></span>";
+	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i></span><br>";
+	$('.ChatList').append(plus);
+}
+</script>
 <div class="nav-header" style="background-color: #fcf9f5;">
 	<div>
 		<a href="Index.do" style="padding: 0"> <b><img
@@ -141,8 +184,8 @@
 
 				<!-- Chatting -->
 				<li class="icons" style="margin-right: 25px"><a
-					href="javascript:void(0)" id="chatBtn"> <i
-						class="far fa-comment"></i></a></li>
+					href="javascript:void(0)" id="chatBtn"> <i class="far fa-comment"></i></a>
+				</li>
 
 				<!-- Alram -->
 				<li class="icons" style="margin-right: 25px"><a
@@ -159,10 +202,7 @@
 
 
 			<!-- toggle content Start-->
-			<div class="toggleOption" id="userToggle">
-				<div class="text-center">
-					<i class="far fa-address-card fa-2x"></i>&nbsp; USER PROFILE
-				</div>
+			<div class="toggleOption" id="userToggle"  style="padding-top: 0px; z-index: 80;">
 				<div class="text-center setting-box">
 					<div class="user-img c-pointer position-relative">
 					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
@@ -173,7 +213,6 @@
 					<p class="m-0">E-mail Address</p>
 				</div>
 				<hr>
-				
 				<div class="text-center setting-box">
 					<ul>
 					<li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
@@ -181,18 +220,102 @@
 				
 				</div>
 			</div>
-
-
-			<div class="toggleOption" id="chatToggle">채팅 토글입니다.</div>
-
-
-			<div class="toggleOption" id="alarmToggle">알람토글입니다</div>
-
-			<div class="toggleOption" id="settingToggle">
-				<div class="text-center">
-					<i class="fas fa-cog fa-2x"></i> CUSTOMIZING
+			
+			<!-- 채팅 목록 토글 -->
+			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 80;">
+				<div  class="ChatList"> 
+					<span style=" float: right;">&emsp;<i class="fas fa-cog"></i></span>
+					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;">&emsp;<i class="fas fa-comment-medical"></i></a>					
+					<span id="searchChatname" onclick="Search()"><i class="fas fa-search"></i></span>
+				<br>
 				</div>
+				<hr>
+				<div class="setting-box">
+					 <ul class="list-group">
+                       <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;">
+                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
+                               <div class="media">
+                               <img src="resources/images/user/group.png" class="rounded-circle" alt="" id="userImg">
+                               <h5 style="margin-top: 18px; color: #ffb1b9">Project 1</h5>
+                               </div>
+                                <small style="float:right;">AM 12:00</small>
+                           </div>
+                           <ul>
+		                      	<li class="d-flex justify-content-between align-items-center">
+		                      			진성씨 시말서 제출하세요.
+		                        		<span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>
+		                        </li>
+                           </ul>             
+                       </li>
+                       <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;">
+                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
+                               <div class="media">
+                               <img src="resources/images/user/group.png" class="rounded-circle" alt="" id="userImg">
+                               <h5 style="margin-top: 18px; color: #ccccff">kanban_iy</h5>
+                               </div>
+                                <small style="float:right;">2020-01-05</small>
+                           </div>
+                           <ul>
+		                      	<li class="d-flex justify-content-between align-items-center">
+		                      			이슈 끝나면 Done으로 이동해주세요.
+		                        		<span class="badge badge-primary badge-pill" style="background-color: #ccccff">2</span>
+		                        </li>
+                           </ul>             
+                       </li>	                       					 
+                       <li class="list-group-item list-group-item-action flex-column align-items-start" style="height: 106px;">
+                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
+                               <div class="media">
+                               <img src="resources/images/member/4.jpg" class="rounded-circle" alt="" id="userImg">
+                               <h5 style="margin-top: 18px;">윤다정</h5>
+                               </div>
+                                <small style="float:right;">AM 11:11</small>
+                           </div>
+                           <ul>
+		                      	<li class="d-flex justify-content-between align-items-center">
+		                      			샐러드 사왔어?
+		                        		<span class="badge badge-primary badge-pill">1</span>
+		                        </li>
+                           </ul>             
+                       </li>
+                       <li class="list-group-item list-group-item-action flex-column align-items-start" style="height: 106px;">
+                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
+                               <div class="media">
+                               <img src="resources/images/member/8.jpg" class="rounded-circle" alt="" id="userImg">
+                               <h5 style="margin-top: 18px;">정은아</h5>
+                               </div>
+                                <small style="float:right;">2020-01-06</small>
+                           </div>
+                           <ul>
+		                      	<li class="d-flex justify-content-between align-items-center">
+		                      			언니언니~
+		                        		<span class="badge badge-primary badge-pill">5</span>
+		                        </li>
+                           </ul>             
+                       </li>
+                       <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;">
+                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
+                               <div class="media">
+                               <img src="resources/images/member/3.jpg" class="rounded-circle" alt="" id="userImg">
+                               <h5 style="margin-top: 18px;">배인영</h5>
+                               </div>
+                                <small style="float:right;">2020-01-06</small>
+                           </div>
+                           <ul>
+		                      	<li class="d-flex justify-content-between align-items-center">
+		                      			Hey! What's up!
+		                        		<span class="badge badge-primary badge-pill">1</span>
+		                        </li>
+                           </ul>             
+                       </li>
+                    </ul>
+				
+				</div>
+		</div>
 
+
+			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 80;">알람토글입니다</div>
+
+			<div class="toggleOption" id="settingToggle"  style="padding-top: 0px; z-index: 80;">
 				<div class="text-center setting-box c-pointer">
 					<h5 class="mt-3 mb-1">SIDEBAR BACKGROUND</h5>
 					<hr>
@@ -236,3 +359,4 @@
 
 <!-- MyProfile Modal -->
 	<jsp:include page="modal/myProfileSetting.jsp" />
+	<jsp:include page="modal/newChat.jsp" />
