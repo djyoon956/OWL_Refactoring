@@ -99,7 +99,7 @@ public class LoginController {
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 			Map<String, Object> models = new HashMap<String, Object>();
-			models.put("email", member.getEmail());
+			models.put("memberId", member.getEmail());
 			models.put("name", member.getName());
 			
 			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
@@ -122,8 +122,12 @@ public class LoginController {
 	
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
 	public String emailConfirmOK(String memberId, Model model) {
-		System.out.println("EmailConfirm");
+		System.out.println("EmailConfirm1");
+		System.out.println(memberId);
+		System.out.println("EmailConfirm2");
+		
 		model.addAttribute("show", "joinOk");
+		model.addAttribute("memberId", memberId);
 		return "index";
 	}
 }

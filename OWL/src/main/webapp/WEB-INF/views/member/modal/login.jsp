@@ -12,7 +12,7 @@
       <div class="modal-body mx-3">
         <form action="Login.do" method="post" class="mt-3 mb-3 login-input">
             <div class="form-group">
-                <input type="email" name="email" class="form-control" placeholder="Email">
+                <input type="email" name="email" id="email" class="form-control" placeholder="Email">
             </div>
             <div class="form-group">
                 <input type="password" name="pwd" class="form-control" placeholder="Password">
