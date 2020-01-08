@@ -18,21 +18,40 @@ import com.owl.member.dto.Member;
 
 @RestController
 public class MemberRestController {
-	
-	@RequestMapping(value = "/FindPassword.do")
+	@Autowired
+	private JavaMailSender mailSender;
+
+	@Autowired
+	private VelocityEngineFactoryBean velocityEngineFactoryBean;
+
+	@RequestMapping(value = "ForgotPassword.do")
 	public Map<String, Object> findPassword(String email) throws Exception {
 		System.out.println("in FindPassword");
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean isMember = false;
 		String message = "";
-
 		isMember = true;
-
+		email="dbsekwjdaa@naver.com";
 		// 회원 경우
 		if (isMember) {
 			isMember = true;
-			message = "이메일을 전송했습니다."
-						+ "\n이메일을 확인해주세요.";
+			try {
+				MimeMessage content = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(content, true, "UTF-8");
+				Map<String, Object> models = new HashMap<String, Object>();
+
+				String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
+						velocityEngineFactoryBean.createVelocityEngine(), "forgotPasswordTemplate.vm", "UTF-8", models);
+				messageHelper.setSubject("[OWL] 비밀번호 재설정");
+				messageHelper.setFrom("bit_team2@naver.com");
+				messageHelper.setTo(email);
+				messageHelper.setText(mailBody, true);
+				mailSender.send(content);
+
+			} catch (Exception e) {
+				System.out.println("이거 에러..>" + e.getMessage());
+			}
+			message = "이메일을 전송했습니다." + "\n이메일을 확인해주세요.";
 		}
 		// 비회원 경우
 		else {
