@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" 
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			xmlns:context="http://www.springframework.org/schema/context"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:schemaLocation="http://www.springframework.org/schema/beans 
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context 
                            http://www.springframework.org/schema/context/spring-context.xsd">
-<!-- DB연결 설정 -->
-<!-- <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
- 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
- 	<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
- 	<property name="username" value="springuser" />
- 	<property name="password" value="1004" />
- </bean> -->
- 
-<!-- Mybatis 설정
-기본 자바코드 : SqlMapConfig.xml 에서 설정했던 작업 (DB연결 ,mapper 설정)
-파일 없어지고 설명파일안에서   > SqlSessionFactoryBean
-기존 java 코드 : builder 사용 > Factory 객체 > sqlsession 생성 > 사용 
+	<!-- DB연결 설정 -->
+	<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		<!-- <property name="url"
+            value="jdbc:mysql://데이터베이스 주소:포트번호/스키마이름?useSSL=false&amp;serverTimezone=UTC"/> -->
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/owl?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC" />
+		<property name="username" value="family_c" />
+		<property name="password" value="1004" />
+	</bean>
 
-두개의 클래스가 위 작업 처리 
-SqlSessionFactoryBean
-SqlSessionTemplate
- -->
-<!-- <bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
-    <property name="dataSource" ref="driverManagerDataSource"></property>
-    <property name="mapperLocations" value="classpath*:kr/co/mycom/model/mapper/*xml" />
-</bean> 
+	<bean class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="driverManagerDataSource"></property>
+	</bean>
 
-<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-  <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
-</bean> -->
-<!-- Mybatis 설정  -->
-		
-		
+	<!-- Mybatis 설정  -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="driverManagerDataSource"></property>
+		<property name="mapperLocations" value="classpath*:kr/co/mycom/model/mapper/*xml" />
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactoryBean" />
+	</bean>
+
+
+
 	<!-- 메일 전송 설정 -->
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
@@ -49,17 +48,18 @@ SqlSessionTemplate
 	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
 		<property name="resourceLoaderPath" value="/resources/member/velocity/" />
 	</bean>
-	
+
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-   	 <property name="host" value="smtp.naver.com" />
-   	 <property name="port" value="587" />
-   	 <property name="username" value="bit_team2@naver.com"/>
-   	 <property name="password" value="bitteam21004" />
-   	 <property name="javaMailProperties">
-   	 <props>
-   	   <prop key="mail.smtp.auth">true</prop>
-   	   <prop key="mail.smtp.starttls.enable">true</prop>
-   	 </props>
-  	  </property>
-  </bean>
+		<property name="host" value="smtp.naver.com" />
+		<property name="port" value="587" />
+		<property name="username" value="bit_team2@naver.com" />
+		<property name="password" value="bitteam21004" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
 </beans>
