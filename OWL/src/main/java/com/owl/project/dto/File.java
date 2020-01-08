@@ -5,7 +5,7 @@ public class File {
 	private int belongTo;
 	private String writer;
 	private String fileName;
-	private String size;
+	private String filesize;
 	public int getFileIdx() {
 		return fileIdx;
 	}
@@ -30,17 +30,19 @@ public class File {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public String getSize() {
-		return size;
+	public String getFilesize() {
+		return filesize;
 	}
-	public void setSize(String size) {
-		this.size = size;
+	public void setFilesize(String filesize) {
+		this.filesize = filesize;
 	}
 	@Override
 	public String toString() {
 		return "File [fileIdx=" + fileIdx + ", belongTo=" + belongTo + ", writer=" + writer + ", fileName=" + fileName
-				+ ", size=" + size + "]";
+				+ ", filesize=" + filesize + "]";
 	}
+	
+	
 	
 	
 	
