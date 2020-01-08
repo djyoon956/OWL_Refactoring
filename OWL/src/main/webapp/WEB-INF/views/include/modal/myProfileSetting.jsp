@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+<style>
+.list-margin {
+margin-bottom: 10px;
+}
+</style>
 
 <div id="myProfileSetModal" class="modal fade bd-example-modal-lg"
 	tabindex="-1" role="dialog" aria-hidden="true">
@@ -24,22 +30,24 @@
 					</ul>
 
 					<div class="tab-content">
-					<!-- My profile start-->
-						<div class="col-lg-12 tab-pane fade show active" id="profile" role="tabpanel">
+						<!-- My profile start-->
+						<div class="col-lg-12 tab-pane fade show active" id="profile"
+							role="tabpanel">
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
 										<form action="Login.do" method="post">
 											<div class="form-row">
 												<div class="form-group col-md-6">
-													<label>Your photo</label> <br> 
-													<img src="resources/images/users/8.jpg" class="rounded-circle" alt="" id="userImg">
+													<label>Your photo</label> <br> <img
+														src="resources/images/users/8.jpg" class="rounded-circle"
+														alt="" id="userImg">
 												</div>
 
 												<input type="file">
 												<div class="form-group col-md-6">
-													<label>Your name</label> 
-													<input type="text" class="form-control input-default" placeholder="name">
+													<label>Your name</label> <input type="text"
+														class="form-control input-default" placeholder="name">
 												</div>
 												<div class="form-group col-md-6">
 													<label>Your email</label> <input type="text"
@@ -49,40 +57,73 @@
 											</div>
 											<div class="form-row">
 												<div class="form-group  col-md-6">
-													<label>Password</label> <input type="text"
+													<label>Password</label> <input type="password"
 														class="form-control input-default" placeholder="password">
 												</div>
 												<div class="form-group  col-md-6">
-													<label>Password check+</label> <input type="text"
+													<label>Password check+</label> <input type="password"
 														class="form-control input-default" placeholder="password">
 												</div>
 											</div>
-											<button type="submit" class="btn btn-dark">Save Change</button>
+											<br>
+											<div class="text-right">
+											<button type="submit" class="btn btn-dark ">Save Change</button>
+											</div>
 										</form>
 									</div>
 								</div>
 							</div>
-						</div> 	<!-- My profile end-->
-						
+						</div>
+						<!-- My profile end-->
 
-						<!-- 탈퇴시 탈퇴정보 적어주고, 마지막에 비밀번호 확인 후 탈퇴 ok  -->
+						<!-- Delete Account Start -->
 						<div class="col-lg-12 tab-pane fade" id="deleteAccount">
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
 										<form action="Login.do" method="post">
-											<div class="form-row">
-												<div class="form-group col-md-6">
-													<label>Your photo</label>
+											<div class="modal-body">
+											<h5 class="mt-3 mb-1 "><img class="" src="resources/images/owl_logo_fit.png" style="width: 60px"> &nbsp;&nbsp; Please check before deleting your account.</h5>
+												<br>
+												<div class="text-justify">
+													<ul class="list-icons">
+													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;회원 탈퇴후 다시 가입은 가능합니다.</li>
+														<li><i class="fa fa-check text-info list-margin"></i>&nbsp;회원 탈퇴시 다시 복원이 불가능합니다.</li>
+														<li><i class="fa fa-check text-info list-margin"></i>&nbsp;탈퇴된 계정의 정보나 게시물은 완전히 삭제된다는 점을 기억해주세요.</li>
+													</ul>
 												</div>
-											</div>
-											<button type="submit" class="btn btn-dark">Close Account</button>
+<br><br>			
+												<p class="text-muted">정말 탈퇴하시겟습니까?</p>
+												
+												<div class="basic-form">
+													<div class="form-group ">
+														<div class="form-check form-check-inline">
+															<label class="form-check-label"> <input type="checkbox" class="form-check-input" value="">
+																<code>*</code>I agree.
+															</label>
+														</div>
+													</div>
+												</div>
+												<hr>
+												<div class="row">
+													<div class="col-sm-6">
+														<label class="sr-only">Password</label> 
+													</div>
+													<div class="col-sm-3">
+														<input type="password" class="form-control" placeholder="Password">
+														</div>
+													<div class="col-sm-3">
+														<button type="submit" class="btn btn-dark mb-2">Close Account</button>
+														</div>
+													</div>
+												</div>
 										</form>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- Delete Account End -->
 				</div>
 			</div>
 		</div>
