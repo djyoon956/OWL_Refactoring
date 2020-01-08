@@ -46,10 +46,9 @@
 							class="icon-close font-weight-bold iconSize"></i> </span>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-				</div>
-
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+                 </div>
 			</div>
 		</div>
 	</div>
