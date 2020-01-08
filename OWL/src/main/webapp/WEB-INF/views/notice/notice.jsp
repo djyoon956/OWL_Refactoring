@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Main</title>
+    <title>공지사항</title>
     <link href="resources/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <!-- Custom Stylesheet -->
@@ -33,8 +33,6 @@ $(function() {
         <jsp:include page="../include/projectTab.jsp"/>
         
             <div class="container-fluid mt-3">
-                 <div class="row">
-                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">&emsp;&nbsp;&nbsp;Notice</h4>
@@ -42,9 +40,10 @@ $(function() {
                                     <table class="table table-striped table-bordered zero-configuration text-center">
                                         <thead>
                                             <tr>
-                                                <th width="10%">글번호</th>
+                                                <th width="10%">NO</th>
                                                 <th width="60%">제목</th>
-                                                <th width="20%">작성일</th>
+                                                <th width="10%">작성자</th>
+                                                <th width="10%">작성일</th>
                                                 <th width="10%">조회</th>
                                             </tr>
                                         </thead>
@@ -52,18 +51,21 @@ $(function() {
                                             <tr>
                                                 <td>1</td>
                                                 <td>쉬지 말고 일하세요</td>
-                                                <td>2020-01-07</td>
+                                                <td>PM</td>
+                                                <td>2020-01-10</td>
                                                 <td>1</td>
                                             </tr>
                                             <tr>
                                                 <td>2</td>
                                                 <td>프로젝트가 얼마 안남았어요</td>
+                                                <td>PM</td>
                                                 <td>2020-01-08</td>
                                                 <td>1</td>
                                             </tr>
                                             <tr>
                                                 <td>3</td>
                                                 <td>화이팅합시다</td>
+                                                <td>PM</td>
                                                 <td>2020-01-09</td>
                                                 <td>1</td>
                                             </tr>
@@ -76,8 +78,6 @@ $(function() {
 								</a>
 							  </div>
                             </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
