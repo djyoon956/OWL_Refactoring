@@ -27,8 +27,10 @@ public class ChatUser {
 	}
 	@Override
 	public String toString() {
-		return "ChatUser [chatUserIdx=" + chatUserIdx + ", userName=" + userName + ", name=" + name + "]";
+		return "ChatUser [chatUserIdx=" + chatUserIdx + ", email=" + email + ", name=" + name + "]";
 	}
+	
+	
 	
 	
 
