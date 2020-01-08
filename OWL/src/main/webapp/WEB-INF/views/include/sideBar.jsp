@@ -341,13 +341,10 @@ $(".chbox").click(function(){
 		var likeIt = $('#tools').parent();
 		var plus = likeIt.clone();
 		   $('#favoriteList').append(plus);
-
 		}
-
 });
  </script>       
-  
-  
+   
 <script src="resources/plugins/moment/moment.js"></script>
 <script src="resources/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 <!-- Clock Plugin JavaScript -->
