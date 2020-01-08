@@ -14771,11 +14771,4 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
     overflow-y: auto;
 }
 
-  #toggle {
-    width: 400px;
-    height: 400px;
-    background: #ccc;
-  }
-#toggleOut {
-position: absolute;
-}
+
