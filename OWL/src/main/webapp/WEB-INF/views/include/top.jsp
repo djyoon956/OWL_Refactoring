@@ -3,6 +3,7 @@
 <link href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-latest.min.js"	type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
 <style>
 .coloricon {
 	padding: 15px;
@@ -81,6 +82,52 @@ font-weight: bold;
     background-color:#f0f3f7;
     text-align: center;
 }
+
+
+/* alarm shake */
+#alarmBtn:hover {
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+
+  animation: shake 1s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+
+
+.activity{
+	height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    border: 3px solid #fff;
+    bottom: .4rem;
+    right: 0rem;
+    padding: 0;
+    background-color: #326295; /*#ff763b*/
+    left: 30px;
+    top: 37px;
+}
+
+.activity.off{
+	background-color: lightgrey;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -123,40 +170,38 @@ font-weight: bold;
 			$("#settingToggle").animate({
 				height : 'toggle'
 			});
+		});	
+	 $("#settingBtn").on({
+		    mouseover: function (event) {
+		    	$("#setIcon").addClass("fa-spin");
+		    	  console.log("애드 클래스");
+		    },
+		    mouseleave: function (event) {
+		    	 console.log("리무브 클래스");
+		    	$("#setIcon").removeClass("fa-spin");
+		    }
 		});
+ 	
+
+
+	
 	});
 
 function Search(){
 	$('.ChatList').empty();   
 	var plus = "";
-	plus += "<input type='text' id='searchChat' style='width: 70%; height:30px; float:left; margin-top: 10px;'>&emsp; <span style='cursor:pointer;' onclick='Cancle()'><i class='fas fa-times'></i></span>";
-	plus += "<span style='float:right'>&emsp;<i class='fas fa-comment-medical'></i>&emsp;<i class='fas fa-cog'></i></span>";
+	plus += "<input type='text' id='searchChat' style='width: 75%; height:30px; float:left; margin-top: 10px;'>&emsp; <span style='cursor:pointer;' onclick='Cancle()'><i class='fas fa-times'></i></span>";
+	plus += "<a href='#' data-toggle='modal' data-target='#newChat' style='float: right;'>&emsp;<i class='fas fa-comment-medical'></i>&emsp;</a>";
 	$('.ChatList').append(plus);
 }
 
 function Cancle(){
 	$('.ChatList').empty();   
 	var plus = "";	
-	plus += "<span style='float: right;'>&emsp;<i class='fas fa-comment-medical'></i>&emsp;<i class='fas fa-cog'></i></span>";
-	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i></span><br>";
+	plus += "<a href='#' data-toggle='modal' data-target='#newChat' style='float: right;'><i class='fas fa-comment-medical'></i>&emsp;</a>";
+	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i>&emsp;</span><br>";
 	$('.ChatList').append(plus);
 }
-
-
-$("#chatroom").mousedown(function(e) { 
-	alert(e.which); // 1:좌클릭, 2:휠클릭, 3:우클릭 
-});
-
-/* $(document).bind("contextmenu", function(event) { 
-	event.preventDefault();    
-    $("<div class='custom-menu'><b style='text-align:center;'>윤다정</b>" 
-    	    + "<ul id='chatTool'><li>채팅방 고정</li><li>채팅방 나가기</li></ul></div>")
-        .appendTo("li")
-        .css({top: event.pageY + "px", left: event.pageX + "px"});
-}).bind("click", function(event) {
-    $("div.custom-menu").hide();
-}); */
-
 </script>
 <div class="nav-header" style="background-color: #fcf9f5;">
 	<div>
@@ -218,7 +263,7 @@ $("#chatroom").mousedown(function(e) {
 
 				<!--  Setting - customizing -->
 				<li class="icons" style="margin-right: 15px"><a
-					href="javascript:void(0)" id="settingBtn"><i class="fas fa-cog"></i></a>
+					href="javascript:void(0)" id="settingBtn"><i class="fas fa-cog"  id="setIcon"></i></a>
 				</li>
 			</ul>
 
@@ -226,7 +271,7 @@ $("#chatroom").mousedown(function(e) {
 
 
 			<!-- toggle content Start-->
-			<div class="toggleOption" id="userToggle"  style="padding-top: 0px; z-index: 80;">
+			<div class="toggleOption" id="userToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box">
 					<div class="user-img c-pointer position-relative">
 					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
@@ -246,17 +291,16 @@ $("#chatroom").mousedown(function(e) {
 			</div>
 			
 			<!-- 채팅 목록 토글 -->
-			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 80;">
+			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 20;">
 				<div  class="ChatList"> 
-					<span style=" float: right;">&emsp;<i class="fas fa-cog"></i></span>
-					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;">&emsp;<i class="fas fa-comment-medical"></i></a>					
-					<span id="searchChatname" onclick="Search()"><i class="fas fa-search"></i></span>
+					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;"><i class="fas fa-comment-medical"></i>&emsp;</a>					
+					<span id="searchChatname" onclick="Search()"><i class="fas fa-search"></i>&emsp;</span>
 				<br>
 				</div>
 				<hr>
 				<div class="setting-box">
 					 <ul class="list-group">
-                       <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;" id="chatroom">
+                       <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
                                <img src="resources/images/user/group.png" class="rounded-circle" alt="" id="userImg">
@@ -286,10 +330,13 @@ $("#chatroom").mousedown(function(e) {
 		                        </li>
                            </ul>             
                        </li>	                       					 
-                       <li class="list-group-item list-group-item-action flex-column align-items-start" style="height: 106px;">
+                       <li class="list-group-item list-group-item-action flex-column" style="height: 106px;" id="chatroom" >					                   
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
-                               <img src="resources/images/member/4.jpg" class="rounded-circle" alt="" id="userImg">
+                               <div class="user-img c-pointer position-relative">
+                               <span class="activity"></span>
+                               <img src="resources/images/member/4.jpg" class="rounded-circle" alt="" id="userImg">   
+                               </div>                            
                                <h5 style="margin-top: 18px;">윤다정</h5>
                                </div>
                                 <small style="float:right;">AM 11:11</small>
@@ -304,7 +351,10 @@ $("#chatroom").mousedown(function(e) {
                        <li class="list-group-item list-group-item-action flex-column align-items-start" style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
-                               <img src="resources/images/member/8.jpg" class="rounded-circle" alt="" id="userImg">
+                               <div class="user-img c-pointer position-relative">
+                               <span class="activity"></span>
+                               <img src="resources/images/member/8.jpg" class="rounded-circle" alt="" id="userImg">   
+                               </div> 
                                <h5 style="margin-top: 18px;">정은아</h5>
                                </div>
                                 <small style="float:right;">2020-01-06</small>
@@ -319,7 +369,10 @@ $("#chatroom").mousedown(function(e) {
                        <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
-                               <img src="resources/images/member/3.jpg" class="rounded-circle" alt="" id="userImg">
+                               <div class="user-img c-pointer position-relative">
+                               <span class="activity off"></span>
+                               <img src="resources/images/member/3.jpg" class="rounded-circle" alt="" id="userImg">   
+                               </div> 
                                <h5 style="margin-top: 18px;">배인영</h5>
                                </div>
                                 <small style="float:right;">2020-01-06</small>
@@ -332,14 +385,14 @@ $("#chatroom").mousedown(function(e) {
                            </ul>             
                        </li>
                     </ul>
-				
-				</div>
+				</div>				
 		</div>
 
+		
+		
+			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">알람토글입니다</div>
 
-			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 80;">알람토글입니다</div>
-
-			<div class="toggleOption" id="settingToggle"  style="padding-top: 0px; z-index: 80;">
+			<div class="toggleOption" id="settingToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box c-pointer">
 					<h5 class="mt-3 mb-1">SIDEBAR BACKGROUND</h5>
 					<hr>
