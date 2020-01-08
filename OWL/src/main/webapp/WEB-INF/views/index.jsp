@@ -215,8 +215,7 @@ function openDialog() {
             <div class="header-right">
                <ul class="clearfix">
 
-                  <li class="icons dropdown d-none d-md-flex"><a href="#"
-                     data-toggle="modal" data-target="#loginModal">
+                  <li class="icons dropdown d-none d-md-flex"><a href="Login.do" >
                         <button type="button" id="loginBtn" class="btn mb-1 btn-primary">Login
                            / Register</button>
                   </a></li>
@@ -242,8 +241,6 @@ function openDialog() {
    </div>
 
    <!--  Modal  -->
-   <jsp:include page="member/modal/login.jsp" />
-   <jsp:include page="member/modal/join.jsp" />
    <jsp:include page="member/modal/forgotPassword.jsp" />
    <jsp:include page="member/modal/joinConfirm.jsp" />
    <jsp:include page="member/modal/joinOk.jsp" />
