@@ -221,10 +221,8 @@ z
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="far fa-star menu-icon"></i> <span class="nav-text">FAVORITES</span>
                         </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./email-inbox.html">Inbox</a></li>
-                            <li><a href="./email-read.html">Read</a></li>
-                            <li><a href="./email-compose.html">Compose</a></li>
+                        <ul class="collapse in" id="favoriteList">
+
                         </ul>
                     </li>
                     <li class="nav-label">PROJECT</li>
@@ -293,8 +291,7 @@ z
 			                     <input type="text" class="form-control" placeholder="End Date" id="endDate" data-dtp="dtp_l9lmR">
 			                 </div>
 			          </div>                         
-                     <br>                 
-                     
+                     <br>                                      
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -337,7 +334,20 @@ z
              </div>
          </div>
      </div>
-     
+ <script>
+$(".chbox").click(function(){
+	var checking = $(".chbox:checked").val();
+	if( checking == 'on'){
+		var likeIt = $('#tools').parent();
+		var plus = likeIt.clone();
+		   $('#favoriteList').append(plus);
+
+		}
+
+});
+ </script>       
+  
+  
 <script src="resources/plugins/moment/moment.js"></script>
 <script src="resources/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 <!-- Clock Plugin JavaScript -->
