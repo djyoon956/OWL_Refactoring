@@ -6756,7 +6756,9 @@ a.text-dark:hover, a.text-dark:focus {
 
 .invisible {
   visibility: hidden !important; }
-
+.hidden {
+	display: none;
+}
 @media print {
   *,
   *::before,

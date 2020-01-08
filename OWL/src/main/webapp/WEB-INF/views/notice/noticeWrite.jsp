@@ -11,7 +11,7 @@
     <!-- Custom Stylesheet -->
     <link href="resources/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!-- include summernote css/js-->
-	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
+	<link href="resources/plugins/summernote/dist/summernote.css" rel="stylesheet">
 	
 </head>
 <script
@@ -109,15 +109,17 @@ let charLimit = 4000;
                                             </div>
                                     </div>
                                     <div class="form-group text-center">
-                                        <input type="submit" class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2" value="확인">
-                                        <button class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" type="button" onclick="location.href='Notice.do'" id="noticeDelBtn">취소</button>
+                                         <input type="submit" class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2" value="확인">
+                                        <button class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" type="button" 
+                                        onclick="location.href='Notice.do'" id="noticeDelBtn">취소</button> 
+                                         </div>                   
                                     </div>
                                     </form>
                                  </div>	 					
 									
 							<!--  여기까지  -->
 
-					</div>
+					<!-- </div> -->
 				</div>
 			</div>
 		</div>
@@ -132,11 +134,9 @@ let charLimit = 4000;
     <script src="resources/js/settings.js"></script>
     <script src="resources/js/gleek.js"></script>
     <script src="resources/js/styleSwitcher.js"></script>
-    <!-- data table -->
-    <script src="resources/plugins/tables/js/jquery.dataTables.min.js"></script>
-    <script src="resources/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
-    <script src="resources/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
-    
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
+
+    <!--  summernote  -->
+    <script src="resources/plugins/summernote/dist/summernote.min.js"></script>
+    <script src="resources/plugins/summernote/dist/summernote-init.js"></script>
 </body>
 </html>
