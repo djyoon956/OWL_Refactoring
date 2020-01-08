@@ -23,7 +23,7 @@ let charLimit = 4000;
             
             $('#summernote').summernote({
                 height: 400,
-                placeholder: "글을 입력하세요.",
+                placeholder: "내용을 입력해주세요.",
                 popover: {
                     image: [],
                     link: [],
@@ -65,6 +65,13 @@ let charLimit = 4000;
         	return result;
         }
 </script>
+<style>
+#noticeDelBtn:hover {
+	 color : black; 
+	 background-color: #808080;
+	 border-color: #808080; 
+}
+</style>
 <body>
     <div id="main-wrapper">
 
@@ -86,7 +93,7 @@ let charLimit = 4000;
                                <div class="col-md-10 offset-1"> 
                                     <div class="compose-content">
                                     <h3 class="text-center">Notice</h3><br>
-                                        <form action="#">
+                                        <form action="#" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <input type="text" class="form-control bg-transparent" placeholder="제목을 입력해주세요">
                                             </div>
@@ -94,17 +101,16 @@ let charLimit = 4000;
                                                <!--  <textarea class="textarea_editor form-control bg-light" rows="15" placeholder="내용을 입력해주세요"></textarea> -->
                                                 <textarea class="form-control bg-light" rows="10" cols="60" id="summernote" name="summernote" placeholder="내용을 입력해주세요"></textarea>
                                             </div>
-                                        <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>파일첨부</h5>
+                                        <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>&nbsp;파일첨부</h5>
                                             <div class="form-group">
                                                 <div class="fallback">
                                                     <input class="l-border-1" name="file" type="file" multiple="multiple">
                                                 </div>
                                             </div>
-                                         
                                     </div>
                                     <div class="form-group text-center">
-                                        <input type="submit" class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-1" value="확인">
-                                        <button class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" type="button">취소</button>
+                                        <input type="submit" class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2" value="확인">
+                                        <button class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" type="button" onclick="location.href='Notice.do'" id="noticeDelBtn">취소</button>
                                     </div>
                                     </form>
                                  </div>	 					

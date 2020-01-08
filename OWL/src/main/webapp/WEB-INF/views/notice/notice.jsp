@@ -35,16 +35,16 @@ $(function() {
             <div class="container-fluid mt-3">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">&emsp;&nbsp;&nbsp;Notice</h4>
+                               <h3 class="text-center">Notice</h3>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered zero-configuration text-center">
                                         <thead>
                                             <tr>
                                                 <th width="10%">NO</th>
-                                                <th width="60%">제목</th>
-                                                <th width="10%">작성자</th>
-                                                <th width="10%">작성일</th>
-                                                <th width="10%">조회</th>
+                                                <th width="53%">제목</th>
+                                                <th width="15%">작성자</th>
+                                                <th width="15%">작성일</th>
+                                                <th width="7%">조회</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -60,7 +60,7 @@ $(function() {
                                                 <td>프로젝트가 얼마 안남았어요</td>
                                                 <td>PM</td>
                                                 <td>2020-01-08</td>
-                                                <td>1</td>
+                                                <td>1234</td>
                                             </tr>
                                             <tr>
                                                 <td>3</td>
@@ -73,9 +73,12 @@ $(function() {
                                     </table>
                                 </div>
                              <div class="text-right mt-3 ">
-                            	<a href="NoticeWrite.do">
-								 <input type="button" class="btn btn-primary" value="글쓰기" id="notice" name="">&emsp;&emsp;
-								</a>
+                            	<!-- <a href="NoticeWrite.do"> -->
+								<!--  <input type="button" class="btn btn-primary" value="글쓰기" id="notice" name="">&emsp;&emsp; -->
+								
+								<button class="btn btn-primary" type="submit" id="notice" name="" onclick="location.href='NoticeWrite.do'"><i class="icon-pencil"></i>&nbsp; 글쓰기</button>
+								<!-- </a> -->
+								&emsp;&emsp;
 							  </div>
                             </div>
                 </div>
