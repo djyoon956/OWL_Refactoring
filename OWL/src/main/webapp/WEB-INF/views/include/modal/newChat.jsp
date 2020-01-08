@@ -5,7 +5,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header text-center">
-				<h4 class="modal-title w-100 font-weight-bold" style="color: grey;">
+				<h4 class="modal-title w-100 font-weight-bold">
 					<i class="far fa-comments"></i> 새로운 채팅
 				</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -44,10 +44,9 @@
 							class="icon-close font-weight-bold iconSize"></i> </span>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
-				</div>
-
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary" data-dismiss="modal">생성하기</button>
+                 </div>
 			</div>
 		</div>
 	</div>
