@@ -49,7 +49,7 @@
 		$(function () {
 			$("#sendPwd").click(function () {
 				$.ajax({
-					url: "FindPassword.do",
+					url: "ForgotPassword.do",
 					data: {
 						email: $("#email").val()
 					},

@@ -8,6 +8,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,9 @@ import com.owl.member.service.NaverService;
 
 @Controller
 public class LoginController {
-
+	@Autowired
+	private SqlSession sqlSession;
+	
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -139,6 +142,4 @@ public class LoginController {
 		System.out.println("여기오니?");
 		return "member/deleteOk";
 	}
-	
-	
 }
