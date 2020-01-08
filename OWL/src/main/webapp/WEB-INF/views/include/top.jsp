@@ -3,6 +3,7 @@
 <link href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-latest.min.js"	type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
 <style>
 .coloricon {
 	padding: 15px;
@@ -73,14 +74,6 @@ font-weight: bold;
 	margin-top: 20px;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
-.custom-menu {
-    z-index:1000;
-    position: absolute;
-    padding: 2px;
-    background-color:#f0f3f7;
-    text-align: center;
-}
 </style>
 <script>
 	$(document).ready(function() {
@@ -123,7 +116,7 @@ font-weight: bold;
 			$("#settingToggle").animate({
 				height : 'toggle'
 			});
-		});
+		});	
 	});
 
 function Search(){
@@ -141,22 +134,6 @@ function Cancle(){
 	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i></span><br>";
 	$('.ChatList').append(plus);
 }
-
-
-$(".list-group-item").mousedown(function(e) { 
-	alert(e.which); // 1:좌클릭, 2:휠클릭, 3:우클릭 
-});
-
-/* $(document).bind("contextmenu", function(event) { 
-	event.preventDefault();    
-    $("<div class='custom-menu'><b style='text-align:center;'>윤다정</b>" 
-    	    + "<ul id='chatTool'><li>채팅방 고정</li><li>채팅방 나가기</li></ul></div>")
-        .appendTo("li")
-        .css({top: event.pageY + "px", left: event.pageX + "px"});
-}).bind("click", function(event) {
-    $("div.custom-menu").hide();
-}); */
-
 </script>
 <div class="nav-header" style="background-color: #fcf9f5;">
 	<div>
@@ -226,7 +203,7 @@ $(".list-group-item").mousedown(function(e) {
 
 
 			<!-- toggle content Start-->
-			<div class="toggleOption" id="userToggle"  style="padding-top: 0px; z-index: 80;">
+			<div class="toggleOption" id="userToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box">
 					<div class="user-img c-pointer position-relative">
 					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
@@ -246,7 +223,7 @@ $(".list-group-item").mousedown(function(e) {
 			</div>
 			
 			<!-- 채팅 목록 토글 -->
-			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 80;">
+			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 20;">
 				<div  class="ChatList"> 
 					<span style=" float: right;">&emsp;<i class="fas fa-cog"></i></span>
 					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;">&emsp;<i class="fas fa-comment-medical"></i></a>					
@@ -256,7 +233,7 @@ $(".list-group-item").mousedown(function(e) {
 				<hr>
 				<div class="setting-box">
 					 <ul class="list-group">
-                       <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;" id="chatroom">
+                       <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
                                <img src="resources/images/user/group.png" class="rounded-circle" alt="" id="userImg">
@@ -286,7 +263,7 @@ $(".list-group-item").mousedown(function(e) {
 		                        </li>
                            </ul>             
                        </li>	                       					 
-                       <li class="list-group-item list-group-item-action flex-column align-items-start" style="height: 106px;">
+                       <li class="list-group-item list-group-item-action flex-column" style="height: 106px;" id="chatroom" >					                   
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
                                <img src="resources/images/member/4.jpg" class="rounded-circle" alt="" id="userImg">
@@ -332,21 +309,14 @@ $(".list-group-item").mousedown(function(e) {
                            </ul>             
                        </li>
                     </ul>
-				
-				<ul class="contextmenu">
-					  <li><a href="#">채팅방 상단고정</a></li>
-					  <li><a href="#">Link to somewhere</a></li>
-					  <li><a href="#">Another link</a></li>
-					  <li><a href="#">Link to nowhere</a></li>
-					  <li><a href="#">Random link</a></li>
-				</ul>
-				</div>
+				</div>				
 		</div>
 
+		
+		
+			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">알람토글입니다</div>
 
-			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 80;">알람토글입니다</div>
-
-			<div class="toggleOption" id="settingToggle"  style="padding-top: 0px; z-index: 80;">
+			<div class="toggleOption" id="settingToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box c-pointer">
 					<h5 class="mt-3 mb-1">SIDEBAR BACKGROUND</h5>
 					<hr>
