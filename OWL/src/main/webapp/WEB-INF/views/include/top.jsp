@@ -108,19 +108,6 @@ font-weight: bold;
   100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
-/* rotate */
-
-#settingBtn:hover {
-	 transform: rotate(720deg);
-}
-@keyframes infinite-spinning {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
-  }
-}
 
 
 .activity{
@@ -184,6 +171,20 @@ font-weight: bold;
 				height : 'toggle'
 			});
 		});	
+	 $("#settingBtn").on({
+		    mouseover: function (event) {
+		    	$("#setIcon").addClass("fa-spin");
+		    	  console.log("애드 클래스");
+		    },
+		    mouseleave: function (event) {
+		    	 console.log("리무브 클래스");
+		    	$("#setIcon").removeClass("fa-spin");
+		    }
+		});
+ 	
+
+
+	
 	});
 
 function Search(){
@@ -262,7 +263,7 @@ function Cancle(){
 
 				<!--  Setting - customizing -->
 				<li class="icons" style="margin-right: 15px"><a
-					href="javascript:void(0)" id="settingBtn"><i class="fas fa-cog"></i></a>
+					href="javascript:void(0)" id="settingBtn"><i class="fas fa-cog"  id="setIcon"></i></a>
 				</li>
 			</ul>
 
