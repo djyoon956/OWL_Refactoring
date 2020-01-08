@@ -64,7 +64,6 @@ $(function(){
 	        joinModalOpen=true;
 	        $('body').css({'overflow': 'hidden', 'height': '100%'}); 
 	      }); 
-      	
 	    $("#joinModal").on('hide.bs.modal', function () {
 	    	$(this).find('form').trigger('reset');
 	    	 joinModalOpen = false;
@@ -78,7 +77,6 @@ $(function(){
 		    	 joinModalOpen = false;
 		    	}
 	      }); 
-	      
 	    $("#loginModal").on('hide.bs.modal', function () {
 	    	$(this).find('form').trigger('reset');
 	        $('html, body').css({'overflow': 'auto', 'height': '100%'}); 
@@ -87,12 +85,25 @@ $(function(){
 	    $("#findPwdModal").on('show.bs.modal', function () {
 	    	 $("#loginModal").modal("hide");
 	    	 $('html, body').css({'overflow': 'hidden', 'height': '100%'}); 
-	      }); 
-	      
+	      });  
 	    $("#findPwdModal").on('hide.bs.modal', function () {
 	    	$(this).find('form').trigger('reset');
 	        $('html, body').css({'overflow': 'auto', 'height': '100%'}); 
       	}); 
+
+	    $("#joinOkModal").on('show.bs.modal', function () {
+		    	let interval = 3;
+	       		let changeTime = setInterval(function(){
+		       		if(interval < 0){
+		       			clearTimeout(changeTime);
+			       		$("#joinOkModal").modal("hide");
+			       		$("#loginModal  #email").val("${memberId}");
+						$("#loginBtn").click();
+		       		}
+		       		
+		       		$("#joinOkModal #changeTime").text(interval--);
+	       		}, 1000)
+	      });
 
 	    $("#sendPwd").click(function() { 
 			$.ajax({
@@ -145,7 +156,6 @@ $(function(){
 			else
 				$( "#email").siblings( ".text-danger" ).css( "display", "block" );
 		})
-		 
 		$("#joinModal  #pwd").keyup(function(event){
 			console.log("in pwd");
 			if($("#pwd").val().length < 8)
@@ -161,7 +171,10 @@ function openDialog() {
 	let type="${show}";
 	if(!type) return;
 	else if(type === "joinEmail") $("#opneJoinEmailModal").click();
-	else if(type === "joinOk") $("#opneJoinOkModal").click();
+	else if(type === "joinOk") {
+		$('#joinOkModal').modal({backdrop: 'static', keyboard: false})  
+		$("#opneJoinOkModal").click();
+	}
 }
 
 	</script>
@@ -228,9 +241,9 @@ function openDialog() {
 
 	<!--  Modal  -->
 	<jsp:include page="member/modal/login.jsp" />
-	<jsp:include page="member/modal/register.jsp" />
-	<jsp:include page="member/modal/findPassword.jsp" />
-	<jsp:include page="member/modal/joinEmail.jsp" />
+	<jsp:include page="member/modal/join.jsp" />
+	<jsp:include page="member/modal/forgotPassword.jsp" />
+	<jsp:include page="member/modal/joinConfirm.jsp" />
 	<jsp:include page="member/modal/joinOk.jsp" />
 
 	<!--Scripts-->
