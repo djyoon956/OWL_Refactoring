@@ -87,6 +87,9 @@ $(function() {
         
         <!-- Bottom -->
 		<jsp:include page="../include/bottom.jsp"/>
+		<!-- pm의 설정  modal -->
+	    <jsp:include page="../project/modal/projectMemberEdit.jsp" />
+	    <jsp:include page="../project/modal/labelEdit.jsp" />
     </div>
 
     <!--Scripts-->

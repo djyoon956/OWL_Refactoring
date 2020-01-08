@@ -32,7 +32,7 @@ $(function(){
 						<input type="button" class="form-control btn btn-primary" value="추가">
 					</div>
 				</div>
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col-md-4 m-b-10">
 						<input type="text" class="complex-colorpicker form-control" value="#b3b3ff">
 					</div>
@@ -43,7 +43,7 @@ $(function(){
 					<div class="form-group col-md-2 pl-0">
 						<input type="button" class="form-control btn btn-primary" value="추가">
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
   </div>
