@@ -82,6 +82,8 @@ font-weight: bold;
     background-color:#f0f3f7;
     text-align: center;
 }
+
+
 /* alarm shake */
 #alarmBtn:hover {
   /* Start the shake animation and make the animation last for 0.5 seconds */
@@ -120,6 +122,25 @@ font-weight: bold;
   }
 }
 
+
+.activity{
+	height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    border: 3px solid #fff;
+    bottom: .4rem;
+    right: 0rem;
+    padding: 0;
+    background-color: #326295; /*#ff763b*/
+    left: 30px;
+    top: 37px;
+}
+
+.activity.off{
+	background-color: lightgrey;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -168,16 +189,16 @@ font-weight: bold;
 function Search(){
 	$('.ChatList').empty();   
 	var plus = "";
-	plus += "<input type='text' id='searchChat' style='width: 70%; height:30px; float:left; margin-top: 10px;'>&emsp; <span style='cursor:pointer;' onclick='Cancle()'><i class='fas fa-times'></i></span>";
-	plus += "<span style='float:right'>&emsp;<i class='fas fa-comment-medical'></i>&emsp;<i class='fas fa-cog'></i></span>";
+	plus += "<input type='text' id='searchChat' style='width: 75%; height:30px; float:left; margin-top: 10px;'>&emsp; <span style='cursor:pointer;' onclick='Cancle()'><i class='fas fa-times'></i></span>";
+	plus += "<a href='#' data-toggle='modal' data-target='#newChat' style='float: right;'>&emsp;<i class='fas fa-comment-medical'></i>&emsp;</a>";
 	$('.ChatList').append(plus);
 }
 
 function Cancle(){
 	$('.ChatList').empty();   
 	var plus = "";	
-	plus += "<span style='float: right;'>&emsp;<i class='fas fa-comment-medical'></i>&emsp;<i class='fas fa-cog'></i></span>";
-	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i></span><br>";
+	plus += "<a href='#' data-toggle='modal' data-target='#newChat' style='float: right;'><i class='fas fa-comment-medical'></i>&emsp;</a>";
+	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i>&emsp;</span><br>";
 	$('.ChatList').append(plus);
 }
 </script>
@@ -271,9 +292,8 @@ function Cancle(){
 			<!-- 채팅 목록 토글 -->
 			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 20;">
 				<div  class="ChatList"> 
-					<span style=" float: right;">&emsp;<i class="fas fa-cog"></i></span>
-					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;">&emsp;<i class="fas fa-comment-medical"></i></a>					
-					<span id="searchChatname" onclick="Search()"><i class="fas fa-search"></i></span>
+					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;"><i class="fas fa-comment-medical"></i>&emsp;</a>					
+					<span id="searchChatname" onclick="Search()"><i class="fas fa-search"></i>&emsp;</span>
 				<br>
 				</div>
 				<hr>
@@ -312,7 +332,10 @@ function Cancle(){
                        <li class="list-group-item list-group-item-action flex-column" style="height: 106px;" id="chatroom" >					                   
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
-                               <img src="resources/images/member/4.jpg" class="rounded-circle" alt="" id="userImg">
+                               <div class="user-img c-pointer position-relative">
+                               <span class="activity"></span>
+                               <img src="resources/images/member/4.jpg" class="rounded-circle" alt="" id="userImg">   
+                               </div>                            
                                <h5 style="margin-top: 18px;">윤다정</h5>
                                </div>
                                 <small style="float:right;">AM 11:11</small>
@@ -327,7 +350,10 @@ function Cancle(){
                        <li class="list-group-item list-group-item-action flex-column align-items-start" style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
-                               <img src="resources/images/member/8.jpg" class="rounded-circle" alt="" id="userImg">
+                               <div class="user-img c-pointer position-relative">
+                               <span class="activity"></span>
+                               <img src="resources/images/member/8.jpg" class="rounded-circle" alt="" id="userImg">   
+                               </div> 
                                <h5 style="margin-top: 18px;">정은아</h5>
                                </div>
                                 <small style="float:right;">2020-01-06</small>
@@ -342,7 +368,10 @@ function Cancle(){
                        <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
-                               <img src="resources/images/member/3.jpg" class="rounded-circle" alt="" id="userImg">
+                               <div class="user-img c-pointer position-relative">
+                               <span class="activity off"></span>
+                               <img src="resources/images/member/3.jpg" class="rounded-circle" alt="" id="userImg">   
+                               </div> 
                                <h5 style="margin-top: 18px;">배인영</h5>
                                </div>
                                 <small style="float:right;">2020-01-06</small>
