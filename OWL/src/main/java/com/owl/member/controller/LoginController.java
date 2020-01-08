@@ -85,25 +85,31 @@ public class LoginController {
 		return "member/main";
 	}
 
+	@RequestMapping("googleLogin.do")
+	public String googleLogin() {
+		System.out.println("googleLogin");
+		
+		return "member/main";
+	}
+	
 	@RequestMapping("Lock.do")
 	public String showLockView() {
 		return "member/lock";
 	}
  
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
-	public String showEmailConfirmView(Member member, Model model) {
+	public String emailConfirm(Member member, Model model) {
 		System.out.println(member.toString());
 		try {
 			// DB insert 해야함
-			
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 			Map<String, Object> models = new HashMap<String, Object>();
-			models.put("email", member.getEmail());
+			models.put("memberId", member.getEmail());
 			models.put("name", member.getName());
 			
 			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
-					velocityEngineFactoryBean.createVelocityEngine(), "emailTemplate.vm", "UTF-8", models);
+					velocityEngineFactoryBean.createVelocityEngine(), "joinTemplate.vm", "UTF-8", models);
 			messageHelper.setSubject("[OWL] 가입을 환영합니다.");
 			messageHelper.setFrom("bit_team2@naver.com");
 			messageHelper.setTo(member.getEmail());
@@ -122,8 +128,8 @@ public class LoginController {
 	
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
 	public String emailConfirmOK(String memberId, Model model) {
-		System.out.println("EmailConfirm");
 		model.addAttribute("show", "joinOk");
+		model.addAttribute("memberId", memberId);
 		return "index";
 	}
 }

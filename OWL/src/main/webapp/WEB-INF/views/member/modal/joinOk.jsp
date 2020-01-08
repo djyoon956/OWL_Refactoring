@@ -12,7 +12,7 @@
        
        <div class="mt-5">
 	       <button class="btn btn-lg w-100 btn-primary" style="height: 50px;">
-	       		<span>3</span>초 후 로그인 페이지로 이동합니다. 
+	       		<span id="changeTime">3</span>초 후 로그인 페이지로 이동합니다. 
 	       </button>
        </div>
        

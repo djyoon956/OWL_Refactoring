@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Main</title>
+    <title>공지사항</title>
     <link href="resources/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
     <!-- Custom Stylesheet -->
@@ -13,9 +13,14 @@
 </head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 $(function() {
-	$("#noticeLi").addClass("active");
+	 $("#noticeLi").addClass("active"); 
+     $('#noticeTable').DataTable( {
+       
+        "order": [[ 3, "desc" ]]
+    } ); /* 데이터 테이블 순서 0,1,2 ...  > 3, desc 작성일 순서 */
 }); 
 </script>
 <body>
@@ -33,37 +38,40 @@ $(function() {
         <jsp:include page="../include/projectTab.jsp"/>
         
             <div class="container-fluid mt-3">
-                 <div class="row">
-                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">&emsp;&nbsp;&nbsp;Notice</h4>
+                               <h3 class="text-center">Notice</h3>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration text-center">
+                                    <table class="table table-striped table-bordered zero-configuration text-center" id="noticeTable">
+                                    
                                         <thead>
                                             <tr>
-                                                <th width="10%">글번호</th>
-                                                <th width="60%">제목</th>
-                                                <th width="20%">작성일</th>
-                                                <th width="10%">조회</th>
+                                                <th width="10%">NO</th>
+                                                <th width="53%">제목</th>
+                                                <th width="15%">작성자</th>
+                                                <th width="15%">작성일</th>
+                                                <th width="7%">조회</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
                                                 <td>쉬지 말고 일하세요</td>
-                                                <td>2020-01-07</td>
-                                                <td>1</td>
+                                                <td>PM</td>
+                                                <td>2020-01-10</td>
+                                                <td>12</td>
                                             </tr>
                                             <tr>
                                                 <td>2</td>
                                                 <td>프로젝트가 얼마 안남았어요</td>
+                                                <td>PM</td>
                                                 <td>2020-01-08</td>
-                                                <td>1</td>
+                                                <td>1234</td>
                                             </tr>
                                             <tr>
                                                 <td>3</td>
                                                 <td>화이팅합시다</td>
+                                                <td>PM</td>
                                                 <td>2020-01-09</td>
                                                 <td>1</td>
                                             </tr>
@@ -71,19 +79,23 @@ $(function() {
                                     </table>
                                 </div>
                              <div class="text-right mt-3 ">
-                            	<a href="NoticeWrite.do">
-								 <input type="button" class="btn btn-primary" value="글쓰기" id="notice" name="">&emsp;&emsp;
-								</a>
+                            	<!-- <a href="NoticeWrite.do"> -->
+								<!--  <input type="button" class="btn btn-primary" value="글쓰기" id="notice" name="">&emsp;&emsp; -->
+								
+								<button class="btn btn-primary" type="submit" id="notice" name="" onclick="location.href='NoticeWrite.do'"><i class="icon-pencil"></i>&nbsp; 글쓰기</button>
+								<!-- </a> -->
+								&emsp;&emsp;
 							  </div>
                             </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
         
         <!-- Bottom -->
 		<jsp:include page="../include/bottom.jsp"/>
+		<!-- pm의 설정  modal -->
+	    <jsp:include page="../project/modal/projectMemberEdit.jsp" />
+	    <jsp:include page="../project/modal/labelEdit.jsp" />
     </div>
 
     <!--Scripts-->
@@ -96,5 +108,6 @@ $(function() {
     <script src="resources/plugins/tables/js/jquery.dataTables.min.js"></script>
     <script src="resources/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
     <script src="resources/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+    
 </body>
 </html>

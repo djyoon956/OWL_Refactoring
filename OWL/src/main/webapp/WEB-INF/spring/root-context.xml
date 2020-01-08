@@ -47,7 +47,7 @@ SqlSessionTemplate
 	</bean>
 
 	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
-		<property name="resourceLoaderPath" value="/WEB-INF/views/velocity/" />
+		<property name="resourceLoaderPath" value="/resources/member/velocity/" />
 	</bean>
 	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

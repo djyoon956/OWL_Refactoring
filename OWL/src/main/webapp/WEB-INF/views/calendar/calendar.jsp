@@ -42,6 +42,9 @@ $(function() {
     </div>
 	
 	<jsp:include page="../project/modal/createProject.jsp"/>
+	 <!-- pm의 설정  modal -->
+	 <jsp:include page="../project/modal/projectMemberEdit.jsp" />
+	 <jsp:include page="../project/modal/labelEdit.jsp" />
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
     <script src="resources/js/custom.min.js"></script>

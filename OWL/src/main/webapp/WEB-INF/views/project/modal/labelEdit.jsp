@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script type="text/javascript">
-$(function(){
-	 $(".complex-colorpicker").asColorPicker({
-	        mode: 'complex'
-    });
-})
+
 </script>
 <div id="labelEditModal" class="modal fade bd-example-modal-lg"
 	tabindex="-1" role="dialog" aria-hidden="true">
@@ -17,9 +13,8 @@ $(function(){
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-			<div class="modal-body mx-3">
+		<div class="modal-body mx-3">
 			<!--  라벨 추가  -->
-					 <!-- <i class="fas fa-bookmark iconSizeBig" style="color: #ff9933 !important;"></i> -->
 				<div class="row">
 					<div class="col-md-4 m-b-10">
 						<input type="text" class="complex-colorpicker form-control" value="#fa7a7a">
@@ -32,8 +27,8 @@ $(function(){
 						<input type="button" class="form-control btn btn-primary" value="추가">
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-4 m-b-10">
+			 <div class="row">
+					<div class="col-md-4 m-b-30">
 						<input type="text" class="complex-colorpicker form-control" value="#b3b3ff">
 					</div>
 					<div class="form-group col-md-6 pr-0">
@@ -43,8 +38,12 @@ $(function(){
 					<div class="form-group col-md-2 pl-0">
 						<input type="button" class="form-control btn btn-primary" value="추가">
 					</div>
-				</div>
+				</div> 
 			</div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                     <button type="button" class="btn btn-primary" data-dismiss="modal">적용하기</button>
+                 </div>
 		</div>
   </div>
 </div>    
