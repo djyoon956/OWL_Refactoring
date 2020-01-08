@@ -19,7 +19,7 @@
 					</div>
 					<div class="col-md-1 mt-2 text-center">
 				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-                         <i class="icon-settings iconSize"></i>
+                         <i class="fas fa-user-cog iconSizeBig pt-2"></i>
                   </a>
                      <div class=" dropdown-menu">
                          <div class="dropdown-content-body">
