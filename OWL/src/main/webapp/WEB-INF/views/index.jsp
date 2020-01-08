@@ -41,6 +41,152 @@
    height: 50px;
    cursor: pointer;
 }
+
+
+
+/*임의의 메인 텍스트*/
+body{
+background-color:#326295;
+
+}
+
+.e{
+  position: absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+}
+h1{
+  font-size:60px;
+  font-weight:bold;
+  font-family: 'Montserrat', sans-serif;
+  text-align:center;
+  color:#fff;
+  letter-spacing:0px;
+  transition:1s;
+  -webkit-transition:1s;
+  -ms-transition:1s;
+  position: relative;
+  padding:10px;
+ 
+}
+
+h1:before,
+h1:after{
+  content:"";
+  position: absolute;
+  height: 7px;
+  width: 0px;
+  background:#fff;
+  transition:300ms;
+  -webkit-transition:1s;
+  -ms-transition:1s;
+  opacity:0.3;
+  left:50%;
+}
+
+h1:before{
+  bottom:0;
+ 
+}
+
+h1:after{
+  top:0;
+  
+}
+
+h1:hover{
+  letter-spacing:30px;
+}
+
+h1:hover:before,
+h1:hover:after{
+   width: 95%;
+    opacity:1;
+  left:0;
+
+}
+h1:hover ~ h2{
+  opacity:0;
+}
+
+h2{
+  color:#fff;
+  font-family: 'Pinyon Script', cursive;
+  text-align:center;
+  font-size:100px;
+  font-weight:100;
+  bottom:40px;
+  position: absolute;
+  transition:1s;
+  -webkit-transition:1s;
+  -ms-transition:1s;
+  opacity:0.1;
+  width: 100%;
+}
+
+
+
+
+
+
+
+/*에니메이션 텍스트*/
+/*  @import url('https://fonts.googleapis.com/css?family=Roboto:700');
+
+
+#container {
+  color:#999;
+  text-transform: uppercase;
+  font-size:36px;
+  font-weight:bold;
+  padding-top:200px;  
+  position:fixed;
+  width:100%;
+  bottom:45%;
+  display:block;
+  font-family:'Roboto';
+  text-align:center;
+}
+
+#flip {
+  height:50px;
+  overflow:hidden;
+}
+
+#flip > div > div {
+  color:#fff;
+  padding:4px 12px;
+  height:45px;
+  margin-bottom:45px;
+  display:inline-block;
+}
+
+#flip div:first-child {
+  animation: show 5s linear infinite;
+}
+
+#flip div div {
+  background:#42c58a;
+}
+#flip div:first-child div {
+  background:#4ec7f3;
+}
+#flip div:last-child div {
+  background:#DC143C;
+}
+
+@keyframes show {
+  0% {margin-top:-270px;}
+  5% {margin-top:-180px;}
+  33% {margin-top:-180px;}
+  38% {margin-top:-90px;}
+  66% {margin-top:-90px;}
+  71% {margin-top:0px;}
+  99.99% {margin-top:0px;}
+  100% {margin-top:-270px;}
+} */
+
 </style>
 <script type="text/javascript">
       Kakao.init("5d151c02cc241d9ba7a8373a8051d79d");
@@ -196,12 +342,12 @@ function openDialog() {
    <div id="main-wrapper">
 
       <!-- Top -->
-      <div class="header-row" style="background-color: black">
+      <div class="header-row">
          <div class="header-content clearfix">
 
             <div class="header-left">
 
-               <div class="nav-header" style="padding-left: 200px;background-color: black">
+               <div class="nav-header" style="padding-left: 200px;">
 
                   <a href="Index.do" > 
                <!--    <b class="logo-abbr"><img src="resources/images/logo.png" alt="">   </b> -->
@@ -229,11 +375,25 @@ function openDialog() {
       <!-- Content -->
       <div class="content-main">
          <div class="container-fluid">
-메인 부분 
+         
+          <div class="e">
+		  <h1>OWL</h1>
+		  <h2>OWL</h2>
+		</div>
+         
+         <!-- 내용 바뀌는 텍스트 에니메이션 -->
+					<!-- <div id=container>
+						Make
+						<div id=flip>
+							<div><div>PROJECT</div></div>
+							<div><div>COMMUNICATION</div></div>
+							<div><div>SCHEDULE</div></div>
+						</div>
+						AweSoMe!
+					<p style="font-size: 12px;">뭔가 이것은 밑에 기능들 설명할 때 쓰면 좋을 효과 같음</p>
+					</div> -->
 
-  
-
-</div>
+			</div>
       </div>
 
       <!-- Bottom -->
