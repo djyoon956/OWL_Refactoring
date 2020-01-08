@@ -73,6 +73,14 @@ font-weight: bold;
 	margin-top: 20px;
 	font-family: 'Noto Sans KR', sans-serif;
 }
+
+.custom-menu {
+    z-index:1000;
+    position: absolute;
+    padding: 2px;
+    background-color:#f0f3f7;
+    text-align: center;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -133,6 +141,22 @@ function Cancle(){
 	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i></span><br>";
 	$('.ChatList').append(plus);
 }
+
+
+$("#chatroom").mousedown(function(e) { 
+	alert(e.which); // 1:좌클릭, 2:휠클릭, 3:우클릭 
+});
+
+/* $(document).bind("contextmenu", function(event) { 
+	event.preventDefault();    
+    $("<div class='custom-menu'><b style='text-align:center;'>윤다정</b>" 
+    	    + "<ul id='chatTool'><li>채팅방 고정</li><li>채팅방 나가기</li></ul></div>")
+        .appendTo("li")
+        .css({top: event.pageY + "px", left: event.pageX + "px"});
+}).bind("click", function(event) {
+    $("div.custom-menu").hide();
+}); */
+
 </script>
 <div class="nav-header" style="background-color: #fcf9f5;">
 	<div>
@@ -232,7 +256,7 @@ function Cancle(){
 				<hr>
 				<div class="setting-box">
 					 <ul class="list-group">
-                       <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;">
+                       <li class="list-group-item list-group-item-action flex-column align-items-start"  style="height: 106px;" id="chatroom">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
                                <img src="resources/images/user/group.png" class="rounded-circle" alt="" id="userImg">
