@@ -13,9 +13,14 @@
 </head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 $(function() {
-	$("#noticeLi").addClass("active");
+	 $("#noticeLi").addClass("active"); 
+     $('#noticeTable').DataTable( {
+       
+        "order": [[ 3, "desc" ]]
+    } ); /* 데이터 테이블 순서 0,1,2 ...  > 3, desc 작성일 순서 */
 }); 
 </script>
 <body>
@@ -37,7 +42,8 @@ $(function() {
                             <div class="card-body">
                                <h3 class="text-center">Notice</h3>
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered zero-configuration text-center">
+                                    <table class="table table-striped table-bordered zero-configuration text-center" id="noticeTable">
+                                    
                                         <thead>
                                             <tr>
                                                 <th width="10%">NO</th>
@@ -53,7 +59,7 @@ $(function() {
                                                 <td>쉬지 말고 일하세요</td>
                                                 <td>PM</td>
                                                 <td>2020-01-10</td>
-                                                <td>1</td>
+                                                <td>12</td>
                                             </tr>
                                             <tr>
                                                 <td>2</td>
@@ -102,5 +108,6 @@ $(function() {
     <script src="resources/plugins/tables/js/jquery.dataTables.min.js"></script>
     <script src="resources/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
     <script src="resources/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+    
 </body>
 </html>
