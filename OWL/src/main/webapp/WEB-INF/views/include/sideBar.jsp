@@ -261,79 +261,12 @@ z
         </div>
 
            <!-- 프로젝트 생성 Modal -->
-     <div class="modal fade" id="newProject">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-             <div class="modal-content">
-                 <div class="modal-header" style="text-align: center;">
-                     <h4 class="modal-title"><b>프로젝트 생성</b></h4>
-                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                     </button>
-                 </div>
-                 <div class="modal-body">
-                 	 <h5>Name</h5>
-                     <input type="text" id="projectTitle" style="width:100%; height: 40px;">
-                     <br>
-                     <br>
- 		             <h5>Color</h5>
- 		             <!-- <span style="float: right; font-size: 12px; color: grey;">원하는 색으로 프로젝트의 색상을 지정해주세요.&emsp;</span> -->
-		             <input type="text" class="complex-colorpicker form-control" value="#326295">
-                     <br> 
-                     <br> 
-                     <h5>Period</h5>  
-			          <div class="row form-group">
-			                 <div class="col-md-5" style="padding-right: 0px;">
-			                     <input type="text" class="form-control" placeholder="Start Date" id="startDate" data-dtp="dtp_l9lmR">
-			                 </div>
-			                 <div class="col-md-2 text-center" style="padding: 0px;">
-			                 		<span>~</span>
-			                 </div>
-			                 <div class="col-md-5" style="padding-left: 0px;">
-			                     <input type="text" class="form-control" placeholder="End Date" id="endDate" data-dtp="dtp_l9lmR">
-			                 </div>
-			          </div>                         
-                     <br>                                      
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="InputProject()">생성하기</button>
-                 </div>
-             </div>
-         </div>
-     </div>
+	<jsp:include page="modal/newProject.jsp" />
+		   <!-- 프로젝트 환경설정 Modal -->
+	<jsp:include page="modal/editProject.jsp" />
      
                 <!-- 프로젝트 환경설정 Modal -->
-    <div class="modal fade" id="editProject">
-         <div class="modal-dialog modal-dialog-centered" role="document">
-             <div class="modal-content">
-                 <div class="modal-header" style="text-align: center;">
-                     <h4 class="modal-title"><b>프로젝트 설정</b></h4>
-                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                     </button>
-                 </div>
-                 <div class="modal-body">
- 		             <h5>Color</h5>
- 		             <!-- <span style="float: right; font-size: 12px; color: grey;">원하는 색으로 프로젝트의 색상을 지정해주세요.&emsp;</span> -->
-		             <input type="text" class="complex-colorpicker form-control" value="#326295">
-                     <br>                        
-                     <br>                
-                     <h5>Favorite</h5>
-                     <div style="position:relative;">
-                     <p>해당 프로젝트를 즐겨찾기에 추가하시겠습니까?</p>
-					        <div class="but r" id="but-2" style="float:right;   position:absolute; top: 0px; right: 0px;">
-					          <input type="checkbox" class="chbox">
-					          <div class="knobs"></div>
-					          <div class="layer"></div>
-					        </div>
-		             </div>
-		             <br>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                     <button type="button" class="btn btn-primary" data-dismiss="modal">적용하기</button>
-                 </div>
-             </div>
-         </div>
-     </div>
+ 
  <script>
 $(".chbox").click(function(){
 	var checking = $(".chbox:checked").val();
