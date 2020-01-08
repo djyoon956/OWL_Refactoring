@@ -41,50 +41,64 @@
 	height: 50px;
 	cursor: pointer;
 }
+
+.graycolor {
+color: gray;
+}
+
+.verticalcenter {
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+}
 </style>
-
 </head>
-
 <body>
-
 	<div id="main-wrapper">
-
 
 		<!-- Top -->
 		<div class="header-row" style="background-color: black">
 			<div class="header-content clearfix">
-
 				<div class="header-left">
-
 					<div class="nav-header" style="padding-left: 200px;background-color: black">
-
 						<a href="Index.do" > 
-					<!-- 	<b class="logo-abbr"><img src="resources/images/logo.png" alt="">	</b> -->
 								<img src="resources/images/owl_logo_real.png" alt="">
-							
 						</a>
-
 					</div>
-				</div>
-
-				<div class="header-right">
-					<ul class="clearfix">
-
-						<li class="icons dropdown d-none d-md-flex"><a href="#"
-							data-toggle="modal" data-target="#loginModal">
-								<button type="button" id="loginBtn" class="btn mb-1 btn-primary">Login
-									/ Register</button>
-						</a></li>
-					</ul>
 				</div>
 			</div>
 		</div>
 
-
-
 		<!-- Content -->
-		<div class="content-main">
-			<div class="container-fluid mt-3">메인 부분</div>
+		<div class="content-main " >
+		<div class="login-form-bg " >
+        <div class="container h-100" >
+            <div class="row justify-content-center ">
+                <div class="col-xl-6">
+                    <div class="error-content">
+                        <div class="card  mt-5">
+                            <div class="card-body text-center">
+                             <div class="text-primary mt-5"><i class="fas fa-check-circle fa-9x"></i></div>
+                                <h3 class="text-primary mt-5"><b>회원탈퇴가 완료되었습니다.</b></h3>
+                            
+                                <h3 class="text-primary"><b>이용해 주셔서 감사합니다.</b></h3> <br>
+                                <h4 class="graycolor">Thank you for using &nbsp;<img class="" src="resources/images/owl_logo_fit.png" style="width: 45px"></h4>
+                                <form class="mt-5 mb-5">                                   
+                                    <div class="text-center mb-2 mt-4"><a href="Index.do" class="btn btn-primary">Go to Main</a>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+			
+			
 		</div>
 
 		<!-- Bottom -->
