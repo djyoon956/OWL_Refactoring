@@ -30,6 +30,10 @@
 			display: flex;
 			align-items: center;
 		}
+		
+		body{
+background-color:#326295;
+}
 	</style>
 	<script type="text/javascript">
 		Kakao.init("5d151c02cc241d9ba7a8373a8051d79d");
@@ -154,12 +158,12 @@
 	<div id="main-wrapper">
 
 		<!-- Top -->
-		<div class="header-row" style="background-color: black">
+		<div class="header-row" style="background-color: #fcf9f5">
 			<div class="header-content clearfix">
 
 				<div class="header-left">
 
-					<div class="nav-header" style="padding-left: 200px;background-color: black">
+					<div class="nav-header" style="padding-left: 200px;background-color: #fcf9f5">
 
 						<a href="Index.do">
 							<!--    <b class="logo-abbr"><img src="resources/images/logo.png" alt="">   </b> -->
