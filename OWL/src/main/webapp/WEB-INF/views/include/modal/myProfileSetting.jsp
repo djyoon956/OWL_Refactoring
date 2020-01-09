@@ -182,7 +182,7 @@ function changeView() {
 												<hr>
 											<c:choose>
 												<c:when test="${member.signFrom == '홈페이지'}">
-													<form action="DeleteAccount.do" method="get">
+													<form action="DeleteAccount.do" method="post">
 												</c:when>
 												<c:when test="${member.signFrom == '구글'}">
 													<form action="googleLogin.do" method="get">

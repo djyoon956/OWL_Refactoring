@@ -56,9 +56,16 @@ public class MemberController {
 		if (!file.exists())
 			file.mkdir();
 	}
-	@RequestMapping(value= "DeleteAccount.do", method = RequestMethod.GET)
-	public String deleteMember() {
-		
+	@RequestMapping(value= "DeleteAccount.do")
+	public String deleteMember(String email) {
+		boolean result = service.deleteMember("qqq@gmail.com"); 
+		/*
+		if(result == true) {
+			
+		}else  {
+			
+		}*/
+		 System.out.println("delete result 값 : " + result); 
 		return "member/deleteOk";
 	}
 }
