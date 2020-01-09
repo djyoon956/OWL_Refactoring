@@ -31,7 +31,6 @@ public class MemberController {
 			if (!imagefilename.equals("")) { // 실 파일 업로드
 				String uploadpath = request.getServletContext().getRealPath("upload");
 				checkDirectory(uploadpath);
-				System.out.println(uploadpath);
 				String fpath = uploadpath + "\\" + imagefilename;
 
 				FileOutputStream fs = new FileOutputStream(fpath);
