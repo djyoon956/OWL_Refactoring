@@ -9,9 +9,13 @@ public class Drive {
 	private String creator;
 	private Date sDate;
 	private Date dDate;
-	private Boolean fileStatus;
+	private Boolean isInBin;
 	private int ref;
 	private int depth;
+	
+	private int nam;
+	
+	
 	public int getDriveIdx() {
 		return driveIdx;
 	}
@@ -48,11 +52,13 @@ public class Drive {
 	public void setdDate(Date dDate) {
 		this.dDate = dDate;
 	}
-	public Boolean getFileStatus() {
-		return fileStatus;
+	
+	
+	public Boolean getIsInBin() {
+		return isInBin;
 	}
-	public void setFileStatus(Boolean fileStatus) {
-		this.fileStatus = fileStatus;
+	public void setIsInBin(Boolean isInBin) {
+		this.isInBin = isInBin;
 	}
 	public int getRef() {
 		return ref;
@@ -69,7 +75,7 @@ public class Drive {
 	@Override
 	public String toString() {
 		return "Drive [driveIdx=" + driveIdx + ", fileName=" + fileName + ", folderName=" + folderName + ", creator="
-				+ creator + ", sDate=" + sDate + ", dDate=" + dDate + ", fileStatus=" + fileStatus + ", ref=" + ref
+				+ creator + ", sDate=" + sDate + ", dDate=" + dDate + ", isInBin=" + isInBin + ", ref=" + ref
 				+ ", depth=" + depth + "]";
 	}
 	
