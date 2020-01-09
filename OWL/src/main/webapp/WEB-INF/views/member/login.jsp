@@ -214,6 +214,14 @@ body {
 						<div class="row justify-content-center h-100">
 							<div class="col-xl-6">
 								<div class="form-input-content">
+								<c:if test="${param.error != null}">
+   <div>
+     로그인실패<br>
+     <c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
+      이유 : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
+     </c:if>
+   </div>
+  </c:if>  
 									<div class="card mb-0">
 										<!-- 로그인 화면 -->
 										<div id="loginBox">
@@ -221,8 +229,8 @@ body {
 												<div class="text-center mt-4">
 													<h4>LOGIN</h4>
 												</div>
-												<c:url value="/login" var="loginurl"></c:url>
-												<form action="${loginurl}" method="post" class="mt-5 mb-5 login-input">
+												<c:url value="/login" var="loginurl"/>
+												<form action="Login.do" method="post" class="mt-5 mb-5 login-input">
 													<div class="form-group">
 														<input type="email" name="email"
 															class="form-control email" placeholder="Email">
@@ -287,7 +295,7 @@ body {
 													<h4>JOIN</h4>
 												</div>
 
-												<form action="SignUp.do" method="post" class="mt-4 mb-3 login-input">
+												<form action="EmailConfirm.do" method="post" class="mt-4 mb-3 login-input" >
 													<div class="text-center mb-3">
 														<img id="profileImage" src="resources/images/login/profile.png" style="width: 150px; height: 150px; cursor: pointer;"
 															data-toggle="tooltip" data-placement="top"
