@@ -1,6 +1,7 @@
 package com.owl.member.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
@@ -8,6 +9,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.member.dto.Member;
+import com.owl.member.service.MemberService;
 
 @RestController
 public class MemberRestController {
@@ -24,6 +27,9 @@ public class MemberRestController {
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
 
+	@Autowired
+	private MemberService service;	
+	
 	@RequestMapping(value = "ForgotPassword.do")
 	public Map<String, Object> findPassword(String email) throws Exception {
 		System.out.println("in FindPassword");
@@ -63,4 +69,28 @@ public class MemberRestController {
 
 		return map;
 	}
+	
+	/*
+	 * @RequestMapping(value="GetMember.do") public String GetMember(String email){
+	 * 
+	 * Member member = service.getMember("qqq@gmail.com");
+	 * 
+	 * return member; }
+	 */
+
+	//회원정보 조회 (test)
+	@RequestMapping("/GetMember.do")
+	public String GetMember(String email, Model model) throws Exception{
+	try {	
+		//회원정보
+		Member member = service.getMember("qqq@gmail.com");
+		System.out.println("멤버 조회 : " + member);
+		model.addAttribute("member", member);
+	} catch (Exception e) {
+		System.out.println(e.getMessage());
+	}
+
+	return "include/modal/myProfileSetting";
+	}
+	
 }

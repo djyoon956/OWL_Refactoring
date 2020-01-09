@@ -118,7 +118,7 @@ body {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #fff;
+  color: #76838f;
   text-align: left;
   background-color: #f0f3f7; 
   height : 100%
@@ -7345,7 +7345,7 @@ body {
 
 a {
   transition: all 0.4s ease-in-out;
-  color: #fff; }
+  color: #76838f; }
 
 a:focus,
 a:hover {

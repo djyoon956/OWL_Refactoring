@@ -1,5 +1,10 @@
 package com.owl.member.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,19 +19,42 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
-		//회원정보 조회
-		@RequestMapping("/GetMember.do")
-		public String GetMember(String email, Model model) throws Exception{
-		try {	
-			//회원정보
-			Member member = service.getMember("qqq@gmail.com");
-			System.out.println("멤버 조회 : " + member);
-			model.addAttribute("member", member);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+	//회원 정보 수정 (test)
+	@RequestMapping(value="UpdateMember.do")
+	public String UpdateMember(Member member, HttpServletRequest request, Model model) {
+		try {
+			Member update = service.getMember("qqq@gmail.com");
+			System.out.println(update);
+			String imagefilename = member.getMultipartFile().getOriginalFilename();
+			System.out.println("사진" + imagefilename);
+			
+			if (!imagefilename.equals("")) { // 실 파일 업로드
+				String uploadpath = request.getServletContext().getRealPath("upload");
+				checkDirectory(uploadpath);
+				System.out.println(uploadpath);
+				String fpath = uploadpath + "\\" + imagefilename;
 
-		return "include/modal/myProfileSetting";
+				FileOutputStream fs = new FileOutputStream(fpath);
+				fs.write(member.getMultipartFile().getBytes());
+				fs.close();
+				member.setImagefilename(imagefilename);
+			}
+			
+			update.setName(member.getName());
+			update.setPassword(member.getPassword());
+			System.out.println(update);
+			service.updateMember(update);		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return "member/main";
+	}
+	
+	private void checkDirectory(String path) {
+		File file = new File(path);
+		if (!file.exists())
+			file.mkdir();
+	}
 
 }
