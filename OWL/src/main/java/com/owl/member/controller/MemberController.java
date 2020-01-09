@@ -22,6 +22,7 @@ public class MemberController {
 
 
 	
+	
 	@RequestMapping(value="UpdateMember.do")
 	public String UpdateMember(Member member, HttpServletRequest request) {
 		try {
@@ -53,7 +54,7 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/member/main";
+		return "member/main";
 	}
 	
 	private void checkDirectory(String path) {
@@ -61,5 +62,9 @@ public class MemberController {
 		if (!file.exists())
 			file.mkdir();
 	}
-
+	@RequestMapping(value= "DeleteAccount.do", method = RequestMethod.GET)
+	public String deleteMember() {
+		
+		return "member/deleteOk";
+	}
 }
