@@ -6,7 +6,22 @@
 										  http://www.springframework.org/schema/beans/spring-beans.xsd
 										  http://www.springframework.org/schema/security 
 										  http://www.springframework.org/schema/security/spring-security.xsd">
-										  
-										  
 
+	<security:http auto-config="true">
+		<security:csrf disabled="true" />
+		<security:form-login login-page="/Login.do" 
+										 authentication-failure-url="/joinus/login.htm?error" />
+		<security:logout logout-success-url="/Index.do" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:jdbc-user-service
+				users-by-username-query="SELECT EMAIL AS username, password, enabled FROM owl.MEMBER" 
+				authorities-by-username-query="SELECT M.EMAIL, R.AUTHORITY FROM owl.MEMBER M JOIN owl.AUTHORITIES R ON M.EMAIL=R.EMAIL WHERE M.EMAIL=?"
+				data-source-ref="driverManagerDataSource" />
+
+			<security:password-encoder ref="bCryptPasswordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
 </beans>
