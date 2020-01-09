@@ -78,7 +78,7 @@ function changeView() {
 						<div class="col-lg-12 tab-pane fade show active" id="profile" role="tabpanel">
 							<div  id="firstpage">	
 							<div class="card">
-								<div class="card-body" style="padding-top: 20px;">						
+								<div class="card-body" style="padding-top: 20px;">												
 									<div class="basic-form">																		
 												<div class="text-center mb-3">
 													<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" 
