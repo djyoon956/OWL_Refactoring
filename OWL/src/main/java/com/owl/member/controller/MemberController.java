@@ -28,13 +28,9 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="UpdateMember.do")
-	public String UpdateMember(Member member, HttpServletRequest request) {
+	public String UpdateMember(Member member, HttpServletRequest request,  Model model) {
 		try {
-			Member update = service.getMember("qqq@gmail.com");
-			System.out.println("update : " + update);
-			System.out.println(member.getMultipartFile());
 			String imagefilename = member.getMultipartFile().getOriginalFilename();
-			System.out.println("사진" + imagefilename);
 			
 			if (!imagefilename.equals("")) { // 실 파일 업로드
 				String uploadpath = request.getServletContext().getRealPath("upload");
@@ -45,15 +41,14 @@ public class MemberController {
 				FileOutputStream fs = new FileOutputStream(fpath);
 				fs.write(member.getMultipartFile().getBytes());
 				fs.close();
-				member.setImagefilename(imagefilename);
-
+				member.setProfilePic(imagefilename);
 			}
-			
-			update.setProfilePic(member.getImagefilename());
-			update.setName(member.getName());
-			update.setPassword(member.getPassword());
-			System.out.println(update);
-			service.updateMember(update);		
+
+			member.setName(member.getName());
+			member.setPassword(member.getPassword());
+
+			service.updateMember(member);		
+			model.addAttribute("member", member);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

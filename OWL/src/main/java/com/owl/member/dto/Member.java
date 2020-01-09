@@ -26,8 +26,7 @@ public class Member {
 	private HashMap<Integer, Pcalendar> pCalendars;
 	private Boolean authOk;
 	private String authority;
-	private String role;
-	
+	private String role;	
 	private CommonsMultipartFile multipartFile;
-	private String imagefilename;
+
 }
