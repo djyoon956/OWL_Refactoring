@@ -5,7 +5,21 @@
 margin-bottom: 10px;
 }
 </style>
+<script>
+$(function(){
+	 $("#multipartFile").change(function(){
+  		var reader = new FileReader();
 
+  	    reader.onload = function (e) {
+  	        // get loaded data and render thumbnail.
+  	        document.getElementById("userImg").src = e.target.result;
+  	    };
+
+  	    // read the image file as a data URL.
+  	    reader.readAsDataURL(this.files[0]);
+  	});	
+});
+</script>
 <div id="myProfileSetModal" class="modal fade bd-example-modal-lg"
 	tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
@@ -34,15 +48,14 @@ margin-bottom: 10px;
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
-										<form action="Login.do" method="post">
+										<form action="UpdateMember.do" method="post" enctype="multipart/form-data">
 											<div class="form-row">
 												<div class="form-group col-md-6">
-													<label>Your photo</label> <br> <img
-														src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle"
+													<label>Your photo</label> <br> 
+													<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle"
 														alt="" id="userImg" height="100" width="100">
 												</div>
-
-												<input type="file">
+												<input type="file" id="multipartFile" name="multipartFile" accept="resources/images/*">
 												<div class="form-group col-md-6">
 													<label>Your name</label> <input type="text"
 														class="form-control input-default" value="${member.name}">

@@ -87,7 +87,6 @@ public class MemberService {
 
 		try {
 			member = userDao.getMember(email);
-			System.out.println("service : " + member);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
