@@ -3,7 +3,9 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.owl.member.dao.MemberDao">
-	
+	<select id="getMembers"  resultType="com.owl.member.dto.Member">
+		SELECT EMAIL, PASSWORD, ENABLED, NAME, PROFILEPIC, SIGNFROM, AUTHOK FROM owl.MEMBER
+	</select>
 </mapper>
 
 

@@ -11,8 +11,7 @@
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 		<!-- <property name="url"
             value="jdbc:mysql://데이터베이스 주소:포트번호/스키마이름?useSSL=false&amp;serverTimezone=UTC"/> -->
-		<property name="url"
-			value="jdbc:mysql://localhost:3306/owl?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC" />
+		<property name="url" value="jdbc:mysql://localhost:3306/owl?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC"/>
 		<property name="username" value="family_c" />
 		<property name="password" value="1004" />
 	</bean>
@@ -24,7 +23,7 @@
 	<!-- Mybatis 설정  -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="driverManagerDataSource"></property>
-		<property name="mapperLocations" value="classpath*:kr/co/mycom/model/mapper/*xml" />
+		<property name="mapperLocations" value="classpath*:com/owl/*/mapper/*xml" />
 	</bean>
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">

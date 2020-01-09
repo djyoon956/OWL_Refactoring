@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactory;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
@@ -26,12 +27,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.owl.member.dto.Member;
 import com.owl.member.service.KaKaoService;
+import com.owl.member.service.MemberService;
 import com.owl.member.service.NaverService;
 
 @Controller
 public class LoginController {
+
 	@Autowired
-	private SqlSession sqlSession;
+	private MemberService service;
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -44,7 +47,7 @@ public class LoginController {
 
 	@Autowired
 	private NaverService naverService;
-
+	
 	@RequestMapping(value = "Login.do", method = RequestMethod.GET)
 	public String showView() {
 		return "member/login";
