@@ -38,6 +38,7 @@ public class MemberService {
 
 	public boolean insertMember(Member member) {
 		System.out.println("insertMember service in");
+		System.out.println(member.toString());
 		MemberDao userDao = getMemberDao();
 	
 		boolean result = false;

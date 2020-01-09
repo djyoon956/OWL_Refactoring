@@ -119,6 +119,8 @@ public class LoginController {
 		
 		String imagefilename = member.getMultipartFile().getOriginalFilename();
 		boolean result = false;
+		String viewpage ="";
+		
 		try {
 			// DB insert 해야함
 			
@@ -131,47 +133,45 @@ public class LoginController {
 				FileOutputStream fs = new FileOutputStream(fpath);
 				fs.write(member.getMultipartFile().getBytes());
 				fs.close();
-				member.setImagefilename(imagefilename);
+				member.setProfilePic(imagefilename);
+				member.setPassword(this.bCryptPasswordEncoder.encode(member.getPassword()));  //비밀번호 암호화 
 
 			}
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			member.setPassword(this.bCryptPasswordEncoder.encode(member.getPassword()));
 			result = service.insertMember(member);
-
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-			Map<String, Object> models = new HashMap<String, Object>();
-			models.put("memberId", member.getEmail());
-			models.put("name", member.getName());
 			
-			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
-					velocityEngineFactoryBean.createVelocityEngine(), "joinTemplate.vm", "UTF-8", models);
-			messageHelper.setSubject("[OWL] 가입을 환영합니다.");
-			messageHelper.setFrom("bit_team2@naver.com");
-			messageHelper.setTo(member.getEmail());
-			messageHelper.setText(mailBody, true);
-			mailSender.send(message);
+			
+			if(result) {
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+				Map<String, Object> models = new HashMap<String, Object>();
+				models.put("memberId", member.getEmail());
+				models.put("name", member.getName());
+				
+				String mailBody = VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "joinTemplate.vm", "UTF-8", models);
+				messageHelper.setSubject("[OWL] 가입을 환영합니다.");
+				messageHelper.setFrom("bit_team2@naver.com");
+				messageHelper.setTo(member.getEmail());
+				messageHelper.setText(mailBody, true);
+				mailSender.send(message);
+				
+				model.addAttribute("mail", member.getEmail());
+				viewpage="redirect:Login.do?show=join";
+			}
+
 
 		} catch (Exception e) {
 			System.out.println("이거 에러..>" + e.getMessage());
+			viewpage="redirect:Login.do";
 		}
 		
-		model.addAttribute("mail", member.getEmail());
-		model.addAttribute("show", "joinEmail");
 		
-		return "index";
+		//model.addAttribute("show", "joinEmail");
+		
+		return viewpage;
 	}
+	
 	
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
 	public String emailConfirmOK(String memberId, Model model) {
