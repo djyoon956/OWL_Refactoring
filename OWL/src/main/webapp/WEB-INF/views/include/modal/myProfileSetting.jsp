@@ -6,19 +6,36 @@ margin-bottom: 10px;
 }
 </style>
 <script>
+
+/* $("#deleteMemberBtn").click(function() { */
+$(function() {
+	
+	$("#deleteChk").change(function(){
+		if ($("input:checkbox[id='deleteChk']").is(":checked") == true){
+			$("#deleteChk").siblings(".text-danger").css(
+					"display", "none");
+			$("#deleteMemberBtn").attr('disabled', false);
+		}else{ 
+			$("#deleteChk").siblings(".text-danger").css(
+				"display", "inline-block");
+			$("#deleteMemberBtn").attr('disabled', true);	
+		}
+	});
+});
+/* }); */
+
 $(function(){
 	 $("#multipartFile").change(function(){
   		var reader = new FileReader();
-
   	    reader.onload = function (e) {
   	        // get loaded data and render thumbnail.
-  	        document.getElementById("userImg").src = e.target.result;
+  	        document.getElementById("userImg2").src = e.target.result;
   	    };
-
   	    // read the image file as a data URL.
   	    reader.readAsDataURL(this.files[0]);
   	});	
 });
+
 </script>
 <div id="myProfileSetModal" class="modal fade bd-example-modal-lg"
 	tabindex="-1" role="dialog" aria-hidden="true">
@@ -53,9 +70,9 @@ $(function(){
 												<div class="form-group col-md-6">
 													<label>Your photo</label> <br> 
 													<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle"
-														alt="" id="userImg" height="100" width="100">
+														alt="" id="userImg2" height="100" width="100">
 												</div>
-												<input type="file" id="multipartFile" name="multipartFile" accept="resources/images/*">
+												<input type="file" id="multipartFile" name="multipartFile">
 												<div class="form-group col-md-6">
 													<label>Your name</label> <input type="text"
 														class="form-control input-default" value="${member.name}">
@@ -109,8 +126,9 @@ $(function(){
 												<div class="basic-form">
 													<div class="form-group ">
 														<div class="form-check form-check-inline">
-															<label class="form-check-label"> <input type="checkbox" class="form-check-input" value="">
+															<label class="form-check-label"> <input type="checkbox" class="form-check-input" value="" id="deleteChk">
 																<code>*</code>I agree.
+																<span class="text-danger" style="display:inline-block;">&emsp;Please check your agreement.</span>
 															</label>
 														</div>
 													</div>
@@ -124,7 +142,7 @@ $(function(){
 														<input type="password" class="form-control" placeholder="Password">
 														</div>
 													<div class="col-sm-3">
-														<button type="submit" class="btn btn-dark mb-2">Close Account</button>
+														<button type="submit" class="btn btn-dark mb-2" id="deleteMemberBtn" disabled>Close Account</button>
 														</div>
 													</div>
 												</div>
