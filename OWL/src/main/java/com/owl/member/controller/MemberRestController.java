@@ -79,18 +79,19 @@ public class MemberRestController {
 	 */
 
 	//회원정보 조회 (test)
-	@RequestMapping("/GetMember.do")
-	public String GetMember(String email, Model model) throws Exception{
-	try {	
+	@RequestMapping("GetMember.do")
+	public Member GetMember(String email, Model model) throws Exception{
+	Member member = null;
+		
+		try {	
 		//회원정보
-		Member member = service.getMember("qqq@gmail.com");
+		member = service.getMember("qqq@gmail.com");
 		System.out.println("멤버 조회 : " + member);
 		model.addAttribute("member", member);
 	} catch (Exception e) {
 		System.out.println(e.getMessage());
 	}
-
-	return "include/modal/myProfileSetting";
+		return member;
 	}
 	
 }

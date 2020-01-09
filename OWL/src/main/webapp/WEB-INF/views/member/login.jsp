@@ -78,7 +78,6 @@ body {
 		})
 
 		$("#profileFile").change(function() {
-			console.log("chagne");
 			let file = document.querySelector('input[type=file]').files[0];
 			let reader = new FileReader();
 
@@ -95,7 +94,6 @@ body {
 
 		$("#joinBox  .name").keyup(
 				function(event) {
-					console.log('hihi');
 					if ($("#joinBox  .name").val().length < 1)
 						$("#joinBox  .name").siblings(".text-danger").css(
 								"display", "block");
@@ -152,7 +150,6 @@ body {
 										console.log('여기와와와 else');
 										$("#resetBox .failletter").css("display", "block");
 										$("#resetBox .successletter").css("display", "none");
-										
 									}
 								})
 					}
@@ -282,7 +279,7 @@ body {
 													<h4>JOIN</h4>
 												</div>
 
-												<form action="Login.do" method="post" class="mt-4 mb-3 login-input">
+												<form action="SignUp.do" method="post" class="mt-4 mb-3 login-input">
 													<div class="text-center mb-3">
 														<img id="profileImage" src="resources/images/login/profile.png" style="width: 150px; height: 150px; cursor: pointer;"
 															data-toggle="tooltip" data-placement="top"
