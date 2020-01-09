@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <link href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-latest.min.js"	type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -179,9 +179,6 @@ font-weight: bold;
 		    	$("#setIcon").removeClass("fa-spin");
 		    }
 		});
- 	
-
-
 	
 	});
 
@@ -200,8 +197,14 @@ function Cancle(){
 	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i>&emsp;</span><br>";
 	$('.ChatList').append(plus);
 }
+
+function ride(){
+
+	console.log("탄다")
+}
 </script>
 
+<c:set var="member" value="${member}" scope="request"/>
 <div class="nav-header" style="background-color: #336699;">
 	<div class="brand-logo">
 		<a href="Index.do"> 
@@ -252,19 +255,16 @@ function Cancle(){
 				</li>
 			</ul>
 
-
-
-
 			<!-- toggle content Start-->
 			<div class="toggleOption " id="userToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box mt-5">
 					<div class="user-img c-pointer position-relative">
-					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
+					<a href="#" onclick="GetMember()" data-toggle="modal" data-target="#myProfileSetModal">
 						<img src="resources/images/users/8.jpg" class="rounded-circle" alt="" id="userImg">
 						</a>
 					</div>
-					<h5 class="mt-3 mb-1">Name</h5>
-					<p class="m-0">E-mail Address</p>
+					<h5 class="mt-3 mb-1">${member.name }</h5>
+					<p class="m-0">${member.email }</p>
 				</div>
 				<hr>
 				<div class="text-center setting-box">
