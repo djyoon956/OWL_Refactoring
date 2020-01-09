@@ -293,7 +293,7 @@ body {
 													<div class="text-center mb-3">
 														<img id="profileImage" src="resources/images/login/profile.png" onerror="this.src='resources/images/login/profile.png'" style="width: 150px; height: 150px; cursor: pointer;"
 															data-toggle="tooltip" data-placement="top"
-															title="Please upload image."> 
+															title="Please upload image." class="rounded-circle" > 
 															<input type="file" name="multipartFile" id="multipartFile" accept="image/*" style="display: none;" onchange="previewProfile()" />
 															
 													</div>
