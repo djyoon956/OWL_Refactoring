@@ -17,27 +17,25 @@ $(function() {
 			$("#deleteMemberBtn").attr('disabled', false);
 		}else{ 
 			$("#deleteChk").siblings(".text-danger").css(
-				"display", "block");
+				"display", "inline-block");
 			$("#deleteMemberBtn").attr('disabled', true);	
 		}
 	});
+
+	 $("#multipartFile").change(function(){
+	  		var reader = new FileReader();
+	  	    reader.onload = function (e) {
+	  	        // get loaded data and render thumbnail.
+	  	        document.getElementById("userImg2").src = e.target.result;
+	  	      console.log($("#multipartFile").val());
+	  	    };
+	  	    // read the image file as a data URL.
+	  	    reader.readAsDataURL(this.files[0]);
+	  	});	
+
+	  	
 });
 /* }); */
-
-$(function(){
-	 $("#multipartFile").change(function(){
-  		var reader = new FileReader();
-
-  	    reader.onload = function (e) {
-  	        // get loaded data and render thumbnail.
-  	        document.getElementById("userImg").src = e.target.result;
-  	    };
-
-  	    // read the image file as a data URL.
-  	    reader.readAsDataURL(this.files[0]);
-  	});	
-});
-
 </script>
 <div id="myProfileSetModal" class="modal fade bd-example-modal-lg"
 	tabindex="-1" role="dialog" aria-hidden="true">
@@ -72,27 +70,26 @@ $(function(){
 												<div class="form-group col-md-6">
 													<label>Your photo</label> <br> 
 													<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle"
-														alt="" id="userImg" height="100" width="100">
+														alt="" id="userImg2" height="100" width="100">
 												</div>
-												<input type="file" id="multipartFile" name="multipartFile" accept="resources/images/*">
+												<input type="file" id="multipartFile" name="multipartFile">
 												<div class="form-group col-md-6">
-													<label>Your name</label> <input type="text"
-														class="form-control input-default" value="${member.name}">
+													<label>Your name</label> 
+													<input type="text" name="name" class="form-control input-default" value="${member.name}">
 												</div>
 												<div class="form-group col-md-6">
-													<label>Your email</label> <input type="text"
-														class="form-control input-default"
-														readonly value="${member.email}">
+													<label>Your email</label> 
+													<input type="text" class="form-control input-default" readonly value="${member.email}">
 												</div>
 											</div>
 											<div class="form-row">
 												<div class="form-group  col-md-6">
 													<label>Password</label> <input type="password"
-														class="form-control input-default" value="${member.password}">
+														class="form-control input-default" name="password" value="${member.password}">
 												</div>
 												<div class="form-group  col-md-6">
-													<label>Password check+</label> <input type="password"
-														class="form-control input-default" value="${member.password}">
+													<label>Password check+</label> 
+													<input type="password" class="form-control input-default" value="${member.password}">
 												</div>
 											</div>
 											<br>
@@ -111,7 +108,7 @@ $(function(){
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
-										<form action="DeleteAccount.do" method="get">
+										<!-- <form action="DeleteAccount.do" method="get"> -->
 											<div class="modal-body">
 											<h5 class="mt-3 mb-1 "><img class="" src="resources/images/owl_logo_fit.png" style="width: 60px"> &nbsp;&nbsp; Please check before deleting your account.</h5>
 												<br>
@@ -130,25 +127,26 @@ $(function(){
 														<div class="form-check form-check-inline">
 															<label class="form-check-label"> <input type="checkbox" class="form-check-input" value="" id="deleteChk">
 																<code>*</code>I agree.
-																<span class="text-danger" style="display: block;">&emsp;Please check your agreement.</span>
+																<span class="text-danger" style="display:inline-block;">&emsp;Please check your agreement.</span>
 															</label>
 														</div>
 													</div>
 												</div>
 												<hr>
+												<form action="DeleteAccount.do" method="get">
 												<div class="row">
 													<div class="col-sm-6">
 														<label class="sr-only">Password</label> 
 													</div>
 													<div class="col-sm-3">
-														<input type="password" class="form-control" placeholder="Password">
+														<input type="password" class="form-control" placeholder="Password" name="password">
 														</div>
 													<div class="col-sm-3">
 														<button type="submit" class="btn btn-dark mb-2" id="deleteMemberBtn" disabled>Close Account</button>
 														</div>
 													</div>
+													</form>
 												</div>
-										</form>
 									</div>
 								</div>
 							</div>
