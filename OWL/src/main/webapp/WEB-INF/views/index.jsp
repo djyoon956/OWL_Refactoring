@@ -33,6 +33,9 @@
 <!-- Kakao -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript" src="resources/js/commonSweetAlert.js"></script>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css?family=Kalam&display=swap" rel="stylesheet">
 <style type="text/css">
 .snsLoginButton {
    background-color: transparent;
@@ -42,23 +45,27 @@
    cursor: pointer;
 }
 
-
-
 /*임의의 메인 텍스트*/
 body{
 background-color:#326295;
-
 }
-
 .e{
   position: absolute;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
 }
+
+.d{
+  position: absolute;
+  left:50%;
+  top:80%;
+  transform:translate(-50%,-50%);
+
+}
 h1{
-  font-size:60px;
-  font-weight:bold;
+  font-size:80px;
+  font-weight:700;
   font-family: 'Montserrat', sans-serif;
   text-align:center;
   color:#fff;
@@ -112,24 +119,18 @@ h1:hover ~ h2{
 
 h2{
   color:#fff;
-  font-family: 'Pinyon Script', cursive;
+  font-family: 'Kalam', cursive;
   text-align:center;
-  font-size:100px;
-  font-weight:100;
-  bottom:40px;
-  position: absolute;
+  font-size:40px;
+  font-weight:200;
+  bottom:80%;
   transition:1s;
   -webkit-transition:1s;
   -ms-transition:1s;
-  opacity:0.1;
-  width: 100%;
+  opacity:0.2;
+  width: 400px;
+  right: 100px;
 }
-
-
-
-
-
-
 
 /*에니메이션 텍스트*/
 /*  @import url('https://fonts.googleapis.com/css?family=Roboto:700');
@@ -373,14 +374,17 @@ function openDialog() {
 
 
       <!-- Content -->
-      <div class="content-main">
-         <div class="container-fluid">
+      <div class="content-main" style="">
+         <div class="container-fluid" >
          
-          <div class="e">
+          <div class="e text-center">
 		  <h1>OWL</h1>
-		  <h2>OWL</h2>
+
 		</div>
-         
+		 <div class="d text-center">
+		 <h5 style="color:lightgrey;">Our Work Leader</h5>
+		<p style="color:lightgrey;">효과적인 팀워크와 가벼워진 업무를 이끌어내는 공간, OWL </p>
+		</div>
          <!-- 내용 바뀌는 텍스트 에니메이션 -->
 					<!-- <div id=container>
 						Make
