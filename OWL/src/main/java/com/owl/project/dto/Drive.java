@@ -13,9 +13,6 @@ public class Drive {
 	private int ref;
 	private int depth;
 	
-	private int nam;
-	
-	
 	public int getDriveIdx() {
 		return driveIdx;
 	}
