@@ -1,5 +1,7 @@
 package com.owl.member.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -107,14 +109,43 @@ public class LoginController {
 	}
  
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
-	public String emailConfirm(Member member, Model model) {
+	public String emailConfirm(Member member, Model model, HttpServletRequest request) {
 		
 		System.out.println("emailConfirm in");
 		System.out.println(member.getMultipartFile());
+		System.out.println(member.getMultipartFile().getOriginalFilename());
+		
 		System.out.println(member.toString());
+		
+		String imagefilename = member.getMultipartFile().getOriginalFilename();
 		boolean result = false;
 		try {
 			// DB insert 해야함
+			
+			if (!imagefilename.equals("")) { // 실 파일 업로드
+				String uploadpath = request.getServletContext().getRealPath("upload");
+				checkDirectory(uploadpath);
+				System.out.println(uploadpath);
+				String fpath = uploadpath + "\\" + imagefilename;
+
+				FileOutputStream fs = new FileOutputStream(fpath);
+				fs.write(member.getMultipartFile().getBytes());
+				fs.close();
+				member.setImagefilename(imagefilename);
+
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			member.setPassword(this.bCryptPasswordEncoder.encode(member.getPassword()));
 			result = service.insertMember(member);
 
@@ -147,6 +178,13 @@ public class LoginController {
 		model.addAttribute("show", "joinOk");
 		model.addAttribute("memberId", memberId);
 		return "index";
+	}
+	
+	
+	private void checkDirectory(String path) {
+		File file = new File(path);
+		if (!file.exists())
+			file.mkdir();
 	}
 
 }

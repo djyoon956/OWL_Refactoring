@@ -4,9 +4,7 @@
 .list-margin {
 margin-bottom: 10px;
 }
-.form-group{
-text-align: center;
-}
+
 </style>
 <script>
 /* $("#deleteMemberBtn").click(function() { */
@@ -29,8 +27,6 @@ $(function() {
 	  	    reader.onload = function (e) {
 	  	        // get loaded data and render thumbnail.
 	  	        document.getElementById("profileImage").src = e.target.result;
-	  	      	document.getElementById("userImgTop").src = e.target.result;
-	  	    	document.getElementById("userImg").src = e.target.result;
 	  	      console.log($("#multipartFile").val());
 	  	    };
 	  	    // read the image file as a data URL.
@@ -85,7 +81,7 @@ function changeView() {
 								<div class="card-body" style="padding-top: 20px;">						
 									<div class="basic-form">																		
 												<div class="text-center mb-3">
-													<img id="profileImage" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" 
+													<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" 
 													style="width: 180px; height: 180px; "> 												
 												</div>
 												<div class="form-group">
@@ -111,15 +107,14 @@ function changeView() {
 						<div class="basic-form">										
 								<form action="UpdateMember.do" method="post"
 									enctype="multipart/form-data">
-									<div class="text-center mb-3">
+									<div class="text-center mb-3" id="changeImg">
 										<img id="profileImage" src="upload/${member.profilePic}"
 											onerror="this.src='resources/images/login/profile.png'"
 											class="rounded-circle"
 											style="width: 180px; height: 180px; cursor: pointer;"
 											data-toggle="tooltip" data-placement="bottom"
-											title="프로필을 수정하실 수 있습니다."> <input type="file"
-											id="multipartFile" name="multipartFile"
-											style="display: none;" onchange="previewProfile()" />
+											title="프로필을 수정하실 수 있습니다."> 
+											<input type="file" id="multipartFile" name="multipartFile" style="visibility: hidden;">
 									</div>
 									<div class="form-group">
 										<input type="text" name="name" id="name"
