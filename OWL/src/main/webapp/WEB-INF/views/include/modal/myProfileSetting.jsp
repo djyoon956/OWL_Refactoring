@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	
+<%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <style>
 .list-margin {
 margin-bottom: 10px;
@@ -28,7 +27,6 @@ margin-bottom: 10px;
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#deleteAccount">Delete account</a></li>
 					</ul>
-
 					<div class="tab-content">
 						<!-- My profile start-->
 						<div class="col-lg-12 tab-pane fade show active" id="profile"
@@ -40,29 +38,29 @@ margin-bottom: 10px;
 											<div class="form-row">
 												<div class="form-group col-md-6">
 													<label>Your photo</label> <br> <img
-														src="resources/images/users/8.jpg" class="rounded-circle"
-														alt="" id="userImg">
+														src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle"
+														alt="" id="userImg" height="100" width="100">
 												</div>
 
 												<input type="file">
 												<div class="form-group col-md-6">
 													<label>Your name</label> <input type="text"
-														class="form-control input-default" placeholder="name">
+														class="form-control input-default" value="${member.name}">
 												</div>
 												<div class="form-group col-md-6">
 													<label>Your email</label> <input type="text"
 														class="form-control input-default"
-														placeholder="email adrress">
+														readonly value="${member.email}">
 												</div>
 											</div>
 											<div class="form-row">
 												<div class="form-group  col-md-6">
 													<label>Password</label> <input type="password"
-														class="form-control input-default" placeholder="password">
+														class="form-control input-default" value="${member.password}">
 												</div>
 												<div class="form-group  col-md-6">
 													<label>Password check+</label> <input type="password"
-														class="form-control input-default" placeholder="password">
+														class="form-control input-default" value="${member.password}">
 												</div>
 											</div>
 											<br>

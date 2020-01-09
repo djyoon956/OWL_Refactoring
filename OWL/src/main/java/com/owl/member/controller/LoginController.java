@@ -54,8 +54,9 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
-	public String login() {
-
+	public String login(HttpServletRequest request) {
+		// for test
+		request.getSession().setAttribute("member", service.getMember("qqq@gmail.com"));
 		System.out.println("login");
 		return "member/main";
 	}
@@ -142,7 +143,6 @@ public class LoginController {
 
 	@RequestMapping(value = "DeleteAccount.do", method = RequestMethod.GET)
 	public String deleteOkView() {
-		System.out.println("여기오니?");
 		return "member/deleteOk";
 	}
 }

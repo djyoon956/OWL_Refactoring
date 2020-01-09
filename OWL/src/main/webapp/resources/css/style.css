@@ -118,7 +118,7 @@ body {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #76838f;
+  color: #fff;
   text-align: left;
   background-color: #f0f3f7; 
   height : 100%
@@ -7345,7 +7345,7 @@ body {
 
 a {
   transition: all 0.4s ease-in-out;
-  color: #76838f; }
+  color: #fff; }
 
 a:focus,
 a:hover {
@@ -7806,7 +7806,7 @@ sub {
   display: inline-block; }
   .icons > a i {
     font-size: 1.25rem;
-    color: #abafb3; }
+    color: #fff; }
 
 .icons.active .drop-down {
   display: block; }

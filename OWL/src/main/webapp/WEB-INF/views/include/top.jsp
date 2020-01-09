@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <link href="https://fonts.googleapis.com/css?family=Kalam:700&display=swap" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-latest.min.js"	type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -29,6 +29,11 @@
 #settingToggle, #alarmToggle, #chatToggle, #userToggle {
 	padding-left: 1%;
 	padding-right: 1%;
+}
+
+
+.whiteColor{
+color: #fff;
 }
 
 .toggleOption {
@@ -126,6 +131,9 @@ font-weight: bold;
 .activity.off{
 	background-color: lightgrey;
 }
+
+
+
 </style>
 <script>
 	$(document).ready(function() {
@@ -179,9 +187,6 @@ font-weight: bold;
 		    	$("#setIcon").removeClass("fa-spin");
 		    }
 		});
- 	
-
-
 	
 	});
 
@@ -202,6 +207,7 @@ function Cancle(){
 }
 </script>
 
+<c:set var="member" value="${member}" scope="request"/>
 <div class="nav-header" style="background-color: #336699;">
 	<div class="brand-logo">
 		<a href="Index.do"> 
@@ -232,7 +238,7 @@ function Cancle(){
 					<div class="user-img c-pointer position-relative">
 						<!-- <span class="activity active"></span> -->
 						<a href="javascript:void(0)" id="userBtn"> 
-						<img src="resources/images/user/1.png" height="40" width="40" alt=""></a>
+						<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="40" width="40" alt=""></a>
 					</div> 
 				</li>
 
@@ -252,19 +258,16 @@ function Cancle(){
 				</li>
 			</ul>
 
-
-
-
 			<!-- toggle content Start-->
 			<div class="toggleOption " id="userToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box mt-5">
 					<div class="user-img c-pointer position-relative">
 					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
-						<img src="resources/images/users/8.jpg" class="rounded-circle" alt="" id="userImg">
+						<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" alt="" id="userImg" height="100" width="100">
 						</a>
 					</div>
-					<h5 class="mt-3 mb-1">Name</h5>
-					<p class="m-0">E-mail Address</p>
+					<h5 class="mt-3 mb-1">${member.name}</h5>
+					<p class="m-0">${member.email}</p>
 				</div>
 				<hr>
 				<div class="text-center setting-box">
@@ -381,27 +384,27 @@ function Cancle(){
 
 
 			<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
-				<div class="text-center setting-box c-pointer mt-5">
-					<h5 class="mt-3 mb-1">SIDEBAR BACKGROUND</h5>
+				<div class="text-center setting-box  mt-5">
+					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR BACKGROUND</h5>
 					<hr>
-					<span class="badge coloricon" style="background-color: white; display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: gray; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: white; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: gray; display: inline-block;"></span>
 
 
 				</div>
-				<div class="text-center setting-box c-pointer">
-					<h5 class="mt-3 mb-1">SIDEBAR ACTIVE COLOR</h5>
+				<div class="text-center setting-box ">
+					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR ACTIVE COLOR</h5>
 					<hr>
-					<span class="badge coloricon" style="background-color: white; display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: #f7c9c9;display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: #e0d8cd; display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: #91a8d1; display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: #c4d7a4; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: white; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: #f7c9c9;display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: #e0d8cd; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: #91a8d1; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: #c4d7a4; display: inline-block;"></span>
 				</div>
 
   <!-- 처음에는 기본된 폰트로 둘까? -->
 				<div class="text-center setting-box">
-					<h5 class="mt-3 mb-1">SELECT FONT</h5>
+					<h5 class="mt-3 mb-1 whiteColor">SELECT FONT</h5>
 					<hr>
 					<div class="col-lg-12">
 						<select class="form-control" id="val-skill" name="val-skill">
