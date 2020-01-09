@@ -65,5 +65,9 @@ public class MemberController {
 		if (!file.exists())
 			file.mkdir();
 	}
-
+	@RequestMapping(value= "DeleteAccount.do", method = RequestMethod.GET)
+	public String deleteMember() {
+		
+		return "member/deleteOk";
+	}
 }
