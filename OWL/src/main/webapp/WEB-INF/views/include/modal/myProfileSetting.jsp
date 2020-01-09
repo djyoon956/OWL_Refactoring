@@ -17,7 +17,7 @@ $(function() {
 			$("#deleteMemberBtn").attr('disabled', false);
 		}else{ 
 			$("#deleteChk").siblings(".text-danger").css(
-				"display", "block");
+				"display", "inline-block");
 			$("#deleteMemberBtn").attr('disabled', true);	
 		}
 	});
@@ -108,7 +108,7 @@ $(function() {
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
-										<form action="DeleteAccount.do" method="get">
+										<!-- <form action="DeleteAccount.do" method="get"> -->
 											<div class="modal-body">
 											<h5 class="mt-3 mb-1 "><img class="" src="resources/images/owl_logo_fit.png" style="width: 60px"> &nbsp;&nbsp; Please check before deleting your account.</h5>
 												<br>
@@ -127,25 +127,26 @@ $(function() {
 														<div class="form-check form-check-inline">
 															<label class="form-check-label"> <input type="checkbox" class="form-check-input" value="" id="deleteChk">
 																<code>*</code>I agree.
-																<span class="text-danger" style="display: block;">&emsp;Please check your agreement.</span>
+																<span class="text-danger" style="display:inline-block;">&emsp;Please check your agreement.</span>
 															</label>
 														</div>
 													</div>
 												</div>
 												<hr>
+												<form action="DeleteAccount.do" method="get">
 												<div class="row">
 													<div class="col-sm-6">
 														<label class="sr-only">Password</label> 
 													</div>
 													<div class="col-sm-3">
-														<input type="password" class="form-control" placeholder="Password">
+														<input type="password" class="form-control" placeholder="Password" name="password">
 														</div>
 													<div class="col-sm-3">
 														<button type="submit" class="btn btn-dark mb-2" id="deleteMemberBtn" disabled>Close Account</button>
 														</div>
 													</div>
+													</form>
 												</div>
-										</form>
 									</div>
 								</div>
 							</div>
