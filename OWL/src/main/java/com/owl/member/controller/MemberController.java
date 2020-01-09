@@ -51,7 +51,7 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "member/main";
+		return "redirect:/member/main";
 	}
 	
 	private void checkDirectory(String path) {
