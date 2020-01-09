@@ -53,22 +53,19 @@ color: gray;
   margin-right: auto;
 
 }
+
+body {
+	background-color: #326295;
+	overflow-y: hidden;
+}
 </style>
 </head>
 <body>
 	<div id="main-wrapper">
 
-		<!-- Top -->
-		<div class="header-row" style="background-color: black">
-			<div class="header-content clearfix">
-				<div class="header-left">
-					<div class="nav-header" style="padding-left: 200px;background-color: black">
-						<a href="Index.do" > 
-								<img src="resources/images/owl_logo_real.png" alt="">
-						</a>
-					</div>
-				</div>
-			</div>
+		<div class="text-center mt-5">
+			<a href="Index.do"><img src="resources/images/owl_plz_beige.png"
+				alt=""></a>
 		</div>
 
 		<!-- Content -->
@@ -101,8 +98,7 @@ color: gray;
 			
 		</div>
 
-		<!-- Bottom -->
-		<jsp:include page="../include/bottom.jsp" />
+
 	</div>
 
 
