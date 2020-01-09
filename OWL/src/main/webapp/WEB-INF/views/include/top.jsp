@@ -281,8 +281,8 @@ function Cancle(){
 			<!-- 채팅 목록 토글 -->
 			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 20;">
 				<div  class="ChatList"> 
-					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;"><i class="fas fa-comment-medical"></i>&emsp;</a>					
-					<span id="searchChatname" onclick="Search()"><i class="fas fa-search"></i>&emsp;</span>
+					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;" class="whiteColor"><i class="fas fa-comment-medical"></i>&emsp;</a>					
+					<span class ="whiteColor" id="searchChatname" onclick="Search()"><i class="fas fa-search"></i>&emsp;</span>
 				<br>
 				</div>
 				<hr>
