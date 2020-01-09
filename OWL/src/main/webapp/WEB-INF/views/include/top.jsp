@@ -238,7 +238,7 @@ function Cancle(){
 					<div class="user-img c-pointer position-relative">
 						<!-- <span class="activity active"></span> -->
 						<a href="javascript:void(0)" id="userBtn"> 
-						<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="40" width="40" alt=""></a>
+						<img id="userImgTop" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="40" width="40" alt=""></a>
 					</div> 
 				</li>
 
