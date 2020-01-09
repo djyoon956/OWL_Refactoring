@@ -266,13 +266,13 @@ function Cancle(){
 						<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" alt="" id="userImg" height="100" width="100">
 						</a>
 					</div>
-					<h5 class="mt-3 mb-1">${member.name}</h5>
-					<p class="m-0">${member.email}</p>
+					<h5 class="mt-3 mb-1 ">${member.name}</h5>
+					<p class="m-0 whiteColor">${member.email}</p>
 				</div>
 				<hr>
 				<div class="text-center setting-box">
 					<ul>
-					<li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+					<li><a href="page-login.html" class="whiteColor"><i class="icon-key"></i> <span>Logout</span></a></li>
 					</ul>
 				
 				</div>
