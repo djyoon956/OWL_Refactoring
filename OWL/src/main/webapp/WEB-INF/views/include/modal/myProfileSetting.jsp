@@ -206,16 +206,60 @@ function changeView() {
 													</div>
 												</div>
 												<hr>
+											<c:choose>
+												<c:when test="${member.signFrom == '홈페이지'}">
+													<form action="DeleteAccount.do" method="get">
+												</c:when>
+												<c:when test="${member.signFrom == '구글'}">
+													<form action="googleLogin.do" method="get">
+												</c:when>
+												<c:when test="${member.signFrom == '카카오'}">
+													<form action="kakaoLogin.do" method="get">
+												</c:when>
+												<c:otherwise>
+													<!-- 네이버 -->
+													<form action="naverLogin.do" method="get">
+												</c:otherwise>
+											</c:choose>
+											<!-- <form action="DeleteAccount.do" method="get"> -->
+
 												<div class="row">
-													<div class="col-sm-6">
+
+												<c:choose>
+												<c:when test="${member.signFrom == '홈페이지'}">
+													<!-- <div class="col-sm-2">
 														<label class="sr-only">Password</label> 
-													</div>
-													<div class="col-sm-3">
+													</div> -->
+													<div class="col-sm-6">
 														<input type="password" class="form-control" placeholder="Password">
 														</div>
-													<div class="col-sm-3">
-														<button type="submit" class="btn btn-dark mb-2" id="deleteMemberBtn" disabled>Close Account</button>
-														</div>
+													<div class="col-sm-6">
+														<button type="submit" class="btn btn-dark mt-1" id="deleteMemberBtn" disabled>Close Account</button>
+													</div>
+												</c:when>
+												<c:when test="${member.signFrom == '구글'}">
+													<button id="googleLoginButton" class="snsLoginButton mr-3">
+														<img src='resources/images/login/google.png'
+															style="width: 50px;">
+													</button>
+												</c:when>
+												<c:when test="${member.signFrom == '카카오'}">
+													<button id="kakaoLoginButton" class="snsLoginButton mr-3"
+														onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=5d151c02cc241d9ba7a8373a8051d79d&redirect_uri=http://localhost:8090/OWL/kakaoLogin.do&response_type=code'">
+														<img src='resources/images/login/kakao.png'
+															style="width: 50px;">
+													</button>
+												</c:when>
+												<c:otherwise>
+													<!-- 네이버 -->
+													<button id="naverLoginButton"
+														class="snsLoginButton mt-2 mr-3"
+														onclick="location.href='https://nid.naver.com/oauth2.0/authorize?client_id=zlKEJHqR7YB9riY5pP5l&redirect_uri=http://localhost:8090/OWL/naverLogin.do&response_type=code'">
+														<img src='resources/images/login/naver.png'
+															style="width: 50px;">
+													</button>
+												</c:otherwise>
+											</c:choose>
 													</div>
 												</div>
 										</form>

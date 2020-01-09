@@ -18,7 +18,7 @@
                 <input type="password" name="pwd1" class="form-control pwd1" placeholder="New Password">
                 <span class="text-danger pwd1letter" style="display: none;">Please enter your New Password.</span><br>
                 <input type="password" name="pwd2" class="form-control pwd2" placeholder="Confirmed New Password">
-                <span class="text-success successletter" style="display: none;">success.</span>
+                <span class="text-success successletter" style="display: none;">You can change your Password</span>
                  <span class="text-danger failletter" style="display: none;">Passwords do not match.</span>
                 
                 
