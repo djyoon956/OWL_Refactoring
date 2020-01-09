@@ -139,10 +139,5 @@ public class LoginController {
 		model.addAttribute("memberId", memberId);
 		return "index";
 	}
-	
 
-	@RequestMapping(value = "DeleteAccount.do", method = RequestMethod.GET)
-	public String deleteOkView() {
-		return "member/deleteOk";
-	}
 }
