@@ -314,7 +314,7 @@ body {
 															enter your email.</span>
 													</div>
 													<div class="form-group">
-														<input type="password" name="pwd" class="form-control pwd"
+														<input type="password" name="password" class="form-control pwd"
 															placeholder="Password"> <span class="text-danger"
 															style="display: none;">Please enter your password
 															at least 8.</span>
