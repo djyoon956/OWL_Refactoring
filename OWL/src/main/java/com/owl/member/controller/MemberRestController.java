@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -69,14 +70,6 @@ public class MemberRestController {
 
 		return map;
 	}
-	
-	/*
-	 * @RequestMapping(value="GetMember.do") public String GetMember(String email){
-	 * 
-	 * Member member = service.getMember("qqq@gmail.com");
-	 * 
-	 * return member; }
-	 */
 
 	//회원정보 조회 (test)
 	@RequestMapping("GetMember.do")
@@ -84,7 +77,6 @@ public class MemberRestController {
 	Member member = null;
 		
 		try {	
-		//회원정보
 		member = service.getMember("qqq@gmail.com");
 		System.out.println("멤버 조회 : " + member);
 		model.addAttribute("member", member);
@@ -93,5 +85,24 @@ public class MemberRestController {
 	}
 		return member;
 	}
+	
+	
+	//회원가입 Ok
+	/*
+	 * @RequestMapping(value="SignUp.do") public String InsertMember(Member member,
+	 * HttpServletRequest request){
+	 * System.out.println("InsertMember Controller in"); Boolean flag = false;
+	 * String viewpage ="";
+	 * 
+	 * flag = service.insertMember(member);
+	 * 
+	 * if(flag) { System.out.println("회원가입성공"); viewpage = "redirect:Login.do";
+	 * }else { System.out.println("회원가입실패"); viewpage =
+	 * "redirect:Login.do?show=join"; }
+	 * 
+	 * return null; }
+	 */
+	
+	
 	
 }
