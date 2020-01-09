@@ -17,7 +17,7 @@ $(function() {
 			$("#deleteMemberBtn").attr('disabled', false);
 		}else{ 
 			$("#deleteChk").siblings(".text-danger").css(
-				"display", "block");
+				"display", "inline-block");
 			$("#deleteMemberBtn").attr('disabled', true);	
 		}
 	});
@@ -128,7 +128,7 @@ $(function(){
 														<div class="form-check form-check-inline">
 															<label class="form-check-label"> <input type="checkbox" class="form-check-input" value="" id="deleteChk">
 																<code>*</code>I agree.
-																<span class="text-danger" style="display: block;">&emsp;Please check your agreement.</span>
+																<span class="text-danger" style="display:inline-block;">&emsp;Please check your agreement.</span>
 															</label>
 														</div>
 													</div>
