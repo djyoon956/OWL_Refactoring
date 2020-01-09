@@ -31,6 +31,11 @@
 	padding-right: 1%;
 }
 
+
+.whiteColor{
+color: #fff;
+}
+
 .toggleOption {
 	padding-top: 30px;
 	background: #336699;
@@ -126,6 +131,9 @@ font-weight: bold;
 .activity.off{
 	background-color: lightgrey;
 }
+
+
+
 </style>
 <script>
 	$(document).ready(function() {
@@ -381,27 +389,27 @@ function ride(){
 
 
 			<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
-				<div class="text-center setting-box c-pointer mt-5">
-					<h5 class="mt-3 mb-1">SIDEBAR BACKGROUND</h5>
+				<div class="text-center setting-box  mt-5">
+					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR BACKGROUND</h5>
 					<hr>
-					<span class="badge coloricon" style="background-color: white; display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: gray; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: white; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: gray; display: inline-block;"></span>
 
 
 				</div>
-				<div class="text-center setting-box c-pointer">
-					<h5 class="mt-3 mb-1">SIDEBAR ACTIVE COLOR</h5>
+				<div class="text-center setting-box ">
+					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR ACTIVE COLOR</h5>
 					<hr>
-					<span class="badge coloricon" style="background-color: white; display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: #f7c9c9;display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: #e0d8cd; display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: #91a8d1; display: inline-block;"></span>
-					<span class="badge coloricon" style="background-color: #c4d7a4; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: white; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: #f7c9c9;display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: #e0d8cd; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: #91a8d1; display: inline-block;"></span>
+					<span class="badge coloricon c-pointer" style="background-color: #c4d7a4; display: inline-block;"></span>
 				</div>
 
   <!-- 처음에는 기본된 폰트로 둘까? -->
 				<div class="text-center setting-box">
-					<h5 class="mt-3 mb-1">SELECT FONT</h5>
+					<h5 class="mt-3 mb-1 whiteColor">SELECT FONT</h5>
 					<hr>
 					<div class="col-lg-12">
 						<select class="form-control" id="val-skill" name="val-skill">
