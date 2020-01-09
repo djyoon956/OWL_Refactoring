@@ -20,5 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteMember">
 		DELETE FROM owl.MEMBER WHERE EMAIL=#{email}
 	</delete>
-	<!-- <insert></insert> -->
+	
+	
+<!-- 	public int insertMember(Member member) throws ClassNotFoundException, SQLException; -->
+	<insert id="insertMember" parameterType="com.owl.member.dto.Member">
+	INSERT INTO owl.MEMBER(email, password, name, profilepic, signfrom, authok) VALUES ('inyoung@naver.com', 1234, 'inyoung', '12.jpg', '홈페이지', 1);
+	</insert>
 </mapper>

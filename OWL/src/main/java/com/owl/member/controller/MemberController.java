@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.owl.member.dto.Member;
 import com.owl.member.service.MemberService;
@@ -18,13 +19,19 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
+
+	@RequestMapping(value="SignUp.do") 
+	public String InsertMember(Member member, HttpServletRequest request){
+		System.out.println("InsertMember Controller in"); 
+		return null;
+	}
 	
-	//회원 정보 수정 (test)
 	@RequestMapping(value="UpdateMember.do")
-	public String UpdateMember(Member member, HttpServletRequest request, Model model) {
+	public String UpdateMember(Member member, HttpServletRequest request) {
 		try {
 			Member update = service.getMember("qqq@gmail.com");
-			System.out.println(update);
+			System.out.println("update : " + update);
+			System.out.println(member.getMultipartFile());
 			String imagefilename = member.getMultipartFile().getOriginalFilename();
 			System.out.println("사진" + imagefilename);
 			
@@ -38,8 +45,10 @@ public class MemberController {
 				fs.write(member.getMultipartFile().getBytes());
 				fs.close();
 				member.setImagefilename(imagefilename);
+
 			}
 			
+			update.setProfilePic(member.getImagefilename());
 			update.setName(member.getName());
 			update.setPassword(member.getPassword());
 			System.out.println(update);
@@ -48,7 +57,7 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "member/main";
+		return "redirect:/member/main";
 	}
 	
 	private void checkDirectory(String path) {

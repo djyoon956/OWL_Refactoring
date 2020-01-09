@@ -80,7 +80,6 @@ body {
 		})
 
 		$("#profileFile").change(function() {
-			console.log("chagne");
 			let file = document.querySelector('input[type=file]').files[0];
 			let reader = new FileReader();
 
@@ -124,6 +123,42 @@ body {
 						$("#joinBox  .pwd").siblings(".text-danger").css(
 								"display", "none");
 				})
+				
+		$("#resetBox  .pwd1").keyup(
+
+				function(event) {
+					if ($("#resetBox  .pwd1").val().length < 8 ) {
+						$("#resetBox  .pwd1").siblings(".text-danger").css("display", "block");
+						$("#resetBox .successletter").css("display", "none");
+						$("#resetBox .failletter").css("display", "none");
+						
+
+					}else if($("#resetBox  .pwd1").val() == null && $("#resetBox  .pwd2").val() == null) {
+						$("#resetBox .successletter").css("display", "none");
+						$("#resetBox .failletter").css("display", "none");
+						
+
+					}else{
+						$("#resetBox  .pwd1").siblings(".text-danger").css("display", "none");
+						$("#resetBox  .pwd2").keyup(
+								function(event) {
+									console.log('여기오니');
+									if ($("#resetBox  .pwd1").val() == $("#resetBox  .pwd2").val()){
+										console.log('여기와와와 if');
+										$("#resetBox .successletter").css("display", "block");
+										$("#resetBox .failletter").css("display", "none");
+										
+									}else{
+										console.log('여기와와와 else');
+										$("#resetBox .failletter").css("display", "block");
+										$("#resetBox .successletter").css("display", "none");
+									}
+								})
+					}
+				})		
+				
+	
+				
 
 		openDialog();
 	})
@@ -162,16 +197,7 @@ body {
 </head>
 
 <body>
-	<!-- ProgressBar -->
-	<!--    
-   <div id="preloader">
-      <div class="loader">
-         <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none"
-               stroke-width="3" stroke-miterlimit="10" />
-            </svg>
-      </div>
-   </div> -->
+
 
 
 	<div id="main-wrapper">
@@ -239,6 +265,12 @@ body {
 														data-toggle="modal" data-target="#findPwdModal"
 														class="text-secondary">Forgot password?</a></b>
 													<p>
+													
+													<!-- 삭제예정 -------------------------------------------------->
+													<b class="login-form__footer"> 
+													<a href="#" data-toggle="modal" data-target="#resetPwdModal" class="text-secondary">ResetPassword 테스트용</a></b>
+													<!-- ----------------------------------------------------- -->	
+													<p>
 														Don't have account? <a href="javascript:void(0);"
 															onclick="changeView(false);" class="text-primary">Sign
 															Up</a> now
@@ -255,7 +287,7 @@ body {
 													<h4>JOIN</h4>
 												</div>
 
-												<form action="Login.do" method="post" class="mt-4 mb-3 login-input">
+												<form action="SignUp.do" method="post" class="mt-4 mb-3 login-input">
 													<div class="text-center mb-3">
 														<img id="profileImage" src="resources/images/login/profile.png" style="width: 150px; height: 150px; cursor: pointer;"
 															data-toggle="tooltip" data-placement="top"
@@ -264,9 +296,8 @@ body {
 															onchange="previewProfile()" />
 													</div>
 													<div class="form-group">
-														<input type="text" name="name" class="form-control name"
-															placeholder="Name"> <span class="text-danger"
-															style="display: none;">Please enter your name.</span>
+														<input type="text" name="name" class="form-control name" placeholder="Name"> 
+														<span class="text-danger" style="display: none;">Please enter your name.</span>
 													</div>
 													<div class="form-group">
 														<input type="email" name="email"
@@ -299,12 +330,11 @@ body {
 			</div>
 		</div>
 
-		<!-- Bottom -->
-		<%-- 		<jsp:include page="../include/bottom.jsp" />
- --%>
+
 	</div>
 
 	<!--  Modal  -->
+	<jsp:include page="modal/resetPassword.jsp" />
 	<jsp:include page="modal/forgotPassword.jsp" />
 	<jsp:include page="modal/joinConfirm.jsp" />
 	<jsp:include page="modal/joinOk.jsp" />
