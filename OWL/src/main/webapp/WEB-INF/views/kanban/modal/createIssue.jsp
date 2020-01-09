@@ -43,13 +43,12 @@
 					<div class="form-group row">
 						<div class="col-2">Due date</div>
 						<div class="col-10">
-							<div class="input-group">
-								<input type="text" class="form-control mydatepicker"
-									placeholder="mm/dd/yyyy"> <span
-									class="input-group-append"> <span
-									class="input-group-text"> <i
-										class="mdi mdi-calendar-check"></i></span></span>
-							</div>
+							
+                              <input type="text" class="form-control" placeholder="YYYY-MM-DD" id="issueDate"  data-dtp="dtp_l9lmR">
+                              <!-- 								<span class="input-group-append"> 
+								<span class="input-group-text"> 
+								<i class="mdi mdi-calendar-check"></i></span></span> -->
+							
 						</div>
 					</div>
 					<div class="form-group row">

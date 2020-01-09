@@ -108,8 +108,6 @@ font-weight: bold;
   100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
-
-
 .activity{
 	height: 15px;
     width: 15px;
@@ -203,15 +201,13 @@ function Cancle(){
 	$('.ChatList').append(plus);
 }
 </script>
+
 <div class="nav-header" style="background-color: #fcf9f5;">
-	<div>
-		<a href="Index.do" style="padding: 0"> <b><img
-				src="resources/images/owl_logo_medium.png" alt=""> </b> <span
-			class="logo-compact"><img
-				src="resources/images/owl_logo_real.png" alt=""></span> <span
-			class="brand-title"> <img
-				src="resources/images/owl_logo_real.png" alt="">
-		</span>
+	<div class="brand-logo">
+		<a href="Index.do"> 
+		<b class="logo-abbr"><img src="resources/images/owl_logo_medium.png" alt=""> </b> 
+		<span class="logo-compact"><img src="resources/images/owl_plz.png" alt=""></span> 
+		<span class="brand-title"> <img src="resources/images/owl_plz.png" alt=""></span>
 		</a>
 	</div>
 </div>
@@ -235,20 +231,9 @@ function Cancle(){
 
 					<div class="user-img c-pointer position-relative">
 						<!-- <span class="activity active"></span> -->
-						<a href="javascript:void(0)" id="userBtn"> <img
-							src="resources/images/user/1.png" height="40" width="40" alt=""></a>
-					</div> <!-- 					<div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
-						<div class="dropdown-content-body">
-							<ul>
-								<li><a href="app-profile.html"><i class="icon-user"></i>
-										<span>Profile</span></a></li>
-
-								<hr class="my-2">
-								<li><a href="Lock.do"><i class="icon-lock"></i> <span>Lock Screen</span></a></li>
-								<li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
-							</ul>
-						</div>
-					</div> -->
+						<a href="javascript:void(0)" id="userBtn"> 
+						<img src="resources/images/user/1.png" height="40" width="40" alt=""></a>
+					</div> 
 				</li>
 
 				<!-- Chatting -->
@@ -271,8 +256,8 @@ function Cancle(){
 
 
 			<!-- toggle content Start-->
-			<div class="toggleOption" id="userToggle"  style="padding-top: 0px; z-index: 20;">
-				<div class="text-center setting-box">
+			<div class="toggleOption " id="userToggle"  style="padding-top: 0px; z-index: 20;">
+				<div class="text-center setting-box mt-5">
 					<div class="user-img c-pointer position-relative">
 					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
 						<img src="resources/images/users/8.jpg" class="rounded-circle" alt="" id="userImg">
@@ -392,8 +377,11 @@ function Cancle(){
 		
 			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">알람토글입니다</div>
 
-			<div class="toggleOption" id="settingToggle"  style="padding-top: 0px; z-index: 20;">
-				<div class="text-center setting-box c-pointer">
+
+
+
+			<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
+				<div class="text-center setting-box c-pointer mt-5">
 					<h5 class="mt-3 mb-1">SIDEBAR BACKGROUND</h5>
 					<hr>
 					<span class="badge coloricon" style="background-color: white; display: inline-block;"></span>

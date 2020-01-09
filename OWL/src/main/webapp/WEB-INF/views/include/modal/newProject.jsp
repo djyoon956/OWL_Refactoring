@@ -7,8 +7,7 @@
 				<h4 class="modal-title w-100 font-weight-bold">
 					<i class="fas fa-desktop"></i> 프로젝트 생성
 				</h4>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
