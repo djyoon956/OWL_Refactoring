@@ -21,21 +21,21 @@ $(function() {
 			$("#deleteMemberBtn").attr('disabled', true);	
 		}
 	});
+
+	 $("#multipartFile").change(function(){
+	  		var reader = new FileReader();
+	  	    reader.onload = function (e) {
+	  	        // get loaded data and render thumbnail.
+	  	        document.getElementById("userImg2").src = e.target.result;
+	  	      console.log($("#multipartFile").val());
+	  	    };
+	  	    // read the image file as a data URL.
+	  	    reader.readAsDataURL(this.files[0]);
+	  	});	
+
+	  	
 });
 /* }); */
-
-$(function(){
-	 $("#multipartFile").change(function(){
-  		var reader = new FileReader();
-  	    reader.onload = function (e) {
-  	        // get loaded data and render thumbnail.
-  	        document.getElementById("userImg2").src = e.target.result;
-  	    };
-  	    // read the image file as a data URL.
-  	    reader.readAsDataURL(this.files[0]);
-  	});	
-});
-
 </script>
 <div id="myProfileSetModal" class="modal fade bd-example-modal-lg"
 	tabindex="-1" role="dialog" aria-hidden="true">
@@ -74,23 +74,22 @@ $(function(){
 												</div>
 												<input type="file" id="multipartFile" name="multipartFile">
 												<div class="form-group col-md-6">
-													<label>Your name</label> <input type="text"
-														class="form-control input-default" value="${member.name}">
+													<label>Your name</label> 
+													<input type="text" name="name" class="form-control input-default" value="${member.name}">
 												</div>
 												<div class="form-group col-md-6">
-													<label>Your email</label> <input type="text"
-														class="form-control input-default"
-														readonly value="${member.email}">
+													<label>Your email</label> 
+													<input type="text" class="form-control input-default" readonly value="${member.email}">
 												</div>
 											</div>
 											<div class="form-row">
 												<div class="form-group  col-md-6">
 													<label>Password</label> <input type="password"
-														class="form-control input-default" value="${member.password}">
+														class="form-control input-default" name="password" value="${member.password}">
 												</div>
 												<div class="form-group  col-md-6">
-													<label>Password check+</label> <input type="password"
-														class="form-control input-default" value="${member.password}">
+													<label>Password check+</label> 
+													<input type="password" class="form-control input-default" value="${member.password}">
 												</div>
 											</div>
 											<br>
