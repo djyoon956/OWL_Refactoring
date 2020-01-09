@@ -34,7 +34,7 @@ import com.owl.member.service.NaverService;
 public class LoginController {
 
 	@Autowired
-	private MemberService Service;
+	private MemberService service;
 	
 	@Autowired
 	private JavaMailSender mailSender;
