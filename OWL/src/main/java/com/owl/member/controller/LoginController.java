@@ -108,7 +108,9 @@ public class LoginController {
  
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
 	public String emailConfirm(Member member, Model model) {
+		
 		System.out.println("emailConfirm in");
+		System.out.println(member.getMultipartFile());
 		System.out.println(member.toString());
 		boolean result = false;
 		try {
