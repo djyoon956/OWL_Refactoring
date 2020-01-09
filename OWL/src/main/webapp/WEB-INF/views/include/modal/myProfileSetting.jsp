@@ -9,12 +9,10 @@ margin-bottom: 10px;
 $(function(){
 	 $("#multipartFile").change(function(){
   		var reader = new FileReader();
-
   	    reader.onload = function (e) {
   	        // get loaded data and render thumbnail.
-  	        document.getElementById("userImg").src = e.target.result;
+  	        document.getElementById("userImg2").src = e.target.result;
   	    };
-
   	    // read the image file as a data URL.
   	    reader.readAsDataURL(this.files[0]);
   	});	
@@ -53,9 +51,9 @@ $(function(){
 												<div class="form-group col-md-6">
 													<label>Your photo</label> <br> 
 													<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle"
-														alt="" id="userImg" height="100" width="100">
+														alt="" id="userImg2" height="100" width="100">
 												</div>
-												<input type="file" id="multipartFile" name="multipartFile" accept="resources/images/*">
+												<input type="file" id="multipartFile" name="multipartFile">
 												<div class="form-group col-md-6">
 													<label>Your name</label> <input type="text"
 														class="form-control input-default" value="${member.name}">
