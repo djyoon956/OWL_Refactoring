@@ -133,7 +133,22 @@ $(function() {
 													</div>
 												</div>
 												<hr>
-												<form action="DeleteAccount.do" method="get">
+											<c:choose>
+												<c:when test="${member.signFrom == '홈페이지'}">
+													<form action="DeleteAccount.do" method="get">
+												</c:when>
+												<c:when test="${member.signFrom == '구글'}">
+													<form action="googleLogin.do" method="get">
+												</c:when>
+												<c:when test="${member.signFrom == '카카오'}">
+													<form action="kakaoLogin.do" method="get">
+												</c:when>
+												<c:otherwise>
+													<!-- 네이버 -->
+													<form action="naverLogin.do" method="get">
+												</c:otherwise>
+											</c:choose>
+											<!-- <form action="DeleteAccount.do" method="get"> -->
 												<div class="row">
 													<div class="col-sm-6">
 														<label class="sr-only">Password</label> 
