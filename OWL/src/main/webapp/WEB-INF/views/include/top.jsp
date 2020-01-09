@@ -197,11 +197,6 @@ function Cancle(){
 	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i>&emsp;</span><br>";
 	$('.ChatList').append(plus);
 }
-
-function ride(){
-
-	console.log("탄다")
-}
 </script>
 
 <c:set var="member" value="${member}" scope="request"/>
@@ -235,7 +230,7 @@ function ride(){
 					<div class="user-img c-pointer position-relative">
 						<!-- <span class="activity active"></span> -->
 						<a href="javascript:void(0)" id="userBtn"> 
-						<img src="resources/images/user/1.png" height="40" width="40" alt=""></a>
+						<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="40" width="40" alt=""></a>
 					</div> 
 				</li>
 
@@ -259,12 +254,12 @@ function ride(){
 			<div class="toggleOption " id="userToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box mt-5">
 					<div class="user-img c-pointer position-relative">
-					<a href="#" onclick="GetMember()" data-toggle="modal" data-target="#myProfileSetModal">
-						<img src="resources/images/users/8.jpg" class="rounded-circle" alt="" id="userImg">
+					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
+						<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" alt="" id="userImg" height="100" width="100">
 						</a>
 					</div>
-					<h5 class="mt-3 mb-1">${member.name }</h5>
-					<p class="m-0">${member.email }</p>
+					<h5 class="mt-3 mb-1">${member.name}</h5>
+					<p class="m-0">${member.email}</p>
 				</div>
 				<hr>
 				<div class="text-center setting-box">
