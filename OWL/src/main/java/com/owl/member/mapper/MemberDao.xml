@@ -24,6 +24,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 <!-- 	public int insertMember(Member member) throws ClassNotFoundException, SQLException; -->
 	<insert id="insertMember" parameterType="com.owl.member.dto.Member">
-		INSERT INTO owl.MEMBER(email, password, name, profilepic, signfrom) VALUES (#{email}, #{password}, #{name}, 'default', '홈페이지');
+		INSERT INTO owl.MEMBER(email, password, name, profilepic, signfrom) VALUES (#{email}, #{password}, #{name}, #{profilePic}, '홈페이지');
 	</insert>
 </mapper>

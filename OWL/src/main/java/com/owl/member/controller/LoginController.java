@@ -60,7 +60,7 @@ public class LoginController {
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
 	public String login(HttpServletRequest request) {
 		// for test
-		request.getSession().setAttribute("member", service.getMember("qqq@gmail.com"));
+		request.getSession().setAttribute("member", service.getMember("ppp@gmail.com"));
 		System.out.println("login");
 		return "member/main";
 	}
@@ -135,14 +135,12 @@ public class LoginController {
 				fs.close();
 				member.setProfilePic(imagefilename);
 				member.setPassword(this.bCryptPasswordEncoder.encode(member.getPassword()));  //비밀번호 암호화 
-
 			}
-			
-			
+
 			result = service.insertMember(member);
 			
-			
 			if(result) {
+				System.out.println("여기는 true");
 				MimeMessage message = mailSender.createMimeMessage();
 				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 				Map<String, Object> models = new HashMap<String, Object>();
@@ -157,19 +155,24 @@ public class LoginController {
 				mailSender.send(message);
 				
 				model.addAttribute("mail", member.getEmail());
-				viewpage="redirect:Login.do?show=join";
+				model.addAttribute("show", "joinEmail");
+
+				//viewpage="redirect:Login.do";
+				
+			}else {
+				System.out.println("여기는 else");
+				model.addAttribute("show", "join");
+
+				//viewpage="redirect:Login.do";
 			}
-
-
 		} catch (Exception e) {
 			System.out.println("이거 에러..>" + e.getMessage());
-			viewpage="redirect:Login.do";
+			model.addAttribute("show", "join");
+
 		}
-		
-		
+
 		//model.addAttribute("show", "joinEmail");
-		
-		return viewpage;
+		return "member/login";
 	}
 	
 	
