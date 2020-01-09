@@ -37,7 +37,9 @@ public class MemberService {
 	}
 
 	public boolean insertMember(Member member) {
+		System.out.println("insertMember service in");
 		MemberDao userDao = getMemberDao();
+	
 		boolean result = false;
 
 		try {
@@ -47,7 +49,8 @@ public class MemberService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+			
+		System.out.println("result는? " +result);
 		return result;
 	}
 

@@ -55,6 +55,8 @@ body {
 	};
 
 	$(function() {
+
+
 		$("#sendPwd").click(function() {
 			$.ajax({
 				url : "ForgotPassword.do",
@@ -76,10 +78,10 @@ body {
 		})
 
 		$("#profileImage").click(function() {
-			$("#profileFile").click();
+			$("#multipartFile").click();
 		})
 
-		$("#profileFile").change(function() {
+		$("#multipartFile").change(function() {
 			let file = document.querySelector('input[type=file]').files[0];
 			let reader = new FileReader();
 
@@ -214,14 +216,6 @@ body {
 						<div class="row justify-content-center h-100">
 							<div class="col-xl-6">
 								<div class="form-input-content">
-								<c:if test="${param.error != null}">
-   <div>
-     로그인실패<br>
-     <c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
-      이유 : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
-     </c:if>
-   </div>
-  </c:if>  
 									<div class="card mb-0">
 										<!-- 로그인 화면 -->
 										<div id="loginBox">
@@ -229,8 +223,8 @@ body {
 												<div class="text-center mt-4">
 													<h4>LOGIN</h4>
 												</div>
-												<c:url value="/login" var="loginurl"/>
-												<form action="Login.do" method="post" class="mt-5 mb-5 login-input">
+												<c:url value="/login" var="loginurl"></c:url>
+												<form action="${loginurl}" method="post" class="mt-5 mb-5 login-input">
 													<div class="form-group">
 														<input type="email" name="email"
 															class="form-control email" placeholder="Email">
@@ -295,32 +289,27 @@ body {
 													<h4>JOIN</h4>
 												</div>
 
-												<form action="EmailConfirm.do" method="post" class="mt-4 mb-3 login-input" >
+												<form action="EmailConfirm.do" method="post" class="mt-4 mb-3 login-input" enctype="multipart/form-data">
 													<div class="text-center mb-3">
-														<img id="profileImage" src="resources/images/login/profile.png" style="width: 150px; height: 150px; cursor: pointer;"
+														<img id="profileImage" src="resources/images/login/profile.png" onerror="this.src='resources/images/login/profile.png'" style="width: 150px; height: 150px; cursor: pointer;"
 															data-toggle="tooltip" data-placement="top"
-															title="Please upload image."> <input type="file"
-															id="profileFile" accept="image/*" style="display: none;"
-															onchange="previewProfile()" />
+															title="Please upload image."> 
+															<input type="file" name="multipartFile" id="multipartFile" accept="image/*" style="display: none;" onchange="previewProfile()" />
+															
 													</div>
 													<div class="form-group">
 														<input type="text" name="name" class="form-control name" placeholder="Name"> 
 														<span class="text-danger" style="display: none;">Please enter your name.</span>
 													</div>
 													<div class="form-group">
-														<input type="email" name="email"
-															class="form-control email" placeholder="Email"> <span
-															class="text-danger" style="display: none;">Please
-															enter your email.</span>
+														<input type="email" name="email" class="form-control email" placeholder="Email"> 
+														<span class="text-danger" style="display: none;">Please enter your email.</span>
 													</div>
 													<div class="form-group">
-														<input type="password" name="pwd" class="form-control pwd"
-															placeholder="Password"> <span class="text-danger"
-															style="display: none;">Please enter your password
-															at least 8.</span>
+														<input type="password" name="password" class="form-control pwd" placeholder="Password"> 
+														<span class="text-danger" style="display: none;">Please enter your password at least 8.</span>
 													</div>
-													<input type="submit"
-														class="btn login-form__btn submit w-100" value="JOIN IN">
+													<input type="submit" class="btn login-form__btn submit w-100" value="JOIN IN">
 												</form>
 												<p class="mt-3 login-form__footer">
 													Don you have account? <a href="javascript:void(0);"

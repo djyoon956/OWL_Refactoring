@@ -24,6 +24,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.owl.member.dto.Member;
 import com.owl.member.service.KaKaoService;
@@ -35,7 +36,8 @@ public class LoginController {
 
 	@Autowired
 	private MemberService service;
-	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -106,9 +108,16 @@ public class LoginController {
  
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
 	public String emailConfirm(Member member, Model model) {
+		
+		System.out.println("emailConfirm in");
+		System.out.println(member.getMultipartFile());
 		System.out.println(member.toString());
+		boolean result = false;
 		try {
 			// DB insert 해야함
+			member.setPassword(this.bCryptPasswordEncoder.encode(member.getPassword()));
+			result = service.insertMember(member);
+
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 			Map<String, Object> models = new HashMap<String, Object>();
