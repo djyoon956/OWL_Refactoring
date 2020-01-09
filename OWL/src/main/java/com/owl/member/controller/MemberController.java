@@ -20,6 +20,12 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
+	@RequestMapping(value="SignUp.do") 
+	public String InsertMember(Member member, HttpServletRequest request){
+		System.out.println("InsertMember Controller in"); 
+		return null;
+	}
+	
 	@RequestMapping(value="UpdateMember.do")
 	public String UpdateMember(Member member, HttpServletRequest request) {
 		try {
