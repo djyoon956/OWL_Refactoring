@@ -38,8 +38,8 @@ margin-bottom: 10px;
 											<div class="form-row">
 												<div class="form-group col-md-6">
 													<label>Your photo</label> <br> <img
-														src="resources/images/users/8.jpg" class="rounded-circle"
-														alt="" id="userImg">
+														src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle"
+														alt="" id="userImg" height="100" width="100">
 												</div>
 
 												<input type="file">
