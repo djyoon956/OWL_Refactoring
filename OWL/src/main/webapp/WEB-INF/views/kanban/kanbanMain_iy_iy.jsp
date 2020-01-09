@@ -25,14 +25,14 @@
 <!-- fontawesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <!-- jquery -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- kanban board -->
-<script
-	src="https://gitcdn.xyz/repo/riktar/jkanban/master/dist/jkanban.min.js"></script>
-<link
-	href="https://www.riccardotartaglia.it/jkanban/dist/jkanban.min.css"
-	rel="stylesheet">
+<script src="https://gitcdn.xyz/repo/riktar/jkanban/master/dist/jkanban.min.js"></script>
+<link href="https://www.riccardotartaglia.it/jkanban/dist/jkanban.min.css" rel="stylesheet">
+<!-- Date  -->
+ <link href="resources/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+ <link href="resources/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+	
 <style>
 #board {
 	display: table;
@@ -126,7 +126,16 @@ body {
 
 <script type="text/javascript">
 $(function() {
+
+	// DatePicker
+	$('#issueDate').bootstrapMaterialDatePicker({
+		weekStart: 0,
+		time: false,
+		format: 'YYYY/MM/DD'
+	});
+
 	
+	//Kanban
     var KanbanTest = new jKanban({
         element : '#myKanban',
         gutter  : '10px',
@@ -233,6 +242,9 @@ $(function() {
         KanbanTest.removeBoard('_done');
     });
 });
+
+
+
 </script>
 </head>
 
@@ -327,8 +339,11 @@ $(function() {
 	<script src="resources/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
 	<!-- ChartistJS -->
 	<script src="resources/plugins/chartist/js/chartist.min.js"></script>
-	<script
-		src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+	<script src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
 	<script src="resources/js/dashboard/dashboard-1.js"></script>
+	<!-- Date Picker Plugin JavaScript -->
+	<script src="resources/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+	<script src="resources/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+	
 </body>
 </html>
