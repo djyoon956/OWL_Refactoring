@@ -37,9 +37,44 @@ $(function() {
 
 	 $("#profileImage").click(function() {
 			$("#multipartFile").click();
-		})
+		});
+
+
+
+
+
+
+	 
+/* 		$('#name').attr("readonly" , false); 
+		$('#password').attr("readonly",  false); 
+
+			
+	$("#editButton").click(function(){
+		$.ajax({
+                 url:"GetMember.do",
+                 data:{email:$("#email").val()},
+                 success:function(data){
+				if(data.signFrom =="홈페이지"){
+					$(".basic-form").empty();
+					var editform = "";
+
+
+					}
+
+                 }
+              });
+
+	}); */
+	
 });
-/* }); */
+
+
+function changeView() {
+	$("#firstpage").addClass("hidden");
+	$("#firstpage").css("display", "none");
+	$("#twopage").removeClass("hidden");
+	}
+
 </script>
 <div id="myProfileSetModal" class="modal fade bd-example-modal-lg"
 	tabindex="-1" role="dialog" aria-hidden="true">
@@ -63,38 +98,83 @@ $(function() {
 							href="#deleteAccount">Delete account</a></li>
 					</ul>
 					<div class="tab-content">
-						<!-- My profile start-->
-						<div class="col-lg-12 tab-pane fade show active" id="profile"
-							role="tabpanel">
+						<!-- 회원 정보 보기-->
+						<div class="col-lg-12 tab-pane fade show active" id="profile" role="tabpanel">
+							<div  id="firstpage">	
 							<div class="card">
 								<div class="card-body" style="padding-top: 20px;">						
-									<div class="basic-form">
-											<form action="UpdateMember.do" method="post" enctype="multipart/form-data">
-													<div class="text-center mb-3">
-														<img id="profileImage" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" 
-														style="width: 180px; height: 180px; cursor: pointer;"	data-toggle="tooltip" data-placement="bottom" title="프로필을 수정하실 수 있습니다."> 
-															<input type="file" id="multipartFile" name="multipartFile" style="display: none;" onchange="previewProfile()" />
-													</div>
-													<div class="form-group">
-														<input type="text" name="name" class="form-control name"
-															placeholder="Name" value="${member.name}">
-													</div>
-													<div class="form-group">
-														<input type="email" name="email" placeholder="Email"
-															class="form-control email" readonly value="${member.email}">
-													</div>
-													<div class="form-group">
-														<input type="password" name="password" class="form-control pwd" 
-														placeholder="Password"	value="${member.password}"> 
-													</div>												
-													<input type="submit"
-														class="btn btn-primary w-100" value="정보 수정">
-												</form>
+									<div class="basic-form">																		
+												<div class="text-center mb-3">
+													<img id="profileImage" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" 
+													style="width: 180px; height: 180px; "> 												
+												</div>
+												<div class="form-group">
+													<input type="text" name="name" id="name" class="form-control name"
+														placeholder="Name" readonly value="${member.name}">
+												</div>
+												<div class="form-group">
+													<input type="email" name="email" id="email" placeholder="Email"
+														class="form-control email" readonly value="${member.email}">
+												</div>										
+												<input type="button" id="editButton" onclick="changeView()" class="btn btn-primary w-100" value="정보 수정">
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- My profile end-->
+
+						<!-- 회원 수정 페이지 -->
+					<div class="hidden" id="twopage">
+							<div class="card">
+								<div class="card-body" style="padding-top: 20px;">
+									<div class="basic-form">										
+											<form action="UpdateMember.do" method="post"
+												enctype="multipart/form-data">
+												<div class="text-center mb-3">
+													<img id="profileImage" src="upload/${member.profilePic}"
+														onerror="this.src='resources/images/login/profile.png'"
+														class="rounded-circle"
+														style="width: 180px; height: 180px; cursor: pointer;"
+														data-toggle="tooltip" data-placement="bottom"
+														title="프로필을 수정하실 수 있습니다."> <input type="file"
+														id="multipartFile" name="multipartFile"
+														style="display: none;" onchange="previewProfile()" />
+												</div>
+												<div class="form-group">
+													<input type="text" name="name" id="name"
+														class="form-control name" placeholder="Name"
+														value="${member.name}">
+												</div>
+												<div class="form-group">
+													<input type="email" name="email" id="email"
+														placeholder="Email" class="form-control email" readonly
+														value="${member.email}">
+												</div>
+												<c:if test="${member.signFrom == '홈페이지'}">
+													<div class="form-group">
+														<input type="password" id="password" name="password"
+															class="form-control pwd" placeholder="Password"
+															value="${member.password}">
+													</div>
+												</c:if>
+												<div class="row">
+													<div class="col-md-6">
+														<input type="button" id="editButton"
+															class="btn btn-primary w-100" value="취소">
+													</div>
+													<div class="col-md-6">
+														<input type="submit" class="btn btn-primary w-100"
+															value="수정 완료">
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							
 
 						<!-- Delete Account Start -->
 						<div class="col-lg-12 tab-pane fade" id="deleteAccount">
