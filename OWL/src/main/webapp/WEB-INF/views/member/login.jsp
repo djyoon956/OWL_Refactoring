@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -139,6 +141,9 @@ body {
 			})
 			$("#opneJoinOkModal").click();
 		}
+		else if(type === "join"){
+			changeView(false)
+		}
 	}
 
 	function changeView(isLogin) {
@@ -190,9 +195,8 @@ body {
 												<div class="text-center mt-4">
 													<h4>LOGIN</h4>
 												</div>
-
-												<form action="Login.do" method="post"
-													class="mt-5 mb-5 login-input">
+												<c:url value="/login" var="loginurl"></c:url>
+												<form action="${loginurl}" method="post" class="mt-5 mb-5 login-input">
 													<div class="form-group">
 														<input type="email" name="email"
 															class="form-control email" placeholder="Email">
@@ -201,6 +205,10 @@ body {
 														<input type="password" name="pwd" class="form-control pwd"
 															placeholder="Password">
 													</div>
+													<div class="form-check mb-3">
+		                                                <label class="form-check-label">
+		                                                    <input type="checkbox" class="form-check-input" name ="_spring_security_remember_me"> Remember me</label>
+		                                            </div>
 													<input type="submit"
 														class="btn login-form__btn submit w-100" value="LOGIN">
 												</form>
