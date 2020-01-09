@@ -69,14 +69,6 @@ public class MemberRestController {
 
 		return map;
 	}
-	
-	/*
-	 * @RequestMapping(value="GetMember.do") public String GetMember(String email){
-	 * 
-	 * Member member = service.getMember("qqq@gmail.com");
-	 * 
-	 * return member; }
-	 */
 
 	//회원정보 조회 (test)
 	@RequestMapping("GetMember.do")
@@ -84,7 +76,6 @@ public class MemberRestController {
 	Member member = null;
 		
 		try {	
-		//회원정보
 		member = service.getMember("qqq@gmail.com");
 		System.out.println("멤버 조회 : " + member);
 		model.addAttribute("member", member);

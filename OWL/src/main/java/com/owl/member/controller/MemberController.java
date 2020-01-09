@@ -26,6 +26,7 @@ public class MemberController {
 		return null;
 	}
 	
+	
 	@RequestMapping(value="UpdateMember.do")
 	public String UpdateMember(Member member, HttpServletRequest request) {
 		try {
@@ -57,7 +58,7 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/member/main";
+		return "member/main";
 	}
 	
 	private void checkDirectory(String path) {
