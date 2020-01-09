@@ -78,10 +78,10 @@ body {
 		})
 
 		$("#profileImage").click(function() {
-			$("#profileFile").click();
+			$("#multipartFile").click();
 		})
 
-		$("#profileFile").change(function() {
+		$("#multipartFile").change(function() {
 			let file = document.querySelector('input[type=file]').files[0];
 			let reader = new FileReader();
 
@@ -294,7 +294,7 @@ body {
 														<img id="profileImage" src="resources/images/login/profile.png" onerror="this.src='resources/images/login/profile.png'" style="width: 150px; height: 150px; cursor: pointer;"
 															data-toggle="tooltip" data-placement="top"
 															title="Please upload image."> 
-															<input type="file" name="profileFile" id="profileFile" accept="image/*" style="display: none;" onchange="previewProfile()" />
+															<input type="file" name="multipartFile" id="multipartFile" accept="image/*" style="display: none;" onchange="previewProfile()" />
 															
 													</div>
 													<div class="form-group">
