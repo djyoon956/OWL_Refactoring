@@ -16,7 +16,7 @@ public class MemberController {
 	
 		//회원정보 조회
 		@RequestMapping("/GetMember.do")
-		public String memberConfirm(String email, Model model) throws Exception{
+		public String GetMember(String email, Model model) throws Exception{
 		try {	
 			//회원정보
 			Member member = service.getMember("qqq@gmail.com");

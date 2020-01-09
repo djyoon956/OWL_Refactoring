@@ -27,7 +27,6 @@ margin-bottom: 10px;
 						<li class="nav-item"><a class="nav-link" data-toggle="tab"
 							href="#deleteAccount">Delete account</a></li>
 					</ul>
-					<c:set var="member" value="${requestScope.member}"/>
 					<div class="tab-content">
 						<!-- My profile start-->
 						<div class="col-lg-12 tab-pane fade show active" id="profile"
