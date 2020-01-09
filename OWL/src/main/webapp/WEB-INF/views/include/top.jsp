@@ -33,7 +33,7 @@
 
 .toggleOption {
 	padding-top: 30px;
-	background: #fcf9f5;
+	background: #336699;
 	height: 1185%;
 	width: 310px;
 	position: absolute;
@@ -202,23 +202,23 @@ function Cancle(){
 }
 </script>
 
-<div class="nav-header" style="background-color: #fcf9f5;">
+<div class="nav-header" style="background-color: #336699;">
 	<div class="brand-logo">
 		<a href="Index.do"> 
-		<b class="logo-abbr"><img src="resources/images/owl_logo_medium.png" alt=""> </b> 
-		<span class="logo-compact"><img src="resources/images/owl_plz.png" alt=""></span> 
-		<span class="brand-title"> <img src="resources/images/owl_plz.png" alt=""></span>
+		<b class="logo-abbr"><img src="resources/images/owl_logo_medium_beige.png" alt=""> </b> 
+		<span class="logo-compact"><img src="resources/images/owl_plz_beige.png" alt=""></span> 
+		<span class="brand-title"> <img src="resources/images/owl_plz_beige.png" alt=""></span>
 		</a>
 	</div>
 </div>
 
 
-<div class="header" style="background-color: #fcf9f5;">
+<div class="header" style="background-color: #336699;">
 	<div class="header-content clearfix">
 
 		<div class="nav-control">
 			<div class="hamburger">
-				<span class="toggle-icon" style="color: #326295;"><i
+				<span class="toggle-icon" style="color: #fcf9f5;"><i
 					class="icon-menu"></i></span>
 			</div>
 		</div>
