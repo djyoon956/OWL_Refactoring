@@ -2,6 +2,8 @@ package com.owl.member.dto;
 
 import java.util.HashMap;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.owl.calendar.dto.Pcalendar;
 import com.owl.project.dto.Project;
 
@@ -25,4 +27,7 @@ public class Member {
 	private Boolean authOk;
 	private String authority;
 	private String role;
+	
+	private CommonsMultipartFile multipartFile;
+	private String imagefilename;
 }

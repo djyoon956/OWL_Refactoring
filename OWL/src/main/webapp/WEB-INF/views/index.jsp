@@ -64,7 +64,7 @@ background-color:#326295;
 
 }
 h1{
-  font-size:80px;
+  font-size:120px;
   font-weight:700;
   font-family: 'Montserrat', sans-serif;
   text-align:center;
