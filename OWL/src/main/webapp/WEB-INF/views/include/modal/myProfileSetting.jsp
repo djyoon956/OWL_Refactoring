@@ -10,9 +10,10 @@ margin-bottom: 10px;
 /* $("#deleteMemberBtn").click(function() { */
 $(function() {
 
-	$("#deleteMemberBtn").click(function(){
-		console.log("보내는 데이터   email" + $("#email").val());
-		console.log("보내는 데이터  pwd" + $("#delPwd").val());
+	$("#delPwd").keyup(function(){
+		console.log("보내는 데이터   email:" + $("#email").val());
+		console.log("보내는 데이터  pwd :" + $("#delPwd").val());
+		console.log("보내는 데이터  제이슨:" + {email:$("#email").val(), password:$("#delPwd").val()});
 		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
 			alert("비밀번호를 입력해주세요");
 			$("#delPwd").focus();
@@ -23,11 +24,13 @@ $(function() {
 				type:"post",
 				dataType: "html",
 				success:function(responsedata){
-					console.log(">"+responsedata+"<");
+					console.log("받는 데이터 >"+responsedata+"<");
 					if(responsedata == "true"){
-						alert("사용가능");
+						/* alert("사용가능"); */
+						$("#pwdMatchMsg").html("비밀번호가 일치합니다");
 					}else{
-						alert("비밀번호가 일치하지 않습니다.");
+						/* alert("비밀번호가 일치하지 않습니다."); */
+						$("#pwdMatchMsg").html("&emsp; Password do not match. Try again.");
 					}
 				},
 				error:function(){
@@ -35,7 +38,7 @@ $(function() {
 				}
 			});
 		}
-	});
+	}); 
 
 	$("#deleteChk").change(function(){
 		if ($("input:checkbox[id='deleteChk']").is(":checked") == true){
@@ -237,6 +240,7 @@ function changeView() {
 													<div class="col-sm-6">
 														<button type="submit" class="btn btn-dark mt-1" id="deleteMemberBtn" disabled>Close Account</button>
 													</div>
+													<span class="text-danger" style="display: block;" id="pwdMatchMsg"></span>
 												</c:when>
 												<c:when test="${member.signFrom == '구글'}">
 													<button id="googleLoginButton" class="snsLoginButton mr-3">
