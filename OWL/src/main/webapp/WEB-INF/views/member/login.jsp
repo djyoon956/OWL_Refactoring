@@ -56,25 +56,42 @@ body {
 
 	$(function() {
 
+		let nameCheck;
+		let emailCheck;
+		let pwdCheck;
+		if (nameCheck && emailCheck && pwdCheck) {
+			console.log('입력완료');
+			$('#joinBtn').attr('disabled', true);
+			}else {
+				console.log('입력실패');
+				
+				$('#joinBtn').attr('disabled', false);
+
+				}
+		
 		//이메일 중복체크 
 		$('#duplicateBtn').click(function() {
-
-			$.ajax({
-				url : "Emailcheck.do",
-				data : {
-					email : $("#email").val()
-					},
-				success : function(data) {
-					console.log("success in");
-					console.log(data);
-					successAlert("인증 성공");
-					},
-				error : function() {
-					console.log("error error");
-					warningAlert("중복임");
+			if($("#email").val() == "") {
+					errorAlert("이메일 주소를 입력하세요.");
+				}else {
+					$.ajax({
+						url : "Emailcheck.do",
+						data : {
+							email : $("#email").val()
+							},
+						success : function(data) {
+							console.log("success in");
+							console.log(data);
+							((data == "true")? successAlert("사용가능한 메일주소입니다") : warningAlert("이미 존재하는 메일주소입니다"));
+							},
+						error : function() {
+							console.log("error error");
+							}
+						})
 					}
-				})
+
 		});
+		
 
 		$("#sendPwd").click(function() {
 			$.ajax({
@@ -117,33 +134,39 @@ body {
 
 		$("#joinBox  .name").keyup(
 				function(event) {
-					if ($("#joinBox  .name").val().length < 1)
-						$("#joinBox  .name").siblings(".text-danger").css(
-								"display", "block");
-					else
-						$("#joinBox  .name").siblings(".text-danger").css(
-								"display", "none");
+					if ($("#joinBox  .name").val().length < 1){
+						$("#joinBox  .name").siblings(".text-danger").css("display", "block");
+						nameCheck = false;
+					}else{
+						$("#joinBox  .name").siblings(".text-danger").css("display", "none");
+						nameCheck = true;
+					}
 				})
-		$("#joinBox  .email")
-				.keyup(
+				
+		 $("#joinBox  .email") .keyup(
 						function(event) {
 							let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-							if ($("#joinBox  .email").val().match(regExp) != null)
-								$("#joinBox  .email").siblings(".text-danger")
-										.css("display", "none");
-							else
-								$("#joinBox  .email").siblings(".text-danger")
-										.css("display", "block");
+							if ($("#joinBox  .email").val().match(regExp) != null){
+								$("#joinBox  .email").siblings(".text-danger").css("display", "none");
+							emailCheck = true;
+							}else{
+								$("#joinBox  .email").siblings(".text-danger").css("display", "block");
+							emailCheck = false;
+							}
 						})
+						
 		$("#joinBox  .pwd").keyup(
 				function(event) {
-					if ($("#joinBox  .pwd").val().length < 8)
-						$("#joinBox  .pwd").siblings(".text-danger").css(
-								"display", "block");
-					else
-						$("#joinBox  .pwd").siblings(".text-danger").css(
-								"display", "none");
+					if ($("#joinBox  .pwd").val().length < 8){
+						$("#joinBox  .pwd").siblings(".text-danger").css("display", "block");
+					pwdCheck = false;
+					}else{
+						$("#joinBox  .pwd").siblings(".text-danger").css("display", "none");
+					pwdCheck = true;
+					}
 				})
+				
+				
 				
 		$("#resetBox  .pwd1").keyup(
 
@@ -339,7 +362,8 @@ body {
 														<input type="password" name="password" class="form-control pwd" placeholder="Password"> 
 														<span class="text-danger" style="display: none;">Please enter your password at least 8.</span>
 													</div>
-													<input type="submit" class="btn login-form__btn submit w-100" value="JOIN IN">
+													<input id="joinBtn" type="submit" class="btn login-form__btn submit w-100" disabled value="JOIN IN">
+													
 												</form>
 												<p class="mt-3 login-form__footer">
 													Don you have account? <a href="javascript:void(0);"
