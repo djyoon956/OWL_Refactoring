@@ -9,6 +9,7 @@
     <title>Main</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="resources/images/favicon.png">
+    <jsp:include page="../include/headTag.jsp" />
     <!-- Pignose Calender -->
     <link href="resources/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
     <!-- Chartist -->
@@ -66,8 +67,4 @@
     <script src="resources/plugins/chartist/js/chartist.min.js"></script>
     <script src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
     <script src="resources/js/dashboard/dashboard-1.js"></script>
-
-	
-
-</body>
 </html>

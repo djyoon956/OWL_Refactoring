@@ -4,7 +4,6 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"	type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
-
 <style>
 .coloricon {
 	padding: 15px;
@@ -429,3 +428,6 @@ function Cancle(){
 <!-- MyProfile Modal -->
 	<jsp:include page="modal/myProfileSetting.jsp" />
 	<jsp:include page="modal/newChat.jsp" />
+	<!-- sweet alert -->
+    <script src="resources/js/styleSwitcher.js"></script>
+
