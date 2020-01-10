@@ -40,7 +40,7 @@ public class MemberService {
 		System.out.println("insertMember service in");
 		System.out.println(member.toString());
 		MemberDao userDao = getMemberDao();
-	
+
 		boolean result = false;
 
 		try {
@@ -50,8 +50,26 @@ public class MemberService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-			
-		System.out.println("result는? " +result);
+
+		System.out.println("result는? " + result);
+		return result;
+	}
+
+	// 미완성
+	public boolean joinMemberOk(String email) {
+		MemberDao userDao = getMemberDao();
+		boolean result = false;
+
+		try {
+			userDao.joinMemberOk(email);
+			userDao.grantDefaultRole(email);
+			result = true;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 
@@ -69,7 +87,20 @@ public class MemberService {
 
 		return result;
 	}
+	public boolean chkDelPwd(String email, String password) {
+		MemberDao userDao = getMemberDao();
+		boolean result = false;
+		
+		try {
+			result = userDao.chkDeletePwd(email, password) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
+		return result;
+	}
 	public boolean deleteMember(String email) {
 		MemberDao userDao = getMemberDao();
 		boolean result = false;
@@ -113,6 +144,21 @@ public class MemberService {
 		}
 
 		return members;
+	}
+	
+	public boolean emailCheck(String email) {
+		System.out.println("emailcheck service in");
+		System.out.println("email" + email);
+		 MemberDao dao = getMemberDao();
+		 
+		 boolean result = false;
+		 try {
+			 result = dao.emailCheck(email) != null? true : false;
+			 System.out.println("email result : " + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		return result;
 	}
 
 	private MemberDao getMemberDao() {

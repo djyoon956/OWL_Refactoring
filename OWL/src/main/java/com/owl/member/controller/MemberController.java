@@ -57,15 +57,15 @@ public class MemberController {
 			file.mkdir();
 	}
 	@RequestMapping(value= "DeleteAccount.do")
-	public String deleteMember(String email) {
-		boolean result = service.deleteMember("qqq@gmail.com"); 
-		/*
-		if(result == true) {
-			
-		}else  {
-			
-		}*/
-		 System.out.println("delete result 값 : " + result); 
-		return "member/deleteOk";
+	public String deleteMember(String email,Model model) {
+		//테스트 데이터 
+		boolean result = service.deleteMember("qqq@gmail.com");
+		String view = "";
+		if(result) {
+			view = "include/modal/myProfileSetting";
+		} else {
+			view = "member/deleteOk";
+		}
+		return view;
 	}
 }

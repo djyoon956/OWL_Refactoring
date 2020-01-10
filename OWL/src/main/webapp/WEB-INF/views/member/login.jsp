@@ -56,6 +56,42 @@ body {
 
 	$(function() {
 
+		let nameCheck;
+		let emailCheck;
+		let pwdCheck;
+		if (nameCheck && emailCheck && pwdCheck) {
+			console.log('입력완료');
+			$('#joinBtn').attr('disabled', true);
+			}else {
+				console.log('입력실패');
+				
+				$('#joinBtn').attr('disabled', false);
+
+				}
+		
+		//이메일 중복체크 
+		$('#duplicateBtn').click(function() {
+			if($("#email").val() == "") {
+					errorAlert("이메일 주소를 입력하세요.");
+				}else {
+					$.ajax({
+						url : "Emailcheck.do",
+						data : {
+							email : $("#email").val()
+							},
+						success : function(data) {
+							console.log("success in");
+							console.log(data);
+							((data == "true")? successAlert("사용가능한 메일주소입니다") : warningAlert("이미 존재하는 메일주소입니다"));
+							},
+						error : function() {
+							console.log("error error");
+							}
+						})
+					}
+
+		});
+		
 
 		$("#sendPwd").click(function() {
 			$.ajax({
@@ -98,33 +134,39 @@ body {
 
 		$("#joinBox  .name").keyup(
 				function(event) {
-					if ($("#joinBox  .name").val().length < 1)
-						$("#joinBox  .name").siblings(".text-danger").css(
-								"display", "block");
-					else
-						$("#joinBox  .name").siblings(".text-danger").css(
-								"display", "none");
+					if ($("#joinBox  .name").val().length < 1){
+						$("#joinBox  .name").siblings(".text-danger").css("display", "block");
+						nameCheck = false;
+					}else{
+						$("#joinBox  .name").siblings(".text-danger").css("display", "none");
+						nameCheck = true;
+					}
 				})
-		$("#joinBox  .email")
-				.keyup(
+				
+		 $("#joinBox  .email") .keyup(
 						function(event) {
 							let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-							if ($("#joinBox  .email").val().match(regExp) != null)
-								$("#joinBox  .email").siblings(".text-danger")
-										.css("display", "none");
-							else
-								$("#joinBox  .email").siblings(".text-danger")
-										.css("display", "block");
+							if ($("#joinBox  .email").val().match(regExp) != null){
+								$("#joinBox  .email").siblings(".text-danger").css("display", "none");
+							emailCheck = true;
+							}else{
+								$("#joinBox  .email").siblings(".text-danger").css("display", "block");
+							emailCheck = false;
+							}
 						})
+						
 		$("#joinBox  .pwd").keyup(
 				function(event) {
-					if ($("#joinBox  .pwd").val().length < 8)
-						$("#joinBox  .pwd").siblings(".text-danger").css(
-								"display", "block");
-					else
-						$("#joinBox  .pwd").siblings(".text-danger").css(
-								"display", "none");
+					if ($("#joinBox  .pwd").val().length < 8){
+						$("#joinBox  .pwd").siblings(".text-danger").css("display", "block");
+					pwdCheck = false;
+					}else{
+						$("#joinBox  .pwd").siblings(".text-danger").css("display", "none");
+					pwdCheck = true;
+					}
 				})
+				
+				
 				
 		$("#resetBox  .pwd1").keyup(
 
@@ -221,6 +263,14 @@ body {
 				<div class="login-form-bg">
 					<div class="container h-100">
 						<div class="row justify-content-center h-100">
+						<c:if test="${param.error != null}">
+   <div>
+     로그인실패<br>
+     <c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
+      이유 : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
+     </c:if>
+   </div>
+  </c:if>  
 							<div class="col-xl-6">
 								<div class="form-input-content">
 									<div class="card mb-0">
@@ -237,12 +287,12 @@ body {
 															class="form-control email" placeholder="Email">
 													</div>
 													<div class="form-group">
-														<input type="password" name="pwd" class="form-control pwd"
+														<input type="password" name="password" class="form-control pwd"
 															placeholder="Password">
 													</div>
 													<div class="form-check mb-3">
 		                                                <label class="form-check-label">
-		                                                    <input type="checkbox" class="form-check-input" name ="_spring_security_remember_me"> Remember me</label>
+		                                                    <input type="checkbox" class="form-check-input" name ="remember-me" id ="remember-me" > Remember me</label>
 		                                            </div>
 													<input type="submit"
 														class="btn login-form__btn submit w-100" value="LOGIN">
@@ -309,14 +359,18 @@ body {
 														<span class="text-danger" style="display: none;">Please enter your name.</span>
 													</div>
 													<div class="form-group">
-														<input type="email" name="email" class="form-control email" placeholder="Email"> 
-														<span class="text-danger" style="display: none;">Please enter your email.</span>
+													<div class="row">
+													<div class="col-8"><input type="email" name="email" id="email" class="form-control email" placeholder="Email"></div>
+													<div class="col-4"><button id="duplicateBtn"type="button" class="btn mb-1 btn-outline-primary">Duplicate Check</button></div>	 
+														</div>
+														<span class="text-danger" style="display: none;">Please enter your email.</span>	
 													</div>
 													<div class="form-group">
 														<input type="password" name="password" class="form-control pwd" placeholder="Password"> 
 														<span class="text-danger" style="display: none;">Please enter your password at least 8.</span>
 													</div>
-													<input type="submit" class="btn login-form__btn submit w-100" value="JOIN IN">
+													<input id="joinBtn" type="submit" class="btn login-form__btn submit w-100" disabled value="JOIN IN">
+													
 												</form>
 												<p class="mt-3 login-form__footer">
 													Don you have account? <a href="javascript:void(0);"

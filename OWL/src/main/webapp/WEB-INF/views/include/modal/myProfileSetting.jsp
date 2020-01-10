@@ -10,18 +10,61 @@ margin-bottom: 10px;
 /* $("#deleteMemberBtn").click(function() { */
 $(function() {
 	
+	let agreeChk;
+	let pwdChk;
+	
+	$("#delPwd").keyup(function(){
+		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
+		   alert("비밀번호를 입력해주세요"); 
+		   $("#delPwd").focus();
+		}else{
+			$.ajax({
+				url:"chkDelPwd.do",
+				data:{email:$("#email").val(), password:$("#delPwd").val()},
+				type:"post",
+				dataType: "html",
+				success:function(responsedata){
+					console.log("받는 데이터 >"+responsedata+"<");
+					if(responsedata == true){
+						$("#pwdMatchMsg").html("비밀번호가 일치합니다");
+						pwdChk = true;
+					}else{
+						$("#pwdMatchMsg").html("&emsp; Password do not match. Try again.");
+						pwdChk = false;
+					}
+				},
+				error:function(){
+					console.log("에러");
+				}
+			});
+		}
+	}); 
+
 	$("#deleteChk").change(function(){
 		if ($("input:checkbox[id='deleteChk']").is(":checked") == true){
 			$("#deleteChk").siblings(".text-danger").css(
 					"display", "none");
-			$("#deleteMemberBtn").attr('disabled', false);
+			agreeChk = true;
+			/* $("#deleteMemberBtn").attr('disabled', false); */
 		}else{ 
 			$("#deleteChk").siblings(".text-danger").css(
 				"display", "block");
-			$("#deleteMemberBtn").attr('disabled', true);	
+			agreeChk = false;
+			/* $("#deleteMemberBtn").attr('disabled', true);	 */
 		}
 	});
+	function check (){
+		if(pwdChk == true && agreeChk == false) {
+			 console.log("둘다 만족");
+			 $("#deleteMemberBtn").attr('disabled', false); 
+		} else {
+			console.log("불만족");
+			 $("#deleteMemberBtn").attr('disabled', true);
+		}
+	}
 
+
+	/*  window.setInterval(check, 2000);  */
 	 $("#multipartFile").change(function(){
 	  		var reader = new FileReader();
 	  	    reader.onload = function (e) {
@@ -180,11 +223,11 @@ function changeView() {
 													</div>
 												</div>
 												<hr>
-											<c:choose>
-												<c:when test="${member.signFrom == '홈페이지'}">
+											<%-- <c:choose> --%>
+												<c:if test="${member.signFrom == '홈페이지'}">
 													<form action="DeleteAccount.do" method="post">
-												</c:when>
-												<c:when test="${member.signFrom == '구글'}">
+												</c:if>
+												<%-- <c:when test="${member.signFrom == '구글'}">
 													<form action="googleLogin.do" method="get">
 												</c:when>
 												<c:when test="${member.signFrom == '카카오'}">
@@ -193,8 +236,8 @@ function changeView() {
 												<c:otherwise>
 													<!-- 네이버 -->
 													<form action="naverLogin.do" method="get">
-												</c:otherwise>
-											</c:choose>
+												</c:otherwise> --%>
+											<%-- </c:choose> --%>
 											<!-- <form action="DeleteAccount.do" method="get"> -->
 
 												<div class="row">
@@ -205,11 +248,12 @@ function changeView() {
 														<label class="sr-only">Password</label> 
 													</div> -->
 													<div class="col-sm-6">
-														<input type="password" class="form-control" placeholder="Password">
+														<input type="password" class="form-control" placeholder="Password" name="password" id="delPwd">
 														</div>
 													<div class="col-sm-6">
 														<button type="submit" class="btn btn-dark mt-1" id="deleteMemberBtn" disabled>Close Account</button>
 													</div>
+													<span class="text-danger" style="display: block;" id="pwdMatchMsg"></span>
 												</c:when>
 												<c:when test="${member.signFrom == '구글'}">
 													<button id="googleLoginButton" class="snsLoginButton mr-3">

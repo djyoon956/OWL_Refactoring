@@ -24,7 +24,7 @@ public class Member {
 	private HashMap<Integer, Project> projects;
 	private Setting setting;
 	private HashMap<Integer, Pcalendar> pCalendars;
-	private Boolean authOk;
+	private boolean authOk;
 	private String authority;
 	private String role;	
 	private CommonsMultipartFile multipartFile;

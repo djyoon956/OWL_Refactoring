@@ -7,9 +7,11 @@ import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
@@ -30,6 +32,9 @@ public class MemberRestController {
 
 	@Autowired
 	private MemberService service;	
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@RequestMapping(value = "ForgotPassword.do")
 	public Map<String, Object> findPassword(String email) throws Exception {
@@ -85,7 +90,18 @@ public class MemberRestController {
 	}
 		return member;
 	}
-	
+	//비밀번호 확인 
+	@RequestMapping("chkDelPwd.do")
+	public boolean chkDelPWd(String email,String password) throws Exception{
+		boolean result = false;
+	//	member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
+	try {	
+		result = service.chkDelPwd(email, bCryptPasswordEncoder.encode(password));
+	} catch (Exception e) {
+		System.out.println(e.getMessage());
+	}
+		return result;
+	}
 	
 	//회원가입 Ok
 	/*
@@ -103,6 +119,22 @@ public class MemberRestController {
 	 * return null; }
 	 */
 	
-	
-	
+	@RequestMapping("Emailcheck.do")
+	public String emailCheck(String email, Model model) throws Exception{
+		System.out.println("EmailCheck controller in");
+		boolean result = service.emailCheck(email);
+		
+		String data = "";
+		if(result) {
+			System.out.println("we have already this email");
+			data = "false";
+
+		}else  {
+			System.out.println("you can use this email");
+			data = "true";
+		}
+		
+		model.addAttribute("data", data);
+		return data;
+	}
 }
