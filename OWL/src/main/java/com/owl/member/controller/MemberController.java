@@ -57,14 +57,14 @@ public class MemberController {
 			file.mkdir();
 	}
 	@RequestMapping(value= "DeleteAccount.do")
-	public String deleteMember(String email) {
-		boolean result = service.deleteMember("qqq@gmail.com"); 
-		/*
+	public String deleteMember(String email,Model model) {
+		boolean result = service.deleteMember("qqq@gmail.com");
+		
 		if(result == true) {
 			
-		}else  {
-			
-		}*/
+		}else {
+		
+		}
 		 System.out.println("delete result 값 : " + result); 
 		return "member/deleteOk";
 	}

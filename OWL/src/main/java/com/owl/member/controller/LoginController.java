@@ -10,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.Server;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,7 +61,7 @@ public class LoginController {
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
 	public String login(HttpServletRequest request) {
 		// for test
-		request.getSession().setAttribute("member", service.getMember("ppp@gmail.com"));
+		request.getSession().setAttribute("member", service.getMember("qqq@gmail.com"));
 		System.out.println("login");
 		return "member/main";
 	}
@@ -149,7 +150,7 @@ public class LoginController {
 				
 				String mailBody = VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "joinTemplate.vm", "UTF-8", models);
 				messageHelper.setSubject("[OWL] 가입을 환영합니다.");
-				messageHelper.setFrom("bit_team2@naver.com");
+				messageHelper.setFrom("bit4owl@gmail.com");
 				messageHelper.setTo(member.getEmail());
 				messageHelper.setText(mailBody, true);
 				mailSender.send(message);
@@ -178,6 +179,8 @@ public class LoginController {
 	
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
 	public String emailConfirmOK(String memberId, Model model) {
+		service.joinMemberOk(memberId);
+		
 		model.addAttribute("show", "joinOk");
 		model.addAttribute("memberId", memberId);
 		return "index";
@@ -189,5 +192,4 @@ public class LoginController {
 		if (!file.exists())
 			file.mkdir();
 	}
-
 }

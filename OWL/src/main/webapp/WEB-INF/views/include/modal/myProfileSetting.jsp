@@ -9,7 +9,32 @@ margin-bottom: 10px;
 <script>
 /* $("#deleteMemberBtn").click(function() { */
 $(function() {
-	
+
+	$("#deleteMemberBtn").click(function(){
+		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
+			alert("비밀번호를 입력해주세요");
+			$("#delPwd").focus();
+		}else{
+			$.ajax({
+				url:"chkDelPwd.do",
+				data:{email:$("#email").val(), password:$("#delPwd").val()},
+				type:"post",
+				dataType: "html",
+				success:function(responsedata){
+					console.log(">"+responsedata+"<");
+					if(responsedata == "true"){
+						alert("사용가능");
+					}else{
+						alert("비밀번호가 일치하지 않습니다.");
+					}
+				},
+				error:function(){
+					console.log("에러");
+				}
+			});
+		}
+	});
+
 	$("#deleteChk").change(function(){
 		if ($("input:checkbox[id='deleteChk']").is(":checked") == true){
 			$("#deleteChk").siblings(".text-danger").css(
@@ -180,11 +205,11 @@ function changeView() {
 													</div>
 												</div>
 												<hr>
-											<c:choose>
-												<c:when test="${member.signFrom == '홈페이지'}">
+											<%-- <c:choose> --%>
+												<c:if test="${member.signFrom == '홈페이지'}">
 													<form action="DeleteAccount.do" method="post">
-												</c:when>
-												<c:when test="${member.signFrom == '구글'}">
+												</c:if>
+												<%-- <c:when test="${member.signFrom == '구글'}">
 													<form action="googleLogin.do" method="get">
 												</c:when>
 												<c:when test="${member.signFrom == '카카오'}">
@@ -193,8 +218,8 @@ function changeView() {
 												<c:otherwise>
 													<!-- 네이버 -->
 													<form action="naverLogin.do" method="get">
-												</c:otherwise>
-											</c:choose>
+												</c:otherwise> --%>
+											<%-- </c:choose> --%>
 											<!-- <form action="DeleteAccount.do" method="get"> -->
 
 												<div class="row">
@@ -205,7 +230,7 @@ function changeView() {
 														<label class="sr-only">Password</label> 
 													</div> -->
 													<div class="col-sm-6">
-														<input type="password" class="form-control" placeholder="Password">
+														<input type="password" class="form-control" placeholder="Password" name="password" id="delPwd">
 														</div>
 													<div class="col-sm-6">
 														<button type="submit" class="btn btn-dark mt-1" id="deleteMemberBtn" disabled>Close Account</button>

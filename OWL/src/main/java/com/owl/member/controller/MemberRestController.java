@@ -85,7 +85,17 @@ public class MemberRestController {
 	}
 		return member;
 	}
-	
+	//회원정보 조회 (test)
+	@RequestMapping("chkDelPwd.do")
+	public Member chkDelPWd(String email,String password, Model model) throws Exception{
+	Member member = null;
+		try {	
+		
+	} catch (Exception e) {
+		System.out.println(e.getMessage());
+	}
+		return member;
+	}
 	
 	//회원가입 Ok
 	/*
