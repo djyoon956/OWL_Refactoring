@@ -96,22 +96,10 @@ public class MemberRestController {
 	@RequestMapping("chkDelPwd.do")
 	public boolean chkDelPWd(String email,String password
 			) throws Exception{
-		/* boolean result = false; */
-		
 		Member member = service.getMember(email);
 		String encodedPassword = member.getPassword();
-		
-		System.out.println("member email" + email);
-		System.out.println("rowPassword :"+ password ); //입력값
-		System.out.println("encodepassword :" + encodedPassword); //DB에 저장된 암호화된 값
 		boolean result = bCryptPasswordEncoder.matches(password, encodedPassword);
-		System.out.println("둘은 같은가 " + password.equals(encodedPassword));
-		System.out.println("비교 결과값 : " + result);
-	try {	
-			/* result = service.chkDelPwd(email, bCryptPasswordEncoder.encode(password)); */
-	} catch (Exception e) {
-		System.out.println(e.getMessage());
-	}
+
 		return result;
 	}
 	

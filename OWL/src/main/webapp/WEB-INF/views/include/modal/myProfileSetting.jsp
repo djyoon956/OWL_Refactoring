@@ -10,8 +10,8 @@ margin-bottom: 10px;
 /* $("#deleteMemberBtn").click(function() { */
 $(function() {
 	
-	let agreeChk;
-	let pwdChk;
+	let agreeChk = false;
+	let pwdChk = false;
 	
 	$("#delPwd").keyup(function(){
 		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
@@ -25,10 +25,12 @@ $(function() {
 				dataType: "html",
 				success:function(responsedata){
 					console.log("받는 데이터 >"+responsedata+"<");
-					if(responsedata == true){
+					if(responsedata == "true"){
+						console.log("참");
 						$("#pwdMatchMsg").html("비밀번호가 일치합니다");
 						pwdChk = true;
 					}else{
+						console.log("거짓");
 						$("#pwdMatchMsg").html("&emsp; Password do not match. Try again.");
 						pwdChk = false;
 					}
@@ -42,29 +44,26 @@ $(function() {
 
 	$("#deleteChk").change(function(){
 		if ($("input:checkbox[id='deleteChk']").is(":checked") == true){
-			$("#deleteChk").siblings(".text-danger").css(
-					"display", "none");
+			$("#deleteChk").siblings(".text-danger").css("display", "none");
 			agreeChk = true;
 			/* $("#deleteMemberBtn").attr('disabled', false); */
 		}else{ 
-			$("#deleteChk").siblings(".text-danger").css(
-				"display", "block");
+			$("#deleteChk").siblings(".text-danger").css("display", "block");
 			agreeChk = false;
 			/* $("#deleteMemberBtn").attr('disabled', true);	 */
 		}
 	});
-	function check (){
-		if(pwdChk == true && agreeChk == false) {
-			 console.log("둘다 만족");
-			 $("#deleteMemberBtn").attr('disabled', false); 
-		} else {
-			console.log("불만족");
-			 $("#deleteMemberBtn").attr('disabled', true);
-		}
-	}
+	   $('#deleteMemberBtn').click(function() {
 
-
-	/*  window.setInterval(check, 2000);  */
+	    	if (agreeChk && pwdChk) {
+	    		console.log('입력완료');
+	    		}else {
+	    			console.log('입력실패');
+	    			warningAlert("필수 항목을 모두 입력해주세요.");
+						return false;
+	    			} 
+	   });
+	   
 	 $("#multipartFile").change(function(){
 	  		var reader = new FileReader();
 	  	    reader.onload = function (e) {
@@ -251,7 +250,7 @@ function changeView() {
 														<input type="password" class="form-control" placeholder="Password" name="password" id="delPwd">
 														</div>
 													<div class="col-sm-6">
-														<button type="submit" class="btn btn-dark mt-1" id="deleteMemberBtn" disabled>Close Account</button>
+														<button type="submit" class="btn btn-dark mt-1" id="deleteMemberBtn">Close Account</button>
 													</div>
 													<span class="text-danger" style="display: block;" id="pwdMatchMsg"></span>
 												</c:when>

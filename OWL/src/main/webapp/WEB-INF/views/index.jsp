@@ -435,7 +435,6 @@ function openDialog() {
    <script
       src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
    <script src="resources/js/dashboard/dashboard-1.js"></script>
-
 </body>
 
 </html>
