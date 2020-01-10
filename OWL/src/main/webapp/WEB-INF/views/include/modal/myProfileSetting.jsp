@@ -25,10 +25,12 @@ $(function() {
 				dataType: "html",
 				success:function(responsedata){
 					console.log("받는 데이터 >"+responsedata+"<");
-					if(responsedata == true){
+					if(responsedata == "true"){
+						console.log("참");
 						$("#pwdMatchMsg").html("비밀번호가 일치합니다");
 						pwdChk = true;
 					}else{
+						console.log("거짓");
 						$("#pwdMatchMsg").html("&emsp; Password do not match. Try again.");
 						pwdChk = false;
 					}
@@ -53,7 +55,7 @@ $(function() {
 			/* $("#deleteMemberBtn").attr('disabled', true);	 */
 		}
 	});
-	function check (){
+	/* function check (){
 		if(pwdChk == true && agreeChk == false) {
 			 console.log("둘다 만족");
 			 $("#deleteMemberBtn").attr('disabled', false); 
@@ -61,7 +63,7 @@ $(function() {
 			console.log("불만족");
 			 $("#deleteMemberBtn").attr('disabled', true);
 		}
-	}
+	} */
 
 
 	/*  window.setInterval(check, 2000);  */
