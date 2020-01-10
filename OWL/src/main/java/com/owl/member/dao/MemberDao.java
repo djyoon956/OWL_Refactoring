@@ -19,8 +19,6 @@ public interface MemberDao {
 	public Member getMember(String email) throws ClassNotFoundException, SQLException;
 
 	public List<Member> getMembers() throws ClassNotFoundException, SQLException;
-	
-	public String chkDeletePwd(String email,String password) throws ClassNotFoundException, SQLException;
 
 	public Member emailCheck(String email) throws ClassNotFoundException, SQLException;
 

@@ -9,14 +9,14 @@ margin-bottom: 10px;
 <script>
 /* $("#deleteMemberBtn").click(function() { */
 $(function() {
-
+	
+	let agreeChk = false;
+	let pwdChk = false;
+	
 	$("#delPwd").keyup(function(){
-		console.log("보내는 데이터   email:" + $("#email").val());
-		console.log("보내는 데이터  pwd :" + $("#delPwd").val());
-		console.log("보내는 데이터  제이슨:" + {email:$("#email").val(), password:$("#delPwd").val()});
 		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
-			alert("비밀번호를 입력해주세요");
-			$("#delPwd").focus();
+			warningAlert("비밀번호를 입력해주세요"); 
+		   $("#delPwd").focus();
 		}else{
 			$.ajax({
 				url:"chkDelPwd.do",
@@ -26,11 +26,13 @@ $(function() {
 				success:function(responsedata){
 					console.log("받는 데이터 >"+responsedata+"<");
 					if(responsedata == "true"){
-						/* alert("사용가능"); */
+						console.log("참");
 						$("#pwdMatchMsg").html("비밀번호가 일치합니다");
+						pwdChk = true;
 					}else{
-						/* alert("비밀번호가 일치하지 않습니다."); */
+						console.log("거짓");
 						$("#pwdMatchMsg").html("&emsp; Password do not match. Try again.");
+						pwdChk = false;
 					}
 				},
 				error:function(){
@@ -42,16 +44,26 @@ $(function() {
 
 	$("#deleteChk").change(function(){
 		if ($("input:checkbox[id='deleteChk']").is(":checked") == true){
-			$("#deleteChk").siblings(".text-danger").css(
-					"display", "none");
-			$("#deleteMemberBtn").attr('disabled', false);
+			$("#deleteChk").siblings(".text-danger").css("display", "none");
+			agreeChk = true;
+			/* $("#deleteMemberBtn").attr('disabled', false); */
 		}else{ 
-			$("#deleteChk").siblings(".text-danger").css(
-				"display", "block");
-			$("#deleteMemberBtn").attr('disabled', true);	
+			$("#deleteChk").siblings(".text-danger").css("display", "block");
+			agreeChk = false;
+			/* $("#deleteMemberBtn").attr('disabled', true);	 */
 		}
 	});
+	   $('#deleteMemberBtn').click(function() {
 
+	    	if (agreeChk && pwdChk) {
+	    		console.log('입력완료');
+	    		}else {
+	    			console.log('입력실패');
+	    			warningAlert("필수 항목을 모두 입력해주세요.");
+						return false;
+	    			} 
+	   });
+	   
 	 $("#multipartFile").change(function(){
 	  		var reader = new FileReader();
 	  	    reader.onload = function (e) {
@@ -238,7 +250,7 @@ function changeView() {
 														<input type="password" class="form-control" placeholder="Password" name="password" id="delPwd">
 														</div>
 													<div class="col-sm-6">
-														<button type="submit" class="btn btn-dark mt-1" id="deleteMemberBtn" disabled>Close Account</button>
+														<button type="submit" class="btn btn-dark mt-1" id="deleteMemberBtn">Close Account</button>
 													</div>
 													<span class="text-danger" style="display: block;" id="pwdMatchMsg"></span>
 												</c:when>

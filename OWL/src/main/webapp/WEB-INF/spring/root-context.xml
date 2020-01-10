@@ -60,6 +60,18 @@
 		</property>
 	</bean>
 	
+	
+	<!-- Google 소셜 로그인 연결 설정 -->
+    <bean id="googleOAuth2Template" class="org.springframework.social.google.connect.GoogleOAuth2Template">
+        <constructor-arg value="266293759218-1i2o19cvv8p80i4q4a9q94d1dner0ksg.apps.googleusercontent.com" />
+        <constructor-arg value="Rr4CKVJVPYVDbTlxEkP2LY-K" />
+    </bean>
+  
+    <bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+        <property name="scope" value="openid profile email"></property>
+        <property name="redirectUri" value="http://localhost:8090/OWL/GoogleLogin.do" />
+    </bean>
+
 	<!-- PasswordEncoder -->
 	<bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 

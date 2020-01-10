@@ -11,26 +11,34 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.Server;
-import org.apache.ibatis.session.SqlSession;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.ui.velocity.VelocityEngineFactory;
-import org.springframework.ui.velocity.VelocityEngineFactoryBean;
-import org.springframework.ui.velocity.VelocityEngineUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.github.scribejava.core.model.OAuth2AccessToken;
-
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.social.google.connect.GoogleOAuth2Template;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Parameters;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.velocity.VelocityEngineFactoryBean;
+import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.owl.member.dto.Member;
+import com.owl.member.service.GoogleService;
 import com.owl.member.service.KaKaoService;
 import com.owl.member.service.MemberService;
 import com.owl.member.service.NaverService;
@@ -40,8 +48,10 @@ public class LoginController {
 
 	@Autowired
 	private MemberService service;
+	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	@Autowired
 	private JavaMailSender mailSender;
 
@@ -53,9 +63,20 @@ public class LoginController {
 
 	@Autowired
 	private NaverService naverService;
+	
+	@Autowired
+	private GoogleService googleService;
+	
+    @Autowired
+    private GoogleOAuth2Template googleOAuth2Template;
+    
+    @Autowired
+    private OAuth2Parameters googleOAuth2Parameters;
 
 	@RequestMapping(value = "Login.do", method = RequestMethod.GET)
-	public String showView() {
+	public String showView(Model model) {
+		String url = googleOAuth2Template.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+        model.addAttribute("google_url", url);
 		return "member/login";
 	}
 	
@@ -111,12 +132,14 @@ public class LoginController {
 		return "member/main";
 	}
 
-	@RequestMapping("googleLogin.do")
-	public String googleLogin() {
-		System.out.println("googleLogin");
-
-		return "member/main";
-	}
+	//구글 로그인 Controller
+	@RequestMapping(value = "GoogleLogin.do")
+    public String doSessionAssignActionPage(String code, HttpServletRequest request, Model model) throws Exception {
+		Map<String, String> googlemember = googleService.getGoogleUser(code);
+		model.addAttribute("googlemember", googlemember);
+		System.out.println(model);
+        return "member/main"; 
+    }
 
 	@RequestMapping("Lock.do")
 	public String showLockView() {

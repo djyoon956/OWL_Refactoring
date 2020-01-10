@@ -1,5 +1,6 @@
 package com.owl.member.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,11 +12,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.member.dto.Member;
@@ -31,6 +34,9 @@ public class MemberRestController {
 
 	@Autowired
 	private MemberService service;	
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@RequestMapping(value = "ForgotPassword.do")
 	public Map<String, Object> findPassword(String email) throws Exception {
@@ -88,16 +94,12 @@ public class MemberRestController {
 	}
 	//비밀번호 확인 
 	@RequestMapping("chkDelPwd.do")
-	public boolean chkDelPWd(String email,String password, Model model) throws Exception{
-		boolean result = false;
-	try {	
-		result = service.chkDelPwd(email, password);
-		System.out.println("레스트 컨트롤러 이메일 : " + email);
-		System.out.println("레스트 컨트롤러 비밀번호 : " + password);
-		System.out.println("레스트 컨트롤러 리절트 : " + result);
-	} catch (Exception e) {
-		System.out.println(e.getMessage());
-	}
+	public boolean chkDelPWd(String email,String password) throws Exception{
+		System.out.println("email : " + email + " / password :" + password);
+		Member member = service.getMember(email);
+		String encodedPassword = member.getPassword();
+		boolean result = bCryptPasswordEncoder.matches(password, encodedPassword);
+
 		return result;
 	}
 	
@@ -118,14 +120,21 @@ public class MemberRestController {
 	 */
 	
 	@RequestMapping("Emailcheck.do")
-	public void emailCheck(String email) throws Exception{
+	public String emailCheck(String email, Model model) throws Exception{
 		System.out.println("EmailCheck controller in");
 		boolean result = service.emailCheck(email);
+		
+		String data = "";
 		if(result) {
 			System.out.println("we have already this email");
+			data = "false";
+
 		}else  {
 			System.out.println("you can use this email");
+			data = "true";
 		}
 		
+		model.addAttribute("data", data);
+		return data;
 	}
 }

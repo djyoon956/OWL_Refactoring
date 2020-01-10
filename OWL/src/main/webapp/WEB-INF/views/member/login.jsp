@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -9,6 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name = "google-signin-client_id"content = "266293759218-1i2o19cvv8p80i4q4a9q94d1dner0ksg.apps.googleusercontent.com.apps.googleusercontent.com">
 <title>OWL</title>
 <jsp:include page="../include/headTag.jsp" />
 <!-- Favicon icon -->
@@ -17,6 +16,7 @@
 
 <!-- Kakao -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <script type="text/javascript" src="resources/js/commonSweetAlert.js"></script>
 <style type="text/css">
 .snsLoginButton {
@@ -55,27 +55,12 @@ body {
 	};
 
 	$(function() {
-		checkError();
-		//이메일 중복체크 
-		$('#duplicateBtn').click(function() {
-
-			$.ajax({
-				url : "Emailcheck.do",
-				data : {
-					email : $("#email").val()
-					},
-				success : function(data) {
-					console.log("success in");
-					console.log(data);
-					successAlert("인증 성공");
-					},
-				error : function() {
-					console.log("error error");
-					warningAlert("중복임");
-					}
-				})
-		});
-
+		
+		//flag 
+		let nameCheck = false;
+		let emailCheck = false;
+		let pwdCheck = false;
+		
 		$("#sendPwd").click(function() {
 			$.ajax({
 				url : "ForgotPassword.do",
@@ -115,35 +100,73 @@ body {
 			}
 		})
 
-		$("#joinBox  .name").keyup(
+		$("#joinBox .name").keyup(
 				function(event) {
-					if ($("#joinBox  .name").val().length < 1)
-						$("#joinBox  .name").siblings(".text-danger").css(
-								"display", "block");
-					else
-						$("#joinBox  .name").siblings(".text-danger").css(
-								"display", "none");
+					if ($("#joinBox .name").val().length < 1){
+						$("#joinBox .name").siblings(".text-danger").css("display", "block");
+						nameCheck = false;
+					}else{
+						$("#joinBox .name").siblings(".text-danger").css("display", "none");
+						nameCheck = true;
+					}
 				})
-		$("#joinBox  .email")
-				.keyup(
+				
+		 $("#joinBox .email") .keyup(
 						function(event) {
 							let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-							if ($("#joinBox  .email").val().match(regExp) != null)
-								$("#joinBox  .email").siblings(".text-danger")
-										.css("display", "none");
-							else
-								$("#joinBox  .email").siblings(".text-danger")
-										.css("display", "block");
+							if ($("#joinBox .email").val().match(regExp) != null){ 
+								$("#joinBox .email").siblings(".text-danger").css("display", "none");
+								$('#duplicateBtn').attr("disabled",false);
+								emailCheck = true;
+							}else{ 
+								$("#joinBox .email").siblings(".text-danger").css("display", "block");
+								$('#duplicateBtn').attr("disabled", true);
+							emailCheck = false;
+							}
 						})
-		$("#joinBox  .pwd").keyup(
+						
+		$("#joinBox .pwd").keyup(
 				function(event) {
-					if ($("#joinBox  .pwd").val().length < 8)
-						$("#joinBox  .pwd").siblings(".text-danger").css(
-								"display", "block");
-					else
-						$("#joinBox  .pwd").siblings(".text-danger").css(
-								"display", "none");
+					if ($("#joinBox .pwd").val().length < 8){
+						$("#joinBox .pwd").siblings(".text-danger").css("display", "block");
+					pwdCheck = false;
+					}else{
+						$("#joinBox .pwd").siblings(".text-danger").css("display", "none");
+					pwdCheck = true;
+					}
 				})
+				
+				
+		//이메일 중복체크 
+		$('#duplicateBtn').click(function() {
+			if($("#email").val() == "") {
+					errorAlert("이메일 주소를 입력하세요.");
+				}else {
+					$.ajax({
+						url : "Emailcheck.do",
+						data : {
+							email : $("#email").val()
+							},
+						success : function(data) {
+							console.log("success in");
+							console.log(data);
+							if(data == "true") {
+								successAlert("사용가능한 메일주소입니다");
+								$("#email").removeAttr("style ");
+								
+								}else {
+									warningAlert("이미 존재하는 메일주소입니다");
+									$("#email").val("");
+									emailCheck = false;
+									}
+							},
+						error : function() {
+							console.log("error error");
+							}
+						})
+					}
+		});		
+				
 				
 		$("#resetBox  .pwd1").keyup(
 
@@ -153,35 +176,35 @@ body {
 						$("#resetBox .successletter").css("display", "none");
 						$("#resetBox .failletter").css("display", "none");
 						
-
 					}else if($("#resetBox  .pwd1").val() == null && $("#resetBox  .pwd2").val() == null) {
 						$("#resetBox .successletter").css("display", "none");
 						$("#resetBox .failletter").css("display", "none");
 						
-
 					}else{
 						$("#resetBox  .pwd1").siblings(".text-danger").css("display", "none");
 						$("#resetBox  .pwd2").keyup(
 								function(event) {
-									console.log('여기오니');
 									if ($("#resetBox  .pwd1").val() == $("#resetBox  .pwd2").val()){
-										console.log('여기와와와 if');
 										$("#resetBox .successletter").css("display", "block");
-										$("#resetBox .failletter").css("display", "none");
-										
+										$("#resetBox .failletter").css("display", "none");									
 									}else{
-										console.log('여기와와와 else');
 										$("#resetBox .failletter").css("display", "block");
 										$("#resetBox .successletter").css("display", "none");
 									}
 								})
 					}
 				})		
-				
-	
-				
-
 		openDialog();
+
+
+	   $('#joinBtn').click(function() {
+	    	if (nameCheck && emailCheck && pwdCheck) {
+	    		}else {
+	    			warningAlert("필수 항목을 모두 입력해주세요.");
+						return false;
+	    			} 
+	   })
+		
 	})
 
 	function openDialog() {
@@ -213,6 +236,7 @@ body {
 			$("#joinBox").removeClass("hidden");
 			$("#loginBox").addClass("hidden");
 		}
+
 	}
 
 	function checkError(){
@@ -225,6 +249,7 @@ body {
 		else 
 			errorAlert(error);
 	}
+
 </script>
 </head>
 
@@ -285,7 +310,7 @@ body {
 														<img src='resources/images/login/kakao.png'
 															style="width: 50px;">
 													</button>
-													<button id="googleLoginButton" class="snsLoginButton mr-3">
+													<button id="googleLoginButton" class="snsLoginButton mr-3" onclick="location.href='${google_url}'">
 														<img src='resources/images/login/google.png'
 															style="width: 50px;">
 													</button>
@@ -327,24 +352,30 @@ body {
 															
 													</div>
 													<div class="form-group">
-														<input type="text" name="name" class="form-control name" placeholder="Name"> 
+														<input id="name" type="text" name="name" class="form-control name" placeholder="* Name"> 
 														<span class="text-danger" style="display: none;">Please enter your name.</span>
 													</div>
 													<div class="form-group">
-													<div class="row">
-													<div class="col-8"><input type="email" name="email" id="email" class="form-control email" placeholder="Email"></div>
-													<div class="col-4"><button id="duplicateBtn"type="button" class="btn mb-1 btn-outline-primary">Duplicate Check</button></div>	 
+														<div class="row">
+															<div class="col-8">
+																<input type="email" name="email" id="email" class="form-control email" placeholder="* Email">
+																<span class="text-danger" style="display: none;">Please enter your email.</span>	
+															</div>
+															<div class="col-4">
+																<button id="duplicateBtn"type="button" class="btn mb-1 btn-outline-primary" disabled>Duplicate Check</button>
+															</div>	 
+															
 														</div>
-														<span class="text-danger" style="display: none;">Please enter your email.</span>	
 													</div>
 													<div class="form-group">
-														<input type="password" name="password" class="form-control pwd" placeholder="Password"> 
+														<input type="password" name="password" id="password" class="form-control pwd" placeholder="* Password"> 
 														<span class="text-danger" style="display: none;">Please enter your password at least 8.</span>
 													</div>
-													<input type="submit" class="btn login-form__btn submit w-100" value="JOIN IN">
+													<input id="joinBtn" type="submit" class="btn login-form__btn submit w-100" value="JOIN IN">
+													
 												</form>
 												<p class="mt-3 login-form__footer">
-													Don you have account? <a href="javascript:void(0);"
+													Do you have account? <a href="javascript:void(0);"
 														onclick="changeView(true);" class="text-primary">Login</a>
 													now
 												</p>
