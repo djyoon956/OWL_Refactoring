@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
@@ -42,12 +43,17 @@ import com.owl.member.service.GoogleService;
 import com.owl.member.service.KaKaoService;
 import com.owl.member.service.MemberService;
 import com.owl.member.service.NaverService;
+import com.owl.project.dto.ProjectList;
+import com.owl.project.service.ProjectService;
 
 @Controller
 public class LoginController {
 
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private ProjectService ProjectSerivce;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -87,10 +93,16 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "Main.do")
-	public String showMainView(HttpServletRequest request, Principal principal) {
+	public String showMainView(HttpServletRequest request, Principal principal, Model model) {
 		System.out.println("principal : " + principal.getName());
 		Member member = service.getMember(principal.getName());
 		request.getSession().setAttribute("member", member);
+		
+		List<ProjectList> projectList  = null;
+	
+		projectList = ProjectSerivce.getProjectLists(member.getEmail());
+		model.addAttribute("projectList", projectList);
+			
 		return "member/main";
 	}
 

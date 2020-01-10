@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
  <link href="resources/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
@@ -205,6 +206,7 @@ z
 </style>
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
+            <c:set var="projectList" value="${projectList}"/>
                 <ul class="metismenu" id="menu">  
                 <li class="nav-label">MY</li>                                    
                     <li>
@@ -222,7 +224,16 @@ z
                             <i class="far fa-star menu-icon"></i> <span class="nav-text">FAVORITES</span>
                         </a>
                         <ul class="collapse in" id="favoriteList">
-
+							<c:forEach var="favoriteList" items="${projectList}">
+								<c:if test="${favoriteList.favorite == 1}">
+								<li style="position:relative;">
+									<a href="ProjectDashBoard.do">
+										<span style="color: ${favoriteList.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${favoriteList.projectName}
+									</a>
+									 <a type="button" id="tools" data-toggle="modal" data-target="#editProject"><i class="far fa-sun"></i></a>					
+									</li>
+								</c:if>
+							</c:forEach>
                         </ul>
                     </li>
                     <li class="nav-label">PROJECT</li>
@@ -230,15 +241,22 @@ z
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="fas fa-desktop menu-icon"></i><span class="nav-text">Project List</span>
                         </a>
+                        
                         <ul aria-expanded="false" id="projectlist">
 						<li style="cursor: pointer;"><a type= "button" data-toggle="modal" data-target="#newProject"> <span style="font-size: 18px;">+</span>&emsp;  New Project</a></li>
-						<li style="position:relative;"><a href="ProjectDashBoard.do"><span style="color: #ffb1b9 !important;"><i class="fas fa-circle"></i></span>&emsp; Project 1</a>
+						<c:forEach var="list" items="${projectList}">
+						<li style="position:relative;">
+						<a href="ProjectDashBoard.do">
+							<span style="color: ${list.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${list.projectName}
+						</a>
 						 <a type="button" id="tools" data-toggle="modal" data-target="#editProject"><i class="far fa-sun"></i></a>					
-						</li>
-	                    <li><a href="Drive.do"><span style="color: #f0cc96 !important;"><i class="fas fa-circle"></i></span>&emsp; Project 2</a></li>
+						</li>						
+	                   <!--  <li><a href="Drive.do"><span style="color: #f0cc96 !important;"><i class="fas fa-circle"></i></span>&emsp; Project 2</a></li>
 	                    <li><a href="kanbanMainiy.do"><span style="color: #ccccff !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iy</a></li>
-	                    <li><a href="kanbanMainiyiy.do"><span style="color: lightgrey !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iyiy</a></li>
+	                    <li><a href="kanbanMainiyiy.do"><span style="color: lightgrey !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iyiy</a></li> -->
+                        </c:forEach>
                         </ul>
+                        
                     </li>
                     <!-- 비밀 기능 -->
 	                 <li>

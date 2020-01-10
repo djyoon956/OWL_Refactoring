@@ -4,7 +4,6 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"	type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 
-
 <style>
 .coloricon {
 	padding: 15px;
@@ -34,6 +33,10 @@
 
 
 .whiteColor{
+color: #fff;
+}
+
+.whieColor:hover {
 color: #fff;
 }
 
@@ -244,8 +247,8 @@ function Cancle(){
 				</li>
 
 				<!-- Chatting -->
-				<li class="icons" style="margin-right: 25px"><a
-					href="javascript:void(0)" id="chatBtn"> <i class="far fa-comment"></i></a>
+				<li class="icons" style="margin-right: 25px">
+				<a href="javascript:void(0)" id="chatBtn"> <i class="far fa-comment"></i></a>
 				</li>
 
 				<!-- Alram -->
@@ -429,3 +432,6 @@ function Cancle(){
 <!-- MyProfile Modal -->
 	<jsp:include page="modal/myProfileSetting.jsp" />
 	<jsp:include page="modal/newChat.jsp" />
+	<!-- sweet alert -->
+    <script src="resources/js/styleSwitcher.js"></script>
+

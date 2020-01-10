@@ -15,9 +15,10 @@
     <link rel="stylesheet" href="resources/plugins/chartist/css/chartist.min.css">
     <link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
     <!-- Custom Stylesheet -->
-    <link href="resources/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-
+    <!-- <link href="resources/css/style.css" rel="stylesheet"> -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+ 	
+ <jsp:include page="../include/headTag.jsp"/>
 </head>
 
 <body>
@@ -47,7 +48,7 @@
     <script src="resources/js/settings.js"></script>
     <script src="resources/js/gleek.js"></script>
     <script src="resources/js/styleSwitcher.js"></script>
-
+ 
     <!-- Chartjs -->
     <script src="resources/plugins/chart.js/Chart.bundle.min.js"></script>
     <!-- Circle progress -->
@@ -66,8 +67,4 @@
     <script src="resources/plugins/chartist/js/chartist.min.js"></script>
     <script src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
     <script src="resources/js/dashboard/dashboard-1.js"></script>
-
-	
-
-</body>
 </html>

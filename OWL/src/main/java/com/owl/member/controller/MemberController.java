@@ -59,12 +59,12 @@ public class MemberController {
 	@RequestMapping(value= "DeleteAccount.do")
 	public String deleteMember(String email,Model model) {
 		//테스트 데이터 
-		boolean result = service.deleteMember("qqq@gmail.com");
+		boolean result = service.deleteMember(email);
 		String view = "";
 		if(result) {
-			view = "include/modal/myProfileSetting";
-		} else {
 			view = "member/deleteOk";
+		} else {
+			view = "include/modal/myProfileSetting";
 		}
 		return view;
 	}
