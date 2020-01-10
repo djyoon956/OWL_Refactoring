@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -85,16 +86,19 @@ public class MemberRestController {
 	}
 		return member;
 	}
-	//회원정보 조회 (test)
+	//비밀번호 확인 
 	@RequestMapping("chkDelPwd.do")
-	public Member chkDelPWd(String email,String password, Model model) throws Exception{
-	Member member = null;
-		try {	
-		
+	public boolean chkDelPWd(String email,String password, Model model) throws Exception{
+		boolean result = false;
+	try {	
+		result = service.chkDelPwd(email, password);
+		System.out.println("레스트 컨트롤러 이메일 : " + email);
+		System.out.println("레스트 컨트롤러 비밀번호 : " + password);
+		System.out.println("레스트 컨트롤러 리절트 : " + result);
 	} catch (Exception e) {
 		System.out.println(e.getMessage());
 	}
-		return member;
+		return result;
 	}
 	
 	//회원가입 Ok
