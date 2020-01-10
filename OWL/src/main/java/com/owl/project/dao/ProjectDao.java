@@ -12,10 +12,10 @@ public interface ProjectDao {
 	
 	public int insertProjectList(ProjectList projectlist) throws ClassNotFoundException, SQLException;
 
-	public int updateProjectList(Member member) throws ClassNotFoundException, SQLException;
+	public int updateProjectList(ProjectList projectlist) throws ClassNotFoundException, SQLException;
 
 	public Project getProject(int projectIdx) throws ClassNotFoundException, SQLException;
 
-	public List<Project> getProjectLists(String email) throws ClassNotFoundException, SQLException;
+	public List<Project> getProjectList(String email) throws ClassNotFoundException, SQLException;
 
 }
