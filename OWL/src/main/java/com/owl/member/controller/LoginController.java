@@ -10,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.Server;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,7 +52,7 @@ public class LoginController {
 
 	@Autowired
 	private NaverService naverService;
-	
+
 	@RequestMapping(value = "Login.do", method = RequestMethod.GET)
 	public String showView() {
 		return "member/login";
@@ -99,31 +100,31 @@ public class LoginController {
 	@RequestMapping("googleLogin.do")
 	public String googleLogin() {
 		System.out.println("googleLogin");
-		
+
 		return "member/main";
 	}
-	
+
 	@RequestMapping("Lock.do")
 	public String showLockView() {
 		return "member/lock";
 	}
- 
+
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
 	public String emailConfirm(Member member, Model model, HttpServletRequest request) {
-		
+
 		System.out.println("emailConfirm in");
 		System.out.println(member.getMultipartFile());
 		System.out.println(member.getMultipartFile().getOriginalFilename());
-		
+
 		System.out.println(member.toString());
-		
+
 		String imagefilename = member.getMultipartFile().getOriginalFilename();
 		boolean result = false;
-		String viewpage ="";
-		
+		String viewpage = "";
+
 		try {
 			// DB insert 해야함
-			
+
 			if (!imagefilename.equals("")) { // 실 파일 업로드
 				String uploadpath = request.getServletContext().getRealPath("upload");
 				checkDirectory(uploadpath);
@@ -133,37 +134,38 @@ public class LoginController {
 				FileOutputStream fs = new FileOutputStream(fpath);
 				fs.write(member.getMultipartFile().getBytes());
 				fs.close();
-				member.setProfilePic(imagefilename);
-				member.setPassword(this.bCryptPasswordEncoder.encode(member.getPassword()));  //비밀번호 암호화 
+				member.setProfilePic(imagefilename);	
 			}
-
-			result = service.insertMember(member);
 			
-			if(result) {
+			member.setPassword(bCryptPasswordEncoder.encode(member.getPassword())); // 비밀번호 암호화
+			result = service.insertMember(member);
+
+			if (result) {
 				System.out.println("여기는 true");
 				MimeMessage message = mailSender.createMimeMessage();
 				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 				Map<String, Object> models = new HashMap<String, Object>();
 				models.put("memberId", member.getEmail());
 				models.put("name", member.getName());
-				
-				String mailBody = VelocityEngineUtils.mergeTemplateIntoString(velocityEngineFactoryBean.createVelocityEngine(), "joinTemplate.vm", "UTF-8", models);
+
+				String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
+						velocityEngineFactoryBean.createVelocityEngine(), "joinTemplate.vm", "UTF-8", models);
 				messageHelper.setSubject("[OWL] 가입을 환영합니다.");
-				messageHelper.setFrom("bit_team2@naver.com");
+				messageHelper.setFrom("bit4owl@gmail.com");
 				messageHelper.setTo(member.getEmail());
 				messageHelper.setText(mailBody, true);
 				mailSender.send(message);
-				
+
 				model.addAttribute("mail", member.getEmail());
 				model.addAttribute("show", "joinEmail");
 
-				//viewpage="redirect:Login.do";
-				
-			}else {
+				// viewpage="redirect:Login.do";
+
+			} else {
 				System.out.println("여기는 else");
 				model.addAttribute("show", "join");
 
-				//viewpage="redirect:Login.do";
+				// viewpage="redirect:Login.do";
 			}
 		} catch (Exception e) {
 			System.out.println("이거 에러..>" + e.getMessage());
@@ -171,23 +173,22 @@ public class LoginController {
 
 		}
 
-		//model.addAttribute("show", "joinEmail");
+		// model.addAttribute("show", "joinEmail");
 		return "member/login";
 	}
-	
-	
+
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
 	public String emailConfirmOK(String memberId, Model model) {
+		service.joinMemberOk(memberId);
+
 		model.addAttribute("show", "joinOk");
 		model.addAttribute("memberId", memberId);
 		return "index";
 	}
-	
-	
+
 	private void checkDirectory(String path) {
 		File file = new File(path);
 		if (!file.exists())
 			file.mkdir();
 	}
-
 }
