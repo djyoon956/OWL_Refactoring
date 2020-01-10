@@ -54,45 +54,14 @@ body {
 		});
 	};
 
+
+	
 	$(function() {
 
-		let nameCheck;
-		let emailCheck;
-		let pwdCheck;
-		if (nameCheck && emailCheck && pwdCheck) {
-			console.log('입력완료');
-			$('#joinBtn').attr('disabled', true);
-			}else {
-				console.log('입력실패');
-				
-				$('#joinBtn').attr('disabled', false);
-
-				}
+		var nameCheck = false;
+		var emailCheck = false;
+		var pwdCheck = false;
 		
-		//이메일 중복체크 
-		$('#duplicateBtn').click(function() {
-			if($("#email").val() == "") {
-					errorAlert("이메일 주소를 입력하세요.");
-				}else {
-					$.ajax({
-						url : "Emailcheck.do",
-						data : {
-							email : $("#email").val()
-							},
-						success : function(data) {
-							console.log("success in");
-							console.log(data);
-							((data == "true")? successAlert("사용가능한 메일주소입니다") : warningAlert("이미 존재하는 메일주소입니다"));
-							},
-						error : function() {
-							console.log("error error");
-							}
-						})
-					}
-
-		});
-		
-
 		$("#sendPwd").click(function() {
 			$.ajax({
 				url : "ForgotPassword.do",
@@ -167,6 +136,40 @@ body {
 				})
 				
 				
+		//이메일 중복체크 
+		$('#duplicateBtn').click(function() {
+			if($("#email").val() == "") {
+					errorAlert("이메일 주소를 입력하세요.");
+				}else {
+					$.ajax({
+						url : "Emailcheck.do",
+						data : {
+							email : $("#email").val()
+							},
+						success : function(data) {
+							console.log("success in");
+							console.log(data);
+							if(data == "true") {
+								successAlert("사용가능한 메일주소입니다");
+								$("#email").removeAttr("style ");
+								
+								}else {
+									warningAlert("이미 존재하는 메일주소입니다");
+									$("#email").val("");
+									$("#email").attr("style","border-bottom : 1px solid red")
+									$("#email").focus();
+									emailCheck = false;
+									
+									}
+							},
+							
+						error : function() {
+							console.log("error error");
+							}
+						})
+					}
+		});		
+				
 				
 		$("#resetBox  .pwd1").keyup(
 
@@ -176,12 +179,10 @@ body {
 						$("#resetBox .successletter").css("display", "none");
 						$("#resetBox .failletter").css("display", "none");
 						
-
 					}else if($("#resetBox  .pwd1").val() == null && $("#resetBox  .pwd2").val() == null) {
 						$("#resetBox .successletter").css("display", "none");
 						$("#resetBox .failletter").css("display", "none");
 						
-
 					}else{
 						$("#resetBox  .pwd1").siblings(".text-danger").css("display", "none");
 						$("#resetBox  .pwd2").keyup(
@@ -190,8 +191,7 @@ body {
 									if ($("#resetBox  .pwd1").val() == $("#resetBox  .pwd2").val()){
 										console.log('여기와와와 if');
 										$("#resetBox .successletter").css("display", "block");
-										$("#resetBox .failletter").css("display", "none");
-										
+										$("#resetBox .failletter").css("display", "none");									
 									}else{
 										console.log('여기와와와 else');
 										$("#resetBox .failletter").css("display", "block");
@@ -200,11 +200,22 @@ body {
 								})
 					}
 				})		
-				
-	
-				
-
 		openDialog();
+
+
+
+	   $('#joinBtn').click(function() {
+
+	    	if (nameCheck && emailCheck && pwdCheck) {
+	    		console.log('입력완료');
+	    		}else {
+	    			console.log('입력실패');
+	    			warningAlert("필수 항목을 모두 입력해주세요.");
+						return false;
+				
+	    			} 
+	   })
+		
 	})
 
 	function openDialog() {
@@ -236,6 +247,12 @@ body {
 			$("#joinBox").removeClass("hidden");
 			$("#loginBox").addClass("hidden");
 		}
+
+
+		
+
+ 
+		
 	}
 </script>
 </head>
@@ -348,21 +365,21 @@ body {
 															
 													</div>
 													<div class="form-group">
-														<input type="text" name="name" class="form-control name" placeholder="Name"> 
+														<input id="name" type="text" name="name" class="form-control name" placeholder="* Name"> 
 														<span class="text-danger" style="display: none;">Please enter your name.</span>
 													</div>
 													<div class="form-group">
 													<div class="row">
-													<div class="col-8"><input type="email" name="email" id="email" class="form-control email" placeholder="Email"></div>
+													<div class="col-8"><input type="email" name="email" id="email" class="form-control email" placeholder="* Email"></div>
 													<div class="col-4"><button id="duplicateBtn"type="button" class="btn mb-1 btn-outline-primary">Duplicate Check</button></div>	 
 														</div>
 														<span class="text-danger" style="display: none;">Please enter your email.</span>	
 													</div>
 													<div class="form-group">
-														<input type="password" name="password" class="form-control pwd" placeholder="Password"> 
+														<input type="password" name="password" id="password" class="form-control pwd" placeholder="* Password"> 
 														<span class="text-danger" style="display: none;">Please enter your password at least 8.</span>
 													</div>
-													<input id="joinBtn" type="submit" class="btn login-form__btn submit w-100" disabled value="JOIN IN">
+													<input id="joinBtn" type="submit" class="btn login-form__btn submit w-100" value="JOIN IN">
 													
 												</form>
 												<p class="mt-3 login-form__footer">
