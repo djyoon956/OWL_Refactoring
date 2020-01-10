@@ -9,13 +9,12 @@ margin-bottom: 10px;
 <script>
 /* $("#deleteMemberBtn").click(function() { */
 $(function() {
-
+	let agreeChk = false;
+	let pwdChk = false;
 	$("#delPwd").keyup(function(){
-		console.log("보내는 데이터   email:" + $("#email").val());
-		console.log("보내는 데이터  pwd :" + $("#delPwd").val());
-		console.log("보내는 데이터  제이슨:" + {email:$("#email").val(), password:$("#delPwd").val()});
 		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
-			alert("비밀번호를 입력해주세요");
+		   alert("비밀번호를 입력해주세요"); 
+			warningAlert("비밀번호를 입력해주세요");
 			$("#delPwd").focus();
 		}else{
 			$.ajax({
@@ -28,9 +27,11 @@ $(function() {
 					if(responsedata == "true"){
 						/* alert("사용가능"); */
 						$("#pwdMatchMsg").html("비밀번호가 일치합니다");
+						pwdChk = true;
 					}else{
 						/* alert("비밀번호가 일치하지 않습니다."); */
 						$("#pwdMatchMsg").html("&emsp; Password do not match. Try again.");
+						pwdChk = false;
 					}
 				},
 				error:function(){
@@ -44,11 +45,13 @@ $(function() {
 		if ($("input:checkbox[id='deleteChk']").is(":checked") == true){
 			$("#deleteChk").siblings(".text-danger").css(
 					"display", "none");
-			$("#deleteMemberBtn").attr('disabled', false);
+			agreeChk = true;
+			/* $("#deleteMemberBtn").attr('disabled', false); */
 		}else{ 
 			$("#deleteChk").siblings(".text-danger").css(
 				"display", "block");
-			$("#deleteMemberBtn").attr('disabled', true);	
+			agreeChk = false;
+			/* $("#deleteMemberBtn").attr('disabled', true);	 */
 		}
 	});
 

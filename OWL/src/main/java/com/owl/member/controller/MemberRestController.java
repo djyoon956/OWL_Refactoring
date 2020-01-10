@@ -88,13 +88,10 @@ public class MemberRestController {
 	}
 	//비밀번호 확인 
 	@RequestMapping("chkDelPwd.do")
-	public boolean chkDelPWd(String email,String password, Model model) throws Exception{
+	public boolean chkDelPWd(String email,String password) throws Exception{
 		boolean result = false;
 	try {	
 		result = service.chkDelPwd(email, password);
-		System.out.println("레스트 컨트롤러 이메일 : " + email);
-		System.out.println("레스트 컨트롤러 비밀번호 : " + password);
-		System.out.println("레스트 컨트롤러 리절트 : " + result);
 	} catch (Exception e) {
 		System.out.println(e.getMessage());
 	}

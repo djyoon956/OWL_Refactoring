@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE EMAIL=#{email}
 	</update>
 	<select id="chkDeletePwd" resultType="String">
-		SELECT EMAIL FROM owl.MEMBER WHERE EMAIL=#{email} AND PASSWORD=#{password}
+		SELECT EMAIL FROM owl.MEMBER WHERE EMAIL=#{param1} AND PASSWORD=#{param2}
 	</select>
 	<delete id="deleteMember">
 		DELETE FROM owl.MEMBER WHERE EMAIL=#{email}
