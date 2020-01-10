@@ -12,16 +12,7 @@ $(function() {
 	
 	let agreeChk;
 	let pwdChk;
-	/* $("#delPwd").change(function(){
-		 
-	if(pwdChk && agreeChk) {
-		 console.log("동의 함 ");
-		 $("#deleteMemberBtn").attr('disabled', false); 
-	} else {
-		console.log("동의 안함 ");
-		 $("#deleteMemberBtn").attr('disabled', true);
-	}
-	}); */
+	
 	$("#delPwd").keyup(function(){
 		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
 		   alert("비밀번호를 입력해주세요"); 
@@ -35,19 +26,9 @@ $(function() {
 				success:function(responsedata){
 					console.log("받는 데이터 >"+responsedata+"<");
 					if(responsedata == true){
-						/* alert("사용가능"); */
 						$("#pwdMatchMsg").html("비밀번호가 일치합니다");
 						pwdChk = true;
-						
-						if(pwdChk && agreeChk) {
-							 console.log("둘다 만족");
-							 $("#deleteMemberBtn").attr('disabled', false); 
-						} else {
-							console.log("불만족");
-							 $("#deleteMemberBtn").attr('disabled', true);
-						}
 					}else{
-						/* alert("비밀번호가 일치하지 않습니다."); */
 						$("#pwdMatchMsg").html("&emsp; Password do not match. Try again.");
 						pwdChk = false;
 					}
@@ -72,9 +53,18 @@ $(function() {
 			/* $("#deleteMemberBtn").attr('disabled', true);	 */
 		}
 	});
-	
+	function check (){
+		if(pwdChk == true && agreeChk == false) {
+			 console.log("둘다 만족");
+			 $("#deleteMemberBtn").attr('disabled', false); 
+		} else {
+			console.log("불만족");
+			 $("#deleteMemberBtn").attr('disabled', true);
+		}
+	}
 
-	
+
+	/*  window.setInterval(check, 2000);  */
 	 $("#multipartFile").change(function(){
 	  		var reader = new FileReader();
 	  	    reader.onload = function (e) {

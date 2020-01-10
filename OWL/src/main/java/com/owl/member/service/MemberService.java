@@ -92,7 +92,7 @@ public class MemberService {
 		boolean result = false;
 		
 		try {
-			result = userDao.chkDeletePwd(email, password) == null ? false : true;
+			result = userDao.chkDeletePwd(email, password) > 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

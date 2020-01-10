@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
@@ -31,6 +32,9 @@ public class MemberRestController {
 
 	@Autowired
 	private MemberService service;	
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@RequestMapping(value = "ForgotPassword.do")
 	public Map<String, Object> findPassword(String email) throws Exception {
@@ -90,8 +94,9 @@ public class MemberRestController {
 	@RequestMapping("chkDelPwd.do")
 	public boolean chkDelPWd(String email,String password) throws Exception{
 		boolean result = false;
+	//	member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
 	try {	
-		result = service.chkDelPwd(email, password);
+		result = service.chkDelPwd(email, bCryptPasswordEncoder.encode(password));
 	} catch (Exception e) {
 		System.out.println(e.getMessage());
 	}
