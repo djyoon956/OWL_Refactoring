@@ -67,9 +67,11 @@ body {
 				success : function(data) {
 					console.log("success in");
 					console.log(data);
+					successAlert("인증 성공");
 					},
 				error : function() {
 					console.log("error error");
+					warningAlert("중복임");
 					}
 				})
 		});
