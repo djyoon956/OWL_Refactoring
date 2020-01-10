@@ -272,7 +272,7 @@ function Cancle(){
 				<hr>
 				<div class="text-center setting-box">
 					<ul>
-					<li><a href="page-login.html" class="whiteColor"><i class="icon-key"></i> <span>Logout</span></a></li>
+					<li><a href="Logout.do" class="whiteColor"><i class="icon-key"></i> <span>Logout</span></a></li>
 					</ul>
 				
 				</div>

@@ -74,6 +74,11 @@ public class LoginController {
 		System.out.println("login");
 		return "member/main";
 	}
+	
+	@RequestMapping(value = "ReturnLogin.do")
+	public String returnLogin() {
+		return "member/login";
+	}
 
 	@RequestMapping(value = "kakaoLogin.do", produces = "application/json")
 	public String kakaoLogin(@RequestParam("code") String code, HttpSession session) throws Exception {

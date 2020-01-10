@@ -7,17 +7,17 @@
 										  http://www.springframework.org/schema/security 
 										  http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<security:http >
+	<security:http auto-config="true">
 		<security:csrf disabled="true" />
 		<security:form-login login-page="/Login.do" 
-										 login-processing-url="/login"
 										 username-parameter="email" 
 										 password-parameter="password"
 										 default-target-url="/Main.do"
 										 always-use-default-target="true"
-										 authentication-failure-url="/Login.do?error" />
+										 authentication-failure-handler-ref="loginFailHandler" />
 										
-		<security:logout logout-success-url="/Index.do"
+		<security:logout logout-url="/Logout.do"
+									logout-success-url="/Index.do"
 								  delete-cookies="remember-cookie" 
 					         	  invalidate-session="true" />
 		
@@ -26,10 +26,10 @@
 											   remember-me-parameter="remember-me"
 											   remember-me-cookie="remember-cookie" />	
 											   
-	   <security:session-management invalid-session-url="/Login.do">
+<!-- 	   <security:session-management invalid-session-url="/Login.do">
 	      <security:concurrency-control max-sessions="1"
-        												  expired-url="/login" />
-	    </security:session-management>						
+        												  expired-url="/Login.do" />
+	    </security:session-management>	 -->					
 	</security:http>
 
 	<security:authentication-manager>
@@ -41,4 +41,10 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 	
+	<bean id="loginFailHandler" class="com.owl.member.handler.LoginFailHandler">
+	    <property name="email" value="email"/>
+	    <property name="password" value="password"/>
+	    <property name="errorMessage" value="errorMessage"/>
+	    <property name="defaultFailureUrl" value="/ReturnLogin.do"/>
+	</bean>
 </beans>
