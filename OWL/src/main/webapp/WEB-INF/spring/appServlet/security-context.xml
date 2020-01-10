@@ -7,23 +7,38 @@
 										  http://www.springframework.org/schema/security 
 										  http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<security:http auto-config="true">
+	<security:http >
 		<security:csrf disabled="true" />
 		<security:form-login login-page="/Login.do" 
-										 username-parameter="email"
-								 		 password-parameter="password"
+										 login-processing-url="/login"
+										 username-parameter="email" 
+										 password-parameter="password"
+										 default-target-url="/Main.do"
+										 always-use-default-target="true"
 										 authentication-failure-url="/Login.do?error" />
-		<security:logout logout-success-url="/Index.do" />
+										
+		<security:logout logout-success-url="/Index.do"
+								  delete-cookies="remember-cookie" 
+					         	  invalidate-session="true" />
+		
+		<security:remember-me key="rememberKey" 
+											   token-validity-seconds="604800" 
+											   remember-me-parameter="remember-me"
+											   remember-me-cookie="remember-cookie" />	
+											   
+	   <security:session-management invalid-session-url="/Login.do">
+	      <security:concurrency-control max-sessions="1"
+        												  expired-url="/login" />
+	    </security:session-management>						
 	</security:http>
 
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<security:jdbc-user-service
-				users-by-username-query="SELECT EMAIL AS username, password, enabled FROM owl.MEMBER" 
-				authorities-by-username-query="SELECT M.EMAIL AS username, R.AUTHORITY FROM owl.MEMBER M JOIN owl.AUTHORITIES R ON M.EMAIL=R.EMAIL WHERE M.EMAIL=?"
-				data-source-ref="driverManagerDataSource" />
-
+			<security:jdbc-user-service users-by-username-query="SELECT EMAIL AS username, password,AUTHOK AS enabled FROM owl.MEMBER WHERE EMAIL = ?"
+														authorities-by-username-query="SELECT M.EMAIL, R.AUTHORITY FROM owl.MEMBER M JOIN owl.AUTHORITIES R ON M.EMAIL=R.EMAIL WHERE M.EMAIL=?"
+														data-source-ref="driverManagerDataSource" />
 			<security:password-encoder ref="bCryptPasswordEncoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>
+	
 </beans>

@@ -250,8 +250,8 @@ body {
 												<div class="text-center mt-4">
 													<h4>LOGIN</h4>
 												</div>
-												<c:url value="/login" var="loginurl"></c:url>
-												<form action="Login.do" method="post" class="mt-5 mb-5 login-input">
+												<c:url value="/login" var="loginurl"/>
+												<form action="${loginurl }" method="post" class="mt-5 mb-5 login-input">
 													<div class="form-group">
 														<input type="email" name="email"
 															class="form-control email" placeholder="Email">

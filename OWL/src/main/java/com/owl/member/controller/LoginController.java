@@ -3,6 +3,7 @@ package com.owl.member.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +57,14 @@ public class LoginController {
 	@RequestMapping(value = "Login.do", method = RequestMethod.GET)
 	public String showView() {
 		return "member/login";
+	}
+	
+	@RequestMapping(value = "Main.do")
+	public String showMainView(HttpServletRequest request, Principal principal) {
+		System.out.println("principal : " + principal.getName());
+		Member member = service.getMember(principal.getName());
+		request.getSession().setAttribute("member", member);
+		return "member/main";
 	}
 
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
