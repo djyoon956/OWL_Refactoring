@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+
 <style>
 .list-margin {
 margin-bottom: 10px;
@@ -11,11 +12,10 @@ margin-bottom: 10px;
 $(function() {
 	
 	let agreeChk = false;
-	let pwdChk = false;
+	let pwdChk = true;
 	
 	$("#delPwd").keyup(function(){
 		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
-			warningAlert("비밀번호를 입력해주세요"); 
 		   $("#delPwd").focus();
 		}else{
 			$.ajax({
@@ -25,6 +25,7 @@ $(function() {
 				dataType: "html",
 				success:function(responsedata){
 					console.log("받는 데이터 >"+responsedata+"<");
+				
 					if(responsedata == "true"){
 						console.log("참");
 						$("#pwdMatchMsg").html("비밀번호가 일치합니다");
@@ -46,6 +47,7 @@ $(function() {
 		if ($("input:checkbox[id='deleteChk']").is(":checked") == true){
 			$("#deleteChk").siblings(".text-danger").css("display", "none");
 			agreeChk = true;
+
 			/* $("#deleteMemberBtn").attr('disabled', false); */
 		}else{ 
 			$("#deleteChk").siblings(".text-danger").css("display", "block");
@@ -61,7 +63,7 @@ $(function() {
 	    			console.log('입력실패');
 	    			warningAlert("필수 항목을 모두 입력해주세요.");
 						return false;
-	    			} 
+	    	} 
 	   });
 	   
 	 $("#multipartFile").change(function(){
@@ -196,7 +198,7 @@ function changeView() {
 							<div class="card">
 								<div class="card-body">
 									<div class="basic-form">
-										<form action="DeleteAccount.do" method="get">
+									<!-- 	<form action="DeleteAccount.do" method="get"> -->
 											<div class="modal-body">
 											<h5 class="mt-3 mb-1 "><img class="" src="resources/images/owl_logo_fit.png" style="width: 60px"> &nbsp;&nbsp; Please check before deleting your account.</h5>
 												<br>
@@ -221,64 +223,28 @@ function changeView() {
 													</div>
 												</div>
 												<hr>
-											<%-- <c:choose> --%>
-												<c:if test="${member.signFrom == '홈페이지'}">
-													<form action="DeleteAccount.do" method="post">
-												</c:if>
-												<%-- <c:when test="${member.signFrom == '구글'}">
-													<form action="googleLogin.do" method="get">
-												</c:when>
-												<c:when test="${member.signFrom == '카카오'}">
-													<form action="kakaoLogin.do" method="get">
-												</c:when>
-												<c:otherwise>
-													<!-- 네이버 -->
-													<form action="naverLogin.do" method="get">
-												</c:otherwise> --%>
-											<%-- </c:choose> --%>
-											<!-- <form action="DeleteAccount.do" method="get"> -->
-
+										<form action="DeleteAccount.do" method="post">
 												<div class="row">
-
-												<c:choose>
-												<c:when test="${member.signFrom == '홈페이지'}">
+											<input type="hidden" name="email" class="form-control email" value="${member.email}">
+												<c:if test="${member.signFrom == '홈페이지'}">
 													<!-- <div class="col-sm-2">
 														<label class="sr-only">Password</label> 
 													</div> -->
+												
 													<div class="col-sm-6">
 														<input type="password" class="form-control" placeholder="Password" name="password" id="delPwd">
 														</div>
+												</c:if>
 													<div class="col-sm-6">
 														<button type="submit" class="btn btn-dark mt-1" id="deleteMemberBtn">Close Account</button>
 													</div>
 													<span class="text-danger" style="display: block;" id="pwdMatchMsg"></span>
-												</c:when>
-												<c:when test="${member.signFrom == '구글'}">
-													<button id="googleLoginButton" class="snsLoginButton mr-3">
-														<img src='resources/images/login/google.png'
-															style="width: 50px;">
-													</button>
-												</c:when>
-												<c:when test="${member.signFrom == '카카오'}">
-													<button id="kakaoLoginButton" class="snsLoginButton mr-3"
-														onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=5d151c02cc241d9ba7a8373a8051d79d&redirect_uri=http://localhost:8090/OWL/kakaoLogin.do&response_type=code'">
-														<img src='resources/images/login/kakao.png'
-															style="width: 50px;">
-													</button>
-												</c:when>
-												<c:otherwise>
-													<!-- 네이버 -->
-													<button id="naverLoginButton"
-														class="snsLoginButton mt-2 mr-3"
-														onclick="location.href='https://nid.naver.com/oauth2.0/authorize?client_id=zlKEJHqR7YB9riY5pP5l&redirect_uri=http://localhost:8090/OWL/naverLogin.do&response_type=code'">
-														<img src='resources/images/login/naver.png'
-															style="width: 50px;">
-													</button>
-												</c:otherwise>
-											</c:choose>
+												
+									
 													</div>
+											</form>
+													
 												</div>
-										</form>
 									</div>
 								</div>
 							</div>
@@ -290,5 +256,6 @@ function changeView() {
 		</div>
 	</div>
 </div>
+
 
 
