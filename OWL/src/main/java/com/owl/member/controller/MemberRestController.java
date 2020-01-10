@@ -103,6 +103,11 @@ public class MemberRestController {
 	 * return null; }
 	 */
 	
-	
-	
+	@RequestMapping("Emailcheck.do")
+	public String emailCheck(String email, Model model) throws Exception{
+		System.out.println("EmailCheck controller in");
+		
+		return null;
+		
+	}
 }

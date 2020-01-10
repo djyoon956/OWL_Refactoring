@@ -1989,7 +1989,9 @@ fieldset:disabled a.btn {
   color: #326295;
   background-color: transparent;
   background-image: none;
-  border-color: #326295; }
+  border-color: #326295; 
+  font-weight: 700;
+  }
   .btn-outline-primary:hover {
     color: #fff;
     background-color: #326295;
@@ -11142,9 +11144,9 @@ table.dataTable thead .sorting::after {
   border-color: #2f3137; }
 
 .btn-outline-primary:active, .btn-outline-primary:focus, .btn-outline-primary:hover {
-  background: #4540f7;
+  background: #336699;
   color: #fff;
-  border-color: #4540f7; }
+  border-color: #336699; }
 
 .btn-outline-secondary {
   color: #464a53; }

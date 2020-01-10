@@ -132,6 +132,13 @@ public class MemberService {
 
 		return members;
 	}
+	
+	public String emailCheck() {
+		
+		 MemberDao dao = getMemberDao();
+		
+		return null;
+	}
 
 	private MemberDao getMemberDao() {
 		return sqlSession.getMapper(MemberDao.class);
