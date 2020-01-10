@@ -74,9 +74,15 @@ public class LoginController {
     private OAuth2Parameters googleOAuth2Parameters;
 
 	@RequestMapping(value = "Login.do", method = RequestMethod.GET)
-	public String showView(Model model) {
-		String url = googleOAuth2Template.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-        model.addAttribute("google_url", url);
+	public String showView(HttpSession session,Model model) {
+		String naverUrl = naverService.getAuthorizationUrl(session);
+		String kakaoUrl = kaKaoService.getAuthorizationUrl();
+		String googleUrl = googleOAuth2Template.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+		
+		model.addAttribute("naverUrl", naverUrl);
+		model.addAttribute("kakaoUrl", kakaoUrl);
+        model.addAttribute("googleUrl", googleUrl);
+        
 		return "member/login";
 	}
 	
@@ -101,43 +107,41 @@ public class LoginController {
 		return "member/login";
 	}
 
-	@RequestMapping(value = "kakaoLogin.do", produces = "application/json")
+	@RequestMapping(value = "KakaoLogin.do", produces = "application/json")
 	public String kakaoLogin(@RequestParam("code") String code, HttpSession session) throws Exception {
-		System.out.println("kakaoLoign");
-		System.out.println(naverService.getAuthorizationUrl(session));
-		String accessToken = kaKaoService.getAccessToken(code);
-		Member member = kaKaoService.getUserInfo(accessToken);
+		Member member = kaKaoService.getMemberInfo(code);
 
-		// id 체크 후 db에 없으면 insert
-
-		session.setAttribute("memberName", member.getName());
+		if (member != null && !member.getEmail().isEmpty()) 
+			snsJoinCheck(member);
+		
 		return "member/main";
 	}
 
-	// kakaoLoginCallback.do
-	@RequestMapping("naverLogin.do")
+
+	@RequestMapping("NaverLogin.do")
 	public String naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session, Model model)
 			throws IOException {
-		System.out.println("naverLogin");
-		System.out.println("naverLogin : " + code);
-		System.out.println("naverLogin : " + state);
-		OAuth2AccessToken oauthToken;
-		oauthToken = naverService.getAccessToken(session, code, state);
-		// 로그인 사용자 정보를 읽어온다.
-		String apiResult = naverService.getUserProfile(oauthToken);
-		System.out.println("apiResult" + apiResult);
-		model.addAttribute("result", apiResult);
+		Member member = naverService.getMemberInfo(session, code, state);
+		
+		if (member != null && !member.getEmail().isEmpty()) 
+			snsJoinCheck(member);
 
-		/* 네이버 로그인 성공 페이지 View 호출 */
 		return "member/main";
+	}
+	
+	private void snsJoinCheck(Member member) {
+		if (service.getMember(member.getEmail()) == null)
+			service.insertMember(member);
 	}
 
 	//구글 로그인 Controller
 	@RequestMapping(value = "GoogleLogin.do")
     public String doSessionAssignActionPage(String code, HttpServletRequest request, Model model) throws Exception {
-		Map<String, String> googlemember = googleService.getGoogleUser(code);
-		model.addAttribute("googlemember", googlemember);
-		System.out.println(model);
+		Member member= googleService.getMemberInfo(code);
+	
+		if (member != null && !member.getEmail().isEmpty()) 
+			snsJoinCheck(member);
+
         return "member/main"; 
     }
 
