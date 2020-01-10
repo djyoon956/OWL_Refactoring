@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 	<insert id="insertMember" parameterType="com.owl.member.dto.Member">
-		INSERT INTO owl.MEMBER(email, password, name, profilepic, signfrom) VALUES (#{email}, #{password}, #{name}, #{profilePic}, '홈페이지');
+		INSERT INTO owl.MEMBER(email, password, name, profilepic, signfrom) VALUES (#{email}, #{password}, #{name}, #{profilePic}, '홈페이지')
 	</insert>
 	
 	<update id="joinMemberOk" parameterType="String">
@@ -33,11 +33,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<insert id="grantDefaultRole" parameterType="String">
-		INSERT INTO owl.AUTHORITIES(email, authority) VALUES (#{email}, 'ROLE_USER');
+		INSERT INTO owl.AUTHORITIES(email, authority) VALUES (#{email}, 'ROLE_USER')
 	</insert>
 	
-	<select id="emailCheck" parameterType="String" resultType="int">
-		SELECT * FROM owl.MEMBER WHERE email = #{email};
-		
+	<select id="emailCheck" parameterType="String" resultType="com.owl.member.dto.Member">
+		SELECT * FROM owl.MEMBER WHERE email = #{email}
 	</select>
+	
 </mapper>

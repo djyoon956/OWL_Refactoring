@@ -20,5 +20,5 @@ public interface MemberDao {
 
 	public List<Member> getMembers() throws ClassNotFoundException, SQLException;
 	
-	public int emailCheck(String email) throws ClassNotFoundException, SQLException;
+	public Member emailCheck(String email) throws ClassNotFoundException, SQLException;
 }
