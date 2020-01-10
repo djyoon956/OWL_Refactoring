@@ -11,6 +11,8 @@ margin-bottom: 10px;
 $(function() {
 
 	$("#deleteMemberBtn").click(function(){
+		console.log("보내는 데이터   email" + $("#email").val());
+		console.log("보내는 데이터  pwd" + $("#delPwd").val());
 		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
 			alert("비밀번호를 입력해주세요");
 			$("#delPwd").focus();
