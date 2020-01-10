@@ -8,15 +8,9 @@ import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-<<<<<<< HEAD
 import org.apache.tomcat.util.codec.binary.Base64;
-=======
-import org.apache.catalina.Server;
-import org.apache.ibatis.session.SqlSession;
->>>>>>> 77010712d952fb2d52117bc6a00900d73b4f5346
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +22,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.social.google.connect.GoogleOAuth2Template;
 import org.springframework.social.oauth2.GrantType;
-import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
