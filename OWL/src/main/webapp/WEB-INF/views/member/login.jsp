@@ -67,9 +67,11 @@ body {
 				success : function(data) {
 					console.log("success in");
 					console.log(data);
+					successAlert("인증 성공");
 					},
 				error : function() {
 					console.log("error error");
+					warningAlert("중복임");
 					}
 				})
 		});
@@ -231,6 +233,14 @@ body {
 				<div class="login-form-bg">
 					<div class="container h-100">
 						<div class="row justify-content-center h-100">
+						<c:if test="${param.error != null}">
+   <div>
+     로그인실패<br>
+     <c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
+      이유 : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
+     </c:if>
+   </div>
+  </c:if>  
 							<div class="col-xl-6">
 								<div class="form-input-content">
 									<div class="card mb-0">
@@ -247,12 +257,12 @@ body {
 															class="form-control email" placeholder="Email">
 													</div>
 													<div class="form-group">
-														<input type="password" name="pwd" class="form-control pwd"
+														<input type="password" name="password" class="form-control pwd"
 															placeholder="Password">
 													</div>
 													<div class="form-check mb-3">
 		                                                <label class="form-check-label">
-		                                                    <input type="checkbox" class="form-check-input" name ="_spring_security_remember_me"> Remember me</label>
+		                                                    <input type="checkbox" class="form-check-input" name ="remember-me" id ="remember-me" > Remember me</label>
 		                                            </div>
 													<input type="submit"
 														class="btn login-form__btn submit w-100" value="LOGIN">
@@ -320,7 +330,7 @@ body {
 													</div>
 													<div class="form-group">
 													<div class="row">
-													<div class="col-8"><input type="email" name="email" class="form-control email" placeholder="Email"></div>
+													<div class="col-8"><input type="email" name="email" id="email" class="form-control email" placeholder="Email"></div>
 													<div class="col-4"><button id="duplicateBtn"type="button" class="btn mb-1 btn-outline-primary">Duplicate Check</button></div>	 
 														</div>
 														<span class="text-danger" style="display: none;">Please enter your email.</span>	

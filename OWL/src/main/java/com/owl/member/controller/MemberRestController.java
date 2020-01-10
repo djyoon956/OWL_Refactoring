@@ -118,10 +118,14 @@ public class MemberRestController {
 	 */
 	
 	@RequestMapping("Emailcheck.do")
-	public String emailCheck(String email, Model model) throws Exception{
+	public void emailCheck(String email) throws Exception{
 		System.out.println("EmailCheck controller in");
-		
-		return null;
+		boolean result = service.emailCheck(email);
+		if(result) {
+			System.out.println("we have already this email");
+		}else  {
+			System.out.println("you can use this email");
+		}
 		
 	}
 }

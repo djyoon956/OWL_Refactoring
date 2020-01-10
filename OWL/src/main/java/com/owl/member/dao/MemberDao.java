@@ -22,6 +22,7 @@ public interface MemberDao {
 	
 	public String chkDeletePwd(String email,String password) throws ClassNotFoundException, SQLException;
 
-	public int emailCheck(String email) throws ClassNotFoundException, SQLException;
+	public Member emailCheck(String email) throws ClassNotFoundException, SQLException;
+
 
 }
