@@ -16,7 +16,62 @@ import com.owl.member.dto.Member;
 
 @Service
 public class KaKaoService {
-	public String getAccessToken(String code)  {
+	public String getAuthorizationUrl() {
+		StringBuilder builder = new StringBuilder() 
+										.append("https://kauth.kakao.com/oauth/authorize?")
+										.append("client_id=5d151c02cc241d9ba7a8373a8051d79d")
+										.append("&redirect_uri=http://localhost:8090/OWL/kakaoLogin.do")
+										.append("&response_type=code");
+		
+		return builder.toString();
+	}
+
+	public Member getMemberInfo (String code) {
+		String token = getAccessToken(code);
+	    Member member = new Member();
+	    member.setSignFrom("kakao");
+	    
+	    String reqURL = "https://kapi.kakao.com/v2/user/me";
+	    try {
+	        URL url = new URL(reqURL);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        
+	        //    요청에 필요한 Header에 포함될 내용
+	        conn.setRequestProperty("Authorization", "Bearer " + token);
+	        
+	        int responseCode = conn.getResponseCode();
+	        System.out.println("responseCode : " + responseCode);
+	        
+	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        
+	        String line = "";
+	        String result = "";
+	        
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+
+	        JSONObject element = new JSONObject(result);
+	        
+			String nickname = (String) ((JSONObject) element.get("properties")).get("nickname");
+			String email = (String) ((JSONObject) element.get("kakao_account")).get("email");
+			
+			member.setName(nickname);
+			member.setEmail(email);
+
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    return member;
+	}
+	
+	private String getAccessToken(String code)  {
 		String access_Token = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
 		System.out.println("in getAccessToken");
@@ -71,50 +126,5 @@ public class KaKaoService {
 		}
 
 		return access_Token;
-	}
-	
-	public Member getUserInfo (String accessToken) {
-
-	    Member member = new Member();
-	    String reqURL = "https://kapi.kakao.com/v2/user/me";
-	    try {
-	        URL url = new URL(reqURL);
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setRequestMethod("POST");
-	        
-	        //    요청에 필요한 Header에 포함될 내용
-	        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-	        
-	        int responseCode = conn.getResponseCode();
-	        System.out.println("responseCode : " + responseCode);
-	        
-	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	        
-	        String line = "";
-	        String result = "";
-	        
-	        while ((line = br.readLine()) != null) {
-	            result += line;
-	        }
-	        System.out.println("response body : " + result);
-	        
-
-	        JSONObject element = new JSONObject(result);
-	        
-			String nickname = (String) ((JSONObject) element.get("properties")).get("nickname");
-			String email = (String) ((JSONObject) element.get("kakao_account")).get("email");
-			
-			member.setName(nickname);
-			member.setEmail(email);
-
-	    } catch (IOException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    }catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
-	    return member;
 	}
 }

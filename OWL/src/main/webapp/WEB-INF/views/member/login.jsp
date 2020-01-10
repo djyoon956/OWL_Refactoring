@@ -299,27 +299,21 @@ body {
 
 												<div class="text-center">
 													<h5>SNS LOGIN</h5>
-													<button id="naverLoginButton"
-														class="snsLoginButton mt-2 mr-3"
-														onclick="location.href='https://nid.naver.com/oauth2.0/authorize?client_id=zlKEJHqR7YB9riY5pP5l&redirect_uri=http://localhost:8090/OWL/naverLogin.do&response_type=code'">
-														<img src='resources/images/login/naver.png'
-															style="width: 50px;">
+													<button id="naverLoginButton" class="snsLoginButton mt-2 mr-3" onclick="location.href='${naverUrl}'">
+														<img src='resources/images/login/naver.png' style="width: 50px;">
 													</button>
-													<button id="kakaoLoginButton" class="snsLoginButton mr-3"
-														onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=5d151c02cc241d9ba7a8373a8051d79d&redirect_uri=http://localhost:8090/OWL/kakaoLogin.do&response_type=code'">
-														<img src='resources/images/login/kakao.png'
-															style="width: 50px;">
+													<button id="kakaoLoginButton" class="snsLoginButton mr-3" onclick="location.href='${kakaoUrl}'">
+														<img src='resources/images/login/kakao.png' style="width: 50px;">
 													</button>
-													<button id="googleLoginButton" class="snsLoginButton mr-3" onclick="location.href='${google_url}'">
-														<img src='resources/images/login/google.png'
-															style="width: 50px;">
+													<button id="googleLoginButton" class="snsLoginButton mr-3" onclick="location.href='${googleUrl}'">
+														<img src='resources/images/login/google.png' style="width: 50px;">
 													</button>
 												</div>
 
 												<div class="mt-5 login-form__footer text-center">
-													<b class="login-form__footer"> <a href="#"
-														data-toggle="modal" data-target="#findPwdModal"
-														class="text-secondary">Forgot password?</a></b>
+													<b class="login-form__footer">
+														 <a href="#" data-toggle="modal" data-target="#findPwdModal" class="text-secondary">Forgot password?</a>
+													 </b>
 													<p>
 													
 													<!-- 삭제예정 -------------------------------------------------->
