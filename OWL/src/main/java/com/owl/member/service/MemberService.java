@@ -87,7 +87,20 @@ public class MemberService {
 
 		return result;
 	}
+	public boolean chkDelPwd(String email, String password) {
+		MemberDao userDao = getMemberDao();
+		boolean result = false;
+		
+		try {
+			result = userDao.chkDeletePwd(email, password) == null ? false : true;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
+		return result;
+	}
 	public boolean deleteMember(String email) {
 		MemberDao userDao = getMemberDao();
 		boolean result = false;
