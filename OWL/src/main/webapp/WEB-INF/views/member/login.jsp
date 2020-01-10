@@ -156,13 +156,9 @@ body {
 								}else {
 									warningAlert("이미 존재하는 메일주소입니다");
 									$("#email").val("");
-									$("#email").attr("style","border-bottom : 1px solid red")
-									$("#email").focus();
 									emailCheck = false;
-									
 									}
 							},
-							
 						error : function() {
 							console.log("error error");
 							}
@@ -212,7 +208,6 @@ body {
 	    			console.log('입력실패');
 	    			warningAlert("필수 항목을 모두 입력해주세요.");
 						return false;
-				
 	    			} 
 	   })
 		
@@ -248,11 +243,6 @@ body {
 			$("#loginBox").addClass("hidden");
 		}
 
-
-		
-
- 
-		
 	}
 
 	function onSignIn(googleUser) {
@@ -390,7 +380,7 @@ body {
 													
 												</form>
 												<p class="mt-3 login-form__footer">
-													Don you have account? <a href="javascript:void(0);"
+													Do you have account? <a href="javascript:void(0);"
 														onclick="changeView(true);" class="text-primary">Login</a>
 													now
 												</p>
