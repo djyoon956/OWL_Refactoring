@@ -15,7 +15,7 @@ $(function() {
 	
 	$("#delPwd").keyup(function(){
 		if($("#delPwd").val() == "" || $("#delPwd").val() == null){
-		   alert("비밀번호를 입력해주세요"); 
+			warningAlert("비밀번호를 입력해주세요"); 
 		   $("#delPwd").focus();
 		}else{
 			$.ajax({
