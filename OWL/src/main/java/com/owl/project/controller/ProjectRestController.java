@@ -1,5 +1,7 @@
 package com.owl.project.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +19,19 @@ public class ProjectRestController {
 	private ProjectService service;
 	
 	
-	@RequestMapping("EditMyProject.do")
-	public String updateProjectList(ProjectList projectlist, HttpServletRequest request, Model model) {
+	@RequestMapping(value="EditMyProject.do")
+	public  boolean updateProjectList(ProjectList projectlist, Principal principal, HttpServletRequest request, Model model) {
 		
-		ProjectList projectList = null;
+		boolean result = false;
 		try {
+			projectlist.setEmail(principal.getName());
 			projectlist.setFavorite(projectlist.getFavorite());
 			projectlist.setProjectColor(projectlist.getProjectColor());
-			service.updateProjectList(projectlist);						
+			result = service.updateProjectList(projectlist);						
 
-			model.addAttribute("projectlist", projectlist);
-			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return ;
+		return result;
 	}
 }

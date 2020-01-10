@@ -65,6 +65,37 @@ function toggleActionStart(toggleBtn, LR) {
     }, 201);
 }
 
+$(".chbox").click(function(){
+	var checking = $(".chbox:checked").val();
+	if(checking == 'on'){
+		var likeIt = $('#tools').parent();
+		var plus = likeIt.clone();
+		   $('#favoriteList').append(plus);
+		}
+});
+
+
+//sidebar에 있는 프로젝트 목록 수정
+function EditProject(li){
+	var only = li;
+	console.log(li);
+
+	var checking = $(".chbox:checked").val();
+	if(checking == 'on'){
+			console.log(checking);
+ 	$.ajax({
+        url:"EditMyProject.do",
+        data:{projectIdx: only},
+        success:function(data){
+			console.log(data);
+			location.reload();	
+       }
+	});
+	
+	}
+	
+}
+
 </script>
 <style>
 .asColorPicker-wrap {
@@ -206,24 +237,23 @@ z
 </style>
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
-            <c:set var="projectList" value="${projectList}"/>
+            <c:set var="projectList" value="${projectList}"/> 
                 <ul class="metismenu" id="menu">  
                 <li class="nav-label">MY</li>                                    
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="far fa-user menu-icon"></i><span class="nav-text">My Task</span>
+                            <i class="far fa-user menu-icon"></i><span class="nav-text">&emsp;My Task</span>
                         </a>
                         <ul class="collapse in">
                              <li><a href="MyDashboard.do">DASHBOARD</a></li>
                				 <li><a href="Calendar.do">CALENDAR</a></li>
                         </ul>
                     </li>
-                  
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="far fa-star menu-icon"></i> <span class="nav-text">FAVORITES</span>
+                            <i class="far fa-star menu-icon"></i> <span class="nav-text">&emsp;FAVORITES</span>
                         </a>
-                        <ul class="collapse in" id="favoriteList">
+                        <ul class="collapse in" id="favoriteList">                        	
 							<c:forEach var="favoriteList" items="${projectList}">
 								<c:if test="${favoriteList.favorite == 1}">
 								<li style="position:relative;">
@@ -239,24 +269,23 @@ z
                     <li class="nav-label">PROJECT</li>
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="fas fa-desktop menu-icon"></i><span class="nav-text">Project List</span>
-                        </a>
-                        
+                            <i class="fas fa-desktop menu-icon"></i><span class="nav-text">&emsp;Project List</span>
+                        </a>                       
                         <ul aria-expanded="false" id="projectlist">
-						<li style="cursor: pointer;"><a type= "button" data-toggle="modal" data-target="#newProject"> <span style="font-size: 18px;">+</span>&emsp;  New Project</a></li>
-						<c:forEach var="list" items="${projectList}">
-						<li style="position:relative;">
-						<a href="ProjectDashBoard.do">
-							<span style="color: ${list.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${list.projectName}
-						</a>
-						 <a type="button" id="tools" data-toggle="modal" data-target="#editProject"><i class="far fa-sun"></i></a>					
-						</li>						
+							<li style="cursor: pointer;"><a type= "button" data-toggle="modal" data-target="#newProject"> <span style="font-size: 18px;">+</span>&emsp;  New Project</a></li>
+								<c:forEach var="list" items="${projectList}">
+									<li style="position:relative;" id="${list.projectIdx}">
+									<input type="hidden" value="${list.favorite}">
+										<a href="ProjectDashBoard.do">
+											<span style="color: ${list.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${list.projectName}
+										</a>
+										 <a type="button" id="tools" data-toggle="modal" data-target="#editProject" ><i class="far fa-sun"></i></a>					
+									</li>						
 	                   <!--  <li><a href="Drive.do"><span style="color: #f0cc96 !important;"><i class="fas fa-circle"></i></span>&emsp; Project 2</a></li>
 	                    <li><a href="kanbanMainiy.do"><span style="color: #ccccff !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iy</a></li>
 	                    <li><a href="kanbanMainiyiy.do"><span style="color: lightgrey !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iyiy</a></li> -->
-                        </c:forEach>
-                        </ul>
-                        
+                        		</c:forEach>
+                        	</ul>                    
                     </li>
                     <!-- 비밀 기능 -->
 	                 <li>
@@ -275,26 +304,51 @@ z
 	                     </a>
 	                 </li>	 	                 
                 </ul>
+                
             </div>
         </div>
 
            <!-- 프로젝트 생성 Modal -->
 	<jsp:include page="modal/newProject.jsp" />
 		   <!-- 프로젝트 환경설정 Modal -->
-	<jsp:include page="modal/editProject.jsp" />
+	   <div class="modal fade" id="editProject">
+         <div class="modal-dialog modal-dialog-centered" role="document">
+	             <div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">
+						<i class="far fa-sun"></i> 프로젝트 환경설정
+					</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+ 		             <h5>Color</h5>
+ 		             <!-- <span style="float: right; font-size: 12px; color: grey;">원하는 색으로 프로젝트의 색상을 지정해주세요.&emsp;</span> -->
+		             <input type="text" class="complex-colorpicker form-control" value="#326295">
+                     <br>                        
+                     <br>                
+                     <h5>Favorite</h5>
+                     <div style="position:relative;">
+                     <p>해당 프로젝트를 즐겨찾기에 추가하시겠습니까?</p>
+					        <div class="but r" id="but-2" style="float:right;   position:absolute; top: 0px; right: 0px;">
+					          <input type="checkbox" class="chbox">
+					          <div class="knobs"></div>
+					          <div class="layer"></div>
+					        </div>
+		             </div>
+		             <br>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="EditProject(${list.projectIdx})">적용하기</button>
+                 </div>
+             </div>
+         </div>
+     </div>
      
                 <!-- 프로젝트 환경설정 Modal -->
- 
- <script>
-$(".chbox").click(function(){
-	var checking = $(".chbox:checked").val();
-	if( checking == 'on'){
-		var likeIt = $('#tools').parent();
-		var plus = likeIt.clone();
-		   $('#favoriteList').append(plus);
-		}
-});
- </script>       
+      
    
 <script src="resources/plugins/moment/moment.js"></script>
 <script src="resources/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
