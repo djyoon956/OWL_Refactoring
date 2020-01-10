@@ -57,10 +57,11 @@ body {
 
 	
 	$(function() {
-
-		var nameCheck = false;
-		var emailCheck = false;
-		var pwdCheck = false;
+		
+		//flag 
+		let nameCheck = false;
+		let emailCheck = false;
+		let pwdCheck = false;
 		
 		$("#sendPwd").click(function() {
 			$.ajax({
@@ -101,36 +102,38 @@ body {
 			}
 		})
 
-		$("#joinBox  .name").keyup(
+		$("#joinBox .name").keyup(
 				function(event) {
-					if ($("#joinBox  .name").val().length < 1){
-						$("#joinBox  .name").siblings(".text-danger").css("display", "block");
+					if ($("#joinBox .name").val().length < 1){
+						$("#joinBox .name").siblings(".text-danger").css("display", "block");
 						nameCheck = false;
 					}else{
-						$("#joinBox  .name").siblings(".text-danger").css("display", "none");
+						$("#joinBox .name").siblings(".text-danger").css("display", "none");
 						nameCheck = true;
 					}
 				})
 				
-		 $("#joinBox  .email") .keyup(
+		 $("#joinBox .email") .keyup(
 						function(event) {
 							let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-							if ($("#joinBox  .email").val().match(regExp) != null){
-								$("#joinBox  .email").siblings(".text-danger").css("display", "none");
-							emailCheck = true;
-							}else{
-								$("#joinBox  .email").siblings(".text-danger").css("display", "block");
+							if ($("#joinBox .email").val().match(regExp) != null){ 
+								$("#joinBox .email").siblings(".text-danger").css("display", "none");
+								$('#duplicateBtn').attr("disabled",false);
+								emailCheck = true;
+							}else{ 
+								$("#joinBox .email").siblings(".text-danger").css("display", "block");
+								$('#duplicateBtn').attr("disabled", true);
 							emailCheck = false;
 							}
 						})
 						
-		$("#joinBox  .pwd").keyup(
+		$("#joinBox .pwd").keyup(
 				function(event) {
-					if ($("#joinBox  .pwd").val().length < 8){
-						$("#joinBox  .pwd").siblings(".text-danger").css("display", "block");
+					if ($("#joinBox .pwd").val().length < 8){
+						$("#joinBox .pwd").siblings(".text-danger").css("display", "block");
 					pwdCheck = false;
 					}else{
-						$("#joinBox  .pwd").siblings(".text-danger").css("display", "none");
+						$("#joinBox .pwd").siblings(".text-danger").css("display", "none");
 					pwdCheck = true;
 					}
 				})
@@ -183,13 +186,10 @@ body {
 						$("#resetBox  .pwd1").siblings(".text-danger").css("display", "none");
 						$("#resetBox  .pwd2").keyup(
 								function(event) {
-									console.log('여기오니');
 									if ($("#resetBox  .pwd1").val() == $("#resetBox  .pwd2").val()){
-										console.log('여기와와와 if');
 										$("#resetBox .successletter").css("display", "block");
 										$("#resetBox .failletter").css("display", "none");									
 									}else{
-										console.log('여기와와와 else');
 										$("#resetBox .failletter").css("display", "block");
 										$("#resetBox .successletter").css("display", "none");
 									}
@@ -199,13 +199,9 @@ body {
 		openDialog();
 
 
-
 	   $('#joinBtn').click(function() {
-
 	    	if (nameCheck && emailCheck && pwdCheck) {
-	    		console.log('입력완료');
 	    		}else {
-	    			console.log('입력실패');
 	    			warningAlert("필수 항목을 모두 입력해주세요.");
 						return false;
 	    			} 
@@ -366,11 +362,16 @@ body {
 														<span class="text-danger" style="display: none;">Please enter your name.</span>
 													</div>
 													<div class="form-group">
-													<div class="row">
-													<div class="col-8"><input type="email" name="email" id="email" class="form-control email" placeholder="* Email"></div>
-													<div class="col-4"><button id="duplicateBtn"type="button" class="btn mb-1 btn-outline-primary">Duplicate Check</button></div>	 
+														<div class="row">
+															<div class="col-8">
+																<input type="email" name="email" id="email" class="form-control email" placeholder="* Email">
+																<span class="text-danger" style="display: none;">Please enter your email.</span>	
+															</div>
+															<div class="col-4">
+																<button id="duplicateBtn"type="button" class="btn mb-1 btn-outline-primary" disabled>Duplicate Check</button>
+															</div>	 
+															
 														</div>
-														<span class="text-danger" style="display: none;">Please enter your email.</span>	
 													</div>
 													<div class="form-group">
 														<input type="password" name="password" id="password" class="form-control pwd" placeholder="* Password"> 
