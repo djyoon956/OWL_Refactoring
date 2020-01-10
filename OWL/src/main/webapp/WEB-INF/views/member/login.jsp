@@ -56,6 +56,23 @@ body {
 
 	$(function() {
 
+		//이메일 중복체크 
+		$('#duplicateBtn').click(function() {
+
+			$.ajax({
+				url : "Emailcheck.do",
+				data : {
+					email : $("#email").val()
+					},
+				success : function(data) {
+					console.log("success in");
+					console.log(data);
+					},
+				error : function() {
+					console.log("error error");
+					}
+				})
+		});
 
 		$("#sendPwd").click(function() {
 			$.ajax({
@@ -302,8 +319,11 @@ body {
 														<span class="text-danger" style="display: none;">Please enter your name.</span>
 													</div>
 													<div class="form-group">
-														<input type="email" name="email" class="form-control email" placeholder="Email"> 
-														<span class="text-danger" style="display: none;">Please enter your email.</span>
+													<div class="row">
+													<div class="col-8"><input type="email" name="email" class="form-control email" placeholder="Email"></div>
+													<div class="col-4"><button id="duplicateBtn"type="button" class="btn mb-1 btn-outline-primary">Duplicate Check</button></div>	 
+														</div>
+														<span class="text-danger" style="display: none;">Please enter your email.</span>	
 													</div>
 													<div class="form-group">
 														<input type="password" name="password" class="form-control pwd" placeholder="Password"> 

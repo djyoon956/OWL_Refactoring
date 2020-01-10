@@ -35,4 +35,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="grantDefaultRole" parameterType="String">
 		INSERT INTO owl.AUTHORITIES(email, authority) VALUES (#{email}, 'ROLE_USER');
 	</insert>
+	
+	<select id="emailCheck" parameterType="String" resultType="int">
+		SELECT * FROM owl.MEMBER WHERE email = #{email};
+		
+	</select>
 </mapper>
