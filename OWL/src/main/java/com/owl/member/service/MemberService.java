@@ -40,7 +40,7 @@ public class MemberService {
 		System.out.println("insertMember service in");
 		System.out.println(member.toString());
 		MemberDao userDao = getMemberDao();
-	
+
 		boolean result = false;
 
 		try {
@@ -50,8 +50,26 @@ public class MemberService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-			
-		System.out.println("result는? " +result);
+
+		System.out.println("result는? " + result);
+		return result;
+	}
+
+	// 미완성
+	public boolean joinMemberOk(String email) {
+		MemberDao userDao = getMemberDao();
+		boolean result = false;
+
+		try {
+			userDao.joinMemberOk(email);
+			userDao.grantDefaultRole(email);
+			result = true;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 
