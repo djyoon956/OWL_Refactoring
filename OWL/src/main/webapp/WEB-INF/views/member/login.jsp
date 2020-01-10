@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -9,6 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name = "google-signin-client_id"content = "266293759218-1i2o19cvv8p80i4q4a9q94d1dner0ksg.apps.googleusercontent.com.apps.googleusercontent.com">
 <title>OWL</title>
 <jsp:include page="../include/headTag.jsp" />
 <!-- Favicon icon -->
@@ -17,6 +16,7 @@
 
 <!-- Kakao -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <script type="text/javascript" src="resources/js/commonSweetAlert.js"></script>
 <style type="text/css">
 .snsLoginButton {
@@ -195,6 +195,13 @@ body {
 			$("#loginBox").addClass("hidden");
 		}
 	}
+
+	function onSignIn(googleUser) {
+		  var profile = googleUser.getBasicProfile();
+		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		  console.log('Name: ' + profile.getName());
+		  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		}
 </script>
 </head>
 
@@ -256,7 +263,7 @@ body {
 														<img src='resources/images/login/kakao.png'
 															style="width: 50px;">
 													</button>
-													<button id="googleLoginButton" class="snsLoginButton mr-3">
+													<button id="googleLoginButton" class="snsLoginButton mr-3" onclick="location.href='${google_url}'">
 														<img src='resources/images/login/google.png'
 															style="width: 50px;">
 													</button>
