@@ -94,8 +94,8 @@ public class MemberRestController {
 	}
 	//비밀번호 확인 
 	@RequestMapping("chkDelPwd.do")
-	public boolean chkDelPWd(String email,String password
-			) throws Exception{
+	public boolean chkDelPWd(String email,String password) throws Exception{
+		System.out.println("email : " + email + " / password :" + password);
 		Member member = service.getMember(email);
 		String encodedPassword = member.getPassword();
 		boolean result = bCryptPasswordEncoder.matches(password, encodedPassword);
