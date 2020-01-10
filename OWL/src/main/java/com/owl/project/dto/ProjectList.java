@@ -13,5 +13,8 @@ public class ProjectList {
 	private String email;
 	private int favorite;
 	private String projectColor;
+	private String authority;
 	
+	//UI용
+	private String projectName;
 }

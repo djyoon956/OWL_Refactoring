@@ -171,8 +171,7 @@ function changeView() {
 									<c:if test="${member.signFrom == '홈페이지'}">
 										<div class="form-group">
 											<input type="password" id="password" name="password"
-												class="form-control pwd" placeholder="Password"
-												value="${member.password}">
+												class="form-control pwd" placeholder="비밀번호를 재입력해주세요.">
 										</div>
 									</c:if>
 									<div class="row">
