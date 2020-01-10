@@ -24,4 +24,5 @@ public interface MemberDao {
 
 	public int emailCheck(String email) throws ClassNotFoundException, SQLException;
 
+
 }

@@ -328,7 +328,7 @@ body {
 													</div>
 													<div class="form-group">
 													<div class="row">
-													<div class="col-8"><input type="email" name="email" class="form-control email" placeholder="Email"></div>
+													<div class="col-8"><input type="email" name="email" id="email" class="form-control email" placeholder="Email"></div>
 													<div class="col-4"><button id="duplicateBtn"type="button" class="btn mb-1 btn-outline-primary">Duplicate Check</button></div>	 
 														</div>
 														<span class="text-danger" style="display: none;">Please enter your email.</span>	
