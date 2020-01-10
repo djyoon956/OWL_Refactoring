@@ -36,6 +36,10 @@
 color: #fff;
 }
 
+.whieColor:hover {
+color: #fff;
+}
+
 .toggleOption {
 	padding-top: 30px;
 	background: #336699;
@@ -243,8 +247,8 @@ function Cancle(){
 				</li>
 
 				<!-- Chatting -->
-				<li class="icons" style="margin-right: 25px"><a
-					href="javascript:void(0)" id="chatBtn"> <i class="far fa-comment"></i></a>
+				<li class="icons" style="margin-right: 25px">
+				<a href="javascript:void(0)" id="chatBtn"> <i class="far fa-comment"></i></a>
 				</li>
 
 				<!-- Alram -->
