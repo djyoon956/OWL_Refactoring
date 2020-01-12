@@ -12,7 +12,7 @@
       <div class="modal-body mx-3">
         <div class="mt-3 mb-3 login-input">
             <div class="form-group">
-                <input type="email" name="email" class="form-control" placeholder="Email">
+                <input type="email" name="email" class="form-control email" placeholder="Email">
             </div>
             <input type="button" class="btn login-form__btn submit w-100" id="sendPwd" value="SEND">
         </div>

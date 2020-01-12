@@ -69,7 +69,7 @@ public class MemberService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 
@@ -87,7 +87,7 @@ public class MemberService {
 
 		return result;
 	}
-	
+
 	public boolean deleteMember(String email) {
 		MemberDao userDao = getMemberDao();
 		boolean result = false;
@@ -132,19 +132,36 @@ public class MemberService {
 
 		return members;
 	}
-	
+
 	public boolean emailCheck(String email) {
 		System.out.println("emailcheck service in");
 		System.out.println("email" + email);
-		 MemberDao dao = getMemberDao();
-		 
-		 boolean result = false;
-		 try {
-			 result = dao.emailCheck(email) != null? true : false;
-			 System.out.println("email result : " + result);
+		MemberDao dao = getMemberDao();
+
+		boolean result = false;
+		try {
+			result = dao.emailCheck(email) != null ? true : false;
+			System.out.println("email result : " + result);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
+		return result;
+	}
+
+	public boolean changePassword(String email, String password) {
+		MemberDao dao = getMemberDao();
+		boolean result = false;
+		
+		try {
+			result = dao.changePassword(email, password) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 

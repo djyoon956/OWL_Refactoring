@@ -1,14 +1,10 @@
 package com.owl.member.controller;
 
-import java.security.Principal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -18,7 +14,6 @@ import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.member.dto.Member;
@@ -33,19 +28,20 @@ public class MemberRestController {
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
 
 	@Autowired
-	private MemberService service;	
-	
+	private MemberService service;
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@RequestMapping(value = "ForgotPassword.do")
 	public Map<String, Object> findPassword(String email) throws Exception {
-		System.out.println("in FindPassword");
+		System.out.println("ForgotPassword");
+		System.out.println(email);
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean isMember = false;
 		String message = "";
 		isMember = true;
-		email="dbsekwjdaa@naver.com";
+
 		// 회원 경우
 		if (isMember) {
 			isMember = true;
@@ -53,19 +49,19 @@ public class MemberRestController {
 				MimeMessage content = mailSender.createMimeMessage();
 				MimeMessageHelper messageHelper = new MimeMessageHelper(content, true, "UTF-8");
 				Map<String, Object> models = new HashMap<String, Object>();
+				models.put("memberId", email);
 
 				String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
 						velocityEngineFactoryBean.createVelocityEngine(), "forgotPasswordTemplate.vm", "UTF-8", models);
 				messageHelper.setSubject("[OWL] 비밀번호 재설정");
-				messageHelper.setFrom("bit_team2@naver.com");
+				messageHelper.setFrom("bit4owl@gmail.com");
 				messageHelper.setTo(email);
 				messageHelper.setText(mailBody, true);
 				mailSender.send(content);
-
+				message = "이메일을 전송했습니다." + "\n이메일을 확인해주세요.";
 			} catch (Exception e) {
 				System.out.println("이거 에러..>" + e.getMessage());
 			}
-			message = "이메일을 전송했습니다." + "\n이메일을 확인해주세요.";
 		}
 		// 비회원 경우
 		else {
@@ -78,23 +74,24 @@ public class MemberRestController {
 		return map;
 	}
 
-	//회원정보 조회 (test)
+	// 회원정보 조회 (test)
 	@RequestMapping("GetMember.do")
-	public Member GetMember(String email, Model model) throws Exception{
-	Member member = null;
-		
-		try {	
-		member = service.getMember("qqq@gmail.com");
-		System.out.println("멤버 조회 : " + member);
-		model.addAttribute("member", member);
-	} catch (Exception e) {
-		System.out.println(e.getMessage());
-	}
+	public Member GetMember(String email, Model model) throws Exception {
+		Member member = null;
+
+		try {
+			member = service.getMember("qqq@gmail.com");
+			System.out.println("멤버 조회 : " + member);
+			model.addAttribute("member", member);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return member;
 	}
-	//비밀번호 확인 
+
+	// 비밀번호 확인
 	@RequestMapping("chkDelPwd.do")
-	public boolean chkDelPWd(String email,String password) throws Exception{
+	public boolean chkDelPWd(String email, String password) throws Exception {
 		System.out.println("email : " + email + " / password :" + password);
 		Member member = service.getMember(email);
 		String encodedPassword = member.getPassword();
@@ -102,39 +99,32 @@ public class MemberRestController {
 
 		return result;
 	}
-	
-	//회원가입 Ok
-	/*
-	 * @RequestMapping(value="SignUp.do") public String InsertMember(Member member,
-	 * HttpServletRequest request){
-	 * System.out.println("InsertMember Controller in"); Boolean flag = false;
-	 * String viewpage ="";
-	 * 
-	 * flag = service.insertMember(member);
-	 * 
-	 * if(flag) { System.out.println("회원가입성공"); viewpage = "redirect:Login.do";
-	 * }else { System.out.println("회원가입실패"); viewpage =
-	 * "redirect:Login.do?show=join"; }
-	 * 
-	 * return null; }
-	 */
-	
+
 	@RequestMapping("Emailcheck.do")
-	public String emailCheck(String email, Model model) throws Exception{
+	public String emailCheck(String email, Model model) throws Exception {
 		System.out.println("EmailCheck controller in");
 		boolean result = service.emailCheck(email);
-		
+
 		String data = "";
-		if(result) {
+		if (result) {
 			System.out.println("we have already this email");
 			data = "false";
 
-		}else  {
+		} else {
 			System.out.println("you can use this email");
 			data = "true";
 		}
-		
+
 		model.addAttribute("data", data);
 		return data;
+	}
+
+	@RequestMapping(value = "ResetPassword.do", method = RequestMethod.POST)
+	public boolean resetPassword(String email, String password) {
+		password = bCryptPasswordEncoder.encode(password);
+		boolean result = service.changePassword(email, password);
+		System.out.println("ResetPassword post");
+		System.out.println(result);
+		return result;
 	}
 }

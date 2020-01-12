@@ -54,15 +54,9 @@ public class LoginController {
 	
 	@Autowired
 	private ProjectService ProjectSerivce;
-	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	@Autowired
-	private JavaMailSender mailSender;
 
-	@Autowired
-	private VelocityEngineFactoryBean velocityEngineFactoryBean;
+	
+
 
 	@Autowired
 	private KaKaoService kaKaoService;
@@ -161,82 +155,7 @@ public class LoginController {
 		return "member/lock";
 	}
 
-	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
-	public String emailConfirm(Member member, Model model, HttpServletRequest request) {
 
-		System.out.println("emailConfirm in");
-		System.out.println(member.getMultipartFile());
-		System.out.println(member.getMultipartFile().getOriginalFilename());
-
-		System.out.println(member.toString());
-
-		String imagefilename = member.getMultipartFile().getOriginalFilename();
-		boolean result = false;
-		String viewpage = "";
-
-		try {
-			// DB insert 해야함
-
-			if (!imagefilename.equals("")) { // 실 파일 업로드
-				String uploadpath = request.getServletContext().getRealPath("upload");
-				checkDirectory(uploadpath);
-				System.out.println(uploadpath);
-				String fpath = uploadpath + "\\" + imagefilename;
-
-				FileOutputStream fs = new FileOutputStream(fpath);
-				fs.write(member.getMultipartFile().getBytes());
-				fs.close();
-				member.setProfilePic(imagefilename);	
-			}
-			
-			member.setPassword(bCryptPasswordEncoder.encode(member.getPassword())); // 비밀번호 암호화
-			result = service.insertMember(member);
-
-			if (result) {
-				System.out.println("여기는 true");
-				MimeMessage message = mailSender.createMimeMessage();
-				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-				Map<String, Object> models = new HashMap<String, Object>();
-				models.put("memberId", member.getEmail());
-				models.put("name", member.getName());
-
-				String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
-						velocityEngineFactoryBean.createVelocityEngine(), "joinTemplate.vm", "UTF-8", models);
-				messageHelper.setSubject("[OWL] 가입을 환영합니다.");
-				messageHelper.setFrom("bit4owl@gmail.com");
-				messageHelper.setTo(member.getEmail());
-				messageHelper.setText(mailBody, true);
-				mailSender.send(message);
-
-				model.addAttribute("mail", member.getEmail());
-				model.addAttribute("show", "joinEmail");
-
-				// viewpage="redirect:Login.do";
-
-			} else {
-				System.out.println("여기는 else");
-				model.addAttribute("show", "join");
-
-				// viewpage="redirect:Login.do";
-			}
-		} catch (Exception e) {
-			System.out.println("이거 에러..>" + e.getMessage());
-			model.addAttribute("show", "join");
-
-		}
-
-		// model.addAttribute("show", "joinEmail");
-		return "member/login";
-	}
-
-	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
-	public String emailConfirmOK(String memberId, Model model) {
-		service.joinMemberOk(memberId);
-
-		model.addAttribute("show", "joinOk");
-		model.addAttribute("memberId", memberId);
-		return "index";
-	}
 
 	private void checkDirectory(String path) {
 		File file = new File(path);

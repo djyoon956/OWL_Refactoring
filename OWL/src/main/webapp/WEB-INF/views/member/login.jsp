@@ -65,7 +65,7 @@ body {
 			$.ajax({
 				url : "ForgotPassword.do",
 				data : {
-					email : $("#email").val()
+					email : $("#findPwdModal .email").val()
 				},
 				success : function(data) {
 					if (data.result) {
@@ -166,34 +166,7 @@ body {
 						})
 					}
 		});		
-				
-				
-		$("#resetBox  .pwd1").keyup(
 
-				function(event) {
-					if ($("#resetBox  .pwd1").val().length < 8 ) {
-						$("#resetBox  .pwd1").siblings(".text-danger").css("display", "block");
-						$("#resetBox .successletter").css("display", "none");
-						$("#resetBox .failletter").css("display", "none");
-						
-					}else if($("#resetBox  .pwd1").val() == null && $("#resetBox  .pwd2").val() == null) {
-						$("#resetBox .successletter").css("display", "none");
-						$("#resetBox .failletter").css("display", "none");
-						
-					}else{
-						$("#resetBox  .pwd1").siblings(".text-danger").css("display", "none");
-						$("#resetBox  .pwd2").keyup(
-								function(event) {
-									if ($("#resetBox  .pwd1").val() == $("#resetBox  .pwd2").val()){
-										$("#resetBox .successletter").css("display", "block");
-										$("#resetBox .failletter").css("display", "none");									
-									}else{
-										$("#resetBox .failletter").css("display", "block");
-										$("#resetBox .successletter").css("display", "none");
-									}
-								})
-					}
-				})		
 		openDialog();
 
 
@@ -315,12 +288,6 @@ body {
 														 <a href="#" data-toggle="modal" data-target="#findPwdModal" class="text-secondary">Forgot password?</a>
 													 </b>
 													<p>
-													
-													<!-- 삭제예정 -------------------------------------------------->
-													<b class="login-form__footer"> 
-													<a href="#" data-toggle="modal" data-target="#resetPwdModal" class="text-secondary">ResetPassword 테스트용</a></b>
-													<!-- ----------------------------------------------------- -->	
-													<p>
 														Don't have account? <a href="javascript:void(0);"
 															onclick="changeView(false);" class="text-primary">Sign
 															Up</a> now
@@ -388,7 +355,6 @@ body {
 	</div>
 
 	<!--  Modal  -->
-	<jsp:include page="modal/resetPassword.jsp" />
 	<jsp:include page="modal/forgotPassword.jsp" />
 	<jsp:include page="modal/joinConfirm.jsp" />
 	<jsp:include page="modal/joinOk.jsp" />

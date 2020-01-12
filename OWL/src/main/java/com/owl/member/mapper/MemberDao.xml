@@ -40,4 +40,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM owl.MEMBER WHERE email = #{email}
 	</select>
 	
+	<update id="changePassword">
+		UPDATE owl.MEMBER SET  PASSWORD = #{param2}
+		WHERE EMAIL=#{param1}
+	</update>
+	
 </mapper>

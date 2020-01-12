@@ -7,11 +7,11 @@ function successAlert(message){
 }
 
 function warningAlert(message){
-	callAlert("warning", message);
+	 callAlert("warning", message);
 }
 
-function callAlert(icon, message){
-	 Swal.fire({
+ function callAlert(icon, message){
+	Swal.fire({
          icon: icon,
          title: message,
          showConfirmButton: false,

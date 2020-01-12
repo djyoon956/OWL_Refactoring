@@ -7,9 +7,9 @@ import com.owl.member.dto.Member;
 
 public interface MemberDao {
 	public int insertMember(Member member) throws ClassNotFoundException, SQLException;
-	
+
 	public int joinMemberOk(String email) throws ClassNotFoundException, SQLException;
-	
+
 	public int grantDefaultRole(String email) throws ClassNotFoundException, SQLException;
 
 	public int updateMember(Member member) throws ClassNotFoundException, SQLException;
@@ -22,5 +22,5 @@ public interface MemberDao {
 
 	public Member emailCheck(String email) throws ClassNotFoundException, SQLException;
 
-
+	public int changePassword(String email, String password) throws ClassNotFoundException, SQLException;
 }
