@@ -16,11 +16,9 @@ public class ProjectService {
 
 	@Autowired
 	private SqlSession sqlSession;
-	
-	
-	//Sidebar의 프로젝트 목록 출력
+
+	// Sidebar의 프로젝트 목록 출력
 	public List<ProjectList> getProjectLists(String email) {
-		
 		ProjectDao projectDao = getProjectDao();
 		List<ProjectList> projectlist = new ArrayList<ProjectList>();
 
@@ -33,8 +31,8 @@ public class ProjectService {
 		}
 		return projectlist;
 	}
-	
-	//Sidebar의 프로젝트 목록 수정
+
+	// Sidebar의 프로젝트 목록 수정
 	public boolean updateProjectList(ProjectList projectlist) {
 		ProjectDao projectDao = getProjectDao();
 		boolean result = false;
@@ -48,8 +46,7 @@ public class ProjectService {
 		}
 		return result;
 	}
-	
-	
+
 	private ProjectDao getProjectDao() {
 		return sqlSession.getMapper(ProjectDao.class);
 	}

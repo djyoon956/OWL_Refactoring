@@ -20,9 +20,6 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
-
-	
-	
 	@RequestMapping(value="UpdateMember.do")
 	public String UpdateMember(Member member, HttpServletRequest request,  Model model) {
 		try {
@@ -50,12 +47,7 @@ public class MemberController {
 		}
 		return "member/main";
 	}
-	
-	private void checkDirectory(String path) {
-		File file = new File(path);
-		if (!file.exists())
-			file.mkdir();
-	}
+
 	@RequestMapping(value= "DeleteAccount.do")
 	public String deleteMember(String email,Model model) {
 		//테스트 데이터 
@@ -67,5 +59,11 @@ public class MemberController {
 			view = "include/modal/myProfileSetting";
 		}
 		return view;
+	}
+	
+	private void checkDirectory(String path) {
+		File file = new File(path);
+		if (!file.exists())
+			file.mkdir();
 	}
 }

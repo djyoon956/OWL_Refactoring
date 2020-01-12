@@ -8,13 +8,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ProjectList {
-	
 	private int projectIdx;
 	private String email;
 	private int favorite;
 	private String projectColor;
 	private String authority;
-	
-	//UI용
+
+	// UI용
 	private String projectName;
 }
