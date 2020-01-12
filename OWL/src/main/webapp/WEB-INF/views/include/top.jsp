@@ -429,9 +429,7 @@ function Cancle(){
 
 
 
-<!-- MyProfile Modal -->
-	<jsp:include page="modal/myProfileSetting.jsp" />
-	<jsp:include page="modal/newChat.jsp" />
-	<!-- sweet alert -->
-    <script src="resources/js/styleSwitcher.js"></script>
+	<!-- MyProfile Modal -->
+	<jsp:include page="../member/myProfileSetting.jsp" />
+	<jsp:include page="../chat/newChat.jsp" />
 
