@@ -32,7 +32,16 @@ jQuery(document).ready(function( $ ) {
 	 $(".complex-colorpicker").asColorPicker({
 	        mode: 'complex'
     });
-    
+
+/*  $(".chbox").click(function(){
+		var checking = $(".chbox:checked").val();
+		console.log("checking " + checking);
+		if(checking == 'on'){
+			var likeIt = $('#tools').parent();
+			var plus = likeIt.clone();
+			   $('#favoriteList').append(plus);
+			}
+	}); */
 });
 
 $(document).on('click', '.toggleBG', function () {
@@ -66,35 +75,21 @@ function toggleActionStart(toggleBtn, LR) {
     }, 201);
 }
 
-$(".chbox").click(function(){
-	var checking = $(".chbox:checked").val();
-	console.log("checking " + checking);
-	if(checking == 'on'){
-		var likeIt = $('#tools').parent();
-		var plus = likeIt.clone();
-		   $('#favoriteList').append(plus);
-		}
-});
-
 function thisProject(obj){
  $("#editProject").on('show.bs.modal', function () {
+	console.log($(obj).siblings("form"));
+	 
 	 var theColor = $(obj).siblings("#projectColor").children().eq(0).css("color");
         $("#nowColor").attr("value",theColor);
         $(".asColorPicker-trigger").children('span').css("background", theColor);
-        console.log($(obj).siblings("#projectFavorite").val());
 
         var checking = $(".chbox").is(":checked");
-        console.log(checking);
           if($(obj).siblings("#projectFavorite").val()=="1"){
                 $(".chbox").attr("checked",true);
            }else if($(obj).siblings("#projectFavorite").val()=="0"){
         	   $(".chbox").attr("checked",false);
            }       
      }); 
-     $("#editProject").on('hide.bs.modal', function () {
-       
-       }); 
-
 }
 </script>
 <style>

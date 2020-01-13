@@ -32,7 +32,9 @@ public class ProjectController {
 			projectlist.setEmail(principal.getName());
 			System.out.println(principal.getName());
 			projectlist.setFavorite(projectlist.getFavorite());
+			System.out.println(projectlist.getFavorite());
 			projectlist.setProjectColor(projectlist.getProjectColor());
+			System.out.println(projectlist.getProjectColor());
 			result = service.updateProjectList(projectlist);						
 
 		} catch (Exception e) {
