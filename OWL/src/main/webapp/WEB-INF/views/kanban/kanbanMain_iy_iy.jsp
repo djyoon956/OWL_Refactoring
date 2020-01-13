@@ -16,10 +16,8 @@
 <link href="resources/plugins/pg-calendar/css/pignose.calendar.min.css"
 	rel="stylesheet">
 <!-- Chartist -->
-<link rel="stylesheet"
-	href="resources/plugins/chartist/css/chartist.min.css">
-<link rel="stylesheet"
-	href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+<link rel="stylesheet" href="resources/plugins/chartist/css/chartist.min.css">
+<link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
 <!-- Custom Stylesheet -->
 <link href="resources/css/style.css" rel="stylesheet">
 <!-- fontawesome -->

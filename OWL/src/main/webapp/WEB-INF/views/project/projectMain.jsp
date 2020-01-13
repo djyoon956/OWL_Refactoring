@@ -58,6 +58,9 @@ $(function() {
 	                   <li class="nav-item">
 	                   		<a class="nav-link" data-toggle="tab" href="#drive">Drive</a>
 	                   </li>
+	                    <li class="nav-item">
+	                   		<a class="nav-link" data-toggle="tab" href="#testKanban">testKanban</a>
+	                   </li>
 	               </ul>
                </div>
                </div>
@@ -87,13 +90,15 @@ $(function() {
                    </div>
                    <div class=" tab-pane fade" id="kanban" role="tabpanel">
                          <jsp:include page="../kanban/kanbanMain_iy_iy.jsp"/>
-                
                    </div>
                    <div class=" tab-pane fade" id="notice" role="tabpanel">
                        <jsp:include page="../notice/notice.jsp"/>
                    </div>
                    <div class=" tab-pane fade" id="drive" role="tabpanel">
                        Drive
+                   </div>
+                    <div class=" tab-pane fade" id="testKanban" role="tabpanel">
+                         <jsp:include page="../kanban/kanbanTest.jsp"/>
                    </div>
                </div>
         </div>
