@@ -16,6 +16,7 @@
     <jsp:include page="../include/headTag.jsp"/> 
 <script type="text/javascript">
 $(function() {
+	console.log("project main");
 	let oldMenu = $("#projectMenu li:first");
 	$("#projectMenu li").on("click", function() {
        console.log("menu in");
@@ -23,23 +24,11 @@ $(function() {
        $(this).addClass("active");
        oldMenu = $(this);
     });
-	
 }); 
 </script>
 </head>
 
 <body>
-
-    <div id="main-wrapper">
-
-        <!-- Top -->
-        <jsp:include page="../include/top.jsp"/>
-       
- 		<!-- SideBar -->
-        <jsp:include page="../include/sideBar.jsp"/>
-         
-        <!-- Content -->
-        <div class="content-body">
    		<!-- Tab -->
         <div id="tab-menu">
         <div class="row">
@@ -83,10 +72,10 @@ $(function() {
            </div>
            <div class="tab-content">
                   <div class=" tab-pane fade show active" id="dash" role="tabpanel">
-                   		Dash Board
+                  		<h1>Dash Board</h1>
                   </div>
                    <div class=" tab-pane fade" id="calendar" role="tabpanel">
-                       Calendar
+                       <h1>Calendar</h1>
                    </div>
                    <div class=" tab-pane fade" id="kanban" role="tabpanel">
                          <jsp:include page="../kanban/kanbanMain_iy_iy.jsp"/>
@@ -96,27 +85,12 @@ $(function() {
                        <jsp:include page="../notice/notice.jsp"/>
                    </div>
                    <div class=" tab-pane fade" id="drive" role="tabpanel">
-                       Drive
+                       <h1>Drive</h1>
                    </div>
                </div>
-        </div>
-        
-        <!-- Bottom -->
-		<jsp:include page="../include/bottom.jsp"/>
 		
 		<!-- pm의 설정  modal -->
 	    <jsp:include page="modal/projectMemberEdit.jsp" />
 	    <jsp:include page="modal/labelEdit.jsp" />
-    </div>
-
-    <!--Scripts-->
-    <script src="resources/plugins/common/common.min.js"></script>
-    <script src="resources/js/custom.min.js"></script>
-    <script src="resources/js/settings.js"></script>
-    <script src="resources/js/gleek.js"></script>
-    <script src="resources/js/styleSwitcher.js"></script>
-
-    <script src="resources/plugins/tables/js/jquery.dataTables.min.js"></script>
-    <script src="resources/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
 </body>
 </html>
