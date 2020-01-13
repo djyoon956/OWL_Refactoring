@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Pcalendar {
+public class SmartCalendar {
 	private int calIdx;
 	private CalendarType type;
 	private String title;

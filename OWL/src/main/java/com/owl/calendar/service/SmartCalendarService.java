@@ -6,17 +6,17 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.owl.calendar.dao.PcalendarDao;
-import com.owl.calendar.dto.Pcalendar;
+import com.owl.calendar.dao.SmartCalendarDao;
+import com.owl.calendar.dto.SmartCalendar;
 
 @Service
-public class PcalendarService {
+public class SmartCalendarService {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public boolean insertCalendar(Pcalendar calendar) {
+	public boolean insertCalendar(SmartCalendar calendar) {
 		boolean result = false;
-		PcalendarDao dao = getPcalendarDao();
+		SmartCalendarDao dao = getPcalendarDao();
 
 		try {
 			result = dao.insertCalendar(calendar) > 0 ? true : false;
@@ -29,9 +29,9 @@ public class PcalendarService {
 		return result;
 	};
 
-	public boolean updateCalendar(Pcalendar calendar) {
+	public boolean updateCalendar(SmartCalendar calendar) {
 		boolean result = false;
-		PcalendarDao dao = getPcalendarDao();
+		SmartCalendarDao dao = getPcalendarDao();
 
 		try {
 			result = dao.updateCalendar(calendar) > 0 ? true : false;
@@ -44,9 +44,9 @@ public class PcalendarService {
 		return result;
 	};
 
-	public boolean deleteCalendar(Pcalendar calendar) {
+	public boolean deleteCalendar(SmartCalendar calendar) {
 		boolean result = false;
-		PcalendarDao dao = getPcalendarDao();
+		SmartCalendarDao dao = getPcalendarDao();
 
 		try {
 			result = dao.deleteCalendar(calendar) > 0 ? true : false;
@@ -58,7 +58,7 @@ public class PcalendarService {
 		return result;
 	};
 
-	private PcalendarDao getPcalendarDao() {
-		return sqlSession.getMapper(PcalendarDao.class);
+	private SmartCalendarDao getPcalendarDao() {
+		return sqlSession.getMapper(SmartCalendarDao.class);
 	}
 }
