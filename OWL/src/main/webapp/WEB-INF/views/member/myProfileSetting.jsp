@@ -204,7 +204,11 @@ function changeView() {
 									<div class="basic-form">
 									<!-- 	<form action="DeleteAccount.do" method="get"> -->
 											<div class="modal-body">
-											<h5 class="mt-3 mb-1 "><img class="" src="resources/images/owl_logo_fit.png" style="width: 60px"> &nbsp;&nbsp; Please check before deleting your account.</h5>
+											<div class="text-center">
+												<img class="" src="resources/images/owl_logo_fit.png" style="width: 60px;"> 
+												<h5 class="mt-3 mb-1 ">&nbsp;&nbsp;Please check before deleting your account.</h5>
+											</div>
+											
 												<br>
 												<div class="text-justify">
 													<ul class="list-icons">
@@ -228,8 +232,9 @@ function changeView() {
 												</div>
 												<hr>
 										<form action="DeleteAccount.do" method="post">
-												<div class="row">
 											<input type="hidden" name="email" class="form-control email" value="${member.email}">
+												<div class="row">
+											
 												<c:if test="${member.signFrom == '홈페이지'}">
 													<!-- <div class="col-sm-2">
 														<label class="sr-only">Password</label> 
