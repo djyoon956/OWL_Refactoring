@@ -21,7 +21,7 @@
                      <div style="position:relative;">
                      <p>해당 프로젝트를 즐겨찾기에 추가하시겠습니까?</p>
 					        <div class="but r" id="but-2" style="float:right;   position:absolute; top: 0px; right: 0px;">
-					          <input type="checkbox" class="chbox" name="chbox" onclick="EditProject(this)">
+					          <input type="checkbox" class="chbox" name="chbox">
 					          <div class="knobs"></div>
 					          <div class="layer"></div>
 					        </div>

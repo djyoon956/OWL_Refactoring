@@ -32,6 +32,18 @@ jQuery(document).ready(function( $ ) {
 	       }
 	   });
 	 });
+
+ $("#insertBtn").click(function(){
+		$.ajax({
+	        url:"InsertNewProject.do",
+	        type: "POST",
+	        data: {projectName: 	$("#projectTitle").val(),
+		        	  projectColor: $("#projectColor").val()},
+	        success:function(data){
+	         location.reload();   
+	       }
+	   });
+	 });
 });
 
 $(document).on('click', '.toggleBG', function () {
@@ -230,15 +242,15 @@ z
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
             <c:set var="projectList" value="${projectList}"/> 
-                <ul class="metismenu" id="menu">  
+                <ul class="metismenu" id="SideMenu">  
                 <li class="nav-label">MY</li>                                    
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="far fa-user menu-icon"></i><span class="nav-text">&emsp;My Task</span>
                         </a>
                         <ul class="collapse in">
-                             <li><a href="MyDashboard.do">DASHBOARD</a></li>
-               				 <li><a href="Calendar.do">CALENDAR</a></li>
+                             <li class="dash_page" ><a href="#">DASHBOARD</a></li>
+               				 <li class="calendar_page" ><a href="#">CALENDAR</a></li>
                         </ul>
                     </li>
                     <li>
@@ -248,9 +260,9 @@ z
                         <ul class="collapse in" id="favoriteList">                  
                         <c:forEach var="list" items="${projectList}">
                         	<c:if test="${list.favorite == 1}">
-								<li style="position:relative;" id="${list.projectIdx}">
+								<li class="project_page" style="position:relative;" id="${list.projectIdx}">
 								<input id="projectFavorite" type="hidden" value="${list.favorite}">
-									<a href="ProjectDashBoard.do" id="projectColor">
+									<a id="projectColor">
 										<span style="color: ${list.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${list.projectName}
 									</a>
 									 <a type="button" id="tools" data-toggle="modal" data-target="#editProject" onclick="thisProject(this)"><i class="far fa-sun"></i></a>					
@@ -267,9 +279,9 @@ z
                         <ul class="collapse in" id="projectlist">
 							<li style="cursor: pointer;"><a type= "button" data-toggle="modal" data-target="#newProject"> <span style="font-size: 18px;">+</span>&emsp;  New Project</a></li>
 								<c:forEach var="list" items="${projectList}">
-									<li style="position:relative;" id="${list.projectIdx}">
+									<li class="project_page" style="position:relative;" id="${list.projectIdx}">
 									<input id="projectFavorite" type="hidden" value="${list.favorite}">
-										<a href="ProjectDashBoard.do" id="projectColor">
+										<a href="#" id="projectColor">
 											<span style="color: ${list.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${list.projectName}
 										</a>
 										 <a type="button" id="tools" data-toggle="modal" data-target="#editProject" onclick="thisProject(this)"><i class="far fa-sun"></i></a>					

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.owl.project.dto.Project;
 import com.owl.project.dto.ProjectList;
 import com.owl.project.service.ProjectService;
 
@@ -33,6 +34,19 @@ public class ProjectRestController {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		return result;
+	}
+	
+	@RequestMapping("InsertNewProject.do")
+	public boolean insertNewProject(String projectName, String projectColor, Project project, ProjectList projectlist, Principal principal, HttpServletRequest request) throws Exception {
+		boolean result = false;
+		try {
+		project.setProjectName(project.getProjectName());
+		result = service.insertNewProject(project, projectlist);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}		
 		return result;
 	}
 }
