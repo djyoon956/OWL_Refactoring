@@ -18,7 +18,7 @@
                      <br>
  		             <h5>Color</h5>
  		             <!-- <span style="float: right; font-size: 12px; color: grey;">원하는 색으로 프로젝트의 색상을 지정해주세요.&emsp;</span> -->
-		             <input type="text" class="complex-colorpicker form-control" value="#326295">
+		             <input type="text" class="complex-colorpicker form-control" value="">
                      <br> 
                      <br> 
                      <h5>Period</h5>  
