@@ -11,7 +11,7 @@
 		<div class="card-body">
 			<h3 class="text-center">Notice</h3>
 			<div class="table-responsive">
-				<table class="table table-striped table-bordered zero-configuration text-center" id="noticeTable">
+				<table class="table  table-hover table-bordered zero-configuration text-center" id="noticeTable">
 					<thead>
 						<tr>
 							<th width="10%">NO</th>

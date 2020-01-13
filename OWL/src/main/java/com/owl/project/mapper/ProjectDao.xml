@@ -16,8 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE EMAIL=#{email} and PROJECTIDX=#{projectIdx}
 	</update>
 
-	<select id="getProjectList"  resultType="com.owl.project.dto.ProjectList" parameterType="String">
-		SELECT PROJECTIDX, FAVORITE, PROJECTCOLOR, EMAIL FROM PROJECTLIST where PROJECTIDX = #{projectIdx}
+	<select id="getProjectList"  resultType="com.owl.project.dto.ProjectList" >
+		SELECT l.PROJECTIDX, p.PROJECTNAME, l.FAVORITE, l.PROJECTCOLOR, l.AUTHORITY, l.email 
+			FROM PROJECT p JOIN PROJECTLIST l 
+		ON p.PROJECTIDX=l.PROJECTIDX where l.EMAIL = #{param2} AND l.PROJECTIDX = #{param1}
 	</select>
 	
 	<!-- sidebar project 목록 삽입 -->

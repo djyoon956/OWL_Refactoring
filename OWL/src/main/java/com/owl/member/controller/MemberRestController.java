@@ -1,9 +1,11 @@
 package com.owl.member.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,9 +17,11 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.owl.member.dto.Member;
 import com.owl.member.service.MemberService;
+import com.owl.project.service.ProjectService;
 
 @RestController
 public class MemberRestController {
@@ -29,6 +33,9 @@ public class MemberRestController {
 
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private ProjectService  projectService;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -126,5 +133,24 @@ public class MemberRestController {
 		System.out.println("ResetPassword post");
 		System.out.println(result);
 		return result;
+	}
+
+	@RequestMapping("PageChage.do")
+	public ModelAndView test(String page, String projectIdx, Principal principal) {
+		String view = "";
+		ModelAndView mv = new ModelAndView();
+		
+		if (page.startsWith("dash"))
+			view = "dashBoard/dashBoard";
+		else if (page.startsWith("calendar"))
+			view = "calendar/calendar2";
+		else if (page.startsWith("project")) {
+			view = "project/projectMain";
+			mv.addObject("project", projectService.getProjectList(Integer.parseInt(projectIdx), principal.getName()));
+		}
+
+		mv.setViewName(view);
+		
+		return mv;
 	}
 }
