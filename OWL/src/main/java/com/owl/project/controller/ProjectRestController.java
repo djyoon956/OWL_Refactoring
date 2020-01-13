@@ -19,19 +19,17 @@ public class ProjectRestController {
 	private ProjectService service;
 	
 	
-	@RequestMapping(value="EditMyProject.do")
-	public  boolean updateProjectList(ProjectList projectlist, Principal principal, HttpServletRequest request, Model model) {
-		
-		boolean result = false;
-		try {
-			projectlist.setEmail(principal.getName());
-			projectlist.setFavorite(projectlist.getFavorite());
-			projectlist.setProjectColor(projectlist.getProjectColor());
-			result = service.updateProjectList(projectlist);						
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return result;
-	}
+	/*
+	 * @RequestMapping(value="EditMyProject.do") public boolean
+	 * updateProjectList(ProjectList projectlist, Principal principal,
+	 * HttpServletRequest request, Model model) {
+	 * 
+	 * boolean result = false; try { projectlist.setEmail(principal.getName());
+	 * projectlist.setFavorite(projectlist.getFavorite());
+	 * projectlist.setProjectColor(projectlist.getProjectColor()); result =
+	 * service.updateProjectList(projectlist);
+	 * 
+	 * } catch (Exception e) { System.out.println(e.getMessage()); } return result;
+	 * }
+	 */
 }

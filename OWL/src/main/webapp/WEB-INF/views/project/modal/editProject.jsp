@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
    <div class="modal fade" id="editProject">
          <div class="modal-dialog modal-dialog-centered" role="document">
 	             <div class="modal-content">
@@ -14,7 +13,7 @@
 				</div>
 				<div class="modal-body">
  		             <h5>Color</h5>
- 		             <form action="EditMyProject.do" method="post">
+ 		             <form action="EditMyProject.do" method="post">		             
 		             <input type="text" id="nowColor" class="complex-colorpicker form-control" value="">
                      <br>                        
                      <br>                
@@ -27,11 +26,11 @@
 					          <div class="layer"></div>
 					        </div>
 		             </div>
-		             <br>
 		             </form>
+		             <br>
                  </div>
                  <div class="modal-footer">
-                     <button type="button" class="btn btn-primary" data-dismiss="modal">적용하기</button>
+                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="EditProject(this)">적용하기</button>
                  </div>
              </div>
          </div>
