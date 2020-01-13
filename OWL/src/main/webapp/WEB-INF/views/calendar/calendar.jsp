@@ -31,7 +31,7 @@ $(function() {
         <!-- Content -->
         <div class="content-body">
         <!-- Project 상단 바 -->
-        <jsp:include page="../include/projectTab.jsp"/>
+        <%-- <jsp:include page="../project/projectTab.jsp"/> --%>
             <div class="container-fluid mt-3">	
             	<jsp:include page="calendar2.jsp"/>
             </div>

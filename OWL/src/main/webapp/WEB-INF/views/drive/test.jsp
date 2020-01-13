@@ -280,7 +280,7 @@ boder-bottom:3px solid #326295;
       <div class="content-body">
 
          <!-- Project 상단 바 -->
-        <jsp:include page="../include/projectTab.jsp"/>
+        <%-- <jsp:include page="../project/projectTab.jsp"/> --%>
             <!-- 드라이브 사이드 바 -->
             <div class="row">
                <div class="col-md-3" style="padding-right: 0;">
@@ -415,7 +415,7 @@ boder-bottom:3px solid #326295;
       <!-- pm의 설정  modal -->
 	  <jsp:include page="../project/modal/projectMemberEdit.jsp" />
 	  <jsp:include page="../project/modal/labelEdit.jsp" />
-   </div>
+  
    <!--Scripts-->
    <script src="resources/plugins/common/common.min.js"></script>
    <script src="resources/js/custom.min.js"></script>

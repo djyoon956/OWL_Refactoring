@@ -21,7 +21,7 @@ public class ProjectController {
 	
 	@RequestMapping("ProjectDashBoard.do")
 	public String showView() {
-		return "project/projectDashBoard";
+		return "project/projectMain";
 	}
 	
 	@RequestMapping(value="EditMyProject.do")

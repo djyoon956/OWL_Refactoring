@@ -122,6 +122,11 @@ body {
 	border-bottom: 3px solid #326295;
 	color: #326295;
 }
+
+
+
+
+
 </style>
 
 <script type="text/javascript">
@@ -243,39 +248,23 @@ $(function() {
     });
 });
 
-
-
 </script>
 </head>
 
-<body>
-
-	<div id="main-wrapper">
-<div id="panel"></div>
-		<!-- Top -->
-		<jsp:include page="../include/top.jsp" />
-
-		<!-- SideBar -->
-		<jsp:include page="../include/sideBar.jsp" />
-		<!-- Content -->
-
-		<div class="content-body">
-
-			<div id="tab-menu">
-				<div id="tab-btn">
-					<ul>
-						<li><a href="#">Dash Board</a></li>
-						<li class="active"><a href="#">Kanban Board</a></li>
-						<li><a href="#">Schedule</a></li>
-						<li><a href="#">Drive</a></li>
-					</ul>
-				</div>
-			</div>
 
 
+	<div id="panel"></div>
 
 
 			<div class="container-fluid mt-3">
+			<div id="mySidebar" class="sidebar">
+				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  				<a href="#">About</a>
+  				<a href="#">Services</a>
+  				<a href="#">Clients</a>
+  				<a href="#">Contact</a>
+			</div>
+			
 				<form class="form-inline">
 					<div class="form-group mx-sm-3 mb-2">
 						<label class="sr-only">search</label> <input type="text"
@@ -287,63 +276,32 @@ $(function() {
 				<div class="row">
 					<div class="col-md-12">
 
-
-						<button class="btn columncolor" id="addDefault">Add
-							Column+</button>
+						<button class="btn columncolor" id="addDefault">Add Column+</button>
 
 						<a href="#" data-toggle="modal" data-target="#addIssueModal">
 							<button class="btn columncolor" id="addToDo">Add Issue++</button>
 						</a>
-						<button class="btn columncolor" id="removeBoard">Remove
-							Column</button>
+						<button class="btn columncolor" id="removeBoard">Remove Column</button>
 
 						<hr>
-						<div id="myKanban" class="row"></div>
-
+						<div id="myKanban" class="row"> </div>
 					</div>
 					<div class="col-md-1">closed</div>
 				</div>
 				<!--  칸반 끝  -->
 			</div>
-		</div>
+		
 
-		<!-- Bottom -->
-		<jsp:include page="../include/bottom.jsp" />
-	</div>
+
 
 	<!-- add issue modal -->
 	<jsp:include page="modal/createIssue.jsp" />
 
 
 
-	<!--Scripts-->
-	<script src="resources/plugins/common/common.min.js"></script>
-	<script src="resources/js/custom.min.js"></script>
-	<script src="resources/js/settings.js"></script>
-	<script src="resources/js/gleek.js"></script>
-	<script src="resources/js/styleSwitcher.js"></script>
 
-	<!-- Chartjs -->
-	<script src="resources/plugins/chart.js/Chart.bundle.min.js"></script>
-	<!-- Circle progress -->
-	<script src="resources/plugins/circle-progress/circle-progress.min.js"></script>
-	<!-- Datamap -->
-	<script src="resources/plugins/d3v3/index.js"></script>
-	<script src="resources/plugins/topojson/topojson.min.js"></script>
-	<script src="resources/plugins/datamaps/datamaps.world.min.js"></script>
-	<!-- Morrisjs -->
-	<script src="resources/plugins/raphael/raphael.min.js"></script>
-	<script src="resources/plugins/morris/morris.min.js"></script>
-	<!-- Pignose Calender -->
-	<script src="resources/plugins/moment/moment.min.js"></script>
-	<script src="resources/plugins/pg-calendar/js/pignose.calendar.min.js"></script>
-	<!-- ChartistJS -->
-	<script src="resources/plugins/chartist/js/chartist.min.js"></script>
-	<script src="resources/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
-	<script src="resources/js/dashboard/dashboard-1.js"></script>
-	<!-- Date Picker Plugin JavaScript -->
-	<script src="resources/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-	<script src="resources/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+
 	
-</body>
+
 </html>
