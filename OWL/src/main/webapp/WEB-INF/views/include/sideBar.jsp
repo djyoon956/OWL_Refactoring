@@ -67,9 +67,7 @@ function toggleActionStart(toggleBtn, LR) {
 
 function thisProject(obj){
  $("#editProject").on('show.bs.modal', function () {	 
-	 $("#projectIdx").val($(obj).parent().attr('id'));
-	 console.log("test : "+$("#projectIdx").val());
-	
+	 $("#projectIdx").val($(obj).parent().attr('id'));	
 	 var theColor = $(obj).siblings("#projectColor").children().eq(0).css("color");
         $("#nowColor").attr("value",theColor);
         $(".asColorPicker-trigger").children('span').css("background", theColor);
@@ -228,6 +226,7 @@ z
     background-color: #ebf7fc;
 }
 </style>
+
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
             <c:set var="projectList" value="${projectList}"/> 
@@ -265,7 +264,7 @@ z
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="fas fa-desktop menu-icon"></i><span class="nav-text">&emsp;Project List</span>
                         </a>                       
-                        <ul aria-expanded="false" id="projectlist">
+                        <ul class="collapse in" id="projectlist">
 							<li style="cursor: pointer;"><a type= "button" data-toggle="modal" data-target="#newProject"> <span style="font-size: 18px;">+</span>&emsp;  New Project</a></li>
 								<c:forEach var="list" items="${projectList}">
 									<li style="position:relative;" id="${list.projectIdx}">

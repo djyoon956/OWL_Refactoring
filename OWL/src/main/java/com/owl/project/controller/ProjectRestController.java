@@ -22,7 +22,6 @@ public class ProjectRestController {
 	
 	@RequestMapping("EditMyProject.do")
 	public  boolean updateProjectList(String projectIdx, String favorite, String projectColor, ProjectList projectlist, Principal principal) {
-		System.out.println("난 여기 탄다.");
 		boolean result = false;
 		try {
 			projectlist.setEmail(principal.getName());
