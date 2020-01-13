@@ -96,7 +96,7 @@ public class LoginController {
 		projectList = ProjectSerivce.getProjectLists(member.getEmail());
 		model.addAttribute("projectList", projectList);
 		System.out.println(projectList);	
-		return "member/main2";
+		return "member/main";
 	}
 
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)

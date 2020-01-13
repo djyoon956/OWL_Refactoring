@@ -17,8 +17,31 @@
     <!-- Custom Stylesheet -->
     <!-- <link href="resources/css/style.css" rel="stylesheet"> -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
- 	
- <jsp:include page="../include/headTag.jsp"/>
+ 	 <jsp:include page="../include/headTag.jsp"/>
+ 	 
+ 	 <script type="text/javascript">
+		$(function(){
+			$("#SideMenu  [class$='_page']").on("click",function(){
+				let data = { page : $(this).attr("class")};
+				if(data.page == "project_page"){
+					console.log("project");
+					data.projectIdx = $(this).attr("id");
+				}
+				console.log(data);
+				$.ajax({
+			        type : "GET",
+			        url : "PageChage.do",
+			        data : data,
+			        dataType : "html",
+			        success : function(data) {
+			            $('#ContentBox').html(data);
+			        }
+			    });
+				 
+			})
+		})
+			
+ 	 </script>
 </head>
 
 <body>
@@ -32,9 +55,9 @@
         <jsp:include page="../include/sideBar.jsp"/>
          
         <!-- Content -->
-        <div class="content-body">
-            <div class="container-fluid mt-3">
-         			 INDEX 페이지
+        <div class="content-body ">
+            <div id="ContentBox" class="container-fluid" style="padding: 0">
+            
             </div>
         </div>
         
