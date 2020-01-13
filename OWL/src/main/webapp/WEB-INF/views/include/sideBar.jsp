@@ -32,6 +32,7 @@ jQuery(document).ready(function( $ ) {
 	 $(".complex-colorpicker").asColorPicker({
 	        mode: 'complex'
     });
+    
 });
 
 $(document).on('click', '.toggleBG', function () {
@@ -67,6 +68,7 @@ function toggleActionStart(toggleBtn, LR) {
 
 $(".chbox").click(function(){
 	var checking = $(".chbox:checked").val();
+	console.log("checking " + checking);
 	if(checking == 'on'){
 		var likeIt = $('#tools').parent();
 		var plus = likeIt.clone();
@@ -74,34 +76,33 @@ $(".chbox").click(function(){
 		}
 });
 
+function thisProject(obj){
+ $("#editProject").on('show.bs.modal', function () {
+	 var theColor = $(obj).siblings("#projectColor").children().eq(0).css("color");
+        $("#nowColor").attr("value",theColor);
+        $(".asColorPicker-trigger").children('span').css("background", theColor);
+        console.log($(obj).siblings("#projectFavorite").val());
 
-//sidebar에 있는 프로젝트 목록 수정
-function EditProject(li){
-	var only = li;
-	console.log(li);
+        var checking = $(".chbox").is(":checked");
+        console.log(checking);
+          if($(obj).siblings("#projectFavorite").val()=="1"){
+                $(".chbox").attr("checked",true);
+           }else if($(obj).siblings("#projectFavorite").val()=="0"){
+        	   $(".chbox").attr("checked",false);
+           }       
+     }); 
+     $("#editProject").on('hide.bs.modal', function () {
+       
+       }); 
 
-	var checking = $(".chbox:checked").val();
-	if(checking == 'on'){
-			console.log(checking);
- 	$.ajax({
-        url:"EditMyProject.do",
-        data:{projectIdx: only},
-        success:function(data){
-			console.log(data);
-			location.reload();	
-       }
-	});
-	
-	}
-	
 }
-
 </script>
 <style>
 .asColorPicker-wrap {
     position: relative;
     display: inline-flex;
     width : 100%;
+    background: 
 }
 
 .asColorPicker-trigger{
@@ -114,6 +115,12 @@ max-width: 270px;
 }
 
 #projectlist > li:hover #tools{
+   visibility: visible;
+   opacity: 1;
+   cursor: pointer;
+}
+
+#favoriteList > li:hover #tools{
    visibility: visible;
    opacity: 1;
    cursor: pointer;
@@ -253,15 +260,16 @@ z
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="far fa-star menu-icon"></i> <span class="nav-text">&emsp;FAVORITES</span>
                         </a>
-                        <ul class="collapse in" id="favoriteList">                        	
-							<c:forEach var="favoriteList" items="${projectList}">
-								<c:if test="${favoriteList.favorite == 1}">
-								<li style="position:relative;">
-									<a href="ProjectDashBoard.do">
-										<span style="color: ${favoriteList.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${favoriteList.projectName}
+                        <ul class="collapse in" id="favoriteList">                  
+                        <c:forEach var="list" items="${projectList}">
+                        	<c:if test="${list.favorite == 1}">
+								<li style="position:relative;" id="${list.projectIdx}">
+								<input id="projectFavorite" type="hidden" value="${list.favorite}">
+									<a href="ProjectDashBoard.do" id="projectColor">
+										<span style="color: ${list.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${list.projectName}
 									</a>
-									 <a type="button" id="tools" data-toggle="modal" data-target="#editProject"><i class="far fa-sun"></i></a>					
-									</li>
+									 <a type="button" id="tools" data-toggle="modal" data-target="#editProject" onclick="thisProject(this)"><i class="far fa-sun"></i></a>					
+								</li>	      	
 								</c:if>
 							</c:forEach>
                         </ul>
@@ -275,15 +283,12 @@ z
 							<li style="cursor: pointer;"><a type= "button" data-toggle="modal" data-target="#newProject"> <span style="font-size: 18px;">+</span>&emsp;  New Project</a></li>
 								<c:forEach var="list" items="${projectList}">
 									<li style="position:relative;" id="${list.projectIdx}">
-									<input type="hidden" value="${list.favorite}">
-										<a href="ProjectDashBoard.do">
+									<input id="projectFavorite" type="hidden" value="${list.favorite}">
+										<a href="ProjectDashBoard.do" id="projectColor">
 											<span style="color: ${list.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${list.projectName}
 										</a>
-										 <a type="button" id="tools" data-toggle="modal" data-target="#editProject" ><i class="far fa-sun"></i></a>					
+										 <a type="button" id="tools" data-toggle="modal" data-target="#editProject" onclick="thisProject(this)"><i class="far fa-sun"></i></a>					
 									</li>						
-	                   <!--  <li><a href="Drive.do"><span style="color: #f0cc96 !important;"><i class="fas fa-circle"></i></span>&emsp; Project 2</a></li>
-	                    <li><a href="kanbanMainiy.do"><span style="color: #ccccff !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iy</a></li>
-	                    <li><a href="kanbanMainiyiy.do"><span style="color: lightgrey !important;"><i class="fas fa-circle"></i></span>&emsp; kanban_iyiy</a></li> -->
                         		</c:forEach>
                         	</ul>                    
                     </li>

@@ -14,20 +14,21 @@
 				</div>
 				<div class="modal-body">
  		             <h5>Color</h5>
- 		             <!-- <span style="float: right; font-size: 12px; color: grey;">원하는 색으로 프로젝트의 색상을 지정해주세요.&emsp;</span> -->
-		             <input type="text" class="complex-colorpicker form-control" value="#326295">
+ 		             <form action="EditMyProject.do" method="post">
+		             <input type="text" id="nowColor" class="complex-colorpicker form-control" value="">
                      <br>                        
                      <br>                
                      <h5>Favorite</h5>
                      <div style="position:relative;">
                      <p>해당 프로젝트를 즐겨찾기에 추가하시겠습니까?</p>
 					        <div class="but r" id="but-2" style="float:right;   position:absolute; top: 0px; right: 0px;">
-					          <input type="checkbox" class="chbox">
+					          <input type="checkbox" class="chbox" name="chbox">
 					          <div class="knobs"></div>
 					          <div class="layer"></div>
 					        </div>
 		             </div>
 		             <br>
+		             </form>
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary" data-dismiss="modal">적용하기</button>
