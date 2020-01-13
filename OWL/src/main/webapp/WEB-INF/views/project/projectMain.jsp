@@ -65,19 +65,19 @@ $(function() {
                
            </div>
            <div class="tab-content">
-                  <div class="container-fluid tab-pane fade show active" id="dash" role="tabpanel">
+                  <div class=" tab-pane fade show active" id="dash" role="tabpanel">
                    		Dash Board
                   </div>
-                   <div class="container-fluid tab-pane fade" id="calendar" role="tabpanel">
+                   <div class=" tab-pane fade" id="calendar" role="tabpanel">
                        Calendar
                    </div>
-                   <div class="container-fluid tab-pane fade" id="kanban" role="tabpanel">
+                   <div class=" tab-pane fade" id="kanban" role="tabpanel">
                        Kanban Board
                    </div>
-                   <div class="container-fluid tab-pane fade" id="notice" role="tabpanel">
-                       Notice
+                   <div class=" tab-pane fade" id="notice" role="tabpanel">
+                       <jsp:include page="../notice/notice.jsp"/>
                    </div>
-                   <div class="container-fluid tab-pane fade" id="drive" role="tabpanel">
+                   <div class=" tab-pane fade" id="drive" role="tabpanel">
                        Drive
                    </div>
                </div>
