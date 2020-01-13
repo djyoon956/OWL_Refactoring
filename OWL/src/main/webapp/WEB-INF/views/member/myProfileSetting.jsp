@@ -28,11 +28,9 @@ $(function() {
 				
 					if(responsedata == "true"){
 						console.log("참");
-						$("#pwdMatchMsg").html("비밀번호가 일치합니다");
 						pwdChk = true;
 					}else{
 						console.log("거짓");
-						$("#pwdMatchMsg").html("&emsp; Password do not match. Try again.");
 						pwdChk = false;
 					}
 				},
@@ -48,22 +46,28 @@ $(function() {
 			$("#deleteChk").siblings(".text-danger").css("display", "none");
 			agreeChk = true;
 
-			/* $("#deleteMemberBtn").attr('disabled', false); */
 		}else{ 
 			$("#deleteChk").siblings(".text-danger").css("display", "block");
 			agreeChk = false;
-			/* $("#deleteMemberBtn").attr('disabled', true);	 */
 		}
 	});
 	   $('#deleteMemberBtn').click(function() {
 
 	    	if (agreeChk && pwdChk) {
-	    		console.log('입력완료');
-	    		}else {
-	    			console.log('입력실패');
-	    			warningAlert("필수 항목을 모두 입력해주세요.");
-						return false;
-	    	} 
+	    		
+	    	} else if (agreeChk && pwdChk == false) {
+	    			
+	    			warningAlert("비밀번호가 일치하지 않습니다");
+					return false; 
+			} else if (agreeChk == false && pwdChk){
+				warningAlert("약관에 동의해주시기 바랍니다.");
+				return false; 
+			
+	    	} else {
+    			
+    			warningAlert("약관에 동의해주시기바랍니다. 비밀번호가 일치하지 않습니다.");
+					return false;
+    	} 
 	   });
 	   
 	 $("#multipartFile").change(function(){
