@@ -32,6 +32,19 @@ jQuery(document).ready(function( $ ) {
 	       }
 	   });
 	 });
+
+ $("#insertBtn").click(function(){
+		$.ajax({
+	        url:"InsertNewProject.do",
+	        type: "POST",
+	        data: {projectIdx: 	$("#projectIdx").val(),
+		        	  projectColor: $("#nowColor").val(),
+		        	  favorite: myFavorite},
+	        success:function(data){
+	         location.reload();   
+	       }
+	   });
+	 });
 });
 
 $(document).on('click', '.toggleBG', function () {
@@ -264,7 +277,7 @@ z
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="fas fa-desktop menu-icon"></i><span class="nav-text">&emsp;Project List</span>
                         </a>                       
-                        <ul class="collapse in" id="projectlist">
+                        <ul aria-expanded="false" id="projectlist">
 							<li style="cursor: pointer;"><a type= "button" data-toggle="modal" data-target="#newProject"> <span style="font-size: 18px;">+</span>&emsp;  New Project</a></li>
 								<c:forEach var="list" items="${projectList}">
 									<li style="position:relative;" id="${list.projectIdx}">

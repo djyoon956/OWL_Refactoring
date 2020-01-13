@@ -1,6 +1,5 @@
 package com.owl.project.dto;
 
-import java.util.Date;
 import java.util.HashMap;
 
 import com.owl.chat.dto.ChatRoom;
