@@ -86,7 +86,8 @@ $(function() {
                        Calendar
                    </div>
                    <div class=" tab-pane fade" id="kanban" role="tabpanel">
-                       Kanban Board
+                       <jsp:include page="../kanban/kanbanMain_iy_iy.jsp"/>
+                       
                    </div>
                    <div class=" tab-pane fade" id="notice" role="tabpanel">
                        <jsp:include page="../notice/notice.jsp"/>
@@ -134,5 +135,10 @@ $(function() {
 	<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
 	<script src="resources/plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
 	<script src="resources/plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+	<!-- Date Picker Plugin JavaScript -->
+	<script src="resources/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+	<script src="resources/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+	
+	
 </body>
 </html>
