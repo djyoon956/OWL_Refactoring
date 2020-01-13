@@ -20,8 +20,6 @@ public class Project {
 	
 	private int projectIdx;
 	private String projectName;
-	private Date startDate;
-	private Date dueDate;
 	private HashMap<String, Member> members;
 	private HashMap<Integer, Issue> issues;
 	private HashMap<Integer, Label> lavels;
