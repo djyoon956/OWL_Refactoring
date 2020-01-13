@@ -17,6 +17,7 @@ public class ChatRoom {
 	private ChatType typeCode;
 
 	enum ChatType {
-		P, ONO, G
+		PROJECT, 
+		ONEONONE
 	}
 }
