@@ -55,10 +55,14 @@ $(function() {
 
 	    	if (agreeChk && pwdChk) {
 	    		
-	    		} else if (agreeChk && pwdChk == false) {
+	    	} else if (agreeChk && pwdChk == false) {
 	    			
 	    			warningAlert("비밀번호가 일치하지 않습니다");
-					return false;
+					return false; 
+			} else if (agreeChk == false && pwdChk){
+				warningAlert("약관에 동의해주시기 바랍니다.");
+				return false; 
+			
 	    	} else {
     			
     			warningAlert("약관에 동의해주시기바랍니다. 비밀번호가 일치하지 않습니다.");
