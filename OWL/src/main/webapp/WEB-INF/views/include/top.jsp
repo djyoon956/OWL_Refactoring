@@ -19,7 +19,7 @@
 
 #userImg, .coloricon {
 	border: 3px solid #fcf9f5;
-    box-shadow: 1px 1px 1px 1px #BDBDBD;
+	box-shadow: 1px 1px 1px 1px #BDBDBD;
 }
 
 #userImg:hover, .coloricon:hover {
@@ -31,13 +31,12 @@
 	padding-right: 1%;
 }
 
-
-.whiteColor{
-color: #fff;
+.whiteColor {
+	color: #fff;
 }
 
 .whieColor:hover {
-color: #fff;
+	color: #fff;
 }
 
 .toggleOption {
@@ -48,96 +47,170 @@ color: #fff;
 	position: absolute;
 }
 
-
 .enter {
-	margin-right: 100
-	display: inline
-}
-#searchChat{
-border-right:0px; 
-border-top:0px; 
-boder-left:0px; 
-boder-bottom:3px solid #326295;
-background-color: rgba(255, 255, 255, 0);
-border-left-width: 0px;
-color: #326295;
-}
-#searchChatname{
-cursor: pointer; float: right;
-}
-#searchChatname:hover{
-color: #326295;
-}
-#chatTitle img{
-margin-top: 10px;
-width: 40px;
-height: 40px;
-margin-right: 10px;
-}
-.media h5{
-font-size: 15px;
-font-weight: bold;
+	margin-right: 100 display: inline
 }
 
-.setting-box{
+#searchChat {
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 3px solid #326295;
+	background-color: rgba(255, 255, 255, 0);
+	border-left-width: 0px;
+	color: #326295;
+}
+
+#searchChatname {
+	cursor: pointer;
+	float: right;
+}
+
+#searchChatname:hover {
+	color: #326295;
+}
+
+#chatTitle img {
+	margin-top: 10px;
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+}
+
+.media h5 {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.setting-box {
 	margin-top: 20px;
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .custom-menu {
-    z-index:1000;
-    position: absolute;
-    padding: 2px;
-    background-color:#f0f3f7;
-    text-align: center;
+	z-index: 1000;
+	position: absolute;
+	padding: 2px;
+	background-color: #f0f3f7;
+	text-align: center;
 }
-
 
 /* alarm shake */
 #alarmBtn:hover {
-  /* Start the shake animation and make the animation last for 0.5 seconds */
-
-  animation: shake 1s;
-
-  /* When the animation is finished, start again */
-  animation-iteration-count: infinite;
+	/* Start the shake animation and make the animation last for 0.5 seconds */
+	animation: shake 1s;
+	/* When the animation is finished, start again */
+	animation-iteration-count: infinite;
+}
+@keyframes shake  {
+	0% { transform: translate(2px, 1px) rotate(0deg) scale(1); }
+	10% { transform: translate(-1px, -2px) rotate(-1deg); }
+	20% { transform: translate(-3px, 0px) rotate(1deg); }
+	30% { transform: translate(0px, 2px) rotate(0deg); }
+	40% { transform: translate(1px, -1px) rotate(1deg); }
+	50% { transform: translate(-1px, 2px) rotate(-1deg); }
+	60% { transform: translate(-3px, 1px) rotate(0deg) scale(1.5); }
+	70% { transform: translate(2px, 1px) rotate(-1deg); }
+	80% { transform: translate(-1px, -1px) rotate(1deg); }
+	90% { transform: translate(2px, 2px) rotate(0deg); }
+	100% { transform: translate(1px, -2px) rotate(-1deg) scale(0); }
 }
 
-@keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); }
-  10% { transform: translate(-1px, -2px) rotate(-1deg); }
-  20% { transform: translate(-3px, 0px) rotate(1deg); }
-  30% { transform: translate(3px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-1px, 2px) rotate(-1deg); }
-  60% { transform: translate(-3px, 1px) rotate(0deg); }
-  70% { transform: translate(3px, 1px) rotate(-1deg); }
-  80% { transform: translate(-1px, -1px) rotate(1deg); }
-  90% { transform: translate(1px, 2px) rotate(0deg); }
-  100% { transform: translate(1px, -2px) rotate(-1deg); }
-}
-
-.activity{
+.activity {
 	height: 15px;
-    width: 15px;
-    border-radius: 50%;
-    display: inline-block;
-    position: absolute;
-    border: 3px solid #fff;
-    bottom: .4rem;
-    right: 0rem;
-    padding: 0;
-    background-color: #326295; /*#ff763b*/
-    left: 30px;
-    top: 37px;
+	width: 15px;
+	border-radius: 50%;
+	display: inline-block;
+	position: absolute;
+	border: 3px solid #fff;
+	bottom: .4rem;
+	right: 0rem;
+	padding: 0;
+	background-color: #326295; /*#ff763b*/
+	left: 30px;
+	top: 37px;
 }
 
-.activity.off{
+.activity.off {
 	background-color: lightgrey;
 }
 
+/*   on off 버튼 */
+input[type="checkbox"] {
+	display: none;
+}
 
+.label__on-off {
+	overflow: hidden;
+	position: relative;
+	display: inline-block;
+	width: 58px;
+	height: 26px;
+	-webkit-border-radius: 13px;
+	-moz-border-radius: 13px;
+	border-radius: 13px;
+	background-color: #ed4956;
+	color: #fff;
+	font-weight: bold;
+	cursor: pointer;
+	-webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	-ms-transition: all .3s;
+	-o-transition: all .3s;
+	transition: all .3s;
+}
 
+.label__on-off>* {
+	vertical-align: middle;
+	-webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	-ms-transition: all .3s;
+	-o-transition: all .3s;
+	transition: all .3s;
+	font-size: 14px;
+}
+
+.label__on-off .marble {
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	display: block;
+	width: 24px;
+	height: 24px;
+	background-color: #fff;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+}
+
+.label__on-off .on {
+	display: none;
+	padding-left: 12px;
+}
+
+.label__on-off .off {
+	padding-left: 30px;
+	line-height: 25px;
+}
+
+.input__on-off:checked+.label__on-off {
+	background-color: #0bba82;
+}
+
+.input__on-off:checked+.label__on-off .on {
+	display: inline-block;
+}
+
+.input__on-off:checked+.label__on-off .off {
+	display: none;
+}
+
+.input__on-off:checked+.label__on-off .marble {
+	left: 33px;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -253,7 +326,9 @@ function Cancle(){
 
 				<!-- Alram -->
 				<li class="icons" style="margin-right: 25px"><a
-					href="javascript:void(0)" id="alarmBtn"><i class="far fa-bell"></i></a>
+					href="javascript:void(0)" id="alarmBtn"><i class="far fa-bell"></i>
+					<span class="badge badge-pill gradient-2">3</span>
+					</a>
 				</li>
 
 				<!--  Setting - customizing -->
@@ -381,8 +456,42 @@ function Cancle(){
 		</div>
 
 		
-		
-			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">알람토글입니다</div>
+			<!--  알람 토글  -->
+			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">
+				<div class="setting-box">
+					 <ul class="list-group">
+                      <li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height:1.6em;"> 
+                            <!-- <div class="d-flex w-100"> -->
+                          
+                               <!-- <div class="media">  -->
+                       			<span class="mr-2"><i class="far fa-bell"></i></span>[공지사항] 프로젝트 기간이 연장되었습니다. 
+                       			<!--  </div> -->
+                       			<!--  </div>  -->
+                       			<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
+                       			<label for="switch1" class="label__on-off" style="top: 4px;"> <span class="marble"></span> 
+                       			<span class="on"></span><span class="off"></span></label>
+                         <!--   <ul> -->
+                           <!-- </ul> -->         
+                       </li> 
+                        <li class="list-group-item list-group-item-action flex-column align-items-start pb-0"  style="height: 106px;">
+                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
+                               <div class="">
+                       			<span class="mr-2"><i class="far fa-bell"></i></span>[드라이브] file.jpg파일이 업로드 되었습니다.  
+                               </div>
+                               
+                           </div>
+                           <ul>
+		                      	<li class="d-flex justify-content-between align-items-center">
+		                      			
+		                        </li>
+                           </ul>             
+                       </li>                       					 
+
+                    </ul>
+				</div>	
+			
+			
+			</div>
 
 
 
