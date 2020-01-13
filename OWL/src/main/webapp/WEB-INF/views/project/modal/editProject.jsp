@@ -13,7 +13,7 @@
 				</div>
 				<div class="modal-body">
  		             <h5>Color</h5>
- 		             <form action="EditMyProject.do" method="post">		             
+ 		             <input type="hidden" name="projectIdx"  id="projectIdx"> 
 		             <input type="text" id="nowColor" class="complex-colorpicker form-control" value="">
                      <br>                        
                      <br>                
@@ -21,16 +21,15 @@
                      <div style="position:relative;">
                      <p>해당 프로젝트를 즐겨찾기에 추가하시겠습니까?</p>
 					        <div class="but r" id="but-2" style="float:right;   position:absolute; top: 0px; right: 0px;">
-					          <input type="checkbox" class="chbox" name="chbox">
+					          <input type="checkbox" class="chbox" name="chbox" onclick="EditProject(this)">
 					          <div class="knobs"></div>
 					          <div class="layer"></div>
 					        </div>
 		             </div>
-		             </form>
 		             <br>
                  </div>
                  <div class="modal-footer">
-                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="EditProject(this)">적용하기</button>
+                     <button type="button" class="btn btn-primary" data-dismiss="modal" id="editBtn">적용하기</button>
                  </div>
              </div>
          </div>

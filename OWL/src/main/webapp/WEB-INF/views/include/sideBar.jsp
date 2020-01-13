@@ -15,33 +15,23 @@ function InputProject(){
 
 $.noConflict();
 jQuery(document).ready(function( $ ) {
-	$('#endDate').bootstrapMaterialDatePicker({
-		weekStart: 0,
-		time: false,
-		format: 'YYYY/MM/DD'
-	});
-
-	$('#startDate').bootstrapMaterialDatePicker({
-	    weekStart: 0, 
-	    time: false,
-	    format: 'YYYY/MM/DD',
-	    minDate: new Date()
-	}).on('change', function(e, date) {
-	    $('#endDate').bootstrapMaterialDatePicker('setMinDate', date);
-	});
 	 $(".complex-colorpicker").asColorPicker({
 	        mode: 'complex'
     });
 
-/*  $(".chbox").click(function(){
-		var checking = $(".chbox:checked").val();
-		console.log("checking " + checking);
-		if(checking == 'on'){
-			var likeIt = $('#tools').parent();
-			var plus = likeIt.clone();
-			   $('#favoriteList').append(plus);
-			}
-	}); */
+ $("#editBtn").click(function(){
+	 let myFavorite =$(".chbox:checked").val() == "on" ? 1 : 0;
+		$.ajax({
+	        url:"EditMyProject.do",
+	        type: "POST",
+	        data: {projectIdx: 	$("#projectIdx").val(),
+		        	  projectColor: $("#nowColor").val(),
+		        	  favorite: myFavorite},
+	        success:function(data){
+	         location.reload();   
+	       }
+	   });
+	 });
 });
 
 $(document).on('click', '.toggleBG', function () {
@@ -76,13 +66,11 @@ function toggleActionStart(toggleBtn, LR) {
 }
 
 function thisProject(obj){
- $("#editProject").on('show.bs.modal', function () {
-	console.log($(obj).siblings("form"));
-	 
+ $("#editProject").on('show.bs.modal', function () {	 
+	 $("#projectIdx").val($(obj).parent().attr('id'));	
 	 var theColor = $(obj).siblings("#projectColor").children().eq(0).css("color");
         $("#nowColor").attr("value",theColor);
         $(".asColorPicker-trigger").children('span').css("background", theColor);
-
         var checking = $(".chbox").is(":checked");
           if($(obj).siblings("#projectFavorite").val()=="1"){
                 $(".chbox").attr("checked",true);
@@ -90,7 +78,8 @@ function thisProject(obj){
         	   $(".chbox").attr("checked",false);
            }       
      }); 
-}
+}   
+
 </script>
 <style>
 .asColorPicker-wrap {
@@ -237,6 +226,7 @@ z
     background-color: #ebf7fc;
 }
 </style>
+
         <div class="nk-sidebar">           
             <div class="nk-nav-scroll">
             <c:set var="projectList" value="${projectList}"/> 
@@ -274,7 +264,7 @@ z
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                             <i class="fas fa-desktop menu-icon"></i><span class="nav-text">&emsp;Project List</span>
                         </a>                       
-                        <ul aria-expanded="false" id="projectlist">
+                        <ul class="collapse in" id="projectlist">
 							<li style="cursor: pointer;"><a type= "button" data-toggle="modal" data-target="#newProject"> <span style="font-size: 18px;">+</span>&emsp;  New Project</a></li>
 								<c:forEach var="list" items="${projectList}">
 									<li style="position:relative;" id="${list.projectIdx}">
