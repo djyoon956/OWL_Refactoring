@@ -37,8 +37,8 @@ jQuery(document).ready(function( $ ) {
 		$.ajax({
 	        url:"InsertNewProject.do",
 	        type: "POST",
-	        data: {projectIdx: 	$("#projectIdx").val(),
-		        	  projectColor: $("#nowColor").val()},
+	        data: {projectName: 	$("#projectTitle").val(),
+		        	  projectColor: $("#projectColor").val()},
 	        success:function(data){
 	         location.reload();   
 	       }
@@ -261,7 +261,7 @@ z
                         <c:forEach var="list" items="${projectList}">
                         	<c:if test="${list.favorite == 1}">
 								<li style="position:relative;" id="${list.projectIdx}">
-								<input id="projectFavorite" type="hidden" value="${list.favorite}">
+								<input id="projectFavorite" type="hidden" value="${list.favorite}">								
 									<a href="ProjectDashBoard.do" id="projectColor">
 										<span style="color: ${list.projectColor}!important;"><i class="fas fa-circle"></i></span>&emsp; ${list.projectName}
 									</a>

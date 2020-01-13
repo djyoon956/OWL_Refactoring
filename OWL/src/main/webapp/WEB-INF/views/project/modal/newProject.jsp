@@ -14,7 +14,6 @@
 			<div class="modal-body">
                  	 <h5>Name</h5>
                      <input type="text" id="projectTitle" style="width:100%; height: 40px;">
-                     <input type="hidden" name="projectIdx"  id="newProjectIdx"> 
                      <br>
                      <br>
  		             <h5>Color</h5>
