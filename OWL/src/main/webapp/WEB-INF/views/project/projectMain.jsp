@@ -9,25 +9,18 @@
     <title>프로젝트 대시보드</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="resources/images/favicon.png">
-    <!-- Pignose Calender -->
-    <link href="resources/plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
-    <!-- Chartist -->
-    <link rel="stylesheet" href="resources/plugins/chartist/css/chartist.min.css">
-    <link rel="stylesheet" href="resources/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
-    
-    <!-- Color picker plugins css -->
-    <link href="resources/plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
-    <!-- Custom Stylesheet -->
-    <link href="resources/css/style.css" rel="stylesheet">
-    <link href="resources/project/css/project.css" rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<style type="text/css">
-
-</style>
+    <jsp:include page="../include/headTag.jsp"/>
+	<link href="resources/project/css/project.css" rel="stylesheet">
 <script type="text/javascript">
 $(function() {
-	$("#dashLi").addClass("active");
+	let oldMenu = $("#projectMenu li:first");
+	$("#projectMenu li").on("click", function() {
+       console.log("menu in");
+       oldMenu.removeClass("active");
+       $(this).addClass("active");
+       oldMenu = $(this);
+    });
+	
 }); 
 </script>
 </head>
@@ -45,12 +38,49 @@ $(function() {
         <!-- Content -->
         <div class="content-body">
    		<!-- Tab -->
-        <jsp:include page="../project/projectTab.jsp"/>
-
-			<div class="container-fluid mt-3"> 프로젝트 대시보드
-
-
-            </div>
+        <div id="tab-menu">
+        <div class="row">
+			<div class="col-md-11">
+        	<div id="tab-btn">
+	               <ul id="projectMenu" class="nav nav-tabs" role="tablist" style="border-bottom-width: 0px;">
+	                   <li class="nav-item active">
+	                   		<a class="nav-link" data-toggle="tab" href="#dash">Dash Board</a>
+	                   </li>
+	                   <li class="nav-item">
+	                   		<a class="nav-link" data-toggle="tab" href="#calendar">Calendar</a>
+	                   </li>
+	                   <li class="nav-item">
+	                   		<a class="nav-link" data-toggle="tab" href="#kanban">Kanban Board</a>
+	                   </li>
+	                   <li class="nav-item">
+	                   		<a class="nav-link" data-toggle="tab" href="#notice">Notice</a>
+	                   </li>
+	                   <li class="nav-item">
+	                   		<a class="nav-link" data-toggle="tab" href="#drive">Drive</a>
+	                   </li>
+	               </ul>
+               </div>
+               </div>
+               </div>
+               
+           </div>
+           <div class="tab-content">
+                  <div class="container-fluid tab-pane fade show active" id="dash" role="tabpanel">
+                   		Dash Board
+                  </div>
+                   <div class="container-fluid tab-pane fade" id="calendar" role="tabpanel">
+                       Calendar
+                   </div>
+                   <div class="container-fluid tab-pane fade" id="kanban" role="tabpanel">
+                       Kanban Board
+                   </div>
+                   <div class="container-fluid tab-pane fade" id="notice" role="tabpanel">
+                       Notice
+                   </div>
+                   <div class="container-fluid tab-pane fade" id="drive" role="tabpanel">
+                       Drive
+                   </div>
+               </div>
         </div>
         
         <!-- Bottom -->

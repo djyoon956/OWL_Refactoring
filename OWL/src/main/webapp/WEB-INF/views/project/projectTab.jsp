@@ -1,7 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<script   src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
   
      <!-- Project 상단 바 -->
 			<div id="tab-menu">
@@ -9,11 +6,11 @@
 					<div class="col-md-11">
 						<div id="tab-btn">
 							<ul id="tabList">
-								<li id="dashLi"><a href="ProjectDashBoard.do">Dash Board</a></li>
-								<li id="calLi"><a href="Calendar.do">Calendar</a></li>
-								<li id="kanbanLi"><a href="kanbanMainiy.do">Kanban Board</a></li>
-								<li id="noticeLi"><a href="Notice.do">Notice</a></li>
-								<li id="driveLi"><a href="Drive.do">Drive</a></li>
+								<li id="dashLi"> <a href="#menu1">Dash Board</a></li>
+								<li id="calLi"> <a href="#menu2">Calendar</a></li>
+								<li id="kanbanLi"> <a href="#menu3">Kanban Board</a></li>
+								<li id="noticeLi"> <a href="Notice.do">Notice</a></li>
+								<li id="driveLi"> <a href="Drive.do">Drive</a></li>
 							</ul>
 						</div>
 					</div>
