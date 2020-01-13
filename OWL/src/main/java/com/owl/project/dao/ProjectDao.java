@@ -16,4 +16,7 @@ public interface ProjectDao {
 	public Project getProject(int projectIdx) throws ClassNotFoundException, SQLException;
 
 	public List<ProjectList> getProjectLists(String email) throws ClassNotFoundException, SQLException;
-}
+	
+	public ProjectList getProjectList(int projectIdx) throws ClassNotFoundException, SQLException;
+	
+} 

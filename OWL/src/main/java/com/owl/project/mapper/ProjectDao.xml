@@ -14,5 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE PROJECTLIST SET FAVORITE=#{favorite}
 								, PROJECTCOLOR=#{projectColor}
 		WHERE EMAIL=#{email} and PROJECTIDX=#{projectIdx}
-	</update>	
+	</update>
+
+	<select id="getProjectList"  resultType="com.owl.project.dto.ProjectList" parameterType="String">
+		SELECT PROJECTIDX, FAVORITE, PROJECTCOLOR, EMAIL FROM PROJECTLIST where PROJECTIDX = #{projectIdx}
+	</select>
 </mapper>
