@@ -11,7 +11,7 @@
 							<ul id="tabList">
 								<li id="dashLi"><a href="ProjectDashBoard.do">Dash Board</a></li>
 								<li id="calLi"><a href="Calendar.do">Calendar</a></li>
-								<li id="kanbanLi"><a href="kanbanMainiy.do">Kanban Board</a></li>
+								<li id="kanbanLi"><a href="kanbanMainiyiy.do">Kanban Board</a></li>
 								<li id="noticeLi"><a href="Notice.do">Notice</a></li>
 								<li id="driveLi"><a href="Drive.do">Drive</a></li>
 							</ul>
