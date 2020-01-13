@@ -415,7 +415,7 @@ boder-bottom:3px solid #326295;
       <!-- pm의 설정  modal -->
 	  <jsp:include page="../project/modal/projectMemberEdit.jsp" />
 	  <jsp:include page="../project/modal/labelEdit.jsp" />
-   </div>
+  
    <!--Scripts-->
    <script src="resources/plugins/common/common.min.js"></script>
    <script src="resources/js/custom.min.js"></script>

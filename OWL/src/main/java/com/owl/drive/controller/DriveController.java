@@ -8,6 +8,7 @@ public class DriveController {
 
 		@RequestMapping("Drive.do")
 		public String showview() {
+			System.out.println("드라이브.do in");
 			return "drive/test";
 		}
 		
