@@ -86,8 +86,8 @@ $(function() {
                        Calendar
                    </div>
                    <div class=" tab-pane fade" id="kanban" role="tabpanel">
-                       <jsp:include page="../kanban/kanbanMain_iy_iy.jsp"/>
-                       
+                         <jsp:include page="../kanban/kanbanMain_iy_iy.jsp"/>
+                
                    </div>
                    <div class=" tab-pane fade" id="notice" role="tabpanel">
                        <jsp:include page="../notice/notice.jsp"/>

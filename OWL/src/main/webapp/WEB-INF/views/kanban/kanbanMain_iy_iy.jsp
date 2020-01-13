@@ -251,19 +251,8 @@ $(function() {
 </script>
 </head>
 
-
-
-	<div id="panel"></div>
-
-
 			<div class="container-fluid mt-3">
-			<div id="mySidebar" class="sidebar">
-				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-  				<a href="#">About</a>
-  				<a href="#">Services</a>
-  				<a href="#">Clients</a>
-  				<a href="#">Contact</a>
-			</div>
+
 			
 				<form class="form-inline">
 					<div class="form-group mx-sm-3 mb-2">
