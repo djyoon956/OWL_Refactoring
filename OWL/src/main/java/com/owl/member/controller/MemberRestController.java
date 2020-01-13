@@ -1,5 +1,6 @@
 package com.owl.member.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,20 +136,21 @@ public class MemberRestController {
 	}
 
 	@RequestMapping("PageChage.do")
-	public ModelAndView test(String page, String projectIdx) {
+	public ModelAndView test(String page, String projectIdx, Principal principal) {
 		String view = "";
-		System.out.println("PageChage.do");
-		System.out.println(page);
-		System.out.println(projectIdx);
+		ModelAndView mv = new ModelAndView();
+		
 		if (page.startsWith("dash"))
-			view = "dashBoard/myDashboard";
+			view = "dashBoard/dashBoard";
 		else if (page.startsWith("calendar"))
 			view = "calendar/calendar2";
 		else if (page.startsWith("project")) {
 			view = "project/projectMain";
+			mv.addObject("project", projectService.getProjectList(Integer.parseInt(projectIdx), principal.getName()));
 		}
 
+		mv.setViewName(view);
 		
-		return new ModelAndView(view);
+		return mv;
 	}
 }

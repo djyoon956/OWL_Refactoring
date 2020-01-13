@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +32,7 @@ $(function() {
 
 <body>
    		<!-- Tab -->
+   		<c:set var="project" value="${project }"/>
         <div id="tab-menu">
         <div class="row">
 			<div class="col-md-11">
@@ -73,12 +76,13 @@ $(function() {
            <div class="tab-content">
                   <div class=" tab-pane fade show active" id="dash" role="tabpanel">
                   		<h1>Dash Board</h1>
+                  		<h1>${project.projectName }</h1>
                   </div>
                    <div class=" tab-pane fade" id="calendar" role="tabpanel">
                        <h1>Calendar</h1>
                    </div>
                    <div class=" tab-pane fade" id="kanban" role="tabpanel">
-                         <jsp:include page="../kanban/kanbanMain_iy_iy.jsp"/>
+                         <%-- <jsp:include page="../kanban/kanbanMain_iy_iy.jsp"/> --%>
                 
                    </div>
                    <div class=" tab-pane fade" id="notice" role="tabpanel">

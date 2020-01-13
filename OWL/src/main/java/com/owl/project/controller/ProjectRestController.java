@@ -41,7 +41,7 @@ public class ProjectRestController {
 	public boolean insertNewProject(Project project, ProjectList projectlist, Principal principal, HttpServletRequest request) throws Exception {
 		boolean result = false;
 		try {
-		result = service.insertNewProject(project, projectlist);
+	//	result = service.insertNewProject(project, projectlist);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

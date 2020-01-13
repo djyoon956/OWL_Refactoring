@@ -71,6 +71,20 @@ public class ProjectService {
 		return result;
 	}
 	
+	public ProjectList getProjectList(int projectIdx, String email) {
+		ProjectDao dao = getProjectDao();
+		ProjectList projectList = null;
+		try {
+			projectList = dao.getProjectList(projectIdx, email);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return projectList;
+	}
+	
 	private ProjectDao getProjectDao() {
 		return sqlSession.getMapper(ProjectDao.class);
 	}
