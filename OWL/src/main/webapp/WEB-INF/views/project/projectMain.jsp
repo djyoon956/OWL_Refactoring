@@ -61,6 +61,20 @@ $(function() {
 	               </ul>
                </div>
                </div>
+               <div class="col-md-1 mt-2 text-center">
+				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                         <i class="fas fa-user-cog iconSizeBig pt-2"></i>
+                  </a>
+                     <div class=" dropdown-menu">
+                         <div class="dropdown-content-body">
+                             <ul>
+                                 <li><a href="#memberEditModal" data-toggle="modal">프로젝트멤버  설정</a></li>
+                                 <li><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
+                             </ul>
+                         </div>
+                     </div>
+                 </li>
+					</div>
                </div>
                
            </div>
