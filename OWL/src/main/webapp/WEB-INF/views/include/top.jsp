@@ -144,7 +144,7 @@ input[type="checkbox"] {
 	overflow: hidden;
 	position: relative;
 	display: inline-block;
-	width: 58px;
+	width: 44px;
 	height: 26px;
 	-webkit-border-radius: 13px;
 	-moz-border-radius: 13px;
@@ -209,7 +209,7 @@ input[type="checkbox"] {
 }
 
 .input__on-off:checked+.label__on-off .marble {
-	left: 33px;
+	left: 20px;
 }
 </style>
 <script>
@@ -467,8 +467,8 @@ function Cancle(){
                        			<span class="mr-2"><i class="far fa-bell"></i></span>[공지사항] 프로젝트 기간이 연장되었습니다. 
                        			<!--  </div> -->
                        			<!--  </div>  -->
-                       			<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
-                       			<label for="switch1" class="label__on-off" style="top: 4px;"> <span class="marble"></span> 
+                       			<input type="checkbox" id="switch1" name="switch1" class="input__on-off mt-4" > 
+                       			<label for="switch1" class="label__on-off"> <span class="marble"></span> 
                        			<span class="on"></span><span class="off"></span></label>
                          <!--   <ul> -->
                            <!-- </ul> -->         
