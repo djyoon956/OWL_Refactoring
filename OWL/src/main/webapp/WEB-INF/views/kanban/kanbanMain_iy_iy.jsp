@@ -122,11 +122,67 @@ body {
 	border-bottom: 3px solid #326295;
 	color: #326295;
 }
+
+
+<!-- 사이드바 하는 중 -->
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
 </style>
 
 <script type="text/javascript">
 $(function() {
 
+	
 	// DatePicker
 	$('#issueDate').bootstrapMaterialDatePicker({
 		weekStart: 0,
@@ -245,13 +301,14 @@ $(function() {
 
 
 
+
 </script>
 </head>
 
 <body>
 
 	<div id="main-wrapper">
-<div id="panel"></div>
+	<div id="panel"></div>
 		<!-- Top -->
 		<jsp:include page="../include/top.jsp" />
 
@@ -260,22 +317,11 @@ $(function() {
 		<!-- Content -->
 
 		<div class="content-body">
-
-			<div id="tab-menu">
-				<div id="tab-btn">
-					<ul>
-						<li><a href="#">Dash Board</a></li>
-						<li class="active"><a href="#">Kanban Board</a></li>
-						<li><a href="#">Schedule</a></li>
-						<li><a href="#">Drive</a></li>
-					</ul>
-				</div>
-			</div>
-
-
-
+        <jsp:include page="../project/projectTab.jsp"/>
+		
 
 			<div class="container-fluid mt-3">
+
 				<form class="form-inline">
 					<div class="form-group mx-sm-3 mb-2">
 						<label class="sr-only">search</label> <input type="text"
@@ -288,8 +334,7 @@ $(function() {
 					<div class="col-md-12">
 
 
-						<button class="btn columncolor" id="addDefault">Add
-							Column+</button>
+						<button class="btn columncolor" id="addDefault">Add Column+</button>
 
 						<a href="#" data-toggle="modal" data-target="#addIssueModal">
 							<button class="btn columncolor" id="addToDo">Add Issue++</button>
@@ -298,8 +343,8 @@ $(function() {
 							Column</button>
 
 						<hr>
-						<div id="myKanban" class="row"></div>
-
+						<div id="myKanban" class="row">
+						</div>
 					</div>
 					<div class="col-md-1">closed</div>
 				</div>
