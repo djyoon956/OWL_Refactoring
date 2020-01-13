@@ -397,7 +397,7 @@ $(function() {
 		<div class="content-body">
 
          <!-- Project 상단 바 -->
-        <jsp:include page="../project/projectTab.jsp"/>
+        <%-- <jsp:include page="../project/projectTab.jsp"/> --%>
         
 			<div class="container-fluid mt-3">
 
@@ -416,7 +416,7 @@ $(function() {
 							Column+</button>
 
 						<a href="#" data-toggle="modal" data-target="#addIssueModal">
-							<button class="btn columncolor" id="addToDo">Add Issue++</button>
+							<button class="btn columncolor" id="addToDo">Add Issue+++</button>
 						</a>
 						<button class="btn columncolor" id="removeBoard">Remove
 							Column</button>
