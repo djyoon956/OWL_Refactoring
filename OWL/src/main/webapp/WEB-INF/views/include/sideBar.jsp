@@ -37,8 +37,8 @@ jQuery(document).ready(function( $ ) {
 		$.ajax({
 	        url:"InsertNewProject.do",
 	        type: "POST",
-	        data: {projectIdx: 	$("#projectIdx").val(),
-		        	  projectColor: $("#nowColor").val()},
+	        data: {projectName: 	$("#projectTitle").val(),
+		        	  projectColor: $("#projectColor").val()},
 	        success:function(data){
 	         location.reload();   
 	       }
