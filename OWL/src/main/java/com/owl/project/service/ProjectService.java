@@ -61,7 +61,7 @@ public class ProjectService {
 
 		try {
 			projectDao.insertProject(project);
-			
+			projectlist.setProjectIdx(project.getProjectIdx());
 			projectDao.insertProjectList(projectlist);
 			result = true;
 		} catch (Exception e) {

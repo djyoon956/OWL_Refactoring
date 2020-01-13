@@ -38,9 +38,10 @@ public class ProjectRestController {
 	}
 	
 	@RequestMapping("InsertNewProject.do")
-	public boolean insertNewProject(Project project, ProjectList projectlist, Principal principal, HttpServletRequest request) throws Exception {
+	public boolean insertNewProject(String projectName, String projectColor, Project project, ProjectList projectlist, Principal principal, HttpServletRequest request) throws Exception {
 		boolean result = false;
 		try {
+		project.setProjectName(project.getProjectName());
 		result = service.insertNewProject(project, projectlist);
 			
 		} catch (Exception e) {
