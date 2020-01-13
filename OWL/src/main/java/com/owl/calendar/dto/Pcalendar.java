@@ -21,7 +21,7 @@ public class Pcalendar {
 	
 	
 	enum CalendarType {
-			P,
-			PS
+			MY,
+			PROJECT
 	}
 }
