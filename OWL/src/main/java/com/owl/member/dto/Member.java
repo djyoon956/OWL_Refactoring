@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.owl.calendar.dto.Pcalendar;
+import com.owl.calendar.dto.SmartCalendar;
 import com.owl.project.dto.Project;
 
 import lombok.Getter;
@@ -23,10 +23,9 @@ public class Member {
 	private String signFrom;
 	private HashMap<Integer, Project> projects;
 	private Setting setting;
-	private HashMap<Integer, Pcalendar> pCalendars;
+	private HashMap<Integer, SmartCalendar> calendars;
 	private boolean authOk;
 	private String authority;
 	private String role;	
 	private CommonsMultipartFile multipartFile;
-
 }

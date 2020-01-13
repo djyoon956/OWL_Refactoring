@@ -280,7 +280,7 @@ boder-bottom:3px solid #326295;
       <div class="content-body">
 
          <!-- Project 상단 바 -->
-        <jsp:include page="../include/projectTab.jsp"/>
+        <jsp:include page="../project/projectTab.jsp"/>
             <!-- 드라이브 사이드 바 -->
             <div class="row">
                <div class="col-md-3" style="padding-right: 0;">

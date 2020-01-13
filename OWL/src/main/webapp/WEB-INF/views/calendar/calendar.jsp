@@ -31,7 +31,7 @@ $(function() {
         <!-- Content -->
         <div class="content-body">
         <!-- Project 상단 바 -->
-        <jsp:include page="../include/projectTab.jsp"/>
+        <jsp:include page="../project/projectTab.jsp"/>
             <div class="container-fluid mt-3">	
             	<jsp:include page="calendar2.jsp"/>
             </div>
@@ -41,7 +41,6 @@ $(function() {
 		<jsp:include page="../include/bottom.jsp"/>
     </div>
 	
-	<jsp:include page="../project/modal/createProject.jsp"/>
 	 <!-- pm의 설정  modal -->
 	 <jsp:include page="../project/modal/projectMemberEdit.jsp" />
 	 <jsp:include page="../project/modal/labelEdit.jsp" />

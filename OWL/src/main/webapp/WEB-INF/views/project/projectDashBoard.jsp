@@ -44,7 +44,7 @@ $(function() {
         <!-- Content -->
         <div class="content-body">
    		<!-- Tab -->
-        <jsp:include page="../include/projectTab.jsp"/>
+        <jsp:include page="../project/projectTab.jsp"/>
 
 			<div class="container-fluid mt-3"> 프로젝트 대시보드
 
