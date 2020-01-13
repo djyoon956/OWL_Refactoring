@@ -325,7 +325,7 @@ $(function() {
 		<div class="content-body">
 
          <!-- Project 상단 바 -->
-        <jsp:include page="../project/projectTab.jsp"/>
+        <%-- <jsp:include page="../project/projectTab.jsp"/> --%>
         
 			<div class="container-fluid mt-3">
 
