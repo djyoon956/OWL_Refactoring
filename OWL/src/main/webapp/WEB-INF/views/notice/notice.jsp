@@ -17,10 +17,7 @@
 <script type="text/javascript">
 $(function() {
 	 $("#noticeLi").addClass("active"); 
-     $('#noticeTable').DataTable( {
-       
-        "order": [[ 3, "desc" ]]
-    } ); /* 데이터 테이블 순서 0,1,2 ...  > 3, desc 작성일 순서 */
+     $('#noticeTable').DataTable(); 
 }); 
 </script>
 <body>
@@ -35,7 +32,7 @@ $(function() {
         <!-- Content -->
         <div class="content-body">
         <!-- Project 상단 바 -->
-        <jsp:include page="../include/projectTab.jsp"/>
+        <jsp:include page="../project/projectTab.jsp"/>
         
             <div class="container-fluid mt-3">
                         <div class="card">
@@ -79,9 +76,6 @@ $(function() {
                                     </table>
                                 </div>
                              <div class="text-right mt-3 ">
-                            	<!-- <a href="NoticeWrite.do"> -->
-								<!--  <input type="button" class="btn btn-primary" value="글쓰기" id="notice" name="">&emsp;&emsp; -->
-								
 								<button class="btn btn-primary" type="submit" id="notice" name="" onclick="location.href='NoticeWrite.do'"><i class="icon-pencil"></i>&nbsp; 글쓰기</button>
 								<!-- </a> -->
 								&emsp;&emsp;
