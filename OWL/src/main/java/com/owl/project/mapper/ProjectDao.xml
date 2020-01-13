@@ -24,10 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- sidebar project 목록 삽입 -->
 	<insert id="insertProject" parameterType="com.owl.project.dto.Project">
-		INSERT INTO PROJECT (PROJECTNAME) VALUES (#{projectName})
+		INSERT INTO PROJECT (PROJECTIDX, PROJECTNAME) VALUES (#{projectIdx}, #{projectName})
 	</insert>
 	
-	<insert id="insertProjectList" parameterType="com.owl.project.dto.ProjectList">
+	<insert id="insertProjectList" parameterType="com.owl.project.dto.ProjectList" useGeneratedKeys="true" keyProperty="projectIdx">
 		INSERT INTO PROJECTLIST (PROJECTIDX, EMAIL, PROJECTCOLOR, AUTHORITY) VALUES (#{projectIdx}, #{email}, #{projectColor}, #{'ROLE_PM'})
 	</insert>
 </mapper>

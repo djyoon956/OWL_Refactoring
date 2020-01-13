@@ -38,8 +38,7 @@ jQuery(document).ready(function( $ ) {
 	        url:"InsertNewProject.do",
 	        type: "POST",
 	        data: {projectIdx: 	$("#projectIdx").val(),
-		        	  projectColor: $("#nowColor").val(),
-		        	  favorite: myFavorite},
+		        	  projectColor: $("#nowColor").val()},
 	        success:function(data){
 	         location.reload();   
 	       }
