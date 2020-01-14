@@ -21,6 +21,7 @@ public class ProjectRestController {
 	@Autowired
 	private ProjectService service;
 	
+	//Sidebar의 프로젝트 목록 수정
 	@RequestMapping("EditMyProject.do")
 	public  boolean updateProjectList(String projectIdx, String favorite, String projectColor, ProjectList projectlist, Principal principal) {
 		boolean result = false;
@@ -37,11 +38,15 @@ public class ProjectRestController {
 		return result;
 	}
 	
+	//새 프로젝트 추가
 	@RequestMapping("InsertNewProject.do")
 	public boolean insertNewProject(String projectName, String projectColor, Project project, ProjectList projectlist, Principal principal, HttpServletRequest request) throws Exception {
 		boolean result = false;
 		try {
-		project.setProjectName(project.getProjectName());
+		projectlist.setEmail(principal.getName());
+		System.out.println(principal.getName());
+		project.setProjectName(project.getProjectName());		
+		projectlist.setProjectColor(projectlist.getProjectColor());
 		result = service.insertNewProject(project, projectlist);
 			
 		} catch (Exception e) {

@@ -327,7 +327,7 @@ function Cancle(){
 				<!-- Alram -->
 				<li class="icons" style="margin-right: 25px"><a
 					href="javascript:void(0)" id="alarmBtn"><i class="far fa-bell"></i>
-					<span class="badge badge-pill gradient-2">3</span>
+					<span class="badge badge-pill gradient-2">4</span>
 					</a>
 				</li>
 
@@ -458,39 +458,92 @@ function Cancle(){
 		
 			<!--  알람 토글  -->
 			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">
-				<div class="setting-box">
+				<!-- <div class="setting-box">
 					 <ul class="list-group">
-                      <li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height:1.6em;"> 
-                            <!-- <div class="d-flex w-100"> -->
-                          
-                               <!-- <div class="media">  -->
+                      <li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height:2em;">                 
                        			<span class="mr-2"><i class="far fa-bell"></i></span>[공지사항] 프로젝트 기간이 연장되었습니다. 
-                       			<!--  </div> -->
-                       			<!--  </div>  -->
-                       			<input type="checkbox" id="switch1" name="switch1" class="input__on-off mt-4" > 
-                       			<label for="switch1" class="label__on-off"> <span class="marble"></span> 
-                       			<span class="on"></span><span class="off"></span></label>
-                         <!--   <ul> -->
-                           <!-- </ul> -->         
+                       			<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
+                       			<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
+                       			<span class="on"></span><span class="off"></span></label> 
                        </li> 
-                        <li class="list-group-item list-group-item-action flex-column align-items-start pb-0"  style="height: 106px;">
-                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
-                               <div class="">
-                       			<span class="mr-2"><i class="far fa-bell"></i></span>[드라이브] file.jpg파일이 업로드 되었습니다.  
-                               </div>
+                       <li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height:2em;"> 
+                       			<span class="mr-2"><i class="far fa-bell"></i></span>[드라이브] 'file.jpg'파일이 업로드 되었습니다.   
+                       			<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
+                       			<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
+                       			<span class="on"></span><span class="off"></span></label>      
+                       </li>
+						<li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height: 2em;">
+							<span class="mr-2"><i class="far fa-bell"></i></span>
+							[이슈] '로그인 view 구현' 이슈가 등록되었습니다. 
+							<input type="checkbox" id="switch1" name="switch1" class="input__on-off">
+							<label for="switch1" class="label__on-off mt-1" style="float: right; "> 
+							<span class="marble"></span> 
+							<span class="on"></span>
+							<span class="off"></span></label>
+						</li>
+						<li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height: 2em;">
+							<div class="d-flex w-100"></div> <span class="mr-2"><i class="far fa-bell"></i></span>
+							[멘션] 배인영 님이 언급하였습니다.  
+							<input type="checkbox" id="switch1" name="switch1" class="input__on-off">
+							<label for="switch1" class="label__on-off mt-1" style="float: right; "> 
+							<span class="marble"></span> 
+							<span class="on"></span>
+							<span class="off"></span></label>
+						</li>
+					</ul>
+				</div>	 -->
+			<!--  ex 2222 -->
+			<div class="dropdown-notfication">
                                
-                           </div>
-                           <ul>
-		                      	<li class="d-flex justify-content-between align-items-center">
-		                      			
-		                        </li>
-                           </ul>             
-                       </li>                       					 
-
-                    </ul>
-				</div>	
-			
-			
+			<div class="dropdown-content-body">
+                                    <ul>
+                                        <li>
+                                            <a href="javascript:void()">
+                                                <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="far fa-bell"></i></span>
+                                                <div class="notification-content">
+                                                    <h6 class="notification-heading">공지사항</h6>
+                                                    <!-- <h6 class="notification-text"> -->프로젝트 기간이 연장되었습니다. 
+                                                    
+                                                    <div>
+                                                    <input type="checkbox" id="switch1" name="switch1" class="input__on-off" style="float: right;" > 
+                       								<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
+                       								<span class="on"></span><span class="off"></span></label> 
+                       								</div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void()">
+                                                <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="far fa-bell"></i></span>
+                                                <div class="notification-content">
+                                                    <h6 class="notification-heading">드라이브</h6>
+                                                    <span class="notification-text">'file.jpg'파일이 업로드 되었습니다.</span> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void()">
+                                                <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="far fa-bell"></i></span>
+                                                <div class="notification-content">
+                                                    <h6 class="notification-heading">이슈</h6>
+                                                    <span class="notification-text">'로그인 view 구현' 이슈가 등록되었습니다.</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void()">
+                                                <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="far fa-bell"></i></span>
+                                                <div class="notification-content">
+                                                    <h6 class="notification-heading">Events to Join</h6>
+                                                    <span class="notification-text">After two days</span> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    
+                                </div>
+							</div>
+			<!--  끝 div -->
 			</div>
 
 

@@ -95,7 +95,6 @@ public class LoginController {
 		List<ProjectList> projectList  = null;
 		projectList = ProjectSerivce.getProjectLists(member.getEmail());
 		model.addAttribute("projectList", projectList);
-		System.out.println(projectList);	
 		return "member/main";
 	}
 

@@ -38,11 +38,11 @@ jQuery(document).ready(function( $ ) {
 	        url:"InsertNewProject.do",
 	        type: "POST",
 	        data: {projectName: 	$("#projectTitle").val(),
-		        	  projectColor: $("#projectColor").val()},
+		        	  projectColor: $("#myColor").val()},
 	        success:function(data){
 	         location.reload();   
 	       }
-	   });
+	   }); 
 	 });
 });
 
