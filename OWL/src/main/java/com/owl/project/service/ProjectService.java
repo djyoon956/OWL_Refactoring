@@ -8,9 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
-import com.owl.member.dao.MemberDao;
-import com.owl.member.dto.Member;
 import com.owl.project.dao.ProjectDao;
 import com.owl.project.dto.Project;
 import com.owl.project.dto.ProjectList;
@@ -61,7 +60,11 @@ public class ProjectService {
 
 		try {
 			projectDao.insertProject(project);
-			projectlist.setProjectIdx(project.getProjectIdx());
+			
+			int projectIdx = project.getProjectIdx();
+			projectlist.setProjectIdx(projectIdx);
+			projectlist.setAuthority("ROLE_PM");
+
 			projectDao.insertProjectList(projectlist);
 			result = true;
 		} catch (Exception e) {
