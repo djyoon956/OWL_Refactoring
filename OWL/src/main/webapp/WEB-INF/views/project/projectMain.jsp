@@ -45,7 +45,6 @@
 
 		function setKanbanData(){
 			console.log("in setKanbanData");
-			//"kanban
 			 $.ajax({
 		        type : "POST",
 		        url : "GetKanban.do",
@@ -68,16 +67,28 @@
 		        url : "GetNotices.do",
 		        data : {projectIdx : ${project.projectIdx}},
 		        success : function(data) {
-		            console.log("success");
+		            console.log("setNoticeData success");
 		            console.log(data);
+		            $("#notice").html(data);
 		        }, error : function(){
-		        	console.log("error");
+		        	console.log("setNoticeData error");
 		        }
 		    }); 
 		}
 
 		function setDriveData(){
 			console.log("in setDriveData");
+			 $.ajax({
+			        type : "POST",
+			        url : "GetDrive.do",
+			        data : {projectIdx : ${project.projectIdx}},
+			        success : function(data) {
+			            console.log("setDriveData success");
+			            $("#drive").html(data);
+			        }, error : function(){
+			        	console.log("setDriveData error");
+			        }
+			    }); 
 		}
 	</script>
 </head>
@@ -142,7 +153,6 @@
 			<jsp:include page="../notice/notice.jsp" />
 		</div>
 		<div class=" tab-pane fade" id="drive" role="tabpanel">
-			<h1>Drive</h1>
 		</div>
 	</div>
 

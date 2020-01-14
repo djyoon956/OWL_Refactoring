@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
 	$(function () {
@@ -22,27 +23,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>쉬지 말고 일하세요</td>
-							<td>PM</td>
-							<td>2020-01-10</td>
-							<td>12</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>프로젝트가 얼마 안남았어요</td>
-							<td>PM</td>
-							<td>2020-01-08</td>
-							<td>1234</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>화이팅합시다</td>
-							<td>PM</td>
-							<td>2020-01-09</td>
-							<td>1</td>
-						</tr>
+					<%-- 	<c:forEach var="notice" items="${notices}"> --%>
+							<tr>
+								<td></td>
+								<td>쉬지 말고 일하세요</td>
+								<td>PM</td>
+								<td>2020-01-10</td>
+								<td>12</td>
+							</tr>
+					<%-- 	</c:forEach> --%>
 					</tbody>
 				</table>
 			</div>

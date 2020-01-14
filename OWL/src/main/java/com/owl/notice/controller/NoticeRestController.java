@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.Notice;
@@ -17,7 +18,7 @@ public class NoticeRestController {
 	private SqlSession sqlSession;
 
 	@RequestMapping("GetNotices.do")
-	public List<Notice> getNotices(int projectIdx) {
+	public ModelAndView getNotices(int projectIdx, ModelAndView modelAndView) {
 		System.out.println("getNotices : "+projectIdx);
 		NoticeDao dao = getNoticeDao();
 		List<Notice> notices = null;
@@ -28,7 +29,10 @@ public class NoticeRestController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return notices;
+		
+		modelAndView.addObject("notices", notices);
+		//modelAndView.setViewName("notice/notice");
+		return modelAndView;
 	}
 
 	private NoticeDao getNoticeDao() {
