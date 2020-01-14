@@ -23,11 +23,9 @@
 		$(function(){
 			$("#SideMenu  [class$='_page']").on("click",function(){
 				let data = { page : $(this).attr("class")};
-				if(data.page == "project_page"){
-					console.log("project");
+				if(data.page == "project_page")
 					data.projectIdx = $(this).attr("id");
-				}
-				console.log(data);
+
 				$.ajax({
 			        type : "GET",
 			        url : "PageChage.do",
@@ -37,7 +35,6 @@
 			            $('#ContentBox').html(data);
 			        }
 			    });
-				 
 			})
 		})
 			
