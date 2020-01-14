@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <style>
-
 
 .columnBody {
     border: 4px solid #eee;
@@ -25,7 +18,6 @@
 
 .columnBody li {
     border: 1px solid #dadde0;
-
 	box-shadow : 4px #dadde0;
 	background-color : #fff;
 	margin: 5px 10px 10px 10px;
@@ -39,9 +31,7 @@
 
 .columnBody:hover {
 	border: 4px solid #c9ccd1;
-
 }
-
 
 
 #kanbanArea {
@@ -52,7 +42,7 @@
 </style>
 
 <script>
-  jQuery(function($){
+  $(function(){
 	  var n = 3;
 	  
     $('#addIssue').click (function() {
@@ -80,7 +70,6 @@
 
         console.log(value);
        	sortableFn(value);
-
         });
 
     function sortableFn (value)  {
