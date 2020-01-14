@@ -18,8 +18,8 @@ public class NoticeRestController {
 	private SqlSession sqlSession;
 
 	@RequestMapping("GetNotices.do")
-	public ModelAndView getNotices(int projectIdx, ModelAndView modelAndView) {
-		System.out.println("getNotices : "+projectIdx);
+	public List<Notice> getNotices(int projectIdx) {
+		System.out.println("getNotices : " + projectIdx);
 		NoticeDao dao = getNoticeDao();
 		List<Notice> notices = null;
 		try {
@@ -29,10 +29,8 @@ public class NoticeRestController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		modelAndView.addObject("notices", notices);
-		//modelAndView.setViewName("notice/notice");
-		return modelAndView;
+
+		return notices;
 	}
 
 	private NoticeDao getNoticeDao() {

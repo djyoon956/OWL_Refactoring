@@ -1,10 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 
 <script type="text/javascript">
-	$(function () {
-		$('#noticeTable').DataTable();
-	});
+	function setNoticeData(){
+		$.ajax({
+	        type : "POST",
+	        url : "GetNotices.do",
+	        data : {projectIdx : ${project.projectIdx}},
+	        success : function(data) {
+	            $("#noticeTable tbody").empty();
+	            $.each(data, function(index, element){
+		            let row = "<tr>"
+				            		+ "<td>"+element.noticeIdx+"</td>"
+			            			+ "<td>"+element.title+"</td>"
+			            			+ "<td>"+element.email+"</td>"
+			            			+ "<td>"+element.writeDate+"</td>"
+			            			+ "<td>"+element.readNum+"</td>"
+		            			+ "</tr>";
+		            			
+           			$("#noticeTable tbody").append(row);
+	            })
+	        }, error : function(){
+	        	console.log("setNoticeData error");
+	        }
+	    }); 
+	}
 </script>
 
 <div class="container-fluid mt-3">
@@ -23,15 +43,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					<%-- 	<c:forEach var="notice" items="${notices}"> --%>
-							<tr>
-								<td></td>
-								<td>쉬지 말고 일하세요</td>
-								<td>PM</td>
-								<td>2020-01-10</td>
-								<td>12</td>
-							</tr>
-					<%-- 	</c:forEach> --%>
+						
 					</tbody>
 				</table>
 			</div>
@@ -43,7 +55,3 @@
 		</div>
 	</div>
 </div>
-
-<!-- Modal -->
-<jsp:include page="../project/modal/projectMemberEdit.jsp" />
-<jsp:include page="../project/modal/labelEdit.jsp" />
