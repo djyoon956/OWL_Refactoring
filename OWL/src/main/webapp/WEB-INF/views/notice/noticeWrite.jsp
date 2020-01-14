@@ -7,20 +7,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>공지사항 작성</title>
     <link href="resources/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-    <!-- Custom Stylesheet -->
-    <link href="resources/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <!-- include summernote css/js-->
-	<link href="resources/plugins/summernote/dist/summernote.css" rel="stylesheet">
-	
+    <jsp:include page="../include/headTag.jsp"/>
+	<!-- include summernote css/js -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
 </head>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <script type="text/javascript">
-let charLimit = 4000;	
         $(function () {
-        	$("#noticeLi").addClass("active");
-            
             $('#summernote').summernote({
                 height: 400,
                 placeholder: "내용을 입력해주세요.",
@@ -28,48 +21,21 @@ let charLimit = 4000;
                     image: [],
                     link: [],
                     air: []
-                  },
-                  callbacks: {
-						onKeyup: function(e) {
-						console.log("onKeydown");
-						console.log($(this).val());
-						let totalCharacters = stringToByte($(this).val());
-							if (totalCharacters > charLimit) {
-								$("#lengthBox").css("color", "red");
-							} else {
-								$("#lengthBox").css("color", "#999999");
-							}
-							
-						$("#total-characters").text(totalCharacters);
-						var t = e.currentTarget.innerText;
-						if (t.trim().length >= charLimit) {
-							if (e.keyCode != 8
-								&& !(e.keyCode >= 37 && e.keyCode <= 40)
-								&& e.keyCode != 46
-								&& !(e.keyCode == 88 && e.ctrlKey)
-								&& !(e.keyCode == 67 && e.ctrlKey))
-									e.preventDefault();
-								}
-							},
-						}
+                  }
             }); 
-            
-            $("#total-characters").text(stringToByte($('#summernote').val()));
-			$("#max").text(charLimit +"byte");
-			$('.note-statusbar').hide();
-			$("#frm").submit(vaildate);
         })
-        
-        function vaildate(){
-        	let result = checkBoardConten($('#title').val(), $('#summernote').val());
-        	return result;
-        }
 </script>
 <style>
 #noticeDelBtn:hover {
 	 color : black; 
 	 background-color: #808080;
 	 border-color: #808080; 
+}
+ 
+/* summer note */
+.panel-heading{
+ 	color: #333;
+    background-color: #f0f3f7;
 }
 </style>
 <body>
@@ -98,8 +64,7 @@ let charLimit = 4000;
                                                 <input type="text" class="form-control bg-transparent" placeholder="제목을 입력해주세요">
                                             </div>
                                             <div class="form-group">
-                                               <!--  <textarea class="textarea_editor form-control bg-light" rows="15" placeholder="내용을 입력해주세요"></textarea> -->
-                                                <textarea class="form-control bg-light" rows="10" cols="60" id="summernote" name="summernote" placeholder="내용을 입력해주세요"></textarea>
+                                                <textarea class="form-control bg-light" rows="10" cols="60" id="summernote" name="summernote"></textarea>
                                             </div>
                                         <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>&nbsp;파일첨부</h5>
                                             <div class="form-group">
@@ -135,8 +100,6 @@ let charLimit = 4000;
     <script src="resources/js/gleek.js"></script>
     <script src="resources/js/styleSwitcher.js"></script>
 
-    <!--  summernote  -->
-    <script src="resources/plugins/summernote/dist/summernote.min.js"></script>
-    <script src="resources/plugins/summernote/dist/summernote-init.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.js"></script>
 </body>
 </html>
