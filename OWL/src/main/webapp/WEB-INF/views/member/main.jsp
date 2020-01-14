@@ -18,7 +18,7 @@
     <!-- <link href="resources/css/style.css" rel="stylesheet"> -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
  	 <jsp:include page="../include/headTag.jsp"/>
- 	 
+ 	<link href="resources/project/css/project.css" rel="stylesheet">
  	 <script type="text/javascript">
 		$(function(){
 			$("#SideMenu  [class$='_page']").on("click",function(){
