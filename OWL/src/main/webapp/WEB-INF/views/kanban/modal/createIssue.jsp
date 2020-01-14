@@ -64,8 +64,7 @@
 							</select>
 						</div>
 					</div>
-					<input type="submit" class="btn login-form__btn submit w-100"
-						value="Enroll">
+					<input type="submit" class="btn login-form__btn submit w-100" value="Enroll">
 				</form>
 
 				<div class="modal-content" style="background-color: #f0f3f7">
