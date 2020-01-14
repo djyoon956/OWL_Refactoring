@@ -1,37 +1,24 @@
-package com.owl.notice.service;
+package com.owl.notice.controller;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.Notice;
 
-
-@Service
-public class NoticeService {
+@RestController
+public class NoticeRestController {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public boolean insertNotice(Notice notice) {
-		NoticeDao dao = getNoticeDao();
-		boolean result = false;
-
-		try {
-			result = dao.insertNotice(notice) > 0 ? true : false;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return result;
-	}
-
-	public List<Notice> getNoticesByProjectIdx(int projectIdx) {
+	@RequestMapping("GetNotices.do")
+	public List<Notice> getNotices(int projectIdx) {
+		System.out.println("getNotices : "+projectIdx);
 		NoticeDao dao = getNoticeDao();
 		List<Notice> notices = null;
 		try {
@@ -41,7 +28,6 @@ public class NoticeService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return notices;
 	}
 
