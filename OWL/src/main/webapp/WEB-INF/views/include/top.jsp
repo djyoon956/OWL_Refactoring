@@ -136,9 +136,9 @@
 }
 
 /*   on off 버튼 */
-input[type="checkbox"] {
+/* input[type="checkbox"] {
 	display: none;
-}
+} */
 
 .label__on-off {
 	overflow: hidden;
