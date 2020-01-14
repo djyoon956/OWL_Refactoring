@@ -3,14 +3,18 @@
 
 <!DOCTYPE html>
 <html>
-<c:set var="project" value="${project }" />
+<c:set var="project" value="${project}" scope="request"/>
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link href="resources/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+	<!-- DataTable -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
 	<script type="text/javascript">
 		$(function () {
+			$('#noticeTable').DataTable();
 			let oldMenu = $("#projectMenu li:first");
 			$("#projectMenu li").on("click", function () {
 				oldMenu.removeClass("active");
