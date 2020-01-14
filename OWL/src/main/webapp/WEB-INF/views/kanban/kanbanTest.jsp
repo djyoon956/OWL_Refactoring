@@ -1,5 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <jsp:include page="../include/headTag.jsp"/>
 
 <style>
 
@@ -18,6 +22,7 @@
 
 .columnBody li {
     border: 1px solid #dadde0;
+
 	box-shadow : 4px #dadde0;
 	background-color : #fff;
 	margin: 5px 10px 10px 10px;
@@ -31,21 +36,26 @@
 
 .columnBody:hover {
 	border: 4px solid #c9ccd1;
+
 }
 
-
-#kanbanArea {
+/* #kanbanArea {
 	overflow-x: auto !important;
 	white-space:nowrap;
 	overflow-y: auto;
-}
+} */
 </style>
 
-<script>
+  <!--  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+  <script>
   $(function(){
 	  var n = 3;
 	  
     $('#addIssue').click (function() {
+       console.log('addIssue click in');
 		$('#sortable1').append('<li class="ui-state-default">New Issue</li>');
         });
 
@@ -56,8 +66,9 @@
       }).disableSelection();
 
     
+    
     $('#addColumn').click(function() {
-        
+        console.log("여기오니?");
 		var value =  "sortable" + n++;
 
 		var result = "";
@@ -73,7 +84,7 @@
         });
 
     function sortableFn (value)  {
-
+	console.log('여기는 함수');
        var value1 ='#' + value;
         $( value1 ).sortable({
             connectWith: ".connectedSortable",
@@ -84,16 +95,15 @@
     
   });
   </script>
-
-<div id="totalbody" class="container-fluid mt-3 makeXscroll">
-	hello?12
+</head>
+<body>
+<div id="totalbody" class="container-fluid mt-3">
+	hello?12345677
 	
-
-	<button id="addIssue">+ ISSUE</button>
-	<button id="addColumn">+ Column</button>
+	<button id="addIssue">ISSUE</button>
+	<button id="addColumn">Column</button>
 
 	<div class="row" id="kanbanArea">
-
 
 		<div class="columnSection">
 		
@@ -123,3 +133,5 @@
 		
 	</div>
 </div>
+</body>
+</html>

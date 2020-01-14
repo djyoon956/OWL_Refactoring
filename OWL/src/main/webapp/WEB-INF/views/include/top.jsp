@@ -136,9 +136,9 @@
 }
 
 /*   on off 버튼 */
-input[type="checkbox"] {
+/* input[type="checkbox"] {
 	display: none;
-}
+} */
 
 .label__on-off {
 	overflow: hidden;
@@ -257,14 +257,13 @@ input[type="checkbox"] {
 	 $("#settingBtn").on({
 		    mouseover: function (event) {
 		    	$("#setIcon").addClass("fa-spin");
-		    	  console.log("애드 클래스");
 		    },
 		    mouseleave: function (event) {
-		    	 console.log("리무브 클래스");
 		    	$("#setIcon").removeClass("fa-spin");
 		    }
 		});
-	
+		//아코디언 
+	    $( "#accordion" ).accordion();
 	});
 
 function Search(){
@@ -282,6 +281,7 @@ function Cancle(){
 	plus += "<span id='searchChatname' onclick='Search()'><i class='fas fa-search'></i>&emsp;</span><br>";
 	$('.ChatList').append(plus);
 }
+
 </script>
 
 <c:set var="member" value="${member}" scope="request"/>
@@ -458,14 +458,18 @@ function Cancle(){
 		
 			<!--  알람 토글  -->
 			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">
-				<!-- <div class="setting-box">
+				 <div class="setting-box" id="accordion">
 					 <ul class="list-group">
+					 <h3>공지사항</h3>
+					 <div>
                       <li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height:2em;">                 
                        			<span class="mr-2"><i class="far fa-bell"></i></span>[공지사항] 프로젝트 기간이 연장되었습니다. 
                        			<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
                        			<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
                        			<span class="on"></span><span class="off"></span></label> 
                        </li> 
+                       </div>
+                        <h3>드라이브</h3>
                        <li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height:2em;"> 
                        			<span class="mr-2"><i class="far fa-bell"></i></span>[드라이브] 'file.jpg'파일이 업로드 되었습니다.   
                        			<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
@@ -482,7 +486,7 @@ function Cancle(){
 							<span class="off"></span></label>
 						</li>
 						<li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height: 2em;">
-							<div class="d-flex w-100"></div> <span class="mr-2"><i class="far fa-bell"></i></span>
+							<span class="mr-2"><i class="far fa-bell"></i></span>
 							[멘션] 배인영 님이 언급하였습니다.  
 							<input type="checkbox" id="switch1" name="switch1" class="input__on-off">
 							<label for="switch1" class="label__on-off mt-1" style="float: right; "> 
@@ -491,58 +495,46 @@ function Cancle(){
 							<span class="off"></span></label>
 						</li>
 					</ul>
-				</div>	 -->
+				</div>	 
+				
 			<!--  ex 2222 -->
-			<div class="dropdown-notfication">
+			<!-- <div class="dropdown-notfication">
                                
 			<div class="dropdown-content-body">
                                     <ul>
-                                        <li>
-                                            <a href="javascript:void()">
+                                        <li style="line-height: 1.5em;">
                                                 <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="far fa-bell"></i></span>
                                                 <div class="notification-content">
                                                     <h6 class="notification-heading">공지사항</h6>
-                                                    <!-- <h6 class="notification-text"> -->프로젝트 기간이 연장되었습니다. 
-                                                    
-                                                    <div>
+                                                   		프로젝트 기간이 연장되었습니다.
                                                     <input type="checkbox" id="switch1" name="switch1" class="input__on-off" style="float: right;" > 
                        								<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
                        								<span class="on"></span><span class="off"></span></label> 
-                       								</div>
                                                 </div>
-                                            </a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void()">
+                                        <li style="line-height: 1.5em;">
                                                 <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="far fa-bell"></i></span>
                                                 <div class="notification-content">
                                                     <h6 class="notification-heading">드라이브</h6>
-                                                    <span class="notification-text">'file.jpg'파일이 업로드 되었습니다.</span> 
+                                                   	'file.jpg'파일이 업로드 되었습니다.
+                                                    <input type="checkbox" id="switch1" name="switch1" class="input__on-off" style="float: right;" > 
+                       								<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
+                       								<span class="on"></span><span class="off"></span></label> 
                                                 </div>
-                                            </a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void()">
                                                 <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="far fa-bell"></i></span>
                                                 <div class="notification-content">
                                                     <h6 class="notification-heading">이슈</h6>
-                                                    <span class="notification-text">'로그인 view 구현' 이슈가 등록되었습니다.</span>
+                                                    	로그인 view 구현' 이슈가 등록되었습니다.
+                                                   <input type="checkbox" id="switch1" name="switch1" class="input__on-off" style="float: right;" > 
+                       								<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
+                       								<span class="on"></span><span class="off"></span></label>
                                                 </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="far fa-bell"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Events to Join</h6>
-                                                    <span class="notification-text">After two days</span> 
-                                                </div>
-                                            </a>
                                         </li>
                                     </ul>
-                                    
                                 </div>
-							</div>
+							</div> -->
 			<!--  끝 div -->
 			</div>
 

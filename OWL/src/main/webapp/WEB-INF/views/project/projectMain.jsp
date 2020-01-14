@@ -45,6 +45,19 @@
 
 		function setKanbanData(){
 			console.log("in setKanbanData");
+			//"kanban
+			 $.ajax({
+		        type : "POST",
+		        url : "GetKanban.do",
+		        data : {projectIdx : ${project.projectIdx}},
+		        success : function(data) {
+		            console.log("setKanbanData success");
+		            $("#kanban").html(data);
+		        }, error : function(){
+		        	console.log("setKanbanData error");
+		        }
+		    }); 
+			
 		}
 
 		function setNoticeData(){
@@ -123,7 +136,7 @@
 		</div>
 		<div class=" tab-pane fade" id="kanban" role="tabpanel">
 			<%-- <jsp:include page="../kanban/kanbanMain_iy_iy.jsp"/> --%>
-
+			
 		</div>
 		<div class=" tab-pane fade" id="notice" role="tabpanel">
 			<jsp:include page="../notice/notice.jsp" />
