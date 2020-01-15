@@ -20,6 +20,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="resources/js/commonSweetAlert.js"></script>
 
-
+<script src="resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 
