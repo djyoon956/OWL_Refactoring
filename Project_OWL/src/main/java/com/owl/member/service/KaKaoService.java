@@ -20,7 +20,7 @@ public class KaKaoService {
 		StringBuilder builder = new StringBuilder() 
 										.append("https://kauth.kakao.com/oauth/authorize?")
 										.append("client_id=5d151c02cc241d9ba7a8373a8051d79d")
-										.append("&redirect_uri=http://localhost:8090/OWL/kakaoLogin.do")
+										.append("&redirect_uri=http://localhost:8090/Project_OWL/kakaoLogin.do")
 										.append("&response_type=code");
 		
 		return builder.toString();

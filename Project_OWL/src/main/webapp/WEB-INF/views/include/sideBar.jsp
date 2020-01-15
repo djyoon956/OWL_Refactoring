@@ -90,8 +90,8 @@
 	  					<c:forEach var="list" items="${projectList}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
 	                    		<input id="projectFavorite" type="hidden" value="${list.favorite}">
-	                    		<a href="#" class="sidebar-link">
-	                    			<i class="mdi mdi-checkbox-blank-circle" style="color: ${list.projectColor};" id="projectColor"></i>
+	                    		<a href="Project.do?projectIdx=${list.projectIdx}" class="sidebar-link">
+	                    			<i class="mdi mdi-checkbox-blank-circle" style="color: ${list.projectColor};"></i>
 	                    			<span class="hide-menu">${list.projectName}</span>
 	                    		</a>
 	                    		<a type="button" id="sidebarTools" data-toggle="modal" data-target="#editProject" onclick="thisProject(this)">
