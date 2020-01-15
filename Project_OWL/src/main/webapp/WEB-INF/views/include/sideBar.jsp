@@ -9,7 +9,7 @@
     });
 
  $("#editBtn").click(function(){
-	 let myFavorite =$(".chbox:checked").val() == "on" ? 1 : 0;
+	 let myFavorite =$(".favoriteCheckbox:checked").val() == "on" ? 1 : 0;
 		$.ajax({
 	        url:"EditMyProject.do",
 	        type: "POST",
@@ -38,21 +38,22 @@
  function thisProject(obj){
 	 $("#editProject").on('show.bs.modal', function () {
 		 $("#projectIdx").val($(obj).parent().attr('id'));	
-		 var theColor = $(obj).siblings().children("#projectColor").eq(0).css("color")
+		 
+		 var theColor = $(obj).siblings().children().eq(0).css("color")
 	        $("#nowColor").attr("value",theColor);
 	        $(".asColorPicker-trigger").children('span').css("background", theColor);  
-	        var checking = $(".chbox").is(":checked");
+
+	      var theName =  $("#projectName").text();
+	      $("#myProjectTitle").append(theName + " 환경설정");
+	        var checking = $(".favoriteCheckbox").is(":checked");
 	          if($(obj).siblings("#projectFavorite").val()=="1"){		     
-	                $(".chbox").attr("checked",true);
+	                $(".favoriteCheckbox").attr("checked",true);
 	           }else if($(obj).siblings("#projectFavorite").val()=="0"){
-	        	   $(".chbox").attr("checked",false);
+	        	   $(".favoriteCheckbox").attr("checked",false);
 	           }       
 	     }); 
 	} 
 </script>
-<style>
-
-</style>
 <aside class="left-sidebar" data-sidebarbg="skin5">
     <div class="scroll-sidebar">
         <nav class="sidebar-nav">
@@ -73,7 +74,7 @@
 	                    		<input id="projectFavorite" type="hidden" value="${list.favorite}">
 	                    		<a href="#" class="sidebar-link">
 	                    			<i class="mdi mdi-checkbox-blank-circle" style="color: ${list.projectColor};"></i>
-	                    			<span class="hide-menu">${list.projectName}</span>
+	                    			<span class="hide-menu" id="projectName">${list.projectName}</span>
 	                    		</a>
 	                    	</li> 
 	                    	</c:if>                    
@@ -84,9 +85,6 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" type= "button" data-toggle="modal" data-target="#newProject"><i class="mdi mdi-plus"></i><span class="hide-menu">NEW PROJECT</span></a></li>           
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">PROJECT LIST</span></a>
                     <ul aria-expanded="false" class="collapse  first-level" id="projectlist">
-                    <li class="sidebar-item" style="position:relative;" ><a href="Project.do" class="sidebar-link"><i class="mdi mdi-checkbox-blank-circle" style="color: #E39CB2;"></i><span class="hide-menu">프로젝트 바로가기</span></a>
-                    	<a type="button" id="sidebarTools" data-toggle="modal" data-target="#editProject" onclick="thisProject(this)"><i class="mdi mdi-settings"></i></a>	
-                    </li>
 	  					<c:forEach var="list" items="${projectList}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
 	                    		<input id="projectFavorite" type="hidden" value="${list.favorite}">

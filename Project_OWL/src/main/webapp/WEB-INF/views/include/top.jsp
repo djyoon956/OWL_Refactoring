@@ -13,7 +13,6 @@
 			$("#alarmToggle").hide();
 			$("#settingToggle").hide();
 			$("#chatToggle").hide();
-
 			$("#userToggle").animate({width:'toggle'},100);
 		});
 
@@ -22,7 +21,6 @@
 			$("#alarmToggle").hide();
 			$("#settingtoggle").hide();
 		 	$("#chatToggle").animate({width:'toggle'},350);
-				
 		});
 
 		$("#alarmBtn").click(function() {
@@ -30,7 +28,6 @@
 			$("#chatToggle").hide();
 			$("#settingToggle").hide();
 			$("#alarmToggle").animate({width:'toggle'},350);
-			
 		});
 
 		$("#settingBtn").click(function() {
@@ -50,6 +47,17 @@
 		    	$("#setIcon").removeClass("fa-spin");
 		    }
 		});
+	$(".clickIcon").click(function() {
+		let iconChange = $(this).children();
+		 if($(iconChange).hasClass("fa-chevron-right")) {
+			$(iconChange).removeClass("fa-chevron-right");
+			$(iconChange).addClass("fa-chevron-down");
+		} else {
+			$(iconChange).removeClass("fa-chevron-down");
+			$(iconChange).addClass("fa-chevron-right");
+		} 
+		
+	});
 	});
 
 	function Search(){
@@ -369,14 +377,14 @@ a:hover{
                 <b class="logo-icon p-l-10">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <img src="resources/assets/images/logo-icon.png" alt="homepage" class="light-logo" />
+                    <img src="resources/images/OWL_LOGO_BEIGE_SM.png" alt="homepage" class="light-logo" />
                    
                 </b>
                 <!--End Logo icon -->
                  <!-- Logo text -->
                 <span class="logo-text">
                      <!-- dark Logo text -->
-                     <img src="resources/assets/images/logo-text.png" alt="homepage" class="light-logo" />
+                     <img src="resources/images/OWL_LOGO_BEIGE.png" alt="homepage" class="light-logo" />
                     
                 </span>
                 <!-- Logo icon -->
@@ -458,7 +466,7 @@ a:hover{
 						</a>
 					</div>
 					<h4 class="mt-3 mb-1 " style="color:white; padding-top: 10px;">${member.name}</h4>
-					<p class="m-0 whiteColor">${member.email}</p>
+					<p class="mt-2 whiteColor">${member.email}</p>
 				</div>
 				<hr>
 				<div class="text-center setting-box">
@@ -474,10 +482,10 @@ a:hover{
 
 				
 				<div class="setting-box">
-								<div class="ChatList" style="margin-top : 30px"> 
+					<div class="ChatList" style="margin-top : 30px"> 
 					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;" class="whiteColor">
-						<i class="fas fa-comment-medical"></i>&emsp;</a>					
-					<span class ="whiteColor" id="searchChatname" onclick="Search()"><i class="fas fa-search"></i>&emsp;</span>
+						<i class="fas fa-comment-medical fa-lg"></i>&emsp;</a>					
+					<span class ="whiteColor" id="searchChatname" onclick="Search()"><i class="fas fa-search fa-lg"></i>&emsp;</span>
 				<br>
 				</div>
 				<hr>
@@ -508,7 +516,7 @@ a:hover{
                            <ul>
 		                      	<li class="d-flex justify-content-between align-items-center">
 		                      			2/13일 화이팅
-		                        		<span class="badge badge-primary badge-pill" style="background-color: #ccccff">2</span>
+		                        	<span class="badge badge-primary badge-pill" style="background-color: #ccccff">2</span>
 		                        </li>
                            </ul>             
                        </li>
@@ -536,43 +544,14 @@ a:hover{
 		
 					<!--  알람 토글  -->
 			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">
-				<!--  <div class="setting-box" id="accordion">
-					 <ul class="list-group">
-					 <h3>공지사항</h3>
-					 <div>
-                      <li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height:2em;">                 
-                       			<span class="mr-2"><i class="far fa-bell"></i></span>[공지사항] 프로젝트 기간이 연장되었습니다. 
-                       			<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
-                       			<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
-                       			<span class="on"></span><span class="off"></span></label> 
-                       </li> 
-                       </div>
-                        <h3>드라이브</h3>
-                       <li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height:2em;"> 
-                       			<span class="mr-2"><i class="far fa-bell"></i></span>[드라이브] 'file.jpg'파일이 업로드 되었습니다.   
-                       			<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
-                       			<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
-                       			<span class="on"></span><span class="off"></span></label>      
-                       </li>
-						
-						<li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height: 2em;">
-							<span class="mr-2"><i class="far fa-bell"></i></span>
-							[멘션] 배인영 님이 언급하였습니다.  
-							<input type="checkbox" id="switch1" name="switch1" class="input__on-off">
-							<label for="switch1" class="label__on-off mt-1" style="float: right; "> 
-							<span class="marble"></span> 
-							<span class="on"></span>
-							<span class="off"></span></label>
-						</li>
-					</ul> -->
 					
-								<div class="setting-box" >
+					<div class="setting-box" >
 				        <div class="card">
                             <div class="card-body" style="padding:20px;">
                                 <div id="accordion-three" class="accordion">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4"><i class="fa" aria-hidden="true"></i>공지사항 
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4">공지사항 <i class="fa fa-chevron-right" style="float:right"></i>
                                             </h5>
                                         </div>
                                         <div id="collapseOne4" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
@@ -598,7 +577,7 @@ a:hover{
                                     </div>
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5"><i class="fa" aria-hidden="true"></i>드라이브</h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5">드라이브<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseTwo5" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
                                             <div class="card-body pt-3 accordionBody">
@@ -612,7 +591,7 @@ a:hover{
                                     </div>
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6"><i class="fa" aria-hidden="true"></i>이슈</h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">이슈<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree6" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
                                             <div class="card-body pt-3 accordionBody">
@@ -640,7 +619,7 @@ a:hover{
                                     </div>
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7"><i class="fa" aria-hidden="true"></i>멘션</h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7">멘션<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree7" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
                                             <div class="card-body pt-3 accordionBody">
@@ -658,7 +637,9 @@ a:hover{
                      </div>	
 				</div>  
 		
-					<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
+		
+		<!-- Setting toggle -->
+			<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box  mt-5">
 					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR BACKGROUND</h5>
 					<hr class="hrGray">
@@ -667,7 +648,7 @@ a:hover{
 
 
 				</div>
-				<div class="text-center setting-box ">
+			<div class="text-center setting-box mt-5">
 					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR ACTIVE COLOR</h5>
 					<hr class="hrGray">
 					<span class="coloricon " style="background-color: white; display: inline-block;"></span>
@@ -676,7 +657,7 @@ a:hover{
 					<span class=" coloricon " style="background-color: #c4d7a4; display: inline-block;"></span>
 				</div>
 
-				<div class="text-center setting-box">
+				<div class="text-center setting-box mt-5">
 					<h5 class="mt-3 mb-1 whiteColor">SELECT FONT</h5>
 					<hr class="hrGray">
 					<div class="col-lg-12">
