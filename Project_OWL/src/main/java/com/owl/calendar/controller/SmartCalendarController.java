@@ -15,6 +15,6 @@ public class SmartCalendarController {
 
 	@RequestMapping("Calendar.do")
 	public String showView() {
-		return "calendar/calendar";
+		return "calendar/calendar3";
 	}
 }

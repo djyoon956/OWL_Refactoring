@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <script>
 	$(document).ready(function() {
 		$("#userToggle").hide();
@@ -11,19 +13,15 @@
 			$("#alarmToggle").hide();
 			$("#settingToggle").hide();
 			$("#chatToggle").hide();
-/* 			$("#userToggle").animate({
-				height : 'toggle'
-			}); */
-			 $("#userToggle").slideToggle("slow");  
-			
-				
+
+			$("#userToggle").animate({width:'toggle'},100);
 		});
 
 		$("#chatBtn").click(function() {
 			$("#userToggle").hide();
 			$("#alarmToggle").hide();
 			$("#settingtoggle").hide();
-			$("#chatToggle").slideToggle("slow");  
+		 	$("#chatToggle").animate({width:'toggle'},350);
 				
 		});
 
@@ -31,16 +29,19 @@
 			$("#userToggle").hide();
 			$("#chatToggle").hide();
 			$("#settingToggle").hide();
-			$("#alarmToggle").slideToggle("slow");
+			$("#alarmToggle").animate({width:'toggle'},350);
+			
 		});
 
 		$("#settingBtn").click(function() {
 			$("#userToggle").hide();
 			$("#chatToggle").hide();
 			$("#alarmToggle").hide();
-			$("#settingToggle").slideToggle("slow");
+			$("#settingToggle").animate({width:'toggle'},350);
 			
 		});	
+
+		
 	 $("#settingBtn").on({
 		    mouseover: function (event) {
 		    	$("#setIcon").addClass("fa-spin");
@@ -49,9 +50,7 @@
 		    	$("#setIcon").removeClass("fa-spin");
 		    }
 		});
-
 	});
-
 
 	function Search(){
 		$('.ChatList').empty();   
@@ -71,6 +70,9 @@
 </script>
 <style>
 
+ul {
+display: block;
+}
 
 .grade1 {
 	z-index :10;
@@ -106,7 +108,7 @@
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-.toggleOption {
+ .toggleOption {
 	margin-right:0px;
  	margin-top:415px;
 	background: #326295;
@@ -114,9 +116,9 @@
 	width: 310px;
 	position: fixed;
 	right:0;
+	overflow: hidden;
 }
-
-
+ 
 #userImg, .coloricon {
 	border: 3px solid #fcf9f5;
 	box-shadow: 1px 1px 1px 1px #BDBDBD;
@@ -148,6 +150,11 @@
     border-top-right-radius: 0.25rem;
 }
 
+.chat_list-group-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
 
 .chat_list-group-item-action {
   width: 100%;
@@ -343,8 +350,27 @@
 	max-height: 650px; 
 	overflow: auto;
 }
-a:hover{
+/* a:hover{
 	color:black;
+} */
+a {
+  transition: all 0.4s ease-in-out;
+  color: #76838f; }
+
+a:focus,
+a:hover {
+  text-decoration: none; }
+
+a.link {
+  color: #464a53; }
+
+a.link:focus,
+a.link:hover {
+  color: #326295; }
+a:hover {
+ color: #326295; }
+.top_card {
+  border-radius: 0.25rem; 
 }
 </style>
 
@@ -413,11 +439,9 @@ a:hover{
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
                 <li class="nav-item iconMargin">
-                <div class="user-img c-pointer"> <!-- 빼도됨 -->
                     <a class="nav-link text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)" id="userBtn">
-                    	<img id="userImgTop" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="40" width="40" alt="">
+                    	<img id="userImgTop" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="35" width="35" alt="">
                     </a>
-                </div>
                 </li>
                 
                   <!-- Chatting Icon -->
@@ -457,22 +481,25 @@ a:hover{
 				</div>
 				<hr>
 				<div class="text-center setting-box">
-					<ul>
-					<li><a href="Logout.do" class="whiteColor"><i class="icon-key"></i> <span>Logout</span></a></li>
-					</ul>
+					
+					<a href="Logout.do" class="whiteColor"><i class="icon-key"></i> <span>Logout</span></a>
+					
 				
 				</div>
 			</div>
 			
 			<!-- 채팅 목록 토글 -->
 			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 20;">
-				<div  class="ChatList"> 
-					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;" class="whiteColor"><i class="fas fa-comment-medical"></i>&emsp;</a>					
+
+				
+				<div class="setting-box">
+								<div class="ChatList" style="margin-top : 30px"> 
+					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;" class="whiteColor">
+						<i class="fas fa-comment-medical"></i>&emsp;</a>					
 					<span class ="whiteColor" id="searchChatname" onclick="Search()"><i class="fas fa-search"></i>&emsp;</span>
 				<br>
 				</div>
 				<hr>
-				<div class="setting-box">
 					 <ul class="list-group">
                        <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start"  style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
@@ -485,7 +512,7 @@ a:hover{
                            <ul>
 		                      	<li class="d-flex justify-content-between align-items-center">
 		                      			진성씨 시말서 제출하세요.
-		                        		<span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>
+		                        <span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>
 		                        </li>
                            </ul>             
                        </li>
@@ -493,13 +520,13 @@ a:hover{
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
                                <img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">
-                               <h5 style="margin-top: 18px; color: #ccccff">kanban_iy</h5>
+                               <h5 style="margin-top: 18px; color: #ccccff">Family_c</h5>
                                </div>
                                 <small style="float:right;">2020-01-05</small>
                            </div>
                            <ul>
 		                      	<li class="d-flex justify-content-between align-items-center">
-		                      			이슈 끝나면 Done으로 이동해주세요.
+		                      			2/13일 화이팅
 		                        		<span class="badge badge-primary badge-pill" style="background-color: #ccccff">2</span>
 		                        </li>
                            </ul>             
@@ -558,11 +585,11 @@ a:hover{
 						</li>
 					</ul> -->
 					
-								<div class="setting-box" >
-				        <div class="card">
+					<div class="setting-box" >
+				        <div class="card top_card">
                             <div class="card-body" style="padding:20px;">
                                 <div id="accordion-three" class="accordion">
-                                    <div class="card">
+                                    <div class="card top_card">
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4"><i class="fa" aria-hidden="true"></i>공지사항 
                                             </h5>
@@ -588,7 +615,7 @@ a:hover{
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
+                                    <div class="card top_card">
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5"><i class="fa" aria-hidden="true"></i>드라이브</h5>
                                         </div>
@@ -602,7 +629,7 @@ a:hover{
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
+                                    <div class="card top_card">
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6"><i class="fa" aria-hidden="true"></i>이슈</h5>
                                         </div>
@@ -610,27 +637,30 @@ a:hover{
                                             <div class="card-body pt-3 accordionBody">
                                             <div class="mt-2 col-md-12"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
-                                            	<a href="#">'[view]로그인 view 구현' 이슈가 등록되었습니다. dddddddddddddd</a> <span class="ml-1" ><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                            	<a href="#">'[view]로그인 view 구현' 이슈가 등록되었습니다.</a> <span class="ml-1" ><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
                                             </div>
-                                          
-                                            <div class="but r col-md-12" id="but-2" style="float:right; top: 0px; right: 0px; height:28px;width:45px;">
+                                          	
+                                            <!-- <div class="but r col-md-12 but-2" id="" style="float:right; top: 0px; right: 0px; height:28px;width:45px;">
 					          				<input type="checkbox" class="chbox" name="chbox">
 					         			 	<div class="knobs" ></div>
 					          				<div class="layer"></div>
-					          				</div>
+					          				</div> -->
                                            
                                             <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                              <span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
-                                            	<a href="#">'칸반보드 view 구현'이슈가 승인 요청을 있습니다.</a> <span class="ml-1"><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                            	'칸반보드 view 구현'이슈가 승인 요청을 있습니다. <span class="ml-1"><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
                                              </div>
-                                             	<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
-                       							<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
-                       							<span class="on"></span><span class="off"></span></label>
+                                             	
+                                             	  <!-- <div class="but r col-md-12 but-2" id="" style="float:right; top: 0px; right: 0px; height:28px;width:45px;">
+							          				<input type="checkbox" class="chbox" name="chbox">
+							         			 	<div class="knobs" ></div>
+							          				<div class="layer"></div>
+					          				</div> -->
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
+                                    <div class="card top_card">
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7"><i class="fa" aria-hidden="true"></i>멘션</h5>
                                         </div>

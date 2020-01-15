@@ -350,6 +350,33 @@ background-color:#326295;
     .main_footer .copyright a {
       color: #326295; }
 </style>
+<script type="text/javascript">
+	$(function(){
+		 $("#joinOkModal").on('show.bs.modal', function () {
+             let interval = 3;
+                let changeTime = setInterval(function(){
+                   if(interval < 0){
+                      clearTimeout(changeTime);
+                      $("#joinOkModal").modal("hide");
+               		  $("#loginBtn").click();
+                   }
+                   
+                   $("#joinOkModal #changeTime").text(interval--);
+                }, 1000)
+         });
+	      openDialog();
+	})
+
+	function openDialog() {
+	   let type="${show}";
+	   if(!type) return;
+	   else if(type === "joinEmail") $("#opneJoinEmailModal").click();
+	   else if(type === "joinOk") {
+	      $('#joinOkModal').modal({backdrop: 'static', keyboard: false})  
+	      $("#opneJoinOkModal").click();
+	   }
+	}
+</script>
 </head>
 
 <body>
@@ -373,17 +400,12 @@ background-color:#326295;
       <!-- Top -->
       <div class="header-row">
          <div class="header-content clearfix">
-
             <div class="header-left">
-
                <div class="nav-header" style="padding-left: 200px;">
-
                   <a href="Index.do" > 
                <!--    <b class="logo-abbr"><img src="resources/images/logo.png" alt="">   </b> -->
-                        <img src="resources/images/owl_logo_real.png" alt="">
-                     
+                        <img src="resources/images/owl_logo_real.png" alt=""> 
                   </a>
-
                </div>
             </div>
 
@@ -418,4 +440,9 @@ background-color:#326295;
 			 <jsp:include page="include/bottom.jsp"/>  
 		</div>
 	</div>
+	
+   <!--  Modal  -->
+   <jsp:include page="member/modal/forgotPassword.jsp" />
+   <jsp:include page="member/modal/joinConfirm.jsp" />
+   <jsp:include page="member/modal/joinOk.jsp" />
 </body>
