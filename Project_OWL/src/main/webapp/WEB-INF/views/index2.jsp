@@ -267,9 +267,6 @@ background-color:#326295;
   .d-md-inline-flex {
     display: inline-flex !important; } }
 
-.mb-1,
-.my-1 {
-  margin-bottom: 0.25rem !important; }
 .main_btn {
 	border-radius: 0.25rem;
 }

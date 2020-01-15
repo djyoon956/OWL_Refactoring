@@ -211,7 +211,7 @@ function changeView() {
 											
 												<br>
 												<div class="text-justify">
-													<ul class="list-icons">
+													<ul class="list-icons" style="list-style-type: none;">
 													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;회원 탈퇴 후 다시 가입은 가능합니다.</li>
 														<li><i class="fa fa-check text-info list-margin"></i>&nbsp;회원 탈퇴시 다시 복원이 불가능합니다.</li>
 														<li><i class="fa fa-check text-info list-margin"></i>&nbsp;탈퇴된 계정의 정보나 게시물은 완전히 삭제됩니다.</li>
