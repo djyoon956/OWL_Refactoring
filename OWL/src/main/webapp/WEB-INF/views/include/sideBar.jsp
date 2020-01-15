@@ -186,7 +186,7 @@ z
 
 
 /* Button 2 */
-#but-2 .knobs:before, #but-2 .knobs:after
+.but-2 .knobs:before, .but-2 .knobs:after
 {
     content: 'Y';
     position: absolute;
@@ -205,34 +205,34 @@ z
     transition: 0.3s ease all;
 }
 
-#but-2 .knobs:after
+.but-2 .knobs:after
 {
     content: 'Y';
 }
 
-#but-2 .knobs:before
+.but-2 .knobs:before
 {
     content: 'N';
 }
 
-#but-2 .knobs:after
+.but-2 .knobs:after
 {
     right: -28px;
     left: auto;
     background-color: #03A9F4;
 }
 
-#but-2 .chbox:checked + .knobs:before
+.but-2 .chbox:checked + .knobs:before
 {
     left: -28px;
 }
 
-#but-2 .chbox:checked + .knobs:after
+.but-2 .chbox:checked + .knobs:after
 {
     right: 4px;
 }
 
-#but-2 .chbox:checked ~ .layer
+.but-2 .chbox:checked ~ .layer
 {
     background-color: #ebf7fc;
 }

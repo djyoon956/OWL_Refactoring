@@ -20,7 +20,7 @@
                      <h5>Favorite</h5>
                      <div style="position:relative;">
                      <p>해당 프로젝트를 즐겨찾기에 추가하시겠습니까?</p>
-					        <div class="but r" id="but-2" style="float:right;   position:absolute; top: 0px; right: 0px;">
+					        <div class="but r but-2" id="" style="float:right;   position:absolute; top: 0px; right: 0px;">
 					          <input type="checkbox" class="chbox" name="chbox">
 					          <div class="knobs"></div>
 					          <div class="layer"></div>
