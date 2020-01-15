@@ -210,6 +210,13 @@
 .input__on-off:checked+.label__on-off .marble {
 	left: 20px;
 }
+.accordionBody {  
+	max-height: 650px; 
+	overflow: auto;
+}
+a:hover{
+	color:black;
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -262,7 +269,11 @@
 		    }
 		});
 		//아코디언 
-	    $( "#accordion" ).accordion();
+	   /*  $( "#accordion" ).accordion(); */
+	   /*  $(".times").on({
+			 $(this).children().css( "display", "none");
+			$(this).siblings().css("display","inline-block");
+		}); */
 	});
 
 function Search(){
@@ -457,7 +468,7 @@ function Cancle(){
 		
 			<!--  알람 토글  -->
 			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">
-				 <div class="setting-box" id="accordion">
+				<!--  <div class="setting-box" id="accordion">
 					 <ul class="list-group">
 					 <h3>공지사항</h3>
 					 <div>
@@ -475,15 +486,7 @@ function Cancle(){
                        			<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
                        			<span class="on"></span><span class="off"></span></label>      
                        </li>
-						<li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height: 2em;">
-							<span class="mr-2"><i class="far fa-bell"></i></span>
-							[이슈] '로그인 view 구현' 이슈가 등록되었습니다. 
-							<input type="checkbox" id="switch1" name="switch1" class="input__on-off">
-							<label for="switch1" class="label__on-off mt-1" style="float: right; "> 
-							<span class="marble"></span> 
-							<span class="on"></span>
-							<span class="off"></span></label>
-						</li>
+						
 						<li class="list-group-item list-group-item-action flex-column align-items-start" style="line-height: 2em;">
 							<span class="mr-2"><i class="far fa-bell"></i></span>
 							[멘션] 배인영 님이 언급하였습니다.  
@@ -494,8 +497,97 @@ function Cancle(){
 							<span class="off"></span></label>
 						</li>
 					</ul>
-				</div>	 
-				
+				</div> -->	 
+				<div class="setting-box" >
+				        <div class="card">
+                            <div class="card-body" style="padding:20px;">
+                                <div id="accordion-three" class="accordion">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4"><i class="fa" aria-hidden="true"></i>공지사항 
+                                            </h5>
+                                        </div>
+                                        <div id="collapseOne4" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                            <div class="card-body pt-3 accordionBody">
+                                            <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	프로젝트 기간이 연장되었습니다. <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                           
+                                            <div class="mt-2">
+                                            <span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ffb1b9; font-size:13px; color: black">판매전략 프로젝트</span>다음주는 대청소 기간입니다.
+                                            <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                           
+                                              <div class="mt-2">
+                                            <span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #326295; font-size:13px;">후기관리</span>설날 잘 보내시길 바랍니다.
+                                            <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5"><i class="fa" aria-hidden="true"></i>드라이브</h5>
+                                        </div>
+                                        <div id="collapseTwo5" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                            <div class="card-body pt-3 accordionBody">
+                                            <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	'file.jpg'파일이 업로드 되었습니다. <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6"><i class="fa" aria-hidden="true"></i>이슈</h5>
+                                        </div>
+                                        <div id="collapseThree6" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                            <div class="card-body pt-3 accordionBody">
+                                            <div class="mt-2 col-md-12"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	<a href="#">'[view]로그인 view 구현' 이슈가 등록되었습니다. dddddddddddddd</a> <span class="ml-1" ><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                            </div>
+                                          
+                                            <div class="but r col-md-12" id="but-2" style="float:right; top: 0px; right: 0px; height:28px;width:45px;">
+					          				<input type="checkbox" class="chbox" name="chbox">
+					         			 	<div class="knobs" ></div>
+					          				<div class="layer"></div>
+					          				</div>
+                                           
+                                            <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	<a href="#">'칸반보드 view 구현'이슈가 승인 요청을 있습니다.</a> <span class="ml-1"><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                             </div>
+                                             	<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
+                       							<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
+                       							<span class="on"></span><span class="off"></span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7"><i class="fa" aria-hidden="true"></i>멘션</h5>
+                                        </div>
+                                        <div id="collapseThree7" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                            <div class="card-body pt-3 accordionBody">
+                                             <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	배인영님이 언급하였습니다. 
+                                            	<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
 			<!--  ex 2222 -->
 			<!-- <div class="dropdown-notfication">
                                
