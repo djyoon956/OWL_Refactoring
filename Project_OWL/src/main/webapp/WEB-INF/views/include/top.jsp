@@ -11,36 +11,35 @@
 			$("#alarmToggle").hide();
 			$("#settingToggle").hide();
 			$("#chatToggle").hide();
-			$("#userToggle").animate({
+/* 			$("#userToggle").animate({
 				height : 'toggle'
-			});
+			}); */
+			 $("#userToggle").slideToggle("slow");  
+			
+				
 		});
 
 		$("#chatBtn").click(function() {
 			$("#userToggle").hide();
 			$("#alarmToggle").hide();
 			$("#settingtoggle").hide();
-			$("#chatToggle").animate({
-				height : 'toggle'
-			});
+			$("#chatToggle").slideToggle("slow");  
+				
 		});
 
 		$("#alarmBtn").click(function() {
 			$("#userToggle").hide();
 			$("#chatToggle").hide();
 			$("#settingToggle").hide();
-			$("#alarmToggle").animate({
-				height : 'toggle'
-			});
+			$("#alarmToggle").slideToggle("slow");
 		});
 
 		$("#settingBtn").click(function() {
 			$("#userToggle").hide();
 			$("#chatToggle").hide();
 			$("#alarmToggle").hide();
-			$("#settingToggle").animate({
-				height : 'toggle'
-			});
+			$("#settingToggle").slideToggle("slow");
+			
 		});	
 	 $("#settingBtn").on({
 		    mouseover: function (event) {
@@ -55,6 +54,18 @@
 </script>
 <style>
 
+
+.grade1 {
+	z-index :10;
+}
+.hrGray {
+	color : #b7babd;
+}
+
+.iconMargin {
+	margin-right: 17px;
+}
+
 .coloricon {
 	padding: 15px;
 	width: 25px;
@@ -62,8 +73,8 @@
 	margin-right: 10px;
 	border: 2px solid #BDBDBD;
 	border-radius: 5px;
+	cursor : pointer;
 }
-
 
 .whiteColor {
 	color: #fff;
@@ -73,21 +84,34 @@
 	color: #fff;
 }
 
-
 .setting-box {
 	margin-top: 20px;
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-
 .toggleOption {
-margin-right:0px;
+	margin-right:0px;
  	margin-top:415px;
-	background: #336699;
+	background: #326295;
 	height: 100%;
 	width: 310px;
 	position: fixed;
 	right:0;
+}
+
+
+#userImg, .coloricon {
+	border: 3px solid #fcf9f5;
+	box-shadow: 1px 1px 1px 1px #BDBDBD;
+}
+
+#userImg:hover, .coloricon:hover {
+	border: 3px solid #BDBDBD;
+}
+
+#settingToggle, #alarmToggle, #chatToggle, #userToggle {
+	padding-left: 1%;
+	padding-right: 1%;
 }
 
 
@@ -98,11 +122,14 @@ margin-right:0px;
   margin-bottom: -1px;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.125); 
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
 
-  
-  }
+}
+
+
+.chat_list-group-item:first-child {
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
 
 
 .chat_list-group-item-action {
@@ -228,7 +255,7 @@ margin-right:0px;
         <!-- ============================================================== -->
         <!-- End Logo -->
         <!-- ============================================================== -->
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+        <div class="navbar-collapse collapse grade1" id="navbarSupportedContent" data-navbarbg="skin5">
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
@@ -248,7 +275,7 @@ margin-right:0px;
 
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
-                <li class="nav-item">
+                <li class="nav-item iconMargin">
                 <div class="user-img c-pointer"> <!-- 빼도됨 -->
                     <a class="nav-link text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)" id="userBtn">
                     	<img id="userImgTop" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="40" width="40" alt="">
@@ -257,21 +284,21 @@ margin-right:0px;
                 </li>
                 
                   <!-- Chatting Icon -->
-                 <li class="nav-item ">
+                 <li class="nav-item iconMargin">
                   <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="chatBtn"> 
                    	 	<i class="far fa-comment fa-lg"></i>
                     </a>
                 </li>
                 
                 <!-- Alarm Icon -->
-                <li class="nav-item ">
+                <li class="nav-item iconMargin">
                     <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="alarmBtn"> 
                     	<i class="far fa-bell fa-lg"></i>
                     </a>
                 </li>
                 
                 <!-- Setting Icon -->
-                 <li class="nav-item ">
+                 <li class="nav-item iconMargin">
                     <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="settingBtn"> 
                     	<i class="fas fa-cog fa-lg" id="setIcon"></i>
                     </a>
@@ -393,30 +420,120 @@ margin-right:0px;
 							<span class="off"></span></label>
 						</li>
 					</ul> -->
+					
+								<div class="setting-box" >
+				        <div class="card">
+                            <div class="card-body" style="padding:20px;">
+                                <div id="accordion-three" class="accordion">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4"><i class="fa" aria-hidden="true"></i>공지사항 
+                                            </h5>
+                                        </div>
+                                        <div id="collapseOne4" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                            <div class="card-body pt-3 accordionBody">
+                                            <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	프로젝트 기간이 연장되었습니다. <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                           
+                                            <div class="mt-2">
+                                            <span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ffb1b9; font-size:13px; color: black">판매전략 프로젝트</span>다음주는 대청소 기간입니다.
+                                            <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                           
+                                              <div class="mt-2">
+                                            <span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #326295; font-size:13px;">후기관리</span>설날 잘 보내시길 바랍니다.
+                                            <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5"><i class="fa" aria-hidden="true"></i>드라이브</h5>
+                                        </div>
+                                        <div id="collapseTwo5" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                            <div class="card-body pt-3 accordionBody">
+                                            <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	'file.jpg'파일이 업로드 되었습니다. <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6"><i class="fa" aria-hidden="true"></i>이슈</h5>
+                                        </div>
+                                        <div id="collapseThree6" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                            <div class="card-body pt-3 accordionBody">
+                                            <div class="mt-2 col-md-12"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	<a href="#">'[view]로그인 view 구현' 이슈가 등록되었습니다. dddddddddddddd</a> <span class="ml-1" ><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                            </div>
+                                          
+                                            <div class="but r col-md-12" id="but-2" style="float:right; top: 0px; right: 0px; height:28px;width:45px;">
+					          				<input type="checkbox" class="chbox" name="chbox">
+					         			 	<div class="knobs" ></div>
+					          				<div class="layer"></div>
+					          				</div>
+                                           
+                                            <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	<a href="#">'칸반보드 view 구현'이슈가 승인 요청을 있습니다.</a> <span class="ml-1"><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                             </div>
+                                             	<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
+                       							<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
+                       							<span class="on"></span><span class="off"></span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7"><i class="fa" aria-hidden="true"></i>멘션</h5>
+                                        </div>
+                                        <div id="collapseThree7" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                            <div class="card-body pt-3 accordionBody">
+                                             <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	배인영님이 언급하였습니다. 
+                                            	<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>	
 				</div>  
 		
 					<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box  mt-5">
 					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR BACKGROUND</h5>
-					<hr>
-					<span class="badge coloricon c-pointer" style="background-color: white; display: inline-block;"></span>
-					<span class="badge coloricon c-pointer" style="background-color: gray; display: inline-block;"></span>
+					<hr class="hrGray">
+					<span class="coloricon" style="background-color: white; display: inline-block;"></span>
+					<span class="coloricon" style="background-color: gray; display: inline-block;"></span>
 
 
 				</div>
 				<div class="text-center setting-box ">
 					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR ACTIVE COLOR</h5>
-					<hr>
-					<span class="badge coloricon c-pointer" style="background-color: white; display: inline-block;"></span>
-					<span class="badge coloricon c-pointer" style="background-color: #f7c9c9;display: inline-block;"></span>
-					<span class="badge coloricon c-pointer" style="background-color: #e0d8cd; display: inline-block;"></span>
-					<span class="badge coloricon c-pointer" style="background-color: #91a8d1; display: inline-block;"></span>
-					<span class="badge coloricon c-pointer" style="background-color: #c4d7a4; display: inline-block;"></span>
+					<hr class="hrGray">
+					<span class="coloricon " style="background-color: white; display: inline-block;"></span>
+					<span class="coloricon " style="background-color: #f7c9c9;display: inline-block;"></span>
+					<span class=" coloricon " style="background-color: #91a8d1; display: inline-block;"></span>
+					<span class=" coloricon " style="background-color: #c4d7a4; display: inline-block;"></span>
 				</div>
 
 				<div class="text-center setting-box">
 					<h5 class="mt-3 mb-1 whiteColor">SELECT FONT</h5>
-					<hr>
+					<hr class="hrGray">
 					<div class="col-lg-12">
 						<select class="form-control" id="val-skill" name="val-skill">
 							<option value="">Please select</option>
