@@ -7,11 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ProjectController {
 	
-	@RequestMapping("ProjectDashBoard.do")
-	public String showView() {
-		return "project/projectMain";
-	}
-	
 	@RequestMapping("Project.do")
 	public String showProject() {
 		return "project/projectMain";

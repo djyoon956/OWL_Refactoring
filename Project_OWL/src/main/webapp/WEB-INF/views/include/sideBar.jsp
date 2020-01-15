@@ -81,6 +81,9 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" type= "button" data-toggle="modal" data-target="#newProject"><i class="mdi mdi-plus"></i><span class="hide-menu">NEW PROJECT</span></a></li>           
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">PROJECT LIST</span></a>
                     <ul aria-expanded="false" class="collapse  first-level" id="projectlist">
+                    <li class="sidebar-item" style="position:relative;" ><a href="Project.do" class="sidebar-link"><i class="mdi mdi-checkbox-blank-circle" style="color: #E39CB2;"></i><span class="hide-menu">프로젝트 바로가기</span></a>
+                    	<a type="button" id="sidebarTools" data-toggle="modal" data-target="#editProject" onclick="thisProject(this)"><i class="mdi mdi-settings"></i></a>	
+                    </li>
 	  					<c:forEach var="list" items="${projectList}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
 	                    		<input id="projectFavorite" type="hidden" value="${list.favorite}">

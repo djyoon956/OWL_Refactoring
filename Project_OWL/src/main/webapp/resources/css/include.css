@@ -23,6 +23,8 @@
   position:absolute; 
   top: 0px; 
   right: 0px;
+  padding-top: 12px;
+  padding-right: 15px;
 }
 
 .asColorPicker-wrap {
