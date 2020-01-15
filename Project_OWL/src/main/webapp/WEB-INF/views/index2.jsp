@@ -32,7 +32,7 @@ background-color:#326295;
   transform:translate(-50%,-50%);
 
 }
-h1{
+.main_h1{
   font-size:120px;
   font-weight:700;
   font-family: 'Montserrat', sans-serif;
@@ -47,8 +47,8 @@ h1{
  
 }
 
-h1:before,
-h1:after{
+.main_h1:before,
+.main_h1:after{
   content:"";
   position: absolute;
   height: 7px;
@@ -61,28 +61,28 @@ h1:after{
   left:50%;
 }
 
-h1:before{
+.main_h1:before{
   bottom:0;
  
 }
 
-h1:after{
+.main_h1:after{
   top:0;
   
 }
 
-h1:hover{
+.main_h1:hover{
   letter-spacing:30px;
 }
 
-h1:hover:before,
-h1:hover:after{
+.main_h1:hover:before,
+.main_h1:hover:after{
    width: 95%;
     opacity:1;
   left:0;
 
 }
-h1:hover ~ h2{
+.main_h1:hover ~ h2{
   opacity:0;
 }
 
@@ -101,39 +101,7 @@ h2{
   right: 100px;
 } 
 
-/* nav */
-.navbar {
-    font-family: Montserrat, sans-serif;
-    margin-bottom: 0;
-    background-color: #2d2d30;
-    border: 0;
-    font-size: 11px !important;
-    letter-spacing: 4px;
-    opacity: 0.9;
-  }
-  .navbar li a, .navbar .navbar-brand { 
-    color: #d5d5d5 !important;
-  }
-  .navbar-nav li a:hover {
-    color: #fff !important;
-  }
-  .navbar-nav li.active a {
-    color: #fff !important;
-    background-color: #29292c !important;
-  }
-  .navbar-default .navbar-toggle {
-    border-color: transparent;
-  }
-  .open .dropdown-toggle {
-    color: #fff;
-    background-color: #555 !important;
-  }
-  .dropdown-menu li a {
-    color: #000 !important;
-  }
-  .dropdown-menu li a:hover {
-    background-color: red !important;
-  }   
+
 </style>
 </head>
 
@@ -157,7 +125,7 @@ h2{
 		<!-- CONTENT BOX -->
 		
 <!--  top   -->
-<nav class="navbar navbar-default navbar-fixed-top">
+<!-- <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -169,24 +137,32 @@ h2{
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#myPage">HOME</a></li>
-        <li><a href="#band">BAND</a></li>
-        <li><a href="#tour">TOUR</a></li>
-        <li><a href="#contact">CONTACT</a></li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Merchandise</a></li>
-            <li><a href="#">Extras</a></li>
-            <li><a href="#">Media</a></li> 
-          </ul>
-        </li>
-        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+        <li><a href="#myPage">Login</a></li>
+        <li><a href="#myPage">Register</a></li>
       </ul>
     </div>
   </div>
+</nav> -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" href="#">
+    <img src="bird.jpg" alt="logo" style="width:40px;">
+  </a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link 1</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link 2</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Link 3</a>
+    </li>
+  </ul>
 </nav>
+
 		<div class="page-wrapper" style="margin-left: 0; width: 100%; height: 700px;">
 		
 
@@ -194,7 +170,7 @@ h2{
 			<div class="container-fluid mainBack" style="height: 100%">
 				<a href="Main2.do">메인으로 이동하기 </a>
 				<div class="e text-center">
-					<h1>OWL</h1>
+					<h1 class="main_h1">OWL</h1>
 				</div>
 				<div class="d text-center">
 					<h5 style="color: lightgrey;">Our Work Leader</h5>
