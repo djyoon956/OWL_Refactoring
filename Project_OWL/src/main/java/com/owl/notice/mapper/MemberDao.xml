@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owl.notice.dao.NoticeDao">
+	<select id="getNoticesByProjectIdx" resultType="com.owl.notice.dto.Notice">
+		SELECT BOARDIDX, EMAIL, TITLE, CONTENT, WRITEDATE 
+			FROM owl.BOARD
+		WHERE PROJECTIDX = #{projectIdx};
+	</select>
+</mapper>
