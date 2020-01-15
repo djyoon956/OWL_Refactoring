@@ -36,13 +36,13 @@
  });
 
  function thisProject(obj){
-	 $("#editProject").on('show.bs.modal', function () {	 
+	 $("#editProject").on('show.bs.modal', function () {
 		 $("#projectIdx").val($(obj).parent().attr('id'));	
-		 var theColor = $(obj).siblings("#projectColor").children().eq(0).css("color");
+		 var theColor = $(obj).siblings().children("#projectColor").eq(0).css("color")
 	        $("#nowColor").attr("value",theColor);
-	        $(".asColorPicker-trigger").children('span').css("background", theColor);
+	        $(".asColorPicker-trigger").children('span').css("background", theColor);  
 	        var checking = $(".chbox").is(":checked");
-	          if($(obj).siblings("#projectFavorite").val()=="1"){
+	          if($(obj).siblings("#projectFavorite").val()=="1"){		     
 	                $(".chbox").attr("checked",true);
 	           }else if($(obj).siblings("#projectFavorite").val()=="0"){
 	        	   $(".chbox").attr("checked",false);
@@ -50,19 +50,22 @@
 	     }); 
 	} 
 </script>
+<style>
+
+</style>
 <aside class="left-sidebar" data-sidebarbg="skin5">
     <div class="scroll-sidebar">
         <nav class="sidebar-nav">
         <c:set var="projectList" value="${projectList}"/> 
             <ul id="sidebarnav" class="p-t-30">
             <li id="sidebarLable" class="sidebar-item hide-menu">MY</li>
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-account-outline"></i><span class="hide-menu">MY TASK</span></a>
+                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-account-outline"></i><span class="hide-menu">MY TASK</span></a>
                     <ul aria-expanded="false" class="collapse in first-level" style="padding-bottom: 0px;">
                         <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">DASHBOARD</span></a></li>
                         <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-calendar"></i><span class="hide-menu">CALENDAR</span></a></li>
                     </ul>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-star-outline"></i> <span class="hide-menu">FAVORITES</span></a>
+                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-star-outline"></i> <span class="hide-menu">FAVORITES</span></a>
                     <ul aria-expanded="true" class="collapse first-level">
                        <c:forEach var="list" items="${projectList}">
                        	<c:if test="${list.favorite == 1}">
@@ -79,7 +82,7 @@
                 </li>
                 <li id="sidebarLable" class="hide-menu">PROJECT</li>    
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" type= "button" data-toggle="modal" data-target="#newProject"><i class="mdi mdi-plus"></i><span class="hide-menu">NEW PROJECT</span></a></li>           
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">PROJECT LIST</span></a>
+                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">PROJECT LIST</span></a>
                     <ul aria-expanded="false" class="collapse  first-level" id="projectlist">
                     <li class="sidebar-item" style="position:relative;" ><a href="Project.do" class="sidebar-link"><i class="mdi mdi-checkbox-blank-circle" style="color: #E39CB2;"></i><span class="hide-menu">프로젝트 바로가기</span></a>
                     	<a type="button" id="sidebarTools" data-toggle="modal" data-target="#editProject" onclick="thisProject(this)"><i class="mdi mdi-settings"></i></a>	
@@ -87,7 +90,7 @@
 	  					<c:forEach var="list" items="${projectList}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
 	                    		<input id="projectFavorite" type="hidden" value="${list.favorite}">
-	                    		<a href="#" class="sidebar-link">
+	                    		<a href="Project.do?projectIdx=${list.projectIdx}" class="sidebar-link">
 	                    			<i class="mdi mdi-checkbox-blank-circle" style="color: ${list.projectColor};"></i>
 	                    			<span class="hide-menu">${list.projectName}</span>
 	                    		</a>

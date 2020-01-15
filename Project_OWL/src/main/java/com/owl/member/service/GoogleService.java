@@ -27,7 +27,7 @@ public class GoogleService{
         parameters.add("code", code);
         parameters.add("client_id", "266293759218-1i2o19cvv8p80i4q4a9q94d1dner0ksg.apps.googleusercontent.com");
         parameters.add("client_secret", "Rr4CKVJVPYVDbTlxEkP2LY-K");
-        parameters.add("redirect_uri", "http://localhost:8090/OWL/GoogleLogin.do");
+        parameters.add("redirect_uri", "http://localhost:8090/Project_OWL/GoogleLogin.do");
         parameters.add("grant_type", "authorization_code");
 
         HttpHeaders headers = new HttpHeaders();
