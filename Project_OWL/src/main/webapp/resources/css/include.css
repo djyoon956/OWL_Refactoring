@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+/*sidebar css*/
+#sidebarLable{
+	padding : 12px 12px;
+	padding-left: 20px;
+}
+
+.sidebar-nav .has-arrow:after {
+	border-color: #464a53;
+}
+
+#projectlist > li:hover #sidebarTools{
+   visibility: visible;
+   opacity: 1;
+   cursor: pointer;
+}
+
+#sidebarTools{
+  visibility: hidden;
+  float:right; 
+  z-index: 5; 
+  position:absolute; 
+  top: 0px; 
+  right: 0px;
+}
