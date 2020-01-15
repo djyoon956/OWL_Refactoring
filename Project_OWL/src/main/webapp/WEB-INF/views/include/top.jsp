@@ -455,7 +455,7 @@ a:hover{
 						</a>
 					</div>
 					<h4 class="mt-3 mb-1 " style="color:white; padding-top: 10px;">${member.name}</h4>
-					<p class="m-0 whiteColor">${member.email}</p>
+					<p class="mt-2 whiteColor">${member.email}</p>
 				</div>
 				<hr>
 				<div class="text-center setting-box">
