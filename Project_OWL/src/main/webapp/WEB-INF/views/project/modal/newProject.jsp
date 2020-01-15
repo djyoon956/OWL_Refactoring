@@ -4,7 +4,7 @@
          <div class="modal-dialog modal-dialog-centered" role="document">
              <div class="modal-content">
 			<div class="modal-header text-center">
-				<h4 class="modal-title w-100 font-weight-bold">
+				<h4 class="modal-title">
 					<i class="fas fa-desktop"></i>&nbsp; 프로젝트 생성
 				</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">

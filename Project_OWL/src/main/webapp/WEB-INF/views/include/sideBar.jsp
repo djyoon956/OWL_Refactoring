@@ -50,3 +50,7 @@
         </nav>
     </div>
 </aside>
+
+<jsp:include page="../project/modal/newProject.jsp" />
+	   <!-- 프로젝트 환경설정 Modal -->
+<jsp:include page="../project/modal/editProject.jsp" />
