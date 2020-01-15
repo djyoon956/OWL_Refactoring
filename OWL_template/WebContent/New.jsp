@@ -10,14 +10,273 @@
     <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
     <!-- Favicon icon -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet"> 
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
     <!-- Custom Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+	<script>
+	$.noConflict();
+	jQuery(document).ready(function( $ ) {
+		var to = false;
+		$('#searchText').keyup(function () {
+			if(to) { clearTimeout(to); }
+			to = setTimeout(function () {
+				var v = $('#searchText').val();
+				$('#jstree_demo').jstree(true).search(v);
+			}, 100);
+		});
 
+		$.jstree.defaults.core.themes.variant = "large";
+		$('#jstree_demo').jstree({
+				"core" : {
+					"animation" : 0,
+					"check_callback" : true,
+					'force_text' : true,
+					"themes" : { "stripes" : true },
+				    'data' : [
+				        '첫번째 프로젝트',
+				        {
+				          'text' : '추가 폴더',
+				          'state' : {
+				            'opened' : true,
+				            'selected' : true
+				          },
+				          'children' : [
+				            { 'text' : '파일1' },
+				            '파일2'
+				          ]
+				       }
+				     ]
+				},
+				"types" : {
+					"#" : { "max_children" : 1, "max_depth" : 4, "valid_children" : ["root"] },
+					"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
+					"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] },
+					"file" : { "icon" : "fas fa-file", "valid_children" : [] }
+				},
+				 "checkbox" : {
+					    "keep_selected_style" : false
+					  },
+				"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow", "checkbox"]
+			});
+
+		$("#createFolder").click(function(){
+			var ref = $('#jstree_demo').jstree(true),
+			sel = ref.get_selected();
+			console.log(sel);
+			if(!sel.length) { 
+				return false; 
+			}
+			sel = sel[0];
+			sel = ref.create_node(sel, {"type":"default"});
+			if(sel) {
+				ref.edit(sel);
+			}
+		});	
+
+		$("#renameFolder").click(function(){
+			console.log("rename");
+			var ref = $('#jstree_demo').jstree(true),
+				sel = ref.get_selected();
+			if(!sel.length) { return false; }
+			sel = sel[0];
+			ref.edit(sel);
+		});
+
+		$("#deleteFolder").click(function(){
+			console.log("delete");
+			var ref = $('#jstree_demo').jstree(true),
+				sel = ref.get_selected();
+			if(!sel.length) { return false; }
+			ref.delete_node(sel);
+		});
+			
+	});
+
+		function Search() {
+			$("div").find(".defaultDriveMenu").each(function(){
+				$(this).attr('style', 'display:none');
+			});
+			$("div").find(".searchDriveMenu").each(function(){
+				$(this).attr('style', 'display:block');
+			});
+			
+		}
+
+		function Allcheck() { //전체선택 onclick
+			$('div.more').parent('div.card').css('background', 'rgba(161, 163, 166, 0.3)');
+			$("input[type=checkbox]").prop("checked", true);
+
+			$('.defaultDriveMenu').empty();
+			var button = "";
+			button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+			button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+			button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+			button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+			button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+			button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
+			$('.defaultDriveMenu').append(button);
+		}
+
+		function Returncheck() {
+			$('div.more').parent('div.card').css('background', '');
+			$("input[type=checkbox]").prop("checked", false);
+
+			$('.defaultDriveMenu').empty();
+			var button = "";
+			button += "<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
+			button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+			button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+			button += "<button type='button' class='btn' onclick='Allcheck()'>전체선택</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+			button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+			button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
+			$('.defaultDriveMenu').append(button);
+		}
+		function Return() {
+			$("div").find(".defaultDriveMenu").each(function(){
+				$(this).attr('style', 'display:block');
+			});
+			$("div").find(".searchDriveMenu").each(function(){
+				$(this).attr('style', 'display:none');
+			});
+		}
+
+		function checkBox(box) {
+			var cardId = document.getElementById('css');
+			if (box.checked == true) {
+				$('div.more').parent('div#css').css('background', 'rgba(161, 163, 166, 0.3)');
+
+				$('.defaultDriveMenu').empty();
+				var button = "";
+				button += "<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
+				button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+				button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+				button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+				button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+				button +=
+					"<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+				button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
+				$('.defaultDriveMenu').append(button);
+
+			} else {
+				$('div.more').parent('div#css').css('background', '');
+				Returncheck();
+			}
+		}
+	</script>
+	<style>
+		.box {
+			width: 100%;
+			background: #fff;
+			padding: 30px;
+			float: left;
+			height: 900px;
+			font-family: 'Source Sans Pro', sans-serif;
+		}
+		.defaultDriveMenu {
+			width: 100%;
+			background: white;
+			/*    border-bottom: 1px double #326295; */
+			font-family: 'Source Sans Pro', sans-serif;
+			padding: 15px 20px;
+		}
+
+		.searchDriveMenu {
+			width: 100%;
+			background: white;
+			/*    border-bottom: 1px double #326295; */
+			font-family: 'Source Sans Pro', sans-serif;
+			padding: 15px 20px;
+		}
+		.btn {
+			border: 1px double #326295;
+			background-color: #fff;
+			cursor: pointer;
+			font-weight: bold;
+			color: #326295;
+
+		}
+
+		.btn:hover {
+			color: #fff;
+			background-color: #326295;
+			border-color: #326295;
+			box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.5) inset;
+		}
+
+		.drivegroup {
+			float: right;
+			margin-top: 5px;
+			color: #326295;
+		}
+		.filebox input[type="file"] {
+			/* 파일 필드 숨기기 */
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			border: 0;
+		}
+		
+		#driveFile input[type="file"] {
+			/* 파일 필드 숨기기 */
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			border: 0;
+		}
+
+		.card {
+			border: 3px solid #326295;
+		}
+
+		.card:hover .more {
+			visibility: visible;
+			opacity: 1;
+			cursor: pointer;
+		}
+
+		.more {
+			visibility: hidden;
+		}
+
+		#trash {
+			position: absolute;
+			top: 880px;
+			font-weight: bold;
+		}
+
+		#detail {
+			position: absolute;
+			z-index: 1;
+			border: 2px solid #e8ebed;
+			padding: 10px 10px;
+			background-color: #fff;
+		}
+
+		#detail li:hover {
+			background-color: #f0f3f7;
+			cursor: pointer;
+		}
+
+		#searchText {
+			border-right: 0px;
+			border-top: 0px;
+			boder-left: 0px;
+			boder-bottom: 3px solid #326295;
+		}
+	</style>
 </head>
 
 <body>
@@ -56,10 +315,6 @@
                 </a>
             </div>
         </div>
-        <!--**********************************
-            Nav header end
-        ***********************************-->
-
         <!--**********************************
             Header start
         ***********************************-->
@@ -142,71 +397,6 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-                                <i class="mdi mdi-bell-outline"></i>
-                                <span class="badge badge-pill gradient-2 badge-primary">3</span>
-                            </a>
-                            <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
-                                <div class="dropdown-content-heading d-flex justify-content-between">
-                                    <span class="">2 New Notifications</span>  
-                                    
-                                </div>
-                                <div class="dropdown-content-body">
-                                    <ul>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Events near you</h6>
-                                                    <span class="notification-text">Within next 5 days</span> 
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Event Started</h6>
-                                                    <span class="notification-text">One hour ago</span> 
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Event Ended Successfully</h6>
-                                                    <span class="notification-text">One hour ago</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Events to Join</h6>
-                                                    <span class="notification-text">After two days</span> 
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    
-                                </div>
-                            </div>
-                        </li>
-                        <li class="icons dropdown d-none d-md-flex">
-                            <a href="javascript:void(0)" class="log-user"  data-toggle="dropdown">
-                                <span>English</span>  <i class="fa fa-angle-down f-s-14" aria-hidden="true"></i>
-                            </a>
-                            <div class="drop-down dropdown-language animated fadeIn  dropdown-menu">
-                                <div class="dropdown-content-body">
-                                    <ul>
-                                        <li><a href="javascript:void()">English</a></li>
-                                        <li><a href="javascript:void()">Dutch</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
@@ -236,10 +426,6 @@
             </div>
         </div>
         <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-
-        <!--**********************************
             Sidebar start
         ***********************************-->
         <div class="nk-sidebar">           
@@ -256,25 +442,6 @@
                             <!-- <li><a href="./index-2.html">Home 2</a></li> -->
                         </ul>
                     </li>
-                    <li class="mega-menu mega-menu-sm">
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-globe-alt menu-icon"></i><span class="nav-text">Layouts</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./layout-blank.html">Blank</a></li>
-                            <li><a href="./layout-one-column.html">One Column</a></li>
-                            <li><a href="./layout-two-column.html">Two column</a></li>
-                            <li><a href="./layout-compact-nav.html">Compact Nav</a></li>
-                            <li><a href="./layout-vertical.html">Vertical</a></li>
-                            <li><a href="./layout-horizontal.html">Horizontal</a></li>
-                            <li><a href="./layout-boxed.html">Boxed</a></li>
-                            <li><a href="./layout-wide.html">Wide</a></li>
-                            
-                            
-                            <li><a href="./layout-fixed-header.html">Fixed Header</a></li>
-                            <li><a href="layout-fixed-sidebar.html">Fixed Sidebar</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-label">Apps</li>
                     <li>
                         <a class="has-arrow" href="javascript:void()" aria-expanded="false">
@@ -282,8 +449,6 @@
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="./email-inbox.html">Inbox</a></li>
-                            <li><a href="./email-read.html">Read</a></li>
-                            <li><a href="./email-compose.html">Compose</a></li>
                         </ul>
                     </li>
                     <li>
@@ -293,54 +458,6 @@
                         <ul aria-expanded="false">
                             <li><a href="./app-profile.html">Profile</a></li>
                             <li><a href="./app-calender.html">Calender</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-graph menu-icon"></i> <span class="nav-text">Charts</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./chart-flot.html">Flot</a></li>
-                            <li><a href="./chart-morris.html">Morris</a></li>
-                            <li><a href="./chart-chartjs.html">Chartjs</a></li>
-                            <li><a href="./chart-chartist.html">Chartist</a></li>
-                            <li><a href="./chart-sparkline.html">Sparkline</a></li>
-                            <li><a href="./chart-peity.html">Peity</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">UI Components</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-grid menu-icon"></i><span class="nav-text">UI Components</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./ui-accordion.html">Accordion</a></li>
-                            <li><a href="./ui-alert.html">Alert</a></li>
-                            <li><a href="./ui-badge.html">Badge</a></li>
-                            <li><a href="./ui-button.html">Button</a></li>
-                            <li><a href="./ui-button-group.html">Button Group</a></li>
-                            <li><a href="./ui-cards.html">Cards</a></li>
-                            <li><a href="./ui-carousel.html">Carousel</a></li>
-                            <li><a href="./ui-dropdown.html">Dropdown</a></li>
-                            <li><a href="./ui-list-group.html">List Group</a></li>
-                            <li><a href="./ui-media-object.html">Media Object</a></li>
-                            <li><a href="./ui-modal.html">Modal</a></li>
-                            <li><a href="./ui-pagination.html">Pagination</a></li>
-                            <li><a href="./ui-popover.html">Popover</a></li>
-                            <li><a href="./ui-progressbar.html">Progressbar</a></li>
-                            <li><a href="./ui-tab.html">Tab</a></li>
-                            <li><a href="./ui-typography.html">Typography</a></li>
-                        <!-- </ul>
-                    </li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-layers menu-icon"></i><span class="nav-text">Components</span>
-                        </a>
-                        <ul aria-expanded="false"> -->
-                            <li><a href="./uc-nestedable.html">Nestedable</a></li>
-                            <li><a href="./uc-noui-slider.html">Noui Slider</a></li>
-                            <li><a href="./uc-sweetalert.html">Sweet Alert</a></li>
-                            <li><a href="./uc-toastr.html">Toastr</a></li>
                         </ul>
                     </li>
                     <li>
@@ -356,152 +473,126 @@
                         <ul aria-expanded="false">
                             <li><a href="./form-basic.html">Basic Form</a></li>
                             <li><a href="./form-validation.html">Form Validation</a></li>
-                            <li><a href="./form-step.html">Step Form</a></li>
-                            <li><a href="./form-editor.html">Editor</a></li>
-                            <li><a href="./form-picker.html">Picker</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">Table</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-menu menu-icon"></i><span class="nav-text">Table</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./table-basic.html" aria-expanded="false">Basic Table</a></li>
-                            <li><a href="./table-datatable.html" aria-expanded="false">Data Table</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-label">Pages</li>
-                    <li>
-                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                            <i class="icon-notebook menu-icon"></i><span class="nav-text">Pages</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./page-login.html">Login</a></li>
-                            <li><a href="./page-register.html">Register</a></li>
-                            <li><a href="./page-lock.html">Lock Screen</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-404.html">Error 404</a></li>
-                                    <li><a href="./page-error-403.html">Error 403</a></li>
-                                    <li><a href="./page-error-400.html">Error 400</a></li>
-                                    <li><a href="./page-error-500.html">Error 500</a></li>
-                                    <li><a href="./page-error-503.html">Error 503</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
+
+
+
 
         <!--**********************************
             Content body start
         ***********************************-->
         <div class="content-body">
             <div class="container-fluid">
-  			<h3>Basic AJAX demo</h3>
-				<div class="row">
-					<div class="col-md-4 col-sm-8 col-xs-8">
-						<button type="button" class="btn btn-success btn-sm" id="createFolder"><i class="glyphicon glyphicon-asterisk"></i> Create</button>
-						<button type="button" class="btn btn-warning btn-sm" id="renameFolder"><i class="glyphicon glyphicon-pencil"></i> Rename</button>
-						<button type="button" class="btn btn-danger btn-sm" id="deleteFolder"><i class="glyphicon glyphicon-remove"></i> Delete</button>
-					</div>
-					<div class="col-md-2 col-sm-4 col-xs-4" style="text-align:right;">
-						<input type="text" value="" style="box-shadow:inset 0 0 4px #eee; width:120px; margin:0; padding:6px 12px; border-radius:4px; border:1px solid silver; font-size:1.1em;" id="demo_q" placeholder="Search" />
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div id="jstree_demo" class="demo" style="margin-top:1em; min-height:200px;">
+	<div class="row">
+		<div class="col-md-3" style="padding-right: 0;">
+			<div class="box">
+				<h2 style="padding-left: 25px;">
+					<b>D r i v e</b>
+				</h2>
+				<hr>
+				<span id="createFolder" style="cursor: pointer; float: right;"><i class="fas fa-plus"></i></span>
+				<br>
+				<div id="jstree_demo" class="demo" style="margin-top:1em; min-height:200px;">
 				
-						</div>
-	<script>	
-	$.noConflict();
-	jQuery(document).ready(function( $ ) {
-		var to = false;
-		$('#demo_q').keyup(function () {
-			if(to) { clearTimeout(to); }
-			to = setTimeout(function () {
-				var v = $('#demo_q').val();
-				$('#jstree_demo').jstree(true).search(v);
-			}, 250);
-		});
+				</div>
+				<a href="Trash.do" id="trash" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
+					<i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;휴지통
+				</a>
+			</div>
+		</div>
 
-		$.jstree.defaults.core.themes.variant = "large";
-		$('#jstree_demo').jstree({
-				"core" : {
-					"animation" : 0,
-					"check_callback" : true,
-					'force_text' : true,
-					"themes" : { "stripes" : true },
-				    'data' : [
-				        'Simple root node',
-				        {
-				          'text' : 'Root node 2',
-				          'state' : {
-				            'opened' : true,
-				            'selected' : true
-				          },
-				          'children' : [
-				            { 'text' : 'Child 1' },
-				            'Child 2'
-				          ]
-				       }
-				     ]
-				},
-				"types" : {
-					"#" : { "max_children" : 1, "max_depth" : 4, "valid_children" : ["root"] },
-					"root" : { "icon" : "/static/3.3.8/assets/images/tree_icon.png", "valid_children" : ["default"] },
-					"default" : { "valid_children" : ["default","file"] },
-					"file" : { "icon" : "glyphicon glyphicon-file", "valid_children" : [] }
-				},
-				 "checkbox" : {
-					    "keep_selected_style" : false
-					  },
-				"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow", "checkbox"]
-			});
-
-		$("#createFolder").click(function(){
-			var ref = $('#jstree_demo').jstree(true),
-			sel = ref.get_selected();
-			console.log(sel);
-			if(!sel.length) { 
-				return false; 
-			}
-			sel = sel[0];
-			sel = ref.create_node(sel, {"type":"file"});
-			if(sel) {
-				ref.edit(sel);
-			}
-		});	
-
-		$("#renameFolder").click(function(){
-			console.log("rename");
-			var ref = $('#jstree_demo').jstree(true),
-				sel = ref.get_selected();
-			if(!sel.length) { return false; }
-			sel = sel[0];
-			ref.edit(sel);
-		});
-
-		$("#deleteFolder").click(function(){
-			console.log("delete");
-			var ref = $('#jstree_demo').jstree(true),
-				sel = ref.get_selected();
-			if(!sel.length) { return false; }
-			ref.delete_node(sel);
-		});
+		<div class="col-md-9" style="padding-left: 0;">
+		
+			<div class="defaultDriveMenu">
+				<button type="button" class="btn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<div class="filebox" style="display:inline;">
+					<input type="file" id="driveFile">
+					<label for="driveFile" style="cursor: pointer; margin-bottom: 0px;"
+						class="btn btn-primary">업로드</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+				<button type="button" class="btn btn-primary" onclick="Allcheck()">전체선택</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<div class="drivegroup">
+					<a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
+					<a><i class="fas fa-th-large fa-2x"></i></a>
+				</div>
+			</div>
 			
-	});
-	</script>
+			<div class="searchDriveMenu" style="display:none;">
+				<input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>
+				<a href='#' onclick='Return()'><i class='fas fa-times'></i></a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<div class="drivegroup">
+					<a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
+					<a><i class="fas fa-th-large fa-2x"></i></a>
+				</div>
+			</div>
+
+			<div class="row" style="margin : 10px 10px;">
+				<div class="col-sm-4">
+					<div class="card" id="css">
+						<div class="more" style="margin-top: 10px;">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="checkbox" value="css" onclick="checkBox(this)"
+								style="width:18px; height:18px;">
+							<a style="float:right;" data-toggle="collapse" href="#detail"><i
+									class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
+						</div>
+						<div style="margin-left: 60%;">
+							<ul id="detail" class="collapse">
+								<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
+								<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
+							</ul>
+						</div>
+						<br>
+						<div class="card-body text-center">
+							<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
+							<br><br>
+							<h4 style="text-align: center;">css</h4>
+						</div>
 					</div>
 				</div>
+				<div class="col-sm-4">
+					<div class="card">
+						<div class="more" style="margin-top: 10px;">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="checkbox" value="js" onclick="checkBox(this)" style="width:18px; height:18px;">
+							<span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i>
+								&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						</div>
+						<br>
+						<div class="card-body text-center">
+							<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
+							<br><br>
+							<h4 style="text-align: center;">js</h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="card">
+						<div class="more" style="margin-top: 10px;">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="checkbox" value="images" onclick="checkBox(this)"
+								style="width:18px; height:18px;">
+							<span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i>
+								&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						</div>
+						<br>
+						<div class="card-body text-center">
+							<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
+							<br><br>
+							<h4 style="text-align: center;">images</h4>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-   </div>
+	</div> 
+
         <div class="footer">
             <div class="copyright">
                 <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
@@ -511,10 +602,7 @@
             Footer end
         ***********************************-->
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
-
+</div>
     <!--**********************************
         Scripts
     ***********************************-->
