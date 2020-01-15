@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <script>
 	$(document).ready(function() {
 		$("#userToggle").hide();
@@ -11,19 +13,15 @@
 			$("#alarmToggle").hide();
 			$("#settingToggle").hide();
 			$("#chatToggle").hide();
-/* 			$("#userToggle").animate({
-				height : 'toggle'
-			}); */
-			 $("#userToggle").slideToggle("slow");  
-			
-				
+
+			$("#userToggle").animate({width:'toggle'},100);
 		});
 
 		$("#chatBtn").click(function() {
 			$("#userToggle").hide();
 			$("#alarmToggle").hide();
 			$("#settingtoggle").hide();
-			$("#chatToggle").slideToggle("slow");  
+		 	$("#chatToggle").animate({width:'toggle'},350);
 				
 		});
 
@@ -31,16 +29,19 @@
 			$("#userToggle").hide();
 			$("#chatToggle").hide();
 			$("#settingToggle").hide();
-			$("#alarmToggle").slideToggle("slow");
+			$("#alarmToggle").animate({width:'toggle'},350);
+			
 		});
 
 		$("#settingBtn").click(function() {
 			$("#userToggle").hide();
 			$("#chatToggle").hide();
 			$("#alarmToggle").hide();
-			$("#settingToggle").slideToggle("slow");
+			$("#settingToggle").animate({width:'toggle'},350);
 			
 		});	
+
+		
 	 $("#settingBtn").on({
 		    mouseover: function (event) {
 		    	$("#setIcon").addClass("fa-spin");
@@ -49,9 +50,7 @@
 		    	$("#setIcon").removeClass("fa-spin");
 		    }
 		});
-
 	});
-
 
 	function Search(){
 		$('.ChatList').empty();   
@@ -71,6 +70,9 @@
 </script>
 <style>
 
+ul {
+display: block;
+}
 
 .grade1 {
 	z-index :10;
@@ -106,7 +108,7 @@
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-.toggleOption {
+ .toggleOption {
 	margin-right:0px;
  	margin-top:415px;
 	background: #326295;
@@ -114,9 +116,9 @@
 	width: 310px;
 	position: fixed;
 	right:0;
+	overflow: hidden;
 }
-
-
+ 
 #userImg, .coloricon {
 	border: 3px solid #fcf9f5;
 	box-shadow: 1px 1px 1px 1px #BDBDBD;
@@ -148,6 +150,11 @@
     border-top-right-radius: 0.25rem;
 }
 
+.chat_list-group-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
 
 .chat_list-group-item-action {
   width: 100%;
@@ -413,11 +420,9 @@ a:hover{
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
                 <li class="nav-item iconMargin">
-                <div class="user-img c-pointer"> <!-- 빼도됨 -->
                     <a class="nav-link text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)" id="userBtn">
-                    	<img id="userImgTop" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="40" width="40" alt="">
+                    	<img id="userImgTop" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="35" width="35" alt="">
                     </a>
-                </div>
                 </li>
                 
                   <!-- Chatting Icon -->
@@ -457,22 +462,25 @@ a:hover{
 				</div>
 				<hr>
 				<div class="text-center setting-box">
-					<ul>
-					<li><a href="Logout.do" class="whiteColor"><i class="icon-key"></i> <span>Logout</span></a></li>
-					</ul>
+					
+					<a href="Logout.do" class="whiteColor"><i class="icon-key"></i> <span>Logout</span></a>
+					
 				
 				</div>
 			</div>
 			
 			<!-- 채팅 목록 토글 -->
 			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 20;">
-				<div  class="ChatList"> 
-					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;" class="whiteColor"><i class="fas fa-comment-medical"></i>&emsp;</a>					
+
+				
+				<div class="setting-box">
+								<div class="ChatList" style="margin-top : 30px"> 
+					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;" class="whiteColor">
+						<i class="fas fa-comment-medical"></i>&emsp;</a>					
 					<span class ="whiteColor" id="searchChatname" onclick="Search()"><i class="fas fa-search"></i>&emsp;</span>
 				<br>
 				</div>
 				<hr>
-				<div class="setting-box">
 					 <ul class="list-group">
                        <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start"  style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
@@ -485,7 +493,7 @@ a:hover{
                            <ul>
 		                      	<li class="d-flex justify-content-between align-items-center">
 		                      			진성씨 시말서 제출하세요.
-		                        		<span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>
+		                        <span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>
 		                        </li>
                            </ul>             
                        </li>
@@ -493,13 +501,13 @@ a:hover{
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
                                <img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">
-                               <h5 style="margin-top: 18px; color: #ccccff">kanban_iy</h5>
+                               <h5 style="margin-top: 18px; color: #ccccff">Family_c</h5>
                                </div>
                                 <small style="float:right;">2020-01-05</small>
                            </div>
                            <ul>
 		                      	<li class="d-flex justify-content-between align-items-center">
-		                      			이슈 끝나면 Done으로 이동해주세요.
+		                      			2/13일 화이팅
 		                        		<span class="badge badge-primary badge-pill" style="background-color: #ccccff">2</span>
 		                        </li>
                            </ul>             
