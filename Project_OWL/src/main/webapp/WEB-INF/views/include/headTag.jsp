@@ -7,6 +7,7 @@
 
 <!-- Custom CSS -->
 <link href="resources/dist/css/style.min.css" rel="stylesheet">
+<link href="resources/css/common.css" rel="stylesheet">
 <script src="resources/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
 
 <!--Menu Sidebar -->

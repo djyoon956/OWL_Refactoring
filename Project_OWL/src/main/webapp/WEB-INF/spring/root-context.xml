@@ -68,7 +68,7 @@
   
     <bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
         <property name="scope" value="openid profile email"></property>
-        <property name="redirectUri" value="http://localhost:8090/OWL/GoogleLogin.do" />
+        <property name="redirectUri" value="http://localhost:8090/Project_OWL/GoogleLogin.do" />
     </bean>
 
 	<!-- PasswordEncoder -->
