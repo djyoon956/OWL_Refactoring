@@ -1,13 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<style>
-
-</style>
    <div class="modal fade" id="editProject">
          <div class="modal-dialog modal-dialog-centered" role="document">
 	             <div class="modal-content">
 				<div class="modal-header text-center">
-					<h4 class="modal-title">
-						<i class="far fa-sun"></i> 프로젝트 환경설정
+					<h4 class="modal-title" id="myProjectTitle">
+						<i class="far fa-sun"></i>
 					</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
