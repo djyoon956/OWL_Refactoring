@@ -9,6 +9,11 @@ public class IndexController {
 
 	@RequestMapping("Index.do")
 	public String showview() {
+		return "index2";
+	}
+	
+	@RequestMapping("Main2.do")
+	public String showMain() {
 		return "index";
 	}
 }
