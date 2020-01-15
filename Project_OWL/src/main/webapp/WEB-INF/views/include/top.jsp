@@ -50,6 +50,17 @@
 		    	$("#setIcon").removeClass("fa-spin");
 		    }
 		});
+	$(".clickIcon").click(function() {
+		let iconChange = $(this).children();
+		 if($(iconChange).hasClass("fa-chevron-right")) {
+			$(iconChange).removeClass("fa-chevron-right");
+			$(iconChange).addClass("fa-chevron-down");
+		} else {
+			$(iconChange).removeClass("fa-chevron-down");
+			$(iconChange).addClass("fa-chevron-right");
+		} 
+		
+	});
 	});
 
 	function Search(){
@@ -591,7 +602,7 @@ a:hover {
                                 <div id="accordion-three" class="accordion">
                                     <div class="card top_card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4"><i class="fa" aria-hidden="true"></i>공지사항 
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4">공지사항 <i class="fa fa-chevron-right" style="float:right"></i>
                                             </h5>
                                         </div>
                                         <div id="collapseOne4" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
@@ -617,7 +628,7 @@ a:hover {
                                     </div>
                                     <div class="card top_card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5"><i class="fa" aria-hidden="true"></i>드라이브</h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5">드라이브<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseTwo5" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
                                             <div class="card-body pt-3 accordionBody">
@@ -631,7 +642,7 @@ a:hover {
                                     </div>
                                     <div class="card top_card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6"><i class="fa" aria-hidden="true"></i>이슈</h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">이슈<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree6" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
                                             <div class="card-body pt-3 accordionBody">
@@ -662,7 +673,7 @@ a:hover {
                                     </div>
                                     <div class="card top_card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7"><i class="fa" aria-hidden="true"></i>멘션</h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7">멘션<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree7" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
                                             <div class="card-body pt-3 accordionBody">
