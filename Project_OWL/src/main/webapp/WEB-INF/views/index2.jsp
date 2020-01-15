@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="resources/assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="resources/images/owl_logo_real.png"">
     <title>OWL</title>
     <jsp:include page="include/headTag.jsp"/>
 <style type="text/css">
@@ -215,13 +215,13 @@ background-color:#326295;
       color: #464a53; }
   .header-left .input-group {
     margin-top: 17px; }
-    .header-left .input-group input {
-      border-radius: 5px !important; }
-    .header-left .input-group .input-group-text {
-      font-size: 1.375rem; }
-      @media (max-width: 575.98px) {
-        .header-left .input-group .input-group-text {
-          padding-left: .5rem; } }
+ .header-left .input-group input {
+    border-radius: 5px !important; }
+ .header-left .input-group .input-group-text {
+   font-size: 1.375rem; }
+ @media (max-width: 575.98px) {
+  .header-left .input-group .input-group-text {
+    padding-left: .5rem; } }
   .header-left .drop-down {
     top: 0;
     height: 100%;
@@ -266,27 +266,100 @@ background-color:#326295;
     display: flex !important; }
   .d-md-inline-flex {
     display: inline-flex !important; } }
-/* .d-none {
-  display: none !important; } */
+
 .mb-1,
 .my-1 {
   margin-bottom: 0.25rem !important; }
-  
+.main_btn {
+	border-radius: 0.25rem;
+}
 .btn-primary:active, .btn-primary:focus, .btn-primary:hover {
   background: #326295 !important;
   color: #fff;
   border-color: #326295; }
+.btn-primary {
+  color: #326295;
+  background-color: #fff;
+  border: 1px double #326295;
+  cursor: pointer;
+  font-weight: bold;
+  }
+ .btn-primary:hover {
+   color: #fff;
+   background-color: #326295;
+   border-color: #326295; 
+ }  
+  .btn-primary:focus, .btn-primary.focus {
+   box-shadow: 0 0 0 0.2rem rgba(51, 102, 153, 0.5); 
+ }
+  .btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: #326295;
+    border-color: #326295; }
+  .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+  .show > .btn-primary.dropdown-toggle {
+   color: #fff;
+   background-color: #326295;
+   border-color: #326295; }
+  .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-primary.dropdown-toggle:focus {
+      box-shadow: 0 0 0 0.2rem rgba(51, 102, 153, 0.5); }
+[data-header-position="fixed"] .nav-header {
+  position: fixed;
+  z-index: 999;
+  left: auto; }
+.nav-header {
+  height: 5rem;
+  width: 15.1875rem;
+  display: inline-block;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #fff;
+  transition: all .2s ease; }
+  .nav-header .logo-abbr {
+    display: none; }
+  .nav-header .logo-compact {
+    display: none; }
+  @media only screen and (min-width: 1200px) and (max-width: 1350px) {
+    .nav-header {
+      width: 14.375rem; } }
+  .nav-header .brand-logo {
+    z-index: 999; }
+    .nav-header .brand-logo a {
+      padding: 1.607rem 1.8125rem;
+      display: block; }
+      .nav-header .brand-logo a i {
+        font-size: 1.375rem; }
+      .nav-header .brand-logo a b img {
+        max-width: 1.5625rem; }
+      .nav-header .brand-logo a span {
+        font-size: 1.125rem; }
+.main_footer {
+ /*  padding-left: 15.1875rem; */
+  background-color: #fff; 
+}
+  .main_footer .copyright {
+    padding: 0.9375rem;
+    background: white; }
+    .main_footer .copyright p {
+      text-align: center;
+      margin: 0;
+      color: #898989; }
+    .main_footer .copyright a {
+      color: #326295; }
 </style>
 </head>
 
 <body>
 	<!-- LOADER -->
-    <div class="preloader">
+    <!-- <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
-    </div>
+    </div> -->
    
     <div id="main-wrapper">
         
@@ -297,23 +370,6 @@ background-color:#326295;
 <%--         <jsp:include page="include/sideBar.jsp"/> --%>
 
 		<!-- CONTENT BOX -->
-		
-<!--  top   -->
- <!--  <div class="row">
-  <div class="col-md-6">
-  <a class="navbar-brand" href="#">
-    <img src="resources/images/owl_logo_real.png" alt="" height="80">
-  </a>
-  </div>
-  <div class="col-md-6" style="text-align: right">
-                  <div class="col-md-6 offset-6">
-                  <a href="Login.do" >
-                        <button type="button" id="loginBtn" class="btn mb-1 btn-primary">Login
-                           / Register</button>
-                  </a></div>
-              
-    </div>
- </div> -->
       <!-- Top -->
       <div class="header-row">
          <div class="header-content clearfix">
@@ -334,8 +390,9 @@ background-color:#326295;
             <div class="header-right">
                <ul class="clearfix">
 
-                  <li class="icons dropdown d-none d-md-flex"><a href="Login.do" >
-                        <button type="button" id="loginBtn" class="btn mb-1 btn-primary">Login
+                  <li class="icons dropdown d-md-flex"><!-- <a href="Login.do" > -->
+                  <a href="Main2.do" > 
+                        <button type="button" id="loginBtn" class="btn mb-1 btn-primary main_btn">Login
                            / Register</button>
                   </a></li>
                </ul>
@@ -345,10 +402,10 @@ background-color:#326295;
 
 
 
-		<div class="page-wrapper" style="margin-left: 0; width: 100%; height: 700px;">
+		<div class="page-wrapper" style="margin-left: 0; width: 100%;">
+		<!--  height:719px; -->
 			<!-- CONTENT MAIN -->
-			<div class="container-fluid mainBack" style="height: 100%">
-				<a href="Main2.do">메인으로 이동하기 </a>
+			<div class="container-fluid mainBack" style="height:668px;">
 				<div class="e text-center">
 					<h1 class="main_h1">OWL</h1>
 				</div>
@@ -359,7 +416,7 @@ background-color:#326295;
 			</div>
 
 			<!-- BOTTOM -->
-			 <jsp:include page="include/bottom.jsp"/> 
+			 <jsp:include page="include/bottom.jsp"/>  
 		</div>
 	</div>
 </body>
