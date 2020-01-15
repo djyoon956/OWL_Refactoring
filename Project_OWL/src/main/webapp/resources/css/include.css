@@ -6,10 +6,6 @@
 	padding-left: 20px;
 }
 
-.sidebar-nav .has-arrow:after {
-	border-color: #464a53;
-}
-
 #projectlist > li:hover #sidebarTools{
    visibility: visible;
    opacity: 1;

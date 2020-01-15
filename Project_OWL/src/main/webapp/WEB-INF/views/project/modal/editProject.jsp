@@ -22,10 +22,12 @@
                      <h5>Favorite</h5>
                      <div style="position:relative;">
                      <p>해당 프로젝트를 즐겨찾기에 추가하시겠습니까?</p>
-					<span class="switcher switcher-2">
-					   <input type="checkbox" id="switcher-2">
-					   <label for="switcher-2" id="swicherlabel"></label>
-					</span>
+                     
+					<div class="favoriteBtn" id="favoriteBtn">
+						  <input type="checkbox" class="favoriteCheckbox">
+						  <div class="knobs"></div>
+						  <div class="layer"></div>
+					</div>
 		             <br>
                  </div>
                  <div class="modal-footer">
