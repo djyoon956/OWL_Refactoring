@@ -97,8 +97,10 @@ public class MemberController {
 		return "member/login";
 	}
 
-	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.GET)
+	@RequestMapping(value = "EmailConfirmOk.do")
 	public String emailConfirmOK(String memberId, Model model) {
+		System.out.println("EmailConfirmOk.do");
+		System.out.println(memberId);
 		service.joinMemberOk(memberId);
 
 		model.addAttribute("show", "joinOk");
