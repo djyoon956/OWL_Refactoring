@@ -32,7 +32,7 @@ background-color:#326295;
   transform:translate(-50%,-50%);
 
 }
-h1{
+.main_h1{
   font-size:120px;
   font-weight:700;
   font-family: 'Montserrat', sans-serif;
@@ -47,8 +47,8 @@ h1{
  
 }
 
-h1:before,
-h1:after{
+.main_h1:before,
+.main_h1:after{
   content:"";
   position: absolute;
   height: 7px;
@@ -61,28 +61,28 @@ h1:after{
   left:50%;
 }
 
-h1:before{
+.main_h1:before{
   bottom:0;
  
 }
 
-h1:after{
+.main_h1:after{
   top:0;
   
 }
 
-h1:hover{
+.main_h1:hover{
   letter-spacing:30px;
 }
 
-h1:hover:before,
-h1:hover:after{
+.main_h1:hover:before,
+.main_h1:hover:after{
    width: 95%;
     opacity:1;
   left:0;
 
 }
-h1:hover ~ h2{
+.main_h1:hover ~ h2{
   opacity:0;
 }
 
@@ -169,20 +169,8 @@ h2{
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#myPage">HOME</a></li>
-        <li><a href="#band">BAND</a></li>
-        <li><a href="#tour">TOUR</a></li>
-        <li><a href="#contact">CONTACT</a></li>
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE
-          <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Merchandise</a></li>
-            <li><a href="#">Extras</a></li>
-            <li><a href="#">Media</a></li> 
-          </ul>
-        </li>
-        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+        <li><a href="#myPage">Login</a></li>
+        <li><a href="#myPage">Register</a></li>
       </ul>
     </div>
   </div>
@@ -194,7 +182,7 @@ h2{
 			<div class="container-fluid mainBack" style="height: 100%">
 				<a href="Main2.do">메인으로 이동하기 </a>
 				<div class="e text-center">
-					<h1>OWL</h1>
+					<h1 class="main_h1">OWL</h1>
 				</div>
 				<div class="d text-center">
 					<h5 style="color: lightgrey;">Our Work Leader</h5>
