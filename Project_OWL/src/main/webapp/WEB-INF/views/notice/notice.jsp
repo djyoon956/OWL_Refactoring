@@ -5,38 +5,7 @@
 		display: none
 	}
 </style>
-<script type="text/javascript">
-	function setNoticeData() {
-		$.ajax({
-			type: "POST",
-			url: "GetNotices.do",
-			data: {
-				projectIdx: $ {
-					project.projectIdx
-				}
-			},
-			success: function (data) {
-				$("#noticeTable tbody").empty();
-				$.each(data, function (index, element) {
-					let row = "<tr>" +
-						"<td>" + element.noticeIdx + "</td>" +
-						"<td>" + element.title + "</td>" +
-						"<td>" + element.email + "</td>" +
-						"<td>" + element.writeDate + "</td>" +
-						"<td>" + element.readNum + "</td>" +
-						"</tr>";
 
-					$("#noticeTable tbody").append(row);
-				})
-			},
-			error: function () {
-				console.log("setNoticeData error");
-			}
-		});
-	}
-
-	
-</script>
 
 <div class="container-fluid mt-3">
 	<div class="card">
