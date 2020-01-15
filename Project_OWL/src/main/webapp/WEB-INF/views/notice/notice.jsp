@@ -1,65 +1,78 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+   pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="resources/assets/images/favicon.png">
+    <title>OWL</title>
+    <jsp:include page="../include/headTag.jsp"/>
+</head>
 
-<style>
-	#writeBox {
-		display: none
-	}
-</style>
+<body>
+	<!-- LOADER -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+   
+    <div id="main-wrapper">
+        
+		<!-- TOP -->
+        <jsp:include page="../include/top.jsp"/>
+       
+        <!-- SIDE BAR -->
+        <jsp:include page="../include/sideBar.jsp"/>
 
+		<!-- CONTENT BOX -->
+        <div class="page-wrapper">
+             <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Dashboard1</h4>
+                        <div class="ml-auto text-right">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CONTENT MAIN -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-md-flex align-items-center">
+                                    <div>
+                                        <h4 class="card-title">Site Analysis</h4>
+                                        <h5 class="card-subtitle">Overview of Latest Month</h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<div class="container-fluid mt-3">
-	<div class="card">
-		<div class="card-body">
-			<h3 class="text-center">Notice</h3>
-			<div class="table-responsive">
-				<table class="table  table-hover table-bordered zero-configuration text-center" id="noticeTable">
-					<thead>
-						<tr>
-							<th width="10%">NO</th>
-							<th width="53%">제목</th>
-							<th width="15%">작성자</th>
-							<th width="15%">작성일</th>
-							<th width="7%">조회</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-			<div class="text-right mt-3 ">
-				<button class="btn btn-primary" onclick="writeNotice()"><i class="icon-pencil"></i>&nbsp; 글쓰기</button>
-			</div>
-		</div>
-	</div>
-
-	<div class="card" id="writeBox">
-		<div class="card-body">
-			<div class="col-md-10 offset-1">
-				<div class="compose-content">
-					<h3 class="text-center">Notice</h3><br>
-					<form action="#" enctype="multipart/form-data">
-						<div class="form-group">
-							<input type="text" class="form-control bg-transparent" placeholder="제목을 입력해주세요">
-						</div>
-						<div class="form-group">
-							<textarea class="form-control bg-light" rows="10" cols="60" id="summernote"
-								name="summernote"></textarea>
-						</div>
-						<h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>&nbsp;파일첨부</h5>
-						<div class="form-group">
-							<div class="fallback">
-								<input class="l-border-1" name="file" type="file" multiple="multiple">
-							</div>
-						</div>
-				</div>
-				<div class="form-group text-center">
-					<input type="submit" class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2"
-						value="확인">
-					<button class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" type="button"
-						onclick="location.href='Notice.do'" id="noticeDelBtn">취소</button>
-				</div>
-			</div>
-			</form>
-		</div>
-	</div>
-</div>
+			<!-- BOTTOM -->
+            <jsp:include page="../include/bottom.jsp"/>
+        </div>
+    </div>
+</body>
