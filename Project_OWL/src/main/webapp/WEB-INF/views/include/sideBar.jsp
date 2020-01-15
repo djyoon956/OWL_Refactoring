@@ -37,16 +37,10 @@
 
  function thisProject(obj){
 	 $("#editProject").on('show.bs.modal', function () {
-
-		 
-		 console.log($(obj).siblings("#projectFavorite").val());
-		 console.log($(obj).parent().attr('id'));
 		 $("#projectIdx").val($(obj).parent().attr('id'));	
-		 console.log($(obj).siblings());
-		 var theColor = $(obj).siblings("#projectColor").children().eq(0).css("color");
+		 var theColor = $(obj).siblings().children("#projectColor").eq(0).css("color")
 	        $("#nowColor").attr("value",theColor);
-	        $(".asColorPicker-trigger").children('span').css("background", theColor);
-	        
+	        $(".asColorPicker-trigger").children('span').css("background", theColor);  
 	        var checking = $(".chbox").is(":checked");
 	          if($(obj).siblings("#projectFavorite").val()=="1"){		     
 	                $(".chbox").attr("checked",true);
@@ -56,6 +50,9 @@
 	     }); 
 	} 
 </script>
+<style>
+
+</style>
 <aside class="left-sidebar" data-sidebarbg="skin5">
     <div class="scroll-sidebar">
         <nav class="sidebar-nav">
