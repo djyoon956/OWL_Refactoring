@@ -11,5 +11,10 @@ public class ProjectController {
 	public String showView() {
 		return "project/projectMain";
 	}
+	
+	@RequestMapping("Project.do")
+	public String showProject() {
+		return "project/projectMain";
+	}
 
 }
