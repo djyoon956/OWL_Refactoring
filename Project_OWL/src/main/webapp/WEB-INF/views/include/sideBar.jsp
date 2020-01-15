@@ -1,6 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<link href="resources/plugin/colorpicker/css/asColorPicker.css" rel="stylesheet">
 <link href="resources/css/include.css" rel="stylesheet">
+<script>
+ $(function(){
+	 $(".complex-colorpicker").asColorPicker({
+	        mode: 'complex'
+    });
+
+ $("#editBtn").click(function(){
+	 let myFavorite =$(".chbox:checked").val() == "on" ? 1 : 0;
+		$.ajax({
+	        url:"EditMyProject.do",
+	        type: "POST",
+	        data: {projectIdx: 	$("#projectIdx").val(),
+		        	  projectColor: $("#nowColor").val(),
+		        	  favorite: myFavorite},
+	        success:function(data){
+	         location.reload();   
+	       }
+	   });
+	 });
+
+ $("#insertBtn").click(function(){
+		$.ajax({
+	        url:"InsertNewProject.do",
+	        type: "POST",
+	        data: {projectName: 	$("#projectTitle").val(),
+		        	  projectColor: $("#myColor").val()},
+	        success:function(data){
+	         location.reload();   
+	       }
+	   }); 
+	 });    
+ });
+
+ function thisProject(obj){
+	 $("#editProject").on('show.bs.modal', function () {	 
+		 $("#projectIdx").val($(obj).parent().attr('id'));	
+		 var theColor = $(obj).siblings("#projectColor").children().eq(0).css("color");
+	        $("#nowColor").attr("value",theColor);
+	        $(".asColorPicker-trigger").children('span').css("background", theColor);
+	        var checking = $(".chbox").is(":checked");
+	          if($(obj).siblings("#projectFavorite").val()=="1"){
+	                $(".chbox").attr("checked",true);
+	           }else if($(obj).siblings("#projectFavorite").val()=="0"){
+	        	   $(".chbox").attr("checked",false);
+	           }       
+	     }); 
+	} 
+</script>
 <aside class="left-sidebar" data-sidebarbg="skin5">
     <div class="scroll-sidebar">
         <nav class="sidebar-nav">
@@ -54,3 +103,6 @@
 <jsp:include page="../project/modal/newProject.jsp" />
 	   <!-- 프로젝트 환경설정 Modal -->
 <jsp:include page="../project/modal/editProject.jsp" />
+<script src="resources/plugin/colorpicker/libs/jquery-asColor.js"></script>
+<script src="resources/plugin/colorpicker/libs/jquery-asGradient.js"></script>
+<script src="resources/plugin/colorpicker/dist/jquery-asColorPicker.min.js"></script>
