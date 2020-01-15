@@ -350,8 +350,27 @@ display: block;
 	max-height: 650px; 
 	overflow: auto;
 }
-a:hover{
+/* a:hover{
 	color:black;
+} */
+a {
+  transition: all 0.4s ease-in-out;
+  color: #76838f; }
+
+a:focus,
+a:hover {
+  text-decoration: none; }
+
+a.link {
+  color: #464a53; }
+
+a.link:focus,
+a.link:hover {
+  color: #326295; }
+a:hover {
+ color: #326295; }
+.top_card {
+  border-radius: 0.25rem; 
 }
 </style>
 
@@ -566,11 +585,11 @@ a:hover{
 						</li>
 					</ul> -->
 					
-								<div class="setting-box" >
-				        <div class="card">
+					<div class="setting-box" >
+				        <div class="card top_card">
                             <div class="card-body" style="padding:20px;">
                                 <div id="accordion-three" class="accordion">
-                                    <div class="card">
+                                    <div class="card top_card">
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4"><i class="fa" aria-hidden="true"></i>공지사항 
                                             </h5>
@@ -596,7 +615,7 @@ a:hover{
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
+                                    <div class="card top_card">
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5"><i class="fa" aria-hidden="true"></i>드라이브</h5>
                                         </div>
@@ -610,7 +629,7 @@ a:hover{
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
+                                    <div class="card top_card">
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6"><i class="fa" aria-hidden="true"></i>이슈</h5>
                                         </div>
@@ -618,27 +637,30 @@ a:hover{
                                             <div class="card-body pt-3 accordionBody">
                                             <div class="mt-2 col-md-12"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
-                                            	<a href="#">'[view]로그인 view 구현' 이슈가 등록되었습니다. dddddddddddddd</a> <span class="ml-1" ><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                            	<a href="#">'[view]로그인 view 구현' 이슈가 등록되었습니다.</a> <span class="ml-1" ><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
                                             </div>
-                                          
-                                            <div class="but r col-md-12" id="but-2" style="float:right; top: 0px; right: 0px; height:28px;width:45px;">
+                                          	
+                                            <!-- <div class="but r col-md-12 but-2" id="" style="float:right; top: 0px; right: 0px; height:28px;width:45px;">
 					          				<input type="checkbox" class="chbox" name="chbox">
 					         			 	<div class="knobs" ></div>
 					          				<div class="layer"></div>
-					          				</div>
+					          				</div> -->
                                            
                                             <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                              <span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
-                                            	<a href="#">'칸반보드 view 구현'이슈가 승인 요청을 있습니다.</a> <span class="ml-1"><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                            	'칸반보드 view 구현'이슈가 승인 요청을 있습니다. <span class="ml-1"><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
                                              </div>
-                                             	<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
-                       							<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
-                       							<span class="on"></span><span class="off"></span></label>
+                                             	
+                                             	  <!-- <div class="but r col-md-12 but-2" id="" style="float:right; top: 0px; right: 0px; height:28px;width:45px;">
+							          				<input type="checkbox" class="chbox" name="chbox">
+							         			 	<div class="knobs" ></div>
+							          				<div class="layer"></div>
+					          				</div> -->
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
+                                    <div class="card top_card">
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7"><i class="fa" aria-hidden="true"></i>멘션</h5>
                                         </div>
