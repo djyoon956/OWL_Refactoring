@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
      <div class="modal fade" id="newProject">
          <div class="modal-dialog modal-dialog-centered" role="document">
              <div class="modal-content">

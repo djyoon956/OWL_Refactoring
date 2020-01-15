@@ -24,3 +24,19 @@
   top: 0px; 
   right: 0px;
 }
+
+.asColorPicker-wrap {
+    position: relative;
+    display: inline-flex;
+    width : 100%;
+    background: 
+}
+
+.asColorPicker-trigger{
+    left: 0px;
+    height: 45px;
+}
+
+.asColorPicker-dropdown{
+max-width: 270px;
+}
