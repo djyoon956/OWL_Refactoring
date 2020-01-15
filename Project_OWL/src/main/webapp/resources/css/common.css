@@ -9987,9 +9987,10 @@ html[dir=ltr] body .p-l-0 {
 	
 }
 
+/* 인영 로고때문에 지움. 혹시 필요하면.. 다시 살려요..
 #main-wrapper .topbar .top-navbar .navbar-header[data-logobg=skin5] {
 	background: #1F262D
-}
+} */
 
 #main-wrapper .topbar .navbar-collapse[data-navbarbg=skin5],
 	#main-wrapper .topbar[data-navbarbg=skin5] {
