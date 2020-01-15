@@ -81,14 +81,13 @@
 
 
 .toggleOption {
-	margin-right:500px;
-	margin-top:410px;
-	padding-top: 30px;
+margin-right:0px;
+ 	margin-top:415px;
 	background: #336699;
-	height: 108.5%;
+	height: 100%;
 	width: 310px;
 	position: fixed;
-	right:+100;
+	right:0;
 }
 
 
@@ -98,7 +97,12 @@
   padding: 0.75rem 1.25rem;
   margin-bottom: -1px;
   background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125); }
+  border: 1px solid rgba(0, 0, 0, 0.125); 
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+
+  
+  }
 
 
 .chat_list-group-item-action {
@@ -107,8 +111,8 @@
   text-align: inherit; }
 
 .chat_img {
-	width: 40px;
-	height: 40px;
+	width: 42px;
+	height: 42px;
 	border: 3px solid #fcf9f5;
 	box-shadow: 1px 1px 1px 1px #BDBDBD;
 	margin-top : 10px;
