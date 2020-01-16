@@ -213,6 +213,7 @@
 			<jsp:include page="../notice/notice.jsp" />		
 		</div>
 		<div class=" tab-pane fade" id="drive" role="tabpanel">
+			<jsp:include page="../drive/drive.jsp" />
 		</div>
 	</div>		
 			</div>
