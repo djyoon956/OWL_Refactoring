@@ -21,20 +21,17 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.css"/>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
-	
-	<!-- Datepicker -->
-	<link rel="stylesheet" type="text/css" href="resources/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-	<script src="resources/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-	
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
 
+	<!-- SummerNote -->
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    
 	<script src="resources/js/notice.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			$('#noticeTable').DataTable({
-				 	stateSave: true, // 페이지 상태 저장
-				 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-			 });
-			 $('#noticeTable_length select').attr("class","select2 form-control custom-select");
+			initNotice();
 
 			let oldMenu = $("#projectMenu li:first");
 			$("#projectMenu li").on("click", function () {
@@ -64,7 +61,7 @@
 			else if(target === "kanban")
 				setKanbanData();
 			else if(target === "notice")
-				setNoticeData();
+				setNoticeData('${project.projectIdx}');
 			else if(target === "drive")
 				setDriveData();
 		}
@@ -93,36 +90,7 @@
 		    }); 
  */			 
 		}
-
-		function setNoticeData() {
-			console.log("in setNoticeData");
-			 $.ajax({
-				type: "POST",
-				url: "GetNotices.do",
-				data: {projectIdx: ${project.projectIdx}},
-				success: function (data) {
-					if(data.length > 0){
-						$("#noticeTable tbody").empty();
-						$.each(data, function (index, element) {
-						$('#noticeTable').DataTable().row.add( [
-								element.noticeIdx,
-								element.title,
-								element.email,
-								element.writeDate,
-								element.readNum
-					        ] ).draw();
-						})
-
-						$("#emptyNoticeBox").addClass("hidden");
-						$("#noticeTableBox").removeClass("hidden");
-					}else{
-						$("#emptyNoticeBox").removeClass("hidden");
-						$("#noticeTableBox").addClass("hidden");
-					}
-				}
-			}); 
-		}
-
+		
 		function setDriveData(){
 			console.log("in setDriveData");
 			/*  $.ajax({
@@ -218,10 +186,10 @@
 			<h1>Calendar</h1>
 		</div>
 		<div class=" tab-pane fade" id="kanban" role="tabpanel">
-			  <jsp:include page="../kanban/kanban.jsp"/>
+			  <jsp:include page="../kanban/kanbanTest.jsp"/>
 		</div>
 		<div class=" tab-pane fade" id="notice" role="tabpanel">
-			<jsp:include page="../notice/notice.jsp" />		
+			<jsp:include page="../notice/notice.jsp" />	
 		</div>
 		<div class=" tab-pane fade" id="drive" role="tabpanel">
 			<jsp:include page="../drive/drive.jsp" />
