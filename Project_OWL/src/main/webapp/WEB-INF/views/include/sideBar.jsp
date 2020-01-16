@@ -42,8 +42,9 @@
 		 var theColor = $(obj).siblings().children().eq(0).css("color")
 	        $("#nowColor").attr("value",theColor);
 	        $(".asColorPicker-trigger").children('span').css("background", theColor);  
-
-	      var theName =  $("#projectName").text();
+	      var theName =  $(obj).siblings().eq(1).text().trim();
+	      $("#myProjectTitle").empty();
+	      $("#myProjectTitle").append('<i class="far fa-sun"></i> ');
 	      $("#myProjectTitle").append(theName + " 환경설정");
 	        var checking = $(".favoriteCheckbox").is(":checked");
 	          if($(obj).siblings("#projectFavorite").val()=="1"){		     
@@ -61,7 +62,7 @@
             <ul id="sidebarnav" class="p-t-30">
             <li id="sidebarLable" class="sidebar-item hide-menu">MY</li>
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-account-outline"></i><span class="hide-menu">MY TASK</span></a>
-                    <ul aria-expanded="false" class="collapse in first-level" style="padding-bottom: 0px;">
+                    <ul aria-expanded="false" class="collapse first-level" style="padding-bottom: 0px;">
                         <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">DASHBOARD</span></a></li>
                         <li class="sidebar-item"><a href="Calendar.do" class="sidebar-link"><i class="mdi mdi-calendar"></i><span class="hide-menu">CALENDAR</span></a></li>
                     </ul>
@@ -85,6 +86,7 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" type= "button" data-toggle="modal" data-target="#newProject"><i class="mdi mdi-plus"></i><span class="hide-menu">NEW PROJECT</span></a></li>           
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">PROJECT LIST</span></a>
                     <ul aria-expanded="false" class="collapse  first-level" id="projectlist">
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">고정</span></a></li>
 	  					<c:forEach var="list" items="${projectList}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
 	                    		<input id="projectFavorite" type="hidden" value="${list.favorite}">
