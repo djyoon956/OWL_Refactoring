@@ -22,9 +22,10 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			$("#noticeTable").DataTable();
+			//$("#noticeTable").DataTable();
 			let oldMenu = $("#projectMenu li:first");
 			$("#projectMenu li").on("click", function () {
+				console.log("click");
 				oldMenu.removeClass("active");
 				let oldTab = $(oldMenu.children(".nav-link").attr("href"));
 				oldTab.removeClass("active show");
@@ -47,7 +48,7 @@
 
 		function setKanbanData(){
 			console.log("in setKanbanData");
-			 $.ajax({
+			/*  $.ajax({
 		        type : "POST",
 		        url : "GetKanban.do",
 		        data : {projectIdx : ${project.projectIdx}},
@@ -58,13 +59,13 @@
 		        	console.log("setKanbanData error");
 		        }
 		    }); 
-			
+			 */
 		}
 
 		function setNoticeData(){
 			console.log("in setNoticeData");
 
-		    $.ajax({
+		   /*  $.ajax({
 		        type : "POST",
 		        url : "GetNotices.do",
 		        data : {projectIdx : ${project.projectIdx}},
@@ -75,12 +76,12 @@
 		        }, error : function(){
 		        	console.log("setNoticeData error");
 		        }
-		    }); 
+		    });  */
 		}
 
 		function setDriveData(){
 			console.log("in setDriveData");
-			 $.ajax({
+			/*  $.ajax({
 			        type : "POST",
 			        url : "GetDrive.do",
 			        data : {projectIdx : ${project.projectIdx}},
@@ -90,7 +91,7 @@
 			        }, error : function(){
 			        	console.log("setDriveData error");
 			        }
-			    }); 
+			    });  */
 		}
 		
 		function writeNotice() {
@@ -174,7 +175,7 @@
 			<h1>Calendar</h1>
 		</div>
 		<div class=" tab-pane fade" id="kanban" role="tabpanel">
-			<%-- <jsp:include page="../kanban/kanbanMain_iy_iy.jsp"/> --%>
+			 <jsp:include page="../kanban/kanbanTest.jsp"/> 
 			
 		</div>
 		<div class=" tab-pane fade" id="notice" role="tabpanel">

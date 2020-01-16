@@ -11,9 +11,7 @@
 			type: "POST",
 			url: "GetNotices.do",
 			data: {
-				projectIdx: $ {
-					project.projectIdx
-				}
+				projectIdx: $ { project.projectIdx}
 			},
 			success: function (data) {
 				$("#noticeTable tbody").empty();
