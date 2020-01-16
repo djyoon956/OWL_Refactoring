@@ -14,12 +14,12 @@ public class DriveService {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public boolean insertDriveFolder(DriveFolder drive) {
+	public boolean insertDriveFolder(DriveFolder drivefolder) {
 		DriveDao dao = getDriveDao();
 		boolean result = false;
 
 		try {
-			result = dao.insertFolder(drive) > 0 ? true : false;
+			result = dao.insertFolder(drivefolder) > 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

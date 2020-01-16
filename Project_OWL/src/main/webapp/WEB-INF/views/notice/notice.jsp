@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="container-fluid mt-3">
      <div id="noticeBox">
         <div class="card">
@@ -11,10 +13,10 @@
                             <thead>
                                 <tr>
                                     <th width="10%">NO</th>
-                                    <th width="53%">제목</th>
+                                    <th width="50%">제목</th>
                                     <th width="15%">작성자</th>
                                     <th width="15%">작성일</th>
-                                    <th width="7%">조회</th>
+                                    <th width="10%">조회</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,10 +30,12 @@
                     <p class="font-pen">공지사항을 작성해주세요.</p>
                     <hr>
                 </div>
-                <div class="text-right mt-3 ">
-                    <button class="btn btn-primary" onclick="writeNotice()"><i class="icon-pencil"></i>&nbsp;
-                        글쓰기</button>
-                </div>
+                
+               <c:if test="${project.authority eq 'ROLE_PM'}">
+	                <div class="text-right mt-3 ">
+	                    <button class="btn btn-primary" onclick="writeNotice()"><i class="icon-pencil"></i>&nbsp;  글쓰기</button>
+	                </div>
+               </c:if>
             </div>
         </div>
     </div>
