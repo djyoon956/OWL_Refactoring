@@ -1,7 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
-<link href="resources/plugin/colorpicker/css/asColorPicker.css" rel="stylesheet">
 <link href="resources/css/include.css" rel="stylesheet">
+<style>
+.asColorPicker-wrap {
+    position: relative !important;
+    display: inline-flex;
+    width : 100%;
+}
+
+.asColorPicker-trigger{
+    left: 0px;
+    height: 45px !important;
+}
+
+.asColorPicker-dropdown{
+max-width: 270px;
+}
+</style>
 <script>
  $(function(){
 	 $(".complex-colorpicker").asColorPicker({
@@ -57,7 +72,7 @@
 </script>
 <aside class="left-sidebar" data-sidebarbg="skin5">
     <div class="scroll-sidebar">
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" id="sidemenu">
         <c:set var="projectList" value="${projectList}"/> 
             <ul id="sidebarnav" class="p-t-30">
             <li id="sidebarLable" class="sidebar-item hide-menu">MY</li>
@@ -108,6 +123,3 @@
 <jsp:include page="../project/modal/newProject.jsp" />
 	   <!-- 프로젝트 환경설정 Modal -->
 <jsp:include page="../project/modal/editProject.jsp" />
-<script src="resources/plugin/colorpicker/libs/jquery-asColor.js"></script>
-<script src="resources/plugin/colorpicker/libs/jquery-asGradient.js"></script>
-<script src="resources/plugin/colorpicker/dist/jquery-asColorPicker.min.js"></script>
