@@ -1,21 +1,17 @@
 package com.owl.drive.controller;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.owl.drive.dto.DriveFolder;
 import com.owl.drive.service.DriveService;
-import com.owl.notice.dto.File;
-import com.owl.notice.dto.Notice;
+
 
 @RestController
 public class DriveRestController {
@@ -31,18 +27,30 @@ public class DriveRestController {
 	}
 	
 	@RequestMapping(value = "insertFolder.do")
-	public boolean insertFolder(DriveFolder drivefolder) {
+	public boolean insertFolder(DriveFolder drivefolder, HttpServletRequest request) {
 		boolean result = false;
 		try {
-		drivefolder.setFolderName(drivefolder.getFolderName());
+		String folderpath = request.getServletContext().getRealPath("upload")+"\\drive\\"+drivefolder.getProjectIdx()+"\\"+drivefolder.getFolderName();
+		System.out.println(folderpath);
+		if(folderpath.equals("")) { //같은 폴더가 없을 때
+			checkDirectory(folderpath);
+			drivefolder.setDepth(0);
+		}
+		drivefolder.setFolderName(folderpath);
 		drivefolder.setRef(drivefolder.getRef());
 		drivefolder.setDepth(drivefolder.getDepth());
-		drivefolder.setProjecIdx(drivefolder.getProjecIdx());
+		drivefolder.setProjectIdx(drivefolder.getProjectIdx());
 		result = service.insertDriveFolder(drivefolder);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
 		return result;
+	}
+	
+	private void checkDirectory(String path) {
+		File file = new File(path);
+		if (!file.exists())
+			file.mkdir();
 	}
 }
