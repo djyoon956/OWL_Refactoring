@@ -34,41 +34,109 @@
 
 		<!-- CONTENT BOX -->
         <div class="page-wrapper">
-             <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Dashboard1</h4>
-                        <div class="ml-auto text-right">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
             <!-- CONTENT MAIN -->
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                <!--  my task -->
+                    <div class="col-md-6">
+                        <div class="card"  style="box-shadow: 3px 3px 3px 3px gray; border-radius: 0.25rem">
+                            <div class="card-body">
+                                <div class="d-md-flex align-items-center">
+                                    <div>
+                                        <h4 class="card-title">My Task</h4>
+                                                                   <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Making The New Suit</td>
+                                        <td class="text-success">Progress</td>
+                                        <td>
+                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
+                                                <i class="mdi mdi-check"></i>
+                                            </a>
+                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                </i><i class="mdi mdi-close"></i>
+                                            </a>     
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Luanch My New Site</td>
+                                        <td class="text-warning">Pending</td>
+                                        <td>
+                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
+                                                <i class="mdi mdi-check"></i>
+                                            </a>
+                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                </i><i class="mdi mdi-close"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Maruti Excellant Theme</td>
+                                        <td class="text-danger">Cancled</td>
+                                        <td>
+                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
+                                                <i class="mdi mdi-check"></i>
+                                            </a>
+                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                </i><i class="mdi mdi-close"></i>
+                                            </a>
+                                        </td>  
+                                    </tr>
+                                </tbody>
+                            </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- calendar -->
+                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-md-flex align-items-center">
                                     <div>
-                                        <h4 class="card-title">Site Analysis</h4>
+                                        <h4 class="card-title">calendar</h4>
                                         <h5 class="card-subtitle">Overview of Latest Month</h5>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                <!--  graph -->
+                <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-md-flex align-items-center">
+                                    <div>
+                                        <h4 class="card-title">graph</h4>
+                                        <h5 class="card-subtitle">Overview of Latest Month</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 <!-- timeline  -->
+                  <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-md-flex align-items-center">
+                                    <div>
+                                        <h4 class="card-title">timeline</h4>
+                                        <h5 class="card-subtitle">Overview of Latest Month</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
 
 			<!-- BOTTOM -->

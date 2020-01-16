@@ -283,7 +283,7 @@ display: block;
 	display: none;
 } */
 
-.label__on-off {
+/* .label__on-off {
 	overflow: hidden;
 	position: relative;
 	display: inline-block;
@@ -353,13 +353,13 @@ display: block;
 
 .input__on-off:checked+.label__on-off .marble {
 	left: 20px;
-}
+} */
 .accordionBody {  
 	max-height: 650px; 
 	overflow: auto;
 }
-a:hover{
-	color:black;
+.top_card {
+	border-radius: 0.25rem;
 }
 </style>
 
@@ -546,7 +546,7 @@ a:hover{
 			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">
 					
 					<div class="setting-box" >
-				        <div class="card">
+				        <div class="card top_card ">
                             <div class="card-body" style="padding:20px;">
                                 <div id="accordion-three" class="accordion">
                                     <div class="card">
