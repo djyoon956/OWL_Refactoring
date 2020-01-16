@@ -23,3 +23,13 @@
  .main_footer .copyright a {
    color: #326295; 
 }
+
+/* Summer note */
+.note-toolbar{
+	background-color: #f0f3f7;
+}
+
+.note-btn{
+	background-color : white !important;
+	color: black !important;
+}
