@@ -2,7 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<c:set var="project" value="${project}"/>
+<c:set var="project" value="${project}" scope="request"/>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -186,7 +186,7 @@
 			<h1>Calendar</h1>
 		</div>
 		<div class=" tab-pane fade" id="kanban" role="tabpanel">
-			  <jsp:include page="../kanban/kanbanTest.jsp"/>
+			  <jsp:include page="../kanban/kanban.jsp"/>
 		</div>
 		<div class=" tab-pane fade" id="notice" role="tabpanel">
 			<jsp:include page="../notice/notice.jsp" />	
