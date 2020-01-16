@@ -24,6 +24,10 @@ public class ProjectController {
 		List<ProjectList> projectList  = null;
 		projectList = service.getProjectLists(principal.getName());
 		model.addAttribute("projectList", projectList);
+		
+		ProjectList project = projectList.stream().filter(x -> x.getProjectIdx() == projectIdx).findFirst().get();
+		System.out.println(project);
+		model.addAttribute("project", project);
 		return "project/projectMain";
 	}
 }
