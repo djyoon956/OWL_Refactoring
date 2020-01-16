@@ -11,7 +11,7 @@
 			<h3 class="text-center">Notice</h3>
 			<div id="noticeTableBox">
 				<div class="table-responsive">
-					<table class="table  table-hover table-bordered zero-configuration text-center" id="noticeTable">
+					<table class="table table-hover table-bordered text-center" id="noticeTable">
 						<thead>
 							<tr>
 								<th width="10%">NO</th>
