@@ -28,22 +28,22 @@
 				<!--  멤버 삭제   -->
 				<label class="m-t-20">멤버 리스트</label>
 				<div class="input-group">
-					<div class="form-control pt-0 pb-3">
-						<i class="icon-user mr-2 iconSize"></i> 홍길동(hong@gmail.com)
+					<div class="form-control">
+						<i class="fas fa-user mr-2 iconSizeBig"></i> 홍길동(hong@gmail.com)
 					</div>
 					<div class="input-group-append">
 						<span class="input-group-text"><i
-							class="icon-close font-weight-bold iconSize"></i> </span>
+							class="far fa-times-circle font-weight-bold iconSizeBig"></i> </span>
 					</div>
 				</div>
 				<!-- 끝 -->
 				<div class="input-group ">
-					<div class="form-control pt-0 pb-3">
-						<i class="icon-user mr-2 iconSize"></i> 김콜린(kim@gmail.com)
+					<div class="form-control">
+						<i class="fas fa-user mr-2 iconSizeBig"></i> 김콜린(kim@gmail.com)
 					</div>
 					<div class="input-group-append">
 						<span class="input-group-text"><i
-							class="icon-close font-weight-bold iconSize"></i> </span>
+							class="far fa-times-circle font-weight-bold iconSizeBig"></i> </span>
 					</div>
 				</div>
                  <div class="modal-footer">

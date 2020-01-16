@@ -24,6 +24,9 @@
 
 <script src="resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
+<!--  popper js  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
+
 <!-- colorpicker -->
 <link href="resources/plugin/colorpicker/css/asColorPicker.css" rel="stylesheet">
 <script src="resources/plugin/colorpicker/libs/jquery-asColor.js"></script>

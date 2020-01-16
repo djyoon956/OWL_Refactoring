@@ -18,15 +18,16 @@
 	<link href="resources/css/project.css" rel="stylesheet">
 	
 	<!-- DataTable -->
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css"/>
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.css"/>
-	 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			//$("#noticeTable").DataTable();
+			 $('#noticeTable').DataTable({
+				 	stateSave: true, // 페이지 상태 저장
+			 });
+			 $('#noticeTable_filter').prepend('<select id="select" class="custom-select" style="margin-right : 10px; width: 100px"></select>');
+
 			let oldMenu = $("#projectMenu li:first");
 			$("#projectMenu li").on("click", function () {
 
@@ -41,6 +42,10 @@
 
 				setChageView(currentTab.attr("id"));
 			});
+
+			  
+			$('#dropdownMenuButton').dropdown()
+			    
 		})
 		
 		function setChageView(target){
@@ -89,9 +94,6 @@
 				url: "GetNotices.do",
 				data: {projectIdx: ${project.projectIdx}},
 				success: function (data) {
-					console.log(data);
-					console.log(data.length > 0);
-					
 					if(data.length > 0){
 						$("#noticeTable tbody").empty();
 						$.each(data, function (index, element) {
@@ -130,6 +132,13 @@
 			    });  */
 		}
 	</script>
+	<style type="text/css">
+	.iconSizeBig {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    color:  #326295; 
+}
+	</style>
 </head>
 
 <body>
@@ -152,14 +161,15 @@
 		<!-- CONTENT BOX -->
 		<div class="page-wrapper" >
 			<!-- CONTENT MAIN -->
-			<div class="container-fluid" style="background-color: white; padding: 0">
+			<div class="container-fluid" style="background-color: white;padding:0">
+
 				<!-- <div class="row">
 					<div class="col-md-12">dfgdfgdsfds
 					</div>
 				</div> -->
 	<div id="tab-menu">
 		<div class="row">
-			<div class="col-md-11">
+			<div class="col-md-11"> 
 				<div id="tab-btn">
 					<ul id="projectMenu" class="nav nav-tabs" role="tablist" style="border-bottom-width: 0px;">
 						<li class="nav-item active">
@@ -180,19 +190,15 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-1 mt-2 text-center">
-				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-						<i class="fas fa-user-cog iconSizeBig pt-2"></i>
-					</a>
-					<div class=" dropdown-menu">
-						<div class="dropdown-content-body">
-							<ul>
-								<li><a href="#memberEditModal" data-toggle="modal">프로젝트멤버 설정</a></li>
-								<li><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
+			<div class="dropdown  col-md-1 mt-2 text-center">
+			<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user-cog iconSizeBig pt-2"></i></a> 
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<ul class="list-style-none">
+								<li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트멤버 설정</a></li>
+								<li class="pl-3"><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
 							</ul>
-						</div>
 					</div>
-				</li>
 			</div>
 		</div>
 
@@ -206,8 +212,7 @@
 			<h1>Calendar</h1>
 		</div>
 		<div class=" tab-pane fade" id="kanban" role="tabpanel">
-			 <jsp:include page="../kanban/kanbanTest.jsp"/> 
-			
+			  <jsp:include page="../kanban/kanbanTest.jsp"/>
 		</div>
 		<div class=" tab-pane fade" id="notice" role="tabpanel">
 			<jsp:include page="../notice/notice.jsp" />		
