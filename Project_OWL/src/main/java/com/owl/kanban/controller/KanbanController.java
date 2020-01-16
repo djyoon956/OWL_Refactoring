@@ -20,8 +20,12 @@ public class KanbanController {
 		return "kanban/kanbanMain_iy_iy";
 	}	
 	
+	/*
 	@RequestMapping("GetKanban.do") 
 	public ModelAndView getKanban() {
 		return new ModelAndView("kanban/kanbanTest");
 	}	
+	
+	*/
+	
 }

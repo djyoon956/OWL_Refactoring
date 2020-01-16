@@ -13,7 +13,7 @@
 			$("#alarmToggle").hide();
 			$("#settingToggle").hide();
 			$("#chatToggle").hide();
-			$("#userToggle").animate({width:'toggle'},100);
+			$("#userToggle").animate({width:'toggle'},350);
 		});
 
 		$("#chatBtn").click(function() {
