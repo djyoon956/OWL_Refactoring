@@ -336,19 +336,6 @@ background-color:#326295;
         max-width: 1.5625rem; }
       .nav-header .brand-logo a span {
         font-size: 1.125rem; }
-.main_footer {
- /*  padding-left: 15.1875rem; */
-  background-color: #fff; 
-}
-  .main_footer .copyright {
-    padding: 0.9375rem;
-    background: white; }
-    .main_footer .copyright p {
-      text-align: center;
-      margin: 0;
-      color: #898989; }
-    .main_footer .copyright a {
-      color: #326295; }
 </style>
 <script type="text/javascript">
 	$(function(){
