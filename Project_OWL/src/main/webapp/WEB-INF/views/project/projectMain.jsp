@@ -38,6 +38,10 @@
 
 				setChageView(currentTab.attr("id"));
 			});
+
+			  
+			$('#dropdownMenuButton').dropdown()
+			    
 		})
 		
 		function setChageView(target){
@@ -127,6 +131,13 @@
 			    });  */
 		}
 	</script>
+	<style type="text/css">
+	.iconSizeBig {
+    font-size: 1.2rem;
+    line-height: 2rem;
+    color:  #326295; 
+}
+	</style>
 </head>
 
 <body>
@@ -149,14 +160,14 @@
 		<!-- CONTENT BOX -->
 		<div class="page-wrapper" >
 			<!-- CONTENT MAIN -->
-			<div class="container-fluid" style="background-color: white; margin: 20px">
+			<div class="container-fluid" style="background-color: white;padding:0">
 				<!-- <div class="row">
 					<div class="col-md-12">dfgdfgdsfds
 					</div>
 				</div> -->
 	<div id="tab-menu">
 		<div class="row">
-			<div class="col-md-11">
+			<div class="col-md-11"> 
 				<div id="tab-btn">
 					<ul id="projectMenu" class="nav nav-tabs" role="tablist" style="border-bottom-width: 0px;">
 						<li class="nav-item active">
@@ -177,19 +188,15 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-1 mt-2 text-center">
-				<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
-						<i class="fas fa-user-cog iconSizeBig pt-2"></i>
-					</a>
-					<div class=" dropdown-menu">
-						<div class="dropdown-content-body">
-							<ul>
-								<li><a href="#memberEditModal" data-toggle="modal">프로젝트멤버 설정</a></li>
-								<li><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
+			<div class="dropdown  col-md-1 mt-2 text-center">
+			<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user-cog iconSizeBig pt-2"></i></a> 
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<ul class="list-style-none">
+								<li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트멤버 설정</a></li>
+								<li class="pl-3"><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
 							</ul>
-						</div>
 					</div>
-				</li>
 			</div>
 		</div>
 
