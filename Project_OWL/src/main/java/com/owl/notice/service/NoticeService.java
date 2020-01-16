@@ -24,7 +24,6 @@ public class NoticeService {
 		System.out.println(notice.getEmail());
 		try {
 			result = dao.insertNotice(notice) > 0 ? true : false;
-			System.out.println(notice.getNoticeIdx());
 			
 			if (notice.getFiles().size() > 0) {
 				// 파일 insert

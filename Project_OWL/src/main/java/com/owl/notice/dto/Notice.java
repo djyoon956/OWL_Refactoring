@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class Notice {
 	private int projectIdx;
-	private int noticeIdx;
+	private int boardIdx;
 	private String email;
 	private String title;
 	private String content;
