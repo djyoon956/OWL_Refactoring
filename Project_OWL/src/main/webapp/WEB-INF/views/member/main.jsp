@@ -13,6 +13,18 @@
     <link rel="icon" type="image/png" sizes="16x16" href="resources/assets/images/favicon.png">
     <title>OWL</title>
     <jsp:include page="../include/headTag.jsp"/>
+	<!-- DataTable -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#dashboardTable").DataTable();
+});
+
+
+
+</script>
 </head>
 
 <body>
@@ -41,53 +53,36 @@
                     <div class="col-md-6">
                         <div class="card"  style="box-shadow: 3px 3px 3px 3px gray; border-radius: 0.25rem">
                             <div class="card-body">
-                                <div class="d-md-flex align-items-center">
+                                <div class="d-md-flex align-items-center table-responsive">
                                     <div>
                                         <h4 class="card-title">My Task</h4>
-                                                                   <table class="table">
+                             <table class="table table-striped table-bordered" id="dashboardTable">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Actions</th>
+                                        <th scope="col">Project</th>
+                                        <th scope="col">Subject</th>
+                                        <th scope="col">Due Date</th>
+                                        <th scope="col">Priority</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Making The New Suit</td>
-                                        <td class="text-success">Progress</td>
-                                        <td>
-                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
-                                                <i class="mdi mdi-check"></i>
-                                            </a>
-                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                </i><i class="mdi mdi-close"></i>
-                                            </a>     
-                                        </td>
+                                        <td>구매전략</td>
+                                        <td>로그인 view 구현</td>
+                                        <td>today</td>
+                                        <td>high</td>
                                     </tr>
                                     <tr>
-                                        <td>Luanch My New Site</td>
-                                        <td class="text-warning">Pending</td>
-                                        <td>
-                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
-                                                <i class="mdi mdi-check"></i>
-                                            </a>
-                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                </i><i class="mdi mdi-close"></i>
-                                            </a>
-                                        </td>
+                                        <td>구매전략</td>
+                                        <td>공지사항 게시판 기능 구현</td>
+                                        <td>1/28</td>
+                                        <td>low</td>
                                     </tr>
                                     <tr>
-                                        <td>Maruti Excellant Theme</td>
-                                        <td class="text-danger">Cancled</td>
-                                        <td>
-                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
-                                                <i class="mdi mdi-check"></i>
-                                            </a>
-                                            <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                </i><i class="mdi mdi-close"></i>
-                                            </a>
-                                        </td>  
+                                        <td>판매계획</td>
+                                        <td>단체 채팅 기능 구현</td>
+                                        <td>1/18</td>
+                                        <td>medium</td>  
                                     </tr>
                                 </tbody>
                             </table>
