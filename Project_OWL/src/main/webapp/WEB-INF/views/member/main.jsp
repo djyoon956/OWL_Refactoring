@@ -57,6 +57,7 @@ $(function() {
  .dash_radius {
  border-radius: 0.25rem
  }
+ 
 </style>
 </head>
 
@@ -123,9 +124,9 @@ $(function() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <!-- </div>  -->
                     <!-- calendar -->
-                     <div class="col-lg-6">
+                     <!-- <div class="col-lg-6"> -->
                         <div class="card dash_shadow dash_radius">
                             <div class="card-body">
                             <h4 class="card-title">Calendar</h4>
@@ -135,58 +136,60 @@ $(function() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
+                      </div> 
+               <!--  </div> -->
+               <!--  <div class="row"> -->
                 <!--  graph -->
-                <div class="col-lg-6">
+              		 <div class="col-lg-6"> 
                         <div class="card dash_shadow dash_radius">
                             <div class="card-body">
                               <h4 class="card-title">Progress</h4>
-                                <div class="d-md-flex align-items-center">
-                                   <div class=" col-md-12 m-t-20 w-100">
+                                <div class="align-items-center">
+                                   <div class="w-100 pt-3">
                                     <div class="d-flex no-block align-items-center">
                                         <span>구매전략</span>
                                         <div class="ml-auto">
-                                            <span>81%</span>
+                                            <span>80%</span>
                                         </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 81%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
-                                 <div class=" col-md-12 m-t-20 w-100">
+                                 <div class="w-100 pt-3">
                                     <div class="d-flex no-block align-items-center">
                                         <span>판매계획</span>
                                         <div class="ml-auto">
-                                            <span>81%</span>
+                                            <span>34%</span>
                                         </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 81%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 34%; background-color:#326295;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                               </div>
                             </div>
                         </div>
-                    </div>
+                        
+                        
+                    <!-- </div> -->
                  <!-- timeline  -->
-                  <div class="col-lg-6">
+                  <!-- <div class="col-lg-6"> -->
                         <div class="card dash_shadow dash_radius">
                             <div class="card-body">
-                           	  <h4 class="card-title">timeline</h4>
+                           	  <h4 class="card-title">Timeline</h4>
                                 <div class="d-md-flex align-items-center">
-                                    <div>
-                                        
-                                        <h5 class="card-subtitle">Overview of Latest Month</h5>
-                                    </div>
+                                                               
+                                    
+                                    <!-- 끝 -->
                                 </div>
                             </div>
                         </div>
                     </div>
-            	</div>
+            	<!-- </div> -->
 			<!-- BOTTOM -->
             <jsp:include page="../include/bottom.jsp"/>
+        </div>
         </div>
     </div>
  </div>
