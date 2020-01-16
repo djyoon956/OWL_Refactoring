@@ -7,6 +7,8 @@ import com.owl.notice.dto.Notice;
 
 public interface NoticeDao {
 	public int insertNotice(Notice notice) throws ClassNotFoundException, SQLException;
+	
+	public int insertNoticeFile(Notice notice) throws ClassNotFoundException, SQLException;
 
 	public int deleteNotice(int noticeIdx) throws ClassNotFoundException, SQLException;
 	
