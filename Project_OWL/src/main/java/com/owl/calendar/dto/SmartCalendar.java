@@ -10,6 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class SmartCalendar {
+	private int projectIdx;
 	private int calIdx;
 	private CalendarType type;
 	private String title;
@@ -17,11 +18,8 @@ public class SmartCalendar {
 	private Date startDate;
 	private Date endDate;
 	private String alarm;
-	private int projectIdx;
-	
-	
-	enum CalendarType {
-			MY,
-			PROJECT
+
+	public enum CalendarType {
+		MY, PROJECT
 	}
 }

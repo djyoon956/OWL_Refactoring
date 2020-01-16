@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,8 +66,113 @@
 				    }
 				  }
 				});
-			$('#calendarListBox').on('change', onChangeCalendars);
+			$('#calendarListBox').on('change', changeCalendar);
 		})
+		
+		function CalendarInfo() {
+		    this.id = null;
+		    this.name = null;
+		    this.checked = true;
+		    this.color = null;
+		    this.bgColor = null;
+		    this.borderColor = null;
+		    this.dragBgColor = null;
+		}
+		
+		function setCalendars(){
+			console.log("in setCalendars");
+			let ttt =${myCalendars};
+			console.log(ttt);
+			let calendarList = [];
+			let myCalendar = new CalendarInfo();
+			myCalendar.id = "my";
+			myCalendar.name = "My Calendar";
+			myCalendar.color = "#326295";
+			myCalendar.bgColor = "#326295";
+			myCalendar.dragBgColor = "#326295";
+			myCalendar.borderColor = "#326295";
+			calendarList.add(myCalendar);
+			console.log(test);
+			$.each(${projectCalendars}, function(key,value){
+				console.log(key);
+				console.log(value);
+				/* let calendar = new CalendarInfo();
+				calendar.id = element.projectIdx;
+			    calendar.name = element.projectName;
+			    calendar.color = element.color;
+			    calendar.bgColor = element.color;
+			    calendar.dragBgColor =element.color;
+			    calendar.borderColor = element.color;
+
+			    calendarList.add(calendar); */
+			});
+
+			return calendarList;
+		}
+		
+		function setMyCalendar(data){
+			let calendar = new CalendarInfo();
+			calendar.id = "my";
+		    calendar.name = "My Calendar";
+		    calendar.color = "#326295";
+		    calendar.bgColor = "#326295";
+		    calendar.dragBgColor = "#326295";
+		    calendar.borderColor = "#326295";
+
+		    return calendar;
+		}
+		
+		function changeCalendar(event){
+			console.log("changeCalendar");
+			let calendarId = event.target.value;
+			let checked = event.target.checked;
+			let viewAll = $('.lnb-calendars-item input');
+			let calendarElements = Array.prototype.slice.call($('#calendarList input'));
+			let allCheckedCalendars = true;
+
+	        if (calendarId === 'all') {
+	            /* allCheckedCalendars = checked;
+
+	            calendarElements.forEach(function(input) {
+	                let span = input.parentNode;
+	                input.checked = checked;
+	                span.style.backgroundColor = checked ? span.style.borderColor : 'transparent';
+	            });
+
+	            CalendarList.forEach(function(calendar) {
+	                calendar.checked = checked;
+	            }); */
+	        } else {
+	        	$('#calendarList input[value="'+calendarId+'"]').prop("checked", checked);
+
+	            allCheckedCalendars = calendarElements.every(function(input) {
+	                return input.checked;
+	            });
+
+	            if (allCheckedCalendars) {
+	                viewAll.checked = true;
+	            } else {
+	                viewAll.checked = false;
+	            }
+	        }
+
+	       // refreshScheduleVisibility();
+		}
+
+		function refreshScheduleVisibility() {
+	        let calendarElements = Array.prototype.slice.call($("#calendarList input"));
+
+	        CalendarList.forEach(function(calendar) {
+	        	$("#calendar").toggleSchedules(calendar.id, !calendar.checked, false);
+	        });
+
+	        $("#calendar").render(true);
+
+	        calendarElements.forEach(function(input) {
+	            let span = input.nextElementSibling;
+	            span.style.backgroundColor = input.checked ? span.style.borderColor : 'transparent';
+	        });
+	    }
 	</script>
 </head>
 
@@ -189,7 +294,7 @@
 					                    
                                 	</div>
                                 	<div class="col-md-10">
-	                                   	<div id="calendar" style="height: 100%; width: 100%"></div>
+	                                   	<div id="calendar" class="h-100 w-100"></div>
                                 	</div>
                                 </div>
                             </div>

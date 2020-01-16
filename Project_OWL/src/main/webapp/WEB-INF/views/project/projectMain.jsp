@@ -28,11 +28,24 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     
+     <!-- Toast Ui -->
+    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
+    <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
+	<script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
+	<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
+	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
+	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
+    
 	<script src="resources/js/notice.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			initNotice();
 
+			$('#calendar').tuiCalendar({
+				  defaultView: 'month',
+				  taskView: true
+				});
+			
 			let oldMenu = $("#projectMenu li:first");
 			$("#projectMenu li").on("click", function () {
 				oldMenu.removeClass("active");
@@ -183,7 +196,7 @@
 			<h1>${project.projectName }</h1>
 		</div>
 		<div class=" tab-pane fade" id="calendar" role="tabpanel">
-			<h1>Calendar</h1>
+			<jsp:include page="../calendar/projectCalendar.jsp" />
 		</div>
 		<div class=" tab-pane fade" id="kanban" role="tabpanel">
 			  <jsp:include page="../kanban/kanban.jsp"/>

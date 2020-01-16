@@ -19,6 +19,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.owl.helper.UploadHelper;
 import com.owl.member.dto.Member;
 import com.owl.member.service.MemberService;
 
@@ -41,20 +42,13 @@ public class MemberController {
 	public String emailConfirm(Member member, Model model, HttpServletRequest request) {
 		String imagefilename = member.getMultipartFile().getOriginalFilename();
 		boolean result = false;
-
+		System.out.println("durl");
+System.out.println(imagefilename);
 		try {
-			// DB insert 해야함
-
 			if (!imagefilename.equals("")) { // 실 파일 업로드
 				String uploadpath = request.getServletContext().getRealPath("upload");
-				checkDirectory(uploadpath);
-				System.out.println(uploadpath);
-				String fpath = uploadpath + "\\" + imagefilename;
-
-				FileOutputStream fs = new FileOutputStream(fpath);
-				fs.write(member.getMultipartFile().getBytes());
-				fs.close();
-				member.setProfilePic(imagefilename);
+				String filePath = UploadHelper.uploadFile(uploadpath,"member", imagefilename, member.getMultipartFile().getBytes());
+				member.setProfilePic(filePath);
 			}
 
 			member.setPassword(bCryptPasswordEncoder.encode(member.getPassword())); // 비밀번호 암호화
@@ -115,13 +109,8 @@ public class MemberController {
 
 			if (!imagefilename.equals("")) { // 실 파일 업로드
 				String uploadpath = request.getServletContext().getRealPath("upload");
-				checkDirectory(uploadpath);
-				String fpath = uploadpath + "\\" + imagefilename;
-
-				FileOutputStream fs = new FileOutputStream(fpath);
-				fs.write(member.getMultipartFile().getBytes());
-				fs.close();
-				member.setProfilePic(imagefilename);
+				String filePath = UploadHelper.uploadFile(uploadpath,"member", imagefilename, member.getMultipartFile().getBytes());
+				member.setProfilePic(filePath);
 			}
 
 			member.setName(member.getName());
@@ -154,11 +143,5 @@ public class MemberController {
 		System.out.println("ResetPassword");
 		model.addAttribute("email", memberId);
 		return "member/deleteOk2";
-	}
-
-	private void checkDirectory(String path) {
-		File file = new File(path);
-		if (!file.exists())
-			file.mkdir();
 	}
 }
