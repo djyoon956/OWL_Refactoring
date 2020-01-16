@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
+<c:set var="project" value="${project}"/>
 <html>
-
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +23,7 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script> 
 	<script type="text/javascript">
 		$(function(){
-			//$("#noticeTable").DataTable();
+			$("#noticeTable").DataTable();
 			let oldMenu = $("#projectMenu li:first");
 			$("#projectMenu li").on("click", function () {
 				console.log("click");
@@ -35,6 +36,21 @@
 				currentTab.addClass("active show");
 				oldMenu = $(this);
 			});
+
+			$('#projectMenu a').on("shown.bs.tab",function(event){
+				let target = $(event.target).attr("href");
+				console.log(target);
+				if(target === "#dash")
+					setDashBoardData();
+				else if(target === "#calendar")
+					setCalendarData();
+				else if(target === "#kanban")
+					setKanbanData();
+				else if(target === "#notice")
+					setNoticeData();
+				else if(target === "#drive")
+					setDriveData();
+		    });
 		})
 		
 		function setDashBoardData(){
@@ -62,21 +78,34 @@
  */			 
 		}
 
-		function setNoticeData(){
+		function setNoticeData() {
 			console.log("in setNoticeData");
+			$.ajax({
+				type: "POST",
+				url: "GetNotices.do",
+				data: {projectIdx: ${project.projectIdx}},
+				success: function (data) {
+					if(data){
+						$("#noticeTable tbody").empty();
+						$.each(data, function (index, element) {
+							let row = "<tr>" +
+													"<td>" + element.noticeIdx + "</td>" +
+													"<td>" + element.title + "</td>" +
+													"<td>" + element.email + "</td>" +
+													"<td>" + element.writeDate + "</td>" +
+													"<td>" + element.readNum + "</td>" +
+												"</tr>";
+						$("#noticeTable tbody").append(row);
+						})
 
-		   /*  $.ajax({
-		        type : "POST",
-		        url : "GetNotices.do",
-		        data : {projectIdx : ${project.projectIdx}},
-		        success : function(data) {
-		            console.log("setNoticeData success");
-		            console.log(data);
-		            $("#notice").html(data);
-		        }, error : function(){
-		        	console.log("setNoticeData error");
-		        }
-		    });  */
+						$("#emptyNoticeBox").addClass("hidden");
+						$("#noticeTableBox").removeClass("hidden");
+					}else{
+						$("#emptyNoticeBox").removeClass("hidden");
+						$("#noticeTableBox").addClass("hidden");
+					}
+				}
+			});
 		}
 
 		function setDriveData(){
@@ -93,11 +122,6 @@
 			        }
 			    });  */
 		}
-		
-		function writeNotice() {
-			console.log("writeNotice");
-			$('#writeBox').show('slide', { direction: 'right' }, 2000);
-		}			
 	</script>
 </head>
 
