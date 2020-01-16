@@ -50,11 +50,11 @@
 	$(".clickIcon").click(function() {
 		let iconChange = $(this).children();
 		 if($(iconChange).hasClass("fa-chevron-right")) {
-			$(iconChange).removeClass("fa-chevron-right");
-			$(iconChange).addClass("fa-chevron-down");
+			$(iconChange).removeClass("fa-chevron-right").addClass("fa-chevron-down");
+			//$(iconChange).addClass("fa-chevron-down");
 		} else {
-			$(iconChange).removeClass("fa-chevron-down");
-			$(iconChange).addClass("fa-chevron-right");
+			$(iconChange).removeClass("fa-chevron-down").addClass("fa-chevron-right");
+			//$(iconChange).addClass("fa-chevron-right");
 		} 
 		
 	});
