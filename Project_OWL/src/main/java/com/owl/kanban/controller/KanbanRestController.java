@@ -17,8 +17,8 @@ public class KanbanRestController {
 	@Autowired
 	private SqlSession sqlSession;
 
-	@RequestMapping("GetNotices.do")
-	public List<Notice> getNotices(int projectIdx) {
+	@RequestMapping("GetKanban.do")
+	public List<Notice> getKanban(int projectIdx) {
 		System.out.println("getNotices : " + projectIdx);
 		NoticeDao dao = getNoticeDao();
 		List<Notice> notices = null;

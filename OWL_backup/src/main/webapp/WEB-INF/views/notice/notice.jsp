@@ -10,8 +10,7 @@
 		$.ajax({
 			type: "POST",
 			url: "GetNotices.do",
-			data: {
-				projectIdx: $ { project.projectIdx}
+			data: {projectIdx: $ { project.projectIdx}
 			},
 			success: function (data) {
 				$("#noticeTable tbody").empty();
