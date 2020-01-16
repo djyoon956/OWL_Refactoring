@@ -92,7 +92,7 @@
     
   });
 
-  function setKanbanData(){
+/*   function setKanbanData(){
 		console.log("in setKanbanData");
 		 $.ajax({
 	        type : "POST",
@@ -105,7 +105,7 @@
 	        	console.log("setKanbanData error");
 	        }
 	    }); 
-	}
+	} */
 	
   </script>
 </head>
