@@ -21,17 +21,17 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.css"/>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
+	
+	<script src="resources/js/notice.js"></script>
 	<script type="text/javascript">
-		let noticeTable;
 		$(function(){
-			noticeTable =$('#noticeTable').DataTable({
+			$('#noticeTable').DataTable({
 				 	stateSave: true, // 페이지 상태 저장
 				 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 			 });
 			 $('#noticeTable_length select').attr("class","select2 form-control custom-select");
 
 			let oldMenu = $("#projectMenu li:first");
-			
 			$("#projectMenu li").on("click", function () {
 				oldMenu.removeClass("active");
 				let oldTab = $(oldMenu.children(".nav-link").attr("href"));
@@ -99,7 +99,7 @@
 					if(data.length > 0){
 						$("#noticeTable tbody").empty();
 						$.each(data, function (index, element) {
-							noticeTable.row.add( [
+						$('#noticeTable').DataTable().row.add( [
 								element.noticeIdx,
 								element.title,
 								element.email,
