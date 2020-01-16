@@ -52,7 +52,8 @@ $(function(){
 		sel = ref.get_selected();
 		console.log(sel);
 		if(!sel.length) { 
-			return false; 
+			sel = null;
+			sel = ref.create_node(sel, {"type":"root"});
 		}
 		sel = sel[0];
 		sel = ref.create_node(sel, {"type":"default"});
@@ -152,84 +153,94 @@ function checkBox(box) {
 </script>
 <style>
 .defaultDriveMenu {
-			width: 100%;
-			background: white;
-			/*    border-bottom: 1px double #326295; */
-			font-family: 'Source Sans Pro', sans-serif;
-			padding: 15px 20px;
-		}
+	width: 100%;
+	background: white;
+	/*    border-bottom: 1px double #326295; */
+	font-family: 'Source Sans Pro', sans-serif;
+	padding: 15px 20px;
+}
+.driveBtn{
+	padding: 0.375rem 0.75rem;
+	border-radius: 2px;
+	width: 82px;
+	height: 35px;
+	text-align: center;
+}
+.searchDriveMenu {
+	width: 100%;
+	background: white;
+	/*    border-bottom: 1px double #326295; */
+	font-family: 'Source Sans Pro', sans-serif;
+	padding: 15px 20px;
+}
 
-		.searchDriveMenu {
-			width: 100%;
-			background: white;
-			/*    border-bottom: 1px double #326295; */
-			font-family: 'Source Sans Pro', sans-serif;
-			padding: 15px 20px;
-		}
+.drivegroup {
+	float: right;
+	margin-top: 5px;
+	color: #326295;
+}
+.filebox input[type="file"] {
+	/* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
 
-		.drivegroup {
-			float: right;
-			margin-top: 5px;
-			color: #326295;
-		}
-		.filebox input[type="file"] {
-			/* 파일 필드 숨기기 */
-			position: absolute;
-			width: 1px;
-			height: 1px;
-			padding: 0;
-			margin: -1px;
-			overflow: hidden;
-			clip: rect(0, 0, 0, 0);
-			border: 0;
-		}
-		
-		#driveFile input[type="file"] {
-			/* 파일 필드 숨기기 */
-			position: absolute;
-			width: 1px;
-			height: 1px;
-			padding: 0;
-			margin: -1px;
-			overflow: hidden;
-			clip: rect(0, 0, 0, 0);
-			border: 0;
-		}
+#driveFile input[type="file"] {
+	/* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
 
-		.card {
-			border: 3px solid #326295;
-		}
+#driveCard {
+	border: 3px solid #326295;
+}
 
-		.card:hover .more {
-			visibility: visible;
-			opacity: 1;
-			cursor: pointer;
-		}
+#driveCard:hover .more {
+	visibility: visible;
+	opacity: 1;
+	cursor: pointer;
+}
 
-		.more {
-			visibility: hidden;
-		}
+.more {
+	visibility: hidden;
+}
 
+#trash {
 
-		#detail {
-			position: absolute;
-			z-index: 1;
-			border: 2px solid #e8ebed;
-			padding: 10px 10px;
-			background-color: #fff;
-		}
+	font-weight: bold;
+}
 
-		#detail li:hover {
-			background-color: #f0f3f7;
-			cursor: pointer;
-		}
+#detail {
+	position: absolute;
+	z-index: 1;
+	border: 2px solid #e8ebed;
+	padding: 10px 10px;
+	background-color: #fff;
+}
 
-		#searchText {
-			border-right: 0px;
-			border-top: 0px;
-			boder-left: 0px;
-			boder-bottom: 3px solid #326295;
-		}
+#detail li:hover {
+	background-color: #f0f3f7;
+	cursor: pointer;
+}
+
+#searchText {
+	border-right: 0px;
+	border-top: 0px;
+	boder-left: 0px;
+	boder-bottom: 3px solid #326295;
+}
 </style>
 <div class="container-fluid mt-3">
 	<div class="row">
@@ -253,13 +264,13 @@ function checkBox(box) {
 			</div>
 		<div class="col-md-9" style="padding-left: 0;">
 					<div class="defaultDriveMenu">
-				<button type="button" class="btn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="button" class="driveBtn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;
 				<div class="filebox" style="display:inline;">
 					<input type="file" id="driveFile">
 					<label for="driveFile" style="cursor: pointer; margin-bottom: 0px;"
-						class="btn btn-primary">업로드</label>&nbsp;&nbsp;&nbsp;&nbsp;
+						class="driveBtn btn-primary">업로드</label>&nbsp;&nbsp;
 				</div>
-				<button type="button" class="btn btn-primary" onclick="Allcheck()">전체선택</button>
+				<button type="button" class="driveBtn btn-primary" onclick="Allcheck()">전체선택</button>
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<div class="drivegroup">
 					<a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
@@ -279,7 +290,7 @@ function checkBox(box) {
 
 			<div class="row" style="margin : 10px 10px;">
 				<div class="col-sm-4">
-					<div class="card" id="css">
+					<div class="card" id="driveCard">
 						<div class="more" style="margin-top: 10px;">
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="checkbox" value="css" onclick="checkBox(this)"
@@ -302,7 +313,7 @@ function checkBox(box) {
 					</div>
 				</div>
 				<div class="col-sm-4">
-					<div class="card">
+					<div class="card" id="driveCard">
 						<div class="more" style="margin-top: 10px;">
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="checkbox" value="js" onclick="checkBox(this)" style="width:18px; height:18px;">
@@ -318,7 +329,7 @@ function checkBox(box) {
 					</div>
 				</div>
 				<div class="col-sm-4">
-					<div class="card">
+					<div class="card" id="driveCard">
 						<div class="more" style="margin-top: 10px;">
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="checkbox" value="images" onclick="checkBox(this)"

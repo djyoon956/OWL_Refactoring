@@ -4,18 +4,22 @@
 	display: none;
 }
 
+/*footer css 적용*/
 .main_footer {
   background-color: #fff; 
 }
+
 .main_footer .copyright {
   padding: 0.9375rem;
   background: white; 
 }
+
  .main_footer .copyright p {
    text-align: center;
    margin: 0;
    color: #898989; 
 }
+
  .main_footer .copyright a {
    color: #326295; 
 }
