@@ -7,11 +7,15 @@
 
 <style>
 
+#kanbanArea {
+	height: 
+}
 .columnBody {
     border: 4px solid #eee;
  	background-color : #f0f3f7;
 	width: 310px;
 	min-height: 20px;
+	max-height : 713px;
 	list-style-type: none;
 	margin: 0;
 	padding: 5px 0 0 0;
@@ -25,10 +29,10 @@
 	box-shadow : 4px #dadde0;
 	background-color : #fff;
 	margin: 5px 10px 10px 10px;
-	padding: 5px;
+	padding: 15px;
 	font-size: 1.2em;
-	width: 285px;
-	height : 80px;
+	width: 250px;
+	height : 50px;
 	border-radius: 3px;
 	cursor:pointer;
 }
@@ -44,10 +48,6 @@
 } */
 </style>
 
-  <!--  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
   <script>
   $(function(){
 	  var n = 3;
@@ -89,21 +89,6 @@
         }
     
   });
-
-/*   function setKanbanData(){
-		console.log("in setKanbanData");
-		 $.ajax({
-	        type : "POST",
-	        url : "GetKanban.do",
-	        data : {projectIdx : ${project.projectIdx}},
-	        success : function(data) {
-	            console.log("setKanbanData success");
-	            $("#kanban").html(data);
-	        }, error : function(){
-	        	console.log("setKanbanData error");
-	        }
-	    }); 
-	} */
 	
   </script>
 </head>
@@ -111,21 +96,17 @@
 <div id="totalbody" class="container-fluid mt-3">
 	hello?12345677
 	
-	<button id="addIssue">ISSUE</button>
-	<button id="addColumn">Column</button>
+	<button id="addIssue">New Issue</button>
+	<button id="addColumn">New Column</button>
 
 	<div class="row" id="kanbanArea">
 
 		<div class="columnSection">
 		
 			<ul id="sortable1" class="connectedSortable columnBody cursor">
-				<label>Undefined section</label>
+				<span>Undefined section</span>
 			
-				<li class="ui-state-default">Item 1</li>
-				<li class="ui-state-default">Item 2</li>
-				<li class="ui-state-default">Item 3</li>
-				<li class="ui-state-default">Item 4</li>
-				<li class="ui-state-default">Item 5</li>
+
 			</ul>
 		</div>
 
@@ -136,9 +117,7 @@
 			
 				<li class="ui-state-default">Item 1</li>
 				<li class="ui-state-default">Item 2</li>
-				<li class="ui-state-default">Item 3</li>
-				<li class="ui-state-default">Item 4</li>
-				<li class="ui-state-default">Item 5</li>
+
 			</ul>
 		</div>
 		
