@@ -2,8 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<link href="resources/css/drive.css" rel="stylesheet">
+<script src="resources/js/drive.js"></script>
 <script>
 $(function(){
+	//jstree 기능
 	var to = false;
 	$('#searchText').keyup(function () {
 		if(to) { clearTimeout(to); }
@@ -21,7 +24,7 @@ $(function(){
 				'force_text' : true,
 				"themes" : { "stripes" : true },
 			    'data' : [
-			        '첫번째 프로젝트',
+			        '구매전략',
 			        {
 			          'text' : '추가 폴더',
 			          'state' : {
@@ -77,171 +80,84 @@ $(function(){
 			sel = ref.get_selected();
 		if(!sel.length) { return false; }
 		ref.delete_node(sel);
-	});		
+	});	
+
+	//file drag and drop 기능
+	var obj = $("#dragandrophandler");
+	obj.on('dragenter', function (e){
+	    e.stopPropagation();
+	    e.preventDefault();
+	    $(this).addClass('dragBorder');
+		 obj.text("이 곳에 파일을 Drag & Drop 해주세요.");
+	});
+	obj.on('dragover', function (e) 
+	{
+	     e.stopPropagation();
+	     e.preventDefault();
+	});
+	obj.on('drop', function (e) 
+	{	 
+	     $(this).removeClass('dragBorder');
+	     obj.text('');
+	     e.preventDefault();
+	     var files = e.originalEvent.dataTransfer.files;	 
+	     //We need to send dropped files to Server
+	     handleFileUpload(files,obj);
+	});
+	$(document).on('dragenter', function (e) 
+	{
+	    e.stopPropagation();
+	    e.preventDefault();
+	});
+	$(document).on('dragover', function (e) 
+	{
+	  e.stopPropagation();
+	  e.preventDefault();
+	  obj.removeClass('dragBorder');
+	  obj.text('');
+	});
+	$(document).on('drop', function (e) 
+	{
+	    e.stopPropagation();
+	    e.preventDefault();
+	});	
 });
 
-function Search() {
-	$("div").find(".defaultDriveMenu").each(function(){
-		$(this).attr('style', 'display:none');
-	});
-	$("div").find(".searchDriveMenu").each(function(){
-		$(this).attr('style', 'display:block');
-	});
-	
-}
-
-function Allcheck() { //전체선택 onclick
-	$('div.more').parent('div.card').css('background', 'rgba(161, 163, 166, 0.3)');
-	$("input[type=checkbox]").prop("checked", true);
-
-	$('.defaultDriveMenu').empty();
-	var button = "";
-	button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-	button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
-	$('.defaultDriveMenu').append(button);
-}
-
-function Returncheck() {
-	$('div.more').parent('div.card').css('background', '');
-	$("input[type=checkbox]").prop("checked", false);
-
-	$('.defaultDriveMenu').empty();
-	var button = "";
-	button += "<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
-	button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn' onclick='Allcheck()'>전체선택</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-	button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
-	$('.defaultDriveMenu').append(button);
-}
-function Return() {
-	$("div").find(".defaultDriveMenu").each(function(){
-		$(this).attr('style', 'display:block');
-	});
-	$("div").find(".searchDriveMenu").each(function(){
-		$(this).attr('style', 'display:none');
-	});
-}
-
-function checkBox(box) {
-	var cardId = document.getElementById('css');
-	if (box.checked == true) {
-		$('div.more').parent('div#css').css('background', 'rgba(161, 163, 166, 0.3)');
-
-		$('.defaultDriveMenu').empty();
-		var button = "";
-		button += "<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
-		button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button +=
-			"<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-		button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
-		$('.defaultDriveMenu').append(button);
-
-	} else {
-		$('div.more').parent('div#css').css('background', '');
-		Returncheck();
-	}
+function sendFileToServer(formData,status){
+	console.log(formData);
+    var uploadURL ="http://hayageek.com/examples/jquery/drag-drop-file-upload/upload.php"; //Upload URL
+    var extraData ={}; //Extra Data.
+    var jqXHR=$.ajax({
+            xhr: function() {
+            var xhrobj = $.ajaxSettings.xhr();
+            if (xhrobj.upload) {
+                    xhrobj.upload.addEventListener('progress', function(event) {
+                        var percent = 0;
+                        var position = event.loaded || event.position;
+                        var total = event.total;
+                        if (event.lengthComputable) {
+                            percent = Math.ceil(position / total * 100);
+                        }
+                        //Set progress
+                        status.setProgress(percent);
+                    }, false);
+                }
+            return xhrobj;
+        },
+    url: uploadURL,
+    type: "POST",
+    contentType:false,
+    processData: false,
+        cache: false,
+        data: formData,
+        success: function(data){
+            status.setProgress(100); 
+        }
+    }); 
+ 
+    status.setAbort(jqXHR);
 }
 </script>
-<style>
-.defaultDriveMenu {
-	width: 100%;
-	background: white;
-	/*    border-bottom: 1px double #326295; */
-	font-family: 'Source Sans Pro', sans-serif;
-	padding: 15px 20px;
-}
-.driveBtn{
-	padding: 0.375rem 0.75rem;
-	border-radius: 2px;
-	width: 82px;
-	height: 35px;
-	text-align: center;
-}
-.searchDriveMenu {
-	width: 100%;
-	background: white;
-	/*    border-bottom: 1px double #326295; */
-	font-family: 'Source Sans Pro', sans-serif;
-	padding: 15px 20px;
-}
-
-.drivegroup {
-	float: right;
-	margin-top: 5px;
-	color: #326295;
-}
-.filebox input[type="file"] {
-	/* 파일 필드 숨기기 */
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	border: 0;
-}
-
-#driveFile input[type="file"] {
-	/* 파일 필드 숨기기 */
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	border: 0;
-}
-
-#driveCard {
-	border: 3px solid #326295;
-}
-
-#driveCard:hover .more {
-	visibility: visible;
-	opacity: 1;
-	cursor: pointer;
-}
-
-.more {
-	visibility: hidden;
-}
-
-#trash {
-
-	font-weight: bold;
-}
-
-#detail {
-	position: absolute;
-	z-index: 1;
-	border: 2px solid #e8ebed;
-	padding: 10px 10px;
-	background-color: #fff;
-}
-
-#detail li:hover {
-	background-color: #f0f3f7;
-	cursor: pointer;
-}
-
-#searchText {
-	border-right: 0px;
-	border-top: 0px;
-	boder-left: 0px;
-	boder-bottom: 3px solid #326295;
-}
-</style>
 <div class="container-fluid mt-3">
 	<div class="row">
 		<div class="col-md-3">
@@ -256,9 +172,9 @@ function checkBox(box) {
 					<div id="jstree" class="demo" style="margin-top:1em; min-height:200px;">
 					
 						</div>
-				<a href="Trash.do" id="trash" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
-					<i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;휴지통
-				</a>
+						<a href="Trash.do" id="trash" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
+							<i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;<b>휴지통</b>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -288,60 +204,79 @@ function checkBox(box) {
 				</div>
 			</div>
 
-			<div class="row" style="margin : 10px 10px;">
-				<div class="col-sm-4">
-					<div class="card" id="driveCard">
-						<div class="more" style="margin-top: 10px;">
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="checkbox" value="css" onclick="checkBox(this)"
-								style="width:18px; height:18px;">
-							<a style="float:right;" data-toggle="collapse" href="#detail"><i
-									class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
-						</div>
-						<div style="margin-left: 60%;">
-							<ul id="detail" class="collapse">
-								<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
-								<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
-							</ul>
-						</div>
-						<br>
-						<div class="card-body text-center">
-							<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-							<br><br>
-							<h4 style="text-align: center;">css</h4>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="card" id="driveCard">
-						<div class="more" style="margin-top: 10px;">
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="checkbox" value="js" onclick="checkBox(this)" style="width:18px; height:18px;">
-							<span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i>
-								&nbsp;&nbsp;&nbsp;&nbsp;</span>
-						</div>
-						<br>
-						<div class="card-body text-center">
-							<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-							<br><br>
-							<h4 style="text-align: center;">js</h4>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="card" id="driveCard">
-						<div class="more" style="margin-top: 10px;">
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<input type="checkbox" value="images" onclick="checkBox(this)"
-								style="width:18px; height:18px;">
-							<span style="float:right;"><i class="fas fa-ellipsis-v fa-lg"></i>
-								&nbsp;&nbsp;&nbsp;&nbsp;</span>
-						</div>
-						<br>
-						<div class="card-body text-center">
-							<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-							<br><br>
-							<h4 style="text-align: center;">images</h4>
+			<div class="row" style="margin : 10px 10px; margin-top: 0px;">
+				<div class="col-lg-12">
+					<div id="dragandrophandler" style="height: 500px;">
+					<div class="row">
+							<div class="col-sm-4">
+								<div class="card" id="driveCard">
+									<div class="more" style="margin-top: 10px;">
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" value="css" onclick="checkBox(this)"
+											style="width:18px; height:18px;">
+										<a style="float:right;" data-toggle="collapse" href="#detail"><i
+												class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
+									</div>
+									<div style="margin-left: 60%;">
+										<ul id="detail" class="collapse">
+											<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
+											<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
+										</ul>
+									</div>
+									<br>
+									<div class="card-body text-center">
+										<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
+										<br><br>
+										<h4 style="text-align: center;">css</h4>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="card" id="driveCard">
+									<div class="more" style="margin-top: 10px;">
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" value="css" onclick="checkBox(this)"
+											style="width:18px; height:18px;">
+										<a style="float:right;" data-toggle="collapse" href="#detail"><i
+												class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
+									</div>
+									<div style="margin-left: 60%;">
+										<ul id="detail" class="collapse">
+											<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
+											<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
+										</ul>
+									</div>
+									<br>
+									<div class="card-body text-center">
+										<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
+										<br><br>
+										<h4 style="text-align: center;">css</h4>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="card" id="driveCard">
+									<div class="more" style="margin-top: 10px;">
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" value="css" onclick="checkBox(this)"
+											style="width:18px; height:18px;">
+										<a style="float:right;" data-toggle="collapse" href="#detail"><i
+												class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
+									</div>
+									<div style="margin-left: 60%;">
+										<ul id="detail" class="collapse">
+											<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
+											<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
+										</ul>
+									</div>
+									<br>
+									<div class="card-body text-center">
+										<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
+										<br><br>
+										<h4 style="text-align: center;">css</h4>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
