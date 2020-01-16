@@ -49,7 +49,7 @@
 
 		}
 
-		function setKanbanData(){
+/* 		function setKanbanData(){
 			console.log("in setKanbanData");
 			 $.ajax({
 		        type : "POST",
@@ -64,6 +64,7 @@
 		    }); 
 			
 		}
+ */
 
 		function setNoticeData(){
 			console.log("in setNoticeData");
