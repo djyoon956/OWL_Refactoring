@@ -23,7 +23,11 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			 $('#noticeTable').DataTable();
+			 $('#noticeTable').DataTable({
+				 	stateSave: true, // 페이지 상태 저장
+			 });
+			 $('#noticeTable_filter').prepend('<select id="select" class="custom-select" style="margin-right : 10px; width: 100px"></select>');
+
 			let oldMenu = $("#projectMenu li:first");
 			$("#projectMenu li").on("click", function () {
 
