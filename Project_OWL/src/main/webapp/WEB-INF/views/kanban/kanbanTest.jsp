@@ -22,7 +22,6 @@
 
 .columnBody li {
     border: 1px solid #dadde0;
-
 	box-shadow : 4px #dadde0;
 	background-color : #fff;
 	margin: 5px 10px 10px 10px;
@@ -36,7 +35,6 @@
 
 .columnBody:hover {
 	border: 4px solid #c9ccd1;
-
 }
 
 /* #kanbanArea {
