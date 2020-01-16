@@ -53,21 +53,25 @@ function writeNotice() {
 }
 
 function cancelNotice(){
-	$("#writeBox").addClass("hidden");
-	$("#noticeBox").removeClass("hidden");
 	$("#noticeForm")[0].reset();
 	$("#noticeNote").summernote('reset');
+	$("#writeBox").addClass("hidden");
+	$("#noticeBox").removeClass("hidden");
 }
 
-function writeNoticeOk(){
+function writeNoticeOk(projectIdx){
+	console.log("WriteNoticeOk");
+	console.log(projectIdx);
     let formData = new FormData();
-    formData.append("projectIdx",$("#projectIdx").val());
+    formData.append("projectIdx", projectIdx);
     formData.append("content",$('#noticeNote').summernote('code'));
     formData.append("title",$("#title").val());
     $.each($("#multipartFiles")[0].files, function(i, file) {
     	formData.append('multipartFiles', file);
     });
-
+    
+    console.log($('#noticeNote').summernote('code'));
+    console.log($("#title").val());
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
@@ -76,7 +80,6 @@ function writeNoticeOk(){
         processData: false,
         contentType: false,
         cache: false,
-        timeout: 600000,
         success: function (data) {
         	console.log(data);
         	if(data){
@@ -86,11 +89,11 @@ function writeNoticeOk(){
         	}
         },
         error: function (e) {
-        	errorAlert("공지사항 작성 실패");
+        	errorAlert("공지사항 작성 실패 : "+e);
         }
     }).done(function(data){
     	cancelNotice();
-    	setNoticeData($("#projectIdx").val());
+    	setNoticeData(projectIdx);
     });
 }
 
