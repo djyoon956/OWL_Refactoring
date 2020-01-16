@@ -57,7 +57,7 @@
 </script>
 <aside class="left-sidebar" data-sidebarbg="skin5">
     <div class="scroll-sidebar">
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" id="sidemenu">
         <c:set var="projectList" value="${projectList}"/> 
             <ul id="sidebarnav" class="p-t-30">
             <li id="sidebarLable" class="sidebar-item hide-menu">MY</li>
