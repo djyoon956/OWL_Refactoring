@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.owl.drive.dao.DriveDao;
-import com.owl.drive.dto.Drive;
+import com.owl.drive.dto.DriveFolder;
 
 @Service
 public class DriveService {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public boolean insertDriveFolder(Drive drive) {
+	public boolean insertDriveFolder(DriveFolder drive) {
 		DriveDao dao = getDriveDao();
 		boolean result = false;
 
