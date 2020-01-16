@@ -69,10 +69,12 @@
 		var value =  "sortable" + n++;
 
 		var result = "";
-    		result += '<div><ul id="'+ value +'"class="connectedSortable columnBody">';
-    		result += '<label>Undefined section</label>';
+    		result += '<div class="columnSection">';
+    		result += '<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>';
+        	result += '<ul id="' + value + '"class="connectedSortable columnBody cursor">';
     		result += '<li class="ui-state-default">Item 1</li>';
-    		result += '<li class="ui-state-default">Item 2</li></ul></div>';
+        	result += '<li class="ui-state-default">Item 2</li></ul></div>';
+
         console.log("result" + result);	
 		$('#kanbanArea').append(result);
 

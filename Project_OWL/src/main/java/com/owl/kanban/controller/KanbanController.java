@@ -15,21 +15,6 @@ public class KanbanController {
 	private KanbanService service;
 
 
-	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST)     
-	public void insertIssue(Issue issue) {
-		System.out.println("in insertIssue");
-		System.out.println(issue.toString());
-		System.out.println(":::"  +issue.getIssueTitle() + issue.getAssigned());
-	}	
-	
-	
-	/*
-	@RequestMapping("GetKanban.do") 
-	public ModelAndView getKanban() {
-		return new ModelAndView("kanban/kanbanTest");
-	}	
-	
-	*/
 	
 	
 	

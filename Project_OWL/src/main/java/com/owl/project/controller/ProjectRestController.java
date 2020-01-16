@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.owl.drive.dto.DriveFolder;
 import com.owl.project.dto.Project;
 import com.owl.project.dto.ProjectList;
 import com.owl.project.service.ProjectService;
@@ -40,14 +41,15 @@ public class ProjectRestController {
 	
 	//새 프로젝트 추가
 	@RequestMapping("InsertNewProject.do")
-	public boolean insertNewProject(String projectName, String projectColor, Project project, ProjectList projectlist, Principal principal, HttpServletRequest request) throws Exception {
+	public boolean insertNewProject(String projectName, String projectColor, Project project, ProjectList projectlist, Principal principal, DriveFolder drivefolder, HttpServletRequest request) throws Exception {
 		boolean result = false;
 		try {
 		projectlist.setEmail(principal.getName());
-		System.out.println(principal.getName());
 		project.setProjectName(project.getProjectName());		
 		projectlist.setProjectColor(projectlist.getProjectColor());
-		result = service.insertNewProject(project, projectlist);
+		drivefolder.setDepth(0);
+		drivefolder.setRef(1);
+		result = service.insertNewProject(project, projectlist, drivefolder, request);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
