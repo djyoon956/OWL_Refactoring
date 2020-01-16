@@ -22,15 +22,17 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
 	<script type="text/javascript">
+		let noticeTable;
 		$(function(){
-			 $('#noticeTable').DataTable({
+			noticeTable =$('#noticeTable').DataTable({
 				 	stateSave: true, // 페이지 상태 저장
+				 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 			 });
-			 $('#noticeTable_filter').prepend('<select id="select" class="custom-select" style="margin-right : 10px; width: 100px"></select>');
+			 $('#noticeTable_length select').attr("class","select2 form-control custom-select");
 
 			let oldMenu = $("#projectMenu li:first");
+			
 			$("#projectMenu li").on("click", function () {
-
 				oldMenu.removeClass("active");
 				let oldTab = $(oldMenu.children(".nav-link").attr("href"));
 				oldTab.removeClass("active show");
@@ -89,7 +91,7 @@
 
 		function setNoticeData() {
 			console.log("in setNoticeData");
-			$.ajax({
+			 $.ajax({
 				type: "POST",
 				url: "GetNotices.do",
 				data: {projectIdx: ${project.projectIdx}},
@@ -97,14 +99,13 @@
 					if(data.length > 0){
 						$("#noticeTable tbody").empty();
 						$.each(data, function (index, element) {
-							let row = "<tr>" +
-													"<td>" + element.noticeIdx + "</td>" +
-													"<td>" + element.title + "</td>" +
-													"<td>" + element.email + "</td>" +
-													"<td>" + element.writeDate + "</td>" +
-													"<td>" + element.readNum + "</td>" +
-												"</tr>";
-						$("#noticeTable tbody").append(row);
+							noticeTable.row.add( [
+								element.noticeIdx,
+								element.title,
+								element.email,
+								element.writeDate,
+								element.readNum
+					        ] ).draw();
 						})
 
 						$("#emptyNoticeBox").addClass("hidden");
@@ -114,7 +115,7 @@
 						$("#noticeTableBox").addClass("hidden");
 					}
 				}
-			});
+			}); 
 		}
 
 		function setDriveData(){
