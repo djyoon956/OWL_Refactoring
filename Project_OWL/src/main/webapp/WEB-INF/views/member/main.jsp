@@ -110,7 +110,7 @@ $(function() {
 		                                    <tr>
 		                                        <td>구매전략</td>
 		                                        <td>공지사항 게시판 기능 구현</td>
-		                                        <td>1/28</td>
+		                                        <td class="text-success">tomorrow</td>
 		                                        <td><span class="badge badge-pill badge-warning font-14">low</span></td>
 		                                    </tr>
 		                                    <tr>
@@ -118,6 +118,12 @@ $(function() {
 		                                        <td>단체 채팅 기능 구현</td>
 		                                        <td>1/18</td>
 		                                        <td><span class="badge badge-pill badge-success font-14">medium</span></td>  
+		                                    </tr>
+		                                    <tr>
+		                                        <td>후기관리</td>
+		                                        <td>캘린더 뷰 구현</td>
+		                                        <td>1/20</td>
+		                                        <td><span class="badge badge-pill badge-warning font-14">low</span></td>
 		                                    </tr>
 		                                </tbody>
 		                            </table>
@@ -165,6 +171,17 @@ $(function() {
                                     </div>
                                     <div class="progress">
                                         <div class="progress-bar" role="progressbar" style="width: 34%; background-color:#326295;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                 <div class="w-100 pt-3">
+                                    <div class="d-flex no-block align-items-center">
+                                        <span>후기관리</span>
+                                        <div class="ml-auto">
+                                            <span>95%</span>
+                                        </div>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" style="width: 95%; background-color:darkgray;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                               </div>
