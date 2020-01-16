@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
 <!-- Custom CSS -->
+<link href="resources/css/common.css" rel="stylesheet">
 <link href="resources/dist/css/style.min.css" rel="stylesheet">
 <script src="resources/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
 

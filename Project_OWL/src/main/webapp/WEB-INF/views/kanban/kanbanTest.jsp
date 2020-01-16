@@ -68,7 +68,6 @@
     
     
     $('#addColumn').click(function() {
-        console.log("여기오니?");
 		var value =  "sortable" + n++;
 
 		var result = "";
@@ -84,16 +83,30 @@
         });
 
     function sortableFn (value)  {
-	console.log('여기는 함수');
        var value1 ='#' + value;
         $( value1 ).sortable({
             connectWith: ".connectedSortable",
             dropOnEmpty: false        
           }).disableSelection();
         }
-
     
   });
+
+/*   function setKanbanData(){
+		console.log("in setKanbanData");
+		 $.ajax({
+	        type : "POST",
+	        url : "GetKanban.do",
+	        data : {projectIdx : ${project.projectIdx}},
+	        success : function(data) {
+	            console.log("setKanbanData success");
+	            $("#kanban").html(data);
+	        }, error : function(){
+	        	console.log("setKanbanData error");
+	        }
+	    }); 
+	} */
+	
   </script>
 </head>
 <body>
