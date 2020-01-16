@@ -2,7 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<c:set var="project" value="${project}"/>
+<c:set var="project" value="${project}" scope="request"/>
 <html>
 <head>
 	<meta charset="utf-8">

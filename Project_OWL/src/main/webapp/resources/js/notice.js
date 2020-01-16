@@ -6,8 +6,6 @@ function initNotice(){
 	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 	});
 	$('#noticeTable_length select').attr("class","select2 form-control custom-select");
-	
-	
 }
 
 function setNoticeData(projectIdx) {
@@ -55,9 +53,47 @@ function writeNotice() {
 }
 
 function cancelNotice(){
-	$("#writeBox").addClass("hidden");
-	$("#noticeBox").removeClass("hidden");
 	$("#noticeForm")[0].reset();
 	$("#noticeNote").summernote('reset');
+	$("#writeBox").addClass("hidden");
+	$("#noticeBox").removeClass("hidden");
+}
+
+function writeNoticeOk(projectIdx){
+	console.log("WriteNoticeOk");
+	console.log(projectIdx);
+    let formData = new FormData();
+    formData.append("projectIdx", projectIdx);
+    formData.append("content",$('#noticeNote').summernote('code'));
+    formData.append("title",$("#title").val());
+    $.each($("#multipartFiles")[0].files, function(i, file) {
+    	formData.append('multipartFiles', file);
+    });
+    
+    console.log($('#noticeNote').summernote('code'));
+    console.log($("#title").val());
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "WriteNotice.do",
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (data) {
+        	console.log(data);
+        	if(data){
+        		successAlert("공지사항 작성 완료");
+        	}else{
+        		errorAlert("공지사항 작성 실패");
+        	}
+        },
+        error: function (e) {
+        	errorAlert("공지사항 작성 실패 : "+e);
+        }
+    }).done(function(data){
+    	cancelNotice();
+    	setNoticeData(projectIdx);
+    });
 }
 

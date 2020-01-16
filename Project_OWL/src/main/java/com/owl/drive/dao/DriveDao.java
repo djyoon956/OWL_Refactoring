@@ -2,10 +2,11 @@ package com.owl.drive.dao;
 
 import java.sql.SQLException;
 
-import com.owl.drive.dto.Drive;
+import com.owl.drive.dto.DriveFile;
+import com.owl.drive.dto.DriveFolder;
 
 public interface DriveDao {
-	public int insertFolder(Drive drive) throws ClassNotFoundException, SQLException;
+	public int insertFolder(DriveFolder drivefolder) throws ClassNotFoundException, SQLException;
 
-	public int insertFile(Drive drive) throws ClassNotFoundException, SQLException;
+	public int insertFile(DriveFile drivefile) throws ClassNotFoundException, SQLException;
 }
