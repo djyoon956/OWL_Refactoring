@@ -72,7 +72,7 @@ $(function() {
 	top: 0;
 	bottom: 0;
 	width: 10px;
-	background: #afdcf8;
+	background: #5086bf;
 	left: 20%;
 	margin-left: -10px;
 }
@@ -101,19 +101,20 @@ $(function() {
 
 .cbp_tmtimeline > li .cbp_tmtime span:last-child {
 	font-size: 2.9em;
-	color: #3594cb;
+	color: #5086bf;
 }
 
 .cbp_tmtimeline > li:nth-child(odd) .cbp_tmtime span:last-child {
-	color: #6cbfee;
+	color: #326295;
 }
 
 /* Right content */
 .cbp_tmtimeline > li .cbp_tmlabel {
-	margin: 0 0 15px 25%;
-	background: #3594cb;
+	margin: 0 0 15px 30%;
+	width:400px;
+	background: #5086bf;
 	color: #fff;
-	padding: 2em;
+	padding: 1em;
 	font-size: 1.2em;
 	font-weight: 300;
 	line-height: 1.4;
@@ -122,7 +123,7 @@ $(function() {
 }
 
 .cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel {
-	background: #6cbfee;
+	background: #326295;
 }
 
 .cbp_tmtimeline > li .cbp_tmlabel h2 { 
@@ -140,13 +141,13 @@ $(function() {
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	border-right-color: #3594cb;
+	border-right-color: #5086bf;
 	border-width: 10px;
 	top: 10px;
 } 
 
 .cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
-	border-right-color: #6cbfee;
+	border-right-color: #326295;
 }
 
 /* The icons */
@@ -164,9 +165,9 @@ $(function() {
 	-webkit-font-smoothing: antialiased;
 	position: absolute;
 	color: #fff;
-	background: #46a4da;
+	background: #326295;
 	border-radius: 50%;
-	box-shadow: 0 0 0 8px #afdcf8;
+	box-shadow: 0 0 0 8px #5086bf;
 	text-align: center;
 	left: 20%;
 	top: 0;
@@ -208,13 +209,13 @@ $(function() {
 		right: auto;
 		left: 20px;
 		border-right-color: transparent;
-		border-bottom-color: #3594cb;
+		border-bottom-color: #5086bf;
 		top: -20px;
 	}
 
 	.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
 		border-right-color: transparent;
-		border-bottom-color: #6cbfee;
+		border-bottom-color: #326295;
 	}
 
 	.cbp_tmtimeline > li .cbp_tmicon {
@@ -223,6 +224,12 @@ $(function() {
 		left: auto;
 		margin: -55px 5px 0 0px;
 	}	
+}
+.font-900 {
+	font-weight: 900;
+}
+.cbp_tmlabel p {
+	font-size:14px;
 }
 </style>
 </head>
@@ -366,52 +373,55 @@ $(function() {
 			<!-- <div class="main"> -->
 				<ul class="cbp_tmtimeline">
 					<li>
-						<div class="cbp_tmicon"><span class="font-14" style="font-weight: 500;">MON</span></div>
+						<div class="cbp_tmicon"><span class="font-14 font-900">MON</span></div>
 						<div class="cbp_tmlabel">
 							<h5>구매전략</h5>
 							<p>로그인 view 구현</p>
 						</div>
 					</li>
 					<li>
-						<div class="cbp_tmicon"><span class="font-14" >TUE</span></div>
+						<div class="cbp_tmicon"><span class="font-14 font-900">TUE</span></div>
+						<div class="cbp_tmlabel">
+							<h5>판매계획</h5>
+							<p>공지사항 게시판 기능 구현</p>
+							<p>공지사항 게시판 view 구현</p>
+							<h5>구매전략</h5>
+							<p>qna 게시판 view 구현</p>
+						</div>
+					</li>
+					<li>
+						<div class="cbp_tmicon"><span class="font-14 font-900">WED</span></div>
+						<div class="cbp_tmlabel">
+							<h5>판매계획</h5>
+							<p>단체 채팅 기능 구현</p>
+						</div>
+					</li>
+					<li>
+						<div class="cbp_tmicon"><span class="font-14 font-900">THU</span></div>
+						<div class="cbp_tmlabel">
+						<h5>판매계획</h5>
+							<p>채팅 view 구현</p>
+						</div>
+					</li>
+					<li>
+						<div class="cbp_tmicon"><span class="font-14 font-900">FRI</span></div>
+						<div class="cbp_tmlabel">
+							<h5>구매전략</h5>
+							<p>탈퇴 view 구현</p>
+						</div>
+					</li>
+					<li>
+						<div class="cbp_tmicon"><span class="font-14 font-900">SAT</span></div>
+						<div class="cbp_tmlabel">
+							<h5>판매계획</h5>
+							<p>대시보드 구현</p>
+						</div>
+					</li>
+					<li>
+						<div class="cbp_tmicon"><span class="font-14 font-900">SUN</span></div>
 						<div class="cbp_tmlabel">
 							<h5>구매전략</h5>
 							<p>로그인 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14">WED</span></div>
-						<div class="cbp_tmlabel">
-							<h5>구매전략</h5>
-							<p>로그인 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14">THU</span></div>
-						<div class="cbp_tmlabel">
-						<h5>구매전략</h5>
-							<p>로그인 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14">FRI</span></div>
-						<div class="cbp_tmlabel">
-							<h2>Courgette daikon</h2>
-							<p> celery peanut swiss chard silver beet squash dandelion maize chicory burdock tatsoi dulse radish wakame beetroot.</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14">SAT</span></div>
-						<div class="cbp_tmlabel">
-							<h2>Greens radish arugula</h2>
-							<p> epazote radicchio shallot winter purslane collard greens spring onion squash lentil. Artichoke salad bamboo shoot black-eyed pea brussels sprout garlic kohlrabi.</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14">SUN</span></div>
-						<div class="cbp_tmlabel">
-							<h2>Sprout garlic kohlrabi</h2>
-							<p> pea chickweed tomatillo quandong cauliflower spinach water spinach.</p>
 						</div>
 					</li>
 				</ul>
