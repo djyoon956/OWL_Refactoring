@@ -22,6 +22,11 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
 	
+	<!-- Datepicker -->
+	<link rel="stylesheet" type="text/css" href="resources/assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+	<script src="resources/assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	
+
 	<script src="resources/js/notice.js"></script>
 	<script type="text/javascript">
 		$(function(){
@@ -213,7 +218,7 @@
 			<h1>Calendar</h1>
 		</div>
 		<div class=" tab-pane fade" id="kanban" role="tabpanel">
-			  <jsp:include page="../kanban/kanbanTest.jsp"/>
+			  <jsp:include page="../kanban/kanban.jsp"/>
 		</div>
 		<div class=" tab-pane fade" id="notice" role="tabpanel">
 			<jsp:include page="../notice/notice.jsp" />		

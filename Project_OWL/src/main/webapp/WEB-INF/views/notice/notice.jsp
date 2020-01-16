@@ -53,8 +53,7 @@
                                 <input type="text" class="form-control bg-transparent" placeholder="제목을 입력해주세요">
                             </div>
                             <div class="form-group">
-                                <textarea class="form-control bg-light" rows="10" cols="60" id="summernote"
-                                    name="summernote"></textarea>
+                                <textarea class="form-control bg-light" rows="10" cols="60" id="summernote" name="summernote"></textarea>
                             </div>
                             <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>&nbsp;파일첨부</h5>
                             <div class="form-group">
