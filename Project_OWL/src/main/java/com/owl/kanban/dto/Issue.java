@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.owl.notice.dto.File;
 
 import lombok.Getter;
@@ -14,6 +16,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Issue {
+	private int projectIdx;
 	private int issueIdx;
 	private String issueTitle;
 	private String content;
@@ -27,7 +30,7 @@ public class Issue {
 	private String file;
 	private List<File> files;
 	private HashMap<Integer, IssueLog> issueLogs;
-	
+	private CommonsMultipartFile multipartFile;
 	enum IssueProgress {
 		REQUESTED,
 		OPEN,

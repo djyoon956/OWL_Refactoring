@@ -48,8 +48,12 @@
 			});
 
 			  
-			$('#dropdownMenuButton').dropdown()
-			    
+			$('#dropdownMenuButton').dropdown();
+
+
+
+
+		    
 		})
 		
 		function setChageView(target){
@@ -90,6 +94,7 @@
 		    }); 
  */			 
 		}
+		
 		
 		function setDriveData(){
 			console.log("in setDriveData");
