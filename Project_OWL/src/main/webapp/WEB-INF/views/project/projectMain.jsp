@@ -18,15 +18,12 @@
 	<link href="resources/css/project.css" rel="stylesheet">
 	
 	<!-- DataTable -->
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css"/>
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.css"/>
-	 
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			//$("#noticeTable").DataTable();
+			 $('#noticeTable').DataTable();
 			let oldMenu = $("#projectMenu li:first");
 			$("#projectMenu li").on("click", function () {
 
@@ -89,9 +86,6 @@
 				url: "GetNotices.do",
 				data: {projectIdx: ${project.projectIdx}},
 				success: function (data) {
-					console.log(data);
-					console.log(data.length > 0);
-					
 					if(data.length > 0){
 						$("#noticeTable tbody").empty();
 						$.each(data, function (index, element) {
@@ -206,8 +200,7 @@
 			<h1>Calendar</h1>
 		</div>
 		<div class=" tab-pane fade" id="kanban" role="tabpanel">
-			 <jsp:include page="../kanban/kanbanTest.jsp"/> 
-			
+			  <jsp:include page="../kanban/kanbanTest.jsp"/>
 		</div>
 		<div class=" tab-pane fade" id="notice" role="tabpanel">
 			<jsp:include page="../notice/notice.jsp" />		
