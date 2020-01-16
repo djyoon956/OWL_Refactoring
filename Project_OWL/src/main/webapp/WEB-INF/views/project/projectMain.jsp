@@ -23,10 +23,10 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			$("#noticeTable").DataTable();
+			//$("#noticeTable").DataTable();
 			let oldMenu = $("#projectMenu li:first");
 			$("#projectMenu li").on("click", function () {
-				console.log("click");
+
 				oldMenu.removeClass("active");
 				let oldTab = $(oldMenu.children(".nav-link").attr("href"));
 				oldTab.removeClass("active show");
@@ -35,23 +35,24 @@
 				let currentTab = $($(this).children(".nav-link").attr("href"));
 				currentTab.addClass("active show");
 				oldMenu = $(this);
-			});
 
-			$('#projectMenu a').on("shown.bs.tab",function(event){
-				let target = $(event.target).attr("href");
-				console.log(target);
-				if(target === "#dash")
-					setDashBoardData();
-				else if(target === "#calendar")
-					setCalendarData();
-				else if(target === "#kanban")
-					setKanbanData();
-				else if(target === "#notice")
-					setNoticeData();
-				else if(target === "#drive")
-					setDriveData();
-		    });
+				setChageView(currentTab.attr("id"));
+			});
 		})
+		
+		function setChageView(target){
+			console.log("setChageView : "+target);
+			if(target === "dash")
+				setDashBoardData();
+			else if(target === "calendar")
+				setCalendarData();
+			else if(target === "kanban")
+				setKanbanData();
+			else if(target === "notice")
+				setNoticeData();
+			else if(target === "drive")
+				setDriveData();
+		}
 		
 		function setDashBoardData(){
 			console.log("in setDashBoardData");
@@ -85,7 +86,10 @@
 				url: "GetNotices.do",
 				data: {projectIdx: ${project.projectIdx}},
 				success: function (data) {
-					if(data){
+					console.log(data);
+					console.log(data.length > 0);
+					
+					if(data.length > 0){
 						$("#noticeTable tbody").empty();
 						$.each(data, function (index, element) {
 							let row = "<tr>" +

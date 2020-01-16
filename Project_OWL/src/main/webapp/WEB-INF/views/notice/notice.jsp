@@ -9,22 +9,24 @@
 	<div class="card">
 		<div class="card-body">
 			<h3 class="text-center">Notice</h3>
-			<div class="table-responsive" id="noticeTableBox">
-				<table class="table  table-hover table-bordered zero-configuration text-center" id="noticeTable">
-					<thead>
-						<tr>
-							<th width="10%">NO</th>
-							<th width="53%">제목</th>
-							<th width="15%">작성자</th>
-							<th width="15%">작성일</th>
-							<th width="7%">조회</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+			<div id="noticeTableBox">
+				<div class="table-responsive">
+					<table class="table  table-hover table-bordered zero-configuration text-center" id="noticeTable">
+						<thead>
+							<tr>
+								<th width="10%">NO</th>
+								<th width="53%">제목</th>
+								<th width="15%">작성자</th>
+								<th width="15%">작성일</th>
+								<th width="7%">조회</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 			</div>
-			<div id="emptyNoticeBox" class="text-center">
+			<div id="emptyNoticeBox" class="text-center m-5 hidden">
 				<hr>
 		   		<h2 class="mt-4 mb-4">작성된 공지 사항이 없습니다.</h2>
 				<p class="font-pen">공지사항을 작성해주세요.</p>
