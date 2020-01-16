@@ -48,7 +48,7 @@
 
 		function setKanbanData(){
 			console.log("in setKanbanData");
-			  $.ajax({
+			/*   $.ajax({
 		        type : "POST",
 		        url : "GetKanban.do",
 		        data : {projectIdx : ${project.projectIdx}},
@@ -59,7 +59,7 @@
 		        	console.log("setKanbanData error");
 		        }
 		    }); 
-			 
+ */			 
 		}
 
 		function setNoticeData(){
