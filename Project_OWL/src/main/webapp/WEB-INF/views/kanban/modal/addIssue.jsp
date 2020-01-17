@@ -21,7 +21,6 @@
 		        height: 120
 		      });
 
-
 			
 			$("#InsertIssueBtn").on("click", function () {		
 						
@@ -34,9 +33,7 @@
 				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
 				console.log($('#multipartFile').val());
 		
-				
 				//var form = $('#myForm').serialize();
-				
 				
 			     let formData = new FormData();
 			    
@@ -46,6 +43,7 @@
 			    formData.append('assigned', $('#assigned').val());
 			    formData.append('labelIdx', $('#labelIdx').val());
 			    formData.append('dueDate', $('#datepicker-autoclose').val());
+			    formData.append('priorityCode', $('#priorityCode').val());
 			    
 			    $.each($("#multipartFiles")[0].files, function(i, file) {
 			    	formData.append('multipartFiles', file);
@@ -74,11 +72,7 @@
 			        	errorAlert("Issue 추가 실패");
 			        }
 			    });
-				
-				
 		 	});
-
-	      
 	 });
 
 
@@ -155,6 +149,22 @@
 								<option>Select Label</option>
 								<option value="1">dev</option>
 								<option value="2">view</option>
+								
+							</select>
+						</div>									
+					</div>
+						</div>
+						<hr>
+					<div class="form-group">
+						<div class="row">
+						<div class="col-4">Priority</div>	
+						<div class="col-8">
+							<select class="select2 form-control custom-select" name="priorityCode" id="priorityCode">
+								<option>Select Priority</option>
+								<option value="LOW">low</option>
+								<option value="MEDIUM">medium</option>
+								<option value="HIGH">high</option>
+								<option value="URGENT">urgent</option>
 								
 							</select>
 						</div>									
