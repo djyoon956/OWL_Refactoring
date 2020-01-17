@@ -129,7 +129,7 @@ function changeView() {
 								<div class="card-body" style="padding-top: 20px;">												
 									<div class="basic-form">																		
 												<div class="text-center mb-3">
-													<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" 
+													<img src="upload/member/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" 
 													style="width: 180px; height: 180px; "> 												
 												</div>
 												<div class="form-group">
