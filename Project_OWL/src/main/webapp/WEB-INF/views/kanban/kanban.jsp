@@ -152,8 +152,24 @@
             dropOnEmpty: false        
           }).disableSelection();
         }
-    
+    $("#openIssueBtn").click(function() {
+        $("#openIssue").removeClass("d-none");
+		$("#closeIssue").hide();
+		$("#openIssue").show();
+     });
+    $("#closeIssueBtn").click(function() {
+    	$("#closeIssue").removeClass("d-none");
+		$("#openIssue").hide();
+		$("#closeIssue").show();
+     });
+
   });
+
+  function closeFn() {
+      console.log("클릭 작동하나");
+  	$("#closeIssue").hide();
+		$("#openIssue").hide();
+   }
   </script>
 
 <div id="totalbody" class="container-fluid mt-3">
@@ -164,6 +180,8 @@
 	</a>	
 	
 	<button id="addColumn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;New Column</button>
+	<button id="openIssueBtn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;Open Issue</button>
+	<button id="closeIssueBtn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;Close Issue</button>
 	</div>
 	<div class="col-2">
 	<a href="#" data-toggle="modal" data-target="#labelEditModal">
@@ -173,6 +191,23 @@
 	</div>
 
 	<div class="row" id="kanbanArea">
+	<!--  open issue -->
+	  <div class="columnSection d-none" style="background-color: #326295;" id="openIssue">
+			<div class="columnTitle text-center mt-2 card-header"><h4>Open Issue<span class="float-right" ><i class="far fa-times-circle"  onclick="closeFn()"></i></span></h4></div>
+			<ul id="sortable0" class="connectedSortable columnBody">
+				<li class="issuePiece" style="display:none;">Item 1</li>
+					<li class="issuePiece"></li>
+			</ul>
+		</div>
+	<!--  close issue -->
+	  <div class="columnSection d-none" style="background-color: #326295;" id="closeIssue">
+			<div class="columnTitle text-center mt-2 card-header"><h4>Close Issue<span class="float-right"><i class="far fa-times-circle" onclick="closeFn()"></i></span></h4></div>
+			<ul id="sortable01" class="connectedSortable columnBody">
+				<li class="issuePiece" style="display:none;">Item 1</li>
+					<li class="issuePiece"></li>
+			</ul>
+		</div>
+		<!-- 칼럼 -->
 		<div class="columnSection">
 				<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
 			<ul id="sortable1" class="connectedSortable columnBody cursor">
