@@ -7,4 +7,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 	<select id="selectProjectMember" resultType="com.owl.member.dto" parameterType="int">
 		SELECT * FROM projectlist where projectidx = #{projectidx}
 	</select> -->
+	
+	
+	<!-- 
+	<insert id="insertColumn" parameterType="com.owl.kanban.dto">
+		INSERT INTO colname(colname, projectidx) VALUE(#{colname}, #{projectidx})
+		<selectKey keyProperty="projectIdx" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	 -->
 </mapper>

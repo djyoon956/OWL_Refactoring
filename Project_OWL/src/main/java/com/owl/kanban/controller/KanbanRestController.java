@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
 import com.owl.kanban.dto.Issue.Priority;
 import com.owl.kanban.service.KanbanService;
@@ -49,7 +50,17 @@ public class KanbanRestController {
 		return notices;
 	}
 
-	
+	@RequestMapping("InsertColumn.do")
+	public String insertColumn(Column column) {
+		System.out.println("insertColumn function in");
+		System.out.println("column : " + column);
+		System.out.println("column : " + column.toString());
+
+		
+		/* = service.insertColumn(projectIdx, colname); */
+
+		return "hi";
+	}
 
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
 	public boolean insertIssue(@RequestParam(value = "projectIdx") int projectIdx

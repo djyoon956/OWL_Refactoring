@@ -10,5 +10,7 @@ public interface KanbanDao {
 
 	public int insertIssue(Issue issue) throws ClassNotFoundException, SQLException;
 
+	public int insertColumn(int projectIdx, String colname) throws ClassNotFoundException, SQLException;
+
 	public int insertIssueLog(Issue issue) throws ClassNotFoundException, SQLException;
 }

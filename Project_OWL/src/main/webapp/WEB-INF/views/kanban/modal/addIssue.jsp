@@ -111,7 +111,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			<form id="myForm" action="InsertIssue.do" method="post" enctype="multipart/form-data">
+			<form action="InsertIssue.do" method="post" enctype="multipart/form-data">
 			    <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
  				<div class="row">
 					<div class="col-8">

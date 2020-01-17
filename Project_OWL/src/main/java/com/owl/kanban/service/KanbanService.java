@@ -35,6 +35,19 @@ public class KanbanService {
 
 	
 	
+	public String insertColumn(int projectIdx, String colname) {
+		System.out.println("insertColumn Service in");
+		System.out.println("projectIdx : " + projectIdx);
+		System.out.println("colname : " + colname);
+		
+		KanbanDao dao = getKanbanDao();
+		/* = dao.insertColumn(projectIdx, colname); */
+		
+		return "hihi";
+	}
+	
+	
+	
 	
 	public List<Member>getAssignees(int projectIdx) {
 		KanbanDao dao = getKanbanDao();
