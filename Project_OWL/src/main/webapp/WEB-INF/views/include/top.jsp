@@ -429,7 +429,7 @@ display: block;
                 <!-- ============================================================== -->
                 <li class="nav-item iconMargin">
                     <a class="nav-link text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)" id="userBtn">
-                    	<img id="userImgTop" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="35" width="35" alt="">
+                    	<img id="userImgTop" src="upload/member/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="35" width="35" alt="">
                     </a>
                 </li>
                 
@@ -462,7 +462,7 @@ display: block;
 				<div class="text-center setting-box mt-5">
 					<div class="user-img c-pointer position-relative">
 					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
-						<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" alt="" id="userImg" height="100" width="100">
+						<img src="upload/member/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" alt="" id="userImg" height="100" width="100">
 						</a>
 					</div>
 					<h4 class="mt-3 mb-1 " style="color:white; padding-top: 10px;">${member.name}</h4>
