@@ -232,8 +232,7 @@ function sendFileToServer(formData,status){
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="checkbox" value="css" onclick="checkBox(this)"
 											style="width:18px; height:18px;">
-										<a style="float:right;" data-toggle="collapse" href="#detail"><i
-												class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
+										<a style="float:right;" data-toggle="collapse" href="#detail"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
 									</div>
 									<div style="margin-left: 60%;">
 										<ul id="detail" class="collapse">

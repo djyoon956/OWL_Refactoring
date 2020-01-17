@@ -31,14 +31,14 @@ public class Issue {
 	private String file;
 	private List<File> files;
 	private HashMap<Integer, IssueLog> issueLogs;
-	enum IssueProgress {
+	public enum IssueProgress {
 		REQUESTED,
 		OPEN,
 		CLOSED,
 		REJECTED
 	}
 	
-	enum Priority {
+	public enum Priority {
 		LOW,
 		MEDIUM,
 		HIGH,
