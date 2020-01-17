@@ -13,7 +13,12 @@
     <jsp:include page="../include/headTag.jsp"/>
     
     <!-- Toast Ui -->
-    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
+<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
+
+<!-- If you use the default popups, use this. -->
+<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
+
     <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
 	<script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
 	<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
@@ -63,12 +68,9 @@ line-height: 30px;
     border-radius: 2px;
     border: 1px solid #bbb;
 }
-.dropdown-menu-title > li :hover i{
-   visibility: visible;
-   opacity: 1;
-}
-.dropdown-menu-title > i{
- visibility: hidden;
+
+.dropdown-menu >li:hover .fa-hand-point-right{
+visibility: visible !important;
 }
 </style>
 	<script type="text/javascript">
@@ -100,7 +102,7 @@ line-height: 30px;
 					$(checkBox).css("background-color", color)
 				}
 			})
-		})
+	});
 
 		
 		function hexToRGBA(hex) {
@@ -184,14 +186,6 @@ line-height: 30px;
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
                         <h4 class="page-title">Calendar</h4>
-                        <div class="ml-auto text-right">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
-                                </ol>
-                            </nav>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -251,27 +245,27 @@ line-height: 30px;
 						                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
 						                    <li role="presentation">
 						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-						                            <i class="far fa-hand-point-right" style="margin-right: 4px;"></i>Daily
+						                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>Daily
 						                        </a>
 						                    </li>
 						                    <li role="presentation">
 						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-						                            <i class="far fa-hand-point-right" style="margin-right: 4px;"></i>Weekly
+						                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>Weekly
 						                        </a>
 						                    </li>
 						                    <li role="presentation">
 						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-						                            <i class="far fa-hand-point-right" style="margin-right: 4px;"></i>Month
+						                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>Month
 						                        </a>
 						                    </li>
 						                    <li role="presentation">
 						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
-						                           <i class="far fa-hand-point-right" style="margin-right: 4px;"></i>2 weeks
+						                           <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>2 weeks
 						                        </a>
 						                    </li>
 						                    <li role="presentation">
 						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
-						                            <i class="far fa-hand-point-right" style="margin-right: 4px;"></i>3 weeks
+						                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>3 weeks
 						                        </a>
 						                    </li>
 						                    <li role="presentation">
