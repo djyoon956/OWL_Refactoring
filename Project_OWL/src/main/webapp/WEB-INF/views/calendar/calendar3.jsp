@@ -21,104 +21,10 @@
 	<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
 	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
 	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
+	
+	 <link rel="stylesheet" type="text/css" href="resources/plugin/toast-calendar/default.css" />
 	<style type="text/css">
-	input[type='checkbox'].tui-full-calendar-checkbox-square {
-	  display: none;
-	}
-	input[type='checkbox'].tui-full-calendar-checkbox-square + span {
-	  display: inline-block;
-	  cursor: pointer;
-	  line-height: 14px;
-	  margin-right: 8px;
-	  width: 14px;
-	  height: 14px;
-	  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IArs4c6QAAADpJREFUKBVjPHfu3O5///65MJAAmJiY9jCcOXPmP6kApIeJBItQlI5qRAkOVM5o4KCGBwqPkcxEvhsAbzRE+Jhb9IwAAAAASUVORK5CYII=) no-repeat;
-	  vertical-align: middle;
-	}
-	input[type='checkbox'].tui-full-calendar-checkbox-square:checked + span {
-	  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IArs4c6QAAAMBJREFUKBWVkjEOwjAMRe2WgZW7IIHEDdhghhuwcQ42rlJugAQS54Cxa5cq1QM5TUpByZfS2j9+dlJVt/tX5ZxbS4ZU9VLkQvSHKTIGRaVJYFmKrBbTCJxE2UgCdDzMZDkHrOV6b95V0US6UmgKodujEZbJg0B0ZgEModO5lrY1TMQf1TpyJGBEjD+E2NPN7ukIUDiF/BfEXgRiGEw8NgkffYGYwCi808fpn/6OvfUfsDr/Vc1IfRf8sKnFVqeiVQfDu0tf/nWH9gAAAABJRU5ErkJggg==) no-repeat;
-	}
 	
-	input[type='checkbox'].tui-full-calendar-checkbox-round {
-	  display: none;
-	}
-	input[type='checkbox'].tui-full-calendar-checkbox-round + span {
-	  display: inline-block;
-	  cursor: pointer;
-	  width: 14px;
-	  height: 14px;
-	  line-height: 14px;
-	  vertical-align: middle;
-	  margin-right: 8px;
-	  border-radius: 8px;
-	  border: solid 2px;
-	  background: transparent;
-	}
-	.underLine{
-		border-bottom: 3px solid #a5c5e8;
-		box-shadow: inset 0 -4px 0 #a5c5e8;
-	}
-	
-	#tui-menu {
-	  padding: 16px;
-	}
-	
-	.tui-open > .dropdown-toggle.btn-default {
-	  background-color: #fff;
-	}
-	
-	#dropdownMenu-calendarType {
-	  padding: 0 8px 0 11px;
-	}
-	
-	#calendarTypeName {
-	  min-width: 62px;
-	  display: inline-block;
-	  text-align: left;
-	  line-height: 30px;
-	}
-	
-	.calendar-icon {
-	  width: 14px;
-	  height: 14px;
-	}
-
-	#tui-menu .btn {
-	  border-radius: 25px;
-	  border-color: #ddd;
-	}
-	
-	#tui-menu .btn:hover {
-	  border: solid 1px #bbb;
-	  background-color: #fff;
-	}
-	
-	#tui-menu .btn:active {
-	  background-color: #f9f9f9;
-	  border: solid 1px #bbb;
-	  outline: none;
-	}
-	
-	#tui-menu .btn:disabled {
-	  background-color: #f9f9f9;
-	  border: solid 1px #ddd;
-	  color: #bbb;
-	}
-	
-	#tui-menu .btn:focus:active, #tui-menu .btn:focus, #tui-menu .btn:active {
-	  outline: none;
-	}
-	
-	#tui-menu >.dropdown-menu {
-	  top: 25px;
-	  padding: 3px 0;
-	  border-radius: 2px;
-	  border: 1px solid #bbb;
-	}
-	
-	#tui-menu >.dropdown-menu-title .calendar-icon {
-	  margin-right: 8px;
-	}
 	
 	</style>
 	<script type="text/javascript">
@@ -126,11 +32,8 @@
 			$('#calendar').tuiCalendar({
 				  defaultView: 'month',
 				  taskView: true,
-				  template: {
-				    monthDayname: function(dayname) {
-				      return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
-				    }
-				  }
+				  useCreationPopup: true,
+		    	useDetailPopup: true
 			});
 			 $('#calendarListBox').on('change', onChangeCalendars);
 			 
@@ -154,6 +57,7 @@
 				}
 			})
 		})
+
 		
 		function hexToRGBA(hex) {
 		    let radix = 16;
@@ -294,18 +198,71 @@
                                         </div>
                                     </div>
                                     <div class="col-md-10">
-                                        <div id="tui-menu">
-										      <span id="menu-navi">
-										        <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
-										        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
-										          <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
-										        </button>
-										        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
-										          <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
-										        </button>
-										      </span>
-										      <span id="renderRange" class="render-range"></span>
-										    </div>
+                                  <!--   <div id="menu">
+							            <span class="dropdown">
+							                <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							                    <i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
+							                    <span id="calendarTypeName">Monthly</span>&nbsp;
+							                    <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
+							                </button>
+							                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
+							                    <li role="presentation">
+							                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
+							                            <i class="calendar-icon ic_view_day"></i>Daily
+							                        </a>
+							                    </li>
+							                    <li role="presentation">
+							                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
+							                            <i class="calendar-icon ic_view_week"></i>Weekly
+							                        </a>
+							                    </li>
+							                    <li role="presentation">
+							                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
+							                            <i class="calendar-icon ic_view_month"></i>Month
+							                        </a>
+							                    </li>
+							                    <li role="presentation">
+							                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
+							                            <i class="calendar-icon ic_view_week"></i>2 weeks
+							                        </a>
+							                    </li>
+							                    <li role="presentation">
+							                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
+							                            <i class="calendar-icon ic_view_week"></i>3 weeks
+							                        </a>
+							                    </li>
+							                    <li role="presentation" class="dropdown-divider"></li>
+							                    <li role="presentation">
+							                        <a role="menuitem" data-action="toggle-workweek">
+							                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked="">
+							                            <span class="checkbox-title"></span>Show weekends
+							                        </a>
+							                    </li>
+							                    <li role="presentation">
+							                        <a role="menuitem" data-action="toggle-start-day-1">
+							                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
+							                            <span class="checkbox-title"></span>Start Week on Monday
+							                        </a>
+							                    </li>
+							                    <li role="presentation">
+							                        <a role="menuitem" data-action="toggle-narrow-weekend">
+							                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
+							                            <span class="checkbox-title"></span>Narrower than weekdays
+							                        </a>
+							                    </li>
+							                </ul>
+							            </span>
+							            <span id="menu-navi">
+							                <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
+							                <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
+							                    <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+							                </button>
+							                <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
+							                    <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+							                </button>
+							            </span>
+							            <span id="renderRange" class="render-range">2020.01</span>
+							        </div> -->
                                         <div id="calendar" class="h-100 w-100"></div>
                                     </div>
                                 </div>
