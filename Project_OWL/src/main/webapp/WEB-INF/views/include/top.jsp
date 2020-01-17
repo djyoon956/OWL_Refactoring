@@ -471,7 +471,7 @@ display: block;
                 <!-- ============================================================== -->
                 <li class="nav-item iconMargin">
                     <a class="nav-link text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)" id="userBtn">
-                    	<img id="userImgTop" src="upload/member/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="35" width="35" alt="">
+                    	<img id="userImgTop" src="upload/member/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="35" width="35" alt="" style="border-radius:50%;">
                     </a>
                 </li>
                 
