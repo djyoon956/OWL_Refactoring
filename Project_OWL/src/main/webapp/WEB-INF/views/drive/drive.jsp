@@ -6,7 +6,6 @@
 <script src="resources/js/drive.js"></script>
 <script>
 $(function(){
-var allFolder = [];	
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
@@ -14,12 +13,13 @@ var allFolder = [];
 		success:function(data){
 			var folder = "";
 			$.each(data, function(index, element){
-				var str = element.folderName;
+				var str = element.folderName;  
 				let arrays = str.split("\\");
 				folder = arrays[arrays.length-1];
 				console.log(folder);
 
 			});
+			
 			//jstree 기능
 			var to = false;
 			$('#searchText').keyup(function () {
@@ -38,7 +38,17 @@ var allFolder = [];
 						"check_callback" : true,
 						'force_text' : true,
 						"themes" : { "stripes" : true },
-					    'data' : [folder]
+					    'data' : [folder,
+					        {
+					         'text' : '새 폴더',
+					         'state' : {
+					           'opened' : true
+					         },
+					         'children' : [
+					           { 'text' : '폴더1' },
+					           '폴더2'
+					         ]
+					      }]
 					  },
 					"types" : {
 						"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
