@@ -52,7 +52,8 @@
 }
 
 #kanbanArea {
-	max-height: 500px;
+ height: 500px;
+ overflow-y: scroll;
 }
 
 </style>
@@ -129,7 +130,30 @@
 
 			</ul>
 		</div>
-		
+		<div class="columnSection">
+			<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
+			<ul id="sortable2" class="connectedSortable columnBody">
+				<li class="issuePiece"><div class="labelColor"></div><span>Item 1</span></li>
+				<li class="issuePiece">Item 2</li>
+
+			</ul>
+		</div>
+		<div class="columnSection">
+			<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
+			<ul id="sortable2" class="connectedSortable columnBody">
+				<li class="issuePiece"><div class="labelColor"></div><span>Item 1</span></li>
+				<li class="issuePiece">Item 2</li>
+
+			</ul>
+		</div>
+		<div class="columnSection">
+			<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
+			<ul id="sortable2" class="connectedSortable columnBody">
+				<li class="issuePiece"><div class="labelColor"></div><span>Item 1</span></li>
+				<li class="issuePiece">Item 2</li>
+
+			</ul>
+		</div>
 	</div>
 </div>
 
