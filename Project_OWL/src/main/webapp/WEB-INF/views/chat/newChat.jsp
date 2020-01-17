@@ -30,21 +30,21 @@
 				<label class="m-t-20">멤버 리스트</label>
 				<div class="input-group ">
 					<div class="form-control pt-2 pb-2">
-						<i class="far fa-user fa-2x"></i> 홍길동(hong@gmail.com)
+						<i class="fas fa-user iconSizeBig"></i> 홍길동(hong@gmail.com)
 					</div>
 					<div class="input-group-append">
 						<span class="input-group-text">
-						<i class="far fa-times-circle fa-2x"></i></span>
+						<i class="far fa-times-circle font-weight-bold iconSizeBig"></i></span>
 					</div>
 				</div>
 				<!-- 끝 -->
 				<div class="input-group ">
 					<div class="form-control pt-2 pb-2">
-						<i class="far fa-user fa-2x"></i> 김콜린(kim@gmail.com)
+						<i class="fas fa-user iconSizeBig"></i> 김콜린(kim@gmail.com)
 					</div>
 					<div class="input-group-append">
 						<span class="input-group-text">
-						<i class="far fa-times-circle fa-2x"></i> </span>
+						<i class="far fa-times-circle font-weight-bold iconSizeBig"></i> </span>
 					</div>
 				</div>
                  <div class="modal-footer">
