@@ -6,81 +6,90 @@
 <script src="resources/js/drive.js"></script>
 <script>
 $(function(){
-	//jstree 기능
-	var to = false;
-	$('#searchText').keyup(function () {
-		if(to) { clearTimeout(to); }
-		to = setTimeout(function () {
-			var v = $('#searchText').val();
-			$('#jstree').jstree(true).search(v);
-		}, 100);
-	});
+	$.ajax({
+		url:"DriveList.do",
+		dataType:"json",
+		data:{projectIdx:$("#theProject").val()},
+		success:function(data){
+			var folder = "";
+			$.each(data, function(index, element){
+				var str = element.folderName;
+				let arrays = str.split("\\");
+				folder = arrays[arrays.length-1];
+				console.log(folder);
 
-	$.jstree.defaults.core.themes.variant = "large";
-	$('#jstree').jstree({
-			"core" : {
-				"animation" : 0,
-				"check_callback" : true,
-				'force_text' : true,
-				"themes" : { "stripes" : true },
-			    'data' : [
-			        '구매전략',
-			        {
-			          'text' : '추가 폴더',
-			          'state' : {
-			            'opened' : true,
-			            'selected' : true
-			          },
-			          'children' : [
-			            { 'text' : '파일1' },
-			            '파일2'
-			          ]
-			       }
-			     ]
-			},
-			"types" : {
-				"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
-				"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
-				"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] },
-				"file" : { "icon" : "fas fa-file", "valid_children" : [] }
-			},
-			 "checkbox" : {
-				    "keep_selected_style" : false
-				  },
-			"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow", "checkbox"]
-		});
+			});
+			//jstree 기능
+			var to = false;
+			$('#searchText').keyup(function () {
+				if(to) { clearTimeout(to); }
+				to = setTimeout(function () {
+					var v = $('#searchText').val();
+					$('#jstree').jstree(true).search(v);
+				}, 100);
+			});
 
-	$("#createFolder").click(function(){
-		var ref = $('#jstree').jstree(true),
-		sel = ref.get_selected();
-		console.log(sel);
-		if(!sel.length) { 
-			sel = null;
-			sel = ref.create_node(sel, {"type":"root"});
+			$.jstree.defaults.core.themes.variant = "large";
+			$('#jstree').jstree({
+					"core" : {
+						"animation" : 0,
+						"check_callback" : true,
+						'force_text' : true,
+						"themes" : { "stripes" : true },
+					    'data' : [folder]
+					  },
+					"types" : {
+						"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
+						"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
+						"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
+					},
+					 "checkbox" : {
+						    "keep_selected_style" : false
+						  },
+					"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow", "checkbox"]
+				});
+
+			$("#createFolder").click(function(){
+				var ref = $('#jstree').jstree(true),
+				sel = ref.get_selected();
+				console.log(ref);
+				console.log(sel);
+				if(!sel.length) { 
+					let firstRoot = $('#jstree').find('li').eq(0).attr("id");
+					sel = firstRoot;
+					console.log("여기");
+					sel = ref.create_node(sel, {"type":"root"});
+					console.log(sel);
+				}
+				sel = sel[0];
+				sel = ref.create_node(sel, {"type":"default"});
+				if(sel) {
+					ref.edit(sel);
+				}
+
+			});	
+
+			$("#renameFolder").click(function(){
+				console.log("rename");
+				var ref = $('#jstree').jstree(true),
+					sel = ref.get_selected();
+				if(!sel.length) { return false; }
+				sel = sel[0];
+				ref.edit(sel);
+			});
+
+			$("#deleteFolder").click(function(){
+				console.log("delete");
+				var ref = $('#jstree').jstree(true),
+					sel = ref.get_selected();
+				if(!sel.length) { return false; }
+				ref.delete_node(sel);
+			});		
+			
 		}
-		sel = sel[0];
-		sel = ref.create_node(sel, {"type":"default"});
-		if(sel) {
-			ref.edit(sel);
-		}
-	});	
-
-	$("#renameFolder").click(function(){
-		console.log("rename");
-		var ref = $('#jstree').jstree(true),
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		sel = sel[0];
-		ref.edit(sel);
 	});
-
-	$("#deleteFolder").click(function(){
-		console.log("delete");
-		var ref = $('#jstree').jstree(true),
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		ref.delete_node(sel);
-	});	
+	
+	
 
 	//file drag and drop 기능
 	var obj = $("#dragandrophandler");
@@ -157,8 +166,10 @@ function sendFileToServer(formData,status){
  
     status.setAbort(jqXHR);
 }
+
 </script>
 <div class="container-fluid mt-3">
+<input type="hidden" value="${project.projectIdx}" id="theProject">
 	<div class="row">
 		<div class="col-md-3">
 					<h2 style="padding-left: 25px;">
