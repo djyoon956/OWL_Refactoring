@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <script>
 	$(document).ready(function() {
 		$("#userToggle").hide();
@@ -14,9 +16,8 @@
 /* 			$("#userToggle").animate({
 				height : 'toggle'
 			}); */
-			 $("#userToggle").slideToggle("slow");  
-			
-				
+			 /* $("#userToggle").slideToggle("slow"); */  
+			 	$("#userToggle").animate({width:'toggle'},350);
 		});
 
 		$("#chatBtn").click(function() {
@@ -41,6 +42,8 @@
 			$("#settingToggle").slideToggle("slow");
 			
 		});	
+
+		
 	 $("#settingBtn").on({
 		    mouseover: function (event) {
 		    	$("#setIcon").addClass("fa-spin");
@@ -71,7 +74,9 @@
 </script>
 <style>
 
-
+ul {
+display: block;
+}
 .grade1 {
 	z-index :10;
 }
@@ -106,7 +111,7 @@
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-.toggleOption {
+ .toggleOption {
 	margin-right:0px;
  	margin-top:415px;
 	background: #326295;
@@ -114,7 +119,19 @@
 	width: 310px;
 	position: fixed;
 	right:0;
+	overflow: hidden;
 }
+ 
+ 
+/*  .toggleOption {
+	margin-right:0px;
+ 	margin-top:415px;
+	background: #326295;
+	height: 1185%;
+	width: 310px;
+	position: absolute;
+	right:0;
+} */
 
 
 #userImg, .coloricon {
@@ -148,6 +165,11 @@
     border-top-right-radius: 0.25rem;
 }
 
+.chat_list-group-item:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
 
 .chat_list-group-item-action {
   width: 100%;
@@ -420,6 +442,10 @@ a:hover{
                 </div>
                 </li>
                 
+                <!-- Chatting Test-->
+				<li class="icons" style="margin-right: 25px">
+				<a href="chatTest.do" id="chatBtn"> Chat Test</i></a>
+				
                   <!-- Chatting Icon -->
                  <li class="nav-item iconMargin">
                   <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="chatBtn"> 
@@ -457,9 +483,9 @@ a:hover{
 				</div>
 				<hr>
 				<div class="text-center setting-box">
-					<ul>
-					<li><a href="Logout.do" class="whiteColor"><i class="icon-key"></i> <span>Logout</span></a></li>
-					</ul>
+					
+					<a href="Logout.do" class="whiteColor"><i class="icon-key"></i> <span>Logout</span></a>
+					
 				
 				</div>
 			</div>
@@ -485,7 +511,7 @@ a:hover{
                            <ul>
 		                      	<li class="d-flex justify-content-between align-items-center">
 		                      			진성씨 시말서 제출하세요.
-		                        		<span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>
+		                        <span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>
 		                        </li>
                            </ul>             
                        </li>
@@ -493,13 +519,13 @@ a:hover{
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
                                <img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">
-                               <h5 style="margin-top: 18px; color: #ccccff">kanban_iy</h5>
+                               <h5 style="margin-top: 18px; color: #ccccff">Family_c</h5>
                                </div>
                                 <small style="float:right;">2020-01-05</small>
                            </div>
                            <ul>
 		                      	<li class="d-flex justify-content-between align-items-center">
-		                      			이슈 끝나면 Done으로 이동해주세요.
+		                      			2/13일 화이팅
 		                        		<span class="badge badge-primary badge-pill" style="background-color: #ccccff">2</span>
 		                        </li>
                            </ul>             
