@@ -4,14 +4,27 @@
 
 <style>
 
+.assigneetitle {
+	margin-left : 5px;
+	font-weight: bold;
+	font-size: 13px;
+	
+}
+
+.assignee {
+	font-family:"Nunito Sans", sans-serif;
+	font-size: 13px;
+	font-weight: 500;
+}
+
 .badgeIcon {
 	display : inline-block;
 	background-color: #F4D452;
 	font-size : small;
 	font-weight : bold;
-	padding:5px;
+	padding : 3px;
 	color: black;
-	margin-right: 5px;
+	margin-right: 7px;
 	border-radius: 2px;
 }
 
@@ -49,7 +62,7 @@
     border: 2px solid #eeee;
 	background-color : #fff;
 	margin: 5px 10px 10px 10px;
-	padding: 15px 10px 15px 10px;
+	padding: 10px 10px 10px 10px;
 	font-size: 1.2em;
 	width: 280px;
 	height : 80px;
@@ -113,13 +126,20 @@
 		newIssue  += '<label>';
 		newIssue  += '<span class="badgeIcon2 float-left">Dev</span>';
 		newIssue  += '<span class="issueTitle">Drive : Development</span>';
-		newIssue  += '</label>'
-		newIssue  += '<a style="float:right;" data-toggle="collapse" href="#detail">'
-		newIssue  += '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+		newIssue  += '</label>';
+		newIssue  += '<a style="float:right;" data-toggle="collapse" href="#detail">';
+		newIssue  += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
+		newIssue  += '</div>';
+		newIssue  += '<div>';
+		newIssue  += '<label>';
+		newIssue  += '<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>';
+		newIssue  += '<span class="assignee">Chloe</span>';
+		newIssue  += '</label>';
 		newIssue  += '</div>';
 		newIssue  += '</li>';
        
 		$('#sortable1').append(newIssue);
+
         });
 
 
@@ -159,8 +179,9 @@
 <div id="totalbody" class="container-fluid mt-3">
 	<div class="row">
 	<div class="col-8" style="margin-left:30px;">
+	
 	<a href="#" data-toggle="modal" data-target="#addIssueModal">
-	 <button id="addIssue" class="btn btn-primary"><i class="fas fa-italic"></i>&nbsp;New Issue</button>
+	 	<button id="addIssue" class="btn btn-primary"><i class="fas fa-italic"></i>&nbsp;New Issue</button>
 	</a>	
 	
 	<button id="addColumn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;New Column</button>
@@ -178,20 +199,20 @@
 			<ul id="sortable1" class="connectedSortable columnBody cursor">
 			    	<li class="issuePiece" style="display:none;">Item 1</li>   <!-- 무조건 있어야함!!! -->
 					<li class="issuePiece">
-						<div class="dropdown">
+						<div>
 							<label>
 							<span class="badgeIcon float-left">Dev</span>
 							<span class="issueTitle">Drive : Development</span>
 							</label>
-							<a style="float:right;" data-toggle="dropdown" id="detailMenu" aria-haspopup="true" aria-expanded="false">
+							<a style="float:right;" data-toggle="collapse" href="#detail">
 							<i class="fas fa-ellipsis-v fa-sm"></i></a>
 						</div>
-							<div style="margin-left: 60%;" class="dropdown-menu" aria-labelledby="detailMenu">
-								<ul id="detail" class="collapse">
-									<li>Edit Issue</li>
-									<li>Remove Issue</li>
-								</ul>
-							</div>
+						<div>
+							<label>
+							<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>
+							<span class="assignee">Chloe</span>
+							</label>
+						</div>
 					</li>
 					<li class="issuePiece">
 						<div>
@@ -202,10 +223,13 @@
 							<a style="float:right;" data-toggle="collapse" href="#detail">
 							<i class="fas fa-ellipsis-v fa-sm"></i></a>
 						</div>
+						<div>
+							<label>
+							<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>
+							<span class="assignee">Colin</span>
+							</label>
+						</div>
 					</li>
-					
-					
-					
 			</ul>
 		</div>
 
@@ -222,6 +246,12 @@
 							<a style="float:right;" data-toggle="collapse" href="#detail">
 							<i class="fas fa-ellipsis-v fa-sm"></i></a>
 						</div>
+						<div>
+							<label>
+							<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>
+							<span class="assignee">Cindy</span>
+							</label>
+						</div>
 					</li>
 				<li class="issuePiece">
 						<div>
@@ -231,6 +261,12 @@
 							</label>
 							<a style="float:right;" data-toggle="collapse" href="#detail">
 							<i class="fas fa-ellipsis-v fa-sm"></i></a>
+						</div>
+						<div>
+							<label>
+							<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>
+							<span class="assignee">Cathy</span>
+							</label>
 						</div>
 					</li>
 			</ul>
