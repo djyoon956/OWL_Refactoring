@@ -21,6 +21,46 @@
 			$("#alarmToggle").hide();
 			$("#settingtoggle").hide();
 		 	$("#chatToggle").animate({width:'toggle'},350);
+
+		 	//디비에서 같은 프로젝트에 속해 있는 유저 목록 뽑아서 채팅 기능에서 유저목록 보여 주기..	
+		 	$.ajax({
+				url: "MyProjectsMates.do",
+				type: "POST",
+				dataType: 'json',
+				data : { email :$('#memberEmail').val(),
+					     name : $('#memberName').val()}, 
+				success: function (data) {
+					console.log("뷰단으로 데이터 들어 오나요?? >" + data);
+
+					var userList = "";
+					$.each(data, function(index, value) {          				
+					  console.log(value);
+					  console.log(value.name + " / " + value.email);
+
+					userList += '<a href = "chatTest.do"'+ '<li id="li' + value.email +'" data-targetUserUid="' + value.email + '" data-username="' + value.name + '" class="collection-item avatar list">'
+	               + '<img src="' + 'value.img' + '" alt="" class="circle">' +
+	              '<span class="title">'+ value.name+ '</span>'+
+	              '<span class="small material-icons right hiddendiv done">done</span>'+
+	              '<span class="small material-icons right hiddendiv mood yellow-text">mood</span>'+
+	              '</li>' + '</a>';
+					  
+					});
+
+					$('#chatUserList').append(userList);
+
+					//firebase database 에 신규 회원일 경우 등록 해야 하는데.. 이미 존재 하는 유전 인지 아닌지 먼저 확인을 학고 등록 해야 겠지??
+					
+				},
+				error: function(xhr, status, error){
+	    			console.log("아잭스 에러 터짐 ㅠㅠ");
+			         var errorMessage = xhr.status + ': ' + xhr.statusText
+			         alert('Error - ' + errorMessage);
+			     }
+			});
+
+
+
+	 	
 		});
 
 		$("#alarmBtn").click(function() {
@@ -59,6 +99,8 @@
 		
 	});
 	});
+
+	
 
 	function Search(){
 		$('.ChatList').empty();   
@@ -489,8 +531,8 @@ display: block;
 				<br>
 				</div>
 				<hr>
-					 <ul class="list-group">
-                       <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start"  style="height: 106px;">
+					 <ul class="list-group" id="chatUserList">
+                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start"  style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
                                <img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">
@@ -537,8 +579,9 @@ display: block;
 		                        		<span class="badge badge-primary badge-pill">1</span>
 		                        </li>
                            </ul>             
-                       </li>	        
+                       </li> 	       
                     </ul>
+                    <!-- 채팅 유정 목록 유엘 끝 -->
 				</div>				
 		</div>
 		

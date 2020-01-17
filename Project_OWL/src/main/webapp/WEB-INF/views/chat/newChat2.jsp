@@ -285,9 +285,10 @@
 	      //유저가 채팅기능 버튼을 눌렀을 때 작동하는 콜백 함수... 목적은.. firebase database 유저 정보저장(메세지 읽기, 쓰기를 위해 특정키 부여 누군인지 구분하기 위해 필요)
 		  //그리고 이미 디비에 있으면...키 값을 불러서 해당 유저와 관련된 정보를 보여 주는 데 활용 할 수 있다...    
           function writeUserData(name, email, imageUrl) {
-        	  var myEmail = firebase.database().ref('emails/');
-        	  myEmail.orderByChild('email').equalTo(email).once('value', function(data){
-          	    console.log('현재 접속한 유저는 채팅 경험이 있나요??	 :' , data.val());
+        	  var myEmail = firebase.database().ref();
+        	  myEmail.child("emails").orderByChild('email').equalTo(email).once('value', function(data){
+          	    console.log('현재 접속한 유저는 채팅 경험이 있나요??	 :' + data.key + " / " + data.val() + " / " +data.numChildren());
+          	    console.log("여기서 데이터 값의 정체는??" + typeof data);
 				var myResult = data.val();
 				if(myResult == null){
 					console.log("신규회원 이메일 등록을 통한 유아디 생성과.. 유저 데이터 등록 필요");
@@ -299,13 +300,24 @@
 		        	  });
 					}else{
 					console.log("이미디비에 있는 회원이므로 키값을 뽑아내서... 채팅에 활용");
-					console.log("이미 있는 회원의 키 값 뽑아 보자 " + data.val());
+					console.log("이미 있는 회원의 키 값 뽑아 보자 " + data);
+					data.forEach(function(childSnapshot) {
+						var userKey = childSnapshot.key;
+              			console.log("이미 있는 회원의 키 값 뽑아 보자 " + userKey);
+              			
+             			 			
+         		 });
+					
+					
+				
+
+
 					
 						}
           	    
           	});
         	}
-          writeUserData('js king', 'dl@naver.com', 'view/coolguy.jpg');
+          writeUserData($('#memberName').val(), $('#memberEmail').val(), 'view/coolguy.jpg');
 
            /*
 			writeUserData().then(function(myresult){
