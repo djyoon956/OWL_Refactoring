@@ -32,8 +32,8 @@ public class UploadHelper {
 		return path;
 	}
 
-	public void makeDriveDirectory(String uploadPath, int projectIdx, String folderName) {
-		String path = Paths.get(uploadPath, "drive", Integer.toString(projectIdx), folderName).toString();
+	public static void makeDriveDirectory(String uploadPath, int projectIdx, String folderName) {
+		String path = Paths.get(uploadPath, "project", Integer.toString(projectIdx), "drive", folderName).toString();
 		makeDirectory(path);
 	}
 
