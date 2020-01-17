@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.owl.notice.dto.File;
@@ -30,7 +31,6 @@ public class Issue {
 	private String file;
 	private List<File> files;
 	private HashMap<Integer, IssueLog> issueLogs;
-	private CommonsMultipartFile multipartFile;
 	enum IssueProgress {
 		REQUESTED,
 		OPEN,

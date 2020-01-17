@@ -14,8 +14,8 @@ public class UploadHelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return path;
+		
+		return fileName;
 	}
 
 	public static String uploadFileByProject(String uploadPath, String uploadType, int projectIdx, String fileName, byte[] content) {

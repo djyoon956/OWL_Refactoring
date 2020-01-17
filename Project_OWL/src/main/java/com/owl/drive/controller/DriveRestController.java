@@ -1,6 +1,7 @@
 package com.owl.drive.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,12 +46,27 @@ public class DriveRestController {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
-		return result;
+		return result;	
 	}
+	
+	@RequestMapping(value = "DriveList.do")
+	public List<DriveFolder> getDriveList(int projectIdx){
+		System.out.println("idx " + projectIdx);
+		List<DriveFolder> folders  = null;
+		folders = service.getDriveList(projectIdx);		
+		System.out.println(folders);
+		return folders;
+	}
+	
+	
+	
+	
+	
+	
 	
 	private void checkDirectory(String path) {
 		File file = new File(path);
 		if (!file.exists())
-			file.mkdir();
+			file.mkdirs();
 	}
 }

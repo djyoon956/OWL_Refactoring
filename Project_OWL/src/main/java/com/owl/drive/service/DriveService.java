@@ -1,6 +1,8 @@
 package com.owl.drive.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +27,25 @@ public class DriveService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return result;
 	}
 
+	public List<DriveFolder> getDriveList(int projectIdx) {
+		DriveDao dao = getDriveDao();
+		List<DriveFolder> folders = new ArrayList<DriveFolder>();
+
+		try {
+			folders = dao.getDriveList(projectIdx);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return folders;
+	}
+	
+	
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);
 	}

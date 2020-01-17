@@ -2,9 +2,15 @@
 
 
 <style>
+
+.labelColor {
+	 display: inline-block;
+	 background-color: red;
+}
+
+
 .columnBody {
     border: 4px solid #eee;
- 	background-color : #f0f3f7;
 	width: 310px;
 	min-height: 20px;
 	max-height : 550px;
@@ -17,9 +23,8 @@
 	overflow-y :auto;
 }
 
-.columnBody li {
+.columnBody li, .issuePiece {
     border: 1px solid #dadde0;
-	box-shadow : 4px #dadde0;
 	background-color : #fff;
 	margin: 5px 10px 10px 10px;
 	padding: 15px;
@@ -35,7 +40,7 @@
 }
 
 .columnTitle {
-	border : 1px solid #fff;
+	border : 4px solid #fff;
 	background-color: #fff;
 	height: 50px;
 	margin-left: 20px;
@@ -43,6 +48,7 @@
 	padding-top: 12px;
 	font-weight: 400;
 	border-radius: 5px;
+	border-bottom-color: #F9AFA4; 
 }
 
 #kanbanArea {
@@ -56,7 +62,7 @@
 	  
     $('#addIssue').click (function() {
        console.log('addIssue click in');
-		$('#sortable1').append('<li class="ui-state-default">New Issue</li>');
+		$('#sortable1').append('<li class="issuePiece">New Issue</li>');
         });
 
 
@@ -72,8 +78,8 @@
     		result += '<div class="columnSection">';
     		result += '<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>';
         	result += '<ul id="' + value + '"class="connectedSortable columnBody cursor">';
-    		result += '<li class="ui-state-default">Item 1</li>';
-        	result += '<li class="ui-state-default">Item 2</li></ul></div>';
+    		result += '<li class="issuePiece">Item 1</li>';
+        	result += '<li class="issuePiece">Item 2</li></ul></div>';
 
         console.log("result" + result);	
 		$('#kanbanArea').append(result);
@@ -98,25 +104,28 @@
 	<a href="#" data-toggle="modal" data-target="#addIssueModal">
 	<button id="addIssue" class="btn btn-primary">New Issue</button>
 	</a>	
+	
 	<button id="addColumn" class="btn btn-primary">New Column</button>
 
-	<div class="row" id="kanbanArea">
+	<a href="#" data-toggle="modal" data-target="#labelEditModal">
+		<button class="btn btn-primary">Make Label</button>
+	</a>	
+	
 
+	<div class="row" id="kanbanArea">
 		<div class="columnSection">
 				<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
 			<ul id="sortable1" class="connectedSortable columnBody cursor">
-							<li class="ui-state-default">Item 1</li>
-							<li class="ui-state-default">Item 2</li>
+					<li>Item 1</li>
+					<li>Item 2</li>
 			</ul>
 		</div>
 
 		<div class="columnSection">
-						<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
-		
+			<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
 			<ul id="sortable2" class="connectedSortable columnBody">
-		
-				<li class="ui-state-default"><span class="">Item 1</span></li>
-				<li class="ui-state-default">Item 2</li>
+				<li class="issuePiece"><div class="labelColor"></div><span>Item 1</span></li>
+				<li class="issuePiece">Item 2</li>
 
 			</ul>
 		</div>
@@ -126,3 +135,4 @@
 
 <!-- add issue modal -->
 <jsp:include page="modal/addIssue.jsp" />
+<jsp:include page="modal/labelEdit.jsp" />

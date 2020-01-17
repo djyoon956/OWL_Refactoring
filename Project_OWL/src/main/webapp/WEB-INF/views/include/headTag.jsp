@@ -24,10 +24,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="resources/js/commonSweetAlert.js"></script>
 
-<script src="resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 
-<!--  popper js  -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
+<script src="resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <!-- colorpicker -->
 <link href="resources/plugin/colorpicker/css/asColorPicker.css" rel="stylesheet">

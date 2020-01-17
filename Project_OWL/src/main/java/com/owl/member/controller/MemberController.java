@@ -43,7 +43,7 @@ public class MemberController {
 		String imagefilename = member.getMultipartFile().getOriginalFilename();
 		boolean result = false;
 		System.out.println("durl");
-System.out.println(imagefilename);
+		System.out.println(imagefilename);
 		try {
 			if (!imagefilename.equals("")) { // 실 파일 업로드
 				String uploadpath = request.getServletContext().getRealPath("upload");
