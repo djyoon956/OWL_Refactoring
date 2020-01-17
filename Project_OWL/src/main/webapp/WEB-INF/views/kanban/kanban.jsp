@@ -1,16 +1,78 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 <style>
 
-.labelColor {
-	 display: inline-block;
-	 background-color: red;
+.assigneetitle {
+	margin-left : 5px;
+	font-weight: bold;
+	font-size: 13px;
+	
 }
 
+.assignee {
+	font-family:"Nunito Sans", sans-serif;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.badgeIcon {
+	display : inline-block;
+	background-color: #F4D452;
+	font-size : small;
+	font-weight : bold;
+	padding : 3px;
+	color: black;
+	margin-right: 7px;
+	border-radius: 2px;
+}
+
+.floatRight {
+	float: right;
+	color:#326295;
+}
+
+.floatRight:hover {
+	color :#326295;
+}
+
+.issuePiece:hover {
+	box-shadow: 1.5px 1.5px 1.5px 1.5px #B4B1B1;
+}
+
+.badgeIcon2 {
+	display : inline-block;
+	background-color: #EC6550;
+	font-size : small;
+	font-weight : bold;
+	padding:5px;
+	color: black;
+	margin-right: 5px;
+	border-radius: 2px;
+}
+
+.issueTitle {
+	font-family:"Nunito Sans", sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.issuePiece {
+    border: 2px solid #eeee;
+	background-color : #fff;
+	margin: 5px 10px 10px 10px;
+	padding: 10px 10px 10px 10px;
+	font-size: 1.2em;
+	width: 280px;
+	height : 80px;
+	border-radius: 3px;
+	cursor:move;
+}
 
 .columnBody {
-    border: 4px solid #eee;
+
+    border: 2px solid #ECE7E2;
 	width: 310px;
 	min-height: 20px;
 	max-height : 550px;
@@ -21,22 +83,12 @@
 	margin: 10px;
 	border-radius: 3px;
 	overflow-y :auto;
+	background-color:#ECE7E2;
 }
 
-.columnBody li, .issuePiece {
-    border: 1px solid #dadde0;
-	background-color : #fff;
-	margin: 5px 10px 10px 10px;
-	padding: 15px;
-	font-size: 1.2em;
-	width: 280px;
-	height : 80px;
-	border-radius: 3px;
-	cursor:pointer;
-}
 
 .columnBody:hover {
-	border: 4px solid #c9ccd1;
+	border: 2px solid #DAD5D0;
 }
 
 .columnTitle {
@@ -52,7 +104,12 @@
 }
 
 #kanbanArea {
-	max-height: 500px;
+ height: 500px; 
+ overflow-y: scroll;
+ display: flex;
+ flex-direction: row;
+ flex-wrap: nowarp;
+ flex-flow: row;
 }
 
 </style>
@@ -62,7 +119,27 @@
 	  
     $('#addIssue').click (function() {
        console.log('addIssue click in');
-		$('#sortable1').append('<li class="issuePiece">New Issue</li>');
+		
+		let newIssue = "";
+		newIssue  += '<li class="issuePiece">';
+		newIssue  += '<div>';
+		newIssue  += '<label>';
+		newIssue  += '<span class="badgeIcon2 float-left">Dev</span>';
+		newIssue  += '<span class="issueTitle">Drive : Development</span>';
+		newIssue  += '</label>';
+		newIssue  += '<a style="float:right;" data-toggle="collapse" href="#detail">';
+		newIssue  += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
+		newIssue  += '</div>';
+		newIssue  += '<div>';
+		newIssue  += '<label>';
+		newIssue  += '<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>';
+		newIssue  += '<span class="assignee">Chloe</span>';
+		newIssue  += '</label>';
+		newIssue  += '</div>';
+		newIssue  += '</li>';
+       
+		$('#sortable1').append(newIssue);
+
         });
 
 
@@ -78,8 +155,8 @@
     		result += '<div class="columnSection">';
     		result += '<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>';
         	result += '<ul id="' + value + '"class="connectedSortable columnBody cursor">';
-    		result += '<li class="issuePiece">Item 1</li>';
-        	result += '<li class="issuePiece">Item 2</li></ul></div>';
+    		result += '<li class="issuePiece" style="display:none;">Item 1</li>';
+        	result += '</ul></div>';
 
         console.log("result" + result);	
 		$('#kanbanArea').append(result);
@@ -95,38 +172,143 @@
             dropOnEmpty: false        
           }).disableSelection();
         }
-    
+    $("#openIssueBtn").click(function() {
+        $("#openIssue").removeClass("d-none");
+		$("#closeIssue").hide();
+		$("#openIssue").show();
+     });
+    $("#closeIssueBtn").click(function() {
+    	$("#closeIssue").removeClass("d-none");
+		$("#openIssue").hide();
+		$("#closeIssue").show();
+     });
+
   });
+
+  function closeFn() {
+      console.log("클릭 작동하나");
+  	$("#closeIssue").hide();
+		$("#openIssue").hide();
+   }
   </script>
 
 <div id="totalbody" class="container-fluid mt-3">
-
+	<div class="row">
+	<div class="col-8" style="margin-left:30px;">
+	
 	<a href="#" data-toggle="modal" data-target="#addIssueModal">
-	<button id="addIssue" class="btn btn-primary">New Issue</button>
+	 	<button id="addIssue" class="btn btn-primary"><i class="fas fa-italic"></i>&nbsp;New Issue</button>
 	</a>	
 	
-	<button id="addColumn" class="btn btn-primary">New Column</button>
 
+	<a href="#" data-toggle="modal" data-target="#addColumnModal">
+		<button id="addColumn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;New Column</button>
+	</a>
+
+	<button id="openIssueBtn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;Open Issue</button>
+	<button id="closeIssueBtn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;Close Issue</button>
+
+	</div>
+	<div class="col-2">
 	<a href="#" data-toggle="modal" data-target="#labelEditModal">
-		<button class="btn btn-primary">Make Label</button>
+		<button class="btn btn-primary"><i class="fas fa-tag"></i>&nbsp;Make Label</button>
 	</a>	
-	
+	</div>
+	</div>
 
 	<div class="row" id="kanbanArea">
+	<!--  open issue -->
+	  <div class="columnSection d-none" style="background-color: #326295;" id="openIssue">
+			<div class="columnTitle text-center mt-2 card-header"><h4>Open Issue<span class="float-right" ><i class="far fa-times-circle"  onclick="closeFn()"></i></span></h4></div>
+			<ul id="sortable0" class="connectedSortable columnBody">
+				<li class="issuePiece" style="display:none;">Item 1</li>
+					<li class="issuePiece"></li>
+			</ul>
+		</div>
+	<!--  close issue -->
+	  <div class="columnSection d-none" style="background-color: #326295;" id="closeIssue">
+			<div class="columnTitle text-center mt-2 card-header"><h4>Close Issue<span class="float-right"><i class="far fa-times-circle" onclick="closeFn()"></i></span></h4></div>
+			<ul id="sortable01" class="connectedSortable columnBody">
+				<li class="issuePiece" style="display:none;">Item 1</li>
+					<li class="issuePiece"></li>
+			</ul>
+		</div>
+		<!-- 칼럼 -->
 		<div class="columnSection">
 				<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
 			<ul id="sortable1" class="connectedSortable columnBody cursor">
-					<li>Item 1</li>
-					<li>Item 2</li>
+			    	<li class="issuePiece" style="display:none;">Item 1</li>   <!-- 무조건 있어야함!!! -->
+					<li class="issuePiece">
+						<div>
+							<label>
+							<span class="badgeIcon float-left">Dev</span>
+							<span class="issueTitle">Drive : Development</span>
+							</label>
+							<a style="float:right;" data-toggle="collapse" href="#detail">
+							<i class="fas fa-ellipsis-v fa-sm"></i></a>
+						</div>
+						<div>
+							<label>
+							<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>
+							<span class="assignee">Chloe</span>
+							</label>
+						</div>
+					</li>
+					<li class="issuePiece">
+						<div>
+							<label>
+							<span class="badgeIcon float-left">Dev</span>
+							<span class="issueTitle">Drive : Development</span>
+							</label>
+							<a style="float:right;" data-toggle="collapse" href="#detail">
+							<i class="fas fa-ellipsis-v fa-sm"></i></a>
+						</div>
+						<div>
+							<label>
+							<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>
+							<span class="assignee">Colin</span>
+							</label>
+						</div>
+					</li>
 			</ul>
 		</div>
 
 		<div class="columnSection">
 			<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
 			<ul id="sortable2" class="connectedSortable columnBody">
-				<li class="issuePiece"><div class="labelColor"></div><span>Item 1</span></li>
-				<li class="issuePiece">Item 2</li>
-
+				<li class="issuePiece" style="display:none;">Item 1</li>
+				<li class="issuePiece">
+						<div>
+							<label>
+							<span class="badgeIcon2 float-left">Dev</span>
+							<span class="issueTitle">Drive : Development</span>
+							</label>
+							<a style="float:right;" data-toggle="collapse" href="#detail">
+							<i class="fas fa-ellipsis-v fa-sm"></i></a>
+						</div>
+						<div>
+							<label>
+							<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>
+							<span class="assignee">Cindy</span>
+							</label>
+						</div>
+					</li>
+				<li class="issuePiece">
+						<div>
+							<label>
+							<span class="badgeIcon2 float-left">Dev</span>
+							<span class="issueTitle">Drive : Development</span>
+							</label>
+							<a style="float:right;" data-toggle="collapse" href="#detail">
+							<i class="fas fa-ellipsis-v fa-sm"></i></a>
+						</div>
+						<div>
+							<label>
+							<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>
+							<span class="assignee">Cathy</span>
+							</label>
+						</div>
+					</li>
 			</ul>
 		</div>
 		
@@ -135,4 +317,5 @@
 
 <!-- add issue modal -->
 <jsp:include page="modal/addIssue.jsp" />
+<jsp:include page="modal/addColumn.jsp" />
 <jsp:include page="modal/labelEdit.jsp" />

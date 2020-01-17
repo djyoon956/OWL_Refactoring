@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.kanban.dto.Issue;
+import com.owl.kanban.dto.Issue.Priority;
 import com.owl.kanban.service.KanbanService;
 import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.File;
@@ -50,11 +51,11 @@ public class KanbanRestController {
 
 	
 
-
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
 	public boolean insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
 							, @RequestParam(value = "content") String content
+							, @RequestParam(value = "priorityCode", required = false) Priority priorityCode
 							, @RequestParam(value = "assigned", required = false) String assigned
 							, @RequestParam(value = "labelIdx", required = false) int labelIdx
 							, @RequestParam(value = "dueDate", required = false) Date dueDate
@@ -67,6 +68,7 @@ public class KanbanRestController {
 		System.out.println(assigned);
 		System.out.println(labelIdx);
 		System.out.println(dueDate);
+		System.out.println(priorityCode);
 		System.out.println(multipartFiles);
 		System.out.println(multipartFiles.size());
 
@@ -74,15 +76,17 @@ public class KanbanRestController {
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
 		issue.setContent(content);
+		issue.setPriorityCode(priorityCode);
 		issue.setAssigned(assigned);
 		issue.setLabelIdx(labelIdx);
 		issue.setDueDate(dueDate);
 		issue.setCreator(principal.getName());
 		
 		List<File> files = new ArrayList<File>();
+		
+		
 		System.out.println("파일은? " +files);
 		
-
 
 		issue.setFiles(files);
 		
