@@ -107,7 +107,7 @@
 	
 	<button id="addColumn" class="btn btn-primary">New Column</button>
 
-	<a href="#" data-toggle="modal" data-target="#makeLabel">
+	<a href="#" data-toggle="modal" data-target="#labelEditModal">
 		<button class="btn btn-primary">Make Label</button>
 	</a>	
 	
@@ -135,4 +135,4 @@
 
 <!-- add issue modal -->
 <jsp:include page="modal/addIssue.jsp" />
-<jsp:include page="modal/makeLabel.jsp" />
+<jsp:include page="modal/labelEdit.jsp" />

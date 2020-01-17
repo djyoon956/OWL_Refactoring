@@ -183,7 +183,6 @@
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<ul class="list-style-none">
 								<li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트멤버 설정</a></li>
-								<li class="pl-3"><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
 							</ul>
 					</div>
 			</div> 
@@ -217,5 +216,5 @@
 	
 		<!-- pm의 설정  modal -->
 	<jsp:include page="modal/projectMemberEdit.jsp" />
-	<jsp:include page="modal/labelEdit.jsp" />
+
 </body>
