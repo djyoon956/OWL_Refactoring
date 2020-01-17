@@ -64,12 +64,10 @@ line-height: 30px;
     border: 1px solid #bbb;
 }
 .dropdown-menu-title > li :hover i{
-   visibility: visible;
+   visibility: hidden;
    opacity: 1;
 }
-.dropdown-menu-title > i{
- visibility: hidden;
-}
+
 </style>
 	<script type="text/javascript">
 		$(function(){
