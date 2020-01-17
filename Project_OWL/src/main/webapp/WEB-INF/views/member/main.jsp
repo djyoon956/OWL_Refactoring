@@ -85,6 +85,7 @@ ul.timeline > li:before {
     width: 20px;
     height: 20px;
     z-index: 400;
+    margin-top: 0.25rem; 
 }
 .timeline li p {
 	line-height:1.8em;
@@ -134,19 +135,19 @@ ul.timeline > li:before {
 		                                </thead>
 		                                <tbody>
 		                                    <tr>
-		                                        <td>구매전략</td>
+		                                        <td>판매계획</td>
 		                                        <td>로그인 view 구현</td>
 		                                        <td class="text-danger">today</td>
 		                                        <td><span class="badge badge-pill badge-danger font-14">high</span></td>
 		                                    </tr>
 		                                    <tr>
-		                                        <td>구매전략</td>
+		                                        <td>판매계획</td>
 		                                        <td>공지사항 게시판 기능 구현</td>
 		                                        <td class="text-success">tomorrow</td>
 		                                        <td><span class="badge badge-pill badge-warning font-14">low</span></td>
 		                                    </tr>
 		                                    <tr>
-		                                        <td>판매계획</td>
+		                                        <td>후기관리</td>
 		                                        <td>단체 채팅 기능 구현</td>
 		                                        <td>1/18</td>
 		                                        <td><span class="badge badge-pill badge-success font-14">medium</span></td>  
@@ -154,7 +155,7 @@ ul.timeline > li:before {
 		                                    <tr>
 		                                        <td>후기관리</td>
 		                                        <td>캘린더 뷰 구현</td>
-		                                        <td>1/20</td>
+		                                        <td>1/30</td>
 		                                        <td><span class="badge badge-pill badge-warning font-14">low</span></td>
 		                                    </tr>
 		                                </tbody>
@@ -191,7 +192,7 @@ ul.timeline > li:before {
                                         </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 80%; background-color: #ccccff" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                  <div class="w-100 pt-3">
@@ -202,7 +203,7 @@ ul.timeline > li:before {
                                         </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 34%; background-color:#326295;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 34%; background-color:  #ffb1b9" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                  <div class="w-100 pt-3">
@@ -213,7 +214,7 @@ ul.timeline > li:before {
                                         </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 95%; background-color:darkgray;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 95%; background-color:lightgray;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                               </div>
@@ -228,99 +229,49 @@ ul.timeline > li:before {
                             <div class="card-body">
                            	  <h4 class="card-title">Timeline</h4>
                                 <div class="d-md-flex align-items-center">
-
-<!-- 				 <ul class="cbp_tmtimeline">
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">MON</span></div>
-						<div class="cbp_tmlabel">
-							<h5>구매전략</h5>
-							<p>로그인 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">TUE</span></div>
-						<div class="cbp_tmlabel">
-							<h5>판매계획</h5>
-							<h5><span class="badge badge-pill badge-danger font-14">판매계획</span></h5>
-							<p>공지사항 게시판 기능 구현</p>
-							<p>공지사항 게시판 view 구현</p>
-							<h5>구매전략</h5>
-							<p>qna 게시판 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">WED</span></div>
-						<div class="cbp_tmlabel">
-							<h5>판매계획</h5>
-							<p>단체 채팅 기능 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">THU</span></div>
-						<div class="cbp_tmlabel">
-						<h5>판매계획</h5>
-							<p>채팅 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">FRI</span></div>
-						<div class="cbp_tmlabel">
-							<h5>구매전략</h5>
-							<p>탈퇴 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">SAT</span></div>
-						<div class="cbp_tmlabel">
-							<h5>판매계획</h5>
-							<p>대시보드 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">SUN</span></div>
-						<div class="cbp_tmlabel">
-							<h5>구매전략</h5>
-							<p>로그인 view 구현</p>
-						</div>
-					</li>
-				</ul> -->
-							<ul class="timeline w-100">
+								<ul class="timeline w-100">
 								<li>
-										<p class="float-right" >Mon, 20 Jan, 2020</p>
-										<h5><span class="badge badge-pill font-14" style="background-color: #ffb1b9">판매계획</span></h5>
-										<p>로그인 view 구현</p>
-										<p>로그인 기능 구현</p>
+									<p class="float-right" >Mon, 20 Jan, 2020</p>
+									<span class="badge badge-pill font-14 font-medium mb-1" style="background-color: #ffb1b9;">판매계획</span>
+									<p>로그인 view 구현</p>
+									<p>로그인 기능 구현</p>
 								</li>
 								<li>
 									<p class="float-right">Tue, 21 Jan, 2020</p>
-									<span class="badge badge-pill font-14" style="background-color: #ffb1b9">판매계획</span>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ffb1b9">판매계획</span>
 										<p>공지사항 게시판 기능 구현</p>
 										<p>공지사항 게시판 view 구현</p>
-								</li>
-								<li>
-									<p class="float-right">Wed, 22 Jan, 2020</p>
-									<span class="badge badge-pill font-14" style="background-color: #ccccff">구매전략</span>
+									<span class="badge badge-pill font-14 mb-1 mt-1 font-medium" style="background-color: lightgray">후기관리</span>
+										<p>단체 채팅 view 구현</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ccccff">구매전략</span>
 										<p>qna 게시판 view 구현</p>
 								</li>
 								<li>
+									<p class="float-right">Wed, 22 Jan, 2020</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ccccff">구매전략</span>
+										<p>qna 게시판 기능 구현</p>
+								</li>
+								<li>
 									<p class="float-right">Thu, 23 Jan, 2020</p>
-									<span class="badge badge-pill font-14" style="background-color: #ffb1b9">판매계획</span>
-										<p>대시보드 구현</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: lightgray">후기관리</span>
+										<p>대시보드 view 구현</p>
 								</li>
 								<li>
 									<p class="float-right">Fri, 24 Jan, 2020</p>
-									<span class="badge badge-pill font-14" style="background-color: #ccccff">구매전략</span>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ccccff">구매전략</span>
 										<p>탈퇴 view 구현</p>
 								</li>
 								<li>
 									<p class="float-right">Sat, 25 Jan, 2020</p>
-									<span class="badge badge-pill font-14" style="background-color: #ffb1b9">판매계획</span>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ffb1b9">판매계획</span>
 										<p>채팅 view 구현</p>
 								</li>
 								<li>
 									<p class="float-right">Sun, 26 Jan, 2020</p>
-									<span class="badge badge-pill font-14" style="background-color: #326295">후기관리</span>
+									<span class="badge badge-pill font-14 mb-1 font-medium" style="background-color: lightgray">후기관리</span>
 										<p>단체 채팅 기능 구현</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium" style="background-color:#ccccff">구매전략</span>
+										<p>대시보드 기능 구현</p>
 								</li>
 							</ul>
                                     <!-- 끝 -->
