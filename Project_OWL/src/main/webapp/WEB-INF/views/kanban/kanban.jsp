@@ -3,14 +3,21 @@
 
 <style>
 
-.labelColor {
-	 display: inline-block;
-	 background-color: red;
+.issuePiece {
+    border: 1px solid #dadde0;
+    border-left: 7px solid red;
+	background-color : #fff;
+	margin: 5px 10px 10px 10px;
+	padding: 15px;
+	font-size: 1.2em;
+	width: 280px;
+	height : 80px;
+	border-radius: 3px;
+	cursor:pointer;
 }
 
-
 .columnBody {
-    border: 4px solid #eee;
+    border: 4px solid #fff;
 	width: 310px;
 	min-height: 20px;
 	max-height : 550px;
@@ -23,20 +30,9 @@
 	overflow-y :auto;
 }
 
-.columnBody li, .issuePiece {
-    border: 1px solid #dadde0;
-	background-color : #fff;
-	margin: 5px 10px 10px 10px;
-	padding: 15px;
-	font-size: 1.2em;
-	width: 280px;
-	height : 80px;
-	border-radius: 3px;
-	cursor:pointer;
-}
 
 .columnBody:hover {
-	border: 4px solid #c9ccd1;
+	border: 4px solid #eeee;
 }
 
 .columnTitle {
@@ -101,31 +97,34 @@
   </script>
 
 <div id="totalbody" class="container-fluid mt-3">
-
+	<div class="row">
+	<div class="col-8" style="margin-left:30px;">
 	<a href="#" data-toggle="modal" data-target="#addIssueModal">
-	<button id="addIssue" class="btn btn-primary">New Issue</button>
+	 <button id="addIssue" class="btn btn-primary"><i class="fas fa-italic"></i>&nbsp;New Issue</button>
 	</a>	
 	
-	<button id="addColumn" class="btn btn-primary">New Column</button>
-
+	<button id="addColumn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;New Column</button>
+	</div>
+	<div class="col-2">
 	<a href="#" data-toggle="modal" data-target="#labelEditModal">
-		<button class="btn btn-primary">Make Label</button>
+		<button class="btn btn-primary"><i class="fas fa-tag"></i>&nbsp;Make Label</button>
 	</a>	
-	
+	</div>
+	</div>
 
 	<div class="row" id="kanbanArea">
 		<div class="columnSection">
 				<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
 			<ul id="sortable1" class="connectedSortable columnBody cursor">
-					<li>Item 1</li>
-					<li>Item 2</li>
+					<li class="issuePiece">Item 1</li>
+					<li class="issuePiece">Item 2</li>
 			</ul>
 		</div>
 
 		<div class="columnSection">
 			<div class="columnTitle text-center mt-2"><h4>Undefined section</h4></div>
 			<ul id="sortable2" class="connectedSortable columnBody">
-				<li class="issuePiece"><div class="labelColor"></div><span>Item 1</span></li>
+				<li class="issuePiece"><span>Item 1</span></li>
 				<li class="issuePiece">Item 2</li>
 
 			</ul>
