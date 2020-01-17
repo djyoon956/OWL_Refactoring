@@ -18,6 +18,8 @@ public class KanbanService {
 	private SqlSession sqlSession;
 
 	public boolean insertIssue(Issue issue) {
+		System.out.println("insertIssue service in");
+		System.out.println(issue.toString());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 

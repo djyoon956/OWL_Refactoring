@@ -70,8 +70,7 @@
 							<input type="text" class="form-control bg-transparent" placeholder="제목을 입력해주세요">
 						</div>
 						<div class="form-group">
-							<textarea class="form-control bg-light" rows="10" cols="60" id="summernote"
-								name="summernote"></textarea>
+							<textarea class="form-control bg-light" rows="10" cols="60" id="summernote" name="summernote"></textarea>
 						</div>
 						<h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>&nbsp;파일첨부</h5>
 						<div class="form-group">
@@ -81,8 +80,7 @@
 						</div>
 				</div>
 				<div class="form-group text-center">
-					<input type="submit" class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2"
-						value="확인">
+					<input type="submit" class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2" value="확인">
 					<button class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" type="button"
 						onclick="location.href='Notice.do'" id="noticeDelBtn">취소</button>
 				</div>

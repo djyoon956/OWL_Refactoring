@@ -23,16 +23,23 @@
 
 
 			
-			$("#InsertIssueBtn").on("click", function () {				
-				console.log('InsertIssueBtn 클릭되니');
+			$("#InsertIssueBtn").on("click", function () {		
+						
+ 				console.log('InsertIssueBtn 클릭되니');
 				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
 				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
 				console.log('$("#content").summernote("code")' + $('#content').summernote('code'));
 				console.log(' $("#assigned").val()' +  $('#assigned').val());
 				console.log('$("#labelIdx").val()' + $('#labelIdx').val());
-				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val());
+				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
+				console.log($('#multipartFile').val());
+		
 				
-			    let formData = new FormData();
+				//var form = $('#myForm').serialize();
+				
+				
+			     let formData = new FormData();
+			    
 			    formData.append("projectIdx",'${project.projectIdx}');
 			    formData.append('issueTitle',$('#issueTitle').val());
 			    formData.append('content', $('#content').summernote('code'));
@@ -42,7 +49,7 @@
 			    
 			    $.each($("#multipartFiles")[0].files, function(i, file) {
 			    	formData.append('multipartFiles', file);
-			    });
+			    }); 
 				
 				
 				$.ajax({
@@ -64,7 +71,7 @@
 			        	} */
 			        },
 			        error: function (e) {
-			        	errorAlert("공지사항 작성 실패");
+			        	errorAlert("Issue 추가 실패");
 			        }
 			    });
 				
@@ -110,7 +117,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			<form action="InsertIssue.do" method="post" enctype="multipart/form-data">
+			<form id="myForm" action="InsertIssue.do" method="post" enctype="multipart/form-data">
 			    <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
  				<div class="row">
 					<div class="col-8">
@@ -119,7 +126,7 @@
 						</div>
 						<div class="form-group">
  							 <textarea class="form-control bg-light" rows="10" cols="50" placeholder="Issue Content" id="content" name="content"></textarea>
-							<input type="file" name="multipartFile" id="multipartFile"> 
+							<input type="file" name="multipartFiles" id="multipartFiles" multiple="multiple"> 
 						</div>
 					</div>
 					<div class="col-4">

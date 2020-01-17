@@ -125,6 +125,7 @@
 		}
 	</script>
 	<style type="text/css">
+	
 	.iconSizeBig {
     font-size: 1.2rem;
     line-height: 2rem;
@@ -182,7 +183,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="dropdown  col-md-1 mt-2 text-center">
+			<div class="dropdown col-md-1 mt-2 text-center">
 			<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
 						<i class="fas fa-user-cog iconSizeBig pt-2"></i></a> 
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
