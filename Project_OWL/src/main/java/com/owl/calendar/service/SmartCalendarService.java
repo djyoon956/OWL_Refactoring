@@ -1,6 +1,8 @@
 package com.owl.calendar.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class SmartCalendarService {
 
 	public boolean insertCalendar(SmartCalendar calendar) {
 		boolean result = false;
-		SmartCalendarDao dao = getPcalendarDao();
+		SmartCalendarDao dao = getSmartCalendarDao();
 
 		try {
 			result = dao.insertCalendar(calendar) > 0 ? true : false;
@@ -31,7 +33,7 @@ public class SmartCalendarService {
 
 	public boolean updateCalendar(SmartCalendar calendar) {
 		boolean result = false;
-		SmartCalendarDao dao = getPcalendarDao();
+		SmartCalendarDao dao = getSmartCalendarDao();
 
 		try {
 			result = dao.updateCalendar(calendar) > 0 ? true : false;
@@ -46,7 +48,7 @@ public class SmartCalendarService {
 
 	public boolean deleteCalendar(SmartCalendar calendar) {
 		boolean result = false;
-		SmartCalendarDao dao = getPcalendarDao();
+		SmartCalendarDao dao = getSmartCalendarDao();
 
 		try {
 			result = dao.deleteCalendar(calendar) > 0 ? true : false;
@@ -57,8 +59,38 @@ public class SmartCalendarService {
 		}
 		return result;
 	};
+	
+	public List<SmartCalendar> getMemberCalendars(String email) {
+		SmartCalendarDao dao = getSmartCalendarDao();
+		
+		List<SmartCalendar> calendars = new ArrayList<SmartCalendar>();
+		try {
+			calendars = dao.getMemberCalendars(email);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return calendars;
+	}
+	
+	public List<SmartCalendar> getProjectCalendars(int projectIdx) {
+		SmartCalendarDao dao = getSmartCalendarDao();
 
-	private SmartCalendarDao getPcalendarDao() {
+		List<SmartCalendar> calendars = new ArrayList<SmartCalendar>();
+		try {
+			calendars = dao.getProjectCalendars(projectIdx);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return calendars;
+	}
+
+	private SmartCalendarDao getSmartCalendarDao() {
 		return sqlSession.getMapper(SmartCalendarDao.class);
 	}
 }

@@ -140,7 +140,7 @@ function changeView() {
 													<input type="email" name="email" id="email" placeholder="Email"
 														class="form-control email" readonly value="${member.email}">
 												</div>										
-												<input type="button" id="editButton" onclick="changeView()" class="btn btn-primary w-100" value="정보 수정">
+												<input type="button" id="editButton" onclick="changeView()" class="btn btn-dark w-100" value="정보 수정">
 										</div>
 									</div>
 								</div>
@@ -182,10 +182,10 @@ function changeView() {
 									</c:if>
 									<div class="row">
 										<div class="col-md-6">
-											<input type="button" id="cancelButton" class="btn btn-primary w-100" value="취소">
+											<input type="button" id="cancelButton" class="btn btn-dark w-100" value="취소">
 										</div>
 										<div class="col-md-6">
-											<input type="submit" class="btn btn-primary w-100" onclick="window.location.reload()"
+											<input type="submit" class="btn btn-dark w-100" onclick="window.location.reload()"
 												value="수정 완료">
 										</div>
 									</div>
@@ -213,12 +213,12 @@ function changeView() {
 
 											<br>
 											<div class="text-justify">
-												<ul class="list-icons" style="list-style-type: none;">
-													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;회원
+												<ul class="list-icons" style="list-style-type: none; padding-left:9px;">
+													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;&nbsp;회원
 														탈퇴 후 다시 가입은 가능합니다.</li>
-													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;회원
+													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;&nbsp;회원
 														탈퇴시 다시 복원이 불가능합니다.</li>
-													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;탈퇴된
+													<li><i class="fa fa-check text-info list-margin"></i>&nbsp;&nbsp;탈퇴된
 														계정의 정보나 게시물은 완전히 삭제됩니다.</li>
 												</ul>
 											</div>

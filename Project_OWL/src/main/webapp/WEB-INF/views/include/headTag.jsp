@@ -1,3 +1,5 @@
+<link rel="icon" type="image/png" href="resources/images/logo_icon1.png">
+
 <!-- jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -6,8 +8,9 @@
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
 <!-- Custom CSS -->
-<link href="resources/dist/css/style.min.css" rel="stylesheet">
+<link href="resources/css/include.css" rel="stylesheet">
 <link href="resources/css/common.css" rel="stylesheet">
+<link href="resources/dist/css/style.min.css" rel="stylesheet">
 <script src="resources/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
 
 <!--Menu Sidebar -->
@@ -23,4 +26,12 @@
 
 <script src="resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 
+<!--  popper js  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
+
+<!-- colorpicker -->
+<link href="resources/plugin/colorpicker/css/asColorPicker.css" rel="stylesheet">
+<script src="resources/plugin/colorpicker/libs/jquery-asColor.js"></script>
+<script src="resources/plugin/colorpicker/libs/jquery-asGradient.js"></script>
+<script src="resources/plugin/colorpicker/dist/jquery-asColorPicker.min.js"></script>
 

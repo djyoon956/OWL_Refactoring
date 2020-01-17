@@ -4,4 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.owl.kanban.dao.KanbanDao">
 
+<!-- 	<select id="selectProjectMember" resultType="com.owl.member.dto" parameterType="int">
+		SELECT * FROM projectlist where projectidx = #{projectidx}
+	</select> -->
 </mapper>

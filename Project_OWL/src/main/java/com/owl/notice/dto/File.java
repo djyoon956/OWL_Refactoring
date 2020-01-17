@@ -8,9 +8,15 @@ import lombok.Setter;
 @Setter
 @ToString
 public class File {
+	private FileType fileFrom;
 	private int fileIdx;
 	private int belongTo;
 	private String writer;
 	private String fileName;
 	private String fileSize;
+
+	enum FileType {
+		ISSUE
+		, NOTICE
+	}
 }

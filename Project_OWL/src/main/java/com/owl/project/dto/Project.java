@@ -3,7 +3,7 @@ package com.owl.project.dto;
 import java.util.HashMap;
 
 import com.owl.chat.dto.ChatRoom;
-import com.owl.drive.dto.Drive;
+import com.owl.drive.dto.DriveFolder;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
 import com.owl.notice.dto.Notice;
@@ -22,7 +22,7 @@ public class Project {
 	private HashMap<String, Member> members;
 	private HashMap<Integer, Issue> issues;
 	private HashMap<Integer, Label> lavels;
-	private HashMap<Integer, Drive> drives;
+	private HashMap<Integer, DriveFolder> drives;
 	private HashMap<Integer, ChatRoom> chatRooms;
 	private HashMap<Integer, Notice> boards;
 

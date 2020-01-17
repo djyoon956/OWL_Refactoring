@@ -1,78 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="resources/assets/images/favicon.png">
-    <title>OWL</title>
-    <jsp:include page="../include/headTag.jsp"/>
-</head>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<body>
-	<!-- LOADER -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
-   
-    <div id="main-wrapper">
-        
-		<!-- TOP -->
-        <jsp:include page="../include/top.jsp"/>
-       
-        <!-- SIDE BAR -->
-        <jsp:include page="../include/sideBar.jsp"/>
-
-		<!-- CONTENT BOX -->
-        <div class="page-wrapper">
-             <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Dashboard1</h4>
-                        <div class="ml-auto text-right">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
-                                </ol>
-                            </nav>
-                        </div>
+<div class="container-fluid mt-3">
+     <div id="noticeBox">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="text-center">Notice</h3>
+                <div id="noticeTableBox">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered text-center" id="noticeTable">
+                            <thead>
+                                <tr>
+                                    <th width="10%">NO</th>
+                                    <th width="50%">제목</th>
+                                    <th width="15%">작성자</th>
+                                    <th width="15%">작성일</th>
+                                    <th width="10%">조회</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </div>
-            
-            <!-- CONTENT MAIN -->
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-md-flex align-items-center">
-                                    <div>
-                                        <h4 class="card-title">Site Analysis</h4>
-                                        <h5 class="card-subtitle">Overview of Latest Month</h5>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="emptyNoticeBox" class="text-center m-5 hidden">
+                    <hr>
+                    <h2 class="mt-4 mb-4">작성된 공지 사항이 없습니다.</h2>
+                    <p class="font-pen">공지사항을 작성해주세요.</p>
+                    <hr>
                 </div>
+                
+               <c:if test="${project.authority eq 'ROLE_PM'}">
+	                <div class="text-right mt-3 ">
+	                    <button class="btn btn-primary" onclick="writeNotice()"><i class="icon-pencil"></i>&nbsp;  글쓰기</button>
+	                </div>
+               </c:if>
             </div>
-
-			<!-- BOTTOM -->
-            <jsp:include page="../include/bottom.jsp"/>
         </div>
     </div>
-</body>
+
+    <!-- Wirte -->
+    <jsp:include page="write.jsp"/>
+</div>
