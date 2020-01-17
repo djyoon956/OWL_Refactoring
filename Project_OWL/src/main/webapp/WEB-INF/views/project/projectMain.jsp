@@ -11,9 +11,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
+
 	<title>OWL</title>
 	<jsp:include page="../include/headTag.jsp" />
 	<link href="resources/css/project.css" rel="stylesheet">
+	<!--  dashboard css -->
+	<link href="resources/css/dashBoard.css" rel="stylesheet">
 	
 	<!-- DataTable -->
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.css"/>
@@ -35,6 +38,7 @@
 	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
     
 	<script src="resources/js/notice.js"></script>
+	<script src="resources/js/dashBoard.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			initNotice();
@@ -57,14 +61,6 @@
 
 				setChageView(currentTab.attr("id"));
 			});
-
-			  
-			$('#dropdownMenuButton').dropdown();
-
-
-
-
-		    
 		})
 		
 		function setChageView(target){
@@ -123,6 +119,7 @@
 		}
 	</script>
 	<style type="text/css">
+	
 	.iconSizeBig {
     font-size: 1.2rem;
     line-height: 2rem;
@@ -180,7 +177,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="dropdown  col-md-1 mt-2 text-center">
+			<div class="dropdown col-md-1 mt-2 text-center">
 			<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false">
 						<i class="fas fa-user-cog iconSizeBig pt-2"></i></a> 
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -189,14 +186,13 @@
 								<li class="pl-3"><a href="#labelEditModal" data-toggle="modal">라벨 추가</a></li>
 							</ul>
 					</div>
-			</div>
+			</div> 
 		</div>
-
 	</div>
 		<div class="tab-content">
 		<div class=" tab-pane fade active show" id="dash" role="tabpanel">
-			<h1>Dash Board</h1>
-			<h1>${project.projectName }</h1>
+			<!-- 대시보드  -->
+			<jsp:include page="../dashBoard/projectDashboard.jsp"/>
 		</div>
 		<div class=" tab-pane fade" id="calendar" role="tabpanel">
 			<jsp:include page="../calendar/projectCalendar.jsp" />
@@ -216,10 +212,10 @@
 			<!-- BOTTOM -->
 			<jsp:include page="../include/bottom.jsp" />
 		</div>
+		
 	</div>
 	
 		<!-- pm의 설정  modal -->
 	<jsp:include page="modal/projectMemberEdit.jsp" />
 	<jsp:include page="modal/labelEdit.jsp" />
-</body>
 </body>

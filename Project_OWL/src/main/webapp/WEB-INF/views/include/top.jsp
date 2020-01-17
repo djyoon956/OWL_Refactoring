@@ -429,7 +429,7 @@ display: block;
                 <!-- ============================================================== -->
                 <li class="nav-item iconMargin">
                     <a class="nav-link text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)" id="userBtn">
-                    	<img id="userImgTop" src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="35" width="35" alt="">
+                    	<img id="userImgTop" src="upload/member/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" height="35" width="35" alt="">
                     </a>
                 </li>
                 
@@ -462,7 +462,7 @@ display: block;
 				<div class="text-center setting-box mt-5">
 					<div class="user-img c-pointer position-relative">
 					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
-						<img src="upload/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" alt="" id="userImg" height="100" width="100">
+						<img src="upload/member/${member.profilePic}" onerror="this.src='resources/images/login/profile.png'" class="rounded-circle" alt="" id="userImg" height="100" width="100">
 						</a>
 					</div>
 					<h4 class="mt-3 mb-1 " style="color:white; padding-top: 10px;">${member.name}</h4>
@@ -597,23 +597,14 @@ display: block;
                                             <div class="card-body pt-3 accordionBody">
                                             <div class="mt-2 col-md-12"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
-                                            	<a href="#">'[view]로그인 view 구현' 이슈가 등록되었습니다. dddddddddddddd</a> <span class="ml-1" ><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                            	'[view]로그인 view 구현' 이슈가 등록되었습니다.<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
                                             </div>
-                                          
-                                            <div class="but r col-md-12" id="but-2" style="float:right; top: 0px; right: 0px; height:28px;width:45px;">
-					          				<input type="checkbox" class="chbox" name="chbox">
-					         			 	<div class="knobs" ></div>
-					          				<div class="layer"></div>
-					          				</div>
-                                           
                                             <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                              <span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
-                                            	<a href="#">'칸반보드 view 구현'이슈가 승인 요청을 있습니다.</a> <span class="ml-1"><a href="#"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></a></span>
+                                            	칸반보드 view 구현'이슈가 승인 요청을 있습니다. <span class="ml-1"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
                                              </div>
-                                             	<input type="checkbox" id="switch1" name="switch1" class="input__on-off" > 
-                       							<label for="switch1" class="label__on-off mt-1" style="float: right;"> <span class="marble"></span> 
-                       							<span class="on"></span><span class="off"></span></label>
+                                 
                                             </div>
                                         </div>
                                     </div>
