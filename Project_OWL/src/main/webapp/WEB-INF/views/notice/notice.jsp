@@ -2,7 +2,7 @@
    pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-3 h-100 w-100">
      <div id="noticeBox">
         <div class="card">
             <div class="card-body">
@@ -42,4 +42,7 @@
 
     <!-- Wirte -->
     <jsp:include page="write.jsp"/>
+    
+    <!-- Detail -->
+    <jsp:include page="detail.jsp"/>
 </div>

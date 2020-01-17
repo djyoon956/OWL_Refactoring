@@ -72,6 +72,19 @@ line-height: 30px;
 .dropdown-menu >li:hover .fa-hand-point-right{
 visibility: visible !important;
 }
+
+.tui-full-calendar-section-calendar.tui-full-calendar-hide{
+visibility: visible !important;
+}
+.tui-full-calendar-confirm{
+background-color: #326295;
+font-size: 14px;
+}
+.tui-full-calendar-confirm:hover{
+color: #326295;
+border: 1px double #326295;
+background-color: #fff;
+}
 </style>
 	<script type="text/javascript">
 		$(function(){
@@ -79,14 +92,22 @@ visibility: visible !important;
 				  defaultView: 'month',
 				  taskView: true,
 				  useCreationPopup: true,
-		    	useDetailPopup: true
+		    	useDetailPopup: true,
+		    	calendars: 
+		            [{
+		                id: '0',
+		                name: 'Jaime',
+		                bgColor: '#9e5fff',
+		                borderColor: '#9e5fff'
+		            }]
 			});
 			 $('#calendarListBox').on('change', onChangeCalendars);
-			 
+
 			// 캘린더 색상 설정	
 			let viewAll = $('.lnb-calendars-item input');
 			let calendarElements = Array.prototype.slice.call($('#calendarList input'));
 			calendarElements.forEach(function(data){
+
 				let span = data.parentNode;
 				let projectName = $(data).val();
 				let checkBox = $(span).find('span').eq(0);
@@ -101,6 +122,8 @@ visibility: visible !important;
 					$(checkBox).css("border-color", color)
 					$(checkBox).css("background-color", color)
 				}
+				$(".tui-full-calendar-dropdown-menu").append("<li class='tui-full-calendar-popup-section-item tui-full-calendar-dropdown-menu-item'>"+span+"</li>");
+				console.log(span);
 			})
 	});
 
@@ -220,7 +243,7 @@ visibility: visible !important;
                                                             style="border-color: rgb(158, 95, 255); background-color: rgb(158, 95, 255);"></span>
                                                         <span class="underLine">My Calendar</span>
                                                     </label>
-                                                </div>
+                                                </div>                                                
                                                 <c:forEach var="project" items="${projectList}">
                                                     <div class="lnb-calendars-item">
                                                         <label>
