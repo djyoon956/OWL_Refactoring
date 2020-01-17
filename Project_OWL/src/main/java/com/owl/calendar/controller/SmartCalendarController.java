@@ -31,6 +31,7 @@ public class SmartCalendarController {
 	public String showView(Principal principal, Model model) {
 		System.out.println("Calendar");
 		List<ProjectList> projects = projectService.getProjectLists(principal.getName());
+		/*
 		System.out.println(projects);
 		List<SmartCalendar> calendarDatas = service.getMemberCalendars(principal.getName());
 		System.out.println(calendarDatas);
@@ -47,10 +48,8 @@ public class SmartCalendarController {
 		List<SmartCalendar>myCalendars = calendarDatas.stream()
 																			.filter(calendar->calendar.getType() == CalendarType.MY)
 																			.collect(Collectors.toList());
-		
-		model.addAttribute("project", datas);
-		model.addAttribute("projectCalendars", datas);
-		model.addAttribute("myCalendars", myCalendars);
+		*/
+		model.addAttribute("projectList", projects);
 		return "calendar/calendar3";
 	}
 }

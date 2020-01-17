@@ -54,6 +54,72 @@
 	  border: solid 2px;
 	  background: transparent;
 	}
+	.underLine{
+		border-bottom: 3px solid #a5c5e8;
+		box-shadow: inset 0 -4px 0 #a5c5e8;
+	}
+	
+	#tui-menu {
+	  padding: 16px;
+	}
+	
+	.tui-open > .dropdown-toggle.btn-default {
+	  background-color: #fff;
+	}
+	
+	#dropdownMenu-calendarType {
+	  padding: 0 8px 0 11px;
+	}
+	
+	#calendarTypeName {
+	  min-width: 62px;
+	  display: inline-block;
+	  text-align: left;
+	  line-height: 30px;
+	}
+	
+	.calendar-icon {
+	  width: 14px;
+	  height: 14px;
+	}
+
+	#tui-menu .btn {
+	  border-radius: 25px;
+	  border-color: #ddd;
+	}
+	
+	#tui-menu .btn:hover {
+	  border: solid 1px #bbb;
+	  background-color: #fff;
+	}
+	
+	#tui-menu .btn:active {
+	  background-color: #f9f9f9;
+	  border: solid 1px #bbb;
+	  outline: none;
+	}
+	
+	#tui-menu .btn:disabled {
+	  background-color: #f9f9f9;
+	  border: solid 1px #ddd;
+	  color: #bbb;
+	}
+	
+	#tui-menu .btn:focus:active, #tui-menu .btn:focus, #tui-menu .btn:active {
+	  outline: none;
+	}
+	
+	#tui-menu >.dropdown-menu {
+	  top: 25px;
+	  padding: 3px 0;
+	  border-radius: 2px;
+	  border: 1px solid #bbb;
+	}
+	
+	#tui-menu >.dropdown-menu-title .calendar-icon {
+	  margin-right: 8px;
+	}
+	
 	</style>
 	<script type="text/javascript">
 		$(function(){
@@ -65,137 +131,108 @@
 				      return '<span class="calendar-week-dayname-name">' + dayname.label + '</span>';
 				    }
 				  }
-				});
-			$('#calendarListBox').on('change', changeCalendar);
-		})
-		
-		function CalendarInfo() {
-		    this.id = null;
-		    this.name = null;
-		    this.checked = true;
-		    this.color = null;
-		    this.bgColor = null;
-		    this.borderColor = null;
-		    this.dragBgColor = null;
-		}
-		
-		function setCalendars(){
-			console.log("in setCalendars");
-			let ttt =${myCalendars};
-			console.log(ttt);
-			let calendarList = [];
-			let myCalendar = new CalendarInfo();
-			myCalendar.id = "my";
-			myCalendar.name = "My Calendar";
-			myCalendar.color = "#326295";
-			myCalendar.bgColor = "#326295";
-			myCalendar.dragBgColor = "#326295";
-			myCalendar.borderColor = "#326295";
-			calendarList.add(myCalendar);
-			console.log(test);
-			$.each(${projectCalendars}, function(key,value){
-				console.log(key);
-				console.log(value);
-				/* let calendar = new CalendarInfo();
-				calendar.id = element.projectIdx;
-			    calendar.name = element.projectName;
-			    calendar.color = element.color;
-			    calendar.bgColor = element.color;
-			    calendar.dragBgColor =element.color;
-			    calendar.borderColor = element.color;
-
-			    calendarList.add(calendar); */
 			});
-
-			return calendarList;
-		}
-		
-		function setMyCalendar(data){
-			let calendar = new CalendarInfo();
-			calendar.id = "my";
-		    calendar.name = "My Calendar";
-		    calendar.color = "#326295";
-		    calendar.bgColor = "#326295";
-		    calendar.dragBgColor = "#326295";
-		    calendar.borderColor = "#326295";
-
-		    return calendar;
-		}
-		
-		function changeCalendar(event){
-			console.log("changeCalendar");
-			let calendarId = event.target.value;
-			let checked = event.target.checked;
+			 $('#calendarListBox').on('change', onChangeCalendars);
+			 
+			// 캘린더 색상 설정	
 			let viewAll = $('.lnb-calendars-item input');
 			let calendarElements = Array.prototype.slice.call($('#calendarList input'));
-			let allCheckedCalendars = true;
-
-	        if (calendarId === 'all') {
-	            /* allCheckedCalendars = checked;
-
-	            calendarElements.forEach(function(input) {
-	                let span = input.parentNode;
-	                input.checked = checked;
-	                span.style.backgroundColor = checked ? span.style.borderColor : 'transparent';
-	            });
-
-	            CalendarList.forEach(function(calendar) {
-	                calendar.checked = checked;
-	            }); */
-	        } else {
-	        	$('#calendarList input[value="'+calendarId+'"]').prop("checked", checked);
-
-	            allCheckedCalendars = calendarElements.every(function(input) {
-	                return input.checked;
-	            });
-
-	            if (allCheckedCalendars) {
-	                viewAll.checked = true;
-	            } else {
-	                viewAll.checked = false;
-	            }
-	        }
-
-	       // refreshScheduleVisibility();
+			calendarElements.forEach(function(data){
+				let span = data.parentNode;
+				let projectName = $(data).val();
+				let checkBox = $(span).find('span').eq(0);
+				data.checked = true;
+				if($(data).val() == "my"){
+					$(checkBox).attr("id", "#326295");
+					let color = hexToRGBA("#326295");
+					$(checkBox).css("border-color", color)
+					$(checkBox).css("background-color", color)
+				}else{
+					let color =hexToRGBA($(checkBox).attr("id"));
+					$(checkBox).css("border-color", color)
+					$(checkBox).css("background-color", color)
+				}
+			})
+		})
+		
+		function hexToRGBA(hex) {
+		    let radix = 16;
+		    let r = parseInt(hex.slice(1, 3), radix),
+		        g = parseInt(hex.slice(3, 5), radix),
+		        b = parseInt(hex.slice(5, 7), radix),
+		        a = parseInt(hex.slice(7, 9), radix) / 255 || 1;
+		    let rgba = 'rgb(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+		    return rgba;
 		}
 
-		function refreshScheduleVisibility() {
-	        let calendarElements = Array.prototype.slice.call($("#calendarList input"));
+		function onChangeCalendars(e) {
+	        let calendarId = e.target.value;
+	        let checked = e.target.checked;
+	        let viewAll = $('.lnb-calendars-item input[value=all]');
+			let calendarElements = Array.prototype.slice.call($('#calendarList input'));
+	        let allCheckedCalendars = true;
 
-	        CalendarList.forEach(function(calendar) {
-	        	$("#calendar").toggleSchedules(calendar.id, !calendar.checked, false);
-	        });
+	        if (calendarId === 'all') {
+		        console.log("all :"+ checked);
+	            allCheckedCalendars = checked;
 
-	        $("#calendar").render(true);
-
-	        calendarElements.forEach(function(input) {
-	            let span = input.nextElementSibling;
-	            span.style.backgroundColor = input.checked ? span.style.borderColor : 'transparent';
-	        });
+	            calendarElements.forEach(function(data) {
+	                let span = data.parentNode;
+	            	let checkBox = $(span).find('span').eq(0);
+	                data.checked = checked;
+	                if(checked)
+	                	$(checkBox).css("background-color", hexToRGBA($(checkBox).attr("id")));
+					else
+						$(checkBox).css("background-color", 'transparent');
+	            });
+	        } else {
+	        	calendarElements.forEach(function(data) {
+	        		let span = data.parentNode;
+					let projectName = $(data).val();
+					let checkBox = $(span).find('span').eq(0);
+					
+					if($(data).val() === calendarId){
+						data.checked = checked;
+						if(checked)
+							$(checkBox).css("background-color", hexToRGBA($(checkBox).attr("id")));
+						else
+							$(checkBox).css("background-color", 'transparent');
+					}
+	            });
+	            
+	        	allCheckedCalendars = calendarElements.every(function(input) {
+	                return input.checked;
+	            });
+	            
+	            if (allCheckedCalendars)
+	            	viewAll.attr("checked",true);
+	            else 
+	            	viewAll.attr("checked",false);
+	        }
 	    }
 	</script>
 </head>
 
 <body>
-	<!-- LOADER -->
+    <!-- LOADER -->
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
     </div>
-   
-    <div id="main-wrapper">
-        
-		<!-- TOP -->
-        <jsp:include page="../include/top.jsp"/>
-       
-        <!-- SIDE BAR -->
-        <jsp:include page="../include/sideBar.jsp"/>
 
-		<!-- CONTENT BOX -->
+    <div id="main-wrapper">
+
+        <!-- TOP -->
+        <jsp:include page="../include/top.jsp" />
+
+        <!-- SIDE BAR -->
+        <jsp:include page="../include/sideBar.jsp" />
+
+        <!-- CONTENT BOX -->
         <div class="page-wrapper">
-             <div class="page-breadcrumb">
+            <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
                         <h4 class="page-title">Calendar</h4>
@@ -210,92 +247,67 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- CONTENT MAIN -->
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-md-flex align-items-center">
-                                    <div>
-                                        <h4 class="card-title">Site Analysis</h4>
-                                        <h5 class="card-subtitle">Overview of Latest Month</h5>
-                                    </div>
-                                </div>
                                 <div class="row">
-                                	<div class="col-md-2">
-                                	<div id="calendarListBox" class="lnb-calendars">
-							            <div>
-							                <div class="lnb-calendars-item">
-							                    <label>
-							                        <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
-							                        <span></span>
-							                        <strong>View all</strong>
-							                    </label>
-							                </div>
-							            </div>
-							            <div id="calendarList" class="lnb-calendars-d1">
-					                    	<div class="lnb-calendars-item">
-						                    	<label>
-							                    	<input type="checkbox" class="tui-full-calendar-checkbox-round" value="1" checked>
-							                    	<span style="border-color: rgb(158, 95, 255); background-color: rgb(158, 95, 255);"></span>
-							                    	<span>My Calendar</span>
-						                    	</label>
-					                    	</div>
-											<div class="lnb-calendars-item">
-												<label>
-													<input type="checkbox" class="tui-full-calendar-checkbox-round" value="2">
-													<span style="border-color: rgb(0, 169, 255); background-color: rgb(0, 169, 255);"></span>
-													<span>Family C</span>
-												</label>
-											</div>
-											<div class="lnb-calendars-item">
-												<label >
-													<input type="checkbox" class="tui-full-calendar-checkbox-round" value="3" checked>
-													<span style="border-color: rgb(255, 85, 131); background-color: rgb(255, 85, 131);"></span>
-													<span>Cindy🧡</span>
-												</label>
-											</div>
-											<div class="lnb-calendars-item">
-												<label ><input type="checkbox" class="tui-full-calendar-checkbox-round" value="4" checked="">
-													<span style="border-color: rgb(3, 189, 158); background-color: rgb(3, 189, 158);"></span>
-													<span>Chole🧡</span>
-												</label>
-											</div>
-											<div class="lnb-calendars-item">
-												<label><input type="checkbox" class="tui-full-calendar-checkbox-round" value="5" checked="">
-													<span style="border-color: rgb(187, 220, 0); background-color: rgb(187, 220, 0);"></span>
-													<span>Crystal🧡</span>
-												</label>
-											</div>
-											<div class="lnb-calendars-item">
-												<label><input type="checkbox" class="tui-full-calendar-checkbox-round" value="6" checked="">
-													<span style="border-color: rgb(157, 157, 157); background-color: rgb(157, 157, 157);"></span>
-													<span>Cathy🧡</span>
-												</label>
-											</div>
-											<div class="lnb-calendars-item">
-												<label><input type="checkbox" class="tui-full-calendar-checkbox-round" value="7" checked="">
-													<span style="border-color: rgb(255, 187, 59); background-color: rgb(255, 187, 59);"></span>
-													<span>Colin💙</span>
-												</label>
-											</div>
-											<div class="lnb-calendars-item">
-												<label><input type="checkbox" class="tui-full-calendar-checkbox-round" value="7" checked="">
-													<span style="border-color: rgb(255, 64, 64); background-color: rgb(255, 64, 64);"></span>
-													<span>나머지</span>
-												</label>
-											</div>
-										</div>
-							        </div>
-								       
-					                    
-					                    
-                                	</div>
-                                	<div class="col-md-10">
-	                                   	<div id="calendar" class="h-100 w-100"></div>
-                                	</div>
+                                    <div class="col-md-2">
+                                        <div id="calendarListBox" class="lnb-calendars">
+                                            <hr>
+                                            <div>
+                                                <div class="lnb-calendars-item">
+                                                    <label>
+                                                        <input class="tui-full-calendar-checkbox-square" type="checkbox"
+                                                            value="all" checked>
+                                                        <span></span>
+                                                        <strong>View all</strong>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div id="calendarList" class="lnb-calendars">
+                                                <div class="lnb-calendars-item">
+                                                    <label>
+                                                        <input type="checkbox" class="tui-full-calendar-checkbox-round"
+                                                            value="my" checked>
+                                                        <span
+                                                            style="border-color: rgb(158, 95, 255); background-color: rgb(158, 95, 255);"></span>
+                                                        <span class="underLine">My Calendar</span>
+                                                    </label>
+                                                </div>
+                                                <c:forEach var="project" items="${projectList}">
+                                                    <div class="lnb-calendars-item">
+                                                        <label>
+                                                            <input type="checkbox"
+                                                                class="tui-full-calendar-checkbox-round"
+                                                                value="${project.projectIdx}" checked>
+                                                            <span id="${project.projectColor}"></span>
+                                                            <span>${project.projectName} </span>
+                                                        </label>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div id="tui-menu">
+										      <span id="menu-navi">
+										        <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
+										        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
+										          <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+										        </button>
+										        <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
+										          <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+										        </button>
+										      </span>
+										      <span id="renderRange" class="render-range"></span>
+										    </div>
+                                        <div id="calendar" class="h-100 w-100"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -303,8 +315,8 @@
                 </div>
             </div>
 
-			<!-- BOTTOM -->
-            <jsp:include page="../include/bottom.jsp"/>
+            <!-- BOTTOM -->
+            <jsp:include page="../include/bottom.jsp" />
         </div>
     </div>
 </body>
