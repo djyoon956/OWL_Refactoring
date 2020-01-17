@@ -184,7 +184,9 @@
 	 	<button id="addIssue" class="btn btn-primary"><i class="fas fa-italic"></i>&nbsp;New Issue</button>
 	</a>	
 	
-	<button id="addColumn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;New Column</button>
+	<a href="#" data-toggle="modal" data-target="#addColumnModal">
+		<button id="addColumn" class="btn btn-primary"><i class="fas fa-columns"></i>&nbsp;New Column</button>
+	</a>
 	</div>
 	<div class="col-2">
 	<a href="#" data-toggle="modal" data-target="#labelEditModal">
@@ -277,4 +279,5 @@
 
 <!-- add issue modal -->
 <jsp:include page="modal/addIssue.jsp" />
+<jsp:include page="modal/addColumn.jsp" />
 <jsp:include page="modal/labelEdit.jsp" />
