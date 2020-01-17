@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,17 +52,34 @@ public class KanbanRestController {
 	}
 
 	@RequestMapping("InsertColumn.do")
-	public String insertColumn(Column column) {
-		System.out.println("insertColumn function in");
-		System.out.println("column : " + column);
-		System.out.println("column : " + column.toString());
+	public int insertColumn(Column column, Model model) {
+		//System.out.println("insertColumn function in");
+		//System.out.println("column : " + column);
+		//System.out.println(column.getProjectIdx() + "/" + column.getColname());
+
+		Column col = new Column();
+		col.setProjectIdx(column.getProjectIdx());
+		col.setColname(column.getColname());
+		
+		boolean result = false;
 
 		
-		/* = service.insertColumn(projectIdx, colname); */
-
-		return "hi";
+		result = service.insertColumn(col); 
+		
+		int data = -1;
+		
+		if(result) {
+			data = col.getColumnIdx();
+		};
+		
+		//System.out.println("컨트롤러 result : " + result);
+		//System.out.println("여기도찍히나? " + col.getColumnIdx());
+	
+		return data;
 	}
 
+	
+	
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
 	public boolean insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
@@ -72,16 +90,17 @@ public class KanbanRestController {
 							, @RequestParam(value = "dueDate", required = false) Date dueDate
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							, Principal principal, HttpServletRequest request) {	
-		System.out.println("insertIssue controller in");
-		System.out.println(projectIdx);
-		System.out.println(issueTitle);
-		System.out.println(content);
-		System.out.println(assigned);
-		System.out.println(labelIdx);
-		System.out.println(dueDate);
-		System.out.println(priorityCode);
-		System.out.println(multipartFiles);
-		System.out.println(multipartFiles.size());
+		
+		//System.out.println("insertIssue controller in");
+		//System.out.println(projectIdx);
+		//System.out.println(issueTitle);
+		//System.out.println(content);
+		//System.out.println(assigned);
+		//System.out.println(labelIdx);
+		//System.out.println(dueDate);
+		//System.out.println(priorityCode);
+		//System.out.println(multipartFiles);
+		//System.out.println(multipartFiles.size());
 
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
@@ -93,18 +112,12 @@ public class KanbanRestController {
 		issue.setDueDate(dueDate);
 		issue.setCreator(principal.getName());
 		
-		List<File> files = new ArrayList<File>();
-		
-		
-		System.out.println("파일은? " +files);
-		
+		System.out.println("principal.getName() :"  + principal.getName());
 
-		issue.setFiles(files);
-		
-		System.out.println(issue.toString());
+		//System.out.println(issue.toString());
 		//issue.setFiles(multipartFiles);
 		boolean result = false;
-		result = service.insertIssue(issue);
+		result = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
 
 		
 		return result;

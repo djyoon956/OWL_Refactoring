@@ -8,13 +8,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM projectlist where projectidx = #{projectidx}
 	</select> -->
 	
-	
-	<!-- 
-	<insert id="insertColumn" parameterType="com.owl.kanban.dto">
-		INSERT INTO colname(colname, projectidx) VALUE(#{colname}, #{projectidx})
-		<selectKey keyProperty="projectIdx" resultType="int" order="AFTER">
+	<insert id="insertColumn" parameterType="com.owl.kanban.dto.Column">
+		INSERT INTO owl.colname(colname, projectidx) VALUE(#{colname}, #{projectIdx})
+		<selectKey keyProperty="columnIdx" resultType="int" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
+	
+	
+	<!-- 
+		<insert id="insertIssue" parameterType="com.owl.kanban.dto.Issue">
+		INSERT INTO issue(creator, issuetitle, content, duedate, PROJECTIDX, prioritycode, assigned, labelidx, colidx) VALUES(#{creator}, #{issueTitle}, #{content}, #{dueDate}, #{projectIdx}, #{priorityCode}, #{assigned}, #{labelIdx}, #{colIdx} )
+		<selectKey keyProperty="issueIdx" resultType="int" order ="AFTER">
+	   		select LAST_INSERT_ID()
+	 	</selectKey>
+	</insert>
+	public int insertIssueFile(File file) throws ClassNotFoundException, SQLException;
+	
 	 -->
 </mapper>

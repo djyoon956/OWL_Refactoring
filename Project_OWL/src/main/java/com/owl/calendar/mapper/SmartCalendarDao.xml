@@ -12,11 +12,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
 	</delete>
 	
-	<select id="getMemberCalendars" parameterType="String" resultType="com.owl.calendar.dto.SmartCalendar">
+<!-- 	<select id="getMemberCalendars" parameterType="String" resultType="com.owl.calendar.dto.SmartCalendar">
 		SELECT P.PROJECTIDX, C.CALIDX, C.TITLE, C.CONTENTS, C.STARTDATE, C.ENDDATE, C.ALARM, C.TYPE 
 			FROM OWL.SMARTCALENDAR C JOIN OWL.PROJECTLIST P
 		ON P.PROJECTIDX = C.PROJECTIDX AND P.EMAIL = #{email}
-	</select>
+	</select> -->
 	
 	<select id="getProjectCalendars" parameterType="Integer">
 	</select>

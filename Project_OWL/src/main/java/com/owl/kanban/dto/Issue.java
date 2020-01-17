@@ -17,17 +17,18 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Issue {
-	private int projectIdx;
 	private int issueIdx;
 	private String issueTitle;
 	private String content;
 	private Date startDate;
 	private Date dueDate;
 	private IssueProgress issueProgress;
+	private int projectIdx;
+	private Priority priorityCode;
 	private String assigned;
 	private String creator;
-	private Priority priorityCode;
 	private int labelIdx;
+	private int colIdx;
 	private String file;
 	private List<File> files;
 	private HashMap<Integer, IssueLog> issueLogs;
