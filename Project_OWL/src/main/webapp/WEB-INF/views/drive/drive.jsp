@@ -6,6 +6,7 @@
 <script src="resources/js/drive.js"></script>
 <script>
 $(function(){
+var allFolder = [];	
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
@@ -29,6 +30,7 @@ $(function(){
 				}, 100);
 			});
 
+			console.log("real : " + folder);
 			$.jstree.defaults.core.themes.variant = "large";
 			$('#jstree').jstree({
 					"core" : {
@@ -52,21 +54,16 @@ $(function(){
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
 				sel = ref.get_selected();
-				console.log(ref);
-				console.log(sel);
-				if(!sel.length) { 
-					let firstRoot = $('#jstree').find('li').eq(0).attr("id");
-					sel = firstRoot;
-					console.log("여기");
-					sel = ref.create_node(sel, {"type":"root"});
-					console.log(sel);
+				if(!sel.length) {
+					sel = null;
+					sel = ref.create_node(sel, {"type":"#"});
 				}
 				sel = sel[0];
 				sel = ref.create_node(sel, {"type":"default"});
 				if(sel) {
 					ref.edit(sel);
+					console.log("마지막은 날타지");
 				}
-
 			});	
 
 			$("#renameFolder").click(function(){
