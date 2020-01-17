@@ -98,6 +98,12 @@
 		} 
 		
 	});
+
+		$("#setBackgroundColor span").click(function(data){
+			console.log("setBackgroundColor click");
+			let selectBackgroundColor = $(data.target).css("background-color");
+			console.log(selectBackgroundColor);
+		})
 	});
 
 	
@@ -672,9 +678,9 @@ display: block;
 				</div>  
 		
 		
-		<!-- Setting toggle -->
+			<!-- Setting toggle -->
 			<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
-				<div class="text-center setting-box  mt-5">
+				<div class="text-center setting-box  mt-5" id="setBackgroundColor">
 					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR BACKGROUND</h5>
 					<hr class="hrGray">
 					<span class="coloricon" style="background-color: white; display: inline-block;"></span>
@@ -682,7 +688,7 @@ display: block;
 
 
 				</div>
-			<div class="text-center setting-box mt-5">
+				<div class="text-center setting-box mt-5" id="setActiveColor">
 					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR ACTIVE COLOR</h5>
 					<hr class="hrGray">
 					<span class="coloricon " style="background-color: white; display: inline-block;"></span>
@@ -690,13 +696,12 @@ display: block;
 					<span class=" coloricon " style="background-color: #91a8d1; display: inline-block;"></span>
 					<span class=" coloricon " style="background-color: #c4d7a4; display: inline-block;"></span>
 				</div>
-
 				<div class="text-center setting-box mt-5">
 					<h5 class="mt-3 mb-1 whiteColor">SELECT FONT</h5>
 					<hr class="hrGray">
 					<div class="col-lg-12">
-						<select class="form-control" id="val-skill" name="val-skill">
-							<option value="">Please select</option>
+						<select class="form-control" id="setFont" name="val-skill">
+							<option hidden>Please select</option>
 							<option value="주아체">배달의민족 - 주아체</option>
 							<option value="도현체">배달의민족 - 도현체</option>
 							<option value="맑은고딕">맑은고딕</option>
@@ -704,7 +709,8 @@ display: block;
 						</select>
 					</div>
 				</div>
-			</div><!-- toggle content End-->
+			</div>
+			<!-- toggle content End-->
 			
 			
         </div>

@@ -5,18 +5,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.owl.notice.dao.NoticeDao">
 	<insert id="insertNotice" parameterType="com.owl.notice.dto.Notice">
 		INSERT INTO owl.BOARD(EMAIL, TITLE, CONTENT, PROJECTIDX) VALUES(#{email}, #{title},#{content}, #{projectIdx})
-		<selectKey keyProperty="noticeIdx" resultType="int" order ="AFTER">
+		<selectKey keyProperty="boardIdx" resultType="int" order ="AFTER">
 	   		select LAST_INSERT_ID()
 	 	</selectKey>
 	</insert>
 	
 	<insert id="insertNoticeFile">
-	
+		INSERT INTO owl.File(BELONGTO, WRITER, FILENAME, FILESIZE, FILEFROM)
+		VALUES(#{belongTo}, #{writer}, #{fileName}, #{fileSize}, #{fileFrom})
 	</insert>
 	
 	<select id="getNoticesByProjectIdx" resultType="com.owl.notice.dto.Notice">
 		SELECT BOARDIDX, EMAIL, TITLE, CONTENT, WRITEDATE 
 			FROM owl.BOARD
 		WHERE PROJECTIDX = #{projectIdx};
+	</select>
+	
+	<select id="getNotice" resultType="com.owl.notice.dto.Notice">
+		SELECT BOARDIDX, EMAIL, TITLE, CONTENT, WRITEDATE 
+			FROM owl.BOARD
+		WHERE BOARDIDX = #{boardIdx};
+	</select>
+	
+	<select id="getNoticeFiles" resultType="com.owl.notice.dto.File">
+		SELECT FILEIDX, BELONGTO, WRITER, FILENAME, FILESIZE, FILEFROM 
+			FROM owl.FILE
+		WHERE FILEFROM = #{param1} AND belongto = #{param2};
 	</select>
 </mapper>

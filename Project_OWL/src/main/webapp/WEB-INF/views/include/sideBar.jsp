@@ -16,6 +16,9 @@
 .asColorPicker-dropdown{
 max-width: 270px;
 }
+.TTest{
+color : ${project.projectColor};
+}
 </style>
 <script>
  $(function(){
