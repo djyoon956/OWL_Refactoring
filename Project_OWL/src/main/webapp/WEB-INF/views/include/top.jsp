@@ -366,7 +366,7 @@ display: block;
 
 <header class="topbar" data-navbarbg="skin5">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-        <div class="navbar-header" data-logobg="skin5">
+        <div class="navbar-header">
             <!-- This is for the sidebar toggle which is visible on mobile only -->
             <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
             <!-- ============================================================== -->
@@ -377,7 +377,7 @@ display: block;
                 <b class="logo-icon p-l-10">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <img src="resources/images/OWL_LOGO_BEIGE_SM.png" alt="homepage" class="light-logo" />
+                    &nbsp;<img src="resources/images/logo_dj.png" alt="homepage" class="light-logo" style="margin-bottom: 10px;"/>
                    
                 </b>
                 <!--End Logo icon -->

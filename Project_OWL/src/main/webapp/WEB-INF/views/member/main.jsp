@@ -9,8 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="resources/assets/images/favicon.png">
     <title>OWL</title>
     <jsp:include page="../include/headTag.jsp"/>
 	<!-- DataTable -->
@@ -58,178 +56,40 @@ $(function() {
  border-radius: 0.25rem
  }
 
-.cbp_tmtimeline {
-	margin: 30px 0 0 0;
-	padding: 0;
-	list-style: none;
-	position: relative;
-} 
-
-/* The line */
-.cbp_tmtimeline:before {
-	content: '';
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	width: 10px;
-	background: #5086bf;
-	left: 20%;
-	margin-left: -10px;
+ul.timeline {
+    list-style-type: none;
+    position: relative;
 }
-
-/* The date/time */
-.cbp_tmtimeline > li {
-	position: relative;
+ul.timeline:before {
+    content: ' ';
+    background: #d4d9df;
+    display: inline-block;
+    position: absolute;
+    left: 29px;
+    width: 2px;
+    height: 100%;
+    z-index: 400;
 }
-
-.cbp_tmtimeline > li .cbp_tmtime {
-	display: block;
-	width: 25%;
-	padding-right: 100px;
-	position: absolute;
+ul.timeline > li {
+    margin: 20px 0;
+    padding-left: 20px;
 }
-
-.cbp_tmtimeline > li .cbp_tmtime span {
-	display: block;
-	text-align: right;
+ul.timeline > li:before {
+    content: ' ';
+    background: white;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #326295;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    z-index: 400;
+    margin-top: 0.25rem; 
 }
-
-.cbp_tmtimeline > li .cbp_tmtime span:first-child {
-	font-size: 0.9em;
-	color: #bdd0db;
-}
-
-.cbp_tmtimeline > li .cbp_tmtime span:last-child {
-	font-size: 2.9em;
-	color: #5086bf;
-}
-
-.cbp_tmtimeline > li:nth-child(odd) .cbp_tmtime span:last-child {
-	color: #326295;
-}
-
-/* Right content */
-.cbp_tmtimeline > li .cbp_tmlabel {
-	margin: 0 0 15px 30%;
-	width:400px;
-	background: #5086bf;
-	color: #fff;
-	padding: 1em;
-	font-size: 1.2em;
-	font-weight: 300;
-	line-height: 1.4;
-	position: relative;
-	border-radius: 5px;
-}
-
-.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel {
-	background: #326295;
-}
-
-.cbp_tmtimeline > li .cbp_tmlabel h2 { 
-	margin-top: 0px;
-	padding: 0 0 10px 0;
-	border-bottom: 1px solid rgba(255,255,255,0.4);
-}
-
-/* The triangle */
-.cbp_tmtimeline > li .cbp_tmlabel:after {
-	right: 100%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-right-color: #5086bf;
-	border-width: 10px;
-	top: 10px;
-} 
-
-.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
-	border-right-color: #326295;
-}
-
-/* The icons */
-.cbp_tmtimeline > li .cbp_tmicon {
-	width: 40px;
-	height: 40px;
-	font-family: 'ecoico';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	font-size: 1.4em;
-	line-height: 40px;
-	-webkit-font-smoothing: antialiased;
-	position: absolute;
-	color: #fff;
-	background: #326295;
-	border-radius: 50%;
-	box-shadow: 0 0 0 8px #5086bf;
-	text-align: center;
-	left: 20%;
-	top: 0;
-	margin: 0 0 0 -25px;
-}
-
-
-
-/* Example Media Queries */
-@media screen and (max-width: 65.375em) {
-	.cbp_tmtimeline > li .cbp_tmtime span:last-child {
-		font-size: 1.5em;
-	}
-}
-
-@media screen and (max-width: 47.2em) {
-	.cbp_tmtimeline:before {
-		display: none;
-	}
-
-	.cbp_tmtimeline > li .cbp_tmtime {
-		width: 100%;
-		position: relative;
-		padding: 0 0 20px 0;
-	}
-
-	.cbp_tmtimeline > li .cbp_tmtime span {
-		text-align: left;
-	}
-
-	.cbp_tmtimeline > li .cbp_tmlabel {
-		margin: 0 0 30px 0;
-		padding: 1em;
-		font-weight: 400;
-		font-size: 95%;
-	}
-
-	.cbp_tmtimeline > li .cbp_tmlabel:after {
-		right: auto;
-		left: 20px;
-		border-right-color: transparent;
-		border-bottom-color: #5086bf;
-		top: -20px;
-	}
-
-	.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
-		border-right-color: transparent;
-		border-bottom-color: #326295;
-	}
-
-	.cbp_tmtimeline > li .cbp_tmicon {
-		position: relative;
-		float: right;
-		left: auto;
-		margin: -55px 5px 0 0px;
-	}	
-}
-.font-900 {
-	font-weight: 900;
-}
-.cbp_tmlabel p {
-	font-size:14px;
+.timeline li p {
+	line-height:1.8em;
+	margin-bottom: 0;
 }
 </style>
 </head>
@@ -275,19 +135,19 @@ $(function() {
 		                                </thead>
 		                                <tbody>
 		                                    <tr>
-		                                        <td>구매전략</td>
+		                                        <td>판매계획</td>
 		                                        <td>로그인 view 구현</td>
 		                                        <td class="text-danger">today</td>
 		                                        <td><span class="badge badge-pill badge-danger font-14">high</span></td>
 		                                    </tr>
 		                                    <tr>
-		                                        <td>구매전략</td>
+		                                        <td>판매계획</td>
 		                                        <td>공지사항 게시판 기능 구현</td>
 		                                        <td class="text-success">tomorrow</td>
 		                                        <td><span class="badge badge-pill badge-warning font-14">low</span></td>
 		                                    </tr>
 		                                    <tr>
-		                                        <td>판매계획</td>
+		                                        <td>후기관리</td>
 		                                        <td>단체 채팅 기능 구현</td>
 		                                        <td>1/18</td>
 		                                        <td><span class="badge badge-pill badge-success font-14">medium</span></td>  
@@ -295,7 +155,7 @@ $(function() {
 		                                    <tr>
 		                                        <td>후기관리</td>
 		                                        <td>캘린더 뷰 구현</td>
-		                                        <td>1/20</td>
+		                                        <td>1/30</td>
 		                                        <td><span class="badge badge-pill badge-warning font-14">low</span></td>
 		                                    </tr>
 		                                </tbody>
@@ -332,7 +192,7 @@ $(function() {
                                         </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 80%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 80%; background-color: #ccccff" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                  <div class="w-100 pt-3">
@@ -343,7 +203,7 @@ $(function() {
                                         </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 34%; background-color:#326295;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 34%; background-color:  #ffb1b9" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                  <div class="w-100 pt-3">
@@ -354,7 +214,7 @@ $(function() {
                                         </div>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 95%; background-color:darkgray;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" role="progressbar" style="width: 95%; background-color:lightgray;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                               </div>
@@ -369,66 +229,51 @@ $(function() {
                             <div class="card-body">
                            	  <h4 class="card-title">Timeline</h4>
                                 <div class="d-md-flex align-items-center">
-            <!--   <div class="container"> -->
-			<!-- <div class="main"> -->
-				<ul class="cbp_tmtimeline">
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">MON</span></div>
-						<div class="cbp_tmlabel">
-							<h5>구매전략</h5>
-							<p>로그인 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">TUE</span></div>
-						<div class="cbp_tmlabel">
-							<h5>판매계획</h5>
-							<p>공지사항 게시판 기능 구현</p>
-							<p>공지사항 게시판 view 구현</p>
-							<h5>구매전략</h5>
-							<p>qna 게시판 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">WED</span></div>
-						<div class="cbp_tmlabel">
-							<h5>판매계획</h5>
-							<p>단체 채팅 기능 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">THU</span></div>
-						<div class="cbp_tmlabel">
-						<h5>판매계획</h5>
-							<p>채팅 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">FRI</span></div>
-						<div class="cbp_tmlabel">
-							<h5>구매전략</h5>
-							<p>탈퇴 view 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">SAT</span></div>
-						<div class="cbp_tmlabel">
-							<h5>판매계획</h5>
-							<p>대시보드 구현</p>
-						</div>
-					</li>
-					<li>
-						<div class="cbp_tmicon"><span class="font-14 font-900">SUN</span></div>
-						<div class="cbp_tmlabel">
-							<h5>구매전략</h5>
-							<p>로그인 view 구현</p>
-						</div>
-					</li>
-				</ul>
-			<!-- </div> -->
-		<!-- </div> -->
-	                 
-                                    
+								<ul class="timeline w-100">
+								<li>
+									<p class="float-right" >Mon, 20 Jan, 2020</p>
+									<span class="badge badge-pill font-14 font-medium mb-1" style="background-color: #ffb1b9;">판매계획</span>
+									<p>로그인 view 구현</p>
+									<p>로그인 기능 구현</p>
+								</li>
+								<li>
+									<p class="float-right">Tue, 21 Jan, 2020</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ffb1b9">판매계획</span>
+										<p>공지사항 게시판 기능 구현</p>
+										<p>공지사항 게시판 view 구현</p>
+									<span class="badge badge-pill font-14 mb-1 mt-1 font-medium" style="background-color: lightgray">후기관리</span>
+										<p>단체 채팅 view 구현</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ccccff">구매전략</span>
+										<p>qna 게시판 view 구현</p>
+								</li>
+								<li>
+									<p class="float-right">Wed, 22 Jan, 2020</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ccccff">구매전략</span>
+										<p>qna 게시판 기능 구현</p>
+								</li>
+								<li>
+									<p class="float-right">Thu, 23 Jan, 2020</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: lightgray">후기관리</span>
+										<p>대시보드 view 구현</p>
+								</li>
+								<li>
+									<p class="float-right">Fri, 24 Jan, 2020</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ccccff">구매전략</span>
+										<p>탈퇴 view 구현</p>
+								</li>
+								<li>
+									<p class="float-right">Sat, 25 Jan, 2020</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ffb1b9">판매계획</span>
+										<p>채팅 view 구현</p>
+								</li>
+								<li>
+									<p class="float-right">Sun, 26 Jan, 2020</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium" style="background-color: lightgray">후기관리</span>
+										<p>단체 채팅 기능 구현</p>
+									<span class="badge badge-pill font-14 mb-1 font-medium" style="background-color:#ccccff">구매전략</span>
+										<p>대시보드 기능 구현</p>
+								</li>
+							</ul>
                                     <!-- 끝 -->
                                 </div>
                             </div>
