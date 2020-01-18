@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.owl.chat.dao.ChatDao">
 
 <select id="getMyProjectsMates" resultType="com.owl.chat.dto.MyProjectsMates">
-	select  p.projectidx, p.email, m.name from owl.member m join 
+	select  p.projectidx, p.email, m.name, m.profilepic from owl.member m join 
 	(select projectidx, email from projectlist where projectidx in (select projectidx from projectlist where email = #{param1})) p
         on m.email = p.email where m.name != #{param2} group by m.name;  
 	</select>

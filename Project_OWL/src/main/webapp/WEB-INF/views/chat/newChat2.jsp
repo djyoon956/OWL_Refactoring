@@ -19,12 +19,14 @@
    <c:set var="member" value="${member}" scope="request"/>
    <input type="hidden" id='memberName'value='${member.name}'>
    <input type="hidden" id='memberEmail'value='${member.email}'>
+    <input type="hidden" id='memberProfilePic'value='${member.profilePic}'>
+    <input type="hidden" id='curUserKey'>
     <!-- header Top 영역 -->
     <header class="navbar-fixed">
         <nav>
             <div class="nav-wrapper valign-wrapper">
                 <a href="#" id="aBackBtn" class="small material-icons left hiddendiv">arrow_back</a>
-                <span id="spTitle" class="brand-logo center">Firebase-Tutorial</span>
+                <span id="spTitle" class="brand-logo center">OWL Chat Room</span>
                 <a href="#dvAddUser" id="aInvite" class="small material-icons right hiddendiv modal-trigger">add</a>
             </div>
         </nav>
@@ -133,7 +135,9 @@
                 <span class="small material-icons right hiddendiv mood yellow-text">mood</span>
             </li>
     </script>
-    <!-- template 메세지리스트 영역 -->
+    --%>
+    
+    <%-- <!-- template 메세지리스트 영역 -->
     <script type="text/template" id="templateMessageList">
         <li id="li<%=key%>" class="collection-item avatar" data-key="<%=key%>">
             <img src="<%=profileImg ? profileImg : 'img/noprofile.png'  %>" alt="" class="circle">
@@ -141,6 +145,7 @@
             <p><%=message %></p>
         </li>
     </script>
+    
     <!-- template 채팅방리스트 영역 -->
     <script type="text/template" id="templateRoomList">
         <li id="liRoom<%=roomId %>" data-roomId="<%=roomId %>" data-roomTitle='<%=roomTitle%>' data-roomUserName="<%=roomUserName%>"
@@ -150,8 +155,8 @@
             <p><%=lastMessage %></p>
             <a href="#!" class="secondary-content"> <%=datetime %></a>
         </li>
-    </script> --%>
-    
+    </script> 
+     --%>
     
       <!-- <script type="text/javascript" src="resources/js/jquery-3.2.1.min.js"></script> -->
       <script type="text/javascript" src="resources/js/materialize.min.js"></script>
@@ -285,60 +290,155 @@
 	      //유저가 채팅기능 버튼을 눌렀을 때 작동하는 콜백 함수... 목적은.. firebase database 유저 정보저장(메세지 읽기, 쓰기를 위해 특정키 부여 누군인지 구분하기 위해 필요)
 		  //그리고 이미 디비에 있으면...키 값을 불러서 해당 유저와 관련된 정보를 보여 주는 데 활용 할 수 있다...    
           function writeUserData(name, email, imageUrl) {
-        	  var myEmail = firebase.database().ref();
-        	  myEmail.child("emails").orderByChild('email').equalTo(email).once('value', function(data){
-          	    console.log('현재 접속한 유저는 채팅 경험이 있나요??	 :' + data.key + " / " + data.val() + " / " +data.numChildren());
-          	    console.log("여기서 데이터 값의 정체는??" + typeof data);
-				var myResult = data.val();
-				if(myResult == null){
-					console.log("신규회원 이메일 등록을 통한 유아디 생성과.. 유저 데이터 등록 필요");
-					var newUser = firebase.database().ref('emails/').push({email :email});
-					firebase.database().ref('users/' + newUser.key).set({
-		        	    username: name,
-		        	    email: email,
-		        	    profile_picture : imageUrl
-		        	  });
-					}else{
-					console.log("이미디비에 있는 회원이므로 키값을 뽑아내서... 채팅에 활용");
-					console.log("이미 있는 회원의 키 값 뽑아 보자 " + data);
-					data.forEach(function(childSnapshot) {
-						var userKey = childSnapshot.key;
-              			console.log("이미 있는 회원의 키 값 뽑아 보자 " + userKey);
-              			
-             			 			
-         		 });
-					
-					
-				
+		       return new Promise(function(resolve){
 
-
-					
-						}
-          	    
-          	});
+		        	  var myEmail = firebase.database().ref();
+		        	  myEmail.child("emails").orderByChild('email').equalTo(email).once('value', function(data){
+		          	    console.log('현재 접속한 유저는 채팅 경험이 있나요??	 :' +email+ " / "+ data.key + " / " + data.val() + " / " +data.numChildren());		          	    
+						var myResult = data.val();
+						var userKey;
+						if(myResult == null){
+							console.log("신규회원 이메일 등록을 통한 유아디 생성과.. 유저 데이터 등록 필요");
+							
+							var newUser = firebase.database().ref('emails/').push({email :email});
+							 userKey = newUser.key;
+							console.log("새로 들어온 유저의 키 값은 ??"  + userKey);
+							firebase.database().ref('users/' + newUser.key).set({
+				        	    username: name,
+				        	    email: email,
+				        	    profile_picture : imageUrl
+				        	  });
+				        	 
+							}else{
+								console.log("이미디비에 있는 회원이므로 키값을 뽑아내서... 채팅에 활용");
+								data.forEach(function(childSnapshot) {
+									userKey = childSnapshot.key;
+		              				console.log("이미 있는 회원의 키 값 뽑아 보자 " + userKey);	              				
+		         		 		});
+							}
+						console.log("라이트유저 데이타 펑션에서 유저 키 함 찍어 볼까??>>>"+userKey);
+						resolve(userKey);
+		          	});
+			          
+			     });
         	}
-          writeUserData($('#memberName').val(), $('#memberEmail').val(), 'view/coolguy.jpg');
+          //writeUserData($('#memberName').val(), $('#memberEmail').val(), 'view/coolguy.jpg');
 
-           /*
-			writeUserData().then(function(myresult){
-					console.log("then 을 타기는 하니??  " + myresult)
-				if(myresult){
-					var newUser = firebase.database().ref('emails/').push({email :email});
-					  var newKey = newUser.key;
-						console.log("처음 채팅기능을 사용하는 유저의 키값은?? "+ newKey);
-
-						var newUserSet = firebase.database().ref('users/' + newUser.key).set({
-			        	    username: name,
-			        	    email: email,
-			        	    profile_picture : imageUrl
-			        	  });
-						console.log("유저가 데이타에 등록 된 키 값은 ??" + newUserSet.key);
-					}
-
-				
-				});
 			
-        	*/
+			
+          
+
+			//채팅방 유적 목록 클릭시 실행 되는 펑션
+          function onUserListClick(event){
+				console.log("유저 목폭 클릭 펑션 타나요?? >>");
+				console.log("이함수 에서 현재 접속한 유저의 챗방 키 값 뽑아 보자" + $('#curUserKey').val());
+				var curUserKey = $('#curUserKey').val();
+				this.aBackBtn.classList.remove('hiddendiv'); // 백버튼 노출 
+				this.aInvite.classList.remove('hiddendiv'); // 초대 버튼 노툴 			
+
+				var targetUserUid = event.getAttribute('data-targetUserUid'); 				
+				var targetUserName = event.getAttribute('data-username'); 
+				var roomTitle = targetUserName+'님'; 
+				var roomUserlist = [targetUserUid, curUserKey]; // 챗방 유저리스트  			
+				var roomUserName = [targetUserName, $('#memberName').val()] // 챗방 유저 이름 
+				var roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss(); 
+				console.log("룸아이뒤 생성되나요??>>>" + roomId);
+				openChatRoom(roomId, roomTitle); // 파라미터 추가
+            }
+
+
+          function openChatRoom(roomId, roomTitle) { 
+        	  this.isOpenRoom = true; // 방이 열린 상태인지 확인하는 플래그 값 
+        	  if(roomTitle){ //상단 타이틀 변경 
+            	  this.spTitle.innerHTML = this.roomTitle; 
+            	  } 
+        	  this.loadMessageList(roomId); //메세지 로드 
+              this.tabMessageList.click();
+
+        	
+              }
+
+          /** * 메세지 로드 */ 
+           var loadMessageList = function(roomId){ 
+              if(roomId){ 
+                  this.ulMessageList.innerHTML = ''; //메세지 화면 리셋 
+              	  var messageTemplate = document.getElementById('templateMessageList').innerHTML; 
+                  if(this.messageRef){ // 이전 메세지 ref 이벤트 제거 
+                  this.messageRef.off(); 
+                  }
+               
+              	  this.messageRef = firebase.database.ref('Messages/' + roomId); 
+                  var cbDisplayMessages = function(data) { 
+                  	var messageHtml = ''; 
+                  	var val = data.val(); 
+                  	messageHtml = _.template(messageTemplate)({ 
+                      	key : data.key , 
+                     	profileImg : val.profileImg , 
+                      	userName : val.userName , 
+                      	time : FirebaseChat.timestampToTime(val.timestamp) , 
+                      	message : val.message 
+                      	}); 
+                   	  	this.ulMessageList.innerHTML = this.ulMessageList.innerHTML + messageHtml; 
+                  	  	this.ulMessageList.scrollTop = this.ulMessageList.scrollHeight; 
+                  	  	this.roomTitle = val.roomTitle; 
+                  } 
+                  this.messageRef.limitToLast(50).on('child_added', cbDisplayMessages.bind(this)); 
+              } 
+            }; 
+
+			
+            function myloadMessageList(roomId) {
+ 		       return new Promise(function(resolve){
+
+ 		        	  var myMessage = firebase.database.ref('Messages/' + roomId);
+					  if(myMessage.hasChild()){
+						  }	
+ 		        	  myMessage.child("emails").orderByChild('email').equalTo(email).once('value', function(data){
+ 		          	    console.log('현재 접속한 유저는 채팅 경험이 있나요??	 :' +email+ " / "+ data.key + " / " + data.val() + " / " +data.numChildren());		          	    
+ 						var myResult = data.val();
+ 						var userKey;
+ 						if(myResult == null){
+ 							console.log("신규회원 이메일 등록을 통한 유아디 생성과.. 유저 데이터 등록 필요");
+ 							
+ 							var newUser = firebase.database().ref('emails/').push({email :email});
+ 							 userKey = newUser.key;
+ 							console.log("새로 들어온 유저의 키 값은 ??"  + userKey);
+ 							firebase.database().ref('users/' + newUser.key).set({
+ 				        	    username: name,
+ 				        	    email: email,
+ 				        	    profile_picture : imageUrl
+ 				        	  });
+ 				        	 
+ 							}else{
+ 								console.log("이미디비에 있는 회원이므로 키값을 뽑아내서... 채팅에 활용");
+ 								data.forEach(function(childSnapshot) {
+ 									userKey = childSnapshot.key;
+ 		              				console.log("이미 있는 회원의 키 값 뽑아 보자 " + userKey);	              				
+ 		         		 		});
+ 							}
+ 						console.log("라이트유저 데이타 펑션에서 유저 키 함 찍어 볼까??>>>"+userKey);
+ 						resolve(userKey);
+ 		          	});
+ 			          
+ 			     });
+         	}
+
+
+          
+          /** * 현재날짜 yyyyMMddHHmmsss형태로 반환 */ 
+          var yyyyMMddHHmmsss =function(){ 
+              var vDate = new Date(); 
+              var yyyy = vDate.getFullYear().toString(); 
+              var MM = (vDate.getMonth() + 1).toString(); 
+              var dd = vDate.getDate().toString(); 
+              var HH = vDate.getHours().toString(); 
+              var mm = vDate.getMinutes().toString(); 
+              var ss = vDate.getSeconds().toString(); 
+              var sss= vDate.getMilliseconds().toString(); 
+              return yyyy + (MM[1] ? MM : '0'+MM[0]) + (dd[1] ? dd : '0'+dd[0]) + (HH[1] ? HH : '0'+ HH[0]) + (mm[1] ? mm : '0'+ mm[0]) + (ss[1] ? ss : '0'+ss[0])+ sss; 
+              };
+
+          
 
           
         	
@@ -346,9 +446,21 @@
 
           var rootRef = firebase.database().ref();
 
-    
+          var userListUp = function(uid, name){
+               
+        	  var userList = '<li id="li' + uid +'" data-targetUserUid="' +uid + '" data-username="' + 
+							  name + '" class="collection-item avatar list" onclick = "onUserListClick(this)">' +
+          					 '<img src="' + 'value.img' + '" alt="" class="circle">' +
+         					 '<span class="title">'+ name+ '</span>'+
+          					 '<span class="small material-icons right hiddendiv done">done</span>'+
+          					 '<span class="small material-icons right hiddendiv mood yellow-text">mood</span>'+
+          					 '</li>';
+        	  $('#ulUserList').append(userList);
+        	  console.log("undefined... 왜 찍히는 거야??" + userList);
+              
+              }
           
-
+	
 
         	
           
@@ -381,13 +493,21 @@
         	});
 			*/	
 
-          var name = $('#memberName').val();
-	      var email = $('#memberEmail').val();    
-          console.log("널인가???" + name + " / " + email);
+          var curName = $('#memberName').val();
+	      var curEmail = $('#memberEmail').val(); 
+	      var curProfilePic = $('#memberProfilePic').val();   
+          console.log("널인가???" + curName + " / " + curEmail);
 
 
           $(function(){
             console.log("아잭스 펑션을 타긴 하니??");
+			var curUserKey;
+            //writeUserData(curName, curEmail, curProfilePic);
+            writeUserData(curName, curEmail, curProfilePic).then(function(resolvedData){
+				console.log("현재 사용자의 챗방 키는용???>>" + resolvedData + "<<<<<");
+                $('#curUserKey').val(resolvedData);
+            }); 
+            
       		$.ajax({
       			url: "MyProjectsMates.do",
       			type: "POST",
@@ -397,21 +517,24 @@
       			success: function (data) {
       				console.log("뷰단으로 데이터 들어 오나요?? >" + data);
 
-      				var userList = "";
+      				var userList;
       				$.each(data, function(index, value) {          				
       				  console.log(value);
-      				  console.log(value.name + " / " + value.email);
+      				  console.log(value.name + " / " + value.email + " / " + value.profilePic);
+      				  //var myResult = writeUserData(value.name, value.email, value.profilePic);
+      				  //console.log("유저 디비 저장 하는 펑션 실행 한뒤 리턴 값은?? 키여야 하는데>>>>>>>>>" + myResult);
 
-      				userList += '<li id="li' + value.email +'" data-targetUserUid="' + value.email + '" data-username="' + value.name + '" class="collection-item avatar list">'
-                     + '<img src="' + 'value.img' + '" alt="" class="circle">' +
-                    '<span class="title">'+ value.name+ '</span>'+
-                    '<span class="small material-icons right hiddendiv done">done</span>'+
-                    '<span class="small material-icons right hiddendiv mood yellow-text">mood</span>'+
-                    '</li>';
-      				  
+				
+      				writeUserData(value.name, value.email, value.profilePic).then(function(resolvedData){          				
+    					console.log("프라미스 실행뒤 오는 값은>>>>>>>>>>" + resolvedData + "유저리스트 값은??");
+    					//목록을 뿌리기위한 태크 뭉치들이 들어 있는 함수 콜
+    					userListUp(resolvedData, value.name);
+						
+      					});
+
       				});
-
-					$('#ulUserList').append(userList);
+                     console.log("채팅방 유저목록 붙이는 태그들..." +userList);
+					//$('#ulUserList').append(userList);
 
 					//firebase database 에 신규 회원일 경우 등록 해야 하는데.. 이미 존재 하는 유전 인지 아닌지 먼저 확인을 학고 등록 해야 겠지??
       				
