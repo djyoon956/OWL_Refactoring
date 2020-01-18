@@ -1,6 +1,7 @@
 package com.owl.project.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,5 +56,13 @@ public class ProjectRestController {
 			System.out.println(e.getMessage());
 		}		
 		return result;
+	}
+	
+	@RequestMapping("ProjectList.do")
+	public List<ProjectList> getDriveList(Principal principal, Model model){
+		List<ProjectList> projectList  = null;
+		projectList = service.getProjectLists(principal.getName());
+		model.addAttribute("projectList", projectList);
+	return projectList;
 	}
 }

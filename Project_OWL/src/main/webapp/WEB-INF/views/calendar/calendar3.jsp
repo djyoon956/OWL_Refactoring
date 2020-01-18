@@ -13,17 +13,10 @@
     <jsp:include page="../include/headTag.jsp"/>
     
     <!-- Toast Ui -->
-<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
-
-<!-- If you use the default popups, use this. -->
-<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
-<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
-
-    <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
-	<script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
-	<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
-	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
-	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
+	<!-- If you use the default popups, use this. -->
+	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
 <style type="text/css">
 #menu{
 	padding: 16px;
@@ -74,115 +67,77 @@ visibility: visible !important;
 }
 
 .tui-full-calendar-section-calendar.tui-full-calendar-hide{
-visibility: visible !important;
+	visibility: visible !important;
 }
 .tui-full-calendar-confirm{
-background-color: #326295;
-font-size: 14px;
+	background-color: #326295;
+	font-size: 14px;
 }
 .tui-full-calendar-confirm:hover{
-color: #326295;
-border: 1px double #326295;
-background-color: #fff;
+	color: #326295;
+	border: 1px double #326295;
+	background-color: #fff;
+}
+.lnb-calendars-item{
+	margin-bottom: 10px;
+}
+
+.tui-full-calendar-popup-section-item.tui-full-calendar-section-title{
+	width: 461px !important;
+}
+
+.tui-full-calendar-popup-section-item.tui-full-calendar-section-location{
+		height: 42px !important;
+		margin-bottom: 10px !important;
+}
+
+.tui-full-calendar-popup-section.tui-full-calendar-dropdown.tui-full-calendar-close.tui-full-calendar-section-state{
+	display: none !important;
+}
+
+#tui-full-calendar-schedule-private{
+	display: none !important;
+}
+
+.tui-full-calendar-popup-container{
+    padding-top: 25px !important;
 }
 </style>
-	<script type="text/javascript">
-		$(function(){
-			$('#calendar').tuiCalendar({
-				  defaultView: 'month',
-				  taskView: true,
-				  useCreationPopup: true,
-		    	useDetailPopup: true,
-		    	calendars: 
-		            [{
-		                id: '0',
-		                name: 'Jaime',
-		                bgColor: '#9e5fff',
-		                borderColor: '#9e5fff'
-		            }]
-			});
-			 $('#calendarListBox').on('change', onChangeCalendars);
+<script type="text/javascript">
+$(function(){
+		$.ajax({
+    		url:"ProjectList.do",
+    		success:function(data){        		
+    		    let calendar;
+    			$.each(data, function(index, element){
+					calendar = new CalendarInfo();
+					console.log(calendar);
+					calendar.id = String(element.projectIdx);
+				    calendar.name = element.projectName;
+				    calendar.color = '#262626';
+				    calendar.bgColor = element.projectColor;
+				    calendar.dragBgColor = element.projectColor;
+				    calendar.borderColor = element.projectColor;
+				    addCalendar(calendar);			    						
+    			})
+    			var calendarList = document.getElementById('calendarList');
+    		    var html = [];
+    		    CalendarList.forEach(function(calendar) {
+    		        html.push('<div class="lnb-calendars-item"><label>' +
+    		            '<input type="checkbox" class="tui-full-calendar-checkbox-round" value="' + calendar.id + '" checked>' +
+    		            '<span style="border-color: ' + calendar.borderColor + '; background-color: ' + calendar.borderColor + ';"></span>' +
+    		            '<span>' + calendar.name + '</span>' +
+    		            '</label></div>'
+    		        );
+    		    });
+    		    calendarList.innerHTML = html.join('\n\n');
+    		}
+    	});
 
-			// 캘린더 색상 설정	
-			let viewAll = $('.lnb-calendars-item input');
-			let calendarElements = Array.prototype.slice.call($('#calendarList input'));
-			calendarElements.forEach(function(data){
+    	$(".tui-full-calendar-icon tui-full-calendar-ic-location").css({'background-image':'url(resources/images/edit.png)!important', 'background-repeat':'no-repeat'})
+});
 
-				let span = data.parentNode;
-				let projectName = $(data).val();
-				let checkBox = $(span).find('span').eq(0);
-				data.checked = true;
-				if($(data).val() == "my"){
-					$(checkBox).attr("id", "#326295");
-					let color = hexToRGBA("#326295");
-					$(checkBox).css("border-color", color)
-					$(checkBox).css("background-color", color)
-				}else{
-					let color =hexToRGBA($(checkBox).attr("id"));
-					$(checkBox).css("border-color", color)
-					$(checkBox).css("background-color", color)
-				}
-				$(".tui-full-calendar-dropdown-menu").append("<li class='tui-full-calendar-popup-section-item tui-full-calendar-dropdown-menu-item'>"+span+"</li>");
-				console.log(span);
-			})
-	});
 
-		
-		function hexToRGBA(hex) {
-		    let radix = 16;
-		    let r = parseInt(hex.slice(1, 3), radix),
-		        g = parseInt(hex.slice(3, 5), radix),
-		        b = parseInt(hex.slice(5, 7), radix),
-		        a = parseInt(hex.slice(7, 9), radix) / 255 || 1;
-		    let rgba = 'rgb(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
-		    return rgba;
-		}
-
-		function onChangeCalendars(e) {
-	        let calendarId = e.target.value;
-	        let checked = e.target.checked;
-	        let viewAll = $('.lnb-calendars-item input[value=all]');
-			let calendarElements = Array.prototype.slice.call($('#calendarList input'));
-	        let allCheckedCalendars = true;
-
-	        if (calendarId === 'all') {
-		        console.log("all :"+ checked);
-	            allCheckedCalendars = checked;
-
-	            calendarElements.forEach(function(data) {
-	                let span = data.parentNode;
-	            	let checkBox = $(span).find('span').eq(0);
-	                data.checked = checked;
-	                if(checked)
-	                	$(checkBox).css("background-color", hexToRGBA($(checkBox).attr("id")));
-					else
-						$(checkBox).css("background-color", 'transparent');
-	            });
-	        } else {
-	        	calendarElements.forEach(function(data) {
-	        		let span = data.parentNode;
-					let projectName = $(data).val();
-					let checkBox = $(span).find('span').eq(0);
-					
-					if($(data).val() === calendarId){
-						data.checked = checked;
-						if(checked)
-							$(checkBox).css("background-color", hexToRGBA($(checkBox).attr("id")));
-						else
-							$(checkBox).css("background-color", 'transparent');
-					}
-	            });
-	            
-	        	allCheckedCalendars = calendarElements.every(function(input) {
-	                return input.checked;
-	            });
-	            
-	            if (allCheckedCalendars)
-	            	viewAll.attr("checked",true);
-	            else 
-	            	viewAll.attr("checked",false);
-	        }
-	    }
 	</script>
 </head>
 
@@ -208,129 +163,115 @@ background-color: #fff;
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Calendar</h4>
+                        <h4 class="page-title"><i class="far fa-calendar-alt"></i>&nbsp;&nbsp;My Calendar</h4>
                     </div>
                 </div>
             </div>
 
             <!-- CONTENT MAIN -->
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div id="calendarListBox" class="lnb-calendars">
-                                            <hr>
-                                            <div>
-                                                <div class="lnb-calendars-item">
-                                                    <label>
-                                                        <input class="tui-full-calendar-checkbox-square" type="checkbox"
-                                                            value="all" checked>
-                                                        <span></span>
-                                                        <strong>View all</strong>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div id="calendarList" class="lnb-calendars">
-                                                <div class="lnb-calendars-item">
-                                                    <label>
-                                                        <input type="checkbox" class="tui-full-calendar-checkbox-round"
-                                                            value="my" checked>
-                                                        <span
-                                                            style="border-color: rgb(158, 95, 255); background-color: rgb(158, 95, 255);"></span>
-                                                        <span class="underLine">My Calendar</span>
-                                                    </label>
-                                                </div>                                                
-                                                <c:forEach var="project" items="${projectList}">
-                                                    <div class="lnb-calendars-item">
-                                                        <label>
-                                                            <input type="checkbox"
-                                                                class="tui-full-calendar-checkbox-round"
-                                                                value="${project.projectIdx}" checked>
-                                                            <span id="${project.projectColor}"></span>
-                                                            <span>${project.projectName} </span>
-                                                        </label>
-                                                    </div>
-                                                </c:forEach>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-10">
-                                <div id="menu">
-						            <span class="dropdown">
-						                <button id="dropdownMenu-calendarType" class="calendarBtn btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						                    <i id="calendarTypeIcon" class="far fa-hand-point-right" style="margin-right: 4px;"></i>
-						                    <span id="calendarTypeName">Month</span>&nbsp;
-						                </button>
-						                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
-						                    <li role="presentation">
-						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
-						                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>Daily
-						                        </a>
-						                    </li>
-						                    <li role="presentation">
-						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
-						                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>Weekly
-						                        </a>
-						                    </li>
-						                    <li role="presentation">
-						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
-						                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>Month
-						                        </a>
-						                    </li>
-						                    <li role="presentation">
-						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
-						                           <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>2 weeks
-						                        </a>
-						                    </li>
-						                    <li role="presentation">
-						                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
-						                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>3 weeks
-						                        </a>
-						                    </li>
-						                    <li role="presentation">
-						                        <a role="menuitem" data-action="toggle-workweek">
-						                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked="">
-						                            <span class="checkbox-title"></span>Show weekends
-						                        </a>
-						                    </li>
-						                    <li role="presentation">
-						                        <a role="menuitem" data-action="toggle-start-day-1">
-						                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
-						                            <span class="checkbox-title"></span>Start Week on Monday
-						                        </a>
-						                    </li>
-						                    <li role="presentation">
-						                        <a role="menuitem" data-action="toggle-narrow-weekend">
-						                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
-						                            <span class="checkbox-title"></span>Narrower than weekdays
-						                        </a>
-						                    </li>
-						                </ul>
-						            </span>
-						            <span id="menu-navi">
-						                <button type="button" class="calendarBtn btn-sm move-today" data-action="move-today">Today</button>
-						                <button type="button" class="calendarBtn btn-sm move-day" data-action="move-prev">
-						                    <i class="fas fa-angle-left"></i>
-						                </button>
-						                <button type="button" class="calendarBtn btn-sm move-day" data-action="move-next">
-						                    <i class="fas fa-angle-right"></i>
-						                </button>
-						            </span>
-						            <span id="renderRange" class="render-range">2020.01</span>
-						        </div>
-                                        <div id="calendar" class="h-100 w-100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row">
+            <div class="col-md-2">
+			    <div id="lnb">
+			        <div id="lnb-calendars" class="lnb-calendars">
+			            <div>
+			            <br>
+			                <div class="lnb-calendars-item">
+			                    <label>
+			                        <input class="tui-full-calendar-checkbox-square" type="checkbox" value="all" checked>
+			                        <span></span>
+			                        <strong>View all</strong>
+			                    </label>
+			                </div>
+			            <hr style="margin-top: 14px !important;">
+			            <div id="calendarList" class="lnb-calendars-d1">
+			            </div>
+			            </div>
+			        </div>
+			    </div>
+		    </div>
+		    <div class="col-md-10">
+			    <div id="right">
+			        <div id="menu">
+			            <span class="dropdown">
+			                <button id="dropdownMenu-calendarType" class="calendarBtn btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+			                    aria-haspopup="true" aria-expanded="true">
+			                    <i id="calendarTypeIcon" class="far fa-hand-point-right" style="margin-right: 4px;"></i>
+			                    <span id="calendarTypeName">Dropdown</span>&nbsp;
+			                </button>
+			                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
+			                    <li role="presentation">
+			                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-daily">
+			                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>Daily
+			                        </a>
+			                    </li>
+			                    <li role="presentation">
+			                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weekly">
+			                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>Weekly
+			                        </a>
+			                    </li>
+			                    <li role="presentation">
+			                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
+			                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>Month
+			                        </a>
+			                    </li>
+			                    <li role="presentation">
+			                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
+			                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>2 weeks
+			                        </a>
+			                    </li>
+			                    <li role="presentation">
+			                        <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks3">
+			                            <i class="far fa-hand-point-right" style="margin-right: 5px; visibility: hidden;"></i>3 weeks
+			                        </a>
+			                    </li>
+			                    <li role="presentation">
+			                        <a role="menuitem" data-action="toggle-workweek">
+			                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-workweek" checked>
+			                            <span class="checkbox-title"></span>Show weekends
+			                        </a>
+			                    </li>
+			                    <li role="presentation">
+			                        <a role="menuitem" data-action="toggle-start-day-1">
+			                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-start-day-1">
+			                            <span class="checkbox-title"></span>Start Week on Monday
+			                        </a>
+			                    </li>
+			                    <li role="presentation">
+			                        <a role="menuitem" data-action="toggle-narrow-weekend">
+			                            <input type="checkbox" class="tui-full-calendar-checkbox-square" value="toggle-narrow-weekend">
+			                            <span class="checkbox-title"></span>Narrower than weekdays
+			                        </a>
+			                    </li>
+			                </ul>
+			            </span>
+			            <span id="menu-navi">
+			                <button type="button" class="calendarBtn btn-sm move-today" data-action="move-today">Today</button>
+			                <button type="button" class="calendarBtn btn-sm move-day" data-action="move-prev">
+			                    	<i class="fas fa-angle-left" data-action="move-prev"></i>
+			                </button>
+			                <button type="button" class="calendarBtn btn-sm move-day" data-action="move-next">
+			                    <i class="fas fa-angle-right" data-action="move-next"></i>
+			                </button>
+			            </span>
+			            <span id="renderRange" class="render-range"></span>
+			        </div>
+			        <div id="calendar"></div>
+			    </div>
+			    </div>
             </div>
-
+            </div>
+    <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
+	<script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
+	<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
+	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
+	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
+    <script src="resources/plugin/calendar/calendars.js"></script>
+    <script src="resources/plugin/calendar/schedules.js"></script>
+    <script src="resources/plugin/calendar/app.js"></script>
             <!-- BOTTOM -->
             <jsp:include page="../include/bottom.jsp" />
         </div>
