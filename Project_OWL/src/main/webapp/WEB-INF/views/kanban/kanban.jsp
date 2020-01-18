@@ -101,12 +101,15 @@
 }
 
 #kanbanArea {
-	height: 500px;
-	overflow-y: scroll;
-	display: flex;
+	height: 600px;
+	overflow-y: scroll; 
+ 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowarp;
 	flex-flow: row;
+}
+.cursor_pointer {
+	cursor: pointer;
 }
 </style>
 <script>
@@ -141,7 +144,7 @@
         });
 
 
-    $( "#sortable000, #sortable0000" ).sortable({
+    $( "#sortable000, #sortable0000, #sortable0, #sortable00" ).sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false        
       }).disableSelection();
@@ -232,15 +235,9 @@
   });
 
   function closeFn() {
-      console.log("클릭 작동하나");
   	$("#closeIssue").hide();
 		$("#openIssue").hide();
    }
-
-
-
-
-  
   </script>
 
 <div id="totalbody" class="container-fluid mt-3">
@@ -276,30 +273,29 @@
 
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
-		<div class="columnSection d-none" style="background-color: #326295;"
+		<div class="columnSection" style="background-color: #e9e9e9;"
 			id="openIssue">
-			<div class="columnTitle text-center mt-2 card-header">
-				<h4>
-					Open Issue<span class="float-right"><i
-						class="far fa-times-circle" onclick="closeFn()"></i></span>
+			<div class="text-center mt-2 card-header">
+				<h4> Open Issue
+				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
 			<ul id="sortable0" class="connectedSortable columnBody">
-				<li class="issuePiece" style="display: none;">Item 1</li>
+				<li class="issuePiece d-none">Item 1</li>
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none" style="background-color: #326295;"
+		<div class="columnSection d-none" style="background-color: #e9e9e9;"
 			id="closeIssue">
-			<div class="columnTitle text-center mt-2 card-header">
+			<div class="text-center mt-2 card-header">
 				<h4>
 					Close Issue<span class="float-right"><i
-						class="far fa-times-circle" onclick="closeFn()"></i></span>
+						class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
 			<ul id="sortable00" class="connectedSortable columnBody">
-				<li class="issuePiece" style="display: none;">Item 1</li>
+				<li class="issuePiece d-none">Item 1</li>
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
