@@ -30,12 +30,10 @@ public class KanbanService {
 	@Transactional
 	public boolean insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
-		System.out.println(issue.toString());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		
 		try {
-			
 			result = dao.insertIssue(issue) > 0 ? true : false;
 			System.out.println(multipartFiles.size());
 			if (multipartFiles.size() > 0) 

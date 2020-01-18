@@ -15,23 +15,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</selectKey>
 	</insert>
 	
-	
-	<insert id="insertLabel" parameterType="com.owl.kanban.dto.Column">
-		INSERT INTO label(labelcolor, projectidx, labelname) VALUE(#{labelColor}, #{projectIdx}, #{labelName})
-		<selectKey keyProperty="labelIdx" resultType="int" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>
-	
-	
-	 
-<!-- 		<insert id="insertIssue" parameterType="com.owl.kanban.dto.Issue">
-		INSERT INTO issue(creator, issuetitle, content, duedate, issueprogress, projectidx, prioritycode, assigned, labelidx, colidx) VALUES(#{creator}, #{issueTitle}, #{content}, #{dueDate}, #{projectIdx}, #{priorityCode}, #{assigned}, #{labelIdx}, #{colIdx} )
+	<insert id="insertIssue" parameterType="com.owl.kanban.dto.Issue">
+		INSERT INTO owl.ISSUE(creator, issuetitle, content, issueprogress, projectidx, duedate, prioritycode, assigned, labelidx, colidx) 
+		VALUES(#{creator}, #{issueTitle}, #{content}, #{issueProgress}, #{projectIdx}
+					, #{dueDate, jdbcType=DATE} , #{priorityCode, jdbcType=VARCHAR}, #{assigned, jdbcType=VARCHAR}
+					, <choose>
+					    <when test="labelIdx != 0"> #{labelIdx} </when>
+					    <otherwise> null </otherwise>
+					  </choose>
+					, <choose> 
+						<when test="colIdx != 0"> #{colIdx} </when>
+					    <otherwise> null </otherwise>
+					  </choose>
+					)
 		<selectKey keyProperty="issueIdx" resultType="int" order ="AFTER">
 	   		select LAST_INSERT_ID()
 	 	</selectKey>
 	</insert>
-	public int insertIssueFile(File file) throws ClassNotFoundException, SQLException;
-	 -->
+
 	
 </mapper>

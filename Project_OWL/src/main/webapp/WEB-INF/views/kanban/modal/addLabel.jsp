@@ -60,7 +60,6 @@ $(function() {
 		success : function(data) {
 			console.log("Showlabel success");
 			console.log(data);
-			
 		},error : function() {
 			console.log("Showlabel error");
 		}

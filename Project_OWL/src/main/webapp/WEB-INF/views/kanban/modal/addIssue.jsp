@@ -23,8 +23,8 @@
 
 			
 			$("#InsertIssueBtn").on("click", function () {		
-						
- 				console.log('InsertIssueBtn 클릭되니');
+				console.log('InsertIssueBtn 클릭되니1');
+ 				console.log('InsertIssueBtn 클릭되니1');
 				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
 				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
 				console.log('$("#content").summernote("code")' + $('#content').summernote('code'));
@@ -32,19 +32,15 @@
 				console.log('$("#labelIdx").val()' + $('#labelIdx').val());
 				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
 				console.log($('#multipartFile').val());
-		
-				//var form = $('#myForm').serialize();
-				
-			     let formData = new FormData();
-			    
+
+			    let formData = new FormData();
 			    formData.append("projectIdx",'${project.projectIdx}');
 			    formData.append('issueTitle',$('#issueTitle').val());
 			    formData.append('content', $('#content').summernote('code'));
+			    formData.append('priorityCode', $('#priorityCode').val());			    
 			    formData.append('assigned', $('#assigned').val());
 			    formData.append('labelIdx', $('#labelIdx').val());
 			    formData.append('dueDate', $('#datepicker-autoclose').val());
-			    formData.append('priorityCode', $('#priorityCode').val());
-			    
 			    $.each($("#multipartFiles")[0].files, function(i, file) {
 			    	formData.append('multipartFiles', file);
 			    }); 
@@ -62,11 +58,11 @@
 			        success: function (data) {
 			        	console.log("ajax in");
 			        	console.log(data);
-		/* 		        	if(data){
-			        		successAlert("공지사항 작성 완료");
+	 		        	if(data){
+			        		successAlert("Issue 추가 완료");
 			        	}else{
-			        		errorAlert("공지사항 작성 실패");
-			        	} */
+			        		errorAlert("Issue 추가 실패");
+			        	} 
 			        },
 			        error: function (e) {
 			        	errorAlert("Issue 추가 실패");
@@ -129,7 +125,7 @@
 						<div class="col-4">Assignees</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="assigned" id="assigned">
-								<option>Select Assignee</option>
+								<option value="">Select Assignee</option>
 								<option value="Cathy">Cathy</option>
 								<option value="Cindy">Cindy</option>
 								<option value="Colin">Colin</option>
@@ -146,7 +142,7 @@
 						<div class="col-4">Label</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="labelIdx" id="labelIdx">
-								<option>Select Label</option>
+								<option value="">Select Label</option>
 								<option value="1">dev</option>
 								<option value="2">view</option>
 								
@@ -160,7 +156,7 @@
 						<div class="col-4">Priority</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="priorityCode" id="priorityCode">
-								<option>Select Priority</option>
+								<option value="">Select Priority</option>
 								<option value="LOW">low</option>
 								<option value="MEDIUM">medium</option>
 								<option value="HIGH">high</option>
