@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
@@ -101,16 +100,68 @@
 }
 
 #kanbanArea {
-	height: 500px;
+	height: 600px;
 	overflow-y: scroll;
-	display: flex;
+ 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowarp;
 	flex-flow: row;
 }
+
+
+
+ 
+ 
+
+.cursor_pointer {
+	cursor: pointer;
+}
 </style>
 <script>
   $(function(){
+
+
+	  $.ajax({
+			url : 'GetLabelList.do',
+			data : {'projectIdx' : ${project.projectIdx}},
+			success : function(data) {
+				console.log("Showlabel success");
+				console.log(data);
+				$('#labelList').empty();
+
+				let lablist = "";
+				
+				 $.each(data,function(index, obj) {
+					 console.log("each문 in")
+					console.log(obj.labelIdx);
+					console.log(obj.labelName);
+					console.log(obj.labelColor);
+
+					lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'">';
+					lablist +=  '<div class="col-lg-8">';
+					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
+					lablist +=  '</div>';
+					lablist +=  '<div class="col-lg-2">';
+					lablist +=  '<a>Edit</a>';
+					lablist +=  '</div>'
+					lablist +=  '<div class="col-lg-2">';
+					lablist +=  '<a>Delete</a>';
+					lablist +=  '</div></div><hr>';
+
+					$('#labelList').append(lablist);
+					
+					 });
+			},error : function() {
+				console.log("Showlabel error");
+			}
+		
+			});
+
+
+
+
+
+	  
 	  var n = 3;
 	  
     $('#addIssue').click (function() {
@@ -141,7 +192,7 @@
         });
 
 
-    $( "#sortable000, #sortable0000" ).sortable({
+    $( "#sortable000, #sortable0000, #sortable0, #sortable00" ).sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false        
       }).disableSelection();
@@ -227,20 +278,50 @@
 	});
 
 
+	
+	$("#addLabelBtn").on("click", function () {	
+		
+		console.log("addLabelBtn in");
+		console.log($('#labelcolor').val());
+		console.log($('#labelname').val());
 
+		let lbcolor = $('#labelcolor').val();
+		let lbname = $('#labelname').val();
+			$.ajax({
+				url : 'InsertLabel.do',
+				data : {'projectIdx' : ${project.projectIdx}, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
+				success : function(data) {
+					console.log(data);  // 라벨번호 
+
+				let labelpiece = "";
+					labelpiece +=  '<div class="row labelList" id="'+data+'">';
+					labelpiece +=  '<div class="col-lg-8">';
+					labelpiece +=  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbname+'</span>';
+					labelpiece +=  '</div>';
+					labelpiece +=  '<div class="col-lg-2">';
+					labelpiece +=  '<a>Edit</a>';
+					labelpiece +=  '</div>'
+					labelpiece +=  '<div class="col-lg-2">';
+					labelpiece +=  '<a>Delete</a>';
+					labelpiece +=  '</div></div><hr>';
+						
+				$('#labelList').append(labelpiece);
+					
+				},
+				error : function(e) {
+		        	errorAlert("label 추가 error");
+					}
+				});
+	});
+
+	
 	
   });
 
   function closeFn() {
-      console.log("클릭 작동하나");
   	$("#closeIssue").hide();
 		$("#openIssue").hide();
    }
-
-
-
-
-  
   </script>
 
 <div id="totalbody" class="container-fluid mt-3">
@@ -266,7 +347,7 @@
 
 		</div>
 		<div class="col-2">
-			<a href="#" data-toggle="modal" data-target="#labelEditModal">
+			<a href="#" data-toggle="modal" data-target="#addLabelModal">
 				<button class="btn btn-primary">
 					<i class="fas fa-tag"></i>&nbsp;Make Label
 				</button>
@@ -276,37 +357,34 @@
 
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
-		<div class="columnSection d-none" style="background-color: #326295;"
+		<div class="columnSection" style="background-color: #e9e9e9;"
 			id="openIssue">
-			<div class="columnTitle text-center mt-2 card-header">
-				<h4>
-					Open Issue<span class="float-right"><i
-						class="far fa-times-circle" onclick="closeFn()"></i></span>
+			<div class="text-center mt-2 card-header">
+				<h4> Open Issue
+				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
 			<ul id="sortable0" class="connectedSortable columnBody">
-				<li class="issuePiece" style="display: none;">Item 1</li>
+				<li class="issuePiece d-none">Item 1</li>
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none" style="background-color: #326295;"
+		<div class="columnSection d-none" style="background-color: #e9e9e9;"
 			id="closeIssue">
-			<div class="columnTitle text-center mt-2 card-header">
+			<div class="text-center mt-2 card-header">
 				<h4>
 					Close Issue<span class="float-right"><i
-						class="far fa-times-circle" onclick="closeFn()"></i></span>
+						class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
 			<ul id="sortable00" class="connectedSortable columnBody">
-				<li class="issuePiece" style="display: none;">Item 1</li>
+				<li class="issuePiece d-none">Item 1</li>
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
 		<!-- 칼럼 -->
 		<div class="columnSection">
-
-
 
 			<div class="columnTitle text-center mt-2 dropdown">
 				<h4>Undefined section
@@ -321,13 +399,10 @@
 						</ul>
 					</div>
 				</h4>
-
-
 			</div>
 
 
 			<ul id="sortable000" class="connectedSortable columnBody cursor">
-
 				<li class="issuePiece" style="display: none;">Item 1</li>
 				<!-- 무조건 있어야함!!! -->
 
@@ -379,11 +454,6 @@
 						</label>
 					</div>
 				</li>
-
-
-
-
-
 			</ul>
 		</div>
 
@@ -395,16 +465,15 @@
 				<li class="issuePiece" style="display: none;">Item 1</li>
 				<li class="issuePiece">
 					<div class="dropdown">
-						<label> <span class="badgeIcon2 float-left">Dev</span> <span
-							class="issueTitle">Drive : Development</span>
+						<label> <span class="badgeIcon2 float-left">Dev</span> 
+						<span class="issueTitle">Drive : Development</span>
 						</label> <a href="javascript:void(0)" data-toggle="dropdown"
 							id="dropdownIssueButton" aria-haspopup="true"
 							aria-expanded="false" style="float: right"> <i
 							class="fas fa-ellipsis-v fa-sm"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
 							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal"
-									data-toggle="modal">Edit Issue</a></li>
+								<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
 								<li class="pl-3"><a href="#">Remove Issue</a></li>
 							</ul>
 						</div>
@@ -433,9 +502,10 @@
 						</div>
 					</div>
 					<div>
-						<label> <span class="assigneetitle"><i
-								class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
+						<label> 
+							<span class="assigneetitle">
+							<i class="fas fa-user-check"></i>&nbsp; Assignee</span> 
+							<span class="assignee">Chloe</span>
 						</label>
 					</div>
 				</li>
@@ -450,4 +520,4 @@
 <jsp:include page="modal/editIssue.jsp" />
 <jsp:include page="modal/addColumn.jsp" />
 <jsp:include page="modal/editColumn.jsp" />
-<jsp:include page="modal/labelEdit.jsp" />
+<jsp:include page="modal/addLabel.jsp" />
