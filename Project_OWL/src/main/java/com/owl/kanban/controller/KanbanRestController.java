@@ -126,6 +126,34 @@ public class KanbanRestController {
 		
 	}
 	
+	
+	
+	
+	
+	
+	@RequestMapping("InsertLabel.do")
+	public int insertLabel(Column column, Model model) {
+		//System.out.println("insertColumn function in");
+		//System.out.println("column : " + column);
+		//System.out.println(column.getProjectIdx() + "/" + column.getColname());
+
+		Column col = new Column();
+		col.setProjectIdx(column.getProjectIdx());
+		col.setColname(column.getColname());
+		
+		boolean result = false;
+		result = service.insertColumn(col); 		
+		int data = -1;		
+		if(result) {
+			data = col.getColumnIdx();
+		};
+		
+		//System.out.println("컨트롤러 result : " + result);
+		//System.out.println("여기도찍히나? " + col.getColumnIdx());
+		return data;
+	}
+
+	
 	private NoticeDao getNoticeDao() {
 		return sqlSession.getMapper(NoticeDao.class);
 	}
