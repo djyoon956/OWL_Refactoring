@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
+import com.owl.kanban.dto.Issue.IssueProgress;
 import com.owl.kanban.dto.Issue.Priority;
 import com.owl.kanban.service.KanbanService;
 import com.owl.notice.dao.NoticeDao;
@@ -62,23 +63,17 @@ public class KanbanRestController {
 		col.setColname(column.getColname());
 		
 		boolean result = false;
-
-		
-		result = service.insertColumn(col); 
-		
-		int data = -1;
-		
+		result = service.insertColumn(col); 		
+		int data = -1;		
 		if(result) {
 			data = col.getColumnIdx();
 		};
 		
 		//System.out.println("컨트롤러 result : " + result);
 		//System.out.println("여기도찍히나? " + col.getColumnIdx());
-	
 		return data;
 	}
 
-	
 	
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
 	public boolean insertIssue(@RequestParam(value = "projectIdx") int projectIdx
@@ -102,6 +97,8 @@ public class KanbanRestController {
 		//System.out.println(multipartFiles);
 		//System.out.println(multipartFiles.size());
 
+		
+		
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
@@ -111,11 +108,11 @@ public class KanbanRestController {
 		issue.setLabelIdx(labelIdx);
 		issue.setDueDate(dueDate);
 		issue.setCreator(principal.getName());
+		//issue.setIssueProgress();
+		
 		
 		System.out.println("principal.getName() :"  + principal.getName());
 
-		//System.out.println(issue.toString());
-		//issue.setFiles(multipartFiles);
 		boolean result = false;
 		result = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
 
