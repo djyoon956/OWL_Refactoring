@@ -209,7 +209,7 @@
 			<jsp:include page="../drive/drive.jsp" />
 		</div>
 		<div class=" tab-pane fade" id="kanbanDetail" role="tabpanel">
-			<jsp:include page="../kanban/kanbanDetail.jsp" />
+			<jsp:include page="../kanban/kanban.jsp" />
 		</div>
 	</div>		
 			</div>
