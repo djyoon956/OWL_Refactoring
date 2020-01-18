@@ -108,6 +108,30 @@
 	flex-wrap: nowarp;
 	flex-flow: row;
 }
+
+
+/* ------ 모달 가운데로 수정 ------------ */
+.modal {
+      text-align: center;
+}
+ 
+@media screen and (min-width: 768px) { 
+        .modal:before {
+                display: inline-block;
+                vertical-align: middle;
+                content: " ";
+                height: 100%;
+        }
+}
+
+.modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+}
+
+/* ---------------------------------- */
+
 </style>
 <script>
   $(function(){
@@ -225,6 +249,34 @@
 					}
 				});
 	});
+
+
+
+
+
+
+
+
+
+	$("#addLabelBtn").on("click", function () {	
+
+		console.log("addLabelBtn in");
+			$.ajax({
+				url : 'InsertLabel.do',
+				data : {'projectIdx' : ${project.projectIdx}, 'labelcolor' : $('#labelcolor').val(), 'labelname' : $('#labelname').val()},
+				success : function(data) {
+					console.log(data);
+					
+				
+				},
+				error : function(e) {
+		        	errorAlert("label 추가 error");
+					}
+				});
+	});
+
+	
+	
   });
 
   function closeFn() {
@@ -258,7 +310,7 @@
 
 		</div>
 		<div class="col-2">
-			<a href="#" data-toggle="modal" data-target="#addlabelModal">
+			<a href="#" data-toggle="modal" data-target="#addLabelModal">
 				<button class="btn btn-primary">
 					<i class="fas fa-tag"></i>&nbsp;Make Label
 				</button>

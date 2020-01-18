@@ -24,24 +24,6 @@
 	appearance: none;
 }
 
-.modal {
-        text-align: center;
-}
- 
-@media screen and (min-width: 768px) { 
-        .modal:before {
-                display: inline-block;
-                vertical-align: middle;
-                content: " ";
-                height: 100%;
-        }
-}
- 
-.modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-}
 
 
 </style>
@@ -57,7 +39,7 @@
 				</button>
 			</div>
 			<div class="modal-body" style="margin-left: 10px">
-				<form action="InsertColumn.do" method="post" enctype="multipart/form-data">
+				<form action="InsertColumn.do" method="post">
 					<input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
 					<div class="row">
 						<h5>Column name</h5>
