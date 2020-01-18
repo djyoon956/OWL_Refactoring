@@ -47,8 +47,6 @@ public class KanbanService {
 		return result;
 	}
 
-		
-	
 	private List<File> insertIssueFiles(KanbanDao dao, String email, int projectIdx, int issueIdx, List<MultipartFile> multipartFiles, String uploadPath) {
 		List<File> files = new ArrayList<File>();
 
@@ -126,6 +124,25 @@ public class KanbanService {
 		
 		return result;
 	}
+	
+	
+	
+	public List<Label> getLabelList(int projectIdx) {
+		System.out.println("getLabelList : " + projectIdx);
+		KanbanDao dao = getKanbanDao();
+		List<Label> lblist = null;
+		try {
+			lblist = dao.getLabelList(projectIdx);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return lblist;
+	}
+	
+	
 	
 	
 	

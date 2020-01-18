@@ -119,6 +119,49 @@
 </style>
 <script>
   $(function(){
+
+
+	  $.ajax({
+			url : 'GetLabelList.do',
+			data : {'projectIdx' : ${project.projectIdx}},
+			success : function(data) {
+				console.log("Showlabel success");
+				console.log(data);
+				$('#labelList').empty();
+
+				let lablist = "";
+				
+				 $.each(data,function(index, obj) {
+					 console.log("each문 in")
+					console.log(obj.labelIdx);
+					console.log(obj.labelName);
+					console.log(obj.labelColor);
+
+					lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'">';
+					lablist +=  '<div class="col-lg-8">';
+					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
+					lablist +=  '</div>';
+					lablist +=  '<div class="col-lg-2">';
+					lablist +=  '<a>Edit</a>';
+					lablist +=  '</div>'
+					lablist +=  '<div class="col-lg-2">';
+					lablist +=  '<a>Delete</a>';
+					lablist +=  '</div></div><hr>';
+
+					$('#labelList').append(lablist);
+					
+					 });
+			},error : function() {
+				console.log("Showlabel error");
+			}
+		
+			});
+
+
+
+
+
+	  
 	  var n = 3;
 	  
     $('#addIssue').click (function() {
@@ -235,8 +278,8 @@
 	});
 
 
+	
 	$("#addLabelBtn").on("click", function () {	
-
 		
 		console.log("addLabelBtn in");
 		console.log($('#labelcolor').val());

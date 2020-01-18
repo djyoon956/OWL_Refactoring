@@ -1,6 +1,7 @@
 package com.owl.kanban.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
@@ -20,4 +21,7 @@ public interface KanbanDao {
 	public int insertLabel(Label label) throws ClassNotFoundException, SQLException;
 
 	public int insertIssueLog(Issue issue) throws ClassNotFoundException, SQLException;
+	
+	public List<Label> getLabelList(int projectIdx) throws ClassNotFoundException, SQLException;
+
 }

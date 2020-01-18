@@ -51,6 +51,17 @@ public class KanbanRestController {
 
 		return notices;
 	}
+	
+	
+	@RequestMapping("GetLabelList.do")
+	public List<Label> getLabelList(int projectIdx) {
+		System.out.println("getLabelList : " + projectIdx);
+		
+		return service.getLabelList(projectIdx);
+	}
+	
+	
+	
 
 	@RequestMapping("InsertColumn.do")
 	public int insertColumn(Column column) {
