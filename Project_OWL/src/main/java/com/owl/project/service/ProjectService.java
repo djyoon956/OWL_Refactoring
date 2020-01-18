@@ -15,6 +15,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.owl.drive.dao.DriveDao;
 import com.owl.drive.dto.DriveFolder;
+import com.owl.helper.UploadHelper;
 import com.owl.project.dao.ProjectDao;
 import com.owl.project.dto.Project;
 import com.owl.project.dto.ProjectList;
@@ -71,13 +72,13 @@ public class ProjectService {
 			projectlist.setProjectIdx(projectIdx);
 			projectlist.setAuthority("ROLE_PM");
 
-			projectDao.insertProjectList(projectlist);
+			projectDao.insertProjectList(projectlist);	
 			
 			String folderName = project.getProjectName();
-			String folderpath = request.getServletContext().getRealPath("upload")+"\\drive\\"+projectIdx+"\\"+folderName;
-			System.out.println(folderpath);
-			checkDirectory(folderpath);
-			drivefolder.setFolderName(folderpath);
+			String uploadPath = request.getServletContext().getRealPath("upload");
+			UploadHelper.makeDriveDirectory(uploadPath, projectIdx, folderName);
+			
+			drivefolder.setFolderName(folderName);
 			drivefolder.setProjectIdx(projectIdx);
 			
 			driveDao.insertFolder(drivefolder);

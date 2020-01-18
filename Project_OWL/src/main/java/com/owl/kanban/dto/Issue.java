@@ -17,28 +17,29 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Issue {
-	private int projectIdx;
 	private int issueIdx;
 	private String issueTitle;
 	private String content;
 	private Date startDate;
 	private Date dueDate;
-	private IssueProgress issueProgress;
+	private IssueProgressType issueProgress;
+	private int projectIdx;
+	private PriorityType priorityCode;
 	private String assigned;
 	private String creator;
-	private Priority priorityCode;
 	private int labelIdx;
-	private String file;
+	private int colIdx;
 	private List<File> files;
 	private HashMap<Integer, IssueLog> issueLogs;
-	enum IssueProgress {
+	
+	public enum IssueProgressType {
 		REQUESTED,
 		OPEN,
 		CLOSED,
 		REJECTED
 	}
 	
-	enum Priority {
+	public enum PriorityType {
 		LOW,
 		MEDIUM,
 		HIGH,

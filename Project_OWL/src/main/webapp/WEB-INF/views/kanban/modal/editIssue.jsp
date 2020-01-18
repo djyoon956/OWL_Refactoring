@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+<!-- 아직 안만듦!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 복사만 해놓음  -->
+
 	<!-- Summernote -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
@@ -23,8 +27,8 @@
 
 			
 			$("#InsertIssueBtn").on("click", function () {		
-				console.log('InsertIssueBtn 클릭되니1');
- 				console.log('InsertIssueBtn 클릭되니1');
+						
+ 				console.log('InsertIssueBtn 클릭되니');
 				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
 				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
 				console.log('$("#content").summernote("code")' + $('#content').summernote('code'));
@@ -32,15 +36,19 @@
 				console.log('$("#labelIdx").val()' + $('#labelIdx').val());
 				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
 				console.log($('#multipartFile').val());
-
-			    let formData = new FormData();
+		
+				//var form = $('#myForm').serialize();
+				
+			     let formData = new FormData();
+			    
 			    formData.append("projectIdx",'${project.projectIdx}');
 			    formData.append('issueTitle',$('#issueTitle').val());
 			    formData.append('content', $('#content').summernote('code'));
-			    formData.append('priorityCode', $('#priorityCode').val());			    
 			    formData.append('assigned', $('#assigned').val());
 			    formData.append('labelIdx', $('#labelIdx').val());
 			    formData.append('dueDate', $('#datepicker-autoclose').val());
+			    formData.append('priorityCode', $('#priorityCode').val());
+			    
 			    $.each($("#multipartFiles")[0].files, function(i, file) {
 			    	formData.append('multipartFiles', file);
 			    }); 
@@ -58,11 +66,11 @@
 			        success: function (data) {
 			        	console.log("ajax in");
 			        	console.log(data);
-	 		        	if(data){
-			        		successAlert("Issue 추가 완료");
+		/* 		        	if(data){
+			        		successAlert("공지사항 작성 완료");
 			        	}else{
-			        		errorAlert("Issue 추가 실패");
-			        	} 
+			        		errorAlert("공지사항 작성 실패");
+			        	} */
 			        },
 			        error: function (e) {
 			        	errorAlert("Issue 추가 실패");
@@ -97,7 +105,7 @@
 }
 
 </style>
-<div id="addIssueModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="editIssueModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -125,7 +133,7 @@
 						<div class="col-4">Assignees</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="assigned" id="assigned">
-								<option value="">Select Assignee</option>
+								<option>Select Assignee</option>
 								<option value="Cathy">Cathy</option>
 								<option value="Cindy">Cindy</option>
 								<option value="Colin">Colin</option>
@@ -142,7 +150,7 @@
 						<div class="col-4">Label</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="labelIdx" id="labelIdx">
-								<option value="">Select Label</option>
+								<option>Select Label</option>
 								<option value="1">dev</option>
 								<option value="2">view</option>
 								
@@ -156,7 +164,7 @@
 						<div class="col-4">Priority</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="priorityCode" id="priorityCode">
-								<option value="">Select Priority</option>
+								<option>Select Priority</option>
 								<option value="LOW">low</option>
 								<option value="MEDIUM">medium</option>
 								<option value="HIGH">high</option>

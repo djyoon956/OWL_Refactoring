@@ -174,6 +174,9 @@
 						<li class="nav-item">
 							<a class="nav-link" data-toggle="tab" href="#drive">Drive</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#kanbanDetail">kanbanDetail</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -204,6 +207,9 @@
 		</div>
 		<div class=" tab-pane fade" id="drive" role="tabpanel">
 			<jsp:include page="../drive/drive.jsp" />
+		</div>
+		<div class=" tab-pane fade" id="kanbanDetail" role="tabpanel">
+			<jsp:include page="../kanban/kanban.jsp" />
 		</div>
 	</div>		
 			</div>

@@ -1,21 +1,19 @@
 package com.owl.notice.controller;
 
 import java.security.Principal;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.owl.notice.dao.NoticeDao;
-import com.owl.notice.dto.File;
 import com.owl.notice.dto.Notice;
 import com.owl.notice.service.NoticeService;
 
@@ -34,34 +32,32 @@ public class NoticeRestController {
 
 
 	@RequestMapping(value = "WriteNotice.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public boolean insertNotice(@RequestParam(value = "projectIdx") int projectIdx
+	public int insertNotice(@RequestParam(value = "projectIdx") int projectIdx
 			, @RequestParam(value = "content") String content
 			, @RequestParam(value = "title") String title
 			, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
-			, Principal principal) {
-		System.out.println("insertNotice");
-		System.out.println(projectIdx);
-		System.out.println(content);
-		System.out.println(title);
-		System.out.println(multipartFiles.size());
-		
+			, Principal principal, HttpServletRequest request) {		
+		System.out.println("insert notice");
 		Notice notice = new Notice();
 		notice.setProjectIdx(projectIdx);
 		notice.setContent(content);
 		notice.setTitle(title);
 		notice.setEmail(principal.getName());
-		List<File> files = new ArrayList<File>();
-		// multipartFiles insert
-		notice.setFiles(files);
-
+		
 		boolean result= false;
 		try {
-			result = service.insertNotice(notice);
+			result = service.insertNotice(notice, multipartFiles, request.getServletContext().getRealPath("upload"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(result);
-		return result;
+
+		return result ? notice.getBoardIdx() : -1;
+	}
+	
+	@RequestMapping(value = "GetNotice.do", method = RequestMethod.POST)
+	public Notice getNotice(int boardIdx) {
+		System.out.println("getNotice");
+		System.out.println(boardIdx);
+		return service.getNotice(boardIdx);
 	}
 }

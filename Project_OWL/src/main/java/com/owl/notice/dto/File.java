@@ -15,7 +15,7 @@ public class File {
 	private String fileName;
 	private String fileSize;
 
-	enum FileType {
+	public enum FileType {
 		ISSUE
 		, NOTICE
 	}

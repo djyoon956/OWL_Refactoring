@@ -7,4 +7,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 	<select id="selectProjectMember" resultType="com.owl.member.dto" parameterType="int">
 		SELECT * FROM projectlist where projectidx = #{projectidx}
 	</select> -->
+	
+	<insert id="insertColumn" parameterType="com.owl.kanban.dto.Column">
+		INSERT INTO owl.colname(colname, projectidx) VALUE(#{colname}, #{projectIdx})
+		<selectKey keyProperty="columnIdx" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertIssue" parameterType="com.owl.kanban.dto.Issue">
+		INSERT INTO owl.ISSUE(creator, issuetitle, content, issueprogress, projectidx, duedate, prioritycode, assigned, labelidx, colidx) 
+		VALUES(#{creator}, #{issueTitle}, #{content}, #{issueProgress}, #{projectIdx}
+					, #{dueDate, jdbcType=DATE} , #{priorityCode, jdbcType=VARCHAR}, #{assigned, jdbcType=VARCHAR}
+					, <choose>
+					    <when test="labelIdx != 0"> #{labelIdx} </when>
+					    <otherwise> null </otherwise>
+					  </choose>
+					, <choose> 
+						<when test="colIdx != 0"> #{colIdx} </when>
+					    <otherwise> null </otherwise>
+					  </choose>
+					)
+		<selectKey keyProperty="issueIdx" resultType="int" order ="AFTER">
+	   		select LAST_INSERT_ID()
+	 	</selectKey>
+	</insert>
+
+
+	<select id="getLabelList" resultType="com.owl.project.dto.Label">
+		select labelidx, labelname, labelcolor from label WHERE projectidx = #{projectIdx};
+	</select>
+	
 </mapper>
