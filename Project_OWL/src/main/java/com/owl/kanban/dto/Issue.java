@@ -22,24 +22,24 @@ public class Issue {
 	private String content;
 	private Date startDate;
 	private Date dueDate;
-	private IssueProgress issueProgress;
+	private IssueProgressType issueProgress;
 	private int projectIdx;
-	private Priority priorityCode;
+	private PriorityType priorityCode;
 	private String assigned;
 	private String creator;
 	private int labelIdx;
 	private int colIdx;
-	private String file;
 	private List<File> files;
 	private HashMap<Integer, IssueLog> issueLogs;
-	public enum IssueProgress {
+	
+	public enum IssueProgressType {
 		REQUESTED,
 		OPEN,
 		CLOSED,
 		REJECTED
 	}
 	
-	public enum Priority {
+	public enum PriorityType {
 		LOW,
 		MEDIUM,
 		HIGH,
