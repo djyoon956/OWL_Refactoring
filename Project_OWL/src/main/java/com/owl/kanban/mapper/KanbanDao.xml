@@ -16,6 +16,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	
+	<insert id="insertLabel" parameterType="com.owl.kanban.dto.Column">
+		INSERT INTO label(labelcolor, projectidx, labelname) VALUE(#{labelColor}, #{projectIdx}, #{labelName})
+		<selectKey keyProperty="labelIdx" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	
 	 
 <!-- 		<insert id="insertIssue" parameterType="com.owl.kanban.dto.Issue">
 		INSERT INTO issue(creator, issuetitle, content, duedate, issueprogress, projectidx, prioritycode, assigned, labelidx, colidx) VALUES(#{creator}, #{issueTitle}, #{content}, #{dueDate}, #{projectIdx}, #{priorityCode}, #{assigned}, #{labelIdx}, #{colIdx} )

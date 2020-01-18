@@ -20,6 +20,7 @@ import com.owl.member.dto.Member;
 import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.File;
 import com.owl.notice.dto.File.FileType;
+import com.owl.project.dto.Label;
 
 @Service
 public class KanbanService {
@@ -80,17 +81,8 @@ public class KanbanService {
 
 		return files;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	public boolean insertColumn(Column column) {
 		System.out.println("insertColumn Service in");
 		System.out.println(column.getProjectIdx() + "/" + column.getColname());
@@ -112,6 +104,31 @@ public class KanbanService {
 		
 		return result;
 	}
+	
+	
+	
+	public boolean insertLabel(Label label) {
+		System.out.println("insertLabel Service in");
+		System.out.println(label.getProjectIdx() + "/" + label.getLabelColor());
+		
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			
+			result = dao.insertLabel(label) > 0 ? true : false;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("insert service 결과 : " + result);
+		System.out.println("insert service 컬럼 아이디엑스  : " + label.getLabelIdx());
+		
+		return result;
+	}
+	
 	
 	
 	
