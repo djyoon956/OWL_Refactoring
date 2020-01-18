@@ -105,7 +105,7 @@ public class KanbanService {
 	
 	public boolean insertLabel(Label label) {
 		System.out.println("insertLabel Service in");
-		System.out.println(label.getProjectIdx() + "/" + label.getLabelColor());
+		System.out.println(label.getProjectIdx() + "/" + label.getLabelColor() + label.getLabelName());
 		
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;

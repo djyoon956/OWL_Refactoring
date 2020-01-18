@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<!-- 여기는 칸반 jsp -->
 <style>
 .assigneetitle {
 	margin-left: 5px;
@@ -148,9 +148,11 @@
 					lablist +=  '<a>Delete</a>';
 					lablist +=  '</div></div><hr>';
 
-					$('#labelList').append(lablist);
 					
 					 });
+
+					$('#labelList').append(lablist);
+					 
 			},error : function() {
 				console.log("Showlabel error");
 			}
