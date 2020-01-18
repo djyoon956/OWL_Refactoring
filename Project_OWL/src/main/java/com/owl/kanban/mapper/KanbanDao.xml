@@ -16,14 +16,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	
-	<!-- 
-		<insert id="insertIssue" parameterType="com.owl.kanban.dto.Issue">
-		INSERT INTO issue(creator, issuetitle, content, duedate, PROJECTIDX, prioritycode, assigned, labelidx, colidx) VALUES(#{creator}, #{issueTitle}, #{content}, #{dueDate}, #{projectIdx}, #{priorityCode}, #{assigned}, #{labelIdx}, #{colIdx} )
+	 
+<!-- 		<insert id="insertIssue" parameterType="com.owl.kanban.dto.Issue">
+		INSERT INTO issue(creator, issuetitle, content, duedate, issueprogress, projectidx, prioritycode, assigned, labelidx, colidx) VALUES(#{creator}, #{issueTitle}, #{content}, #{dueDate}, #{projectIdx}, #{priorityCode}, #{assigned}, #{labelIdx}, #{colIdx} )
 		<selectKey keyProperty="issueIdx" resultType="int" order ="AFTER">
 	   		select LAST_INSERT_ID()
 	 	</selectKey>
 	</insert>
 	public int insertIssueFile(File file) throws ClassNotFoundException, SQLException;
-	
 	 -->
+	
 </mapper>

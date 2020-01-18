@@ -228,10 +228,6 @@
 					}
 				});
 	});
-
-
-
-	
   });
 
   function closeFn() {
@@ -263,7 +259,7 @@
 
 		</div>
 		<div class="col-2">
-			<a href="#" data-toggle="modal" data-target="#labelEditModal">
+			<a href="#" data-toggle="modal" data-target="#addlabelModal">
 				<button class="btn btn-primary">
 					<i class="fas fa-tag"></i>&nbsp;Make Label
 				</button>
@@ -302,8 +298,6 @@
 		<!-- 칼럼 -->
 		<div class="columnSection">
 
-
-
 			<div class="columnTitle text-center mt-2 dropdown">
 				<h4>Undefined section
 					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true"
@@ -317,13 +311,10 @@
 						</ul>
 					</div>
 				</h4>
-
-
 			</div>
 
 
 			<ul id="sortable000" class="connectedSortable columnBody cursor">
-
 				<li class="issuePiece" style="display: none;">Item 1</li>
 				<!-- 무조건 있어야함!!! -->
 
@@ -375,11 +366,6 @@
 						</label>
 					</div>
 				</li>
-
-
-
-
-
 			</ul>
 		</div>
 
@@ -429,9 +415,10 @@
 						</div>
 					</div>
 					<div>
-						<label> <span class="assigneetitle"><i
-								class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
+						<label> 
+							<span class="assigneetitle">
+							<i class="fas fa-user-check"></i>&nbsp; Assignee</span> 
+							<span class="assignee">Chloe</span>
 						</label>
 					</div>
 				</li>
@@ -446,4 +433,4 @@
 <jsp:include page="modal/editIssue.jsp" />
 <jsp:include page="modal/addColumn.jsp" />
 <jsp:include page="modal/editColumn.jsp" />
-<jsp:include page="modal/labelEdit.jsp" />
+<jsp:include page="modal/addLabel.jsp" />
