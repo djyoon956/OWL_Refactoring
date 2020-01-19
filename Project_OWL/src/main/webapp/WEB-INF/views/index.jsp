@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
+<se:authorize access="isAuthenticated()" var="isLogin"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -396,11 +399,27 @@ background-color:#326295;
 
             <div class="header-right">
                <ul class="clearfix">
-
-                  <li class="icons dropdown d-md-flex"><!-- <a href="Login.do" > -->
-                  <a href="Login.do" > 
-                        <button type="button" id="loginBtn" class="btn mb-1 btn-primary main_btn">Login / Register</button>
-                  </a></li>
+               <c:choose>
+	               	<c:when test="${isLogin}">
+	               		<li class="icons dropdown d-md-flex"><!-- <a href="Login.do" > -->
+		                  <a href="Main.do" > 
+		                        <button type="button" id="loginBtn" class="btn mb-1 btn-primary main_btn">Go Main</button>
+		                  </a>
+                 	 </li>
+                 	 <li class="icons dropdown d-md-flex"><!-- <a href="Login.do" > -->
+		                  <a href="Logout.do" > 
+		                        <button type="button" id="loginBtn" class="btn mb-1 btn-primary main_btn">Logout</button>
+		                  </a>
+                 	 </li>
+	               	</c:when>
+	               	<c:otherwise>
+	               		<li class="icons dropdown d-md-flex">
+		                  <a href="Login.do" > 
+		                        <button type="button" id="loginBtn" class="btn mb-1 btn-primary main_btn">Login / Register</button>
+		                  </a>
+                 	 </li>
+	               	</c:otherwise>
+               </c:choose>        
                </ul>
             </div>
          </div>

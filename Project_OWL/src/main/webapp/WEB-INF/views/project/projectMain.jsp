@@ -60,6 +60,25 @@
 
 				setChageView(currentTab.attr("id"));
 			});
+
+			$("#addMemberOk").click(function(){
+				console.log("in click");
+				console.log(addProjectMembers);
+				$.ajaxSettings.traditional = true;
+				$.ajax({
+			        type : "POST",
+			        url : "AddProjectMember.do",
+			        data : {projectIdx : ${project.projectIdx}
+		        			, addProjectMembers : addProjectMembers},
+			        success : function(data) {
+			            console.log("addMemberOk success");
+			          	$("#memberEditModal").modal("hide");
+			          	successAlert("")
+			        }, error : function(){
+			        	console.log("addMemberOk error");
+			        }
+			    });	
+			})
 		})
 		
 		function setChageView(target){
@@ -115,6 +134,31 @@
 			        	console.log("setDriveData error");
 			        }
 			    });  */
+		}
+		let addProjectMembers = [];
+		function addProjectMember() {
+			let addEmail =$("#addProjectMemeberEmail").val();
+			$("#addProjectMemeberEmail").val("");
+			let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			if (!addEmail.match(regExp) || addProjectMembers.includes(addEmail)) {
+				return; 
+			}
+			
+			addProjectMembers.push(addEmail);addProjectMembers
+			let control = "<div class='input-group'>"
+							+	"<input type='hidden' name='addProjectMembers' value='"+addEmail+"'>"
+							+ "	<div class='form-control'>"
+							+ "		<i class='fas fa-envelope mr-2 iconSizeBig'></i>"+addEmail
+							+ "	</div>"
+							+ "	<div class='input-group-append memberDeleteButton'>"
+							+ "		<span class='input-group-text'><i class='far fa-times-circle font-weight-bold iconSizeBig'></i></span>"
+							+ "	</div>"
+							+"</div>";
+			$("#addMemberBox").prepend(control);
+			
+			$(".memberDeleteButton").click(function(){
+				$(this).parent().remove()
+			})
 		}
 	</script>
 	<style type="text/css">

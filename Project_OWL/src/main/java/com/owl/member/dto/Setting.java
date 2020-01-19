@@ -9,7 +9,10 @@ import lombok.ToString;
 @ToString
 public class Setting {
 	private int settingIdx;
-	private String theme;
+	private String email;
 	private String font;
-	private String iconColor;
+	private String themeColor;
+	private String activeColor;
+	
+	private String subColor;
 }

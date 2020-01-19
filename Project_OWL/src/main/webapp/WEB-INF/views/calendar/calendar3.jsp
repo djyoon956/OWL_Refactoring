@@ -102,6 +102,19 @@ visibility: visible !important;
 .tui-full-calendar-popup-container{
     padding-top: 25px !important;
 }
+
+.tui-full-calendar-icon.tui-full-calendar-ic-location{
+background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAA9UlEQVQokX3STSuFQRjG8d/xUk72SNnQiZ3TWVpJITtbu7O0UHwAtmx8DyzsFSmilCg+gEgkLJTyFofFmSfT0zznqmlm7nv+c1/NPTS1hBf8FowGTjEUziuhgnNM40pabVhGP2az4BQuCoBYk7jMNh1RogsbYc5rG9dxIAY/sYlyAjxDbxHYjpGCivd4w0cKLAUoBXbiCOMp8BsnOav7eAzrYdRxgJ3848znKj4EcBR7OMQCajH4jpmEzSp2cYeB4Kyb1n2s4gmLweoX1rJkK/AYKxjETQzR/HKvGEOf/3714AfruMVq6ub4kzdQwwSesYW5PPAHNCg4N4Y0WccAAAAASUVORK5CYII=') no-repeat !important;
+}
+.tui-full-calendar-ic-location-b{
+background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAA80lEQVQokW3RvS4EURQH8N/szhIf2YiEUCloiFAoJRrVdmoPINF6F4nOE0hU20joJApB5QFUssKGYFiZUczZZDLc5Oaee+75f9xzEizhABto+bsynOIYvRTrGME+XmrFCVbQweIQMIUevrCKZgXwHiQZxiGNhwIz/9h6wn1VMq3EA3zUAJ/B/orvKiCJwok4i7AIzzgJa42qpSySrWC+xAPmsIkc3brCaKj+xJ7HHtaUnXwcAnJc4yruTWUbdzEWfxugX1XII1lgGjuhdosGLnDTQB+zWMYC2mFlC5PK2Zwpp/2W4g7bOAr2wyBph0IX59Favyp2O6MuUf5JAAAAAElFTkSuQmCC') no-repeat !important;
+}
+.tui-full-calendar-ic-state-b+span{
+display: none !important;
+}
+.tui-full-calendar-ic-state-b{
+display: none !important;
+}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -132,12 +145,8 @@ $(function(){
     		    });
     		    calendarList.innerHTML = html.join('\n\n');
     		}
-    	});
-
-    	$(".tui-full-calendar-icon tui-full-calendar-ic-location").css({'background-image':'url(resources/images/edit.png)!important', 'background-repeat':'no-repeat'})
+    	});  	
 });
-
-
 	</script>
 </head>
 
@@ -162,8 +171,8 @@ $(function(){
         <div class="page-wrapper">
             <div class="page-breadcrumb">
                 <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title"><i class="far fa-calendar-alt"></i>&nbsp;&nbsp;My Calendar</h4>
+                    <div class="col-12 d-flex no-block align-items-center" style="border-bottom: 1px solid #326295; padding-bottom: 15px;">
+                        <h4 class="page-title" style="color:#326295;">&nbsp;My Calendar</h4>
                     </div>
                 </div>
             </div>

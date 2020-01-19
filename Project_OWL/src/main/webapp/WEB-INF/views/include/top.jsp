@@ -98,15 +98,8 @@
 		} 
 		
 	});
-
-		$("#setBackgroundColor span").click(function(data){
-			console.log("setBackgroundColor click");
-			let selectBackgroundColor = $(data.target).css("background-color");
-			console.log(selectBackgroundColor);
-		})
 	});
 
-	
 
 	function Search(){
 		$('.ChatList').empty();   
@@ -420,7 +413,7 @@ display: block;
             <!-- ============================================================== -->
             <!-- Logo -->
             <!-- ============================================================== -->
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="Index.do">
                 <!-- Logo icon -->
                 <b class="logo-icon p-l-10">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -495,12 +488,12 @@ display: block;
                     </a>
                 </li>
                 
-                <!-- Setting Icon -->
+                <!-- Setting Icon 
                  <li class="nav-item iconMargin">
                     <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="settingBtn"> 
                     	<i class="fas fa-cog fa-lg" id="setIcon"></i>
                     </a>
-                </li>
+                </li>-->
             </ul>
             
             
@@ -678,7 +671,7 @@ display: block;
 				</div>  
 		
 		
-			<!-- Setting toggle -->
+			<!-- Setting toggle 
 			<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box  mt-5" id="setBackgroundColor">
 					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR BACKGROUND</h5>
@@ -701,17 +694,15 @@ display: block;
 					<hr class="hrGray">
 					<div class="col-lg-12">
 						<select class="form-control" id="setFont" name="val-skill">
-							<option hidden>Please select</option>
-							<option value="주아체">배달의민족 - 주아체</option>
-							<option value="도현체">배달의민족 - 도현체</option>
-							<option value="맑은고딕">맑은고딕</option>
-							<option value="궁서체">궁서체</option>
+							<option value="'Nanum Brush Script', cursive" style="font-family: 'Nanum Brush Script', cursive;">나눔붓체</option>
+                            <option value="'Jua', sans-serif" style="font-family: 'Jua', sans-serif;">주아체</option>
+                            <option value="'Hi Melody', cursive" style="font-family: 'Hi Melody', cursive;">하이멜로디체</option>
+                            <option value="'Gothic A1', sans-serif" style="font-family: 'Gothic A1', sans-serif;">고딕체</option>
 						</select>
 					</div>
 				</div>
 			</div>
-			<!-- toggle content End-->
-			
+			-->
 			
         </div>
         

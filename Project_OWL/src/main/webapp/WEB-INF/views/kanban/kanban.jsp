@@ -109,18 +109,26 @@
 }
 
 
-
- 
- 
-
 .cursor_pointer {
 	cursor: pointer;
+}
+
+.leftdoor {
+	background-color: #e9e9e9;
+	margin-top: 20px;
+	border : 1px solid #CBD7E3;
+}
+
+.leftdoorheader {
+	padding : 12px 20px 12px 20px;
 }
 </style>
 <script>
   $(function(){
 
-
+			let selectoption = '<option value="">Select</option>';
+				
+	//프로젝트 내 라벨 리스트 출력 
 	  $.ajax({
 			url : 'GetLabelList.do',
 			data : {'projectIdx' : ${project.projectIdx}},
@@ -128,30 +136,36 @@
 				console.log("Showlabel success");
 				console.log(data);
 				$('#labelList').empty();
+				$('#labelIdx').empty();
 
-				let lablist = "";
+				
+				let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
+				let lblist = ""; //add issue에 select box에 보여줄 것 
 				
 				 $.each(data,function(index, obj) {
-					 console.log("each문 in")
-					console.log(obj.labelIdx);
-					console.log(obj.labelName);
-					console.log(obj.labelColor);
+				
 
 					lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'">';
 					lablist +=  '<div class="col-lg-8">';
 					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<a>Edit</a>';
+					lablist +=  '<button class="btn-link link-gray">Edit</button>';
 					lablist +=  '</div>'
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<a>Delete</a>';
+					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
 					lablist +=  '</div></div><hr>';
 
+					lblist += '<option value="'+obj.labelIdx+'">'+obj.labelName+'</option>'
 					
 					 });
 
 					$('#labelList').append(lablist);
+
+					$('#labelIdx').append(selectoption);
+					$('#labelIdx').append(lblist);
+
+
 					 
 			},error : function() {
 				console.log("Showlabel error");
@@ -159,84 +173,79 @@
 		
 			});
 
+		//칼럼 select  
+		 $.ajax({
+			 url : 'GetColumn.do',
+			 data : {'projectIdx' :  ${project.projectIdx} },
+			 success : function(data) {
+				let colname = "" 
+				$.each(data,function(index,obj) {
+					console.log("칼럼 데이터 colidx " + obj.colIdx);
+					console.log("칼럼 데이터  colname" + obj.colname);
+					
+				});
+			},
+			 error : function() {
+				console.log("getColum.do error");
+			}
+		}); 
 
-
-
-
-	  
-	  var n = 3;
-	  
-    $('#addIssue').click (function() {
-       console.log('addIssue click in');
 		
-		let newIssue = "";
-		newIssue  += '<li class="issuePiece">';
-		newIssue  += '<div class="dropdown">';
-		newIssue  += '<label>';
-		newIssue  += '<span class="badgeIcon float-left">Dev</span>';
-		newIssue  += '<span class="issueTitle">Drive : Development</span>';
-		newIssue  += '</label>';
-		newIssue  += '<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float:right">';
-		newIssue  += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-		newIssue  += '<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
-		newIssue  += '<ul class="list-style-none">';
-		newIssue  += '<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>';
-		newIssue  += '<li class="pl-3"><a href="#">Remove Issue</a></li>';
-		newIssue  += '</ul></div></div>';
-		newIssue  += '<div><label>';
-		newIssue  += '<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>';
-		newIssue  += '<span class="assignee">Chloe</span>';
-		newIssue  += '</label></div></li>';
-	
-       
-		$('#sortable1').append(newIssue);
-
-        });
-
-
-    $( "#sortable000, #sortable0000, #sortable0, #sortable00" ).sortable({
+    $( "#sortable000, #openAppend, #closeAppend" ).sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false        
       }).disableSelection();
 
 
 
-    function addColumn(projectidx, columnidx, colname) {
+	//컬럼 추가 function
+    function addColumn(columnidx, colname) {
 
-  		 console.log("addcolumn 함수타니?");
-  		  
-  		var value =  "sortable" + projectidx;
 
   		var result = "";
-    		result += '<div class="columnSection">';
-    		result += '<div class="columnTitle text-center mt-2"><h4>'+colname+'</h4></div>';
-    		result += '<input type="hidden" name="'+projectidx+'">';
-    		result += '<input type="hidden" name="'+columnidx+'">';
-        	result += '<ul id="' + value + '"class="connectedSortable columnBody cursor ui-sortable">';
-    		result += '<li class="issuePiece ui-sortable-handle" style="display:none;">Item 1</li>';
-        	result += '</ul></div>';
 
-        console.log("result" + result);	
+  		result += '<div class="columnSection">';
+  		result += '<div class="columnTitle text-center mt-2 dropdown">';
+  		result += '<h4>' + colname;
+  		result += '<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
+  		result += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';	
+  		result += '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">';
+  		result += '<ul class="list-style-none">';
+  		result += '<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>';
+  		result += '<li class="pl-3"><a href="#">Remove Column</a></li>';
+  		result += '</ul>';
+  		result += '</div>';
+  		result += '</h4>';
+  		result += '</div>';
+  		result += '<ul id="'+columnidx+'" class="connectedSortable columnBody cursor">';
+  		result += '<li class="issuePiece" style="display: none;">Item 1</li>'
+  		result += '</ul>';
+  		result += '</div>';
+
+  		
   		$('#kanbanArea').append(result);
 
-        console.log(value);
-       	sortableFn(value);
+       	sortableFn(columnidx);
         };
 
 
-
-        function sortableFn (value)  {
-            var value1 ='#' + value;
-             $( value1 ).sortable({
+    	//칸반내에서 움직일 수 있게 만들어 주는 function
+		
+        function sortableFn (columnidx)  {
+            var value ='#' + columnidx;
+             $( value ).sortable({
                  connectWith: ".connectedSortable",
                  dropOnEmpty: false        
                }).disableSelection();
              }
+
+        
          $("#openIssueBtn").click(function() {
              $("#openIssue").removeClass("d-none");
      		$("#closeIssue").hide();
      		$("#openIssue").show();
           });
+         
          $("#closeIssueBtn").click(function() {
          	$("#closeIssue").removeClass("d-none");
      		$("#openIssue").hide();
@@ -252,21 +261,15 @@
 			$.ajax({
 				url : 'InsertColumn.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'colname' : $('#colname').val()},
-				success : function(data) {
-					console.log(data);
-					console.log(typeof(data));
-					if(data > 0) {
-		        		//successAlert("새로운 Column이 추가되었습니다.");
-
-		        		 let proidx = ${project.projectIdx};
-		        		 let colnm = $('#colname').val();
-		        		 //console.log("여기작동하니?");
-		        		 //console.log(proidx);
-		        		 //console.log(colnm);
+				success : function(columnidx) {
+					console.log(columnidx);
+					console.log(typeof(columnidx));
+					if(columnidx > 0) {
 		        		 
-		        		addColumn(proidx, data, colnm);
+		        		 let colnm = $('#colname').val();
+		        
+		        		addColumn(columnidx, colnm);
 
-						
 		        		$('#addColumnModal').modal("hide");
 		        		$('#colname').val("");
 					}else {
@@ -301,10 +304,10 @@
 					labelpiece +=  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbname+'</span>';
 					labelpiece +=  '</div>';
 					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<a>Edit</a>';
+					labelpiece +=  '<button class="btn-link link-gray">Edit</button>';
 					labelpiece +=  '</div>'
 					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<a>Delete</a>';
+					labelpiece +=  '<button class="btn-link link-gray">Delete</button>';
 					labelpiece +=  '</div></div><hr>';
 						
 				$('#labelList').append(labelpiece);
@@ -314,7 +317,7 @@
 		        	errorAlert("label 추가 error");
 					}
 				});
-	});
+		});
 
 	
 	
@@ -331,11 +334,13 @@
 		<div class="col-8" style="margin-left: 30px;">
 
 			<a href="#" data-toggle="modal" data-target="#addIssueModal">
-				<button id="addIssue" class="btn btn-primary">
+				<button id="addIssuebtn" class="btn btn-primary">
 					<i class="fas fa-italic"></i>&nbsp;New Issue
 				</button>
-			</a> <a href="#" data-toggle="modal" data-target="#addColumnModal">
-				<button id="addColumn" class="btn btn-primary">
+			</a> 
+			
+			<a href="#" data-toggle="modal" data-target="#addColumnModal">
+				<button class="btn btn-primary">
 					<i class="fas fa-columns"></i>&nbsp;New Column
 				</button>
 			</a>
@@ -343,6 +348,8 @@
 			<button id="openIssueBtn" class="btn btn-primary">
 				<i class="fas fa-columns"></i>&nbsp;Open Issue
 			</button>
+			
+			
 			<button id="closeIssueBtn" class="btn btn-primary">
 				<i class="fas fa-columns"></i>&nbsp;Close Issue
 			</button>
@@ -359,39 +366,37 @@
 
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
-		<div class="columnSection" style="background-color: #e9e9e9;"
-			id="openIssue">
-			<div class="text-center mt-2 card-header">
+		<div class="columnSection leftdoor" id="openIssue">
+			<div class="text-center mt-2  leftdoorheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
-			<ul id="sortable0" class="connectedSortable columnBody">
+			<ul id="openAppend" class="connectedSortable columnBody">
 				<li class="issuePiece d-none">Item 1</li>
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none" style="background-color: #e9e9e9;"
-			id="closeIssue">
-			<div class="text-center mt-2 card-header">
+		<div class="columnSection d-none leftdoor "  id="closeIssue">
+			<div class="text-center mt-2 leftdoorheader">
 				<h4>
-					Close Issue<span class="float-right"><i
-						class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
+					Close Issue<span class="float-right">
+					<i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
-			<ul id="sortable00" class="connectedSortable columnBody">
+			<ul id="closeAppend" class="connectedSortable columnBody">
 				<li class="issuePiece d-none">Item 1</li>
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
+		
 		<!-- 칼럼 -->
 		<div class="columnSection">
 
 			<div class="columnTitle text-center mt-2 dropdown">
 				<h4>Undefined section
-					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true"
-						aria-expanded="false" style="float: right"> 
+					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
 					<i class="fas fa-ellipsis-v fa-sm"></i></a>
 					
 					<div class="dropdown-menu" aria-labelledby="dropdownColBtn">
@@ -407,94 +412,13 @@
 			<ul id="sortable000" class="connectedSortable columnBody cursor">
 				<li class="issuePiece" style="display: none;">Item 1</li>
 				<!-- 무조건 있어야함!!! -->
-
 				<li class="issuePiece">
 					<div class="dropdown">
-						<label> <span class="badgeIcon float-left">Dev</span> <span
-							class="issueTitle">Drive : Development</span>
-						</label> <a href="javascript:void(0)" data-toggle="dropdown"
-							id="dropdownIssueButton" aria-haspopup="true"
-							aria-expanded="false" style="float: right"> <i
-							class="fas fa-ellipsis-v fa-sm"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal"
-									data-toggle="modal">Edit Issue</a></li>
-								<li class="pl-3"><a href="#">Remove Issue</a></li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<label> <span class="assigneetitle"><i
-								class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
-						</label>
-					</div>
-				</li>
-
-
-				<li class="issuePiece">
-					<div class="dropdown">
-						<label> <span class="badgeIcon float-left">Dev</span> <span
-							class="issueTitle">Drive : Development</span>
-						</label> <a href="javascript:void(0)" data-toggle="dropdown"
-							id="dropdownIssueButton" aria-haspopup="true"
-							aria-expanded="false" style="float: right"> <i
-							class="fas fa-ellipsis-v fa-sm"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal"
-									data-toggle="modal">Edit Issue</a></li>
-								<li class="pl-3"><a href="#">Remove Issue</a></li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<label> <span class="assigneetitle"><i
-								class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
-						</label>
-					</div>
-				</li>
-			</ul>
-		</div>
-
-		<div class="columnSection">
-			<div class="columnTitle text-center mt-2">
-				<h4>Undefined section</h4>
-			</div>
-			<ul id="sortable0000" class="connectedSortable columnBody">
-				<li class="issuePiece" style="display: none;">Item 1</li>
-				<li class="issuePiece">
-					<div class="dropdown">
-						<label> <span class="badgeIcon2 float-left">Dev</span> 
+						<label> <span class="badgeIcon float-left">Dev</span> 
 						<span class="issueTitle">Drive : Development</span>
-						</label> <a href="javascript:void(0)" data-toggle="dropdown"
-							id="dropdownIssueButton" aria-haspopup="true"
-							aria-expanded="false" style="float: right"> <i
-							class="fas fa-ellipsis-v fa-sm"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
-								<li class="pl-3"><a href="#">Remove Issue</a></li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<label> <span class="assigneetitle"><i
-								class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
-						</label>
-					</div>
-				</li>
-				<li class="issuePiece">
-					<div class="dropdown">
-						<label> <span class="badgeIcon2 float-left">Dev</span> <span
-							class="issueTitle">Drive : Development</span>
-						</label> <a href="javascript:void(0)" data-toggle="dropdown"
-							id="dropdownIssueButton" aria-haspopup="true"
-							aria-expanded="false" style="float: right"> <i
-							class="fas fa-ellipsis-v fa-sm"></i></a>
+						</label> 
+						<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
+						<i class="fas fa-ellipsis-v fa-sm"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
 							<ul class="list-style-none">
 								<li class="pl-3"><a href="#editIssueModal"
@@ -505,15 +429,15 @@
 					</div>
 					<div>
 						<label> 
-							<span class="assigneetitle">
-							<i class="fas fa-user-check"></i>&nbsp; Assignee</span> 
-							<span class="assignee">Chloe</span>
+						<span class="assigneetitle">
+						<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
+							class="assignee">Chloe</span>
 						</label>
 					</div>
 				</li>
+
 			</ul>
 		</div>
-
 	</div>
 </div>
 

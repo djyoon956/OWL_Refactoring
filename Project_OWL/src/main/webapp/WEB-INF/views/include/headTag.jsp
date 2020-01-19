@@ -34,3 +34,7 @@
 <script src="resources/plugin/colorpicker/libs/jquery-asGradient.js"></script>
 <script src="resources/plugin/colorpicker/dist/jquery-asColorPicker.min.js"></script>
 
+<!-- font -->
+<link href="https://fonts.googleapis.com/css?family=Gothic+A1|Hi+Melody|Jua|Nanum+Pen+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+

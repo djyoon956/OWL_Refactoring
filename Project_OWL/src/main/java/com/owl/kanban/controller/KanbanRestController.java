@@ -60,8 +60,13 @@ public class KanbanRestController {
 		return service.getLabelList(projectIdx);
 	}
 	
-	
-	
+	//칼럼 리스트 select 
+	@RequestMapping("GetColumn.do")
+	public List<Column> getColum(int projectIdx) {
+		
+		
+		return service.getColum(projectIdx);		
+	}
 
 	@RequestMapping("InsertColumn.do")
 	public int insertColumn(Column column) {
@@ -75,19 +80,19 @@ public class KanbanRestController {
 		
 		boolean result = false;
 		result = service.insertColumn(col); 		
-		int data = -1;		
+		int columnidx = -1;		
 		if(result) {
-			data = col.getColumnIdx();
+			columnidx = col.getColIdx();
 		};
 		
 		//System.out.println("컨트롤러 result : " + result);
 		//System.out.println("여기도찍히나? " + col.getColumnIdx());
-		return data;
+		return columnidx;
 	}
 
 	
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
-	public boolean insertIssue(@RequestParam(value = "projectIdx") int projectIdx
+	public Label insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
 							, @RequestParam(value = "content") String content
 							, @RequestParam(value = "priorityCode", required = false) String priorityCode
@@ -108,6 +113,7 @@ public class KanbanRestController {
 		System.out.println(multipartFiles);
 		System.out.println(multipartFiles.size());
 
+		
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
@@ -122,7 +128,7 @@ public class KanbanRestController {
 			issue.setLabelIdx(Integer.parseInt(labelIdx));
 		if(!dueDate.isEmpty()) {
 			try {
-				issue.setDueDate(new SimpleDateFormat().parse(dueDate));
+				issue.setDueDate(new SimpleDateFormat("yyyy-mm-dd").parse(dueDate));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -131,11 +137,13 @@ public class KanbanRestController {
 		System.out.println("issue");
 		System.out.println(issue);
 		boolean result = false;
-		result = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
+		
+		Label label = null;
+		
+		label = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
 
 		
-		return result;
-		
+		return label;
 	}
 	
 	

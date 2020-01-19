@@ -28,23 +28,30 @@ public class KanbanService {
 	private SqlSession sqlSession;
 
 	@Transactional
-	public boolean insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
+	public Label insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
+		System.out.println(issue.getDueDate());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		
+		Label label = null;
 		try {
+			
 			result = dao.insertIssue(issue) > 0 ? true : false;
 			System.out.println(multipartFiles.size());
+			
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
 
+			
+			if(result) {
+				label = dao.getLabelinfo(issue.getLabelIdx()); 
+			}
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 		} 
 		
 		
-		return result;
+		return label;
 	}
 
 	private List<File> insertIssueFiles(KanbanDao dao, String email, int projectIdx, int issueIdx, List<MultipartFile> multipartFiles, String uploadPath) {
@@ -96,7 +103,7 @@ public class KanbanService {
 		}
 		
 		System.out.println("insert service 결과 : " + result);
-		System.out.println("insert service 컬럼 아이디엑스  : " + column.getColumnIdx());
+		System.out.println("insert service 컬럼 아이디엑스  : " + column.getColIdx());
 		
 		return result;
 	}
@@ -143,7 +150,18 @@ public class KanbanService {
 	}
 	
 	
-	
+	public List<Column> getColum(int projectIdx){
+		KanbanDao dao = getKanbanDao();
+		List<Column> colList = null;
+		try {
+			colList = dao.getColumn(projectIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(colList + " : 칼럼리스트 ");
+		return colList;
+		
+	}
 	
 	
 	
