@@ -74,14 +74,14 @@ public class KanbanRestController {
 		
 		boolean result = false;
 		result = service.insertColumn(col); 		
-		int data = -1;		
+		int columnidx = -1;		
 		if(result) {
-			data = col.getColumnIdx();
+			columnidx = col.getColumnIdx();
 		};
 		
 		//System.out.println("컨트롤러 result : " + result);
 		//System.out.println("여기도찍히나? " + col.getColumnIdx());
-		return data;
+		return columnidx;
 	}
 
 	
