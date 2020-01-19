@@ -137,8 +137,8 @@
     </script>
     --%>
     
-    <%-- <!-- template 메세지리스트 영역 -->
-    <script type="text/template" id="templateMessageList">
+     <!-- template 메세지리스트 영역 -->
+    <%-- <script type="text/template" id="templateMessageList">
         <li id="li<%=key%>" class="collection-item avatar" data-key="<%=key%>">
             <img src="<%=profileImg ? profileImg : 'img/noprofile.png'  %>" alt="" class="circle">
             <span class="title"><%=userName %></span><span class="time"><%=time %></span>
@@ -146,6 +146,7 @@
         </li>
     </script>
     
+    <!-- 
     <!-- template 채팅방리스트 영역 -->
     <script type="text/template" id="templateRoomList">
         <li id="liRoom<%=roomId %>" data-roomId="<%=roomId %>" data-roomTitle='<%=roomTitle%>' data-roomUserName="<%=roomUserName%>"
@@ -156,7 +157,7 @@
             <a href="#!" class="secondary-content"> <%=datetime %></a>
         </li>
     </script> 
-     --%>
+     --> --%>
     
       <!-- <script type="text/javascript" src="resources/js/jquery-3.2.1.min.js"></script> -->
       <script type="text/javascript" src="resources/js/materialize.min.js"></script>
@@ -184,7 +185,7 @@
  -->
 	
 	
-      
+     
       
       
       <script>
@@ -284,7 +285,71 @@
 			        return myBool;
 					} 
 			*/
-		
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//자바 스크립트 프로트타입 클래스 방식으로  할 까... 하다가.. 기존에 프라미스를 이용해서 계속 진행 하기로.. 나중에... 프로토타입 형식으로 바꾸고 싶으면 활용해 바바바..
+			/* function FirebaseChat(){ 
+				this.init(); 
+				this.initEvent(); 
+				}
+
+			FirebaseChat.prototype.init = function() {			
+				this.curName = $('#memberName').val();
+			      this.curEmail = $('#memberEmail').val(); 
+			      this.curProfilePic = $('#memberProfilePic').val();
+			      
+				}
+
+			FirebaseChat.prototype.initEvent = function() {
+				console.log("아잭스 펑션을 타긴 하니??");
+				var curUserKey;
+	            //writeUserData(curName, curEmail, curProfilePic);
+	            writeUserData(curName, curEmail, curProfilePic).then(function(resolvedData){
+					console.log("현재 사용자의 챗방 키는용???>>" + resolvedData + "<<<<<");
+	                $('#curUserKey').val(resolvedData);
+	            }); 
+	            
+	      		$.ajax({
+	      			url: "MyProjectsMates.do",
+	      			type: "POST",
+	      			dataType: 'json',
+	      			data : { email :$('#memberEmail').val(),
+	      				     name : $('#memberName').val()}, 
+	      			success: function (data) {
+	      				console.log("뷰단으로 데이터 들어 오나요?? >" + data);
+
+	      				var userList;
+	      				$.each(data, function(index, value) {          				
+	      				  console.log(value);
+	      				  console.log(value.name + " / " + value.email + " / " + value.profilePic);
+	      				  //var myResult = writeUserData(value.name, value.email, value.profilePic);
+	      				  //console.log("유저 디비 저장 하는 펑션 실행 한뒤 리턴 값은?? 키여야 하는데>>>>>>>>>" + myResult);
+
+					
+	      				writeUserData(value.name, value.email, value.profilePic).then(function(resolvedData){          				
+	    					console.log("프라미스 실행뒤 오는 값은>>>>>>>>>>" + resolvedData + "유저리스트 값은??");
+	    					//목록을 뿌리기위한 태크 뭉치들이 들어 있는 함수 콜
+	    					userListUp(resolvedData, value.name);
+							
+	      					});
+
+	      				});
+	                     console.log("채팅방 유저목록 붙이는 태그들..." +userList);
+						//$('#ulUserList').append(userList);
+
+						//firebase database 에 신규 회원일 경우 등록 해야 하는데.. 이미 존재 하는 유전 인지 아닌지 먼저 확인을 학고 등록 해야 겠지??
+	      				
+	      			},
+	      			error: function(xhr, status, error){
+	          			console.log("아잭스 에러 터짐 ㅠㅠ");
+	      		         var errorMessage = xhr.status + ': ' + xhr.statusText
+	      		         alert('Error - ' + errorMessage);
+	      		     }
+	      		})
+				} */
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			
 
 			
 	      //유저가 채팅기능 버튼을 눌렀을 때 작동하는 콜백 함수... 목적은.. firebase database 유저 정보저장(메세지 읽기, 쓰기를 위해 특정키 부여 누군인지 구분하기 위해 필요)
@@ -322,11 +387,11 @@
 			          
 			     });
         	}
-          //writeUserData($('#memberName').val(), $('#memberEmail').val(), 'view/coolguy.jpg');
+       
 
 			
 			
-          
+				
 
 			//채팅방 유적 목록 클릭시 실행 되는 펑션
           function onUserListClick(event){
@@ -338,40 +403,145 @@
 
 				var targetUserUid = event.getAttribute('data-targetUserUid'); 				
 				var targetUserName = event.getAttribute('data-username'); 
-				var roomTitle = targetUserName+'님'; 
-				var roomUserlist = [targetUserUid, curUserKey]; // 챗방 유저리스트  			
+				var roomTitle = targetUserName+'님 과의 대화'; 
+				var roomUserList = {targetUserUid, curUserKey}; // 챗방 유저리스트  			
 				var roomUserName = [targetUserName, $('#memberName').val()] // 챗방 유저 이름 
-				var roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss(); 
+				var roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss();
+				storeRoomInfo(roomId, roomUserList);
+				setMessage(roomId);
 				console.log("룸아이뒤 생성되나요??>>>" + roomId);
 				openChatRoom(roomId, roomTitle); // 파라미터 추가
             }
-
+          
+          //const messageRef = firebase.database().ref('/messages/' + 'roomId');
+		function setMessage(roomId){
+			
+			var messageRef = firebase.database().ref('messages/');
+			 
+			 messageRef.set(roomId);
+			 console.log("메세지 아이디를 얻어 보자 이것은 메세지 폴더에 룸아이디만 있는 거고" );
+			 
+			}
+		function storeRoomInfo(roomId, roomUserList){
+			 var roomRef = firebase.database().ref('usersInRoom/' + roomId);
+			 roomRef.set(roomUserList);
+			}
+  		
 
           function openChatRoom(roomId, roomTitle) { 
-        	  this.isOpenRoom = true; // 방이 열린 상태인지 확인하는 플래그 값 
+        	  var isOpenRoom = true; // 방이 열린 상태인지 확인하는 플래그 값 
         	  if(roomTitle){ //상단 타이틀 변경 
-            	  this.spTitle.innerHTML = this.roomTitle; 
+            	  document.getElementById('spTitle').innerHTML = roomTitle; 
             	  } 
-        	  this.loadMessageList(roomId); //메세지 로드 
-              this.tabMessageList.click();
+        	  loadMessageList(roomId); //메세지 로드 
+              tabMessageList.click();
+            
+			console.log("이즈 오픈 룸의 값은??" + isOpenRoom);
 
+
+			document.getElementById('dvInputChat').addEventListener('keydown', onEnterKey(this));
+
+			document.getElementById('iBtnSend').addEventListener('click', saveMessages());
+
+			
         	
               }
 
+
+			function onEnterKey(ev) {
+				if(ev.keyCode === 13){ //엔터키 키코드가 입력이 되면 
+					ev.preventDefault(); 
+					saveMessages(); 
+					}
+				}
+			
+			function saveMessages() {
+
+				var user = $('#curUserKey'); 
+				var msg = document.getElementById('dvInputChat').innerHTML.trim(); 
+				
+				if(msg.length > 0){ 
+					this.dvInputChat.focus(); 
+					this.dvInputChat.innerHTML = ''; 
+					var multiUpdates = {}; 
+					var messageRefKey = this.messageRef.push().key; // 메세지 키값 구하기 
+					var convertMsg = FirebaseChat.convertMsg(msg); 
+
+					
+					if(this.ulMessageList.getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
+						var roomUserlistLength =this.roomUserlist.length; 
+						for(var i=0; i < roomUserlistLength; i++){ 
+							multiUpdates['RoomUsers/' +this.roomId+'/' +this.roomUserlist[i]] = true; 
+						} 
+						this.database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
+						this.loadMessageList(this.roomId); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
+					} 
+					
+					multiUpdates ={}; // 변수 초기화 
+
+					//메세지 저장 
+					multiUpdates['Messages/' +this.roomId + '/' + messageRefKey] = { 
+							uid: user.uid, 
+							userName: user.displayName, 
+							message: convertMsg, // 태그 입력 방지
+							profileImg: user.photoURL ? user.photoURL : '', 
+							timestamp: firebase.database.ServerValue.TIMESTAMP //서버시간 등록하기 
+					} 
+
+					//유저별 룸리스트 저장 
+					var roomUserListLength = this.roomUserlist.length; 
+					if(this.roomUserlist && roomUserListLength > 0){ 
+						for(var i = 0; i < roomUserListLength ; i++){ 
+							multiUpdates['UserRooms/'+ this.roomUserlist[i] +'/'+ this.roomId] = { 
+								roomId : this.roomId, 
+								roomUserName : this.roomUserName.join(this.SPLIT_CHAR), 
+								roomUserlist : this.roomUserlist.join(this.SPLIT_CHAR), 
+								roomType : roomUserListLength > 2 ? this.MULTI : this.ONE_VS_ONE, 
+								roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? this.roomUserlist[1] : // 1대 1 대화이고 i 값이 0 이면 
+									roomUserListLength == 2 && i == 1 ? this.roomUserlist[0] // 1대 1 대화 이고 i값이 1이면 
+									: '', // 나머지 
+								lastMessage : convertMsg, 
+								profileImg : user.photoURL ? user.photoURL : '', 
+								timestamp: firebase.database.ServerValue.TIMESTAMP 
+
+							}; 
+						} 
+					} 
+					this.database.ref().update(multiUpdates); 
+				} 
+		   }
+
+		
+
+			
+          
+          //var newChild = messageRef.push('Hi, there!!');
+          //console.log("new key :" + newChild.key);
+          //messageRef.push('Test push method ^^');
+          //console.log("new key :" + messageRef.key);
+          
+          const msgOutRef = firebase.database().ref('/messages/myFirstMessage');
+          msgOutRef.on('value', (value) => console.log("메세지가 추가 되면 찍히는 콘솔" +value.val()));
+          
+
           /** * 메세지 로드 */ 
-           var loadMessageList = function(roomId){ 
+           function loadMessageList(roomId){ 
+               console.log("메세지 로드 함수 타나요??");
               if(roomId){ 
-                  this.ulMessageList.innerHTML = ''; //메세지 화면 리셋 
-              	  var messageTemplate = document.getElementById('templateMessageList').innerHTML; 
-                  if(this.messageRef){ // 이전 메세지 ref 이벤트 제거 
-                  this.messageRef.off(); 
-                  }
+                  document.getElementById('ulMessageList').innerHTML = ''; //메세지 화면 리셋 
+                  console.log("이프 룸아이디 밑에다.. 여기 타나요??");
+					//언더스코어 제이에서 어쩌구... 자꾸 에러 나서 .. 그리고 어케 사용하는 지 몰라서 포기........
+                  //var messageTemplate = document.getElementById('templateMessageList').innerHTML;
+
                
-              	  this.messageRef = firebase.database.ref('Messages/' + roomId); 
-                  var cbDisplayMessages = function(data) { 
+                  var messageRef = firebase.database().ref('Messages/' + roomId);
+                  messageRef.off();
+         
+              	  //underscore.js 사용 포기..... 두시간이나 해매고....젠...
+                  /* var cbDisplayMessages = function(data) { 
                   	var messageHtml = ''; 
                   	var val = data.val(); 
-                  	messageHtml = _.template(messageTemplate)({ 
+                  	messageHtml = _.template(messageTemplate)( { 
                       	key : data.key , 
                      	profileImg : val.profileImg , 
                       	userName : val.userName , 
@@ -381,48 +551,30 @@
                    	  	this.ulMessageList.innerHTML = this.ulMessageList.innerHTML + messageHtml; 
                   	  	this.ulMessageList.scrollTop = this.ulMessageList.scrollHeight; 
                   	  	this.roomTitle = val.roomTitle; 
-                  } 
-                  this.messageRef.limitToLast(50).on('child_added', cbDisplayMessages.bind(this)); 
+                  }  */
+                  messageRef.limitToLast(50).on('child_added', function(data){
+                      	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                	  data.forEach(function(childSnapshot) {
+							var msgKey = childSnapshot.key;
+            				console.log("메세지 로드 함수를 타긴 하는거야 머야??? " + msgKey);	              				
+       		 		});
+							
+                      }); 
               } 
-            }; 
+            } 
 
 			
-            function myloadMessageList(roomId) {
- 		       return new Promise(function(resolve){
+            
 
- 		        	  var myMessage = firebase.database.ref('Messages/' + roomId);
-					  if(myMessage.hasChild()){
-						  }	
- 		        	  myMessage.child("emails").orderByChild('email').equalTo(email).once('value', function(data){
- 		          	    console.log('현재 접속한 유저는 채팅 경험이 있나요??	 :' +email+ " / "+ data.key + " / " + data.val() + " / " +data.numChildren());		          	    
- 						var myResult = data.val();
- 						var userKey;
- 						if(myResult == null){
- 							console.log("신규회원 이메일 등록을 통한 유아디 생성과.. 유저 데이터 등록 필요");
- 							
- 							var newUser = firebase.database().ref('emails/').push({email :email});
- 							 userKey = newUser.key;
- 							console.log("새로 들어온 유저의 키 값은 ??"  + userKey);
- 							firebase.database().ref('users/' + newUser.key).set({
- 				        	    username: name,
- 				        	    email: email,
- 				        	    profile_picture : imageUrl
- 				        	  });
- 				        	 
- 							}else{
- 								console.log("이미디비에 있는 회원이므로 키값을 뽑아내서... 채팅에 활용");
- 								data.forEach(function(childSnapshot) {
- 									userKey = childSnapshot.key;
- 		              				console.log("이미 있는 회원의 키 값 뽑아 보자 " + userKey);	              				
- 		         		 		});
- 							}
- 						console.log("라이트유저 데이타 펑션에서 유저 키 함 찍어 볼까??>>>"+userKey);
- 						resolve(userKey);
- 		          	});
- 			          
- 			     });
-         	}
-
+			// example of firebase 'exists'...
+            var ref = firebase.database().ref("s/ + roomId");
+     	   ref.once("value")
+     	     .then(function(snapshot) {
+     	       var a = snapshot.exists();  // true
+     	       var b = snapshot.child("name").exists(); // true
+     	       var c = snapshot.child("name/first").exists(); // true
+     	       var d = snapshot.child("name/middle").exists(); // false
+     	     });
 
           
           /** * 현재날짜 yyyyMMddHHmmsss형태로 반환 */ 
@@ -439,7 +591,28 @@
               };
 
           
+              /** * timestamp를 날짜 시간 으로 변환 */ 
+              var timestampToTime = function(timestamp){ 
+                  var date = new Date(timestamp), 
+                  	  year = date.getFullYear(), 
+                  	  month = date.getMonth()+1, 
+                  	  day = date.getDate(), 
+                  	  hour = date.getHours(), 
+                  	  minute = date.getMinutes(), 
+                  	  week = new Array('일', '월', '화', '수', '목', '금', '토'); 
+              	  var convertDate = year + "년 "+month+"월 "+ day +"일 ("+ week[date.getDay()] +") "; 
+              	  var convertHour=""; 
+              	  if(hour < 12){ 
+                  	  convertHour = "오전 " + FirebaseChat.pad(hour) +":" + FirebaseChat.pad(minute); 
+                  	  }else if(hour === 12){ 
+                      	  convertHour = "오후 " + FirebaseChat.pad(hour) +":" + FirebaseChat.pad(minute); 
+                      	  }else{ convertHour = "오후 " + FirebaseChat.pad(hour - 12) +":" + FirebaseChat.pad(minute); 
+                      	  } 
+              	  return convertDate + convertHour; 
 
+              }
+
+              
           
         	
           //writeUserData('js king', 'sdkjfsdl@naver.com', 'view/coolguy.jpg');
@@ -461,18 +634,19 @@
               }
           
 	
+          var messageListUp= function(){
 
-        	
+        	  var messageTemplate = '<li id="li' + key  + '" class="collection-item avatar" data-key="' + key + '">'+
+  									'<img src="'+ profileImg ? profileImg : + 'img/noprofile.png'+'" alt="" class="circle">'+
+  									'<span class="title">'+userName+'</span><span class="time">'+time+'</span>'+
+  									'<p>'+message+'</p>'+
+  					 				'</li>'; 
           
+        	  $('#ulUserList').append(userList);
+        	  console.log("undefined... 왜 찍히는 거야??" + userList);
+          } 
 
-          const messageRef = firebase.database().ref('/messages/myFirstMessage');
-          var newChild = messageRef.push('Hi, there!!');
-          console.log("new key :" + newChild.key);
-          //messageRef.push('Test push method ^^');
-          //console.log("new key :" + messageRef.key);
           
-          const msgOutRef = firebase.database().ref('/messages/myFirstMessage');
-          msgOutRef.on('value', (value) => console.log("메세지가 추가 되면 찍히는 콘솔" +value.val()));
           
 
           var name = $('#memberName').val();
