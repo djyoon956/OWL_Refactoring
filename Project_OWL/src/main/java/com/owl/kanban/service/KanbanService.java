@@ -28,23 +28,30 @@ public class KanbanService {
 	private SqlSession sqlSession;
 
 	@Transactional
-	public boolean insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
+	public Label insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
+		System.out.println(issue.getDueDate());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		
+		Label label = null;
 		try {
+			
 			result = dao.insertIssue(issue) > 0 ? true : false;
 			System.out.println(multipartFiles.size());
+			
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
 
+			
+			if(result) {
+				label = dao.getLabelinfo(issue.getLabelIdx()); 
+			}
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 		} 
 		
 		
-		return result;
+		return label;
 	}
 
 	private List<File> insertIssueFiles(KanbanDao dao, String email, int projectIdx, int issueIdx, List<MultipartFile> multipartFiles, String uploadPath) {
