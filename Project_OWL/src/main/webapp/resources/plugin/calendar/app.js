@@ -46,6 +46,11 @@
         'beforeCreateSchedule': function(e) {
             console.log('beforeCreateSchedule', e);
             saveNewSchedule(e);
+    		$.ajax({
+        		url:"insertCalendar.do",
+        		success:function(data){	
+        		}
+    		});
         },
         'beforeUpdateSchedule': function(e) {
             var schedule = e.schedule;
