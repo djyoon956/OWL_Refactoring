@@ -24,6 +24,7 @@ import com.owl.kanban.dto.Issue.PriorityType;
 import com.owl.kanban.service.KanbanService;
 import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.Notice;
+import com.owl.project.dto.Label;
 
 @RestController
 public class KanbanRestController {
@@ -50,9 +51,20 @@ public class KanbanRestController {
 
 		return notices;
 	}
+	
+	
+	@RequestMapping("GetLabelList.do")
+	public List<Label> getLabelList(int projectIdx) {
+		System.out.println("getLabelList : " + projectIdx);
+		
+		return service.getLabelList(projectIdx);
+	}
+	
+	
+	
 
 	@RequestMapping("InsertColumn.do")
-	public int insertColumn(Column column, Model model) {
+	public int insertColumn(Column column) {
 		//System.out.println("insertColumn function in");
 		//System.out.println("column : " + column);
 		//System.out.println(column.getProjectIdx() + "/" + column.getColname());
@@ -127,29 +139,26 @@ public class KanbanRestController {
 	}
 	
 	
-	
-	
-	
-	
 	@RequestMapping("InsertLabel.do")
-	public int insertLabel(Column column, Model model) {
-		//System.out.println("insertColumn function in");
-		//System.out.println("column : " + column);
-		//System.out.println(column.getProjectIdx() + "/" + column.getColname());
+	public int insertLabel(Label label) {
+		System.out.println("insertLabel function in");
+		System.out.println("label : " + label);
+		System.out.println(label.getProjectIdx() + "/" + label.getLabelColor() + "/" + label.getLabelIdx() + "/" + label.getLabelName());
 
-		Column col = new Column();
-		col.setProjectIdx(column.getProjectIdx());
-		col.setColname(column.getColname());
-		
+		Label lb = new Label();
+		lb.setLabelColor(label.getLabelColor());
+		lb.setLabelName(label.getLabelName());
+		lb.setProjectIdx(label.getProjectIdx());
+
 		boolean result = false;
-		result = service.insertColumn(col); 		
+		result = service.insertLabel(lb); 
+
 		int data = -1;		
 		if(result) {
-			data = col.getColumnIdx();
+			data = lb.getLabelIdx();
+			System.out.println("dao에서 가져온 getLabelIdx :" + lb.getLabelIdx() + "/"+ data) ;
 		};
 		
-		//System.out.println("컨트롤러 result : " + result);
-		//System.out.println("여기도찍히나? " + col.getColumnIdx());
 		return data;
 	}
 

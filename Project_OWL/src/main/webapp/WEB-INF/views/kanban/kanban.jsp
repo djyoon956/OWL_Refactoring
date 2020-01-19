@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<!-- 여기는 칸반 jsp -->
 <style>
 .assigneetitle {
 	margin-left: 5px;
@@ -110,28 +109,9 @@
 }
 
 
-/* ------ 모달 가운데로 수정 ------------ */
-.modal {
-      text-align: center;
-}
+
  
-@media screen and (min-width: 768px) { 
-        .modal:before {
-                display: inline-block;
-                vertical-align: middle;
-                content: " ";
-                height: 100%;
-        }
-}
-
-.modal-dialog {
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-}
-
-/* ---------------------------------- */
-
+ 
 
 .cursor_pointer {
 	cursor: pointer;
@@ -139,6 +119,51 @@
 </style>
 <script>
   $(function(){
+
+
+	  $.ajax({
+			url : 'GetLabelList.do',
+			data : {'projectIdx' : ${project.projectIdx}},
+			success : function(data) {
+				console.log("Showlabel success");
+				console.log(data);
+				$('#labelList').empty();
+
+				let lablist = "";
+				
+				 $.each(data,function(index, obj) {
+					 console.log("each문 in")
+					console.log(obj.labelIdx);
+					console.log(obj.labelName);
+					console.log(obj.labelColor);
+
+					lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'">';
+					lablist +=  '<div class="col-lg-8">';
+					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
+					lablist +=  '</div>';
+					lablist +=  '<div class="col-lg-2">';
+					lablist +=  '<a>Edit</a>';
+					lablist +=  '</div>'
+					lablist +=  '<div class="col-lg-2">';
+					lablist +=  '<a>Delete</a>';
+					lablist +=  '</div></div><hr>';
+
+					
+					 });
+
+					$('#labelList').append(lablist);
+					 
+			},error : function() {
+				console.log("Showlabel error");
+			}
+		
+			});
+
+
+
+
+
+	  
 	  var n = 3;
 	  
     $('#addIssue').click (function() {
@@ -255,23 +280,35 @@
 	});
 
 
-
-
-
-
-
-
-
+	
 	$("#addLabelBtn").on("click", function () {	
-
+		
 		console.log("addLabelBtn in");
+		console.log($('#labelcolor').val());
+		console.log($('#labelname').val());
+
+		let lbcolor = $('#labelcolor').val();
+		let lbname = $('#labelname').val();
 			$.ajax({
 				url : 'InsertLabel.do',
-				data : {'projectIdx' : ${project.projectIdx}, 'labelcolor' : $('#labelcolor').val(), 'labelname' : $('#labelname').val()},
+				data : {'projectIdx' : ${project.projectIdx}, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
 				success : function(data) {
-					console.log(data);
+					console.log(data);  // 라벨번호 
+
+				let labelpiece = "";
+					labelpiece +=  '<div class="row labelList" id="'+data+'">';
+					labelpiece +=  '<div class="col-lg-8">';
+					labelpiece +=  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbname+'</span>';
+					labelpiece +=  '</div>';
+					labelpiece +=  '<div class="col-lg-2">';
+					labelpiece +=  '<a>Edit</a>';
+					labelpiece +=  '</div>'
+					labelpiece +=  '<div class="col-lg-2">';
+					labelpiece +=  '<a>Delete</a>';
+					labelpiece +=  '</div></div><hr>';
+						
+				$('#labelList').append(labelpiece);
 					
-				
 				},
 				error : function(e) {
 		        	errorAlert("label 추가 error");
@@ -430,16 +467,15 @@
 				<li class="issuePiece" style="display: none;">Item 1</li>
 				<li class="issuePiece">
 					<div class="dropdown">
-						<label> <span class="badgeIcon2 float-left">Dev</span> <span
-							class="issueTitle">Drive : Development</span>
+						<label> <span class="badgeIcon2 float-left">Dev</span> 
+						<span class="issueTitle">Drive : Development</span>
 						</label> <a href="javascript:void(0)" data-toggle="dropdown"
 							id="dropdownIssueButton" aria-haspopup="true"
 							aria-expanded="false" style="float: right"> <i
 							class="fas fa-ellipsis-v fa-sm"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
 							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal"
-									data-toggle="modal">Edit Issue</a></li>
+								<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
 								<li class="pl-3"><a href="#">Remove Issue</a></li>
 							</ul>
 						</div>

@@ -12,6 +12,6 @@ public class MyProjectsMates {
 	private int projectIdx;
 	private String email;
 	private String name;
-	
+	private String profilePic;
 
 }
