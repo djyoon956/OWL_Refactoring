@@ -46,7 +46,6 @@ function hexToRGBA(hex) {
     var id = 0;
 
     calendar = new CalendarInfo();
-    id += 1;
     calendar.id = String(id);
     calendar.name = 'My Calendar';
     calendar.color = '#ffffff';

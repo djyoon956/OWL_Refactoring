@@ -15,13 +15,13 @@ public class SmartCalendarRestController {
 	@Autowired
 	SmartCalendarService service;
 	
-	@RequestMapping("insertCalendar.do")
+	@RequestMapping(value="insertCalendar.do")
 	public boolean insertCalendar(SmartCalendar calendar, Principal principal) {
 		boolean result = false;
-		
-		calendar.setType(calendar.getType());
-		calendar.setTitle(calendar.getTitle());
-		calendar.setContent(calendar.getContent());
+		calendar.setEmail(principal.getName());
+		result = service.insertCalendar(calendar);
+		System.out.println(result);
 		return result;
 	}
+
 }
