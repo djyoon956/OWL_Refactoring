@@ -45,7 +45,6 @@
 			    	formData.append('multipartFiles', file);
 			    }); 
 				
-				
 				$.ajax({
 					url : 'InsertIssue.do',
 			        type: "POST",

@@ -98,38 +98,9 @@
 		} 
 		
 	});
-
-		$("#setBackgroundColor span").click(function(data){
-			let color = $(data.target).css("background-color");
-			chageSetting("themecolor", color);
-		})
-		$("#setActiveColor span").click(function(data){
-			let color = $(data.target).css("background-color");
-			chageSetting("activecolor", color);
-		})
-		$("#setFont").change(function() {
-			chageSetting("font", $("#setFont").val());
-      	});
 	});
 
-	function chageSetting(cmd, value){
-		$.ajax({
-			url: "SettingChange.do",
-			type: "POST",
-			dataType: 'json',
-			data : { cmd : cmd , value :value}, 
-			success: function (data) {
-				console.log(data);
-				if(data){
-					$(".mySetting").each(function(){
-						$(this).attr("style", "background-color : "+data.themeColor+" !important;"
-										+ "color : "+data.activeColor+" !important;");
-					})
-				}
-			}
-		});
-	}
-	
+
 	function Search(){
 		$('.ChatList').empty();   
 		var plus = "";
@@ -517,12 +488,12 @@ display: block;
                     </a>
                 </li>
                 
-                <!-- Setting Icon -->
+                <!-- Setting Icon 
                  <li class="nav-item iconMargin">
                     <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="settingBtn"> 
                     	<i class="fas fa-cog fa-lg" id="setIcon"></i>
                     </a>
-                </li>
+                </li>-->
             </ul>
             
             
@@ -700,7 +671,7 @@ display: block;
 				</div>  
 		
 		
-			<!-- Setting toggle -->
+			<!-- Setting toggle 
 			<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
 				<div class="text-center setting-box  mt-5" id="setBackgroundColor">
 					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR BACKGROUND</h5>
@@ -731,8 +702,7 @@ display: block;
 					</div>
 				</div>
 			</div>
-			<!-- toggle content End-->
-			
+			-->
 			
         </div>
         

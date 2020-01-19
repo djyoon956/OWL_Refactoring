@@ -23,6 +23,7 @@
 <!-- sweetalert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="resources/js/commonSweetAlert.js"></script>
+<script src="resources/js/include.js"></script>
 
 <script src="resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 
