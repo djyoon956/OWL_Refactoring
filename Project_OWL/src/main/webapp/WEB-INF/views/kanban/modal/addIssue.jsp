@@ -8,7 +8,7 @@
 
 	 $('.mydatepicker').datepicker();
 		 $('#datepicker-autoclose').datepicker({
-			 dateformat : 'yy-mm-dd',
+			 dateFormat: 'yy-mm-dd' ,
 	   		  autoclose: true,
 	    	  todayHighlight: true
 		 }); 
@@ -115,7 +115,7 @@
 						</div>
 						<div class="form-group">
  							 <textarea class="form-control bg-light" rows="10" cols="50" placeholder="Issue Content" id="content" name="content"></textarea>
-							<input type="file" name="multipartFiles" id="multipartFiles" multiple="multiple"> 
+							 <input type="file" name="multipartFiles" id="multipartFiles" multiple="multiple"> 
 						</div>
 					</div>
 					<div class="col-4">
@@ -129,7 +129,6 @@
 								<option value="Cindy">Cindy</option>
 								<option value="Colin">Colin</option>
 								<option value="Chloe">Chloe</option>
-								
 							</select>
 						</div>
 					
@@ -140,12 +139,7 @@
 						<div class="row">
 						<div class="col-4">Label</div>	
 						<div class="col-8">
-							<select class="select2 form-control custom-select" name="labelIdx" id="labelIdx">
-								<option value="">Select Label</option>
-								<option value="1">dev</option>
-								<option value="2">view</option>
-								
-							</select>
+							<select class="select2 form-control custom-select" name="labelIdx" id="labelIdx"></select>
 						</div>									
 					</div>
 						</div>
@@ -170,7 +164,7 @@
 						<div class="row">
 						<div class="col-4">Due Date</div>	
 						<div class="col-8">                                
-                           <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy" name="dueDate" >
+                           <input type="text" class="form-control" id="datepicker-autoclose" placeholder="yyyy-mm-dd" name="dueDate" >
                          </div>	
 					</div>
 					</div>

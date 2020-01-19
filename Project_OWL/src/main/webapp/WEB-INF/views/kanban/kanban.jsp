@@ -166,6 +166,8 @@
 		
 			});
 
+
+
 	  
 	  var n = 3;
 	  
@@ -386,6 +388,7 @@
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
+		
 		<!-- 칼럼 -->
 		<div class="columnSection">
 
@@ -408,94 +411,13 @@
 			<ul id="sortable000" class="connectedSortable columnBody cursor">
 				<li class="issuePiece" style="display: none;">Item 1</li>
 				<!-- 무조건 있어야함!!! -->
-
 				<li class="issuePiece">
 					<div class="dropdown">
-						<label> <span class="badgeIcon float-left">Dev</span> <span
-							class="issueTitle">Drive : Development</span>
-						</label> <a href="javascript:void(0)" data-toggle="dropdown"
-							id="dropdownIssueButton" aria-haspopup="true"
-							aria-expanded="false" style="float: right"> <i
-							class="fas fa-ellipsis-v fa-sm"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal"
-									data-toggle="modal">Edit Issue</a></li>
-								<li class="pl-3"><a href="#">Remove Issue</a></li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<label> <span class="assigneetitle"><i
-								class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
-						</label>
-					</div>
-				</li>
-
-
-				<li class="issuePiece">
-					<div class="dropdown">
-						<label> <span class="badgeIcon float-left">Dev</span> <span
-							class="issueTitle">Drive : Development</span>
-						</label> <a href="javascript:void(0)" data-toggle="dropdown"
-							id="dropdownIssueButton" aria-haspopup="true"
-							aria-expanded="false" style="float: right"> <i
-							class="fas fa-ellipsis-v fa-sm"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal"
-									data-toggle="modal">Edit Issue</a></li>
-								<li class="pl-3"><a href="#">Remove Issue</a></li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<label> <span class="assigneetitle"><i
-								class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
-						</label>
-					</div>
-				</li>
-			</ul>
-		</div>
-
-		<div class="columnSection">
-			<div class="columnTitle text-center mt-2">
-				<h4>Undefined section</h4>
-			</div>
-			<ul id="sortable0000" class="connectedSortable columnBody">
-				<li class="issuePiece" style="display: none;">Item 1</li>
-				<li class="issuePiece">
-					<div class="dropdown">
-						<label> <span class="badgeIcon2 float-left">Dev</span> 
+						<label> <span class="badgeIcon float-left">Dev</span> 
 						<span class="issueTitle">Drive : Development</span>
-						</label> <a href="javascript:void(0)" data-toggle="dropdown"
-							id="dropdownIssueButton" aria-haspopup="true"
-							aria-expanded="false" style="float: right"> <i
-							class="fas fa-ellipsis-v fa-sm"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
-								<li class="pl-3"><a href="#">Remove Issue</a></li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<label> <span class="assigneetitle"><i
-								class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
-						</label>
-					</div>
-				</li>
-				<li class="issuePiece">
-					<div class="dropdown">
-						<label> <span class="badgeIcon2 float-left">Dev</span> <span
-							class="issueTitle">Drive : Development</span>
-						</label> <a href="javascript:void(0)" data-toggle="dropdown"
-							id="dropdownIssueButton" aria-haspopup="true"
-							aria-expanded="false" style="float: right"> <i
-							class="fas fa-ellipsis-v fa-sm"></i></a>
+						</label> 
+						<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
+						<i class="fas fa-ellipsis-v fa-sm"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
 							<ul class="list-style-none">
 								<li class="pl-3"><a href="#editIssueModal"
@@ -506,15 +428,15 @@
 					</div>
 					<div>
 						<label> 
-							<span class="assigneetitle">
-							<i class="fas fa-user-check"></i>&nbsp; Assignee</span> 
-							<span class="assignee">Chloe</span>
+						<span class="assigneetitle">
+						<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
+							class="assignee">Chloe</span>
 						</label>
 					</div>
 				</li>
+
 			</ul>
 		</div>
-
 	</div>
 </div>
 

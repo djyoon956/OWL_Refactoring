@@ -122,8 +122,9 @@ public class KanbanRestController {
 			issue.setLabelIdx(Integer.parseInt(labelIdx));
 		if(!dueDate.isEmpty()) {
 			try {
-				issue.setDueDate(new SimpleDateFormat().parse(dueDate));
+				issue.setDueDate(new SimpleDateFormat("yyyy-mm-dd").parse(dueDate));
 			} catch (ParseException e) {
+				System.out.println("parse(dueDate)");
 				e.printStackTrace();
 			}
 		}
