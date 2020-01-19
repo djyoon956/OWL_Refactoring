@@ -172,37 +172,8 @@
 
 	  var n = 3;
 	  
-/* 	//이슈 추가 function
-    $('#InsertIssueBtn').click (function() {
-       console.log('addIssue click in');
-		
-		let newIssue = "";
-		newIssue  += '<li class="issuePiece">';
-		newIssue  += '<div class="dropdown">';
-		newIssue  += '<label>';
-		newIssue  += '<span class="badgeIcon float-left">Dev</span>';
-		newIssue  += '<span class="issueTitle">Drive : Development</span>';
-		newIssue  += '</label>';
-		newIssue  += '<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float:right">';
-		newIssue  += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-		newIssue  += '<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
-		newIssue  += '<ul class="list-style-none">';
-		newIssue  += '<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>';
-		newIssue  += '<li class="pl-3"><a href="#">Remove Issue</a></li>';
-		newIssue  += '</ul></div></div>';
-		newIssue  += '<div><label>';
-		newIssue  += '<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>';
-		newIssue  += '<span class="assignee">Chloe</span>';
-		newIssue  += '</label></div></li>';
-	
-       
-		$('#openAppend').append(newIssue);
 
-        }); */
-
-
-	
-    $( "#sortable000, #sortable0000, #openAppend, #closeAppend" ).sortable({
+    $( "#sortable000, #openAppend, #closeAppend" ).sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false        
       }).disableSelection();
@@ -210,32 +181,43 @@
 
 
 	//컬럼 추가 function
-    function addColumn(projectidx, columnidx, colname) {
+    function addColumn(columnidx, colname) {
 
   		 console.log("addcolumn 함수타니?");
   		  
-  		var value =  "sortable" + projectidx;
 
   		var result = "";
-    		result += '<div class="columnSection">';
-    		result += '<div class="columnTitle text-center mt-2"><h4>'+colname+'</h4></div>';
-    		result += '<input type="hidden" name="'+projectidx+'">';
-    		result += '<input type="hidden" name="'+columnidx+'">';
-        	result += '<ul id="' + value + '"class="connectedSortable columnBody cursor ui-sortable">';
-    		result += '<li class="issuePiece ui-sortable-handle" style="display:none;">Item 1</li>';
-        	result += '</ul></div>';
 
+  		result += '<div class="columnSection">';
+  		result += '<div class="columnTitle text-center mt-2 dropdown">';
+  		result += '<h4>' + colname;
+  		result += '<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
+  		result += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';	
+  		result += '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">';
+  		result += '<ul class="list-style-none">';
+  		result += '<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>';
+  		result += '<li class="pl-3"><a href="#">Remove Column</a></li>';
+  		result += '</ul>';
+  		result += '</div>';
+  		result += '</h4>';
+  		result += '</div>';
+  		result += '<ul id="'+columnidx+'" class="connectedSortable columnBody cursor">';
+  		result += '<li class="issuePiece" style="display: none;">Item 1</li>'
+  		result += '</ul>';
+  		result += '</div>';
+
+  		
   		$('#kanbanArea').append(result);
 
-       	sortableFn(value);
+       	sortableFn(columnidx);
         };
 
 
     	//칸반내에서 움직일 수 있게 만들어 주는 function
 		
-        function sortableFn (value)  {
-            var value1 ='#' + value;
-             $( value1 ).sortable({
+        function sortableFn (columnidx)  {
+            var value ='#' + columnidx;
+             $( value ).sortable({
                  connectWith: ".connectedSortable",
                  dropOnEmpty: false        
                }).disableSelection();
@@ -263,14 +245,14 @@
 			$.ajax({
 				url : 'InsertColumn.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'colname' : $('#colname').val()},
-				success : function(data) {
-					console.log(data);
-					console.log(typeof(data));
-					if(data > 0) {
-		        		 let proidx = ${project.projectIdx};
+				success : function(columnidx) {
+					console.log(columnidx);
+					console.log(typeof(columnidx));
+					if(columnidx > 0) {
+		        		 
 		        		 let colnm = $('#colname').val();
 		        
-		        		addColumn(proidx, data, colnm);
+		        		addColumn(columnidx, colnm);
 
 		        		$('#addColumnModal').modal("hide");
 		        		$('#colname').val("");
@@ -398,8 +380,7 @@
 
 			<div class="columnTitle text-center mt-2 dropdown">
 				<h4>Undefined section
-					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true"
-						aria-expanded="false" style="float: right"> 
+					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
 					<i class="fas fa-ellipsis-v fa-sm"></i></a>
 					
 					<div class="dropdown-menu" aria-labelledby="dropdownColBtn">

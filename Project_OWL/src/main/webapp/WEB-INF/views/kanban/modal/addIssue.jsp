@@ -95,11 +95,8 @@
 			        		newIssue  += '<span class="assignee" style="margin-left:3px">'+isassignee+'</span>';
 			        		newIssue  += '</label></div></li>';
 			        	
-			               
 			        		$('#openAppend').append(newIssue);
-
-
-			        		
+	
 			        	}else{
 			        		errorAlert("Issue 추가 실패");
 			        	} 
