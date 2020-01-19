@@ -9,10 +9,9 @@
 <script>
     /* $("#deleteMemberBtn").click(function() { */
     $(function () {
-
         let agreeChk = false;
         let pwdChk = true;
-
+		let font = "{setting.font}";
 		$('#setFont option[value=\"'+font+'\"]').attr("selected", "selected");
 		
         $("#delPwd").keyup(function () {
@@ -95,15 +94,13 @@
         });
 
 		$("#setBackgroundColor span").click(function(data){
+			console.log("in span");
 			let color = $(data.target).css("background-color");
 			chageSetting("themecolor", color);
 		})
-		$("#setActiveColor span").click(function(data){
-			let color = $(data.target).css("background-color");
-			chageSetting("activecolor", color);
-		})
 
 		$("#setFont").change(function() {
+			console.log("in setFont");
 			chageSetting("font", $("#setFont").val());
       	});
     });
@@ -121,7 +118,7 @@
 					$(".mySetting").each(function(){
 						$(this).attr("style", "background-color : "+data.themeColor+" !important;");
 					})
-					$("#mainBody").css("font-family",data.font);
+					$(".mainBody").css("font-family",data.font);
 				}
 			}
 		});
