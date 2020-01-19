@@ -16,9 +16,8 @@
 .asColorPicker-dropdown{
 max-width: 270px;
 }
-.TTest{
-color : ${project.projectColor};
-}
+
+
 </style>
 <script>
  $(function(){
@@ -73,20 +72,20 @@ color : ${project.projectColor};
 	     }); 
 	} 
 </script>
-<aside class="left-sidebar" data-sidebarbg="skin5">
-    <div class="scroll-sidebar">
+<aside class="left-sidebar mySetting" data-sidebarbg="skin5">
+    <div class="scroll-sidebar mySetting">
         <nav class="sidebar-nav" id="sidemenu">
         <c:set var="projectList" value="${projectList}"/> 
-            <ul id="sidebarnav" class="p-t-30">
+            <ul id="sidebarnav" class="p-t-30 mySetting">
             <li id="sidebarLable" class="sidebar-item hide-menu">MY</li>
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-account-outline"></i><span class="hide-menu">MY TASK</span></a>
-                    <ul aria-expanded="false" class="collapse first-level" style="padding-bottom: 0px;">
+                    <ul aria-expanded="false" class="mySetting collapse first-level" style="padding-bottom: 0px;">
                         <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">DASHBOARD</span></a></li>
                         <li class="sidebar-item"><a href="Calendar.do" class="sidebar-link"><i class="mdi mdi-calendar"></i><span class="hide-menu">CALENDAR</span></a></li>
                     </ul>
                 </li>
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-star-outline"></i> <span class="hide-menu">FAVORITES</span></a>
-                    <ul aria-expanded="true" class="collapse first-level">
+                    <ul aria-expanded="true" class="mySetting collapse first-level">
                        <c:forEach var="list" items="${projectList}">
                        	<c:if test="${list.favorite == 1}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
@@ -103,7 +102,7 @@ color : ${project.projectColor};
                 <li id="sidebarLable" class="hide-menu">PROJECT</li>    
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" type= "button" data-toggle="modal" data-target="#newProject"><i class="mdi mdi-plus"></i><span class="hide-menu">NEW PROJECT</span></a></li>           
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">PROJECT LIST</span></a>
-                    <ul aria-expanded="false" class="collapse  first-level" id="projectlist">
+                    <ul aria-expanded="false" class="mySetting collapse  first-level" id="projectlist">
 	  					<c:forEach var="list" items="${projectList}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
 	                    		<input id="projectFavorite" type="hidden" value="${list.favorite}">

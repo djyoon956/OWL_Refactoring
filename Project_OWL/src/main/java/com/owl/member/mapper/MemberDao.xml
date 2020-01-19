@@ -45,4 +45,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE EMAIL=#{param1}
 	</update>
 	
+	<select id="getSetting" parameterType="String" resultType="com.owl.member.dto.Setting">
+		SELECT SETTINGIDX, FONT, ACTIVECOLOR, THEMECOLOR
+			FROM owl.SETTING
+		WHERE EMAIL = #{email}
+	</select>
+	
+	<update id="updateSetting">
+		UPDATE owl.SETTING SET ${param2} = #{param3}
+			WHERE EMAIL=#{param1}
+	</update>
+	
 </mapper>

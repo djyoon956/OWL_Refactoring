@@ -25,9 +25,17 @@
 	<!--  dashboard css -->
 	<link href="resources/css/dashBoard.css" rel="stylesheet">
 	<script src="resources/js/dashBoard.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".mySetting").each(function(){
+				$(this).attr("style", "background-color : ${setting.themeColor} !important;"
+								+ "color : ${setting.activeColor} !important;");
+			})
+		})
+	</script>
 </head>
 
-<body>
+<body id="mainBody">
 	<!-- LOADER -->
     <div class="preloader">
         <div class="lds-ripple">

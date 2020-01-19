@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.owl.member.dao.MemberDao;
 import com.owl.member.dto.Member;
+import com.owl.member.dto.Setting;
 
 @Service
 public class MemberService {
@@ -151,7 +152,7 @@ public class MemberService {
 	public boolean changePassword(String email, String password) {
 		MemberDao dao = getMemberDao();
 		boolean result = false;
-		
+
 		try {
 			result = dao.changePassword(email, password) > 0 ? true : false;
 		} catch (ClassNotFoundException e) {
@@ -161,7 +162,44 @@ public class MemberService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+		return result;
+	}
+
+	public Setting getSetting(String email) {
+		MemberDao dao = getMemberDao();
+		Setting setting = new Setting();
+		try {
+			setting = dao.getSetting(email);
+			// dark theme 일때
+			if(setting.getThemeColor().equals("rgb(128, 128, 128)")) 
+				setting.setSubColor("white");
+			else
+				setting.setSubColor("black");
+				
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return setting;
+	}
+
+	public boolean updateSetting(String email, String column, String value) {
+		System.out.println(email);
+		System.out.println(column);
+		System.out.println(value);
+		MemberDao dao = getMemberDao();
+		boolean result = false;
+		try {
+			result = dao.updateSetting(email, column, value) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return result;
 	}
 
