@@ -8,7 +8,7 @@
 
 	 $('.mydatepicker').datepicker();
 		 $('#datepicker-autoclose').datepicker({
-			 dateformat : 'yy-mm-dd',
+			 dateFormat: 'yy-mm-dd' ,
 	   		  autoclose: true,
 	    	  todayHighlight: true
 		 }); 
@@ -170,7 +170,7 @@
 						<div class="row">
 						<div class="col-4">Due Date</div>	
 						<div class="col-8">                                
-                           <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy" name="dueDate" >
+                           <input type="text" class="form-control" id="datepicker-autoclose" placeholder="yyyy-mm-dd" name="dueDate" >
                          </div>	
 					</div>
 					</div>
