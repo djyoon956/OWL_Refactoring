@@ -3,8 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <style>
-a {
- color: #326295;
+.comment_img {
+background-color: #326295;
+width:50px; 
+height: 50px; 
+line-height: 50px;
+border-radius:50%;
+text-align: center;
+font-weight: 900;
+font-size: 16px;
+color: #f8f9fa;
 }
 </style>
 <script>
@@ -23,7 +31,7 @@ $(function() {
 	});
 });
 </script>
-<div class="container-fluid mt-2 p-25">
+<div class="container-fluid mt-2" style="padding: 25px;">
 	<div class="row">
 		<div class="col-8">
 		<div class="card">
@@ -40,14 +48,14 @@ $(function() {
 			</div>
 			<hr class="mt-1"> 
 			<div class="card-body mt-0 mb-0 pt-0">
-			<div class="ml-1"><i class="fas fa-download mr-2 mb-2"></i>Attachment</div>
+			<h5><i class="fas fa-download mr-2 mb-2"></i>Attachment</h5>
 			<a href="#" class="p-1 m-1">owl_테이블 쿼리.txt</a>
 			<a href="#" class="p-1 m-1">owl_발표자료.ppt</a>
 			</div>
 		<!-- 	<div class="card-footer" style="padding:6px;border: 1px solid; border-color:#e9e9e9;"><a href="#"><i class="fas fa-download  mr-2"></i>owl_발표자료.ppt</a></div> -->
 			<hr class="mt-1"> 
 			<div class="card-body mt-0 mb-0 pt-0">
-			<div><i class="fas fa-bars mr-2 mb-2"></i>Activity</div>
+			<h5><i class="fas fa-bars mr-2 mb-2"></i>Activity</h5>
               <div class="d-md-flex align-items-center">
               
 				<ul class="timeline w-100">
@@ -67,29 +75,37 @@ $(function() {
              <!-- 끝 -->
              </div>
           </div>
-          <div class="card-body mt-0" style="border: 1px solid; border-color:#e9e9e9;">
-          <div><i class="fas fa-comments mr-2 mb-2"></i>Comments</div>
+          <div class="card-body mt-0" style="border: 1px solid; border-color:#e9e9e9; border-radius: 0.25rem">
+         	<h5><i class="fas fa-comments mr-2 mb-2"></i>Comments</h5>
             <div class="comment-widgets scrollable">
                  <div class="d-flex flex-row comment-row m-t-0">
-                   <div class="p-2"><div class="rounded-circle" style="width:50px; background-color: #326295">Cindy</div></div>
+                   <div class="p-2"><div class="comment_img">C</div></div>
                     <div class="comment-text w-100">
                         <h6 class="font-medium">Cindy <span class="text-muted float-right">Jan 18, 2020</span></h6>
-                        <div class="m-b-15 d-block"><span >화이팅</span></div>
+                        <div class="mb-1 d-block"><span >화이팅</span></div>
                         <div class="comment-footer">
-                            <button type="button" class="btn btn-cyan btn-sm">Edit</button>
-                            <button type="button" class="btn btn-success btn-sm">Publish</button>
-                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="button" class="btn btn-info btn-sm">Edit</button>
+                            <button type="button" class="btn btn-secondary btn-sm">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-row comment-row m-t-0">
+                   <div class="p-2"><div class="comment_img">C</div></div>
+                    <div class="comment-text w-100">
+                        <h6 class="font-medium">Colin<span class="text-muted float-right">Jan 16, 2020</span></h6>
+                        <div class="mb-1 d-block"><span >파이어베이스 알아?</span></div>
+                        <div class="comment-footer">
+                            <button type="button" class="btn btn-info btn-sm">Edit</button>
+                            <button type="button" class="btn btn-secondary btn-sm">Delete</button>
                         </div>
                     </div>
                 </div>
               </div>
           </div>
-        <div class="card-body mt-0 p-0" style="border: 1px solid; border-color:#e9e9e9;">
-          	
+        <div class="card-body mt-0 p-0">
           		 	<textarea class="form-control bg-light w-100" rows="10" cols="10" placeholder="Leave a comment" name="" id="issueReply"></textarea>
-          		
-          			<button class="btn btn-secondary mt-1">comment</button>
-          
+          			<button class="btn btn-secondary mt-1 mr-1">comment</button>
+          			<button class="btn btn-secondary mt-1 ml-1"><i class="fas fa-at"></i></button>
           </div>
 			<!--  카드 끝  -->
 		</div>
