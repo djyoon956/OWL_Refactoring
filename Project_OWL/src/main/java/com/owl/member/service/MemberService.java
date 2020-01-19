@@ -64,6 +64,7 @@ public class MemberService {
 		try {
 			userDao.joinMemberOk(email);
 			userDao.grantDefaultRole(email);
+			userDao.grantDefaultSetting(email);
 			result = true;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

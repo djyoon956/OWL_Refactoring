@@ -36,6 +36,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO owl.AUTHORITIES(email, authority) VALUES (#{email}, 'ROLE_USER')
 	</insert>
 	
+	<insert id="grantDefaultSetting" parameterType="String">
+		 insert into owl.SETTING(EMAIL, FONT, THEMECOLOR, ACTIVECOLOR) VALUES (#{email}, '굴림체', 'white', 'gray')
+	</insert>
+	
 	<select id="emailCheck" parameterType="String" resultType="com.owl.member.dto.Member">
 		SELECT * FROM owl.MEMBER WHERE email = #{email}
 	</select>

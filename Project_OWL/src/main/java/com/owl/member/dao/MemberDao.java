@@ -12,6 +12,8 @@ public interface MemberDao {
 	public int joinMemberOk(String email) throws ClassNotFoundException, SQLException;
 
 	public int grantDefaultRole(String email) throws ClassNotFoundException, SQLException;
+	
+	public int grantDefaultSetting(String email) throws ClassNotFoundException, SQLException;
 
 	public int updateMember(Member member) throws ClassNotFoundException, SQLException;
 
