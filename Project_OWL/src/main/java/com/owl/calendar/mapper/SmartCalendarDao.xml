@@ -4,6 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.owl.calendar.dao.SmartCalendarDao">
 	<insert id="insertCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
+			INSERT INTO SMARTCALENDAR(TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALARM, EMAIL, PROJECTIDX) 
+			VALUES(#{type}, #{title}, #{content}, #{startDate}, #{endDate}, #{alarm}, #{email}, #{projectIdx})
 	</insert>
 	
 	<update id="updateCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
