@@ -27,15 +27,12 @@
 	<script src="resources/js/dashBoard.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			$(".mySetting").each(function(){
-				$(this).attr("style", "background-color : ${setting.themeColor} !important;"
-								+ "color : ${setting.activeColor} !important;");
-			})
+			themeSetting();
 		})
 	</script>
 </head>
 
-<body id="mainBody">
+<body class="mainBody">
 	<!-- LOADER -->
     <div class="preloader">
         <div class="lds-ripple">
