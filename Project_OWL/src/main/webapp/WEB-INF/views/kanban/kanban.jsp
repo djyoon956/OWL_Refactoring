@@ -162,7 +162,10 @@
 			}
 		
 			});
-
+		//칼럼 select  
+		$.ajax({
+			/* url : 'getColumn' */
+		});
 
     $( "#sortable000, #openAppend, #closeAppend" ).sortable({
         connectWith: ".connectedSortable",
