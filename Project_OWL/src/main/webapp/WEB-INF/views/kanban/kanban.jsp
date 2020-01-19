@@ -123,8 +123,8 @@
 			url : 'GetLabelList.do',
 			data : {'projectIdx' : ${project.projectIdx}},
 			success : function(data) {
-				console.log("Showlabel success");
-				console.log(data);
+				//console.log("Showlabel success");
+				//console.log(data);
 				$('#labelList').empty();
 				$('#labelIdx').empty();
 
@@ -155,20 +155,14 @@
 					$('#labelIdx').append(selectoption);
 					$('#labelIdx').append(lblist);
 
-					console.log('여기확인');
-					console.log('lblist' + lblist);
-					
+				
 
-					 
 			},error : function() {
 				console.log("Showlabel error");
 			}
 		
 			});
 
-
-	  var n = 3;
-	  
 
     $( "#sortable000, #openAppend, #closeAppend" ).sortable({
         connectWith: ".connectedSortable",
@@ -180,8 +174,6 @@
 	//컬럼 추가 function
     function addColumn(columnidx, colname) {
 
-  		 console.log("addcolumn 함수타니?");
-  		  
 
   		var result = "";
 
