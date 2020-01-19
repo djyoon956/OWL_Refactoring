@@ -183,7 +183,7 @@ public class MemberService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		System.out.println(setting);
 		return setting;
 	}
 
