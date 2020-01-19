@@ -155,7 +155,7 @@
 						<div class="col-4">Priority</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="priorityCode" id="priorityCode">
-								<option value="">Select Priority</option>
+								<option value="" id="">Select Priority</option>
 								<option value="LOW">low</option>
 								<option value="MEDIUM">medium</option>
 								<option value="HIGH">high</option>
