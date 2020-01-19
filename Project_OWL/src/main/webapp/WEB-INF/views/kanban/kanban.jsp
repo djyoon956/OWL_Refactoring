@@ -173,8 +173,24 @@
 		
 			});
 
+		//칼럼 select  
+		 $.ajax({
+			 url : 'GetColumn.do',
+			 data : {'projectIdx' :  ${project.projectIdx} },
+			 success : function(data) {
+				let colname = "" 
+				$.each(data,function(index,obj) {
+					console.log("칼럼 데이터 colidx " + obj.colIdx);
+					console.log("칼럼 데이터  colname" + obj.colname);
+					
+				});
+			},
+			 error : function() {
+				console.log("getColum.do error");
+			}
+		}); 
 
-
+		
     $( "#sortable000, #openAppend, #closeAppend" ).sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false        

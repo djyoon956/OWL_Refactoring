@@ -60,7 +60,13 @@ public class KanbanRestController {
 		return service.getLabelList(projectIdx);
 	}
 	
-	
+	//칼럼 리스트 select 
+	@RequestMapping("GetColumn.do")
+	public List<Column> getColum(int projectIdx) {
+		
+		
+		return service.getColum(projectIdx);		
+	}
 
 	@RequestMapping("InsertColumn.do")
 	public int insertColumn(Column column) {
@@ -76,7 +82,7 @@ public class KanbanRestController {
 		result = service.insertColumn(col); 		
 		int columnidx = -1;		
 		if(result) {
-			columnidx = col.getColumnIdx();
+			columnidx = col.getColIdx();
 		};
 		
 		//System.out.println("컨트롤러 result : " + result);

@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Column {
-	private int columnIdx;
+	private int colIdx;
 	private int projectIdx;
 	private String colname;
 }
