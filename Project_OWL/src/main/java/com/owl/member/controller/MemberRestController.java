@@ -166,4 +166,13 @@ public class MemberRestController {
 
 		return setting;
 	}
+	
+	@RequestMapping(value = "AddProjectMember.do", method = RequestMethod.POST)
+	public void AddProjectMember(int projectIdx, String[] addProjectMembers) {
+		System.out.println("in AddProjectMember");
+		System.out.println(projectIdx);
+		System.out.println(addProjectMembers.length);
+		
+		// 함께해요 메일 보내기
+	}
 }
