@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.owl.member.dto.Member;
+import com.owl.member.dto.Setting;
 import com.owl.member.service.MemberService;
 import com.owl.project.service.ProjectService;
 
@@ -33,9 +34,9 @@ public class MemberRestController {
 
 	@Autowired
 	private MemberService service;
-	
+
 	@Autowired
-	private ProjectService  projectService;
+	private ProjectService projectService;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -139,7 +140,7 @@ public class MemberRestController {
 	public ModelAndView test(String page, String projectIdx, Principal principal) {
 		String view = "";
 		ModelAndView mv = new ModelAndView();
-		
+
 		if (page.startsWith("dash"))
 			view = "dashBoard/dashBoard";
 		else if (page.startsWith("calendar"))
@@ -150,7 +151,19 @@ public class MemberRestController {
 		}
 
 		mv.setViewName(view);
-		
+
 		return mv;
+	}
+
+	@RequestMapping("SettingChange.do")
+	public Setting settingChange(String cmd, String value, HttpServletRequest request, Principal principal) {
+		boolean result = service.updateSetting(principal.getName(), cmd.toUpperCase(), value);
+		Setting setting = null;
+		if (result) {
+			setting = service.getSetting(principal.getName());
+			request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
+		}
+
+		return setting;
 	}
 }

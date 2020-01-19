@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.owl.member.dto.Member;
+import com.owl.member.dto.Setting;
 import com.owl.member.service.GoogleService;
 import com.owl.member.service.KaKaoService;
 import com.owl.member.service.MemberService;
@@ -71,13 +72,16 @@ public class LoginController {
 		System.out.println("principal : " + principal.getName());
 		Member member = service.getMember(principal.getName());
 		request.getSession().setAttribute("member", member);
+		request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
 		
-		List<ProjectList> projectList  = null;
+		List<ProjectList> projectList = null;
 		projectList = ProjectSerivce.getProjectLists(member.getEmail());
 		model.addAttribute("projectList", projectList);
+
+
 		return "member/main";
 	}
-
+	
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
 	public String login(HttpServletRequest request) {
 		// for test
@@ -132,13 +136,5 @@ public class LoginController {
 	@RequestMapping("Lock.do")
 	public String showLockView() {
 		return "member/lock";
-	}
-
-
-
-	private void checkDirectory(String path) {
-		File file = new File(path);
-		if (!file.exists())
-			file.mkdir();
 	}
 }

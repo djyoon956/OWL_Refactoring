@@ -5,7 +5,7 @@
         <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">OWL</a> 2020</p>
     </div>
 </footer> -->
-<div class="main_footer">
+<div class="main_footer mySetting">
     <div class="copyright">
         <p>Copyright &copy; Designed & Developed by <a href="#">OWL</a> 2020</p>
     </div>
