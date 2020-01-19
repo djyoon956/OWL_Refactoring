@@ -52,4 +52,6 @@ public class SmartCalendarController {
 		model.addAttribute("projectList", projects);
 		return "calendar/calendar3";
 	}
+	
+	
 }
