@@ -61,7 +61,6 @@ public class KanbanRestController {
 	}
 	
 	
-	
 
 	@RequestMapping("InsertColumn.do")
 	public int insertColumn(Column column) {
@@ -87,7 +86,7 @@ public class KanbanRestController {
 
 	
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
-	public boolean insertIssue(@RequestParam(value = "projectIdx") int projectIdx
+	public Label insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
 							, @RequestParam(value = "content") String content
 							, @RequestParam(value = "priorityCode", required = false) String priorityCode
@@ -108,6 +107,7 @@ public class KanbanRestController {
 		System.out.println(multipartFiles);
 		System.out.println(multipartFiles.size());
 
+		
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
@@ -124,7 +124,6 @@ public class KanbanRestController {
 			try {
 				issue.setDueDate(new SimpleDateFormat("yyyy-mm-dd").parse(dueDate));
 			} catch (ParseException e) {
-				System.out.println("parse(dueDate)");
 				e.printStackTrace();
 			}
 		}
@@ -132,11 +131,13 @@ public class KanbanRestController {
 		System.out.println("issue");
 		System.out.println(issue);
 		boolean result = false;
-		result = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
+		
+		Label label = null;
+		
+		label = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
 
 		
-		return result;
-		
+		return label;
 	}
 	
 	

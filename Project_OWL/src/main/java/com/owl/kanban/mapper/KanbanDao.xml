@@ -41,9 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 
-
 	<select id="getLabelList" resultType="com.owl.project.dto.Label">
 		select labelidx, labelname, labelcolor from label WHERE projectidx = #{projectIdx}
+	</select>
+	
+	
+	<select id="getLabelinfo" resultType="com.owl.project.dto.Label">
+		select  labelname, labelcolor from label WHERE labelIdx = #{labelIdx}
 	</select>
 	
 </mapper>

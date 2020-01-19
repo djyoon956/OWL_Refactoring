@@ -167,12 +167,10 @@
 			});
 
 
-
-	  
 	  var n = 3;
 	  
-	//이슈 추가 function
-    $('#addIssue').click (function() {
+/* 	//이슈 추가 function
+    $('#InsertIssueBtn').click (function() {
        console.log('addIssue click in');
 		
 		let newIssue = "";
@@ -195,13 +193,13 @@
 		newIssue  += '</label></div></li>';
 	
        
-		$('#sortable1').append(newIssue);
+		$('#openAppend').append(newIssue);
 
-        });
+        }); */
 
 
 	
-    $( "#sortable000, #sortable0000, #sortable0, #sortable00" ).sortable({
+    $( "#sortable000, #sortable0000, #openAppend, #closeAppend" ).sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false        
       }).disableSelection();
@@ -246,6 +244,7 @@
      		$("#closeIssue").hide();
      		$("#openIssue").show();
           });
+         
          $("#closeIssueBtn").click(function() {
          	$("#closeIssue").removeClass("d-none");
      		$("#openIssue").hide();
@@ -317,7 +316,7 @@
 		        	errorAlert("label 추가 error");
 					}
 				});
-	});
+		});
 
 	
 	
@@ -334,11 +333,13 @@
 		<div class="col-8" style="margin-left: 30px;">
 
 			<a href="#" data-toggle="modal" data-target="#addIssueModal">
-				<button id="addIssue" class="btn btn-primary">
+				<button id="addIssuebtn" class="btn btn-primary">
 					<i class="fas fa-italic"></i>&nbsp;New Issue
 				</button>
-			</a> <a href="#" data-toggle="modal" data-target="#addColumnModal">
-				<button id="addColumn" class="btn btn-primary">
+			</a> 
+			
+			<a href="#" data-toggle="modal" data-target="#addColumnModal">
+				<button class="btn btn-primary">
 					<i class="fas fa-columns"></i>&nbsp;New Column
 				</button>
 			</a>
@@ -346,6 +347,8 @@
 			<button id="openIssueBtn" class="btn btn-primary">
 				<i class="fas fa-columns"></i>&nbsp;Open Issue
 			</button>
+			
+			
 			<button id="closeIssueBtn" class="btn btn-primary">
 				<i class="fas fa-columns"></i>&nbsp;Close Issue
 			</button>
@@ -362,28 +365,26 @@
 
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
-		<div class="columnSection" style="background-color: #e9e9e9;"
-			id="openIssue">
+		<div class="columnSection" style="background-color: #e9e9e9;" id="openIssue">
 			<div class="text-center mt-2 card-header">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
-			<ul id="sortable0" class="connectedSortable columnBody">
+			<ul id="openAppend" class="connectedSortable columnBody">
 				<li class="issuePiece d-none">Item 1</li>
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none" style="background-color: #e9e9e9;"
-			id="closeIssue">
+		<div class="columnSection d-none" style="background-color: #e9e9e9;" id="closeIssue">
 			<div class="text-center mt-2 card-header">
 				<h4>
-					Close Issue<span class="float-right"><i
-						class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
+					Close Issue<span class="float-right">
+					<i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
-			<ul id="sortable00" class="connectedSortable columnBody">
+			<ul id="closeAppend" class="connectedSortable columnBody">
 				<li class="issuePiece d-none">Item 1</li>
 				<li class="issuePiece"></li>
 			</ul>
