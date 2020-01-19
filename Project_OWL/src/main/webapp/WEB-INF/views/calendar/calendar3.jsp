@@ -147,8 +147,6 @@ $(function(){
     		}
     	});  	
 });
-
-
 	</script>
 </head>
 

@@ -26,8 +26,8 @@
             time: function(schedule) {
                 return getTimeTemplate(schedule, false);
             },
-            locationPlaceholder: function() {
-            	 return 'Content';
+            'locationPlaceholder-tmpl': function() {
+                return 'Content';
             }
         }
     });
