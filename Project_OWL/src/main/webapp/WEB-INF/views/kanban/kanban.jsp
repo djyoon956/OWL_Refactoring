@@ -165,7 +165,10 @@
 			}
 		
 			});
-
+		//칼럼 select  
+		$.ajax({
+			/* url : 'getColumn' */
+		});
 
 	  var n = 3;
 	  
