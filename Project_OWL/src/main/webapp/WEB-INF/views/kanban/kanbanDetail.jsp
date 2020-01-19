@@ -39,22 +39,22 @@ $(function() {
 				<div class="ml-3"><h2>Drive Development</h2></div>
 			</div>
 		<hr class="mt-1"> 
-			<div class="card-body mt-0 mb-0" >
+			<div class="card-body mt-0 mb-0" style="border: 1px solid; border-color:#e9e9e9;">
 			<!-- style="border: 1px solid; border-color:#e9e9e9;" -->
 				<p>Task </p>
 				<p>- 드라이브 디폴트 폴더 생성</p>
 				<p>- 계층형 구조 </p>
 				<p>- 휴지통 기능</p>
 			</div>
-			<hr class="mt-1"> 
-			<div class="card-body mt-0 mb-0 pt-0">
-			<h5><i class="fas fa-download mr-2 mb-2"></i>Attachment</h5>
+			<!-- <hr class="mt-1">  -->
+			<div class="card-footer mb-0" style="border-left:1px solid;border-right:1px solid;border-bottom:1px solid;border-color:#e9e9e9;padding-bottom:6px;padding-top:10px;" >
+			<i class="fas fa-download mr-2 mb-2"></i>
 			<a href="#" class="p-1 m-1">owl_테이블 쿼리.txt</a>
 			<a href="#" class="p-1 m-1">owl_발표자료.ppt</a>
 			</div>
 		<!-- 	<div class="card-footer" style="padding:6px;border: 1px solid; border-color:#e9e9e9;"><a href="#"><i class="fas fa-download  mr-2"></i>owl_발표자료.ppt</a></div> -->
-			<hr class="mt-1"> 
-			<div class="card-body mt-0 mb-0 pt-0">
+			<!-- <hr class="mt-1">  -->
+			<div class="card-body mt-0 mb-0 pt-3">
 			<h5><i class="fas fa-bars mr-2 mb-2"></i>Activity</h5>
               <div class="d-md-flex align-items-center">
               
@@ -75,7 +75,7 @@ $(function() {
              <!-- 끝 -->
              </div>
           </div>
-          <div class="card-body mt-0" style="border: 1px solid; border-color:#e9e9e9; border-radius: 0.25rem">
+          <div class="card-body mt-0" style="border: 1px solid; border-color:#e9e9e9; border-radius: 0.25rem;background-color:#e9e9e9;">
          	<h5><i class="fas fa-comments mr-2 mb-2"></i>Comments</h5>
             <div class="comment-widgets scrollable">
                  <div class="d-flex flex-row comment-row m-t-0">
