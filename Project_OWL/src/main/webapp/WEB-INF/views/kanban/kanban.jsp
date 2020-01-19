@@ -112,6 +112,16 @@
 .cursor_pointer {
 	cursor: pointer;
 }
+
+.leftdoor {
+	background-color: #e9e9e9;
+	margin-top: 20px;
+	border : 1px solid #CBD7E3;
+}
+
+.leftdoorheader {
+	padding : 12px 20px 12px 20px;
+}
 </style>
 <script>
   $(function(){
@@ -123,8 +133,8 @@
 			url : 'GetLabelList.do',
 			data : {'projectIdx' : ${project.projectIdx}},
 			success : function(data) {
-				//console.log("Showlabel success");
-				//console.log(data);
+				console.log("Showlabel success");
+				console.log(data);
 				$('#labelList').empty();
 				$('#labelIdx').empty();
 
@@ -140,10 +150,10 @@
 					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<a>Edit</a>';
+					lablist +=  '<button class="btn-link link-gray">Edit</button>';
 					lablist +=  '</div>'
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<a>Delete</a>';
+					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
 					lablist +=  '</div></div><hr>';
 
 					lblist += '<option value="'+obj.labelIdx+'">'+obj.labelName+'</option>'
@@ -155,17 +165,15 @@
 					$('#labelIdx').append(selectoption);
 					$('#labelIdx').append(lblist);
 
-				
 
+					 
 			},error : function() {
 				console.log("Showlabel error");
 			}
 		
 			});
-		//칼럼 select  
-		$.ajax({
-			/* url : 'getColumn' */
-		});
+
+
 
     $( "#sortable000, #openAppend, #closeAppend" ).sortable({
         connectWith: ".connectedSortable",
@@ -280,10 +288,10 @@
 					labelpiece +=  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbname+'</span>';
 					labelpiece +=  '</div>';
 					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<a>Edit</a>';
+					labelpiece +=  '<button class="btn-link link-gray">Edit</button>';
 					labelpiece +=  '</div>'
 					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<a>Delete</a>';
+					labelpiece +=  '<button class="btn-link link-gray">Delete</button>';
 					labelpiece +=  '</div></div><hr>';
 						
 				$('#labelList').append(labelpiece);
@@ -342,8 +350,8 @@
 
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
-		<div class="columnSection" style="background-color: #e9e9e9;" id="openIssue">
-			<div class="text-center mt-2 card-header">
+		<div class="columnSection leftdoor" id="openIssue">
+			<div class="text-center mt-2  leftdoorheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
@@ -354,8 +362,8 @@
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none" style="background-color: #e9e9e9;" id="closeIssue">
-			<div class="text-center mt-2 card-header">
+		<div class="columnSection d-none leftdoor "  id="closeIssue">
+			<div class="text-center mt-2 leftdoorheader">
 				<h4>
 					Close Issue<span class="float-right">
 					<i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>

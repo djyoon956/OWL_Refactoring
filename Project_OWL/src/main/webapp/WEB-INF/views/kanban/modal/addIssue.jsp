@@ -13,19 +13,16 @@
 	    	  todayHighlight: true
 		 }); 
 		
-
-
 		/*Summer Note*/
 		 $('#content').summernote({
 		        placeholder: 'Write Issue content',
 		        height: 120,
 		        toolbar: [
 		            ['style', ['bold', 'italic', 'underline', 'clear']],
-		            ['font', ['strikethrough', 'superscript', 'subscript']],
-		            ['fontsize', ['fontsize']],
-		            ['color', ['color']],
+		            ['font', ['strikethrough', 'superscript']],
+		            ['fontsize'],
+		            ['color'],
 		            ['para', ['ul', 'ol', 'paragraph']],
-		            ['height', ['height']]
 		        ]
 		      });
 

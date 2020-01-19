@@ -21,6 +21,16 @@
 	appearance: none;
 }
 
+
+.link-gray {
+    color: #586069!important;
+}
+
+.link-gray:hover {
+    color: #326295!important;
+}
+
+
 .newLabelSection {
 	padding: 10px;
 	background-color: #ebedf0;
