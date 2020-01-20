@@ -26,9 +26,9 @@
             time: function(schedule) {
                 return getTimeTemplate(schedule, false);
             },
-            'locationPlaceholder-tmpl': function() {
-                return 'Content';
-            }
+            locationPlaceholder: function() {
+            	     return 'Content';
+         }
         }
     });
 
@@ -46,6 +46,20 @@
         'beforeCreateSchedule': function(e) {
             console.log('beforeCreateSchedule', e);
             saveNewSchedule(e);
+            
+            //캘린더 일정 DB Insert
+    		$.ajax({
+        		url:"insertCalendar.do",
+        		method:"POST",
+        		data:{calendarId: e.calendarId,
+        			       title: e.calendarId,
+        			       location: e.title,
+        			       start: $("#tui-full-calendar-schedule-start-date").val(),
+        			       end: $("#tui-full-calendar-schedule-end-date").val()
+        			      },
+        		success:function(data){	
+        		}
+    		});
         },
         'beforeUpdateSchedule': function(e) {
             var schedule = e.schedule;

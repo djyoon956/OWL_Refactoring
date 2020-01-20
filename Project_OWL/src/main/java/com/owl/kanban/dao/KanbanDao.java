@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.owl.kanban.dto.Column;
+import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
 import com.owl.notice.dto.File;
@@ -25,4 +26,6 @@ public interface KanbanDao {
 	public List<Label> getLabelList(int projectIdx) throws ClassNotFoundException, SQLException;
 
 	public Label getLabelinfo(int labelIdx) throws ClassNotFoundException, SQLException;
+	
+	public List<ColumnList> getColumn(int projectIdx) throws ClassNotFoundException, SQLException;
 }

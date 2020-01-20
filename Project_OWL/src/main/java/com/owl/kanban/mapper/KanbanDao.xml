@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertColumn" parameterType="com.owl.kanban.dto.Column">
 		INSERT INTO owl.colname(colname, projectidx) VALUE(#{colname}, #{projectIdx})
-		<selectKey keyProperty="columnIdx" resultType="int" order="AFTER">
+		<selectKey keyProperty="colIdx" resultType="int" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
@@ -49,5 +49,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getLabelinfo" resultType="com.owl.project.dto.Label">
 		select  labelname, labelcolor from label WHERE labelIdx = #{labelIdx}
 	</select>
-	
+	<select id="getColumn" resultType="com.owl.kanban.dto.ColumnList">
+		SELECT I.PROJECTIDX, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR, C.COLIDX, C.COLNAME
+		FROM COLNAME C LEFT JOIN ISSUE I ON I.PROJECTIDX = C.PROJECTIDX 
+		AND C.COLIDX = I.COLIDX LEFT JOIN LABEL L 
+		ON C .PROJECTIDX = C.PROJECTIDX AND L.LABELIDX = I.LABELIDX WHERE C.PROJECTIDX=#{projectIdx}
+	</select> 
 </mapper>

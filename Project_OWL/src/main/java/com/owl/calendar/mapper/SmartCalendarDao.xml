@@ -5,13 +5,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.owl.calendar.dao.SmartCalendarDao">
 	<insert id="insertCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
 			INSERT INTO SMARTCALENDAR(TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALARM, EMAIL, PROJECTIDX) 
-			VALUES(#{type}, #{title}, #{content}, #{startDate}, #{endDate}, #{alarm}, #{email}, #{projectIdx})
+			VALUES(#{type}, #{title}, #{content}, #{startDate}, #{endDate}, #{alarm}, #{email},
+			<choose>
+			    <when test="projectIdx != 0"> #{projectIdx} </when>
+			    <otherwise> null </otherwise>
+		  </choose>
+		  )
 	</insert>
 	
 	<update id="updateCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
 	</update>
 	
-	<delete id="deleteCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
+	<delete id="deleteMyCalendar">
+	DELETE FROM SMARTCALENDAR WHERE EMAIL =#{email}
+	</delete>
+	
+	<delete id="deleteProjectCalendar">
+	DELETE FROM SMARTCALENDAR WHERE EMAIL =#{email} AND PROJECTIDX =#{projectIdx}
 	</delete>
 	
 <!-- 	<select id="getMemberCalendars" parameterType="String" resultType="com.owl.calendar.dto.SmartCalendar">

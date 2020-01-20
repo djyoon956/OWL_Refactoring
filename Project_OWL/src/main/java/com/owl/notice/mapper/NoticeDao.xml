@@ -18,18 +18,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getNoticesByProjectIdx" resultType="com.owl.notice.dto.Notice">
 		SELECT BOARDIDX, EMAIL, TITLE, CONTENT, WRITEDATE 
 			FROM owl.BOARD
-		WHERE PROJECTIDX = #{projectIdx};
+		WHERE PROJECTIDX = #{projectIdx}
 	</select>
 	
 	<select id="getNotice" resultType="com.owl.notice.dto.Notice">
 		SELECT BOARDIDX, EMAIL, TITLE, CONTENT, WRITEDATE 
 			FROM owl.BOARD
-		WHERE BOARDIDX = #{boardIdx};
+		WHERE BOARDIDX = #{boardIdx}
 	</select>
 	
 	<select id="getNoticeFiles" resultType="com.owl.notice.dto.File">
 		SELECT FILEIDX, BELONGTO, WRITER, FILENAME, FILESIZE, FILEFROM 
 			FROM owl.FILE
-		WHERE FILEFROM = #{param1} AND belongto = #{param2};
+		WHERE FILEFROM = #{param1} AND belongto = #{param2}
 	</select>
 </mapper>
