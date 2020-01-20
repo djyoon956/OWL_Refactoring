@@ -404,13 +404,13 @@
 				var targetUserUid = event.getAttribute('data-targetUserUid'); 				
 				var targetUserName = event.getAttribute('data-username'); 
 				var roomTitle = targetUserName+'님 과의 대화'; 
-				var roomUserList = {targetUserUid, curUserKey}; // 챗방 유저리스트  			
+				var roomUserList = [targetUserUid, curUserKey]; // 챗방 유저리스트  			
 				var roomUserName = [targetUserName, $('#memberName').val()] // 챗방 유저 이름 
 				var roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss();
 				storeRoomInfo(roomId, roomUserList);
 				setMessage(roomId);
 				console.log("룸아이뒤 생성되나요??>>>" + roomId);
-				openChatRoom(roomId, roomTitle); // 파라미터 추가
+				openChatRoom(roomId, roomTitle, roomUserList, roomUserName); // 파라미터 추가
             }
           
           //const messageRef = firebase.database().ref('/messages/' + 'roomId');
@@ -424,11 +424,15 @@
 			}
 		function storeRoomInfo(roomId, roomUserList){
 			 var roomRef = firebase.database().ref('usersInRoom/' + roomId);
-			 roomRef.set(roomUserList);
+			 roomUserList.forEach(function(value,index){
+				 console.log("챗방 유저리스트 키 값 뽑아내기" + value );
+				 roomRef.set(value);
+				 });
+			 
 			}
   		
 
-          function openChatRoom(roomId, roomTitle) { 
+          function openChatRoom(roomId, roomTitle, roomUserList, roomUserName) { 
         	  var isOpenRoom = true; // 방이 열린 상태인지 확인하는 플래그 값 
         	  if(roomTitle){ //상단 타이틀 변경 
             	  document.getElementById('spTitle').innerHTML = roomTitle; 
@@ -439,79 +443,110 @@
 			console.log("이즈 오픈 룸의 값은??" + isOpenRoom);
 
 
-			document.getElementById('dvInputChat').addEventListener('keydown', onEnterKey(this, roomId));
+			document.getElementById('dvInputChat').addEventListener('keydown', function(ev, roomId, roomUserList, roomUserName){
+				console.log("챗방 메세지 입력하고 엔터 누르면 타야 되는 함수");
+				if(ev.keyCode === 13){ //엔터키 키코드가 입력이 되면 
+					ev.preventDefault();
+					console.log("챗방 메세지 입력하고 엔터 누르면 타야 되는 함수 이프문 안인데  여기는 타나요??"); 
+					saveMessages(roomId, roomUserList,roomUserName); 
+					}
+				});
 
 			document.getElementById('iBtnSend').addEventListener('click', saveMessages());
 
 			
-        	
+        	console.log("오픈챗룸 함수 마지막 단 타나요????");
               }
 
 
-			function onEnterKey(ev, roomId) {
+			/* function onEnterKey(ev, roomId, roomUserList, roomUserName) {
+				console.log("챗방 메세지 입력하고 엔터 누르면 타야 되는 함수");
 				if(ev.keyCode === 13){ //엔터키 키코드가 입력이 되면 
-					ev.preventDefault(); 
-					saveMessages(roomId); 
+					ev.preventDefault();
+					console.log("챗방 메세지 입력하고 엔터 누르면 타야 되는 함수 이프문 안인데  여기는 타나요??"); 
+					saveMessages(roomId, roomUserList,roomUserName); 
 					}
-				}
-			
-			function saveMessages(roomId) {
+				} */
 
-				var user = $('#curUserKey'); 
+
+			//자주 쓰는 값은 컨스트로 설정하려 했으나...  유저키는 파베에서 받아 오는 거라... 에러 날 것 같음...
+			/* const curUserKey = $('#curUserKey').val();
+			const curUserName = $('#memberName').val();
+			const curUserEmail = $('#memberEmail').val();
+			const curUserProfilePic = $('#memberProfilePic').val();
+ */
+
+ 
+ 				/** * 메세지에 태그 입력시 변경하기 */ 
+ 			function myconvertMsg(html){ 
+				console.log("챗 메세지 창 태그 방지 함수 타나요???");
+	  			var tmp = document.createElement("DIV"); 
+	  			tmp.innerHTML = html; 
+	  			return tmp.textContent || tmp.innerText || ""; 
+		 	}
+			
+			function saveMessages(roomId, roomUserList, roomUserName) {
+				console.log("세이브 메세지 함수 여기까지 룸 아이디 오나요???" + roomId);
 				var msgDiv = document.getElementById('dvInputChat');
 				var msg = msgDiv.innerHTML.trim(); 
-				
+				var curUserKey = $('#curUserKey').val();
+				var curUserName = $('#memberName').val();
+				var curUserProfilePic = $('#memberProfilePic').val();
+				var convertMsg = myconvertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
 				if(msg.length > 0){ 
 					msgDiv.focus(); 
 					msgDiv.innerHTML = ''; 
 					var multiUpdates = {}; 
 					var messageRef = firebase.database().ref('messages/'+ roomId);
 					var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
-					var convertMsg = FirebaseChat.convertMsg(msg); 
+					//var convertMsg = convertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
 
-					
-					if(this.ulMessageList.getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
-						var roomUserlistLength =this.roomUserlist.length; 
+					//UsersInRoom 데이터 저장
+					if(document.getElementById('ulMessageList').getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
+						var roomUserlistLength = roomUserlist.length; 
 						for(var i=0; i < roomUserlistLength; i++){ 
-							multiUpdates['RoomUsers/' +this.roomId+'/' +this.roomUserlist[i]] = true; 
+							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserlist[i]] = true; 
 						} 
-						this.database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
-						this.loadMessageList(this.roomId); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
+						firebase.database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
+						loadMessageList(roomId); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
 					} 
 					
 					multiUpdates ={}; // 변수 초기화 
 
 					//메세지 저장 
-					multiUpdates['Messages/' +this.roomId + '/' + messageRefKey] = { 
-							uid: user.uid, 
-							userName: user.displayName, 
+					multiUpdates['Messages/' + roomId + '/' + messageRefKey] = { 
+							uid: curUserKey, 
+							userName: curUserName, 
 							message: convertMsg, // 태그 입력 방지
-							profileImg: user.photoURL ? user.photoURL : '', 
+							profileImg: curUserProfilePic ? curUserProfilePic : '', 
 							timestamp: firebase.database.ServerValue.TIMESTAMP //서버시간 등록하기 
 					} 
 
 					//유저별 룸리스트 저장 
-					var roomUserListLength = this.roomUserlist.length; 
-					if(this.roomUserlist && roomUserListLength > 0){ 
+					var roomUserListLength = roomUserlist.length; 
+					if(roomUserlist && roomUserListLength > 0){ 
 						for(var i = 0; i < roomUserListLength ; i++){ 
-							multiUpdates['UserRooms/'+ this.roomUserlist[i] +'/'+ this.roomId] = { 
-								roomId : this.roomId, 
-								roomUserName : this.roomUserName.join(this.SPLIT_CHAR), 
-								roomUserlist : this.roomUserlist.join(this.SPLIT_CHAR), 
-								roomType : roomUserListLength > 2 ? this.MULTI : this.ONE_VS_ONE, 
-								roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? this.roomUserlist[1] : // 1대 1 대화이고 i 값이 0 이면 
-									roomUserListLength == 2 && i == 1 ? this.roomUserlist[0] // 1대 1 대화 이고 i값이 1이면 
+							multiUpdates['RoomsByUser /'+ roomUserlist[i] +'/'+ roomId] = { 
+								roomId : roomId, 
+								roomUserName : roomUserName.join('@spl@'), 
+								roomUserlist : roomUserlist.join('@spl@'), 
+								roomType : roomUserListLength > 2 ? 'MULTI' : 'ONE_VS_ONE', 
+								roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? roomUserlist[1] : // 1대 1 대화이고 i 값이 0 이면 
+									roomUserListLength == 2 && i == 1 ? roomUserlist[0] // 1대 1 대화 이고 i값이 1이면 
 									: '', // 나머지 
 								lastMessage : convertMsg, 
-								profileImg : user.photoURL ? user.photoURL : '', 
+								profileImg : curUserProfilePic ? curUserProfilePic : '', 
 								timestamp: firebase.database.ServerValue.TIMESTAMP 
 
 							}; 
 						} 
 					} 
-					this.database.ref().update(multiUpdates); 
+					firebase.database.ref().update(multiUpdates); 
 				} 
 		   }
+
+
+			
 
 		
 
@@ -568,10 +603,11 @@
               	  data.forEach(function(childSnapshot) {
 							var msgKey = childSnapshot.key;
           				console.log("메세지 로드 함수를 타긴 하는거야 머야??? " + msgKey);
-                  } 
+                  }); 
+            	  });
             } 
 
-			
+          }
             
 
 			// example of firebase 'exists'...

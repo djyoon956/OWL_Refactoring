@@ -17,7 +17,6 @@
 
 .badgeIcon {
 	display: inline-block;
-	background-color: #F4D452;
 	font-size: small;
 	font-weight: bold;
 	padding: 3px;
@@ -59,7 +58,7 @@
 .issuePiece {
 	border: 2px solid #eeee;
 	background-color: #fff;
-	margin: 5px 10px 10px 10px;
+	margin: 5px 10px 10px 10px; 
 	padding: 10px 15px 15px 15px;
 	font-size: 1.2em;
 	width: 280px;
@@ -124,10 +123,85 @@
 }
 </style>
 <script>
+/* 	function addKanbanIssue(colIdx,obj){
+	 let issue = '<li class="issuePiece">'
+			+		'<div class="dropdown">'
+			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
+			+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
+			+			'</label>'
+			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
+			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
+			+				'<ul class="list-style-none">'
+			+					'<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>'
+			+					'<li class="pl-3"><a href="#">Remove Issue</a></li>'
+			+				'</ul>'
+			+			'</div>'
+			+		'</div>'
+			+		'<div>'
+			+			'<label>'
+			+			'<span class="assigneetitle">'
+			+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>'
+			+			'</label>'
+			+		'</div>'
+			+	'</li>';
+	
+		$("#"+colIdx+"Column > .columnBody").append(issue);
+	}
+
+	function addColumn(obj){
+		console.log("addColumn :" + obj.colIdx);
+		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
+					+ '<div class="columnTitle text-center mt-2 dropdown">'
+					+ '<h4>' + obj.colname
+					+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
+					+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+					+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
+					+				'<ul class="list-style-none">'
+					+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
+					+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
+					+   '>Edit Column</a></li>'
+					+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
+					+				'</ul>'
+					+			'</div>'
+					+		'</h4>'
+					+	'</div>'
+					+	'<ul class="connectedSortable sortableCol columnBody cursor">'
+					+	'</ul>'
+					+ '</div>';
+
+		$('#kanbanArea').append(column);
+	}
+    function setKanbanData() {
+        console.log("in setKanbanData");
+        $.ajax({
+			 url : 'GetColumn.do',
+			 data : {'projectIdx' :  ${project.projectIdx} },
+			 success : function(data) {
+				//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
+				$.each(data,function(index,obj) {
+					if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
+						 addKanbanIssue(obj.colIdx, obj); 
+	   					}
+					else{ // 칼럼 박스가 존재하지 않을때
+						 addColumn(obj);
+	   					addKanbanIssue(obj.colIdx, obj); 
+					}
+				});
+				$( ".sortableCol").sortable({
+			        connectWith: ".connectedSortable",
+			        dropOnEmpty: true       
+			     }).disableSelection();
+			},
+			 error : function() {
+				console.log("getColum.do error");
+			}
+		}); 
+    } */
   $(function(){
 
 			let selectoption = '<option value="">Select</option>';
-				
+			 	
 	//프로젝트 내 라벨 리스트 출력 
 	  $.ajax({
 			url : 'GetLabelList.do',
@@ -172,132 +246,20 @@
 			}
 		
 			});
-		 /* projectIdx;
-		 	String issueTitle;
-		 	issueIdx;
-			String assigned;
-		 	String labelName;
-		 	String labelColor;
-		 	int colIdx;
-			String colname; */
 		//칼럼 select  
-		 $.ajax({
-			 url : 'GetColumn.do',
-			 data : {'projectIdx' :  ${project.projectIdx} },
-			 success : function(data) {
-				let colist = "" ;
-				console.log(data);
-				$.each(data,function(index,obj) {
-					/* console.log("칼럼 ::::" + obj);
-					console.log("칼럼 데이터 projectIdx " + obj.projectIdx);
-					console.log("칼럼 데이터  issueTitle" + obj.issueTitle);
-					console.log("칼럼 데이터  issueIdx" + obj.issueIdx);
-					console.log("칼럼 데이터  assigned" + obj.assigned);
-					console.log("칼럼 데이터  labelName" + obj.labelName);
-					console.log("칼럼 데이터  labelColor" + obj.labelColor);
-					console.log("칼럼 데이터  colIdx" + obj.colIdx);
-					console.log("칼럼 데이터  colname" + obj.colname); */
-					
-				colist += '<div class="columnSection">';
-				colist += '<div class="columnTitle text-center mt-2 dropdown">';
-				colist += '<h4>' + obj.colname;
-				/*id = "dropdownColBtn" */
-				colist += '<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
-				colist += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-				colist += '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">';
-				colist +=				'<ul class="list-style-none">';
-				colist +=	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>';
-				colist +=					'<li class="pl-3"><a href="#">Remove Column</a></li>';
-				colist +=				'</ul>';
-				colist +=			'</div>';
-				colist +=		'</h4>';
-				colist +=	'</div>';
-				colist +=	'<ul class="connectedSortable columnBody cursor sortable">';
-				colist +=	'<li class="issuePiece d-none">Item 1</li>'
-				colist +=		'<li class="issuePiece">';
-				colist +=			'<div class="dropdown">';
-				colist +=				'<label> <span class="badgeIcon float-left" style="background-color:"'+ obj.labelColor+'>' + obj.labelName + '</span>'; 
-				colist +=				'<span class="issueTitle">' + obj.issueTitle + '</span>';
-				colist +=				'</label>'; 
-				/* id="dropdownIssueButton" */
-				colist +=				'<a href="javascript:void(0)" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" style="float: right">'; 
-				colist +=				'<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-				colist +=				'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
-				colist +=					'<ul class="list-style-none">';
-				colist +=		'<li class="pl-3"><a href="#editIssueModal"data-toggle="modal">Edit Issue</a></li>';
-				colist +=						'<li class="pl-3"><a href="#">Remove Issue</a></li>';
-				colist +=					'</ul>';
-				colist +=				'</div>';
-				colist +=			'</div>';
-				colist +=			'<div>';
-				colist +=				'<label>';
-				colist +=				'<span class="assigneetitle">';
-				colist +=				'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>';
-				colist +=				'</label>';
-				colist +=			'</div>';
-				colist +=		'</li>';
-				colist +=	'</ul>';
-				colist +=	'</div>';
-				});
-				$('#columnList').append(colist);
-			},
-			 error : function() {
-				console.log("getColum.do error");
-			}
-		}); 
-
-		
-    $( "#sortable000, #openAppend, #closeAppend",".sortable" ).sortable({
-        connectWith: ".connectedSortable",
-        dropOnEmpty: false        
-      }).disableSelection();
-
-
-
-	//컬럼 추가 function
-    function addColumn(columnidx, colname) {
-
-
-  		var result = "";
-
-  		result += '<div class="columnSection">';
-  		result += '<div class="columnTitle text-center mt-2 dropdown">';
-  		result += '<h4>' + colname;
-  		result += '<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
-  		result += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';	
-  		result += '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">';
-  		result += '<ul class="list-style-none">';
-  		result += '<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>';
-  		result += '<li class="pl-3"><a href="#">Remove Column</a></li>';
-  		result += '</ul>';
-  		result += '</div>';
-  		result += '</h4>';
-  		result += '</div>';
-  		result += '<ul id="'+columnidx+'" class="connectedSortable columnBody cursor">';
-  		result += '<li class="issuePiece" style="display: none;">Item 1</li>'
-  		result += '</ul>';
-  		result += '</div>';
-
-  		
-  		$('#kanbanArea').append(result);
-
-       	sortableFn(columnidx);
-        };
-
 
     	//칸반내에서 움직일 수 있게 만들어 주는 function
-		
         function sortableFn (columnidx)  {
             var value ='#' + columnidx;
              $( value ).sortable({
                  connectWith: ".connectedSortable",
-                 dropOnEmpty: false        
+                 dropOnEmpty: true        
                }).disableSelection();
-             }
+             } 
 
         
          $("#openIssueBtn").click(function() {
-             $("#openIssue").removeClass("d-none");
+            $("#openIssue").removeClass("d-none");
      		$("#closeIssue").hide();
      		$("#openIssue").show();
           });
@@ -307,7 +269,7 @@
      		$("#openIssue").hide();
      		$("#closeIssue").show();
           });
-
+	
         
 
          
@@ -371,18 +333,34 @@
 				},
 				error : function(e) {
 		        	errorAlert("label 추가 error");
-					}
-				});
+				}
+			});
 		});
-
-	
-	
-  });
-
-  function closeFn() {
-  	$("#closeIssue").hide();
-		$("#openIssue").hide();
-   }
+/* 	let editColIdx="";
+	let editColname="";
+    $('#editColumnModal').on('show.bs.modal', function(event) {          
+    	editColIdx = $(event.relatedTarget).data('updatecol-id');
+    	editColname = $(event.relatedTarget).data('upcolname-id');
+    	console.log("에딧 모달");
+    	console.log(editColIdx);
+    	console.log(editColname);
+       /* $(".modal-body").prepend("<b>[ " + updateCol +" ]</b>");
+       $("#deletebtn").attr("href","UpdateColumn.do?colIdx=" + updateCol); 
+    }); */
+    $("#editColumnBtn").click(function() {
+        $.ajax({
+        	url : 'UpdateColumn.do',
+        	data : { 'colname' : $("#editcolName").val(),'projectIdx' : ${project.projectIdx},'colIdx' :  $("#editcolIdx").val()}, 
+        	success : function(data) {
+            	console.log("업데이트 칼럼 성공 ");
+            	console.log(data);
+            },
+            error : function() {
+            	errorAlert("칼럼 수정 error");
+            }
+        });
+    });
+});
   </script>
 
 <div id="totalbody" class="container-fluid mt-3">
@@ -422,14 +400,14 @@
 
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
-		<div class="columnSection leftdoor" id="openIssue">
+		<div class="columnSection leftdoor d-none" id="openIssue">
 			<div class="text-center mt-2  leftdoorheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
-			<ul id="openAppend" class="connectedSortable columnBody">
-				<li class="issuePiece d-none">Item 1</li>
+			<ul class="connectedSortable columnBody sortableCol">
+				<!-- <li class="issuePiece d-none">Item 1</li> -->
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
@@ -441,12 +419,10 @@
 					<i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
 			</div>
-			<ul id="closeAppend" class="connectedSortable columnBody">
-				<li class="issuePiece d-none">Item 1</li>
+			<ul class="connectedSortable columnBody sortableCol">
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
-		<div class="columnList"></div>
 		<!-- 칼럼 -->
 <!-- 		<div class="columnSection">
 			<div class="columnTitle text-center mt-2 dropdown">
@@ -491,7 +467,7 @@
 				</li>
 			</ul>
 		</div> -->
-			
+		<!-- 끝 -->
 	</div>
 </div>
 

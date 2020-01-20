@@ -165,7 +165,20 @@ public class KanbanService {
 		return colList;
 	}
 	
-	
+	public boolean updateColumn(Column column) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			System.out.println("칼럼 업데이트  :" + column);
+			result = dao.updateColumn(column) > 0 ? true : false;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	
 	public List<Member>getAssignees(int projectIdx) {

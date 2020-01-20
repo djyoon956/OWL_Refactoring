@@ -29,6 +29,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FROM OWL.SMARTCALENDAR C JOIN OWL.PROJECTLIST P
 		ON P.PROJECTIDX = C.PROJECTIDX AND P.EMAIL = #{email}
 	</select> -->
+	<select id="getMyAllCalendars" resultType="com.owl.calendar.dto.SmartCalendar" parameterType="String" >
+	SELECT CALIDX, TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, EMAIL, PROJECTIDX FROM SMARTCALENDAR WHERE EMAIL = #{email}; 
+	</select>
 	
 	<select id="getProjectCalendars" parameterType="Integer">
 	</select>
