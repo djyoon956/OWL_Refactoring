@@ -46,12 +46,26 @@ public class SmartCalendarService {
 		return result;
 	};
 
-	public boolean deleteCalendar(SmartCalendar calendar) {
+	public boolean deleteMyCalendar(String email) {
 		boolean result = false;
 		SmartCalendarDao dao = getSmartCalendarDao();
 
 		try {
-			result = dao.deleteCalendar(calendar) > 0 ? true : false;
+			result = dao.deleteMyCalendar(email) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
+	
+	public boolean deleteProjectCalendar(String email, int projectIdx) {
+		boolean result = false;
+		SmartCalendarDao dao = getSmartCalendarDao();
+
+		try {
+			result = dao.deleteProjectCalendar(email, projectIdx) > 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
