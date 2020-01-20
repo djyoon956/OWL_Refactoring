@@ -439,7 +439,7 @@
 			console.log("이즈 오픈 룸의 값은??" + isOpenRoom);
 
 
-			document.getElementById('dvInputChat').addEventListener('keydown', onEnterKey(this));
+			document.getElementById('dvInputChat').addEventListener('keydown', onEnterKey(this, roomId));
 
 			document.getElementById('iBtnSend').addEventListener('click', saveMessages());
 
@@ -448,23 +448,25 @@
               }
 
 
-			function onEnterKey(ev) {
+			function onEnterKey(ev, roomId) {
 				if(ev.keyCode === 13){ //엔터키 키코드가 입력이 되면 
 					ev.preventDefault(); 
-					saveMessages(); 
+					saveMessages(roomId); 
 					}
 				}
 			
-			function saveMessages() {
+			function saveMessages(roomId) {
 
 				var user = $('#curUserKey'); 
-				var msg = document.getElementById('dvInputChat').innerHTML.trim(); 
+				var msgDiv = document.getElementById('dvInputChat');
+				var msg = msgDiv.innerHTML.trim(); 
 				
 				if(msg.length > 0){ 
-					this.dvInputChat.focus(); 
-					this.dvInputChat.innerHTML = ''; 
+					msgDiv.focus(); 
+					msgDiv.innerHTML = ''; 
 					var multiUpdates = {}; 
-					var messageRefKey = this.messageRef.push().key; // 메세지 키값 구하기 
+					var messageRef = firebase.database().ref('messages/'+ roomId);
+					var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
 					var convertMsg = FirebaseChat.convertMsg(msg); 
 
 					
@@ -534,7 +536,7 @@
                   //var messageTemplate = document.getElementById('templateMessageList').innerHTML;
 
                
-                  var messageRef = firebase.database().ref('Messages/' + roomId);
+                  var messageRef = firebase.database().ref('Messages/');
                   messageRef.off();
          
               	  //underscore.js 사용 포기..... 두시간이나 해매고....젠...
@@ -552,7 +554,7 @@
                   	  	this.ulMessageList.scrollTop = this.ulMessageList.scrollHeight; 
                   	  	this.roomTitle = val.roomTitle; 
                   }  */
-                  messageRef.limitToLast(50).on('child_added', function(data){
+                  messageRef.child(roomId).limitToLast(50).on('child_added', function(data){
                       	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                 	  data.forEach(function(childSnapshot) {
 							var msgKey = childSnapshot.key;
@@ -560,7 +562,13 @@
        		 		});
 							
                       }); 
-              } 
+              }else{
+            	  messageRef.limitToLast(50).on('child_added', function(data){
+                    	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+              	  data.forEach(function(childSnapshot) {
+							var msgKey = childSnapshot.key;
+          				console.log("메세지 로드 함수를 타긴 하는거야 머야??? " + msgKey);
+                  } 
             } 
 
 			
