@@ -38,7 +38,7 @@ public class ChatService {
 		return sqlSession.getMapper(ChatDao.class);
 	}
 	
-	// chat  °°Àº ÇÁ·ÎÁ§Æ®¿¡ ¼ÓÇØ ÀÖ´Â ¸â¹ö Á¤º¸ 
+	// chat  ê°™ì€ í”„ë¡œì íŠ¸ì— ìˆëŠ” ìœ ì €ë¥¼ ë½‘ì•„ë‚´ëŠ” í•¨ìˆ˜
 		public List<MyProjectsMates> getMyProjectsMates(String email, String name) {
 			ChatDao dao = getChatDao();
 			List<MyProjectsMates> myprojectsmates = new ArrayList<MyProjectsMates>();
@@ -50,8 +50,8 @@ public class ChatService {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			System.out.println("µğºñ¿¡¼­ ³ª¿Â ³ÑÀÇ ±æÀÌ´Â??"+ myprojectsmates.size());
-			System.out.println("µğºñ¿¡¼­ ¸Õ°¡ ³ª¿À±â´Â ÇÏ´Ï??" + myprojectsmates);
+			System.out.println("ë””ë¹„ì—ì„œ ê°™ì€ í”„ë¡œì íŠ¸ ë©¤ë²„ ë‚˜ì˜¤ë‚˜ìš” ì‚¬ì´ì¦ˆëŠ”??"+ myprojectsmates.size());
+			System.out.println("ë””ë¹„ì—ì„œ ê°™ì€ í”„ë¡œì íŠ¸ ë©¤ë²„ ë‚˜ì˜¤ë‚˜ìš” ??" + myprojectsmates);
 			
 			return myprojectsmates;
 			

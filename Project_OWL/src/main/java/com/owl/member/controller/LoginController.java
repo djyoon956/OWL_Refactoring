@@ -71,6 +71,7 @@ public class LoginController {
 	public String showMainView(HttpServletRequest request, Principal principal, Model model) {
 		System.out.println("principal : " + principal.getName());
 		Member member = service.getMember(principal.getName());
+		System.out.println(member);
 		request.getSession().setAttribute("member", member);
 		request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
 		
