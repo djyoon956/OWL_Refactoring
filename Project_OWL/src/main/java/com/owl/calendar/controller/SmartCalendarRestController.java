@@ -27,7 +27,7 @@ public class SmartCalendarRestController {
 												@RequestParam(value = "location",required = false) String content,
 												@RequestParam(value = "start") String startDate,
 												@RequestParam(value = "end") String endDate,
-												@RequestParam(value = "allDay") boolean allDayCheck,
+												@RequestParam(value = "allDay") boolean allDay,
 												Principal principal) {
 		boolean result = false;
 		SmartCalendar calendar = new SmartCalendar();
@@ -41,13 +41,18 @@ public class SmartCalendarRestController {
 		}
 		calendar.setTitle(title);
 		calendar.setContent(content);	
-		if(allDayCheck == false) {
-			calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(startDate));
-			calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(endDate));			
-		}else if(allDayCheck == true){
+		
+
+		if(allDay) {			
 			calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd").parse(startDate));
-			calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd").parse(endDate));					
-		}
+			calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd").parse(endDate));		
+			calendar.setAllDay(1);
+	
+		}else {
+			calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(startDate));
+			calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(endDate));
+			calendar.setAllDay(0);
+		}		
 		calendar.setEmail(principal.getName());
 		result = service.insertCalendar(calendar);
 		} catch (ParseException e) {

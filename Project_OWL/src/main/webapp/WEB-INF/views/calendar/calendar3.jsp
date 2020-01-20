@@ -145,9 +145,93 @@ $(function(){
     		        );
     		    });
     		    calendarList.innerHTML = html.join('\n\n');
+    		    setSchedules();
     		}
     	});
 });
+
+function setSchedules() {
+    cal.clear();
+    generateSchedule(cal.getViewName());
+    cal.createSchedules(ScheduleList);
+    refreshScheduleVisibility();
+}
+
+function generateSchedule(viewName) {         
+
+	$.ajax({
+		url:"getMyAllCalendars.do",
+		dataType:"json",
+		async: false,
+		success:function(data){
+	    	ScheduleList = [];
+	    	
+			$.each(data, function(index, element){
+		    	let calendar;
+		    	let schedule = new ScheduleInfo();
+		    	console.log("element.projectIdx : "+element.projectIdx);
+				$.each(CalendarList, function(index, obj){
+					console.log("obj.id :"+obj.id);
+					console.log(obj.id == element.projectIdx);
+		    		if(obj.id == element.projectIdx){
+		    			console.log(obj.id);
+		    			calendar = obj;
+		    			return false;
+		    		}
+		    	})		    	
+		    	GetCalendar(calendar, element);				
+			});
+	    }
+
+    });
+}
+
+function GetCalendar(calendar, element){
+	 let data = {
+	            id: String(element.calIdx),
+	            title: element.title,
+	            isAllDay: element.allDay >0 ? true : false,
+	            start: element.startDate,
+	            end: element.endDate,
+	            category: element.allDay >0 ? 'allday' : 'time',
+	            dueDateClass: '',
+	            color: "#fff",
+	            bgColor: calendar.bgColor,
+	            dragBgColor: calendar.bgColor,
+	            borderColor: calendar.borderColor,
+	            location: element.content,
+	             raw: {
+	                class: "public"
+	            },
+	            state: "Busy" 
+	        };
+        
+	        if (calendar) {
+	        	data.calendarId = calendar.id;
+	        	data.color = calendar.color;
+	        	data.bgColor = calendar.bgColor;
+	        	data.borderColor = calendar.borderColor;
+	        }
+
+	        cal.createSchedules([data]);
+
+	        refreshScheduleVisibility();
+}
+
+function refreshScheduleVisibility() {
+    var calendarElements = Array.prototype.slice.call(document.querySelectorAll('#calendarList input'));
+
+    CalendarList.forEach(function(calendar) {
+        cal.toggleSchedules(calendar.id, !calendar.checked, false);
+    });
+
+    cal.render(false);
+
+    calendarElements.forEach(function(input) {
+        var span = input.nextElementSibling;
+        span.style.backgroundColor = input.checked ? span.style.borderColor : 'transparent';
+    });
+}
 	</script>
 </head>
 

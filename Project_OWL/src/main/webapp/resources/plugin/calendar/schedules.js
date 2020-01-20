@@ -52,11 +52,17 @@ function ScheduleInfo() {
     };
 }
 
-function generateTime(schedule, renderStart, renderEnd) {
-    var startDate = moment(renderStart.getTime())
-    var endDate = moment(renderEnd.getTime());
+function generateTime(schedule, start, end) {
+	var startDate = moment(start.getTime());
+	console.log(start);
+	console.log(startDate);
+	console.log("시작시점");
+    var endDate = moment(end.getTime());
+    console.log(end);
+    console.log(endDate);
+    console.log("종료시점");
     var diffDate = endDate.diff(startDate, 'days');
-
+    
     schedule.isAllday = chance.bool({likelihood: 30});
     if (schedule.isAllday) {
         schedule.category = 'allday';
@@ -73,7 +79,7 @@ function generateTime(schedule, renderStart, renderEnd) {
     startDate.hours(chance.integer({min: 0, max: 23}))
     startDate.minutes(chance.bool() ? 0 : 30);
     schedule.start = startDate.toDate();
-
+console.log("이거" + schedule.start);
     endDate = moment(startDate);
     if (schedule.isAllday) {
         endDate.add(chance.integer({min: 0, max: 3}), 'days');
@@ -105,77 +111,3 @@ function generateNames() {
     return names;
 }
 
-function generateSchedule(viewName, renderStart, renderEnd) {         
-    var i = 0, length = 10;
-    if (viewName === 'month') {
-        length = 3;
-    } else if (viewName === 'day') {
-        length = 4;
-    }
-	$.ajax({
-		url:"getMyAllCalendars.do",
-		dataType:"json",
-		async: false,
-		success:function(data){
-	    	ScheduleList = [];
-
-	    	
-			$.each(data, function(index, element){
-		    	let calendar;
-		    	let schedule = new ScheduleInfo();
-		    	console.log("element.projectIdx : "+element.projectIdx);
-				$.each(CalendarList, function(index, obj){
-					console.log("obj.id :"+obj.id);
-					console.log(obj.id == element.projectIdx);
-		    		if(obj.id == element.projectIdx){
-		    			console.log(obj.id);
-		    			calendar = obj;
-		    			return false;
-		    		}
-		    	})
-	
-		    	if(calendar == null)
-		    		return;
-				
-				console.log("get calendar");
-		        let renderStart;
-		        let renderEnd;   
-		        
-	    		renderStart = new Date(element.startDate);
-	    		renderEnd = new Date(element.endDate);			
-	    	
-	    	    schedule.id = String(element.calIdx);
-	    	    schedule.calendarId = String(element.projectIdx);
-	    	    schedule.title = element.title;  	
-	    	    
-	    	    generateTime(schedule, renderStart, renderEnd);
-	    	    schedule.location = element.content;
-	    	    schedule.color = calendar.color;
-	    	    schedule.bgColor = calendar.bgColor;
-	    	    schedule.dragBgColor = calendar.dragBgColor;
-	    	    schedule.borderColor = calendar.borderColor;
-	    	
-	    	    if (schedule.category === 'milestone') {
-	    	        schedule.color = schedule.bgColor;
-	    	        schedule.bgColor = 'transparent';
-	    	        schedule.dragBgColor = 'transparent';
-	    	        schedule.borderColor = 'transparent';
-	    	    }
-	    	   	
-	    	    if (chance.bool({ likelihood: 20 })) {
-	    	        var travelTime = chance.minute();
-	    	        schedule.goingDuration = travelTime;
-	    	        schedule.comingDuration = travelTime;
-	    	    	}   
-	    	    ScheduleList.push(schedule);
-	    	        	    
-			});
-	
-		    console.log(ScheduleList);
-	    }
-
-    });
-	console.log("done");
-	console.log(ScheduleList);
-	console.log("done1");
-}

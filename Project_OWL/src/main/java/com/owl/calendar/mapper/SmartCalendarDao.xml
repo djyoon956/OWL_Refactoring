@@ -4,8 +4,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.owl.calendar.dao.SmartCalendarDao">
 	<insert id="insertCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
-			INSERT INTO SMARTCALENDAR(TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALARM, EMAIL, PROJECTIDX) 
-			VALUES(#{type}, #{title}, #{content}, #{startDate}, #{endDate}, #{alarm}, #{email},
+			INSERT INTO SMARTCALENDAR(TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALLDAY, EMAIL, PROJECTIDX) 
+			VALUES(#{type}, #{title}, #{content}, #{startDate}, #{endDate}, #{allDay}, #{email},
 			<choose>
 			    <when test="projectIdx != 0"> #{projectIdx} </when>
 			    <otherwise> null </otherwise>
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON P.PROJECTIDX = C.PROJECTIDX AND P.EMAIL = #{email}
 	</select> -->
 	<select id="getMyAllCalendars" resultType="com.owl.calendar.dto.SmartCalendar" parameterType="String" >
-	SELECT CALIDX, TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, EMAIL, PROJECTIDX FROM SMARTCALENDAR WHERE EMAIL = #{email}; 
+	SELECT CALIDX, TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALLDAY, EMAIL, PROJECTIDX FROM SMARTCALENDAR WHERE EMAIL = #{email}; 
 	</select>
 	
 	<select id="getProjectCalendars" parameterType="Integer">
