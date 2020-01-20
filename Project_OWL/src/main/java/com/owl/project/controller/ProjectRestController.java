@@ -16,8 +16,6 @@ import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.drive.dto.DriveFolder;
@@ -81,20 +79,18 @@ public class ProjectRestController {
 	}
 	
 	@RequestMapping(value = "AddProjectMember.do", method = RequestMethod.POST)
-	public void AddProjectMember(int projectIdx, String projectName, String[] addProjectMembers, Principal principal) {
+	public void AddProjectMember(int projectIdx, String projectName, String pm, String[] addProjectMembers, Principal principal) {
 		System.out.println("in AddProjectMember");
-		System.out.println(projectIdx);
-		System.out.println(addProjectMembers.length);
-		System.out.println(addProjectMembers[0]);
-		System.out.println(addProjectMembers[1]);
+		System.out.println("in " + projectIdx);
 		
 		try {
 			MimeMessage content = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(content, true, "UTF-8");
 			Map<String, Object> models = new HashMap<String, Object>();
 			models.put("projectName", projectName);
-			models.put("projectIdx", projectIdx);
-			models.put("pm", principal.getName());
+			models.put("joinProjectIdx", projectIdx);
+			models.put("pm", pm);
+			models.put("pmEamil", principal.getName());
 
 			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
 					velocityEngineFactoryBean.createVelocityEngine(), "joinProjectTemplate.vm", "UTF-8", models);

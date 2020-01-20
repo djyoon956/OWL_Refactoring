@@ -1,6 +1,5 @@
 package com.owl.calendar.dto;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.Getter;
@@ -18,18 +17,20 @@ public class SmartCalendar {
 	private String content;
 	private Date startDate;
 	private Date endDate;
-	private String alarm;
+	private int allDay;
 	private String email;
-
+ 
 	public enum CalendarType {
 		MY, PROJECT
 	}
 	
+
 	/*
-	 * public String getstartDate() { return new
-	 * SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate); }
+	 * public Date getstartDate() { SimpleDateFormat simpleDateFormat = new
+	 * SimpleDateFormat("yyyy-MM-dd HH:mm"); Date stDate =
+	 * simpleDateFormat.parse(startDate); return stDate; }
 	 * 
-	 * public String getendDate() { return new
+	 * public Date getendDate() { return new
 	 * SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate); }
 	 */
 }

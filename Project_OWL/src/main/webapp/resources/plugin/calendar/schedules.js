@@ -52,11 +52,17 @@ function ScheduleInfo() {
     };
 }
 
-function generateTime(schedule, renderStart, renderEnd) {
-    var startDate = moment(renderStart.getTime())
-    var endDate = moment(renderEnd.getTime());
+function generateTime(schedule, start, end) {
+	var startDate = moment(start.getTime());
+	console.log(start);
+	console.log(startDate);
+	console.log("시작시점");
+    var endDate = moment(end.getTime());
+    console.log(end);
+    console.log(endDate);
+    console.log("종료시점");
     var diffDate = endDate.diff(startDate, 'days');
-
+    
     schedule.isAllday = chance.bool({likelihood: 30});
     if (schedule.isAllday) {
         schedule.category = 'allday';
@@ -73,7 +79,7 @@ function generateTime(schedule, renderStart, renderEnd) {
     startDate.hours(chance.integer({min: 0, max: 23}))
     startDate.minutes(chance.bool() ? 0 : 30);
     schedule.start = startDate.toDate();
-
+console.log("이거" + schedule.start);
     endDate = moment(startDate);
     if (schedule.isAllday) {
         endDate.add(chance.integer({min: 0, max: 3}), 'days');
@@ -105,61 +111,3 @@ function generateNames() {
     return names;
 }
 
-function generateRandomSchedule(calendar, renderStart, renderEnd) {
-    var schedule = new ScheduleInfo();
-
-    schedule.id = chance.guid();
-    schedule.calendarId = calendar.id;
-
-    schedule.title = chance.sentence({words: 3});
-    schedule.body = chance.bool({likelihood: 20}) ? chance.sentence({words: 10}) : '';
-    schedule.isReadOnly = chance.bool({likelihood: 20});
-    generateTime(schedule, renderStart, renderEnd);
-
-    schedule.isPrivate = chance.bool({likelihood: 10});
-    schedule.location = chance.address();
-    schedule.attendees = chance.bool({likelihood: 70}) ? generateNames() : [];
-    schedule.recurrenceRule = chance.bool({likelihood: 20}) ? 'repeated events' : '';
-    schedule.state = chance.bool({likelihood: 20}) ? 'Free' : 'Busy';
-    schedule.color = calendar.color;
-    schedule.bgColor = calendar.bgColor;
-    schedule.dragBgColor = calendar.dragBgColor;
-    schedule.borderColor = calendar.borderColor;
-
-    if (schedule.category === 'milestone') {
-        schedule.color = schedule.bgColor;
-        schedule.bgColor = 'transparent';
-        schedule.dragBgColor = 'transparent';
-        schedule.borderColor = 'transparent';
-    }
-
-    schedule.raw.memo = chance.sentence();
-    schedule.raw.creator.name = chance.name();
-    schedule.raw.creator.avatar = chance.avatar();
-    schedule.raw.creator.company = chance.company();
-    schedule.raw.creator.email = chance.email();
-    schedule.raw.creator.phone = chance.phone();
-
-    if (chance.bool({ likelihood: 20 })) {
-        var travelTime = chance.minute();
-        schedule.goingDuration = travelTime;
-        schedule.comingDuration = travelTime;
-    }
-
-    ScheduleList.push(schedule);
-}
-
-function generateSchedule(viewName, renderStart, renderEnd) {
-    ScheduleList = [];
-    CalendarList.forEach(function(calendar) {
-        var i = 0, length = 10;
-        if (viewName === 'month') {
-            length = 3;
-        } else if (viewName === 'day') {
-            length = 4;
-        }
-        for (; i < length; i += 1) {
-            /*generateRandomSchedule(calendar, renderStart, renderEnd);*/
-        }
-    });
-}
