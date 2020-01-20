@@ -103,7 +103,7 @@ public class KanbanService {
 		}
 		
 		System.out.println("insert service 결과 : " + result);
-		System.out.println("insert service 컬럼 아이디엑스  : " + column.getColumnIdx());
+		System.out.println("insert service 컬럼 아이디엑스  : " + column.getColIdx());
 		
 		return result;
 	}
@@ -150,7 +150,18 @@ public class KanbanService {
 	}
 	
 	
-	
+	public List<Column> getColum(int projectIdx){
+		KanbanDao dao = getKanbanDao();
+		List<Column> colList = null;
+		try {
+			colList = dao.getColumn(projectIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println(colList + " : 칼럼리스트 ");
+		return colList;
+		
+	}
 	
 	
 	

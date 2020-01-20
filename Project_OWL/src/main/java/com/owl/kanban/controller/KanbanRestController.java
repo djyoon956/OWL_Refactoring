@@ -60,7 +60,13 @@ public class KanbanRestController {
 		return service.getLabelList(projectIdx);
 	}
 	
-	
+	//칼럼 리스트 select 
+	@RequestMapping("GetColumn.do")
+	public List<Column> getColum(int projectIdx) {
+		
+		
+		return service.getColum(projectIdx);		
+	}
 
 	@RequestMapping("InsertColumn.do")
 	public int insertColumn(Column column) {
@@ -74,14 +80,14 @@ public class KanbanRestController {
 		
 		boolean result = false;
 		result = service.insertColumn(col); 		
-		int data = -1;		
+		int columnidx = -1;		
 		if(result) {
-			data = col.getColumnIdx();
+			columnidx = col.getColIdx();
 		};
 		
 		//System.out.println("컨트롤러 result : " + result);
 		//System.out.println("여기도찍히나? " + col.getColumnIdx());
-		return data;
+		return columnidx;
 	}
 
 	

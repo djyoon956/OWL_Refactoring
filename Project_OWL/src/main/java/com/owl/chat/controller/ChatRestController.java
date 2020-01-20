@@ -22,13 +22,13 @@ public class ChatRestController {
 	
 	@RequestMapping("MyProjectsMates.do")
 	public List<MyProjectsMates> getMyProjectsMates(String email, String name) {
-		System.out.println("¸¶ÀÌ ÇÁ·ÎÁ§Æ® ¸¶ÀÌÃ÷ º¸±â ÇÔ¼ö ÃÊÀÔ Å¸³ª¿ä??.");
-		System.out.println("ºä´Ü¿¡¼­ µé¾î¿Â µ¥ÀÌÅ¸ È®ÀÎ" + email+ " / " + name);
+		System.out.println("ë‚˜ì™€ ê°™ì€ í”„ë¡œì íŠ¸ì— ìˆëŠ” ì‚¬ëŒë“¤ ë½‘ì•„ë‚´ëŠ” í•¨ìˆ˜ íƒ€ë‚˜ìš”??");
+		System.out.println("ë·°ë‹¨ì—ì„œ ë°ì´íƒ€ ë“¤ì–´ ì˜¤ë‚˜ìš”??" + email+ " / " + name);
 		List<MyProjectsMates> result = new ArrayList<MyProjectsMates>();
 		
 		try {
-			result = service.getMyProjectsMates("aaa@gmail.com", "À±´ÙÁ¤");
-			System.out.println("¸¶ÀÌÇÁ·ÎÁ§Æ®¸¶ÀÌÃ÷ ÄÁÆ®·Ñ·¯ Æ®¶óÀÌ ¾È : " + result);
+			result = service.getMyProjectsMates("aaa@gmail.com", "ìœ¤ë‹¤ì •");
+			System.out.println("ë””ë¹„ì—ì„œ ë°ì´íƒ€ ë½‘íˆë‚˜ìš”??? : " + result);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

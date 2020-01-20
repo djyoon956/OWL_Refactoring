@@ -112,6 +112,16 @@
 .cursor_pointer {
 	cursor: pointer;
 }
+
+.leftdoor {
+	background-color: #e9e9e9;
+	margin-top: 20px;
+	border : 1px solid #CBD7E3;
+}
+
+.leftdoorheader {
+	padding : 12px 20px 12px 20px;
+}
 </style>
 <script>
   $(function(){
@@ -140,10 +150,10 @@
 					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<a>Edit</a>';
+					lablist +=  '<button class="btn-link link-gray">Edit</button>';
 					lablist +=  '</div>'
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<a>Delete</a>';
+					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
 					lablist +=  '</div></div><hr>';
 
 					lblist += '<option value="'+obj.labelIdx+'">'+obj.labelName+'</option>'
@@ -155,9 +165,6 @@
 					$('#labelIdx').append(selectoption);
 					$('#labelIdx').append(lblist);
 
-					console.log('여기확인');
-					console.log('lblist' + lblist);
-					
 
 					 
 			},error : function() {
@@ -166,40 +173,25 @@
 		
 			});
 
+		//칼럼 select  
+		 $.ajax({
+			 url : 'GetColumn.do',
+			 data : {'projectIdx' :  ${project.projectIdx} },
+			 success : function(data) {
+				let colname = "" 
+				$.each(data,function(index,obj) {
+					console.log("칼럼 데이터 colidx " + obj.colIdx);
+					console.log("칼럼 데이터  colname" + obj.colname);
+					
+				});
+			},
+			 error : function() {
+				console.log("getColum.do error");
+			}
+		}); 
 
-	  var n = 3;
-	  
-/* 	//이슈 추가 function
-    $('#InsertIssueBtn').click (function() {
-       console.log('addIssue click in');
 		
-		let newIssue = "";
-		newIssue  += '<li class="issuePiece">';
-		newIssue  += '<div class="dropdown">';
-		newIssue  += '<label>';
-		newIssue  += '<span class="badgeIcon float-left">Dev</span>';
-		newIssue  += '<span class="issueTitle">Drive : Development</span>';
-		newIssue  += '</label>';
-		newIssue  += '<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float:right">';
-		newIssue  += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-		newIssue  += '<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
-		newIssue  += '<ul class="list-style-none">';
-		newIssue  += '<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>';
-		newIssue  += '<li class="pl-3"><a href="#">Remove Issue</a></li>';
-		newIssue  += '</ul></div></div>';
-		newIssue  += '<div><label>';
-		newIssue  += '<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>';
-		newIssue  += '<span class="assignee">Chloe</span>';
-		newIssue  += '</label></div></li>';
-	
-       
-		$('#openAppend').append(newIssue);
-
-        }); */
-
-
-	
-    $( "#sortable000, #sortable0000, #openAppend, #closeAppend" ).sortable({
+    $( "#sortable000, #openAppend, #closeAppend" ).sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false        
       }).disableSelection();
@@ -207,32 +199,41 @@
 
 
 	//컬럼 추가 function
-    function addColumn(projectidx, columnidx, colname) {
+    function addColumn(columnidx, colname) {
 
-  		 console.log("addcolumn 함수타니?");
-  		  
-  		var value =  "sortable" + projectidx;
 
   		var result = "";
-    		result += '<div class="columnSection">';
-    		result += '<div class="columnTitle text-center mt-2"><h4>'+colname+'</h4></div>';
-    		result += '<input type="hidden" name="'+projectidx+'">';
-    		result += '<input type="hidden" name="'+columnidx+'">';
-        	result += '<ul id="' + value + '"class="connectedSortable columnBody cursor ui-sortable">';
-    		result += '<li class="issuePiece ui-sortable-handle" style="display:none;">Item 1</li>';
-        	result += '</ul></div>';
 
+  		result += '<div class="columnSection">';
+  		result += '<div class="columnTitle text-center mt-2 dropdown">';
+  		result += '<h4>' + colname;
+  		result += '<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
+  		result += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';	
+  		result += '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">';
+  		result += '<ul class="list-style-none">';
+  		result += '<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>';
+  		result += '<li class="pl-3"><a href="#">Remove Column</a></li>';
+  		result += '</ul>';
+  		result += '</div>';
+  		result += '</h4>';
+  		result += '</div>';
+  		result += '<ul id="'+columnidx+'" class="connectedSortable columnBody cursor">';
+  		result += '<li class="issuePiece" style="display: none;">Item 1</li>'
+  		result += '</ul>';
+  		result += '</div>';
+
+  		
   		$('#kanbanArea').append(result);
 
-       	sortableFn(value);
+       	sortableFn(columnidx);
         };
 
 
     	//칸반내에서 움직일 수 있게 만들어 주는 function
 		
-        function sortableFn (value)  {
-            var value1 ='#' + value;
-             $( value1 ).sortable({
+        function sortableFn (columnidx)  {
+            var value ='#' + columnidx;
+             $( value ).sortable({
                  connectWith: ".connectedSortable",
                  dropOnEmpty: false        
                }).disableSelection();
@@ -260,14 +261,14 @@
 			$.ajax({
 				url : 'InsertColumn.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'colname' : $('#colname').val()},
-				success : function(data) {
-					console.log(data);
-					console.log(typeof(data));
-					if(data > 0) {
-		        		 let proidx = ${project.projectIdx};
+				success : function(columnidx) {
+					console.log(columnidx);
+					console.log(typeof(columnidx));
+					if(columnidx > 0) {
+		        		 
 		        		 let colnm = $('#colname').val();
 		        
-		        		addColumn(proidx, data, colnm);
+		        		addColumn(columnidx, colnm);
 
 		        		$('#addColumnModal').modal("hide");
 		        		$('#colname').val("");
@@ -303,10 +304,10 @@
 					labelpiece +=  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbname+'</span>';
 					labelpiece +=  '</div>';
 					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<a>Edit</a>';
+					labelpiece +=  '<button class="btn-link link-gray">Edit</button>';
 					labelpiece +=  '</div>'
 					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<a>Delete</a>';
+					labelpiece +=  '<button class="btn-link link-gray">Delete</button>';
 					labelpiece +=  '</div></div><hr>';
 						
 				$('#labelList').append(labelpiece);
@@ -365,8 +366,8 @@
 
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
-		<div class="columnSection" style="background-color: #e9e9e9;" id="openIssue">
-			<div class="text-center mt-2 card-header">
+		<div class="columnSection leftdoor" id="openIssue">
+			<div class="text-center mt-2  leftdoorheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
@@ -377,8 +378,8 @@
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none" style="background-color: #e9e9e9;" id="closeIssue">
-			<div class="text-center mt-2 card-header">
+		<div class="columnSection d-none leftdoor "  id="closeIssue">
+			<div class="text-center mt-2 leftdoorheader">
 				<h4>
 					Close Issue<span class="float-right">
 					<i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
@@ -395,8 +396,7 @@
 
 			<div class="columnTitle text-center mt-2 dropdown">
 				<h4>Undefined section
-					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true"
-						aria-expanded="false" style="float: right"> 
+					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
 					<i class="fas fa-ellipsis-v fa-sm"></i></a>
 					
 					<div class="dropdown-menu" aria-labelledby="dropdownColBtn">
