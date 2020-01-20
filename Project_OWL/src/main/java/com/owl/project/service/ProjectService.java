@@ -103,6 +103,28 @@ public class ProjectService {
 
 		return projectList;
 	}
+
+	public boolean insertProjectMember(int projectIdx, String pm, String email) {
+		ProjectDao dao = getProjectDao();
+		boolean result = false;
+		ProjectList projectList = new ProjectList();
+		projectList.setAuthority("ROLE_PROJECTMEMBER");
+		projectList.setEmail(email);
+		projectList.setProjectIdx(projectIdx);
+		System.out.println(projectIdx);
+		System.out.println(pm);
+		System.out.println(email);
+		try {
+			projectList.setProjectColor(dao.getProjectList(projectIdx, pm).getProjectColor());
+			result = dao.insertProjectMember(projectList) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	private ProjectDao getProjectDao() {
 		return sqlSession.getMapper(ProjectDao.class);
@@ -111,10 +133,4 @@ public class ProjectService {
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);
 	}	
-	
-	private void checkDirectory(String path) {
-		File file = new File(path);
-		if (!file.exists())
-			file.mkdirs();
-	}
 }

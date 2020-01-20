@@ -79,16 +79,18 @@ public class ProjectRestController {
 	}
 	
 	@RequestMapping(value = "AddProjectMember.do", method = RequestMethod.POST)
-	public void AddProjectMember(int projectIdx, String projectName, String pm, String[] addProjectMembers) {
+	public void AddProjectMember(int projectIdx, String projectName, String pm, String[] addProjectMembers, Principal principal) {
 		System.out.println("in AddProjectMember");
+		System.out.println("in " + projectIdx);
 		
 		try {
 			MimeMessage content = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(content, true, "UTF-8");
 			Map<String, Object> models = new HashMap<String, Object>();
 			models.put("projectName", projectName);
-			models.put("projectIdx", projectIdx);
+			models.put("joinProjectIdx", projectIdx);
 			models.put("pm", pm);
+			models.put("pmEamil", principal.getName());
 
 			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
 					velocityEngineFactoryBean.createVelocityEngine(), "joinProjectTemplate.vm", "UTF-8", models);

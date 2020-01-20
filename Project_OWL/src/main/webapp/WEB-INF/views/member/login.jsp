@@ -282,7 +282,6 @@
 												<label class="custom-control-label" for="customControlAutosizing1">Remember me</label>
 											</div>
 										</div>
-
 										<input type="submit" class="btn loginButton btn-block waves-effect waves-light" value="LOGIN">
 									</form>
 									<hr />
@@ -315,9 +314,16 @@
 								<!-- Start 회원가입 화면 -->
 								<div id="joinBox" class="roundBox p-4 hidden">
 									<div class="text-center mt-4">
-										<h4>JOIN</h4>
+										<h4>JOIN </h4>
 									</div>
-									<form action="EmailConfirm.do" method="post" class="mt-4 mb-3 login-input" enctype="multipart/form-data">
+									<c:choose>
+										<c:when test="${joinProjectIdx == null}">
+											<form action="EmailConfirm.do" method="post" class="mt-4 mb-3 login-input" enctype="multipart/form-data">
+										</c:when>
+										<c:otherwise>
+											<form action="EmailConfirmPass.do" method="post" class="mt-4 mb-3 login-input" enctype="multipart/form-data">
+										</c:otherwise>
+									</c:choose>
 										<div class="text-center mb-3">
 											<img id="profileImage" src="resources/images/login/profile.png"
 													onerror="this.src='resources/images/login/profile.png'"
