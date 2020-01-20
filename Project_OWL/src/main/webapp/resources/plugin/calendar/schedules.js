@@ -105,61 +105,77 @@ function generateNames() {
     return names;
 }
 
-function generateRandomSchedule(calendar, renderStart, renderEnd) {
-    var schedule = new ScheduleInfo();
-
-    schedule.id = chance.guid();
-    schedule.calendarId = calendar.id;
-
-    schedule.title = chance.sentence({words: 3});
-    schedule.body = chance.bool({likelihood: 20}) ? chance.sentence({words: 10}) : '';
-    schedule.isReadOnly = chance.bool({likelihood: 20});
-    generateTime(schedule, renderStart, renderEnd);
-
-    schedule.isPrivate = chance.bool({likelihood: 10});
-    schedule.location = chance.address();
-    schedule.attendees = chance.bool({likelihood: 70}) ? generateNames() : [];
-    schedule.recurrenceRule = chance.bool({likelihood: 20}) ? 'repeated events' : '';
-    schedule.state = chance.bool({likelihood: 20}) ? 'Free' : 'Busy';
-    schedule.color = calendar.color;
-    schedule.bgColor = calendar.bgColor;
-    schedule.dragBgColor = calendar.dragBgColor;
-    schedule.borderColor = calendar.borderColor;
-
-    if (schedule.category === 'milestone') {
-        schedule.color = schedule.bgColor;
-        schedule.bgColor = 'transparent';
-        schedule.dragBgColor = 'transparent';
-        schedule.borderColor = 'transparent';
+function generateSchedule(viewName, renderStart, renderEnd) {         
+    var i = 0, length = 10;
+    if (viewName === 'month') {
+        length = 3;
+    } else if (viewName === 'day') {
+        length = 4;
     }
+	$.ajax({
+		url:"getMyAllCalendars.do",
+		dataType:"json",
+		async: false,
+		success:function(data){
+	    	ScheduleList = [];
 
-    schedule.raw.memo = chance.sentence();
-    schedule.raw.creator.name = chance.name();
-    schedule.raw.creator.avatar = chance.avatar();
-    schedule.raw.creator.company = chance.company();
-    schedule.raw.creator.email = chance.email();
-    schedule.raw.creator.phone = chance.phone();
+	    	
+			$.each(data, function(index, element){
+		    	let calendar;
+		    	let schedule = new ScheduleInfo();
+		    	console.log("element.projectIdx : "+element.projectIdx);
+				$.each(CalendarList, function(index, obj){
+					console.log("obj.id :"+obj.id);
+					console.log(obj.id == element.projectIdx);
+		    		if(obj.id == element.projectIdx){
+		    			console.log(obj.id);
+		    			calendar = obj;
+		    			return false;
+		    		}
+		    	})
+	
+		    	if(calendar == null)
+		    		return;
+				
+				console.log("get calendar");
+		        let renderStart;
+		        let renderEnd;   
+		        
+	    		renderStart = new Date(element.startDate);
+	    		renderEnd = new Date(element.endDate);			
+	    	
+	    	    schedule.id = String(element.calIdx);
+	    	    schedule.calendarId = String(element.projectIdx);
+	    	    schedule.title = element.title;  	
+	    	    
+	    	    generateTime(schedule, renderStart, renderEnd);
+	    	    schedule.location = element.content;
+	    	    schedule.color = calendar.color;
+	    	    schedule.bgColor = calendar.bgColor;
+	    	    schedule.dragBgColor = calendar.dragBgColor;
+	    	    schedule.borderColor = calendar.borderColor;
+	    	
+	    	    if (schedule.category === 'milestone') {
+	    	        schedule.color = schedule.bgColor;
+	    	        schedule.bgColor = 'transparent';
+	    	        schedule.dragBgColor = 'transparent';
+	    	        schedule.borderColor = 'transparent';
+	    	    }
+	    	   	
+	    	    if (chance.bool({ likelihood: 20 })) {
+	    	        var travelTime = chance.minute();
+	    	        schedule.goingDuration = travelTime;
+	    	        schedule.comingDuration = travelTime;
+	    	    	}   
+	    	    ScheduleList.push(schedule);
+	    	        	    
+			});
+	
+		    console.log(ScheduleList);
+	    }
 
-    if (chance.bool({ likelihood: 20 })) {
-        var travelTime = chance.minute();
-        schedule.goingDuration = travelTime;
-        schedule.comingDuration = travelTime;
-    }
-
-    ScheduleList.push(schedule);
-}
-
-function generateSchedule(viewName, renderStart, renderEnd) {
-    ScheduleList = [];
-    CalendarList.forEach(function(calendar) {
-        var i = 0, length = 10;
-        if (viewName === 'month') {
-            length = 3;
-        } else if (viewName === 'day') {
-            length = 4;
-        }
-        for (; i < length; i += 1) {
-            /*generateRandomSchedule(calendar, renderStart, renderEnd);*/
-        }
     });
+	console.log("done");
+	console.log(ScheduleList);
+	console.log("done1");
 }

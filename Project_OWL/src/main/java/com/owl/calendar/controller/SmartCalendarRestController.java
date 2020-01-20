@@ -3,6 +3,7 @@ package com.owl.calendar.controller;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class SmartCalendarRestController {
 												@RequestParam(value = "location",required = false) String content,
 												@RequestParam(value = "start") String startDate,
 												@RequestParam(value = "end") String endDate,
+												@RequestParam(value = "allDay") boolean allDayCheck,
 												Principal principal) {
 		boolean result = false;
 		SmartCalendar calendar = new SmartCalendar();
@@ -38,9 +40,14 @@ public class SmartCalendarRestController {
 			calendar.setProjectIdx(calendarId);
 		}
 		calendar.setTitle(title);
-		calendar.setContent(content);		
-		calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(startDate));
-		calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(endDate));
+		calendar.setContent(content);	
+		if(allDayCheck == false) {
+			calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(startDate));
+			calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(endDate));			
+		}else if(allDayCheck == true){
+			calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd").parse(startDate));
+			calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd").parse(endDate));					
+		}
 		calendar.setEmail(principal.getName());
 		result = service.insertCalendar(calendar);
 		} catch (ParseException e) {
@@ -65,5 +72,14 @@ public class SmartCalendarRestController {
 		result = service.deleteProjectCalendar(principal.getName(), projectIdx);
 		System.out.println(result);
 		return result;
+	}
+	
+	
+	@RequestMapping(value="getMyAllCalendars.do")
+	public List<SmartCalendar> getMyAllCalendars(Principal principal){
+		List<SmartCalendar> calendar = null;
+		calendar = service.getMyAllCalendars(principal.getName());		
+		System.out.println(calendar);
+		return calendar;
 	}
 }

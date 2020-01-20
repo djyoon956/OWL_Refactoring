@@ -26,10 +26,11 @@ public class SmartCalendar {
 	}
 	
 	/*
-	 * public String getstartDate() { return new
-	 * SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate); }
+	 * public Date getstartDate() { SimpleDateFormat simpleDateFormat = new
+	 * SimpleDateFormat("yyyy-MM-dd HH:mm"); Date stDate =
+	 * simpleDateFormat.parse(startDate); return stDate; }
 	 * 
-	 * public String getendDate() { return new
+	 * public Date getendDate() { return new
 	 * SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate); }
 	 */
 }
