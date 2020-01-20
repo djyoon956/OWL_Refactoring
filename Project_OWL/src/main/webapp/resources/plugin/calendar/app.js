@@ -46,6 +46,8 @@
         'beforeCreateSchedule': function(e) {
             console.log('beforeCreateSchedule', e);
             saveNewSchedule(e);
+            
+            //캘린더 일정 DB Insert
     		$.ajax({
         		url:"insertCalendar.do",
         		method:"POST",

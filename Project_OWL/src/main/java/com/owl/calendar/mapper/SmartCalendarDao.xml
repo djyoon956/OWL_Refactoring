@@ -16,7 +16,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
 	</update>
 	
-	<delete id="deleteCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
+	<delete id="deleteMyCalendar">
+	DELETE FROM SMARTCALENDAR WHERE EMAIL =#{email}
+	</delete>
+	
+	<delete id="deleteProjectCalendar">
+	DELETE FROM SMARTCALENDAR WHERE EMAIL =#{email} AND PROJECTIDX =#{projectIdx}
 	</delete>
 	
 <!-- 	<select id="getMemberCalendars" parameterType="String" resultType="com.owl.calendar.dto.SmartCalendar">

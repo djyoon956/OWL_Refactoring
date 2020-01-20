@@ -28,8 +28,6 @@ public class SmartCalendarRestController {
 												@RequestParam(value = "end") String endDate,
 												Principal principal) {
 		boolean result = false;
-		System.out.println("controller 입장");
-		System.out.println(calendarId);
 		SmartCalendar calendar = new SmartCalendar();
 		try {
 		
@@ -44,14 +42,28 @@ public class SmartCalendarRestController {
 		calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(startDate));
 		calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(endDate));
 		calendar.setEmail(principal.getName());
-		System.out.println("insert 전 : " + calendar);
 		result = service.insertCalendar(calendar);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println(result);
 		return result;
 	}
 
+	@RequestMapping(value="deleteMyCalendar.do", method = RequestMethod.POST)
+	public boolean deleteMyCalendar(Principal principal) {
+		boolean result = false;
+		result = service.deleteMyCalendar(principal.getName());	
+		System.out.println(result);
+		return result;
+	}
+	
+	@RequestMapping(value="deleteProjectCalendar.do", method = RequestMethod.POST)
+	public boolean deleteProejctCalendar(@RequestParam(value = "calendarId") int projectIdx, Principal principal) {
+		boolean result = false;
+		System.out.println(projectIdx);
+		result = service.deleteProjectCalendar(principal.getName(), projectIdx);
+		System.out.println(result);
+		return result;
+	}
 }
