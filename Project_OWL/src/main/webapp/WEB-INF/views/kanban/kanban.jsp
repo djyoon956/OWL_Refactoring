@@ -17,7 +17,7 @@
 
 .badgeIcon {
 	display: inline-block;
-	background-color: #F4D452;
+/* 	background-color: #F4D452; */
 	font-size: small;
 	font-weight: bold;
 	padding: 3px;
@@ -172,82 +172,76 @@
 			}
 		
 			});
-		 /* projectIdx;
-		 	String issueTitle;
-		 	issueIdx;
-			String assigned;
-		 	String labelName;
-		 	String labelColor;
-		 	int colIdx;
-			String colname; */
 		//칼럼 select  
-		 $.ajax({
+		 /*$.ajax({
 			 url : 'GetColumn.do',
 			 data : {'projectIdx' :  ${project.projectIdx} },
 			 success : function(data) {
-				let colist = "" ;
-				console.log(data);
+				let colSection = "";  //칼럼 바디 
+				let issueList = "";  //칼럼 안 이슈 
+				console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
 				$.each(data,function(index,obj) {
-					/* console.log("칼럼 ::::" + obj);
-					console.log("칼럼 데이터 projectIdx " + obj.projectIdx);
-					console.log("칼럼 데이터  issueTitle" + obj.issueTitle);
-					console.log("칼럼 데이터  issueIdx" + obj.issueIdx);
-					console.log("칼럼 데이터  assigned" + obj.assigned);
-					console.log("칼럼 데이터  labelName" + obj.labelName);
-					console.log("칼럼 데이터  labelColor" + obj.labelColor);
-					console.log("칼럼 데이터  colIdx" + obj.colIdx);
-					console.log("칼럼 데이터  colname" + obj.colname); */
+					console.log(obj);
+					console.log("check1 : "+obj.colIdx);
 					
-				colist += '<div class="columnSection">';
-				colist += '<div class="columnTitle text-center mt-2 dropdown">';
-				colist += '<h4>' + obj.colname;
-				/*id = "dropdownColBtn" */
-				colist += '<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
-				colist += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-				colist += '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">';
-				colist +=				'<ul class="list-style-none">';
-				colist +=	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>';
-				colist +=					'<li class="pl-3"><a href="#">Remove Column</a></li>';
-				colist +=				'</ul>';
-				colist +=			'</div>';
-				colist +=		'</h4>';
-				colist +=	'</div>';
-				colist +=	'<ul class="connectedSortable columnBody cursor sortable">';
-				colist +=	'<li class="issuePiece d-none">Item 1</li>'
-				colist +=		'<li class="issuePiece">';
-				colist +=			'<div class="dropdown">';
-				colist +=				'<label> <span class="badgeIcon float-left" style="background-color:"'+ obj.labelColor+'>' + obj.labelName + '</span>'; 
-				colist +=				'<span class="issueTitle">' + obj.issueTitle + '</span>';
-				colist +=				'</label>'; 
-				/* id="dropdownIssueButton" */
-				colist +=				'<a href="javascript:void(0)" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" style="float: right">'; 
-				colist +=				'<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-				colist +=				'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
-				colist +=					'<ul class="list-style-none">';
-				colist +=		'<li class="pl-3"><a href="#editIssueModal"data-toggle="modal">Edit Issue</a></li>';
-				colist +=						'<li class="pl-3"><a href="#">Remove Issue</a></li>';
-				colist +=					'</ul>';
-				colist +=				'</div>';
-				colist +=			'</div>';
-				colist +=			'<div>';
-				colist +=				'<label>';
-				colist +=				'<span class="assigneetitle">';
-				colist +=				'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>';
-				colist +=				'</label>';
-				colist +=			'</div>';
-				colist +=		'</li>';
-				colist +=	'</ul>';
-				colist +=	'</div>';
+					console.log($('.columnSection').find('#'+obj.colIdx) > 0 );
+					
+					colSection += '<div class="columnSection" id="'+ obj.colIdx +'">';
+					colSection += '<div class="columnTitle text-center mt-2 dropdown">';
+					colSection += '<h4>' + obj.colname;
+					colSection += '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
+					colSection += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
+					colSection += '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">';
+					colSection +=				'<ul class="list-style-none">';
+					colSection +=	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>';
+					colSection +=					'<li class="pl-3"><a href="#">Remove Column</a></li>';
+					colSection +=				'</ul>';
+					colSection +=			'</div>';
+					colSection +=		'</h4>';
+					colSection +=	'</div>';
+					colSection +=	'<ul class="connectedSortable columnBody cursor sortable">';
+					colSection +=	'<li class="issuePiece d-none">Item 1</li>';
+					colSection += '</div>';
+
+					$('#kanbanArea').append(colSection);
 				});
-				$('#columnList').append(colist);
+				//$('#kanbanArea').append(colSection); 
+
+				
+				/* $.each(obj.colIdx ,function(index,obj) {
+					
+				issueList +=		'<li class="issuePiece">';
+				issueList +=			'<div class="dropdown">';
+				issueList +=				'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'; 
+				issueList +=				'<span class="issueTitle">' + obj.issueTitle + '</span>';
+				issueList +=				'</label>'; 
+				issueList +=				'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
+				issueList +=				'<i class="fas fa-ellipsis-v fa-sm"></i></a>';
+				issueList +=				'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
+				issueList +=					'<ul class="list-style-none">';
+				issueList +=						'<li class="pl-3"><a href="#editIssueModal"data-toggle="modal">Edit Issue</a></li>';
+				issueList +=						'<li class="pl-3"><a href="#">Remove Issue</a></li>';
+				issueList +=					'</ul>';
+				issueList +=				'</div>';
+				issueList +=			'</div>';
+				issueList +=			'<div>';
+				issueList +=				'<label>';
+				issueList +=				'<span class="assigneetitle">';
+				issueList +=				'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>';
+				issueList +=				'</label>';
+				issueList +=			'</div>';
+				issueList +=		'</li>';
+				issueList +=	'</ul>';
+				});
+				$(".columnSection").append(iisueList); 
 			},
 			 error : function() {
 				console.log("getColum.do error");
 			}
-		}); 
+		}); */
 
 		
-    $( "#sortable000, #openAppend, #closeAppend",".sortable" ).sortable({
+    $( "#openAppend, #closeAppend ,.sortable" ).sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false        
       }).disableSelection();
@@ -255,7 +249,7 @@
 
 
 	//컬럼 추가 function
-    function addColumn(columnidx, colname) {
+/*     function addColumn(columnidx, colname) {
 
 
   		var result = "";
@@ -282,11 +276,10 @@
   		$('#kanbanArea').append(result);
 
        	sortableFn(columnidx);
-        };
+        }; */
 
 
     	//칸반내에서 움직일 수 있게 만들어 주는 function
-		
         function sortableFn (columnidx)  {
             var value ='#' + columnidx;
              $( value ).sortable({
@@ -446,7 +439,6 @@
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
-		<div class="columnList"></div>
 		<!-- 칼럼 -->
 <!-- 		<div class="columnSection">
 			<div class="columnTitle text-center mt-2 dropdown">
@@ -491,7 +483,6 @@
 				</li>
 			</ul>
 		</div> -->
-			
 	</div>
 </div>
 
