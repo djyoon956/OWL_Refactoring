@@ -80,12 +80,18 @@
                     data: {
                         projectIdx: ${project.projectIdx},
                         projectName: "${project.projectName}",
+                        pm : "${member.name}",
                         addProjectMembers: addProjectMembers
                     },
                     success: function (data) {
                         console.log("addMemberOk success");
                         $("#memberEditModal").modal("hide");
-                        successAlert("")
+                        $("#sendMemberCount").text(addProjectMembers.length);
+                        $("#sendMembers").empty();
+                        $.each(addProjectMembers, function(){
+	                        $("#sendMembers").append("<h5> - "+this+"</h5>")
+                         })
+                        $("#openJoinProjectMemberModal").click();
                     },
                     error: function () {
                         console.log("addMemberOk error");
@@ -281,5 +287,6 @@
 
     <!-- pm의 설정  modal -->
     <jsp:include page="modal/projectMemberEdit.jsp" />
+    <jsp:include page="modal/joinProjectMember.jsp" />
 
 </body>

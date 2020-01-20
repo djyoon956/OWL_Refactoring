@@ -1,6 +1,5 @@
 package com.owl.member.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.owl.member.dto.Member;
-import com.owl.member.dto.Setting;
 import com.owl.member.service.GoogleService;
 import com.owl.member.service.KaKaoService;
 import com.owl.member.service.MemberService;
