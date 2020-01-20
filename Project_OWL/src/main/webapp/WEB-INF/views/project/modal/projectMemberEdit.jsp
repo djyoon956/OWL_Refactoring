@@ -17,21 +17,18 @@
 				</button>
 			</div>
 			<div class="modal-body modal-scroll mx-3">
-				<!--  멤버 추가  -->
+				<small class="text-muted">더 많은 사람을 초대하여 원활한 의사소통으로 업무를 효율적으로 처리해보세요.</small><br/>			
+				<small class="text-muted">회사 동료뿐만 아니라 외부 협업자도 파트너로 초대할 수 있습니다.</small><br/>
+				<label class="mt-3 mb-3">초대 메일</label>
 					<div class="form-row">
-						<div class="form-group col-md-10 pr-0">
-							<input type="email" id="addProjectMemeberEmail"  class="form-control" placeholder="추가할 멤버를 입력해주세요" 
-										onKeypress="javascript:if(event.keyCode==13) {addProjectMember()}">
-						</div>
-						<div class="form-group col-md-2 pl-0">
-							<input type="button" class="form-control btn btn-primary" onclick="addProjectMember()" value="추가">
-						</div>
+						<input type="email" id="addProjectMemeberEmail"  class="form-control" placeholder="추가할 멤버를 입력해주세요" 
+									onKeypress="javascript:if(event.keyCode==13 || event.keyCode==188 || event.keyCode==32) {addProjectMember()}">
 					</div>
 				<!--  멤버 삭제   -->
-				<label class="m-t-20">멤버 리스트</label>
+				<label class="mt-3 mb-3">멤버 리스트</label> (<span id="addMemberCount"> 0명 </span>)
 					<div id="addMemberBox">
-		                 <div class="modal-footer">
-		                     <input type="button" id="addMemberOk" class="btn btn-primary"  value="확인">
+		                 <div class="text-center mt-3">
+		                     <input type="button" id="addMemberOk" class="btn btn-primary btn-lg"  value="초대 메일 보내기">
 		                 </div>
 					</div>				
 			</div>

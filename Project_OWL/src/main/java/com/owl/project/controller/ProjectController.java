@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.owl.project.dto.ProjectList;
 import com.owl.project.service.ProjectService;
@@ -29,5 +30,11 @@ public class ProjectController {
 		System.out.println(project);
 		model.addAttribute("project", project);
 		return "project/projectMain";
+	}
+	
+	@RequestMapping(value = "AddProjectMemberOk.do", method = RequestMethod.POST)
+	public void addProjectMemberOk(int projectIdx) {
+		System.out.println("in addProjectMemberOk");
+		System.out.println(projectIdx);
 	}
 }

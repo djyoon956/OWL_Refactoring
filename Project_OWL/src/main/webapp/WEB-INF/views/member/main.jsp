@@ -27,10 +27,7 @@
 	<script src="resources/js/dashBoard.js"></script>
 	<script type="text/javascript">
 		$(function(){
-			$(".mySetting").each(function(){
-				$(this).attr("style", "background-color : ${setting.themeColor} !important;");
-			})
-			$(".mainBody").css("font-family","${setting.font}");
+			setTheme("${setting.themeColor}", "${setting.font}");
 		})
 	</script>
 </head>
