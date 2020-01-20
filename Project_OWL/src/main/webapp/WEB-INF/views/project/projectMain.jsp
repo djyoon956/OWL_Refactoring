@@ -259,7 +259,6 @@
     		}
 
     		function addColumn(obj){
-    			console.log("addColumn :" + obj.colIdx);
     			let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
     						+ '<div class="columnTitle text-center mt-2 dropdown">'
     						+ '<h4>' + obj.colname
