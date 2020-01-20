@@ -55,4 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND C.COLIDX = I.COLIDX LEFT JOIN LABEL L 
 		ON C .PROJECTIDX = C.PROJECTIDX AND L.LABELIDX = I.LABELIDX WHERE C.PROJECTIDX=#{projectIdx}
 	</select> 
+	<update id="updateColumn" parameterType="com.owl.kanban.dto.Column">
+		UPDATE COLNAME SET COLNAME = #{param1} WHERE PROJECTIDX = #{param2} AND COLIDX=#{param3}
+	</update>
 </mapper>

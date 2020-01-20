@@ -69,6 +69,25 @@ public class KanbanRestController {
 		return service.getColum(projectIdx);		
 	}
 
+	@RequestMapping("UpdateColumn.do")
+	public int updateColumn(Column column) {
+		Column col = new Column();
+		
+		col.setColname(column.getColname());
+		col.setProjectIdx(column.getProjectIdx());
+		col.setColIdx(column.getColIdx());
+		
+		boolean result = false;
+		result = service.updateColumn(col);		
+		int columnidx = -1;		
+		if(result) {
+			columnidx = col.getColIdx();
+		};
+		
+		//System.out.println("컨트롤러 result : " + result);
+		//System.out.println("여기도찍히나? " + col.getColumnIdx());
+		return columnidx;
+	}
 	@RequestMapping("InsertColumn.do")
 	public int insertColumn(Column column) {
 		//System.out.println("insertColumn function in");

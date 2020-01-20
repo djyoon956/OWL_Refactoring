@@ -186,7 +186,7 @@
 				</div>
 			</div> 
 					<div class="modal-footer text-right">
-					<input type="button" class="btn btn-primary" id="InsertIssueBtn" value="Save changes">
+					<input type="button" class="btn btn-primary" id="editIssueBtn" value="Save changes">
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 				</div>
 			</form>

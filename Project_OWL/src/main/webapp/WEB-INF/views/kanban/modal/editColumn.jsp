@@ -26,26 +26,42 @@
 
 
 </style>
-
+<script>
+let editColIdx="";
+let editColname="";
+$(function() {
+$('#editColumnModal').on('show.bs.modal', function(event) {          
+	editColIdx = $(event.relatedTarget).data('updatecol-id');
+	editColname = $(event.relatedTarget).data('upcolname-id');
+	console.log("에딧 모달");
+	console.log(editColIdx);
+	console.log(editColname);
+  	
+  $("#editcolName").val(editColname);
+  $("#editcolIdx").val(editColIdx);
+});
+});
+</script>
 <div id="editColumnModal" class="modal fade" tabindex="-1" role="dialog"
 	aria-hidden="true">
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">New Column</h4>
+				<h4 class="modal-title">Edit Column</h4>
 				<button type="button" class="close" data-dismiss="modal">
 					<span>&times;</span>
 				</button>
 			</div>
 			<div class="modal-body" style="margin-left: 10px">
-				<form action="InsertColumn.do" method="post" enctype="multipart/form-data">
-					<input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
+				<form action="" method="post">
+					<%-- <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}"> --%>
 					<div class="row">
 						<h5>Column name</h5>
-						<input type="text" class="form-control input-default" placeholder="Issue Title" name="colname" id="colname">
+						<input type="text" class="form-control input-default" name="colname" id="editcolName">
+						<input type="hidden" name="colIdx" id="editcolIdx" >
 					</div>
 					<div class="modal-footer text-right">
-						<input type="button" class="btn btn-primary" id="InsertColumnBtn" value="Create Column">
+						<input type="button" class="btn btn-primary" id="editColumnBtn" value="Create Column">
 						<button type="button" class="btn btn-primary" data-dismiss="modal" >Close</button>
 					</div>
 				</form>
