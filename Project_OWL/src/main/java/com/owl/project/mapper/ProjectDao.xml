@@ -33,4 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertProjectList" parameterType="com.owl.project.dto.ProjectList">
 		INSERT INTO PROJECTLIST (PROJECTIDX, EMAIL, PROJECTCOLOR, AUTHORITY) VALUES (#{projectIdx}, #{email}, #{projectColor}, #{authority})	
 	</insert>
+	
+	<insert id="insertProjectMember" parameterType="com.owl.project.dto.ProjectList">
+		INSERT INTO PROJECTLIST (PROJECTIDX, EMAIL, PROJECTCOLOR, AUTHORITY) VALUES (#{projectIdx}, #{email}, #{projectColor}, #{authority})	
+	</insert>
 </mapper>

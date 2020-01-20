@@ -8,7 +8,9 @@ import com.owl.project.dto.ProjectList;
 
 public interface ProjectDao {
 	public int insertProject(Project project) throws ClassNotFoundException, SQLException;
-	
+
+	public int insertProjectMember(ProjectList projectlist) throws ClassNotFoundException, SQLException;
+
 	public int insertProjectList(ProjectList projectlist) throws ClassNotFoundException, SQLException;
 
 	public int updateProjectList(ProjectList projectlist) throws ClassNotFoundException, SQLException;
@@ -18,5 +20,5 @@ public interface ProjectDao {
 	public List<ProjectList> getProjectLists(String email) throws ClassNotFoundException, SQLException;
 
 	public ProjectList getProjectList(int projectIdx, String email) throws ClassNotFoundException, SQLException;
-	
-} 
+
+}

@@ -3,6 +3,9 @@ package com.owl.project.controller;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,10 +34,13 @@ public class ProjectController {
 		model.addAttribute("project", project);
 		return "project/projectMain";
 	}
-	
+
 	@RequestMapping(value = "AddProjectMemberOk.do", method = RequestMethod.POST)
-	public void addProjectMemberOk(int projectIdx) {
-		System.out.println("in addProjectMemberOk");
-		System.out.println(projectIdx);
+	public String addProjectMemberOk(int joinProjectIdx, String projectName, String joinProjectPm, HttpServletRequest request, Model model) {
+		model.addAttribute("projectName", projectName);
+		request.getSession().setAttribute("joinProjectIdx", joinProjectIdx);
+		request.getSession().setAttribute("joinProjectPm", joinProjectPm);
+
+		return "member/joinProject";
 	}
 }
