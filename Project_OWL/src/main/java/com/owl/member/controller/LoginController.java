@@ -252,6 +252,7 @@ public class LoginController {
 			int projectIdx = Integer.parseInt(request.getSession().getAttribute("joinProjectIdx").toString());
 			projectSerivce.insertProjectMember(projectIdx, request.getSession().getAttribute("joinProjectPm").toString(), email);
 			request.getSession().removeAttribute("joinProjectIdx");
+			request.getSession().removeAttribute("joinProjectPm");
 		}
 	}
 }
