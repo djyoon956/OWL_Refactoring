@@ -1,10 +1,5 @@
 'use strict';
 
-/* eslint-disable require-jsdoc */
-/* eslint-env jquery */
-/* global moment, tui, chance */
-/* global findCalendar, CalendarList, ScheduleList, generateSchedule */
-
 (function(window, Calendar) {
     var cal, resizeThrottled;
     var useCreationPopup = true;
@@ -46,16 +41,16 @@
         'beforeCreateSchedule': function(e) {
             console.log('beforeCreateSchedule', e);
             saveNewSchedule(e);
-            
             //캘린더 일정 DB Insert
     		$.ajax({
         		url:"insertCalendar.do",
         		method:"POST",
         		data:{calendarId: e.calendarId,
-        			       title: e.calendarId,
-        			       location: e.title,
+        			       title: e.title,
+        			       location: e.location,
         			       start: $("#tui-full-calendar-schedule-start-date").val(),
-        			       end: $("#tui-full-calendar-schedule-end-date").val()
+        			       end: $("#tui-full-calendar-schedule-end-date").val(),
+        			       allDay: e.isAllDay
         			      },
         		success:function(data){	
         		}
@@ -72,7 +67,9 @@
         },
         'beforeDeleteSchedule': function(e) {
             console.log('beforeDeleteSchedule', e);
+            console.log(e.schedule.calendarId);
             cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
+            
         },
         'afterRenderSchedule': function(e) {
             var schedule = e.schedule;
@@ -409,7 +406,11 @@
 
     function setSchedules() {
         cal.clear();
+        console.log("before");
+        console.log(ScheduleList);
         generateSchedule(cal.getViewName(), cal.getDateRangeStart(), cal.getDateRangeEnd());
+        console.log("after");
+        console.log(ScheduleList);
         cal.createSchedules(ScheduleList);
         // var schedules = [
         //     {id: 489273, title: 'Workout for 2019-04-05', isAllDay: false, start: '2018-02-01T11:30:00+09:00', end: '2018-02-01T12:00:00+09:00', goingDuration: 30, comingDuration: 30, color: '#ffffff', isVisible: true, bgColor: '#69BB2D', dragBgColor: '#69BB2D', borderColor: '#69BB2D', calendarId: 'logged-workout', category: 'time', dueDateClass: '', customStyle: 'cursor: default;', isPending: false, isFocused: false, isReadOnly: true, isPrivate: false, location: '', attendees: '', recurrenceRule: '', state: ''},

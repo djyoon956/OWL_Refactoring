@@ -125,14 +125,14 @@ $(function(){
     		    let calendar;
     			$.each(data, function(index, element){
 					calendar = new CalendarInfo();
-					console.log(calendar);
 					calendar.id = String(element.projectIdx);
 				    calendar.name = element.projectName;
 				    calendar.color = '#262626';
 				    calendar.bgColor = element.projectColor;
 				    calendar.dragBgColor = element.projectColor;
 				    calendar.borderColor = element.projectColor;
-				    addCalendar(calendar);			    						
+				    addCalendar(calendar);
+				    console.log(calendar);			    						
     			})
     			var calendarList = document.getElementById('calendarList');
     		    var html = [];
@@ -146,7 +146,7 @@ $(function(){
     		    });
     		    calendarList.innerHTML = html.join('\n\n');
     		}
-    	});  	
+    	});
 });
 	</script>
 </head>
