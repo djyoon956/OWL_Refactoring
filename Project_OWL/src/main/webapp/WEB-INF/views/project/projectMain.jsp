@@ -63,6 +63,11 @@
                 setChageView(currentTab.attr("id"));
             });
 
+            $('#joinProjectMemberModal').on('hidden.bs.modal', function(){
+               $("#addMemberBox").empty();
+               $("#addMemberOk").val("초대 메일 전송");
+             });
+            
             $("#addMemberOk").click(function () {
                 console.log("in click");
                 let addProjectMembers = [];
@@ -73,7 +78,7 @@
                 if(addProjectMembers.length < 1) return;
 
                 $.ajaxSettings.traditional = true;
-                $(this).val("초대 메일 전송중");
+                $(this).val("초대 메일 전송중...");
                 $.ajax({
                     type: "POST",
                     url: "AddProjectMember.do",
@@ -165,7 +170,7 @@
                 return;
             }
 
-            $("#addMemberCount").text(addProjectMembers.length + "명");
+            $("#addMemberCount").text((addProjectMembers.length+1) + "명");
             let control = "<div class='input-group'>" +
                 "<input type='hidden' class='addProjectMembers' name='addProjectMembers' value='" + addEmail + "'>" +
                 "	<div class='form-control'>" +
