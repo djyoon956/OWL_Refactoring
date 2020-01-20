@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<input type="hidden" id="opneJoinEmailModal" data-toggle="modal" data-target="#joinEmailModal">
+<input type="hidden" id="joinProjectMemberModal" data-toggle="modal" data-target="#joinEmailModal">
 <div class="modal fade" id="joinEmailModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -15,9 +16,10 @@
             <div class="modal-body mx-3">
                 <div class="text-center">
                     <img class="mb-3" src="resources/images/login/mailbox.png" style="width: 150px">
-                    <h3 class="mt-3 mb-3"> ${mail} </h3>
-                    <p class="m-0">위 메일 주소로 인증메일이 발송되었습니다.</p>
-                    <p class="m-0">발송된 메일을 통해 계정을 인증해주세요.</p>
+                    <h3 class="mt-3 mb-3"> 초대 메일 성공적으로 발송되었습니다!</h3>
+                    <c:forEach var="member" items="${members }">
+						<p class="m-0">${member }</p>
+					</c:forEach>
                 </div>
             </div>
         </div>
