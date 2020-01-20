@@ -172,18 +172,74 @@
 			}
 		
 			});
-
+		 /* projectIdx;
+		 	String issueTitle;
+		 	issueIdx;
+			String assigned;
+		 	String labelName;
+		 	String labelColor;
+		 	int colIdx;
+			String colname; */
 		//칼럼 select  
 		 $.ajax({
 			 url : 'GetColumn.do',
 			 data : {'projectIdx' :  ${project.projectIdx} },
 			 success : function(data) {
-				let colname = "" 
+				let colist = "" ;
+				console.log(data);
 				$.each(data,function(index,obj) {
-					console.log("칼럼 데이터 colidx " + obj.colIdx);
-					console.log("칼럼 데이터  colname" + obj.colname);
+					/* console.log("칼럼 ::::" + obj);
+					console.log("칼럼 데이터 projectIdx " + obj.projectIdx);
+					console.log("칼럼 데이터  issueTitle" + obj.issueTitle);
+					console.log("칼럼 데이터  issueIdx" + obj.issueIdx);
+					console.log("칼럼 데이터  assigned" + obj.assigned);
+					console.log("칼럼 데이터  labelName" + obj.labelName);
+					console.log("칼럼 데이터  labelColor" + obj.labelColor);
+					console.log("칼럼 데이터  colIdx" + obj.colIdx);
+					console.log("칼럼 데이터  colname" + obj.colname); */
 					
+				colist += '<div class="columnSection">';
+				colist += '<div class="columnTitle text-center mt-2 dropdown">';
+				colist += '<h4>' + obj.colname;
+				/*id = "dropdownColBtn" */
+				colist += '<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
+				colist += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
+				colist += '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">';
+				colist +=				'<ul class="list-style-none">';
+				colist +=	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>';
+				colist +=					'<li class="pl-3"><a href="#">Remove Column</a></li>';
+				colist +=				'</ul>';
+				colist +=			'</div>';
+				colist +=		'</h4>';
+				colist +=	'</div>';
+				colist +=	'<ul class="connectedSortable columnBody cursor sortable">';
+				colist +=	'<li class="issuePiece d-none">Item 1</li>'
+				colist +=		'<li class="issuePiece">';
+				colist +=			'<div class="dropdown">';
+				colist +=				'<label> <span class="badgeIcon float-left" style="background-color:"'+ obj.labelColor+'>' + obj.labelName + '</span>'; 
+				colist +=				'<span class="issueTitle">' + obj.issueTitle + '</span>';
+				colist +=				'</label>'; 
+				/* id="dropdownIssueButton" */
+				colist +=				'<a href="javascript:void(0)" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" style="float: right">'; 
+				colist +=				'<i class="fas fa-ellipsis-v fa-sm"></i></a>';
+				colist +=				'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
+				colist +=					'<ul class="list-style-none">';
+				colist +=		'<li class="pl-3"><a href="#editIssueModal"data-toggle="modal">Edit Issue</a></li>';
+				colist +=						'<li class="pl-3"><a href="#">Remove Issue</a></li>';
+				colist +=					'</ul>';
+				colist +=				'</div>';
+				colist +=			'</div>';
+				colist +=			'<div>';
+				colist +=				'<label>';
+				colist +=				'<span class="assigneetitle">';
+				colist +=				'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>';
+				colist +=				'</label>';
+				colist +=			'</div>';
+				colist +=		'</li>';
+				colist +=	'</ul>';
+				colist +=	'</div>';
 				});
+				$('#columnList').append(colist);
 			},
 			 error : function() {
 				console.log("getColum.do error");
@@ -191,7 +247,7 @@
 		}); 
 
 		
-    $( "#sortable000, #openAppend, #closeAppend" ).sortable({
+    $( "#sortable000, #openAppend, #closeAppend",".sortable" ).sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false        
       }).disableSelection();
@@ -390,10 +446,9 @@
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
-		
+		<div class="columnList"></div>
 		<!-- 칼럼 -->
-		<div class="columnSection">
-
+<!-- 		<div class="columnSection">
 			<div class="columnTitle text-center mt-2 dropdown">
 				<h4>Undefined section
 					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
@@ -408,10 +463,9 @@
 				</h4>
 			</div>
 
-
 			<ul id="sortable000" class="connectedSortable columnBody cursor">
-				<li class="issuePiece" style="display: none;">Item 1</li>
-				<!-- 무조건 있어야함!!! -->
+				<li class="issuePiece d-none">Item 1</li>
+				무조건 있어야함!!!
 				<li class="issuePiece">
 					<div class="dropdown">
 						<label> <span class="badgeIcon float-left">Dev</span> 
@@ -435,9 +489,9 @@
 						</label>
 					</div>
 				</li>
-
 			</ul>
-		</div>
+		</div> -->
+			
 	</div>
 </div>
 

@@ -25,11 +25,11 @@ public class SmartCalendar {
 		MY, PROJECT
 	}
 	
-	public String getstartDate() {
-		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate);
-	}
-	
-	public String getendDate() {
-		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate);
-	}
+	/*
+	 * public String getstartDate() { return new
+	 * SimpleDateFormat("yyyy-MM-dd HH:mm").format(startDate); }
+	 * 
+	 * public String getendDate() { return new
+	 * SimpleDateFormat("yyyy-MM-dd HH:mm").format(endDate); }
+	 */
 }

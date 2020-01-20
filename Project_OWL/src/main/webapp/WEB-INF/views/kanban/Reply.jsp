@@ -10,7 +10,7 @@
 <%-- <c:set var="bIdx" value="${param.bIdx}"/>
 <c:set var="replies" value="${requestScope.replies}"/> --%>
 <script type="text/javascript">
-	$(function(){
+	/* $(function(){
 		changReplyHeader();
 		$("#reply").click(function(){
 			if($("#replyContent").val()==""){
@@ -101,7 +101,7 @@
 			header = "No Reply";
 		
 		$("#replyCount").text(header);
-	}
+	} */
 </script>
 </head>
 <body>
