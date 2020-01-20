@@ -5,6 +5,7 @@
 		cursor: pointer;
 	}
 </style>
+
 <div id="memberEditModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
@@ -26,7 +27,9 @@
 					</div>
 				<!--  멤버 삭제   -->
 				<label class="mt-3 mb-3">멤버 리스트</label> (<span id="addMemberCount"> 0명 </span>)
-					<div id="addMemberBox">
+					<div >
+						<div id="addMemberBox">
+						</div>
 		                 <div class="text-center mt-3">
 		                     <input type="button" id="addMemberOk" class="btn btn-primary btn-lg"  value="초대 메일 보내기">
 		                 </div>

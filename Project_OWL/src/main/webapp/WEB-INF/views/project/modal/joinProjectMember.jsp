@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<input type="hidden" id="joinProjectMemberModal" data-toggle="modal" data-target="#joinEmailModal">
-<div class="modal fade" id="joinEmailModal" tabindex="-1" role="dialog" aria-hidden="true">
+<input type="hidden" id="openJoinProjectMemberModal" data-toggle="modal" data-target="#joinProjectMemberModal">
+<div class="modal fade" id="joinProjectMemberModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-center" style="border-bottom: 0px">
@@ -16,10 +16,9 @@
             <div class="modal-body mx-3">
                 <div class="text-center">
                     <img class="mb-3" src="resources/images/login/mailbox.png" style="width: 150px">
-                    <h3 class="mt-3 mb-3"> 초대 메일 성공적으로 발송되었습니다!</h3>
-                    <c:forEach var="member" items="${members }">
-						<p class="m-0">${member }</p>
-					</c:forEach>
+                    <h3 class="mt-5 mb-5"> 초대 메일 <span id="sendMemberCount">1</span>건이 발송되었습니다!</h3>
+                    <div id="sendMembers">
+                    </div>
                 </div>
             </div>
         </div>
