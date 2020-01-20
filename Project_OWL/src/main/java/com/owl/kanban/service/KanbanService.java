@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.owl.helper.UploadHelper;
 import com.owl.kanban.dao.KanbanDao;
 import com.owl.kanban.dto.Column;
+import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
 import com.owl.notice.dao.NoticeDao;
@@ -150,17 +151,18 @@ public class KanbanService {
 	}
 	
 	
-	public List<Column> getColum(int projectIdx){
+	public List<ColumnList> getColum(int projectIdx){
 		KanbanDao dao = getKanbanDao();
-		List<Column> colList = null;
+		List<ColumnList> colList = null;
+		
 		try {
 			colList = dao.getColumn(projectIdx);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+		
 		System.out.println(colList + " : 칼럼리스트 ");
 		return colList;
-		
 	}
 	
 	

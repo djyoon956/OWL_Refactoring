@@ -172,17 +172,31 @@
 			}
 		
 			});
-
+		 /* projectIdx;
+		 	String issueTitle;
+		 	issueIdx;
+			String assigned;
+		 	String labelName;
+		 	String labelColor;
+		 	int colIdx;
+			String colname; */
 		//칼럼 select  
 		 $.ajax({
 			 url : 'GetColumn.do',
 			 data : {'projectIdx' :  ${project.projectIdx} },
 			 success : function(data) {
-				let colname = "" 
+				let colname = "" ;
+				console.log("칸반 넘어온 데이터 : " + data);
 				$.each(data,function(index,obj) {
-					console.log("칼럼 데이터 colidx " + obj.colIdx);
+					console.log("칼럼 ::::" + obj);
+					console.log("칼럼 데이터 projectIdx " + obj.projectIdx);
+					console.log("칼럼 데이터  issueTitle" + obj.issueTitle);
+					console.log("칼럼 데이터  issueIdx" + obj.issueIdx);
+					console.log("칼럼 데이터  assigned" + obj.assigned);
+					console.log("칼럼 데이터  labelName" + obj.labelName);
+					console.log("칼럼 데이터  labelColor" + obj.labelColor);
+					console.log("칼럼 데이터  colIdx" + obj.colIdx);
 					console.log("칼럼 데이터  colname" + obj.colname);
-					
 				});
 			},
 			 error : function() {

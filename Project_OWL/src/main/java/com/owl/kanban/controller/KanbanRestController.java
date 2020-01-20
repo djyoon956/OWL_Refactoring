@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.kanban.dto.Column;
+import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.kanban.dto.Issue.IssueProgressType;
 import com.owl.kanban.dto.Issue.PriorityType;
@@ -62,7 +63,7 @@ public class KanbanRestController {
 	
 	//칼럼 리스트 select 
 	@RequestMapping("GetColumn.do")
-	public List<Column> getColum(int projectIdx) {
+	public List<ColumnList> getColum(int projectIdx) {
 		
 		
 		return service.getColum(projectIdx);		
