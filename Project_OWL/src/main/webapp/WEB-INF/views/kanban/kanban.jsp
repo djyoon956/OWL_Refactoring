@@ -349,7 +349,7 @@
     }); */
     $("#editColumnBtn").click(function() {
         $.ajax({
-        	url : 'UpdateColumn.do'
+        	url : 'UpdateColumn.do',
         	data : { 'colname' : $("#editcolName").val(),'projectIdx' : ${project.projectIdx},'colIdx' :  $("#editcolIdx").val()}, 
         	success : function(data) {
             	console.log("업데이트 칼럼 성공 ");

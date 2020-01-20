@@ -76,7 +76,6 @@ public class KanbanRestController {
 		col.setColname(column.getColname());
 		col.setProjectIdx(column.getProjectIdx());
 		col.setColIdx(column.getColIdx());
-		
 		boolean result = false;
 		result = service.updateColumn(col);		
 		int columnidx = -1;		

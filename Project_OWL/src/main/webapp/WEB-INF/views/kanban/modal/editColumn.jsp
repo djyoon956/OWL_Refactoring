@@ -61,7 +61,7 @@ $('#editColumnModal').on('show.bs.modal', function(event) {
 						<input type="hidden" name="colIdx" id="editcolIdx" >
 					</div>
 					<div class="modal-footer text-right">
-						<input type="button" class="btn btn-primary" id="editColumnBtn" value="Create Column">
+						<input type="button" class="btn btn-primary" id="editColumnBtn" value="Edit Column">
 						<button type="button" class="btn btn-primary" data-dismiss="modal" >Close</button>
 					</div>
 				</form>
