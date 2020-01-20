@@ -92,8 +92,7 @@
                     }
                 });
             })
-        })
-
+        }) 
         function setChageView(target) {
             console.log("setChageView : " + target);
             if (target === "dash")
@@ -116,7 +115,8 @@
             console.log("in setCalendarData");
 
         }
-		function addKanbanIssue(colIdx,obj){
+
+/* 		function addKanbanIssue(colIdx,obj){
 			let issue =		'<li class="issuePiece">';
 				issue +=			'<div class="dropdown">';
 				issue +=				'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'; 
@@ -187,7 +187,7 @@
    				console.log("getColum.do error");
    			}
    		}); 
-        }
+        } */
 
 
         function setDriveData() {
