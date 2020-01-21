@@ -62,8 +62,6 @@
 
             console.log('beforeUpdateSchedule', e);
             cal.updateSchedule(schedule.id, schedule.calendarId, changes);
-
-
             let changeStart = changes.start ==null? null : changes.start._date;
             let changeEnd = changes.end ==null? null : changes.end._date;
             //스윗alart 띄우기

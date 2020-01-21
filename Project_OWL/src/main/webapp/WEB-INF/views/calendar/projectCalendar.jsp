@@ -129,16 +129,11 @@ function generateSchedule(viewName) {
 		data: {projectIdx: ${project.projectIdx}},
 		success:function(data){
 	    	ScheduleList = [];
-	    	console.log(data);
 			$.each(data, function(index, element){
 		    	let calendar;
 		    	let schedule = new ScheduleInfo();
-		    	console.log("element.projectIdx : "+element.projectIdx);
 				$.each(CalendarList, function(index, obj){
-					console.log("obj.id :"+obj.id);
-					console.log(obj.id == element.projectIdx);
 		    		if(obj.id == element.projectIdx){
-		    			console.log(obj.id);
 		    			calendar = obj;
 		    			return false;
 		    		}

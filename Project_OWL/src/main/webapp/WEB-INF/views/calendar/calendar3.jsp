@@ -131,8 +131,7 @@ $(function(){
 				    calendar.bgColor = element.projectColor;
 				    calendar.dragBgColor = element.projectColor;
 				    calendar.borderColor = element.projectColor;
-				    addCalendar(calendar);
-				    console.log(calendar);			    						
+				    addCalendar(calendar);		    						
     			})
     			var calendarList = document.getElementById('calendarList');
     		    var html = [];
@@ -169,12 +168,8 @@ function generateSchedule(viewName) {
 			$.each(data, function(index, element){
 		    	let calendar;
 		    	let schedule = new ScheduleInfo();
-		    	console.log("element.projectIdx : "+element.projectIdx);
 				$.each(CalendarList, function(index, obj){
-					console.log("obj.id :"+obj.id);
-					console.log(obj.id == element.projectIdx);
 		    		if(obj.id == element.projectIdx){
-		    			console.log(obj.id);
 		    			calendar = obj;
 		    			return false;
 		    		}
