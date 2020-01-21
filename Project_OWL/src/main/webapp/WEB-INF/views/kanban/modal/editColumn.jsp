@@ -33,9 +33,9 @@ $(function() {
 $('#editColumnModal').on('show.bs.modal', function(event) {          
 	editColIdx = $(event.relatedTarget).data('updatecol-id');
 	editColname = $(event.relatedTarget).data('upcolname-id');
-	console.log("에딧 모달");
-	console.log(editColIdx);
-	console.log(editColname);
+	//console.log("에딧 모달");
+	//console.log(editColIdx);
+	//console.log(editColname);
   	
   $("#editcolName").val(editColname);
   $("#editcolIdx").val(editColIdx);
