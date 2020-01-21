@@ -62,8 +62,12 @@
             
             let oldMenu = $("#projectMenu li:first");
             $("#projectMenu li").on("click", function () {
-                oldMenu.removeClass("active");
+                console.log("in projectlsit :"+$(this).children(".nav-link").attr("href") );
+                if($(this).children(".nav-link").attr("href") == "#project")
+					return;
+				
                 let oldTab = $(oldMenu.children(".nav-link").attr("href"));
+                oldMenu.removeClass("active");
                 oldTab.removeClass("active show");
 
                 $(this).addClass("active");
@@ -91,11 +95,11 @@
 		                				+ "	<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
 		                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
 
-               				if(index == 0)
+               				if(index == 0){
                					control += "<span class='ml-5 roleBadge pm'></span>";
-            				else	
+               				}else{
             					control += "<span class='ml-5 roleBadge member'></span>";		
-
+               				}	
            					control+= "</li>";	
            					
            					$("#projectMemebersBox").append(control);
@@ -218,7 +222,7 @@
             })
         }
         // 칸반 --> 
-    	function addKanbanIssue(colIdx,obj){
+    	/* function addKanbanIssue(colIdx,obj){
         	console.log("in addKanbanIssue : "+colIdx);
         	console.log($("#"+colIdx+"Column > .columnBody"));
         	console.log("in addKanbanIssue2 : ");
@@ -246,8 +250,9 @@
     				+	'</li>';
     		
     			$("#"+colIdx+"Column > .columnBody").append(issue);
-    		}
-			
+    		} */
+
+
 
     	    function setKanbanData() {
     	       // console.log("in setKanbanData");
@@ -278,7 +283,8 @@
     						else{ // 칼럼 박스가 존재하지 않을때
         						
     							 addColumn(obj);
-    							 if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj);  };
+    							 addKanbanIssue(obj.colIdx,obj);
+    							 /* if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; */
     							 
     						}
         					} */
@@ -361,6 +367,9 @@
                             <div id="tab-btn">
                                 <ul id="projectMenu" class="nav nav-tabs" role="tablist"
                                     style="border-bottom-width: 0px;">
+                                  <li class="nav-item">
+                                        <a class="nav-link" href="#project" style="font-size: 20px; height: 51.979166px; padding-top: 12px;">${project.projectName}</a>
+                                    </li>
                                     <li class="nav-item active">
                                         <a class="nav-link" data-toggle="tab" href="#dash">Dash Board</a>
                                     </li>

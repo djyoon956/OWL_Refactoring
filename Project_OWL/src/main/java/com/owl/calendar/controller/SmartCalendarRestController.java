@@ -70,7 +70,6 @@ public class SmartCalendarRestController {
 	public boolean deleteMyCalendar(@RequestParam(value = "scheduleId") int calIdx) {
 		boolean result = false;
 		result = service.deleteCalendar(calIdx);	
-		System.out.println(result);
 		return result;
 	}
 	

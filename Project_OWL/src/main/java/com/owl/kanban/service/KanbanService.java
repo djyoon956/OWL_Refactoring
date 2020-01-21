@@ -32,6 +32,7 @@ public class KanbanService {
 	public ColumnList insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
 		System.out.println(issue.getDueDate());
+		System.out.println(issue.getOrderNum());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		ColumnList colList = null;
