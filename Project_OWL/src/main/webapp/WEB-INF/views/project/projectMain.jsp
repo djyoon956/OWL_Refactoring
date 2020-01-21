@@ -244,7 +244,9 @@
 
 
     	    function setKanbanData() {
-    	        console.log("in setKanbanData");
+    	       // console.log("in setKanbanData");
+    	       // $('#kanbanArea').empty();
+    	       //$('#kanbanArea').find(":not(('#openIssueColumn').children())").empty();
     	        $.ajax({
     				 url : 'GetColumn.do',
     				 data : {'projectIdx' :  ${project.projectIdx} },
@@ -255,6 +257,10 @@
     						/* $('#kanbanArea').empty(); */
     						console.log("칸반");
     						console.log(obj.colIdx);
+    						if(obj.colIdx == 0) {
+    							 addKanbanIssue(obj.colIdx, obj); 
+        					} else {
+            				
     						if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
     							 addKanbanIssue(obj.colIdx, obj); 
     		   					}
@@ -264,6 +270,7 @@
     							 if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj);  };
     							 
     						}
+        					}
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
@@ -275,9 +282,11 @@
     				}
     			}); 
     	    }
+
+    	    
     	    function closeFn() {
-    	      	$("#closeIssue").hide();
-    	    	$("#openIssue").hide();
+    	      	$("#closeIssueColumn").hide();
+    	    	$("#0Column").hide();
     	       }
     </script>
     <style type="text/css">

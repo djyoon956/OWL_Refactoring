@@ -88,7 +88,7 @@ public class KanbanRestController {
 		return columnidx;
 	}
 	@RequestMapping("InsertColumn.do")
-	public int insertColumn(Column column) {
+	public Column insertColumn(Column column) {
 		//System.out.println("insertColumn function in");
 		//System.out.println("column : " + column);
 		//System.out.println(column.getProjectIdx() + "/" + column.getColname());
@@ -98,15 +98,16 @@ public class KanbanRestController {
 		col.setColname(column.getColname());
 		
 		boolean result = false;
-		result = service.insertColumn(col); 		
-		int columnidx = -1;		
+		result = service.insertColumn(col); 
+		
+		Column colobj = null;
+				
 		if(result) {
-			columnidx = col.getColIdx();
+			colobj = col;
 		};
 		
-		//System.out.println("컨트롤러 result : " + result);
-		//System.out.println("여기도찍히나? " + col.getColumnIdx());
-		return columnidx;
+
+		return colobj;
 	}
 
 	
@@ -119,6 +120,7 @@ public class KanbanRestController {
 							, @RequestParam(value = "labelIdx", required = false) String labelIdx
 							, @RequestParam(value = "dueDate", required = false) String dueDate
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
+							, @RequestParam(value = "colIdx") int colIdx
 							, Principal principal, HttpServletRequest request) {	
 		System.out.println("in InsertIssue.do");
 		System.out.println("insertIssue controller in");
@@ -139,6 +141,7 @@ public class KanbanRestController {
 		issue.setContent(content);
 		issue.setCreator(principal.getName());
 		issue.setIssueProgress(IssueProgressType.OPEN);
+		issue.setColIdx(colIdx);
 		if(!priorityCode.isEmpty())
 			issue.setPriorityCode(PriorityType.valueOf(priorityCode));
 		if(!assigned.isEmpty())

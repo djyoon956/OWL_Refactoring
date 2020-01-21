@@ -78,7 +78,7 @@ public class KanbanService {
 			file.setFileName(fileName);
 			file.setWriter(email);
 			file.setFileSize(String.valueOf(multipartFile.getSize()));
-			
+			System.out.println("file값" +file.toString());
 			try {
 				dao.insertIssueFile(file);
 			} catch (Exception e) {
@@ -98,7 +98,7 @@ public class KanbanService {
 		
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		
+
 		try {
 			
 			result = dao.insertColumn(column) > 0 ? true : false;
@@ -108,8 +108,10 @@ public class KanbanService {
 			e.printStackTrace();
 		}
 		
+		System.out.println("컬럼정보" + column.toString());
 		System.out.println("insert service 결과 : " + result);
 		System.out.println("insert service 컬럼 아이디엑스  : " + column.getColIdx());
+		
 		
 		return result;
 	}

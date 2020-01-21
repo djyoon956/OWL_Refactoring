@@ -46,6 +46,7 @@
 			    formData.append('assigned', $('#assigned').val());
 			    formData.append('labelIdx', $('#labelIdx').val());
 			    formData.append('dueDate', $('#datepicker-autoclose').val());
+			    formData.append('colIdx', '0');
 			    $.each($("#multipartFiles")[0].files, function(i, file) {
 			    	formData.append('multipartFiles', file);
 			    }); 
@@ -64,11 +65,11 @@
 			        cache: false,
 			        timeout: 600000,
 			        success: function (data) {
-			        	console.log("ajax in");
-			        	console.log(data);
+			        	//console.log("ajax in");
+			        	//console.log(data);
 
-			        	console.log(data.labelName);
-			        	console.log(data.labelColor);
+			        	//console.log(data.labelName);
+			        	//console.log(data.labelColor);
 			        	
 	 		        	if(data != null){
 			        		successAlert("Issue 추가 완료");
