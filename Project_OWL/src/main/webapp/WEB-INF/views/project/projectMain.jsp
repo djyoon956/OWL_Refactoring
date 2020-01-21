@@ -217,6 +217,10 @@
         }
         // 칸반 --> 
     	function addKanbanIssue(colIdx,obj){
+        	console.log("in addKanbanIssue : "+colIdx);
+        	console.log($("#"+colIdx+"Column > .columnBody"));
+        	console.log("in addKanbanIssue2 : ");
+        	
     		 let issue = '<li class="issuePiece">'
     				+		'<div class="dropdown">'
     				+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
@@ -258,7 +262,9 @@
     						console.log("칸반");
     						console.log(obj.colIdx);
     						if(obj.colIdx == 0) {
+    							if(obj.issueTitle != null) { 
     							 addKanbanIssue(obj.colIdx, obj); 
+    							}
         					} else {
             				
     						if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
