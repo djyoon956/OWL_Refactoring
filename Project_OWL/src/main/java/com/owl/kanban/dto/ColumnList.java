@@ -16,4 +16,5 @@ public class ColumnList {
 	private String labelColor;
 	private int colIdx;
 	private String colname;
+	private int orderNum;
 }

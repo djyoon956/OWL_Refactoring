@@ -216,7 +216,7 @@
             })
         }
         // 칸반 --> 
-    	function addKanbanIssue(colIdx,obj){
+    	/* function addKanbanIssue(colIdx,obj){
         	console.log("in addKanbanIssue : "+colIdx);
         	console.log($("#"+colIdx+"Column > .columnBody"));
         	console.log("in addKanbanIssue2 : ");
@@ -244,7 +244,7 @@
     				+	'</li>';
     		
     			$("#"+colIdx+"Column > .columnBody").append(issue);
-    		}
+    		} */
 
 
     	    function setKanbanData() {
@@ -273,7 +273,8 @@
     						else{ // 칼럼 박스가 존재하지 않을때
         						
     							 addColumn(obj);
-    							 if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj);  };
+    							 addKanbanIssue(obj.colIdx,obj);
+    							 /* if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; */
     							 
     						}
         					}
