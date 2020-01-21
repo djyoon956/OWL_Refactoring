@@ -61,7 +61,7 @@ public class NoticeService {
 			file.setBelongTo(boardIdx);
 			file.setFileName(fileName);
 			file.setWriter(email);
-			file.setFileSize(String.valueOf(multipartFile.getSize()));
+			file.setFileSize(String.valueOf(multipartFile.getSize()/1024));
 			
 			try {
 				dao.insertNoticeFile(file);
