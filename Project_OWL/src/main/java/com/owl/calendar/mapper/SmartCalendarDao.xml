@@ -30,9 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 													<if test="endDate != null">
 													, ENDDATE=#{endDate}
 													</if>
-													<if test="allDay == null">
 													, ALLDAY=	#{allDay}
-													</if>
 													<choose>
 														<when test="projectIdx > 0">
 														, PROJECTIDX =	#{projectIdx}

@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,10 +90,6 @@ public class SmartCalendarRestController {
 												  @RequestParam(value = "allDay" ,required = false) boolean allDay,
 												Principal principal) {
 		boolean result = false;
-		System.out.println("업데이트 캘린더 탐");
-		System.out.println(startDate);
-		System.out.println(endDate);
-		System.out.println(allDay);
 		SmartCalendar calendar = new SmartCalendar();
 		try {
 		if(projectIdx !=null) { // 프로젝트 변경했을 때
@@ -109,33 +106,29 @@ public class SmartCalendarRestController {
 		calendar.setTitle(title);
 		calendar.setContent(content);	
 		calendar.setCalIdx(calIdx);
+		System.out.println("----------------");
 		System.out.println(startDate);
-		System.out.println("index : "+startDate.indexOf("GMT"));
-		int inddex = startDate.indexOf("GMT");
-	
-		System.out.println(startDate.substring(0, inddex));
-		System.out.println(startDate.substring(0, inddex+1));
-		
-		System.out.println(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss").parse(startDate.substring(0, inddex-1)));
-		System.out.println("-------------------------------");
-			/*
-			 * DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss ZZZZZ",
-			 * Locale.KOREA);
-			 */
-		
+		System.out.println(endDate);
+	    System.out.println(allDay);
 			if(allDay) {
-					calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd").parse(startDate));
-					calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd").parse(endDate));		
+				if(!startDate.isEmpty()) {
+					calendar.setStartDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(startDate));
+				}
+				if(!endDate.isEmpty()) {
+					calendar.setEndDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(endDate));		
+				}	
 					calendar.setAllDay(1);
 			}else{
 				if(!startDate.isEmpty()) {
-					calendar.setStartDate(new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss z" ,Locale.KOREA).parse(startDate));
-				}else if(!endDate.isEmpty()) {
-					calendar.setEndDate(new SimpleDateFormat("EEE dd MMM yyyy HH:mm:ss z" ,Locale.KOREA).parse(endDate));		
+					calendar.setStartDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(startDate));
+				}
+				if(!endDate.isEmpty()) {
+					calendar.setEndDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(endDate));		
 				}
 				calendar.setAllDay(0);
 			}
-
+		System.out.println(calendar.getStartDate());
+		System.out.println(calendar.getEndDate());
 		calendar.setEmail(principal.getName());
 		result = service.updateCalendar(calendar);
 		} catch (Exception e) {
