@@ -225,6 +225,8 @@
     					
     					$.each(data,function(index,obj) {
     						/* $('#kanbanArea').empty(); */
+    						console.log("칸반");
+    						console.log(obj.colIdx);
     						if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
     							 addKanbanIssue(obj.colIdx, obj); 
     		   					}
