@@ -339,7 +339,7 @@
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
-
+		<div id="kanbanIn" class="row"></div>
 		<!-- 칼럼 -->
 	 <!--  	<div class="columnSection">
 			<div class="columnTitle text-center mt-2 dropdown">

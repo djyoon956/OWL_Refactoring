@@ -161,6 +161,7 @@
             else if (target === "calendar")
                 setCalendarData();
             else if (target === "kanban"){
+                $("#kanbanIn").empty();
                 setKanbanData();
             	setIssueData()
             }
@@ -269,7 +270,13 @@
     						console.log("칸반");
     						
     						console.log(obj.colIdx);
-    						if(obj.colIdx != -1 || obj.colIdx != 0)
+
+    						if(obj.colIdx != -1 && obj.colIdx != 0){
+        						console.log("칼럼 안 ");
+    							addColumn(obj);
+    						}
+    						
+    						/* if(obj.colIdx != -1 || obj.colIdx != 0)
     						addColumn(obj);
     						 if(obj.colIdx == 0) {
     							if(obj.issueTitle != null) { 
@@ -287,7 +294,7 @@
     							  if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; 
     							 
     						}
-        					} 
+        					}  */
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
