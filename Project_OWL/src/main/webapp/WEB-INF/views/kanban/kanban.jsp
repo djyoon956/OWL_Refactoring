@@ -317,7 +317,7 @@
 		<!--  openIssueColumn -->
 	
 		<div class="columnSection leftdoor d-none" id="0Column">
-			<div class="text-center mt-2  leftdoorheader">
+			<div class="text-center mt-2  leftdo orheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>

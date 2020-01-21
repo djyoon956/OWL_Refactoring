@@ -156,8 +156,10 @@
                 setDashBoardData();
             else if (target === "calendar")
                 setCalendarData();
-            else if (target === "kanban")
+            else if (target === "kanban"){
                 setKanbanData();
+            	setIssueData()
+            }
             else if (target === "notice")
                 setNoticeData('${project.projectIdx}');
             else if (target === "drive")
@@ -247,6 +249,7 @@
     		} */
 
 
+
     	    function setKanbanData() {
     	       // console.log("in setKanbanData");
     	       // $('#kanbanArea').empty();
@@ -255,13 +258,15 @@
     				 url : 'GetColumn.do',
     				 data : {'projectIdx' :  ${project.projectIdx} },
     				 success : function(data) {
-    					//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
-    					
+    					console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
+    					console.log("칸반");
     					$.each(data,function(index,obj) {
     						/* $('#kanbanArea').empty(); */
     						console.log("칸반");
+    						
     						console.log(obj.colIdx);
-    						if(obj.colIdx == 0) {
+    						addColumn(obj);
+    						/* if(obj.colIdx == 0) {
     							if(obj.issueTitle != null) { 
     							 addKanbanIssue(obj.colIdx, obj); 
     							}
@@ -277,7 +282,7 @@
     							 /* if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; */
     							 
     						}
-        					}
+        					} */
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
@@ -289,7 +294,32 @@
     				}
     			}); 
     	    }
-
+			function setIssueData(){
+				$.ajax({
+					url : "GetIssue.do",
+					data : {'projectIdx' :  ${project.projectIdx} },
+					success : function(data) {
+						console.log("셋 이슈 데이터");
+						console.log(data);
+						$.each(data,function(index,obj) {
+						if(obj.colIdx == 0) {
+							if(obj.issueTitle != null) { 
+							 addKanbanIssue(obj.colIdx, obj); 
+							}
+    					} else {
+    				if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj);  }	
+    					}
+						});
+    					$( ".sortableCol").sortable({
+    				        connectWith: ".connectedSortable",
+    				        dropOnEmpty: true       
+    				     }).disableSelection();
+					},
+					error: function() {
+						console.log("getIssue.do error");
+					}
+				})
+			}
     	    
     	    function closeFn() {
     	      	$("#closeIssueColumn").hide();
