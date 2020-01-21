@@ -29,27 +29,37 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- Toast Ui -->
-    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
-    <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
-    <script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
-    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
-    <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
-    <script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
-
+	<!-- Toast Calendar -->
+	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
+	<!-- If you use the default popups, use this. -->
+	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
     <script src="resources/js/kanban.js"></script>
     <script type="text/javascript">
         $(function () {
+            $.ajax({
+        		url:"GetProjectList.do",
+        		data: {projectIdx: ${project.projectIdx}},
+        		success:function(data){  
+            		console.log(data);      		
+        		    calendar = new CalendarInfo();
+        				calendar.id = String(data.projectIdx);
+        			    calendar.name = data.projectName;
+        			    calendar.color = '#ffffff';
+        			    calendar.bgColor = data.projectColor;
+        			    calendar.dragBgColor = data.projectColor;
+        			    calendar.borderColor = data.projectColor;
+        			    addCalendar(calendar);
+        			    console.log(calendar);			    						
+        		    setSchedules();
+        		}
+            });
+            
             setTheme("${setting.themeColor}", "${setting.font}");
             initNotice();
-
-            $('#calendar').tuiCalendar({
-                defaultView: 'month',
-                taskView: true
-            });
-
+            
             let oldMenu = $("#projectMenu li:first");
             $("#projectMenu li").on("click", function () {
                 oldMenu.removeClass("active");
@@ -137,7 +147,8 @@
                     }
                 });
             })
-        }) 
+          
+        }); 
         
         function setChageView(target) {
             console.log("setChageView : " + target);
@@ -158,7 +169,8 @@
         }
 
         function setCalendarData() {
-            console.log("in setCalendarData");
+            console.log("in setCalendarData");           
+            refreshScheduleVisibility();
         }
 
 
@@ -205,6 +217,10 @@
         }
         // 칸반 --> 
     	function addKanbanIssue(colIdx,obj){
+        	console.log("in addKanbanIssue : "+colIdx);
+        	console.log($("#"+colIdx+"Column > .columnBody"));
+        	console.log("in addKanbanIssue2 : ");
+        	
     		 let issue = '<li class="issuePiece">'
     				+		'<div class="dropdown">'
     				+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
@@ -246,7 +262,9 @@
     						console.log("칸반");
     						console.log(obj.colIdx);
     						if(obj.colIdx == 0) {
+    							if(obj.issueTitle != null) { 
     							 addKanbanIssue(obj.colIdx, obj); 
+    							}
         					} else {
             				
     						if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때

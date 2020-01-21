@@ -66,7 +66,8 @@
 
             let changeStart = changes.start ==null? null : changes.start._date;
             let changeEnd = changes.end ==null? null : changes.end._date;
-
+            //캘린더 일정 DB UPDATE
+            
             $.ajax({ 
         		url:"UpdateCalendar.do",
         		method:"POST",  
@@ -79,7 +80,8 @@
 	    			     allDay: changes.isAllDay
         			      },
         		success:function(data){	
-        			location.reload();
+        			if(changes.calendarId != null)
+        				location.reload();
         		}
     		});
             refreshScheduleVisibility();

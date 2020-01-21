@@ -80,6 +80,13 @@ public class SmartCalendarRestController {
 		return calendar;
 	}
 	
+	@RequestMapping(value="GetProjectCalendar.do")
+	public List<SmartCalendar> getProjectCalendar(int projectIdx){
+		List<SmartCalendar> calendar = null;
+		calendar = service.getProjectCalendar(projectIdx);
+		return calendar;
+	}
+	
 	@RequestMapping(value="UpdateCalendar.do", method = RequestMethod.POST)
 	public boolean updateCalendar(@RequestParam(value = "scheduleId") int calIdx, 
 												  @RequestParam(value = "calendarId" ,required = false) String projectIdx, 												  
