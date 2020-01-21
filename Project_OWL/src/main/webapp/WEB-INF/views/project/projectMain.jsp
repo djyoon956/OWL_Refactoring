@@ -283,7 +283,7 @@
         						
     							 addColumn(obj);
     							 addKanbanIssue(obj.colIdx,obj);
-    							 /* if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; */
+    							  if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; 
     							 
     						}
         					} */

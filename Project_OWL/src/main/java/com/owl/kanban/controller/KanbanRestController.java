@@ -63,17 +63,9 @@ public class KanbanRestController {
 	
 	//칼럼 리스트 select 
 	@RequestMapping("GetColumn.do")
-	public List<Column> getColum(int projectIdx) {
+	public List<ColumnList> getColum(int projectIdx) {
 		System.out.println("-------------------------");
-		List<Column> columns= service.getColum(projectIdx);
-		System.out.println(columns);
-		return columns;		
-	}
-	//이슈 리스트 select 
-	@RequestMapping("GetIssue.do")
-	public List<ColumnList> getIssue(int projectIdx) {
-		System.out.println("-------------------------");
-		List<ColumnList> columns= service.getIssueList(projectIdx);
+		List<ColumnList> columns= service.getColum(projectIdx);
 		System.out.println(columns);
 		return columns;		
 	}
@@ -124,7 +116,6 @@ public class KanbanRestController {
 	public ColumnList insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
 							, @RequestParam(value = "content") String content
-							, @RequestParam(value = "ordernum") int orderNum
 							, @RequestParam(value = "priorityCode", required = false) String priorityCode
 							, @RequestParam(value = "assigned", required = false) String assigned
 							, @RequestParam(value = "labelIdx", required = false) String labelIdx
@@ -142,7 +133,6 @@ public class KanbanRestController {
 		System.out.println(dueDate);
 		System.out.println(priorityCode);
 		System.out.println(multipartFiles);
-		System.out.println("orderNum" +  orderNum);
 		System.out.println(multipartFiles.size());
 
 		
@@ -153,7 +143,6 @@ public class KanbanRestController {
 		issue.setCreator(principal.getName());
 		issue.setIssueProgress(IssueProgressType.OPEN);
 		issue.setColIdx(colIdx);
-		issue.setOrderNum(orderNum);
 		if(!priorityCode.isEmpty())
 			issue.setPriorityCode(PriorityType.valueOf(priorityCode));
 		if(!assigned.isEmpty())
