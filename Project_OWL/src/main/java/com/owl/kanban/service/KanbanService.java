@@ -158,9 +158,9 @@ public class KanbanService {
 	}
 	
 	
-	public List<ColumnList> getColum(int projectIdx){
+	public List<Column> getColum(int projectIdx){
 		KanbanDao dao = getKanbanDao();
-		List<ColumnList> colList = null;
+		List<Column> colList = null;
 		
 		try {
 			colList = dao.getColumn(projectIdx);
