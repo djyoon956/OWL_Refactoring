@@ -222,7 +222,6 @@
 	});
 
 
-	
 	$("#addLabelBtn").on("click", function () {	
 		
 		console.log("addLabelBtn in");
@@ -258,6 +257,7 @@
 			});
 		});
 
+	
     $("#editColumnBtn").click(function() {
         $.ajax({
         	url : 'UpdateColumn.do',
@@ -317,7 +317,7 @@
 		<!--  openIssueColumn -->
 	
 		<div class="columnSection leftdoor d-none" id="0Column">
-			<div class="text-center mt-2  leftdo orheader">
+			<div class="text-center mt-2 leftdoorheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
@@ -328,7 +328,7 @@
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none leftdoor"  id="closeIssueColumn">
+		<div class="columnSection d-none leftdoor" id="closeIssueColumn">
 			<div class="text-center mt-2 leftdoorheader">
 				<h4>
 					Close Issue<span class="float-right">
