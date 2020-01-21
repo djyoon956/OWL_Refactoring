@@ -14,5 +14,5 @@ public interface SmartCalendarDao {
 
 	public List<SmartCalendar> getMyAllCalendars(String email) throws ClassNotFoundException, SQLException;
 
-	public List<SmartCalendar> getProjectCalendars(int projectIdx) throws ClassNotFoundException, SQLException;
+	public List<SmartCalendar> getProjectCalendar(int projectIdx) throws ClassNotFoundException, SQLException;
 }
