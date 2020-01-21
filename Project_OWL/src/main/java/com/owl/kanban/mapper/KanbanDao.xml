@@ -23,10 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					    <when test="labelIdx != 0"> #{labelIdx} </when>
 					    <otherwise> null </otherwise>
 					  </choose>
-					, <choose> 
+					  , #{colIdx}
+					<!-- , <choose> 
 						<when test="colIdx != 0"> #{colIdx} </when>
 					    <otherwise> null </otherwise>
-					  </choose>
+					  </choose> -->
 					)
 		<selectKey keyProperty="issueIdx" resultType="int" order ="AFTER">
 	   		select LAST_INSERT_ID()

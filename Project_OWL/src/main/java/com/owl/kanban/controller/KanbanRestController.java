@@ -119,6 +119,7 @@ public class KanbanRestController {
 							, @RequestParam(value = "labelIdx", required = false) String labelIdx
 							, @RequestParam(value = "dueDate", required = false) String dueDate
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
+							, @RequestParam(value = "colIdx") int colIdx
 							, Principal principal, HttpServletRequest request) {	
 		System.out.println("in InsertIssue.do");
 		System.out.println("insertIssue controller in");
@@ -139,6 +140,7 @@ public class KanbanRestController {
 		issue.setContent(content);
 		issue.setCreator(principal.getName());
 		issue.setIssueProgress(IssueProgressType.OPEN);
+		issue.setColIdx(colIdx);
 		if(!priorityCode.isEmpty())
 			issue.setPriorityCode(PriorityType.valueOf(priorityCode));
 		if(!assigned.isEmpty())

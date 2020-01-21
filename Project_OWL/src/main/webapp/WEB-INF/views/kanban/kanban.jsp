@@ -184,9 +184,9 @@
 
         
          $("#openIssueBtn").click(function() {
-            $("#openIssueColumn").removeClass("d-none");
+            $("#0Column").removeClass("d-none");
      		$("#closeIssueColumn").hide();
-     		$("#openIssueColumn").show();
+     		$("#0Column").show();
           });
 
          
@@ -318,7 +318,8 @@
 
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
-		<div class="columnSection leftdoor d-none" id="openIssueColumn">
+		<!--  openIssueColumn -->
+		<div class="columnSection leftdoor d-none" id="0Column">
 			<div class="text-center mt-2  leftdoorheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
@@ -326,7 +327,7 @@
 			</div>
 			<ul class="connectedSortable columnBody sortableCol">
 				<!-- <li class="issuePiece d-none">Item 1</li> -->
-				<li class="issuePiece"></li>
+			<!-- 	<li class="issuePiece"></li> -->
 			</ul>
 		</div>
 		<!--  close issue -->
@@ -340,6 +341,9 @@
 			<ul class="connectedSortable columnBody sortableCol">
 				<li class="issuePiece"></li>
 			</ul>
+		</div>
+		<div>
+		
 		</div>
 		<!-- 칼럼 -->
 <!-- 		<div class="columnSection">
