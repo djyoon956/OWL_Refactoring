@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.helper.UploadHelper;
@@ -18,9 +17,7 @@ import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
-import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.File;
-import com.owl.notice.dto.File.FileType;
 import com.owl.project.dto.Label;
 
 @Service
@@ -73,11 +70,10 @@ public class KanbanService {
 			}
 
 			File file = new File();
-			file.setFileFrom(FileType.ISSUE);
-			file.setBelongTo(issueIdx);
+			file.setIssueIdx(issueIdx);
 			file.setFileName(fileName);
 			file.setWriter(email);
-			file.setFileSize(String.valueOf(multipartFile.getSize()));
+			file.setFileSize(String.valueOf(multipartFile.getSize()/1024));
 			System.out.println("file값" +file.toString());
 			try {
 				dao.insertIssueFile(file);

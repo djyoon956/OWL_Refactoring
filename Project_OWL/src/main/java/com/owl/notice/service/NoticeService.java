@@ -16,7 +16,6 @@ import com.owl.helper.UploadHelper;
 import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.File;
 import com.owl.notice.dto.Notice;
-import com.owl.notice.dto.File.FileType;
 
 
 @Service
@@ -57,8 +56,7 @@ public class NoticeService {
 			}
 
 			File file = new File();
-			file.setFileFrom(FileType.NOTICE);
-			file.setBelongTo(boardIdx);
+			file.setBoardIdx(boardIdx);
 			file.setFileName(fileName);
 			file.setWriter(email);
 			file.setFileSize(String.valueOf(multipartFile.getSize()/1024));
@@ -96,7 +94,7 @@ public class NoticeService {
 		Notice notice = new Notice();
 		try {
 			notice = dao.getNotice(boardIdx);
-			notice.setFiles(dao.getNoticeFiles(FileType.NOTICE, boardIdx));
+			notice.setFiles(dao.getNoticeFiles(boardIdx));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
