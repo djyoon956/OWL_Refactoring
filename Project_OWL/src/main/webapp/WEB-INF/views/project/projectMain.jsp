@@ -39,6 +39,7 @@
 
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
+    <script src="resources/js/kanban.js"></script>
     <script type="text/javascript">
         $(function () {
             setTheme("${setting.themeColor}", "${setting.font}");
@@ -63,8 +64,41 @@
                 setChageView(currentTab.attr("id"));
             });
 
-            $('#joinProjectMemberModal').on('hidden.bs.modal', function(){
-               $("#addMemberBox").empty();
+            $('#memberCheckModal').on('show.bs.modal', function(){
+				console.log("open MemberCheckModal");
+				$("#projectMemebers").empty();
+			 	$.ajax({
+			 		type: "POST",
+                    url: "GetProjectMember.do",
+                    data: { projectIdx: ${project.projectIdx}},
+                    success: function (data) {
+                         console.log("GetProjectMember success");
+                        $("#projectMemebersBox").empty();
+                        let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
+                        $.each(data, function(index, element){
+                     
+                            let control = "<li class='mt-3'>"
+		                				+ "	<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
+		                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
+
+               				if(index == 0)
+               					control += "<span class='ml-5 roleBadge pm'></span>";
+            				else	
+            					control += "<span class='ml-5 roleBadge member'></span>";		
+
+           					control+= "</li>";	
+           					
+           					$("#projectMemebersBox").append(control);
+                         }) 
+                    },
+                    error: function () {
+                        console.log("GetProjectMember error");
+                    }
+				}) 
+              });
+
+            $('#memberEditModal').on('hidden.bs.modal', function(){
+                $("#addMemberBox").empty();
                $("#addMemberOk").val("초대 메일 전송");
              });
             
@@ -104,6 +138,7 @@
                 });
             })
         }) 
+        
         function setChageView(target) {
             console.log("setChageView : " + target);
             if (target === "dash")
@@ -124,82 +159,8 @@
 
         function setCalendarData() {
             console.log("in setCalendarData");
-
         }
 
-/* 		function addKanbanIssue(colIdx,obj){
-			let issue =		'<li class="issuePiece">';
-				issue +=			'<div class="dropdown">';
-				issue +=				'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'; 
-				issue +=				'<span class="issueTitle">' + obj.issueTitle + '</span>';
-				issue +=				'</label>'; 
-				issue +=				'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
-				issue +=				'<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-				issue +=				'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
-				issue +=					'<ul class="list-style-none">';
-				issue +=						'<li class="pl-3"><a href="#editIssueModal"data-toggle="modal">Edit Issue</a></li>';
-				issue +=						'<li class="pl-3"><a href="#">Remove Issue</a></li>';
-				issue +=					'</ul>';
-				issue +=				'</div>';
-				issue +=			'</div>';
-				issue +=			'<div>';
-				issue +=				'<label>';
-				issue +=				'<span class="assigneetitle">';
-				issue +=				'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>';
-				issue +=				'</label>';
-				issue +=			'</div>';
-				issue +=		'</li>';
-		
-			console.log("이슈")
-			console.log($("#"+colIdx+"Column > .columnBody"))
-			$("#"+colIdx+"Column > .columnBody").append(issue);
-		}
-
-		function addColumn(obj){
-			console.log("addColumn :" + obj.colIdx);
-			let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-						+ '<div class="columnTitle text-center mt-2 dropdown">'
-						+ '<h4>' + obj.colname
-						+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-						+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-						+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-						+				'<ul class="list-style-none">'
-						+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>'
-						+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
-						+				'</ul>'
-						+			'</div>'
-						+		'</h4>'
-						+	'</div>'
-						+	'<ul class="connectedSortable columnBody cursor sortableCol">'
-						+	'	<li class="issuePiece d-none">Item 1</li>'
-						+	'</ul>'
-						+ '</div>';
-
-			$('#kanbanArea').append(column);
-		}
-        function setKanbanData() {
-            console.log("in setKanbanData");
-            $.ajax({
-   			 url : 'GetColumn.do',
-   			 data : {'projectIdx' :  ${project.projectIdx} },
-   			 success : function(data) {
-   				//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
-   				$.each(data,function(index,obj) {
-   					if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
-   						addKanbanIssue(obj.colIdx, obj);
-   	   					}
-   					else{ // 칼럼 박스가 존재하지 않을때
-   						addColumn(obj);
-   	   					addKanbanIssue(obj.colIdx, obj);
-   					}
-   				});
-   			},
-   			 error : function() {
-   				console.log("getColum.do error");
-   			}
-   		}); 
-        } */
-        
 
         function setDriveData() {
             console.log("in setDriveData");
@@ -227,15 +188,15 @@
             }
 
             $("#addMemberCount").text((addProjectMembers.length+1) + "명");
-            let control = "<div class='input-group'>" +
-                "<input type='hidden' class='addProjectMembers' name='addProjectMembers' value='" + addEmail + "'>" +
-                "	<div class='form-control'>" +
-                "		<i class='fas fa-envelope mr-2 iconSizeBig'></i>" + addEmail +
-                "	</div>" +
-                "	<div class='input-group-append memberDeleteButton'>" +
-                "		<span class='input-group-text'><i class='far fa-times-circle font-weight-bold iconSizeBig'></i></span>" +
-                "	</div>" +
-                "</div>";
+            let control = "<div class='input-group'>" 
+			               + "<input type='hidden' class='addProjectMembers' name='addProjectMembers' value='" + addEmail + "'>" 
+			               + "	<div class='form-control'>" 
+			               + "		<i class='fas fa-envelope mr-2 iconSizeBig'></i>" + addEmail 
+			               + "	</div>" 
+			               + "	<div class='input-group-append memberDeleteButton'>" 
+			               + "		<span class='input-group-text'><i class='far fa-times-circle font-weight-bold iconSizeBig'></i></span>" 
+			               + "	</div>" 
+			               + "</div>";
             $("#addMemberBox").prepend(control);
 
             $(".memberDeleteButton").click(function () {
@@ -269,28 +230,7 @@
     			$("#"+colIdx+"Column > .columnBody").append(issue);
     		}
 
-    		function addColumn(obj){
-    			let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-    						+ '<div class="columnTitle text-center mt-2 dropdown">'
-    						+ '<h4><span>' + obj.colname + '</span>'
-    						+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-    						+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-    						+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-    						+				'<ul class="list-style-none">'
-    						+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
-    						+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"' 
-    						+   '>Edit Column</a></li>'
-    						+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
-    						+				'</ul>'
-    						+			'</div>'
-    						+		'</h4>'
-    						+	'</div>'
-    						+	'<ul class="connectedSortable sortableCol columnBody cursor">'
-    						+	'</ul>'
-    						+ '</div>';
 
-    			$('#kanbanArea').append(column);
-    		}
     	    function setKanbanData() {
     	        console.log("in setKanbanData");
     	        $.ajax({
@@ -298,13 +238,19 @@
     				 data : {'projectIdx' :  ${project.projectIdx} },
     				 success : function(data) {
     					//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
+    					
     					$.each(data,function(index,obj) {
+    						/* $('#kanbanArea').empty(); */
+    						console.log("칸반");
+    						console.log(obj.colIdx);
     						if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
     							 addKanbanIssue(obj.colIdx, obj); 
     		   					}
     						else{ // 칼럼 박스가 존재하지 않을때
+        						
     							 addColumn(obj);
-    		   					addKanbanIssue(obj.colIdx, obj); 
+    							 if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj);  };
+    							 
     						}
     					});
     					$( ".sortableCol").sortable({
@@ -390,7 +336,8 @@
                                 <i class="fas fa-user-cog iconSizeBig pt-2"></i></a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <ul class="list-style-none">
-                                    <li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트멤버 설정</a></li>
+                                    <li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트 멤버 추가</a></li>
+                                    <li class="pl-3"><a href="#memberCheckModal" data-toggle="modal">프로젝트 멤버 확인</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -425,8 +372,9 @@
 
     </div>
 
-    <!-- pm의 설정  modal -->
-    <jsp:include page="modal/projectMemberEdit.jsp" />
+    <!-- MODAL -->
+    <jsp:include page="modal/memberAdd.jsp" />
     <jsp:include page="modal/joinProjectMember.jsp" />
+      <jsp:include page="modal/memberCheck.jsp" />
 
 </body>

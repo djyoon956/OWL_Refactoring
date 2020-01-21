@@ -16,6 +16,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import com.owl.drive.dao.DriveDao;
 import com.owl.drive.dto.DriveFolder;
 import com.owl.helper.UploadHelper;
+import com.owl.member.dto.Member;
 import com.owl.project.dao.ProjectDao;
 import com.owl.project.dto.Project;
 import com.owl.project.dto.ProjectList;
@@ -124,6 +125,20 @@ public class ProjectService {
 		}
 		
 		return result;
+	}
+	
+	public List<Member> getProjectMembers(int projectIdx) {
+		ProjectDao dao = getProjectDao();
+		List<Member> projectMembers = new ArrayList<>();
+		try {
+			projectMembers = dao.getProjectMembers(projectIdx);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return projectMembers;
 	}
 	
 	private ProjectDao getProjectDao() {

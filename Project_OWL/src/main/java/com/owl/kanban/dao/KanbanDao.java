@@ -29,5 +29,7 @@ public interface KanbanDao {
 	
 	public List<ColumnList> getColumn(int projectIdx) throws ClassNotFoundException, SQLException;
 	
+	public ColumnList getIssuebyIssueIdx(int projectIdx, int issueIdx) throws ClassNotFoundException, SQLException;
+	
 	public int updateColumn(Column column) throws ClassNotFoundException, SQLException;
 }

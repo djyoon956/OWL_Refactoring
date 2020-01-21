@@ -111,7 +111,7 @@ public class KanbanRestController {
 
 	
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
-	public Label insertIssue(@RequestParam(value = "projectIdx") int projectIdx
+	public ColumnList insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
 							, @RequestParam(value = "content") String content
 							, @RequestParam(value = "priorityCode", required = false) String priorityCode
@@ -157,12 +157,12 @@ public class KanbanRestController {
 		System.out.println(issue);
 		boolean result = false;
 		
-		Label label = null;
+		ColumnList collist = null;
 		
-		label = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
+		collist = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
 
-		
-		return label;
+		System.out.println("collist : " + collist);
+		return collist;
 	}
 	
 	
