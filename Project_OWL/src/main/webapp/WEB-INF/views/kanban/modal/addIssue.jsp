@@ -65,16 +65,15 @@
 			        cache: false,
 			        timeout: 600000,
 			        success: function (data) {
-			        	//console.log("ajax in");
-			        	//console.log(data);
+			        	console.log("ajax in");
+			        	console.log(data);
 
 			        	//console.log(data.labelName);
 			        	//console.log(data.labelColor);
 			        	
 	 		        	if(data != null){
 			        		successAlert("Issue 추가 완료");
-
-			        		addKanbanIssue("openIssue", data);
+			        		addKanbanIssue('0', data);
 			        		
 			        	}else{
 			        		errorAlert("Issue 추가 실패");

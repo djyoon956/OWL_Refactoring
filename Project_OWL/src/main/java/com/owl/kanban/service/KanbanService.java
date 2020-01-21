@@ -172,6 +172,8 @@ public class KanbanService {
 		return colList;
 	}
 	
+	
+	
 	public boolean updateColumn(Column column) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;

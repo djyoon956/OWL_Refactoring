@@ -23,11 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					    <when test="labelIdx != 0"> #{labelIdx} </when>
 					    <otherwise> null </otherwise>
 					  </choose>
-					  , #{colIdx}
-					<!-- , <choose> 
+					 
+					 , <choose> 
 						<when test="colIdx != 0"> #{colIdx} </when>
 					    <otherwise> null </otherwise>
-					  </choose> -->
+					  </choose>
 					)
 		<selectKey keyProperty="issueIdx" resultType="int" order ="AFTER">
 	   		select LAST_INSERT_ID()
@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.ColumnList">
 		SELECT I.PROJECTIDX, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR
-		FROM ISSUE I LEFT JOIN LABEL L  ON I.PROJECTIDX =  L.LABELIDX
+		FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
 		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2}
 	</select>
 	
@@ -76,4 +76,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateColumn" parameterType="com.owl.kanban.dto.Column">
 		UPDATE COLNAME SET COLNAME = #{colname} WHERE PROJECTIDX = #{projectIdx} AND COLIDX=#{colIdx}
 	</update>
+	
 </mapper>

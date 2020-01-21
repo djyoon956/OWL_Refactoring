@@ -280,8 +280,19 @@
 
 <div id="totalbody" class="container-fluid mt-3">
 	<div class="row">
-		<div class="col-8" style="margin-left: 30px;">
+		<div class="col-2" style="margin-left: 30px;">
 
+			<button id="openIssueBtn" class="btn btn-primary">
+				<i class="fas fa-columns"></i>&nbsp;Open
+			</button>
+			
+			
+			<button id="closeIssueBtn" class="btn btn-primary">
+				<i class="fas fa-columns"></i>&nbsp;Closed
+			</button>
+
+		</div>
+		<div class="col-8">
 			<a href="#" data-toggle="modal" data-target="#addIssueModal">
 				<button id="addIssuebtn" class="btn btn-primary">
 					<i class="fas fa-italic"></i>&nbsp;New Issue
@@ -293,18 +304,6 @@
 					<i class="fas fa-columns"></i>&nbsp;New Column
 				</button>
 			</a>
-
-			<button id="openIssueBtn" class="btn btn-primary">
-				<i class="fas fa-columns"></i>&nbsp;Open Issue
-			</button>
-			
-			
-			<button id="closeIssueBtn" class="btn btn-primary">
-				<i class="fas fa-columns"></i>&nbsp;Close Issue
-			</button>
-
-		</div>
-		<div class="col-2">
 			<a href="#" data-toggle="modal" data-target="#addLabelModal">
 				<button class="btn btn-primary">
 					<i class="fas fa-tag"></i>&nbsp;Make Label
