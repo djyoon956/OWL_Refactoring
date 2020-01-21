@@ -230,7 +230,7 @@
     				+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
     				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
     				+				'<ul class="list-style-none">'
-    				+					'<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>'
+    				+					'<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Issue detail</a></li>'
     				+					'<li class="pl-3"><a href="#">Remove Issue</a></li>'
     				+				'</ul>'
     				+			'</div>'
