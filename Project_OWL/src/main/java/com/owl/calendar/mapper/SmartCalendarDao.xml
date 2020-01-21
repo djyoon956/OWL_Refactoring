@@ -14,18 +14,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<update id="updateCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
-		UPDATE SMARTCALENDAR SET TYPE=#{type}
+		UPDATE SMARTCALENDAR SET EMAIL=#{email}
+													<if test="type != null">
+													, TYPE=#{type}
+													</if>
+													<if test="title != null">
 													, TITLE=#{title}
+													</if>
+													<if test="content != null">
 													, CONTENT=#{content}
+													</if>
+													<if test="startDate != null">
 													, STARTDATE=#{startDate}
+													</if>
+													<if test="endDate != null">
 													, ENDDATE=#{endDate}
-													, ALLDAY=#{allDay}
-													, EMAIL=#{email}
-													, PROJECTIDX=
-		<choose>
-			    <when test="projectIdx != 0"> #{projectIdx} </when>
-			    <otherwise> null </otherwise>
-		  </choose>
+													</if>
+													, ALLDAY=	#{allDay}
+													<choose>
+														<when test="projectIdx > 0">
+														, PROJECTIDX =	#{projectIdx}
+														</when>
+														<when test="projectIdx == 0">
+														, PROJECTIDX = null
+														</when>
+													</choose>																																			
 		WHERE CALIDX=#{calIdx}	
 	</update>
 	
