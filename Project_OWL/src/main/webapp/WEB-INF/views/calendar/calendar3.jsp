@@ -127,7 +127,7 @@ $(function(){
 					calendar = new CalendarInfo();
 					calendar.id = String(element.projectIdx);
 				    calendar.name = element.projectName;
-				    calendar.color = '#262626';
+				    calendar.color = '#ffffff';
 				    calendar.bgColor = element.projectColor;
 				    calendar.dragBgColor = element.projectColor;
 				    calendar.borderColor = element.projectColor;
@@ -160,7 +160,7 @@ function setSchedules() {
 function generateSchedule(viewName) {         
 
 	$.ajax({
-		url:"getMyAllCalendars.do",
+		url:"GetMyAllCalendars.do",
 		dataType:"json",
 		async: false,
 		success:function(data){
@@ -195,7 +195,7 @@ function GetCalendar(calendar, element){
 	            end: element.endDate,
 	            category: element.allDay >0 ? 'allday' : 'time',
 	            dueDateClass: '',
-	            color: "#fff",
+	            color: "#ffffff",
 	            bgColor: calendar.bgColor,
 	            dragBgColor: calendar.bgColor,
 	            borderColor: calendar.borderColor,

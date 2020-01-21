@@ -14,26 +14,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<update id="updateCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
+		UPDATE SMARTCALENDAR SET TYPE=#{type}
+													, TITLE=#{title}
+													, CONTENT=#{content}
+													, STARTDATE=#{startDate}
+													, ENDDATE=#{endDate}
+													, ALLDAY=#{allDay}
+													, EMAIL=#{email}
+													, PROJECTIDX=
+		<choose>
+			    <when test="projectIdx != 0"> #{projectIdx} </when>
+			    <otherwise> null </otherwise>
+		  </choose>
+		WHERE CALIDX=#{calIdx}	
 	</update>
 	
-	<delete id="deleteMyCalendar">
-	DELETE FROM SMARTCALENDAR WHERE EMAIL =#{email}
+	<delete id="deleteCalendar">
+	DELETE FROM SMARTCALENDAR WHERE PROJECTIDX =#{projectIdx}
 	</delete>
-	
-	<delete id="deleteProjectCalendar">
-	DELETE FROM SMARTCALENDAR WHERE EMAIL =#{email} AND PROJECTIDX =#{projectIdx}
-	</delete>
-	
-<!-- 	<select id="getMemberCalendars" parameterType="String" resultType="com.owl.calendar.dto.SmartCalendar">
-		SELECT P.PROJECTIDX, C.CALIDX, C.TITLE, C.CONTENTS, C.STARTDATE, C.ENDDATE, C.ALARM, C.TYPE 
-			FROM OWL.SMARTCALENDAR C JOIN OWL.PROJECTLIST P
-		ON P.PROJECTIDX = C.PROJECTIDX AND P.EMAIL = #{email}
-	</select> -->
+
 	<select id="getMyAllCalendars" resultType="com.owl.calendar.dto.SmartCalendar" parameterType="String" >
 	SELECT CALIDX, TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALLDAY, EMAIL, PROJECTIDX FROM SMARTCALENDAR WHERE EMAIL = #{email}; 
-	</select>
-	
-	<select id="getProjectCalendars" parameterType="Integer">
 	</select>
 	
 </mapper>
