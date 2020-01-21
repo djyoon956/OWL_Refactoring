@@ -300,13 +300,7 @@
 						console.log("셋 이슈 데이터");
 						console.log(data);
 						$.each(data,function(index,obj) {
-						if(obj.colIdx == 0) {
-							if(obj.issueTitle != null) { 
 							 addKanbanIssue(obj.colIdx, obj); 
-							}
-    					} else {
-    				if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj);  }	
-    					}
 						});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
