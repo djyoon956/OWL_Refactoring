@@ -125,7 +125,7 @@
 <script>
   $(function(){
 
-			let selectoption = '<option value="">Select</option>';
+	let selectoption = '<option value="">Select</option>';
 			 	
 	//프로젝트 내 라벨 리스트 출력 
 	  $.ajax({
@@ -339,7 +339,7 @@
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
-
+		<div id="kanbanIn" class="row"></div>
 		<!-- 칼럼 -->
 	 <!--  	<div class="columnSection">
 			<div class="columnTitle text-center mt-2 dropdown">

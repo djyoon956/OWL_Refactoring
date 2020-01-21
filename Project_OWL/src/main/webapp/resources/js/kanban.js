@@ -15,7 +15,7 @@
 					+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
 					+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
 					+   '>Edit Column</a></li>'
-					+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
+					+					'<li class="pl-3"><a href="#" onclick="deleteColumn(' + obj.colIdx +');">Remove Column</a></li>'
 					+				'</ul>'
 					+			'</div>'
 					+		'</h4>'
@@ -24,10 +24,33 @@
 					+	'</ul>'
 					+ '</div>';
 
-		$('#kanbanArea').append(column);
+		/*$('#kanbanArea').append(column);*/
+		$('#kanbanIn').append(column);
 	}
 	
-	
+	function deleteColumn(obj){
+		var colIndex = obj;
+		Swal.fire({
+      		  title: '정말 삭제하시겠습니까?',
+      		  text: '컬럼 내에 있는 이슈와 파일들이 함께 삭제됩니다.',
+      		  icon: 'warning',
+      		  showCancelButton: true,
+      		  confirmButtonColor: '#3085d6',
+      		  cancelButtonColor: '#d33',
+      		  confirmButtonText: 'Yes'
+      		}).then((result) => {
+      		  if (result.value) {
+      			$.ajax({
+      	      		url:"DeleteColumn.do",
+      	      		method:"POST",
+      	      		data:{colIdx: colIndex},
+      	      		success:function(data){
+      	      			
+      	      		}
+      	      	});	
+      		 }			
+      	});
+	}
 
 	
 	function addKanbanIssue(colIdx,obj){

@@ -11,8 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="insertNoticeFile">
-		INSERT INTO owl.File(BELONGTO, WRITER, FILENAME, FILESIZE, FILEFROM)
-		VALUES(#{belongTo}, #{writer}, #{fileName}, #{fileSize}, #{fileFrom})
+		INSERT INTO owl.File(BOARDIDX, WRITER, FILENAME, FILESIZE)
+		VALUES(#{boardIdx}, #{writer}, #{fileName}, #{fileSize})
 	</insert>
 	
 	<select id="getNoticesByProjectIdx" resultType="com.owl.notice.dto.Notice">
@@ -28,8 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getNoticeFiles" resultType="com.owl.notice.dto.File">
-		SELECT FILEIDX, BELONGTO, WRITER, FILENAME, FILESIZE, FILEFROM 
+		SELECT FILEIDX, BOARDIDX, WRITER, FILENAME, FILESIZE 
 			FROM owl.FILE
-		WHERE FILEFROM = #{param1} AND belongto = #{param2}
+		WHERE BOARDIDX  = #{boardIdx}
 	</select>
 </mapper>

@@ -58,11 +58,10 @@
             });
             
             setTheme("${setting.themeColor}", "${setting.font}");
-            initNotice();
+            initNotice("${project.projectIdx}");
             
             let oldMenu = $("#projectMenu li:first");
             $("#projectMenu li").on("click", function () {
-                console.log("in projectlsit :"+$(this).children(".nav-link").attr("href") );
                 if($(this).children(".nav-link").attr("href") == "#project")
 					return;
 				
@@ -161,8 +160,9 @@
             else if (target === "calendar")
                 setCalendarData();
             else if (target === "kanban"){
+                $("#kanbanIn").empty();
                 setKanbanData();
-            	setIssueData()
+            	setIssueData();
             }
             else if (target === "notice")
                 setNoticeData('${project.projectIdx}');
@@ -269,7 +269,14 @@
     						console.log("칸반");
     						
     						console.log(obj.colIdx);
-    						if(obj.colIdx != -1 && obj.colIdx != -99)
+
+    						if(obj.colIdx != -1 && obj.colIdx != -99){
+        						console.log("칼럼 안 ");
+    							addColumn(obj);
+    						}
+    						
+    						/* if(obj.colIdx != -1 || obj.colIdx != 0)
+>>>>>>> 01a25db32d021d077e37f3f510dc46ccece001fb
     						addColumn(obj);
     						 /* if(obj.colIdx == 0) {
     							if(obj.issueTitle != null) { 

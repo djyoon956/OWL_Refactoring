@@ -196,6 +196,12 @@ public class KanbanRestController {
 		return data;
 	}
 
+	@RequestMapping(value="DeleteColumn.do", method = RequestMethod.POST)
+	public boolean deleteColumn(@RequestParam(value = "colIdx") int colIdx) {
+		boolean result = false;
+		result = service.deleteColumn(colIdx);
+		return result;
+	}
 	
 	private NoticeDao getNoticeDao() {
 		return sqlSession.getMapper(NoticeDao.class);

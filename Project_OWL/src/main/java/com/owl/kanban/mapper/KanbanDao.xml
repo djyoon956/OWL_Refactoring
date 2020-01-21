@@ -36,8 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<insert id="insertIssueFile" >
-		INSERT INTO owl.File(BELONGTO, WRITER, FILENAME, FILESIZE, FILEFROM)
-		VALUES(#{belongTo}, #{writer}, #{fileName}, #{fileSize}, #{fileFrom})
+		INSERT INTO owl.File(ISSUEIDX, WRITER, FILENAME, FILESIZE)
+		VALUES(#{issueIdx}, #{writer}, #{fileName}, #{fileSize})
 	</insert>
 
 
@@ -80,4 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE COLNAME SET COLNAME = #{colname} WHERE PROJECTIDX = #{projectIdx} AND COLIDX=#{colIdx}
 	</update>
 	
+	<delete id="deleteColumn">
+		DELETE FROM COLNAME WHERE COLIDX =#{colIdx}
+	</delete>
 </mapper>
