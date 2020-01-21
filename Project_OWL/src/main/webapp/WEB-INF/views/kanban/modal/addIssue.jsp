@@ -4,8 +4,8 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
 <script>
  $(function() {
+	 
 /*datwpicker*/
-
 	 $('.mydatepicker').datepicker();
 		 $('#datepicker-autoclose').datepicker({
 			 dateFormat: 'yy-mm-dd' ,

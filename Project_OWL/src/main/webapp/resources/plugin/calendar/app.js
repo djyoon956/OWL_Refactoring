@@ -61,15 +61,21 @@
             var changes = e.changes;
 
             console.log('beforeUpdateSchedule', e);
-
+            console.log(schedule.id);
+            console.log(schedule.calendarId);
             cal.updateSchedule(schedule.id, schedule.calendarId, changes);
             refreshScheduleVisibility();
         },
         'beforeDeleteSchedule': function(e) {
             console.log('beforeDeleteSchedule', e);
-            console.log(e.schedule.calendarId);
             cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
-            
+            	$.ajax({
+            		url:"DeleteCalendar.do",
+            		method:"POST",
+            		data:{calendarId: e.schedule.calendarId},
+            		success:function(data){	
+            		}
+            	});
         },
         'afterRenderSchedule': function(e) {
             var schedule = e.schedule;

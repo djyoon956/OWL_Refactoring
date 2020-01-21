@@ -82,6 +82,7 @@ public class LoginController {
 	@RequestMapping(value = "Main.do")
 	public String showMainView(HttpServletRequest request, Principal principal, Model model) {
 		Member member = service.getMember(principal.getName());
+		System.out.println(member);
 		request.getSession().setAttribute("member", member);
 		request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
 		

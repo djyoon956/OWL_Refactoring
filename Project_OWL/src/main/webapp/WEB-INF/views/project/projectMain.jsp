@@ -286,10 +286,10 @@
     			$("#"+colIdx+"Column > .columnBody").append(issue);
     		}
 
-    		function addColumn(obj){
+    		function addColumnAjax(obj){
     			let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
     						+ '<div class="columnTitle text-center mt-2 dropdown">'
-    						+ '<h4>' + obj.colname
+    						+ '<h4><span>' + obj.colname + '</span>'
     						+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
     						+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
     						+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
@@ -320,7 +320,7 @@
     							 addKanbanIssue(obj.colIdx, obj); 
     		   					}
     						else{ // 칼럼 박스가 존재하지 않을때
-    							 addColumn(obj);
+    							addColumnAjax(obj);
     		   					addKanbanIssue(obj.colIdx, obj); 
     						}
     					});

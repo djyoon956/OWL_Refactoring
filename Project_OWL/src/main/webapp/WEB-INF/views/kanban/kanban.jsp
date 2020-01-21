@@ -149,29 +149,6 @@
 		$("#"+colIdx+"Column > .columnBody").append(issue);
 	}
 
-	function addColumn(obj){
-		console.log("addColumn :" + obj.colIdx);
-		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-					+ '<div class="columnTitle text-center mt-2 dropdown">'
-					+ '<h4>' + obj.colname
-					+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-					+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-					+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-					+				'<ul class="list-style-none">'
-					+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
-					+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
-					+   '>Edit Column</a></li>'
-					+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
-					+				'</ul>'
-					+			'</div>'
-					+		'</h4>'
-					+	'</div>'
-					+	'<ul class="connectedSortable sortableCol columnBody cursor">'
-					+	'</ul>'
-					+ '</div>';
-
-		$('#kanbanArea').append(column);
-	}
     function setKanbanData() {
         console.log("in setKanbanData");
         $.ajax({
@@ -198,6 +175,30 @@
 			}
 		}); 
     } */
+
+	function addColumn(obj){
+		console.log("addColumn :" + obj.colIdx);
+		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
+					+ '<div class="columnTitle text-center mt-2 dropdown">'
+					+ '<h4>' + obj.colname
+					+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
+					+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+					+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
+					+				'<ul class="list-style-none">'
+					+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
+					+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
+					+   '>Edit Column</a></li>'
+					+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
+					+				'</ul>'
+					+			'</div>'
+					+		'</h4>'
+					+	'</div>'
+					+	'<ul class="connectedSortable sortableCol columnBody cursor">'
+					+	'</ul>'
+					+ '</div>';
+
+		$('#kanbanArea').append(column);
+	}
   $(function(){
 
 			let selectoption = '<option value="">Select</option>';
@@ -225,7 +226,7 @@
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
 					lablist +=  '<button class="btn-link link-gray">Edit</button>';
-					lablist +=  '</div>'
+					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
 					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
 					lablist +=  '</div></div><hr>';
@@ -263,6 +264,7 @@
      		$("#closeIssue").hide();
      		$("#openIssue").show();
           });
+
          
          $("#closeIssueBtn").click(function() {
          	$("#closeIssue").removeClass("d-none");
@@ -336,27 +338,17 @@
 				}
 			});
 		});
-/* 	let editColIdx="";
-	let editColname="";
-    $('#editColumnModal').on('show.bs.modal', function(event) {          
-    	editColIdx = $(event.relatedTarget).data('updatecol-id');
-    	editColname = $(event.relatedTarget).data('upcolname-id');
-    	console.log("에딧 모달");
-    	console.log(editColIdx);
-    	console.log(editColname);
-       /* $(".modal-body").prepend("<b>[ " + updateCol +" ]</b>");
-       $("#deletebtn").attr("href","UpdateColumn.do?colIdx=" + updateCol); 
-    }); */
+
     $("#editColumnBtn").click(function() {
         $.ajax({
         	url : 'UpdateColumn.do',
         	data : { 'colname' : $("#editcolName").val(),'projectIdx' : ${project.projectIdx},'colIdx' :  $("#editcolIdx").val()}, 
         	success : function(data) {
             	console.log("업데이트 칼럼 성공 ");
-            	//console.log(data);
-            	console.log($("#" + data + "Column"));
-            	$("#" + data + "Column > h4").html($("#editcolName").val());
-        		//$("#"+colIdx+"Column > .columnBody").append(issue);
+            	console.log(data);
+            	console.log($("#" + data + "Column span").text());
+            	$("#" + data + "Column > h4 > span").text($("#editcolName").val());
+        	//	$("#"+data+"Column > .columnBody").append(issue);
             	$('#editColumnModal').modal('hide');
             },
             error : function() {
@@ -365,7 +357,7 @@
         });
     });
 });
-  </script>
+</script>
 
 <div id="totalbody" class="container-fluid mt-3">
 	<div class="row">

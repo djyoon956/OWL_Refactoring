@@ -11,15 +11,13 @@
     <link type="text/css" rel="stylesheet" href="resources/css/materialize.min.css"  media="screen,projection"/>
     <link rel="stylesheet" href="resources/css/custom.css">
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
   </head>
   <body>
-   <c:set var="member" value="${member}" scope="request"/>
+<%--    <c:set var="member" value="${member}" scope="request"/>
    <input type="hidden" id='memberName'value='${member.name}'>
    <input type="hidden" id='memberEmail'value='${member.email}'>
-    <input type="hidden" id='memberProfilePic'value='${member.profilePic}'>
+    <input type="hidden" id='memberProfilePic'value='${member.profilePic}'> --%>
     <input type="hidden" id='curUserKey'>
     <!-- header Top 영역 -->
     <header class="navbar-fixed">
@@ -150,7 +148,7 @@
     <!-- template 채팅방리스트 영역 -->
     <script type="text/template" id="templateRoomList">
         <li id="liRoom<%=roomId %>" data-roomId="<%=roomId %>" data-roomTitle='<%=roomTitle%>' data-roomUserName="<%=roomUserName%>"
-            data-roomType="<%=roomType%>" data-roomOneVSOneTarget="<%=roomOneVSOneTarget%>" data-roomUserlist="<%=roomUserlist %>" class="collection-item avatar" >
+            data-roomType="<%=roomType%>" data-roomOneVSOneTarget="<%=roomOneVSOneTarget%>" data-roomUserList="<%=roomUserlist %>" class="collection-item avatar" >
             <img src="<%=profileImg ? profileImg : 'img/noprofile.png'  %>" alt="" class="circle">
             <span class="title"><%=roomTitle%></span>
             <p><%=lastMessage %></p>
@@ -189,7 +187,19 @@
       
       
       <script>
-      
+      console.log("value : " + '${member.name}');
+      const curName = "'${member.name}'";
+      const curEmail = "'${member.email}'"; 
+      const curProfilePic = "'${member.profilePic}'";
+      console.log("현재 접속중인 유저 정보" + curName+"/"+curEmail+"/"+curProfilePic);
+
+      /* var messageTemplate = '<li id="li' + key  + '" class="collection-item avatar" data-key="' + key + '">'+
+		'<img src="'+ profileImg ? profileImg : + 'img/noprofile.png'+'" alt="" class="circle">'+
+		'<span class="title">'+userName+'</span><span class="time">'+time+'</span>'+
+		'<p>'+message+'</p>'+
+			'</li>'; 
+
+			console.log("messageTemplate 여기에 담긴 값이 언디파인디인 이유는???") */
           /**
            *  FirebaseChat ES5 클래스
            */
@@ -236,7 +246,7 @@
           firebase.analytics();
           
         //Get a reference to the database service
-          var database = firebase.database();
+          const database = firebase.database();
              
    
 
@@ -357,7 +367,7 @@
           function writeUserData(name, email, imageUrl) {
 		       return new Promise(function(resolve){
 
-		        	  var myEmail = firebase.database().ref();
+		        	  var myEmail = database.ref();
 		        	  myEmail.child("emails").orderByChild('email').equalTo(email).once('value', function(data){
 		          	    console.log('현재 접속한 유저는 채팅 경험이 있나요??	 :' +email+ " / "+ data.key + " / " + data.val() + " / " +data.numChildren());		          	    
 						var myResult = data.val();
@@ -365,10 +375,10 @@
 						if(myResult == null){
 							console.log("신규회원 이메일 등록을 통한 유아디 생성과.. 유저 데이터 등록 필요");
 							
-							var newUser = firebase.database().ref('emails/').push({email :email});
+							var newUser = database.ref('emails/').push({email :email});
 							 userKey = newUser.key;
 							console.log("새로 들어온 유저의 키 값은 ??"  + userKey);
-							firebase.database().ref('users/' + newUser.key).set({
+							database.ref('users/' + newUser.key).set({
 				        	    username: name,
 				        	    email: email,
 				        	    profile_picture : imageUrl
@@ -390,7 +400,11 @@
        
 
 			
-			
+
+
+
+
+				
 				
 
 			//채팅방 유적 목록 클릭시 실행 되는 펑션
@@ -405,25 +419,27 @@
 				var targetUserName = event.getAttribute('data-username'); 
 				var roomTitle = targetUserName+'님 과의 대화'; 
 				var roomUserList = [targetUserUid, curUserKey]; // 챗방 유저리스트  			
-				var roomUserName = [targetUserName, $('#memberName').val()] // 챗방 유저 이름 
+				var roomUserName = [targetUserName, curName] // 챗방 유저 이름 
 				var roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss();
-				storeRoomInfo(roomId, roomUserList);
-				setMessage(roomId);
-				console.log("룸아이뒤 생성되나요??>>>" + roomId);
+				
+				storeRoomInfo(roomId, roomUserList);//UsersInRoom 에다가  해당 채팅방이 열릴 때 채팅방에 참여 하고 있는 유저 정보 저장 장소
+				//setRoom(roomId);				
 				openChatRoom(roomId, roomTitle, roomUserList, roomUserName); // 파라미터 추가
             }
           
           //const messageRef = firebase.database().ref('/messages/' + 'roomId');
-		function setMessage(roomId){
+	   function setRoom(roomId){
 			
-			var messageRef = firebase.database().ref('messages/');
+			var messageRef = database.ref('Messages/');
 			 
 			 messageRef.set(roomId);
 			 console.log("메세지 아이디를 얻어 보자 이것은 메세지 폴더에 룸아이디만 있는 거고" );
 			 
-			}
+			} 
+
+		
 		function storeRoomInfo(roomId, roomUserList){
-			 var roomRef = firebase.database().ref('usersInRoom/' + roomId);
+			 var roomRef = database.ref('UsersInRoom/' + roomId);
 			 roomUserList.forEach(function(value,index){
 				 console.log("챗방 유저리스트 키 값 뽑아내기" + value );
 				 roomRef.set(value);
@@ -443,8 +459,9 @@
 			console.log("이즈 오픈 룸의 값은??" + isOpenRoom);
 
 
-			document.getElementById('dvInputChat').addEventListener('keydown', function(ev, roomId, roomUserList, roomUserName){
+			document.getElementById('dvInputChat').addEventListener('keydown', function(ev){
 				console.log("챗방 메세지 입력하고 엔터 누르면 타야 되는 함수");
+				console.log("openChatRoom function  변수값 받아야 하는데~~~!!!!" + roomId +"/"+roomUserList+"/"+roomUserName);
 				if(ev.keyCode === 13){ //엔터키 키코드가 입력이 되면 
 					ev.preventDefault();
 					console.log("챗방 메세지 입력하고 엔터 누르면 타야 되는 함수 이프문 안인데  여기는 타나요??"); 
@@ -452,13 +469,67 @@
 					}
 				});
 
-			document.getElementById('iBtnSend').addEventListener('click', saveMessages());
+			document.getElementById('iBtnSend').addEventListener('click', saveMessages);
 
 			
         	console.log("오픈챗룸 함수 마지막 단 타나요????");
               }
 
 
+          /** * 메세지 로드 */ 
+          function loadMessageList(roomId){ 
+              console.log("메세지 로드 함수 타나요??");
+              var messageRef = database.ref('Messages/'+roomId);
+              /* messageRef.once('value', function(data){
+                  
+              } */
+              
+             if(roomId){ 
+                 document.getElementById('ulMessageList').innerHTML = ''; //메세지 화면 리셋 
+                 console.log("이프 룸아이디 밑에다.. 여기 타나요??");
+					//언더스코어 제이에서 어쩌구... 자꾸 에러 나서 .. 그리고 어케 사용하는 지 몰라서 포기........
+                 //var messageTemplate = document.getElementById('templateMessageList').innerHTML;
+
+              
+                 
+                 messageRef.off();
+        
+             	  //underscore.js 사용 포기..... 두시간이나 해매고....젠...
+                 /* var cbDisplayMessages = function(data) { 
+                 	var messageHtml = ''; 
+                 	var val = data.val(); 
+                 	messageHtml = _.template(messageTemplate)( { 
+                     	key : data.key , 
+                    	profileImg : val.profileImg , 
+                     	userName : val.userName , 
+                     	time : FirebaseChat.timestampToTime(val.timestamp) , 
+                     	message : val.message 
+                     	}); 
+                  	  	this.ulMessageList.innerHTML = this.ulMessageList.innerHTML + messageHtml; 
+                 	  	this.ulMessageList.scrollTop = this.ulMessageList.scrollHeight; 
+                 	  	this.roomTitle = val.roomTitle; 
+                 }  */
+                 messageRef.limitToLast(50).on('child_added', function(data){
+                     	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~데이타 값은~~~~~~~~~~~~~~~~~~" + data + " / " + data.val());
+                     	var msgKey = data.val();
+                     	console.log("데이타 값은~~~~~~~~~~~~~~~~~~" + data + " / " + data.key + "/"+msgKey.userName);
+           			 	messageListUp(data.key, msgKey.profileImg, msgKey.timestamp, msgKey.userName, msgKey.message);              				
+      		 		
+							
+                     }); 
+             }else{
+           	  messageRef.limitToLast(50).on('child_added', function(data){
+                   	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+             	  data.forEach(function(childSnapshot) {
+							var msgKey = childSnapshot.key;
+         				console.log("메세지 로드 함수를 타긴 하는거야 머야??? " + msgKey);
+                 }); 
+           	  });
+           } 
+
+         }
+
+			
 			/* function onEnterKey(ev, roomId, roomUserList, roomUserName) {
 				console.log("챗방 메세지 입력하고 엔터 누르면 타야 되는 함수");
 				if(ev.keyCode === 13){ //엔터키 키코드가 입력이 되면 
@@ -478,7 +549,7 @@
 
  
  				/** * 메세지에 태그 입력시 변경하기 */ 
- 			function myconvertMsg(html){ 
+ 			function myConvertMsg(html){ 
 				console.log("챗 메세지 창 태그 방지 함수 타나요???");
 	  			var tmp = document.createElement("DIV"); 
 	  			tmp.innerHTML = html; 
@@ -486,28 +557,32 @@
 		 	}
 			
 			function saveMessages(roomId, roomUserList, roomUserName) {
-				console.log("세이브 메세지 함수 여기까지 룸 아이디 오나요???" + roomId);
+				console.log("세이브 메세지 함수 여기까지 룸 아이디 오나요???" + roomId + " / " + roomUserList + " / " +roomUserName);
+				console.log("세이브 메세지 함수 여기까지 룸 아이디 오나요???" + roomUserList);
 				var msgDiv = document.getElementById('dvInputChat');
 				var msg = msgDiv.innerHTML.trim(); 
+				console.log("메세지 왜 못 잡아??" + msg);
 				var curUserKey = $('#curUserKey').val();
-				var curUserName = $('#memberName').val();
+				var curUserName = $('#memberName').val();	
+				console.log("세이브 메세지 함수  현재 사용중인 유저 이름 가져오기  ~~~????>>>>>>" + curUserName);			
 				var curUserProfilePic = $('#memberProfilePic').val();
-				var convertMsg = myconvertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
+				var convertMsg = myConvertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
 				if(msg.length > 0){ 
 					msgDiv.focus(); 
 					msgDiv.innerHTML = ''; 
 					var multiUpdates = {}; 
-					var messageRef = firebase.database().ref('messages/'+ roomId);
+					var messageRef = database.ref('Messages/'+ roomId);
 					var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
 					//var convertMsg = convertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
 
 					//UsersInRoom 데이터 저장
 					if(document.getElementById('ulMessageList').getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
-						var roomUserlistLength = roomUserlist.length; 
-						for(var i=0; i < roomUserlistLength; i++){ 
-							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserlist[i]] = true; 
+						var roomUserListLength = roomUserList.length; 
+						for(var i=0; i < roomUserListLength; i++){ 
+							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true; 
 						} 
-						firebase.database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
+						//firebase.database().ref('usersInRoom/' + roomId);
+						database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
 						loadMessageList(roomId); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
 					} 
 					
@@ -516,32 +591,32 @@
 					//메세지 저장 
 					multiUpdates['Messages/' + roomId + '/' + messageRefKey] = { 
 							uid: curUserKey, 
-							userName: curUserName, 
+							userName: curName, 
 							message: convertMsg, // 태그 입력 방지
-							profileImg: curUserProfilePic ? curUserProfilePic : '', 
+							profileImg: curProfilePic ? curProfilePic : '', 
 							timestamp: firebase.database.ServerValue.TIMESTAMP //서버시간 등록하기 
 					} 
 
 					//유저별 룸리스트 저장 
-					var roomUserListLength = roomUserlist.length; 
-					if(roomUserlist && roomUserListLength > 0){ 
+					var roomUserListLength = roomUserList.length; 
+					if(roomUserList && roomUserListLength > 0){ 
 						for(var i = 0; i < roomUserListLength ; i++){ 
-							multiUpdates['RoomsByUser /'+ roomUserlist[i] +'/'+ roomId] = { 
+							multiUpdates['RoomsByUser /'+ roomUserList[i] +'/'+ roomId] = { 
 								roomId : roomId, 
 								roomUserName : roomUserName.join('@spl@'), 
-								roomUserlist : roomUserlist.join('@spl@'), 
+								roomUserList : roomUserList.join('@spl@'), 
 								roomType : roomUserListLength > 2 ? 'MULTI' : 'ONE_VS_ONE', 
-								roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? roomUserlist[1] : // 1대 1 대화이고 i 값이 0 이면 
-									roomUserListLength == 2 && i == 1 ? roomUserlist[0] // 1대 1 대화 이고 i값이 1이면 
+								roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? roomUserList[1] : // 1대 1 대화이고 i 값이 0 이면 
+									roomUserListLength == 2 && i == 1 ? roomUserList[0] // 1대 1 대화 이고 i값이 1이면 
 									: '', // 나머지 
 								lastMessage : convertMsg, 
-								profileImg : curUserProfilePic ? curUserProfilePic : '', 
+								profileImg : curProfilePic ? curProfilePic : '', 
 								timestamp: firebase.database.ServerValue.TIMESTAMP 
 
 							}; 
 						} 
 					} 
-					firebase.database.ref().update(multiUpdates); 
+					database.ref().update(multiUpdates); 
 				} 
 		   }
 
@@ -557,57 +632,11 @@
           //messageRef.push('Test push method ^^');
           //console.log("new key :" + messageRef.key);
           
-          const msgOutRef = firebase.database().ref('/messages/myFirstMessage');
+          const msgOutRef = database.ref('/messages/myFirstMessage');
           msgOutRef.on('value', (value) => console.log("메세지가 추가 되면 찍히는 콘솔" +value.val()));
           
 
-          /** * 메세지 로드 */ 
-           function loadMessageList(roomId){ 
-               console.log("메세지 로드 함수 타나요??");
-              if(roomId){ 
-                  document.getElementById('ulMessageList').innerHTML = ''; //메세지 화면 리셋 
-                  console.log("이프 룸아이디 밑에다.. 여기 타나요??");
-					//언더스코어 제이에서 어쩌구... 자꾸 에러 나서 .. 그리고 어케 사용하는 지 몰라서 포기........
-                  //var messageTemplate = document.getElementById('templateMessageList').innerHTML;
-
-               
-                  var messageRef = firebase.database().ref('Messages/');
-                  messageRef.off();
          
-              	  //underscore.js 사용 포기..... 두시간이나 해매고....젠...
-                  /* var cbDisplayMessages = function(data) { 
-                  	var messageHtml = ''; 
-                  	var val = data.val(); 
-                  	messageHtml = _.template(messageTemplate)( { 
-                      	key : data.key , 
-                     	profileImg : val.profileImg , 
-                      	userName : val.userName , 
-                      	time : FirebaseChat.timestampToTime(val.timestamp) , 
-                      	message : val.message 
-                      	}); 
-                   	  	this.ulMessageList.innerHTML = this.ulMessageList.innerHTML + messageHtml; 
-                  	  	this.ulMessageList.scrollTop = this.ulMessageList.scrollHeight; 
-                  	  	this.roomTitle = val.roomTitle; 
-                  }  */
-                  messageRef.child(roomId).limitToLast(50).on('child_added', function(data){
-                      	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                	  data.forEach(function(childSnapshot) {
-							var msgKey = childSnapshot.key;
-            				console.log("메세지 로드 함수를 타긴 하는거야 머야??? " + msgKey);	              				
-       		 		});
-							
-                      }); 
-              }else{
-            	  messageRef.limitToLast(50).on('child_added', function(data){
-                    	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-              	  data.forEach(function(childSnapshot) {
-							var msgKey = childSnapshot.key;
-          				console.log("메세지 로드 함수를 타긴 하는거야 머야??? " + msgKey);
-                  }); 
-            	  });
-            } 
-
-          }
             
 
 			// example of firebase 'exists'...
@@ -661,7 +690,7 @@
         	
           //writeUserData('js king', 'sdkjfsdl@naver.com', 'view/coolguy.jpg');
 
-          var rootRef = firebase.database().ref();
+          var rootRef = database.ref();
 
           var userListUp = function(uid, name){
                
@@ -678,23 +707,27 @@
               }
           
 	
-          var messageListUp= function(){
-
+          var messageListUp= function(key, profileImg, time, userName, message){
+              console.log("messageListUp 함수..데이타 들어오냐??" + key+"/"+profileImg+"/"+time+"/"+userName+"/"+message);
+			  var userProPic = 	(profileImg ? profileImg : "");
         	  var messageTemplate = '<li id="li' + key  + '" class="collection-item avatar" data-key="' + key + '">'+
-  									'<img src="'+ profileImg ? profileImg : + 'img/noprofile.png'+'" alt="" class="circle">'+
+  									'<img src="'+ userProPic + 'img/noprofile.png'+'" alt="" class="circle">'+
   									'<span class="title">'+userName+'</span><span class="time">'+time+'</span>'+
   									'<p>'+message+'</p>'+
   					 				'</li>'; 
           
-        	  $('#ulUserList').append(userList);
-        	  console.log("undefined... 왜 찍히는 거야??" + userList);
+        	  $('#ulMessageList').append(messageTemplate);
+        	  messageTemplate += '먼데 안들어가는 거야??';
+        	  console.log("messageListUp 합수 타변 변수에 담기는 값들은??>>>" +messageTemplate);
           } 
 
           
           
 
-          var name = $('#memberName').val();
+          let name = "${member.name}";
+          let name2 = "${member.email}";
           console.log("널인가???" + name);
+          console.log("널인가???" + name2);
           
           /*
           var db = firebase.firestore();
@@ -711,9 +744,8 @@
         	});
 			*/	
 
-          var curName = $('#memberName').val();
-	      var curEmail = $('#memberEmail').val(); 
-	      var curProfilePic = $('#memberProfilePic').val();   
+
+	           
           console.log("널인가???" + curName + " / " + curEmail);
 
 
