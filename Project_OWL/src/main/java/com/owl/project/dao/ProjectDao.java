@@ -3,6 +3,7 @@ package com.owl.project.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.owl.member.dto.Member;
 import com.owl.project.dto.Project;
 import com.owl.project.dto.ProjectList;
 
@@ -20,5 +21,7 @@ public interface ProjectDao {
 	public List<ProjectList> getProjectLists(String email) throws ClassNotFoundException, SQLException;
 
 	public ProjectList getProjectList(int projectIdx, String email) throws ClassNotFoundException, SQLException;
+	
+	public List<Member> getProjectMembers(int projectIdx) throws ClassNotFoundException, SQLException;
 
 }

@@ -63,8 +63,25 @@
                 setChageView(currentTab.attr("id"));
             });
 
+            $('#MemberCheckModal').on('show.bs.modal', function(){
+				console.log("open MemberCheckModal");
+				$("#projectMemebers").empty();
+			 	$.ajax({
+			 		type: "POST",
+                    url: "GetProjectMember.do",
+                    data: { rojectIdx: ${project.projectIdx}},
+                    success: function (data) {
+                        console.log("GetProjectMember success");
+                        console.log(data);
+                    },
+                    error: function () {
+                        console.log("GetProjectMember error");
+                    }
+				}) 
+              });
+
             $('#joinProjectMemberModal').on('hidden.bs.modal', function(){
-               $("#addMemberBox").empty();
+                $("#addMemberBox").empty();
                $("#addMemberOk").val("초대 메일 전송");
              });
             
@@ -104,6 +121,7 @@
                 });
             })
         }) 
+        
         function setChageView(target) {
             console.log("setChageView : " + target);
             if (target === "dash")
@@ -124,7 +142,6 @@
 
         function setCalendarData() {
             console.log("in setCalendarData");
-
         }
 
 /* 		function addKanbanIssue(colIdx,obj){
@@ -227,15 +244,15 @@
             }
 
             $("#addMemberCount").text((addProjectMembers.length+1) + "명");
-            let control = "<div class='input-group'>" +
-                "<input type='hidden' class='addProjectMembers' name='addProjectMembers' value='" + addEmail + "'>" +
-                "	<div class='form-control'>" +
-                "		<i class='fas fa-envelope mr-2 iconSizeBig'></i>" + addEmail +
-                "	</div>" +
-                "	<div class='input-group-append memberDeleteButton'>" +
-                "		<span class='input-group-text'><i class='far fa-times-circle font-weight-bold iconSizeBig'></i></span>" +
-                "	</div>" +
-                "</div>";
+            let control = "<div class='input-group'>" 
+			               + "<input type='hidden' class='addProjectMembers' name='addProjectMembers' value='" + addEmail + "'>" 
+			               + "	<div class='form-control'>" 
+			               + "		<i class='fas fa-envelope mr-2 iconSizeBig'></i>" + addEmail 
+			               + "	</div>" 
+			               + "	<div class='input-group-append memberDeleteButton'>" 
+			               + "		<span class='input-group-text'><i class='far fa-times-circle font-weight-bold iconSizeBig'></i></span>" 
+			               + "	</div>" 
+			               + "</div>";
             $("#addMemberBox").prepend(control);
 
             $(".memberDeleteButton").click(function () {
@@ -390,7 +407,8 @@
                                 <i class="fas fa-user-cog iconSizeBig pt-2"></i></a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <ul class="list-style-none">
-                                    <li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트멤버 설정</a></li>
+                                    <li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트 멤버 추가</a></li>
+                                    <li class="pl-3"><a href="#memberCheckModal" data-toggle="modal">프로젝트 멤버 확인</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -425,8 +443,9 @@
 
     </div>
 
-    <!-- pm의 설정  modal -->
-    <jsp:include page="modal/projectMemberEdit.jsp" />
+    <!-- MODAL -->
+    <jsp:include page="modal/memberAdd.jsp" />
     <jsp:include page="modal/joinProjectMember.jsp" />
+      <jsp:include page="modal/memberCheck.jsp" />
 
 </body>
