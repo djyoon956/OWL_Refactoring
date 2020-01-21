@@ -28,7 +28,7 @@
 
 			
 			$("#InsertIssueBtn").on("click", function () {		
-				console.log('InsertIssueBtn 클릭되니1');
+/* 				console.log('InsertIssueBtn 클릭되니1');
  				console.log('InsertIssueBtn 클릭되니1');
 				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
 				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
@@ -36,7 +36,7 @@
 				console.log(' $("#assigned").val()' +  $('#assigned').val());
 				console.log('$("#labelIdx").val()' + $('#labelIdx').val());
 				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
-				console.log($('#multipartFile').val());
+				console.log($('#multipartFile').val()); */
 
 			    let formData = new FormData();
 			    formData.append("projectIdx",'${project.projectIdx}');
@@ -73,27 +73,8 @@
 	 		        	if(data != null){
 			        		successAlert("Issue 추가 완료");
 
-			        		let newIssue = "";
-			        		newIssue  += '<li class="issuePiece">';
-			        		newIssue  += '<div class="dropdown">';
-			        		newIssue  += '<label>';
-			        		newIssue  += '<span class="badgeIcon float-left" style="background-color:'+data.labelColor+'">'+data.labelName+'</span>';
-			        		newIssue  += '<span class="issueTitle">'+istitle+'</span>';
-			        		newIssue  += '</label>';
-			        		newIssue  += '<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float:right">';
-			        		newIssue  += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-			        		newIssue  += '<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
-			        		newIssue  += '<ul class="list-style-none">';
-			        		newIssue  += '<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>';
-			        		newIssue  += '<li class="pl-3"><a href="#">Remove Issue</a></li>';
-			        		newIssue  += '</ul></div></div>';
-			        		newIssue  += '<div><label>';
-			        		newIssue  += '<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>';
-			        		newIssue  += '<span class="assignee" style="margin-left:3px">'+isassignee+'</span>';
-			        		newIssue  += '</label></div></li>';
-			        	
-			        		$('#openAppend').append(newIssue);
-	
+			        		addKanbanIssue("openIssue", data);
+			        		
 			        	}else{
 			        		errorAlert("Issue 추가 실패");
 			        	} 
@@ -104,9 +85,6 @@
 			    });
 		 	});
 	 });
-
-
- 
 
 </script>
 

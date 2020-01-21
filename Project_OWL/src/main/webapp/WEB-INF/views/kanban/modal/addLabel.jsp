@@ -61,47 +61,6 @@
 
 </style>
 
-<script>
-$(function() {
-	console.log("라벨박스 in !!!!!!");
-	
-	/* $.ajax({
-		url : 'GetLabelList.do',
-		data : {'projectIdx' : ${project.projectIdx}},
-		success : function(data) {
-			console.log("Showlabel success");
-			console.log(data);
-			$('#labelList').empty();
-
-			let lablist = "";
-			
-			 $.each(data,function(index, obj) {
-				 console.log("each문 in")
-				console.log(obj.labelIdx);
-				console.log(obj.labelName);
-				console.log(obj.labelColor);
-
-				lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'">';
-				lablist +=  '<div class="col-lg-8">';
-				lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
-				lablist +=  '</div>';
-				lablist +=  '<div class="col-lg-2">';
-				lablist +=  '<a>Edit</a>';
-				lablist +=  '</div>'
-				lablist +=  '<div class="col-lg-2">';
-				lablist +=  '<a>Delete</a>';
-				lablist +=  '</div></div><hr>';
-
-				$('#labelList').append(lablist);
-				
-				 });
-		},error : function() {
-			console.log("Showlabel error");
-		}
-	
-		}); */
-});	
-</script>
 <div id="addLabelModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
