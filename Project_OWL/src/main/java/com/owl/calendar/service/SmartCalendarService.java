@@ -74,12 +74,12 @@ public class SmartCalendarService {
 		return calendars;
 	}
 	
-	public List<SmartCalendar> getProjectCalendars(int projectIdx) {
+	public List<SmartCalendar> getProjectCalendar(int projectIdx) {
 		SmartCalendarDao dao = getSmartCalendarDao();
 
 		List<SmartCalendar> calendars = new ArrayList<SmartCalendar>();
 		try {
-			calendars = dao.getProjectCalendars(projectIdx);
+			calendars = dao.getProjectCalendar(projectIdx);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

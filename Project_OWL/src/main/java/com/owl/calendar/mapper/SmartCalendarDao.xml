@@ -50,4 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT CALIDX, TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALLDAY, EMAIL, PROJECTIDX FROM SMARTCALENDAR WHERE EMAIL = #{email}; 
 	</select>
 	
+	<select id="getProjectCalendar" resultType="com.owl.calendar.dto.SmartCalendar" parameterType="int">
+	SELECT CALIDX, TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALLDAY, EMAIL, PROJECTIDX FROM SMARTCALENDAR WHERE PROJECTIDX =#{projectIdx}; 
+	</select>
+	
 </mapper>

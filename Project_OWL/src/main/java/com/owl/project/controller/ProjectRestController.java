@@ -71,6 +71,15 @@ public class ProjectRestController {
 		return result;
 	}
 	
+	@RequestMapping("GetProjectList.do")
+	public ProjectList getProjectList(int projectIdx, Principal principal, Model model) {
+		ProjectList projectList = null;
+		projectList = service.getProjectList(projectIdx, principal.getName());
+		model.addAttribute("projectList", projectList);
+		System.out.println("단일 캘린더 " + projectList);
+		return projectList;
+	}
+	
 	@RequestMapping("ProjectList.do")
 	public List<ProjectList> getDriveList(Principal principal, Model model){
 		List<ProjectList> projectList  = null;
