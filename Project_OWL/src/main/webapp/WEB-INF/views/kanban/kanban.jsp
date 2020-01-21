@@ -125,7 +125,7 @@
 <script>
   $(function(){
 
-			let selectoption = '<option value="">Select</option>';
+	let selectoption = '<option value="">Select</option>';
 			 	
 	//프로젝트 내 라벨 리스트 출력 
 	  $.ajax({

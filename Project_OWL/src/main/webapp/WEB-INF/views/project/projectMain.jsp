@@ -62,7 +62,6 @@
             
             let oldMenu = $("#projectMenu li:first");
             $("#projectMenu li").on("click", function () {
-                console.log("in projectlsit :"+$(this).children(".nav-link").attr("href") );
                 if($(this).children(".nav-link").attr("href") == "#project")
 					return;
 				
@@ -162,7 +161,7 @@
                 setCalendarData();
             else if (target === "kanban"){
                 setKanbanData();
-            	setIssueData()
+            	setIssueData();
             }
             else if (target === "notice")
                 setNoticeData('${project.projectIdx}');
@@ -283,7 +282,7 @@
         						
     							 addColumn(obj);
     							 addKanbanIssue(obj.colIdx,obj);
-    							 /* if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; */
+    							  if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; 
     							 
     						}
         					} */

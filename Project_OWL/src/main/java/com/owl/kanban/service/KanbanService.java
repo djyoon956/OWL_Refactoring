@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.helper.UploadHelper;
@@ -18,7 +17,6 @@ import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
-import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.File;
 import com.owl.notice.dto.File.FileType;
 import com.owl.project.dto.Label;
@@ -216,7 +214,18 @@ public class KanbanService {
 		return null;
 	}
 	
-	
+	public boolean deleteColumn(int colIdx) {
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		try {
+			result = dao.deleteColumn(colIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
