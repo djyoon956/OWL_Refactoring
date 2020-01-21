@@ -67,9 +67,10 @@ public class SmartCalendarRestController {
 	}
 
 	@RequestMapping(value="DeleteCalendar.do", method = RequestMethod.POST)
-	public boolean deleteMyCalendar(@RequestParam(value = "calendarId") int projectIdx) {
+	public boolean deleteMyCalendar(@RequestParam(value = "scheduleId") int calIdx) {
 		boolean result = false;
-		result = service.deleteCalendar(projectIdx);	
+		result = service.deleteCalendar(calIdx);	
+		System.out.println(result);
 		return result;
 	}
 	
