@@ -58,7 +58,7 @@
             });
             
             setTheme("${setting.themeColor}", "${setting.font}");
-            initNotice();
+            initNotice("${project.projectIdx}");
             
             let oldMenu = $("#projectMenu li:first");
             $("#projectMenu li").on("click", function () {

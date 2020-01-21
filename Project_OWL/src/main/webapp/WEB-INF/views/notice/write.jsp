@@ -16,12 +16,12 @@
                         <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>&nbsp;파일첨부</h5>
                         <div class="form-group">
                             <div class="fallback">
-                                <input class="l-border-1" name="multipartFiles" id="multipartFiles" type="file" multiple="multiple">
+                                <input class="l-border-1" name="noticeMultipartFiles" id="noticeMultipartFiles" type="file" multiple="multiple">
                             </div>
                         </div>
                         <div class="form-group text-center">
                             <input type="button"
-                                class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2" onclick="writeNoticeOk(${project.projectIdx})" value="확인">
+                                class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2" onclick="writeNoticeOk()" value="확인">
                             <input type="button" class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" onclick="cancelNotice()"  value="취소">
                         </div>
                     </form>
