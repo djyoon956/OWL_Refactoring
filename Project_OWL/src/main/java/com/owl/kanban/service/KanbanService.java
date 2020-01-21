@@ -29,12 +29,12 @@ public class KanbanService {
 	private SqlSession sqlSession;
 
 	@Transactional
-	public Label insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
+	public ColumnList insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
 		System.out.println(issue.getDueDate());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		Label label = null;
+		ColumnList colList = null;
 		try {
 			
 			result = dao.insertIssue(issue) > 0 ? true : false;
@@ -42,17 +42,22 @@ public class KanbanService {
 			
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
-
 			
+			System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
+			
+			
+			System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
 			if(result) {
-				label = dao.getLabelinfo(issue.getLabelIdx()); 
+				colList = dao.getIssuebyIssueIdx(issue.getProjectIdx(), issue.getIssueIdx());
 			}
+			
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 		} 
 		
+		System.out.println("service colist : " + colList);
 		
-		return label;
+		return colList;
 	}
 
 	private List<File> insertIssueFiles(KanbanDao dao, String email, int projectIdx, int issueIdx, List<MultipartFile> multipartFiles, String uploadPath) {

@@ -123,82 +123,6 @@
 }
 </style>
 <script>
-/* 	function addKanbanIssue(colIdx,obj){
-	 let issue = '<li class="issuePiece">'
-			+		'<div class="dropdown">'
-			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
-			+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
-			+			'</label>'
-			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
-			+				'<ul class="list-style-none">'
-			+					'<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>'
-			+					'<li class="pl-3"><a href="#">Remove Issue</a></li>'
-			+				'</ul>'
-			+			'</div>'
-			+		'</div>'
-			+		'<div>'
-			+			'<label>'
-			+			'<span class="assigneetitle">'
-			+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>'
-			+			'</label>'
-			+		'</div>'
-			+	'</li>';
-	
-		$("#"+colIdx+"Column > .columnBody").append(issue);
-	}
-
-    function setKanbanData() {
-        console.log("in setKanbanData");
-        $.ajax({
-			 url : 'GetColumn.do',
-			 data : {'projectIdx' :  ${project.projectIdx} },
-			 success : function(data) {
-				//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
-				$.each(data,function(index,obj) {
-					if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
-						 addKanbanIssue(obj.colIdx, obj); 
-	   					}
-					else{ // 칼럼 박스가 존재하지 않을때
-						 addColumn(obj);
-	   					addKanbanIssue(obj.colIdx, obj); 
-					}
-				});
-				$( ".sortableCol").sortable({
-			        connectWith: ".connectedSortable",
-			        dropOnEmpty: true       
-			     }).disableSelection();
-			},
-			 error : function() {
-				console.log("getColum.do error");
-			}
-		}); 
-    } */
-
-	function addColumn(obj){
-		console.log("addColumn :" + obj.colIdx);
-		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-					+ '<div class="columnTitle text-center mt-2 dropdown">'
-					+ '<h4>' + obj.colname
-					+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-					+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-					+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-					+				'<ul class="list-style-none">'
-					+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
-					+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
-					+   '>Edit Column</a></li>'
-					+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
-					+				'</ul>'
-					+			'</div>'
-					+		'</h4>'
-					+	'</div>'
-					+	'<ul class="connectedSortable sortableCol columnBody cursor">'
-					+	'</ul>'
-					+ '</div>';
-
-		$('#kanbanArea').append(column);
-	}
   $(function(){
 
 			let selectoption = '<option value="">Select</option>';
@@ -250,30 +174,28 @@
 		//칼럼 select  
 
     	//칸반내에서 움직일 수 있게 만들어 주는 function
-        function sortableFn (columnidx)  {
+/*         function sortableFn (columnidx)  {
             var value ='#' + columnidx;
              $( value ).sortable({
                  connectWith: ".connectedSortable",
                  dropOnEmpty: true        
                }).disableSelection();
-             } 
+             }  */
 
         
          $("#openIssueBtn").click(function() {
-            $("#openIssue").removeClass("d-none");
-     		$("#closeIssue").hide();
-     		$("#openIssue").show();
+            $("#openIssueColumn").removeClass("d-none");
+     		$("#closeIssueColumn").hide();
+     		$("#openIssueColumn").show();
           });
 
          
          $("#closeIssueBtn").click(function() {
-         	$("#closeIssue").removeClass("d-none");
-     		$("#openIssue").hide();
-     		$("#closeIssue").show();
+         	$("#closeIssueColumn").removeClass("d-none");
+     		$("#openIssueColumn").hide();
+     		$("#closeIssueColumn").show();
           });
 	
-        
-
          
 	$("#InsertColumnBtn").on("click", function () {	
 
@@ -396,7 +318,7 @@
 
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
-		<div class="columnSection leftdoor d-none" id="openIssue">
+		<div class="columnSection leftdoor d-none" id="openIssueColumn">
 			<div class="text-center mt-2  leftdoorheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
@@ -408,7 +330,7 @@
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none leftdoor "  id="closeIssue">
+		<div class="columnSection d-none leftdoor "  id="closeIssueColumn">
 			<div class="text-center mt-2 leftdoorheader">
 				<h4>
 					Close Issue<span class="float-right">
@@ -469,7 +391,6 @@
 
 <!-- add issue modal -->
 <jsp:include page="modal/addIssue.jsp" />
-<jsp:include page="modal/editIssue.jsp" />
 <jsp:include page="modal/addColumn.jsp" />
 <jsp:include page="modal/editColumn.jsp" />
 <jsp:include page="modal/addLabel.jsp" />
