@@ -264,6 +264,7 @@
     						console.log("칸반");
     						
     						console.log(obj.colIdx);
+    						if(obj.colIdx != -1 || obj.colIdx != 0)
     						addColumn(obj);
     						/* if(obj.colIdx == 0) {
     							if(obj.issueTitle != null) { 
@@ -300,6 +301,7 @@
 						console.log("셋 이슈 데이터");
 						console.log(data);
 						$.each(data,function(index,obj) {
+							
 							 addKanbanIssue(obj.colIdx, obj); 
 						});
     					$( ".sortableCol").sortable({
