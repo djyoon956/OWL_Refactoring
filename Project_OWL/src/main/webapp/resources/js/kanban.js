@@ -24,7 +24,8 @@
 					+	'</ul>'
 					+ '</div>';
 
-		$('#kanbanArea').append(column);
+		/*$('#kanbanArea').append(column);*/
+		$('#kanbanIn').append(column);
 	}
 	
 	function deleteColumn(obj){

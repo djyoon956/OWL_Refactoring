@@ -1,6 +1,9 @@
 "use strict";
 
-function initNotice(){
+let noticeProjectIdx;
+function initNotice(projectIdx){
+	noticeProjectIdx = projectIdx;
+	console.log("notice init : "+noticeProjectIdx);
 	$('#noticeTable').DataTable({
 	 	stateSave: true, // 페이지 상태 저장
 	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
@@ -22,22 +25,32 @@ function setDetailData(boardIdx){
 		url: "GetNotice.do",
 		data: {boardIdx: boardIdx},
 		success: function (notice) {
-			console.log(notice);
-			console.log(notice.title);
-			console.log(notice.content);
-			$("#DetailBox #title").val(notice.title);
-			$("#DetailBox #content").html(notice.content);
-			
-			changeNoticeView("DetailBox");
+			$("#detailBox #noticeTitle").text(notice.title);
+			$("#detailBox #noticeContent").html(notice.content);
+			console.log("file");
+			console.log(notice.files);
+			$("#noticeFiles").empty();
+			$("#noticeFileCount").text("첨부파일 ("+notice.files.length+")");
+			$.each(notice.files, function(){
+				//noticeFiles
+				console.log(this);
+				let path = "/upload/"+ noticeProjectIdx +"/file/"+this.fileName;
+				console.log(path);
+				let control = "<li class='mb-2' style='font-size: 16px'>"
+								+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+this.fileName+" ("+this.fileSize+" KB)</span></a>"
+								+" </li>";
+				$("#noticeFiles").append(control);
+			})
+			changeNoticeView("detailBox");
 		}
 	}); 
 }
 
-function setNoticeData(projectIdx) {
+function setNoticeData() {
 	 $.ajax({
 		type: "POST",
 		url: "GetNotices.do",
-		data: {projectIdx: projectIdx},
+		data: {projectIdx: noticeProjectIdx},
 		success: function (data) {
 			if(data.length > 0){
 				$('#noticeTable').DataTable().clear();
@@ -83,14 +96,13 @@ function cancelNotice(){
 	changeNoticeView("noticeBox");
 }
 
-function writeNoticeOk(projectIdx){
+function writeNoticeOk(){
 	console.log("WriteNoticeOk");
-	console.log(projectIdx);
     let formData = new FormData();
-    formData.append("projectIdx", projectIdx);
+    formData.append("projectIdx", noticeProjectIdx);
     formData.append("content",$('#noticeNote').summernote('code'));
     formData.append("title",$("#title").val());
-    $.each($("#multipartFiles")[0].files, function(i, file) {
+    $.each($("#noticeMultipartFiles")[0].files, function(i, file) {
     	formData.append('multipartFiles', file);
     });
     
@@ -124,23 +136,21 @@ function writeNoticeOk(projectIdx){
 function writeNoticeError(){
 	errorAlert("공지사항 작성 실패 ");
 	cancelNotice();
-	setNoticeData(projectIdx);
+	setNoticeData(noticeProjectIdx);
 }
 
 function changeNoticeView(view){
 	if(view == "noticeBox"){
-		$("#DetailBox").addClass("hidden");
+		$("#detailBox").addClass("hidden");
 		$("#writeBox").addClass("hidden");
 		$("#noticeBox").removeClass("hidden");
 	}else if(view == "writeBox"){
 		$("#noticeBox").addClass("hidden");
 		$("#DetailBox").addClass("hidden");
 		$("#writeBox").removeClass("hidden");
-	}else if(view == "DetailBox"){
+	}else if(view == "detailBox"){
 		$("#noticeBox").addClass("hidden");
 		$("#writeBox").addClass("hidden");
-		$("#DetailBox").removeClass("hidden");
-}
-	
-	
+		$("#detailBox").removeClass("hidden");
+	}
 }

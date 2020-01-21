@@ -18,7 +18,6 @@ import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
 import com.owl.notice.dto.File;
-import com.owl.notice.dto.File.FileType;
 import com.owl.project.dto.Label;
 
 @Service
@@ -30,7 +29,6 @@ public class KanbanService {
 	public ColumnList insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
 		System.out.println(issue.getDueDate());
-		System.out.println(issue.getOrderNum());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		ColumnList colList = null;
@@ -72,11 +70,10 @@ public class KanbanService {
 			}
 
 			File file = new File();
-			file.setFileFrom(FileType.ISSUE);
-			file.setBelongTo(issueIdx);
+			file.setIssueIdx(issueIdx);
 			file.setFileName(fileName);
 			file.setWriter(email);
-			file.setFileSize(String.valueOf(multipartFile.getSize()));
+			file.setFileSize(String.valueOf(multipartFile.getSize()/1024));
 			System.out.println("file값" +file.toString());
 			try {
 				dao.insertIssueFile(file);
@@ -156,7 +153,7 @@ public class KanbanService {
 		return lblist;
 	}
 	
-	//칼럼  목록 보여주기 
+	
 	public List<Column> getColum(int projectIdx){
 		KanbanDao dao = getKanbanDao();
 		List<Column> colList = null;
@@ -166,24 +163,12 @@ public class KanbanService {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(projectIdx);
+		
 		System.out.println(colList + " : 칼럼리스트 ");
 		return colList;
 	}
 	
-	public List<ColumnList> getIssueList(int projectIdx){
-		KanbanDao dao = getKanbanDao();
-		List<ColumnList> colList = null;
-		
-		try {
-			colList = dao.getIssueList(projectIdx);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println(colList + " : 이슈리스트");
-		return colList;
-	}
+	
 	
 	public boolean updateColumn(Column column) {
 		KanbanDao dao = getKanbanDao();

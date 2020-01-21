@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.owl.notice.dto.File;
-import com.owl.notice.dto.File.FileType;
 import com.owl.notice.dto.Notice;
 
 public interface NoticeDao {
@@ -18,5 +17,5 @@ public interface NoticeDao {
 
 	public Notice getNotice(int boardIdx) throws ClassNotFoundException, SQLException;
 
-	public List<File> getNoticeFiles(FileType type ,int boardIdx) throws ClassNotFoundException, SQLException;
+	public List<File> getNoticeFiles(int boardIdx) throws ClassNotFoundException, SQLException;
 }

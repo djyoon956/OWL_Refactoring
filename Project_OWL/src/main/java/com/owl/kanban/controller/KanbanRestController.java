@@ -69,14 +69,6 @@ public class KanbanRestController {
 		System.out.println(columns);
 		return columns;		
 	}
-	//이슈 리스트 select 
-	@RequestMapping("GetIssue.do")
-	public List<ColumnList> getIssue(int projectIdx) {
-		System.out.println("-------------------------");
-		List<ColumnList> columns= service.getIssueList(projectIdx);
-		System.out.println(columns);
-		return columns;		
-	}
 
 	@RequestMapping("UpdateColumn.do")
 	public int updateColumn(Column column) {
@@ -124,7 +116,7 @@ public class KanbanRestController {
 	public ColumnList insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
 							, @RequestParam(value = "content") String content
-							, @RequestParam(value = "ordernum") int orderNum
+							, @RequestParam(value = "orderNum") int orderNum
 							, @RequestParam(value = "priorityCode", required = false) String priorityCode
 							, @RequestParam(value = "assigned", required = false) String assigned
 							, @RequestParam(value = "labelIdx", required = false) String labelIdx
@@ -140,9 +132,9 @@ public class KanbanRestController {
 		System.out.println(assigned);
 		System.out.println(labelIdx);
 		System.out.println(dueDate);
+		System.out.println(orderNum);
 		System.out.println(priorityCode);
 		System.out.println(multipartFiles);
-		System.out.println("orderNum" +  orderNum);
 		System.out.println(multipartFiles.size());
 
 		
