@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<delete id="deleteCalendar">
-	DELETE FROM SMARTCALENDAR WHERE PROJECTIDX =#{projectIdx}
+	DELETE FROM SMARTCALENDAR WHERE CALIDX =#{calIdx}
 	</delete>
 
 	<select id="getMyAllCalendars" resultType="com.owl.calendar.dto.SmartCalendar" parameterType="String" >

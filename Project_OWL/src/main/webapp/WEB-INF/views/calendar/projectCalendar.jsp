@@ -104,6 +104,13 @@ margin-left: 30px;
 margin-right: 30px;
 }
 
+#tui-full-calendar-schedule-location{
+top: 4px !important;
+}
+#tui-full-calendar-schedule-title{
+top: 1px !important;
+height: 27px !important;
+}
 </style>
 <script type="text/javascript">
 //왼쪽에 위치한 프로젝트 리스트 목록 출력 및 팝업창에서의 프로젝트 리스트 출력
