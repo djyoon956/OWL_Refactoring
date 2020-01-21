@@ -232,7 +232,9 @@
 
 
     	    function setKanbanData() {
-    	        console.log("in setKanbanData");
+    	       // console.log("in setKanbanData");
+    	       // $('#kanbanArea').empty();
+    	       //$('#kanbanArea').find(":not(('#openIssueColumn').children())").empty();
     	        $.ajax({
     				 url : 'GetColumn.do',
     				 data : {'projectIdx' :  ${project.projectIdx} },
@@ -268,9 +270,11 @@
     				}
     			}); 
     	    }
+
+    	    
     	    function closeFn() {
-    	      	$("#closeIssue").hide();
-    	    	$("#openIssue").hide();
+    	      	$("#closeIssueColumn").hide();
+    	    	$("#0Column").hide();
     	       }
     </script>
     <style type="text/css">

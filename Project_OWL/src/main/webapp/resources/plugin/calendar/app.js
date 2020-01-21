@@ -43,7 +43,7 @@
             saveNewSchedule(e);
             //캘린더 일정 DB Insert
     		$.ajax({
-        		url:"insertCalendar.do",
+        		url:"InsertCalendar.do",
         		method:"POST",
         		data:{calendarId: e.calendarId,
         			       title: e.title,
@@ -61,14 +61,33 @@
             var changes = e.changes;
 
             console.log('beforeUpdateSchedule', e);
-            console.log(schedule.id);
-            console.log(schedule.calendarId);
             cal.updateSchedule(schedule.id, schedule.calendarId, changes);
+
+
+            let changeStart = changes.start ==null? null : changes.start._date;
+            let changeEnd = changes.end ==null? null : changes.end._date;
+
+            $.ajax({ 
+        		url:"UpdateCalendar.do",
+        		method:"POST",  
+        		data:{scheduleId: schedule.id,
+	    				 calendarId: changes.calendarId,        				  
+	    			     title: changes.title,
+	    			     location: changes.location,
+	    			     start: changeStart,
+	    			     end: changeEnd,
+	    			     allDay: changes.isAllDay
+        			      },
+        		success:function(data){	
+        			location.reload();
+        		}
+    		});
             refreshScheduleVisibility();
         },
         'beforeDeleteSchedule': function(e) {
             console.log('beforeDeleteSchedule', e);
             cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
+          //캘린더 일정 DB delete
             	$.ajax({
             		url:"DeleteCalendar.do",
             		method:"POST",

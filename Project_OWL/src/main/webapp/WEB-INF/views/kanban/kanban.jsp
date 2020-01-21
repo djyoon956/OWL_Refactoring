@@ -192,7 +192,7 @@
          
          $("#closeIssueBtn").click(function() {
          	$("#closeIssueColumn").removeClass("d-none");
-     		$("#openIssueColumn").hide();
+     		$("#0Column").hide();
      		$("#closeIssueColumn").show();
           });
 	
@@ -203,17 +203,14 @@
 			$.ajax({
 				url : 'InsertColumn.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'colname' : $('#colname').val()},
-				success : function(columnidx) {
-					console.log(columnidx);
-					console.log(typeof(columnidx));
-					if(columnidx > 0) {
-		        		 
-		        		 let colnm = $('#colname').val();
-		        
-		        		addColumn(columnidx, colnm);
-
+				success : function(data) {
+					console.log('insertColumnBtn in');
+					console.log(data);
+					console.log(typeof(data));
+					if(data != null) {
+		        		 console.log('data : ' + data);
+		        		addColumn(data);
 		        		$('#addColumnModal').modal("hide");
-		        		$('#colname').val("");
 					}else {
 						errorAlert("Column 추가 실패");
 					}
@@ -342,6 +339,7 @@
 				<li class="issuePiece"></li>
 			</ul>
 		</div>
+
 		<div>
 		
 		</div>
@@ -390,6 +388,7 @@
 			</ul>
 		</div> -->
 		<!-- 끝 -->
+
 	</div>
 </div>
 
