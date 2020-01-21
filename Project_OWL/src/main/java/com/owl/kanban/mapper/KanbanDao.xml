@@ -61,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.ColumnList">
 		SELECT I.PROJECTIDX, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR
 		FROM ISSUE I LEFT JOIN LABEL L  ON I.PROJECTIDX =  L.LABELIDX
-		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2};
+		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2}
 	</select>
 	
 	
