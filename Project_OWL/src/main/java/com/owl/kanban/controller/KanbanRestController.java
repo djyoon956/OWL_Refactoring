@@ -87,6 +87,7 @@ public class KanbanRestController {
 		//System.out.println("여기도찍히나? " + col.getColumnIdx());
 		return columnidx;
 	}
+	
 	@RequestMapping("InsertColumn.do")
 	public Column insertColumn(Column column) {
 		//System.out.println("insertColumn function in");
@@ -106,7 +107,6 @@ public class KanbanRestController {
 			colobj = col;
 		};
 		
-
 		return colobj;
 	}
 
