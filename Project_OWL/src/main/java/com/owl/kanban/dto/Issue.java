@@ -29,6 +29,7 @@ public class Issue {
 	private String assigned;
 	private String creator;
 	private int labelIdx;
+	private int orderNum;
 	private int colIdx;
 	private List<File> files;
 	private HashMap<Integer, IssueLog> issueLogs;

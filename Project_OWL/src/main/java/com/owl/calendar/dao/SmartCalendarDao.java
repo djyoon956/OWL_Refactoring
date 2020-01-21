@@ -10,7 +10,7 @@ public interface SmartCalendarDao {
 
 	public int updateCalendar(SmartCalendar calendar) throws ClassNotFoundException, SQLException;
 
-	public int deleteCalendar(int projectIdx) throws ClassNotFoundException, SQLException;
+	public int deleteCalendar(int calIdx) throws ClassNotFoundException, SQLException;
 
 	public List<SmartCalendar> getMyAllCalendars(String email) throws ClassNotFoundException, SQLException;
 

@@ -3,8 +3,11 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
 <script>
+
+ var ordernum = 1; 
+
  $(function() {
-	 
+	
 /*datwpicker*/
 	 $('.mydatepicker').datepicker();
 		 $('#datepicker-autoclose').datepicker({
@@ -28,9 +31,9 @@
 
 			
 			$("#InsertIssueBtn").on("click", function () {		
-/* 				console.log('InsertIssueBtn 클릭되니1');
+			console.log('InsertIssueBtn 클릭되니1');
  				console.log('InsertIssueBtn 클릭되니1');
-				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
+ 				/* 			console.log('$("#projectIdx").val()' + '${project.projectIdx}');
 				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
 				console.log('$("#content").summernote("code")' + $('#content').summernote('code'));
 				console.log(' $("#assigned").val()' +  $('#assigned').val());
@@ -42,6 +45,7 @@
 			    formData.append("projectIdx",'${project.projectIdx}');
 			    formData.append('issueTitle',$('#issueTitle').val());
 			    formData.append('content', $('#content').summernote('code'));
+			    formData.append('orderNum', ordernum++);
 			    formData.append('priorityCode', $('#priorityCode').val());			    
 			    formData.append('assigned', $('#assigned').val());
 			    formData.append('labelIdx', $('#labelIdx').val());
@@ -77,7 +81,12 @@
 			        		
 			        	}else{
 			        		errorAlert("Issue 추가 실패");
-			        	} 
+			        	}
+
+	 		       	$( ".sortableCol").sortable({
+				        connectWith: ".connectedSortable",
+				        dropOnEmpty: true       
+				     }).disableSelection(); 
 			        },
 			        error: function (e) {
 			        	errorAlert("Issue 추가 실패");

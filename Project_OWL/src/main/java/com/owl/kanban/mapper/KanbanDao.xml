@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="insertIssue" parameterType="com.owl.kanban.dto.Issue">
-		INSERT INTO owl.ISSUE(creator, issuetitle, content, issueprogress, projectidx, duedate, prioritycode, assigned, labelidx, colidx) 
-		VALUES(#{creator}, #{issueTitle}, #{content}, #{issueProgress}, #{projectIdx}
+		INSERT INTO owl.ISSUE(ordernum, creator, issuetitle, content, issueprogress, projectidx, duedate, prioritycode, assigned, labelidx, colidx) 
+		VALUES(#{orderNum}, #{creator}, #{issueTitle}, #{content}, #{issueProgress}, #{projectIdx}
 					, #{dueDate, jdbcType=DATE} , #{priorityCode, jdbcType=VARCHAR}, #{assigned, jdbcType=VARCHAR}
 					, <choose>
 					    <when test="labelIdx != 0"> #{labelIdx} </when>
@@ -59,12 +59,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<select id="getColumn" resultType="com.owl.kanban.dto.ColumnList">
+	<select id="getIssueList" resultType="com.owl.kanban.dto.ColumnList">
 	SELECT I.PROJECTIDX, I.ISSUETITLE, I.ISSUEIDX, I.ASSIGNED , I.colidx , C.colname, L.LABELNAME, L.LABELCOLOR
 	FROM ISSUE I JOIN colname C  ON I.colidx = C.colidx JOIN LABEL L ON I.LABELIDX = L.LABELIDX
 	WHERE I.PROJECTIDX= #{projectIdx}
-	</select> 
+	</select>  
 	
+	<select id="getColumn" resultType="com.owl.kanban.dto.Column">
+  		select colidx, colname from colname c where projectidx=#{projectIdx}
+	</select>
 	
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.ColumnList">
 		SELECT I.PROJECTIDX, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR

@@ -27,7 +27,9 @@ public interface KanbanDao {
 
 	public Label getLabelinfo(int labelIdx) throws ClassNotFoundException, SQLException;
 	
-	public List<ColumnList> getColumn(int projectIdx) throws ClassNotFoundException, SQLException;
+	public List<ColumnList> getIssueList(int projectIdx) throws ClassNotFoundException, SQLException;
+	
+	public List<Column> getColumn(int projectIdx) throws ClassNotFoundException, SQLException;
 	
 	public ColumnList getIssuebyIssueIdx(int projectIdx, int issueIdx) throws ClassNotFoundException, SQLException;
 	

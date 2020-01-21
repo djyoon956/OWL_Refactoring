@@ -62,8 +62,12 @@
             
             let oldMenu = $("#projectMenu li:first");
             $("#projectMenu li").on("click", function () {
-                oldMenu.removeClass("active");
+                console.log("in projectlsit :"+$(this).children(".nav-link").attr("href") );
+                if($(this).children(".nav-link").attr("href") == "#project")
+					return;
+				
                 let oldTab = $(oldMenu.children(".nav-link").attr("href"));
+                oldMenu.removeClass("active");
                 oldTab.removeClass("active show");
 
                 $(this).addClass("active");
@@ -91,11 +95,11 @@
 		                				+ "	<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
 		                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
 
-               				if(index == 0)
+               				if(index == 0){
                					control += "<span class='ml-5 roleBadge pm'></span>";
-            				else	
+               				}else{
             					control += "<span class='ml-5 roleBadge member'></span>";		
-
+               				}	
            					control+= "</li>";	
            					
            					$("#projectMemebersBox").append(control);
@@ -156,8 +160,10 @@
                 setDashBoardData();
             else if (target === "calendar")
                 setCalendarData();
-            else if (target === "kanban")
+            else if (target === "kanban"){
                 setKanbanData();
+            	setIssueData()
+            }
             else if (target === "notice")
                 setNoticeData('${project.projectIdx}');
             else if (target === "drive")
@@ -216,7 +222,7 @@
             })
         }
         // 칸반 --> 
-    	function addKanbanIssue(colIdx,obj){
+    	/* function addKanbanIssue(colIdx,obj){
         	console.log("in addKanbanIssue : "+colIdx);
         	console.log($("#"+colIdx+"Column > .columnBody"));
         	console.log("in addKanbanIssue2 : ");
@@ -244,7 +250,8 @@
     				+	'</li>';
     		
     			$("#"+colIdx+"Column > .columnBody").append(issue);
-    		}
+    		} */
+
 
 
     	    function setKanbanData() {
@@ -255,13 +262,16 @@
     				 url : 'GetColumn.do',
     				 data : {'projectIdx' :  ${project.projectIdx} },
     				 success : function(data) {
-    					//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
-    					
+    					console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
+    					console.log("칸반");
     					$.each(data,function(index,obj) {
     						/* $('#kanbanArea').empty(); */
     						console.log("칸반");
+    						
     						console.log(obj.colIdx);
-    						if(obj.colIdx == 0) {
+    						if(obj.colIdx != -1 || obj.colIdx != 0)
+    						addColumn(obj);
+    						 if(obj.colIdx == 0) {
     							if(obj.issueTitle != null) { 
     							 addKanbanIssue(obj.colIdx, obj); 
     							}
@@ -273,10 +283,11 @@
     						else{ // 칼럼 박스가 존재하지 않을때
         						
     							 addColumn(obj);
-    							 if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj);  };
+    							 addKanbanIssue(obj.colIdx,obj);
+    							  if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; 
     							 
     						}
-        					}
+        					} 
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
@@ -288,7 +299,27 @@
     				}
     			}); 
     	    }
-
+			function setIssueData(){
+				$.ajax({
+					url : "GetIssue.do",
+					data : {'projectIdx' :  ${project.projectIdx} },
+					success : function(data) {
+						console.log("셋 이슈 데이터");
+						console.log(data);
+						$.each(data,function(index,obj) {
+							
+							 addKanbanIssue(obj.colIdx, obj); 
+						});
+    					$( ".sortableCol").sortable({
+    				        connectWith: ".connectedSortable",
+    				        dropOnEmpty: true       
+    				     }).disableSelection();
+					},
+					error: function() {
+						console.log("getIssue.do error");
+					}
+				})
+			}
     	    
     	    function closeFn() {
     	      	$("#closeIssueColumn").hide();
@@ -336,6 +367,9 @@
                             <div id="tab-btn">
                                 <ul id="projectMenu" class="nav nav-tabs" role="tablist"
                                     style="border-bottom-width: 0px;">
+                                  <li class="nav-item">
+                                        <a class="nav-link" href="#project" style="font-size: 20px; height: 51.979166px; padding-top: 12px;">${project.projectName}</a>
+                                    </li>
                                     <li class="nav-item active">
                                         <a class="nav-link" data-toggle="tab" href="#dash">Dash Board</a>
                                     </li>
