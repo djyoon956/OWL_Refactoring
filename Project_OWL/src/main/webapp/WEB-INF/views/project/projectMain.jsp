@@ -271,7 +271,7 @@
     						console.log(obj.colIdx);
     						if(obj.colIdx != -1 || obj.colIdx != 0)
     						addColumn(obj);
-    						/* if(obj.colIdx == 0) {
+    						 if(obj.colIdx == 0) {
     							if(obj.issueTitle != null) { 
     							 addKanbanIssue(obj.colIdx, obj); 
     							}
@@ -287,7 +287,7 @@
     							  if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; 
     							 
     						}
-        					} */
+        					} 
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
