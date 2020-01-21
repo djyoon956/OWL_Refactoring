@@ -116,6 +116,7 @@ public class KanbanRestController {
 	public ColumnList insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
 							, @RequestParam(value = "content") String content
+							, @RequestParam(value = "orderNum") int orderNum
 							, @RequestParam(value = "priorityCode", required = false) String priorityCode
 							, @RequestParam(value = "assigned", required = false) String assigned
 							, @RequestParam(value = "labelIdx", required = false) String labelIdx
@@ -131,6 +132,7 @@ public class KanbanRestController {
 		System.out.println(assigned);
 		System.out.println(labelIdx);
 		System.out.println(dueDate);
+		System.out.println(orderNum);
 		System.out.println(priorityCode);
 		System.out.println(multipartFiles);
 		System.out.println(multipartFiles.size());
@@ -143,6 +145,7 @@ public class KanbanRestController {
 		issue.setCreator(principal.getName());
 		issue.setIssueProgress(IssueProgressType.OPEN);
 		issue.setColIdx(colIdx);
+		issue.setOrderNum(orderNum);
 		if(!priorityCode.isEmpty())
 			issue.setPriorityCode(PriorityType.valueOf(priorityCode));
 		if(!assigned.isEmpty())

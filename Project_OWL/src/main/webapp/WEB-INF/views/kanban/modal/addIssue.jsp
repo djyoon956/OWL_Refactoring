@@ -31,9 +31,9 @@
 
 			
 			$("#InsertIssueBtn").on("click", function () {		
-/* 				console.log('InsertIssueBtn 클릭되니1');
+			console.log('InsertIssueBtn 클릭되니1');
  				console.log('InsertIssueBtn 클릭되니1');
-				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
+ 				/* 			console.log('$("#projectIdx").val()' + '${project.projectIdx}');
 				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
 				console.log('$("#content").summernote("code")' + $('#content').summernote('code'));
 				console.log(' $("#assigned").val()' +  $('#assigned').val());
@@ -45,13 +45,12 @@
 			    formData.append("projectIdx",'${project.projectIdx}');
 			    formData.append('issueTitle',$('#issueTitle').val());
 			    formData.append('content', $('#content').summernote('code'));
+			    formData.append('orderNum', ordernum++);
 			    formData.append('priorityCode', $('#priorityCode').val());			    
 			    formData.append('assigned', $('#assigned').val());
 			    formData.append('labelIdx', $('#labelIdx').val());
 			    formData.append('dueDate', $('#datepicker-autoclose').val());
 			    formData.append('colIdx', '0');
-			    formData.append('ordernum',++ordernum);
-			    console.log('ordernum :' + ordernum);
 			    $.each($("#multipartFiles")[0].files, function(i, file) {
 			    	formData.append('multipartFiles', file);
 			    }); 
