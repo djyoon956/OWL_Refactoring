@@ -225,7 +225,7 @@
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
 					lablist +=  '<button class="btn-link link-gray">Edit</button>';
-					lablist +=  '</div>'
+					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
 					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
 					lablist +=  '</div></div><hr>';
@@ -263,6 +263,7 @@
      		$("#closeIssue").hide();
      		$("#openIssue").show();
           });
+
          
          $("#closeIssueBtn").click(function() {
          	$("#closeIssue").removeClass("d-none");
