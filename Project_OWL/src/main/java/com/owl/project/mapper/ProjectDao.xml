@@ -37,4 +37,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertProjectMember" parameterType="com.owl.project.dto.ProjectList">
 		INSERT INTO PROJECTLIST (PROJECTIDX, EMAIL, PROJECTCOLOR, AUTHORITY) VALUES (#{projectIdx}, #{email}, #{projectColor}, #{authority})	
 	</insert>
+	
+	<select id="getProjectMembers"  resultType="com.owl.member.dto.Member" >
+		SELECT  M.EMAIL, M.NAME, M.PROFILEPIC, P.AUTHORITY
+			FROM owl.projectlist P JOIN OWL.MEMBER M ON P.EMAIL = M.EMAIL
+		WHERE P.PROJECTIDX = #{projectIdx}
+		ORDER BY P.AUTHORITY
+	</select>
 </mapper>

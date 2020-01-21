@@ -42,7 +42,6 @@ $(function() {
     </div>
 	
 	 <!-- pm의 설정  modal -->
-	 <jsp:include page="../project/modal/projectMemberEdit.jsp" />
 	 <jsp:include page="../kanban/modal/addLabel.jsp" />
     <!--Scripts-->
     <script src="resources/plugins/common/common.min.js"></script>
