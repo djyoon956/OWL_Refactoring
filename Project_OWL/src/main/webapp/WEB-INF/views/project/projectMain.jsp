@@ -63,16 +63,32 @@
                 setChageView(currentTab.attr("id"));
             });
 
-            $('#MemberCheckModal').on('show.bs.modal', function(){
+            $('#memberCheckModal').on('show.bs.modal', function(){
 				console.log("open MemberCheckModal");
 				$("#projectMemebers").empty();
 			 	$.ajax({
 			 		type: "POST",
                     url: "GetProjectMember.do",
-                    data: { rojectIdx: ${project.projectIdx}},
+                    data: { projectIdx: ${project.projectIdx}},
                     success: function (data) {
-                        console.log("GetProjectMember success");
-                        console.log(data);
+                         console.log("GetProjectMember success");
+                        $("#projectMemebersBox").empty();
+                        let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
+                        $.each(data, function(index, element){
+                     
+                            let control = "<li class='mt-3'>"
+		                				+ "	<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
+		                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
+
+               				if(index == 0)
+               					control += "<span class='ml-5 roleBadge pm'></span>";
+            				else	
+            					control += "<span class='ml-5 roleBadge member'></span>";		
+
+           					control+= "</li>";	
+           					
+           					$("#projectMemebersBox").append(control);
+                         }) 
                     },
                     error: function () {
                         console.log("GetProjectMember error");
@@ -80,7 +96,7 @@
 				}) 
               });
 
-            $('#joinProjectMemberModal').on('hidden.bs.modal', function(){
+            $('#memberEditModal').on('hidden.bs.modal', function(){
                 $("#addMemberBox").empty();
                $("#addMemberOk").val("초대 메일 전송");
              });

@@ -43,29 +43,9 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body modal-scroll mx-3"> 
+			<div class="modal-body modal-scroll mx-3 mb-3"> 
 				<div>
-					<ul class="list-style-none assignedto text-center" id="projectMemebers">
-						<li class="mt-3">
-							<img class="rounded-circle" width="40" src="resources/images/login/profile.png" alt="user">
-							<label class="ml-3">윤다정 (dbsekwjdaa@naver.com)</label>
-							<span class="ml-5  roleBadge pm" ></span>
-						</li>
-						<li class="mt-3">
-							<img class="rounded-circle" width="40" src="resources/images/login/profile.png" alt="user">
-							<label class="ml-3">윤다정 (dbsekwjdaa@naver.com)</label>
-							<span class="ml-5 roleBadge member"> </span>
-						</li>
-						<li class="mt-3"> 
-							<img class="rounded-circle" width="40" src="resources/images/login/profile.png" alt="user">
-							<label class="ml-3">윤다정 (dbsekwjdaa@naver.com)</label>
-							<span class="ml-5 roleBadge member">  </span>
-						</li>
-						<li class="mt-3">
-							<img class="rounded-circle" width="40" src="resources/images/login/profile.png" alt="user">
-							<label class="ml-3">윤다정 (dbsekwjdaa@naver.com)</label>
-							<span class="ml-5 roleBadge member" >  </span>
-						</li>
+					<ul class="list-style-none assignedto text-center" id="projectMemebersBox">
 					</ul>
 				</div>			
 			</div>
