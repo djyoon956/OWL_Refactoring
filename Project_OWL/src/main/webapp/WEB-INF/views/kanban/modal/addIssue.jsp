@@ -2,11 +2,15 @@
 	<!-- Summernote -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
+
 <script>
 
  var ordernum = 1; 
+	
 
  $(function() {
+
+	 let selectoption = '<option value="">Select</option>';
 	
 /*datwpicker*/
 	 $('.mydatepicker').datepicker();
@@ -93,6 +97,10 @@
 			        }
 			    });
 		 	});
+
+
+
+
 	 });
 
 </script>
@@ -161,7 +169,9 @@
 						<div class="row">
 						<div class="col-4">Label</div>	
 						<div class="col-8">
-							<select class="select2 form-control custom-select" name="labelIdx" id="labelIdx"></select>
+							<select class="select2 form-control custom-select" name="labelIdx" id="labelIdx">
+								
+							</select>
 						</div>									
 					</div>
 						</div>

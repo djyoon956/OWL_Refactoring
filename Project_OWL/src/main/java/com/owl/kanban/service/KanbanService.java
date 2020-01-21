@@ -212,6 +212,9 @@ public class KanbanService {
 		return result;
 	};
 	
+	
+	
+	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
 	}

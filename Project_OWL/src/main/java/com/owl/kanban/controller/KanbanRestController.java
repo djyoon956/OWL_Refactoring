@@ -203,6 +203,16 @@ public class KanbanRestController {
 		return result;
 	}
 	
+	
+	/*
+	@RequestMapping(value="GetIssueform.do")
+	public boolean getIssueform(int projectIdx) {
+		boolean result = false;
+		result = service.deleteColumn(colIdx);
+		return result;
+	}
+	*/
+	
 	private NoticeDao getNoticeDao() {
 		return sqlSession.getMapper(NoticeDao.class);
 	}

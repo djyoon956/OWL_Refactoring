@@ -276,7 +276,7 @@
     						}
     						
     						/* if(obj.colIdx != -1 || obj.colIdx != 0)
->>>>>>> 01a25db32d021d077e37f3f510dc46ccece001fb
+
     						addColumn(obj);
     						 /* if(obj.colIdx == 0) {
     							if(obj.issueTitle != null) { 
@@ -443,6 +443,6 @@
     <!-- MODAL -->
     <jsp:include page="modal/memberAdd.jsp" />
     <jsp:include page="modal/joinProjectMember.jsp" />
-      <jsp:include page="modal/memberCheck.jsp" />
+      <jsp:include page="modal/memberCheck.jsp" /> 
 
 </body>

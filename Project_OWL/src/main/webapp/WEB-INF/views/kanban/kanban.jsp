@@ -125,6 +125,35 @@
 <script>
   $(function(){
 
+
+
+	/* 	 $.ajax({
+				url : "GetLabelList.do",
+				type : "POST",
+				data : {'projectIdx' : ${project.projectIdx}},
+				success : function(data) {
+					console.log("GetIssueform get");
+					console.log(data);
+
+					let opt = "";
+					$.each(data, function(index, obj){
+						console.log("here!");
+						console.log(obj);
+					   opt += '<option value="'+obj.labelIdx+'"style="background-color:'+obj.labelColor+'">'+obj.labelName+'</option>';
+						})
+						
+						//console.log('---');
+						//console.log(opt);
+						$('#labelIdx').append(selectoption);
+						$('#labelIdx').append(opt);	
+					
+				}, error : function(e) {
+					errorAlert("GetIssueform error");
+					}
+				 }); */
+
+	  
+
 	let selectoption = '<option value="">Select</option>';
 			 	
 	//프로젝트 내 라벨 리스트 출력 
@@ -139,8 +168,8 @@
 
 				
 				let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
-				let lblist = ""; //add issue에 select box에 보여줄 것 
 				
+				let opt = ""; //add issue에 select box에 보여줄 것
 				 $.each(data,function(index, obj) {
 				
 
@@ -155,22 +184,23 @@
 					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
 					lablist +=  '</div></div><hr>';
 
-					lblist += '<option value="'+obj.labelIdx+'">'+obj.labelName+'</option>'
+					 opt += '<option value="'+obj.labelIdx+'"style="background-color:'+obj.labelColor+'">'+obj.labelName+'</option>';
 					
 					 });
 
 					$('#labelList').append(lablist);
 
+					
 					$('#labelIdx').append(selectoption);
-					$('#labelIdx').append(lblist);
+					$('#labelIdx').append(opt);	
+				
 
-
-					 
 			},error : function() {
 				console.log("Showlabel error");
 			}
 		
 			});
+		
 		//칼럼 select  
 
     	//칸반내에서 움직일 수 있게 만들어 주는 function
