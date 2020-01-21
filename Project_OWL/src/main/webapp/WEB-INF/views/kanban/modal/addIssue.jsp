@@ -3,8 +3,11 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
 <script>
+
+ var ordernum = 1; 
+
  $(function() {
-	 
+	
 /*datwpicker*/
 	 $('.mydatepicker').datepicker();
 		 $('#datepicker-autoclose').datepicker({
@@ -47,6 +50,8 @@
 			    formData.append('labelIdx', $('#labelIdx').val());
 			    formData.append('dueDate', $('#datepicker-autoclose').val());
 			    formData.append('colIdx', '0');
+			    formData.append('ordernum',++ordernum);
+			    console.log('ordernum :' + ordernum);
 			    $.each($("#multipartFiles")[0].files, function(i, file) {
 			    	formData.append('multipartFiles', file);
 			    }); 
@@ -77,7 +82,12 @@
 			        		
 			        	}else{
 			        		errorAlert("Issue 추가 실패");
-			        	} 
+			        	}
+
+	 		       	$( ".sortableCol").sortable({
+				        connectWith: ".connectedSortable",
+				        dropOnEmpty: true       
+				     }).disableSelection(); 
 			        },
 			        error: function (e) {
 			        	errorAlert("Issue 추가 실패");

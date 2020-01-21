@@ -160,8 +160,10 @@
                 setDashBoardData();
             else if (target === "calendar")
                 setCalendarData();
-            else if (target === "kanban")
+            else if (target === "kanban"){
                 setKanbanData();
+            	setIssueData()
+            }
             else if (target === "notice")
                 setNoticeData('${project.projectIdx}');
             else if (target === "drive")
@@ -220,7 +222,7 @@
             })
         }
         // 칸반 --> 
-    	function addKanbanIssue(colIdx,obj){
+    	/* function addKanbanIssue(colIdx,obj){
         	console.log("in addKanbanIssue : "+colIdx);
         	console.log($("#"+colIdx+"Column > .columnBody"));
         	console.log("in addKanbanIssue2 : ");
@@ -248,7 +250,8 @@
     				+	'</li>';
     		
     			$("#"+colIdx+"Column > .columnBody").append(issue);
-    		}
+    		} */
+
 
 
     	    function setKanbanData() {
@@ -259,13 +262,15 @@
     				 url : 'GetColumn.do',
     				 data : {'projectIdx' :  ${project.projectIdx} },
     				 success : function(data) {
-    					//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
-    					
+    					console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
+    					console.log("칸반");
     					$.each(data,function(index,obj) {
     						/* $('#kanbanArea').empty(); */
     						console.log("칸반");
+    						
     						console.log(obj.colIdx);
-    						if(obj.colIdx == 0) {
+    						addColumn(obj);
+    						/* if(obj.colIdx == 0) {
     							if(obj.issueTitle != null) { 
     							 addKanbanIssue(obj.colIdx, obj); 
     							}
@@ -277,10 +282,11 @@
     						else{ // 칼럼 박스가 존재하지 않을때
         						
     							 addColumn(obj);
-    							 if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj);  };
+    							 addKanbanIssue(obj.colIdx,obj);
+    							 /* if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; */
     							 
     						}
-        					}
+        					} */
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
@@ -292,7 +298,26 @@
     				}
     			}); 
     	    }
-
+			function setIssueData(){
+				$.ajax({
+					url : "GetIssue.do",
+					data : {'projectIdx' :  ${project.projectIdx} },
+					success : function(data) {
+						console.log("셋 이슈 데이터");
+						console.log(data);
+						$.each(data,function(index,obj) {
+							 addKanbanIssue(obj.colIdx, obj); 
+						});
+    					$( ".sortableCol").sortable({
+    				        connectWith: ".connectedSortable",
+    				        dropOnEmpty: true       
+    				     }).disableSelection();
+					},
+					error: function() {
+						console.log("getIssue.do error");
+					}
+				})
+			}
     	    
     	    function closeFn() {
     	      	$("#closeIssueColumn").hide();

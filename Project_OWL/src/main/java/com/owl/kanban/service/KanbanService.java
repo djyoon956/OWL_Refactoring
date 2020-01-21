@@ -32,6 +32,7 @@ public class KanbanService {
 	public ColumnList insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
 		System.out.println(issue.getDueDate());
+		System.out.println(issue.getOrderNum());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		ColumnList colList = null;
@@ -157,22 +158,34 @@ public class KanbanService {
 		return lblist;
 	}
 	
-	
-	public List<ColumnList> getColum(int projectIdx){
+	//칼럼  목록 보여주기 
+	public List<Column> getColum(int projectIdx){
 		KanbanDao dao = getKanbanDao();
-		List<ColumnList> colList = null;
+		List<Column> colList = null;
 		
 		try {
 			colList = dao.getColumn(projectIdx);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println(projectIdx);
 		System.out.println(colList + " : 칼럼리스트 ");
 		return colList;
 	}
 	
-	
+	public List<ColumnList> getIssueList(int projectIdx){
+		KanbanDao dao = getKanbanDao();
+		List<ColumnList> colList = null;
+		
+		try {
+			colList = dao.getIssueList(projectIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(colList + " : 이슈리스트");
+		return colList;
+	}
 	
 	public boolean updateColumn(Column column) {
 		KanbanDao dao = getKanbanDao();

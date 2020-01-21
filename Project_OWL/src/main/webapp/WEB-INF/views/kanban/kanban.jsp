@@ -315,8 +315,9 @@
 	<div class="row" id="kanbanArea">
 		<!--  open issue -->
 		<!--  openIssueColumn -->
+	
 		<div class="columnSection leftdoor d-none" id="0Column">
-			<div class="text-center mt-2  leftdoorheader">
+			<div class="text-center mt-2  leftdo orheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
 				</h4>
@@ -327,7 +328,7 @@
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none leftdoor "  id="closeIssueColumn">
+		<div class="columnSection d-none leftdoor"  id="closeIssueColumn">
 			<div class="text-center mt-2 leftdoorheader">
 				<h4>
 					Close Issue<span class="float-right">
@@ -339,11 +340,8 @@
 			</ul>
 		</div>
 
-		<div>
-		
-		</div>
 		<!-- 칼럼 -->
-<!-- 		<div class="columnSection">
+	 <!--  	<div class="columnSection">
 			<div class="columnTitle text-center mt-2 dropdown">
 				<h4>Undefined section
 					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
@@ -359,31 +357,27 @@
 			</div>
 
 			<ul id="sortable000" class="connectedSortable columnBody cursor">
-				<li class="issuePiece d-none">Item 1</li>
-				무조건 있어야함!!!
 				<li class="issuePiece">
-					<div class="dropdown">
-						<label> <span class="badgeIcon float-left">Dev</span> 
-						<span class="issueTitle">Drive : Development</span>
-						</label> 
-						<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
-						<i class="fas fa-ellipsis-v fa-sm"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal"
-									data-toggle="modal">Edit Issue</a></li>
+						<div class="dropdown">
+							<label> <span class="badgeIcon float-left" style="background-color: yellow">title</span>
+							<span class="issueTitle">title</span>
+							</label>
+							<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
+							<i class="fas fa-ellipsis-v fa-sm"></i></a>
+							<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
+								<ul class="list-style-none">
+									<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
 								<li class="pl-3"><a href="#">Remove Issue</a></li>
-							</ul>
+								</ul>
+							</div>
 						</div>
-					</div>
-					<div>
-						<label> 
-						<span class="assigneetitle">
-						<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
+						<div>
+						<label>
+							<span class="assigneetitle">
+							<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">yoon</span>
 						</label>
 					</div>
-				</li>
+					</li>
 			</ul>
 		</div> -->
 		<!-- 끝 -->
