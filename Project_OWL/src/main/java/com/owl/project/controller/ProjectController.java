@@ -32,7 +32,7 @@ public class ProjectController {
 		ProjectList project = projectList.stream().filter(x -> x.getProjectIdx() == projectIdx).findFirst().get();
 		System.out.println(project);
 		model.addAttribute("project", project);
-		return "project/projectMain";
+		return "project/main";
 	}
 
 	@RequestMapping(value = "AddProjectMemberOk.do", method = RequestMethod.POST)

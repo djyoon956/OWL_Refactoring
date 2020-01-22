@@ -146,7 +146,7 @@ public class MemberRestController {
 		else if (page.startsWith("calendar"))
 			view = "calendar/calendar2";
 		else if (page.startsWith("project")) {
-			view = "project/projectMain";
+			view = "project/main";
 			mv.addObject("project", projectService.getProjectList(Integer.parseInt(projectIdx), principal.getName()));
 		}
 

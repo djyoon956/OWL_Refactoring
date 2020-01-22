@@ -48,8 +48,8 @@
         		data:{calendarId: e.calendarId,
         			       title: e.title,
         			       location: e.location,
-        			       start: $("#tui-full-calendar-schedule-start-date").val(),
-        			       end: $("#tui-full-calendar-schedule-end-date").val(),
+        			       start: e.start._date,
+        			       end: e.end._date,
         			       allDay: e.isAllDay
         			      },
         		success:function(data){	
