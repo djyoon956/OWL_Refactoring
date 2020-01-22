@@ -212,6 +212,13 @@ public class KanbanService {
 		return result;
 	};
 	
+	public boolean updateIssueOrder() {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		
+		return result;
+	}
 	
 	
 	
