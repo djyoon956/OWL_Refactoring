@@ -57,22 +57,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select  labelname, labelcolor from label WHERE labelIdx = #{labelIdx}
 	</select>
 	
-	
-	<select id="getIssueList" resultType="com.owl.kanban.dto.ColumnList">
-	SELECT I.PROJECTIDX, I.ISSUETITLE, I.ISSUEIDX, I.ASSIGNED , I.colidx , C.colname, L.LABELNAME, L.LABELCOLOR
-	FROM ISSUE I JOIN colname C  ON I.colidx = C.colidx JOIN LABEL L ON I.LABELIDX = L.LABELIDX
-	WHERE I.PROJECTIDX= #{projectIdx}
-	</select>  
-	
 	<select id="getColumn" resultType="com.owl.kanban.dto.Column">
-  		select colidx, colname from colname c where projectidx=#{projectIdx}
+  		select colidx, colname from colname where projectidx=#{projectIdx}
 	</select>
 	<select id="getIssue" resultType="com.owl.kanban.dto.Issue">
 	SELECT ISSUETITLE, ISSUEIDX, ASSIGNED , colidx, labelidx
 	FROM ISSUE  WHERE PROJECTIDX=#{projectIdx}
 	</select>
 	
-	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.ColumnList">
+	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.Issue">
 		SELECT I.PROJECTIDX, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR
 		FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
 		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2}
