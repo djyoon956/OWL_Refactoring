@@ -157,18 +157,27 @@ public class KanbanService {
 	public List<Column> getColum(int projectIdx){
 		KanbanDao dao = getKanbanDao();
 		List<Column> colList = null;
-		
 		try {
 			colList = dao.getColumn(projectIdx);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(colList + " : 칼럼리스트 ");
 		return colList;
 	}
 	
-	
+	public List<ColumnList> getIssue(int projectIdx){
+		KanbanDao dao = getKanbanDao();
+		List<ColumnList> colList = null;
+		
+		try {
+			colList = dao.getIssueList(projectIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(colList + " : 이슈리스트 ");
+		return colList;
+	}
 	
 	public boolean updateColumn(Column column) {
 		KanbanDao dao = getKanbanDao();

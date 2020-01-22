@@ -162,7 +162,7 @@
             else if (target === "kanban"){
                 $("#kanbanIn").empty();
                 setKanbanData();
-            	setIssueData();
+            	setIssueData(); 
             }
             else if (target === "notice")
                 setNoticeData('${project.projectIdx}');
@@ -222,38 +222,6 @@
             })
         }
         // 칸반 --> 
-    	/* function addKanbanIssue(colIdx,obj){
-        	console.log("in addKanbanIssue : "+colIdx);
-        	console.log($("#"+colIdx+"Column > .columnBody"));
-        	console.log("in addKanbanIssue2 : ");
-        	
-    		 let issue = '<li class="issuePiece">'
-    				+		'<div class="dropdown">'
-    				+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
-    				+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
-    				+			'</label>'
-    				+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-    				+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-    				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
-    				+				'<ul class="list-style-none">'
-    				+					'<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Issue detail</a></li>'
-    				+					'<li class="pl-3"><a href="#">Remove Issue</a></li>'
-    				+				'</ul>'
-    				+			'</div>'
-    				+		'</div>'
-    				+		'<div>'
-    				+			'<label>'
-    				+			'<span class="assigneetitle">'
-    				+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>'
-    				+			'</label>'
-    				+		'</div>'
-    				+	'</li>';
-    		
-    			$("#"+colIdx+"Column > .columnBody").append(issue);
-    		} */
-
-
-
     	    function setKanbanData() {
     	       // console.log("in setKanbanData");
     	       // $('#kanbanArea').empty();
@@ -265,7 +233,6 @@
     					console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
     					console.log("칸반");
     					$.each(data,function(index,obj) {
-    						/* $('#kanbanArea').empty(); */
     						console.log("칸반");
     						
     						console.log(obj.colIdx);
@@ -300,6 +267,7 @@
     				        connectWith: ".connectedSortable",
     				        dropOnEmpty: true       
     				     }).disableSelection();
+    				
     				},
     				 error : function() {
     					console.log("getColum.do error");
@@ -313,14 +281,14 @@
 					success : function(data) {
 						console.log("셋 이슈 데이터");
 						console.log(data);
-						$.each(data,function(index,obj) {
+						 $.each(data,function(index,obj) {
 							
 							 addKanbanIssue(obj.colIdx, obj); 
 						});
-    					$( ".sortableCol").sortable({
+    					 $( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
     				        dropOnEmpty: true       
-    				     }).disableSelection();
+    				     }).disableSelection(); 
 					},
 					error: function() {
 						console.log("getIssue.do error");
@@ -329,8 +297,8 @@
 			}
     	    
     	    function closeFn() {
-    	      	$("#closeIssueColumn").hide();
-    	    	$("#0Column").hide();
+    	      	$("#-99Column").hide();
+    	    	$("#-1Column").hide();
     	       }
     </script>
     <style type="text/css">

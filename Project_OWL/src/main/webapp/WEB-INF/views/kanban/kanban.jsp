@@ -214,16 +214,16 @@
 
         
          $("#openIssueBtn").click(function() {
-            $("#0Column").removeClass("d-none");
-     		$("#closeIssueColumn").hide();
-     		$("#0Column").show();
+            $("#-1Column").removeClass("d-none");
+     		$("#-99Column").hide();
+     		$("#-1Column").show();
           });
 
          
          $("#closeIssueBtn").click(function() {
-         	$("#closeIssueColumn").removeClass("d-none");
-     		$("#0Column").hide();
-     		$("#closeIssueColumn").show();
+         	$("#-99Column").removeClass("d-none");
+     		$("#-1Column").hide();
+     		$("#-99Column").show();
           });
 	
          
@@ -346,7 +346,7 @@
 		<!--  open issue -->
 		<!--  openIssueColumn -->
 	
-		<div class="columnSection leftdoor d-none" id="0Column">
+		<div class="columnSection leftdoor d-none" id="-1Column">
 			<div class="text-center mt-2 leftdoorheader">
 				<h4> Open Issue
 				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
@@ -358,7 +358,7 @@
 			</ul>
 		</div>
 		<!--  close issue -->
-		<div class="columnSection d-none leftdoor" id="closeIssueColumn">
+		<div class="columnSection d-none leftdoor" id="-99Column">
 			<div class="text-center mt-2 leftdoorheader">
 				<h4>
 					Close Issue<span class="float-right">
@@ -366,7 +366,7 @@
 				</h4>
 			</div>
 			<ul class="connectedSortable columnBody sortableCol">
-				<li class="issuePiece"></li>
+				<li class="issuePiece d-none"></li>
 			</ul>
 		</div>
 		<div id="kanbanIn" class="row"></div>
