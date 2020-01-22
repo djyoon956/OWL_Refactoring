@@ -1,6 +1,13 @@
 'use strict';
 
 function setTheme(theme, font){
+	let subColor;
+	if(theme == "black"){
+		subColor = "white";
+	}else{
+		subColor = "#326295";
+	}
+	
 	$(".mySetting").each(function(){
 		$(this).attr("style", "background-color : "+theme+" !important;");
 	})
@@ -10,4 +17,8 @@ function setTheme(theme, font){
 	$(".projectBody").css("background-color", theme);
 	$(".projectBody .tab-content").css("background-color", theme);
 	$(".projectBody #tab-menu").css("background-color", theme);
+	$(".projectBody #tab-menu .nav-item > .nav-link").css("color", subColor);
+	//$(".nav-tabs .nav-link.active").css("background-color","none");
+	//$(".projectBody#tab-menu.nav-item>.nav-link.active").css("background-color", "none");
+	//$(".projectBody #tab-menu .nav-item>.nav-link.active").css("color", "black");
 }
