@@ -265,7 +265,8 @@
 						console.log(data);
 						 $.each(data,function(index,obj) {
 							
-							 addIssue(obj.colIdx, obj); 
+							 addKanbanIssue(obj.colIdx, obj); 
+					
 						});
 					},
 					error: function() {
@@ -321,8 +322,8 @@
                             <div id="tab-btn">
                                 <ul id="projectMenu" class="nav nav-tabs" role="tablist"
                                     style="border-bottom-width: 0px;">
-                                  <li class="nav-item">
-                                        <a class="nav-link" href="#project" style="font-size: 20px; height: 51.979166px; padding-top: 12px;">${project.projectName}</a>
+                                  <li class="nav-item" style="width:auto; margin-left: 10px; margin-right: 10px;">
+                                        <a class="nav-link" href="#project" style="font-size: 20px; height: 51.979166px; padding-top: 12px; width: max-content;">${project.projectName}</a>
                                     </li>
                                     <li class="nav-item active">
                                         <a class="nav-link" data-toggle="tab" href="#dash">Dash Board</a>
