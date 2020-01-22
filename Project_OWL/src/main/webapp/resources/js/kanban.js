@@ -1,3 +1,4 @@
+let projectIdx;
 
 function addLabel(lbidx, lbcolor, lbnm) {
 	
@@ -15,7 +16,11 @@ function addLabel(lbidx, lbcolor, lbnm) {
 	
 	
 	$('#labelList').append(lablist);
+	
+}
 
+function initKanban(projectIdx){
+	this.projectIdx= projectIdx;
 }
 
 	function addColumn(obj){
@@ -116,7 +121,6 @@ function addLabel(lbidx, lbcolor, lbnm) {
 	      	});	
 	}
 
-
 	
 	
 	function deleteLabel(labelidx) {
@@ -142,41 +146,74 @@ function addLabel(lbidx, lbcolor, lbnm) {
 	}
 	
 	
-	function setKanbanDetail(issueIdx){
-	console.log("in setKanbanDetail : "+issueIdx + "/" + projectIdx);
 
+function setKanbanDetail(issueIdx){
 	$.ajax({
-		url : "GetIssueDetail.do",
-		data : {projectIdx : issueIdx, issueIdx : issueIdx},
-		success : function (data){
+		type: "POST",
+        url: "GetIssueDetail.do",
+		data : {projectIdx : this.projectIdx, issueIdx : issueIdx},
+		success : function (data) {
 			console.log("GetIssueDetail success");
 			console.log(data);
 			//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
-			$.each(data, function(){
-				$("#issueDetailTitle").text(this.issueTitle);
-				$("#issueDetailContent").html(this.content);
+				$("#issueDetailTitle").text(data.issueTitle);
+				$("#issueDetailContent").html(data.content);
 				
 				$("#issueDetailFiles").empty();
-				$("#issueDetailFileCount").text("첨부파일 ("+this.files.length+") ");
-				$.each(this.files, function(){
-					let path = "/upload/"+ projectIdx +"/file/"+this.fileName;
+				$("#issueDetailFileCount").text("첨부파일 ("+data.files.length+") ");
+				$.each(data.files, function(file){
+					let path = "/upload/"+ projectIdx +"/file/"+file.fileName;
 					console.log(path);
 					let control = "<li class='mb-2' style='font-size: 16px'>"
-									+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+this.fileName+" ("+this.fileSize+" KB)</span></a>"
+									+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+file.fileName+" ("+file.fileSize+" KB)</span></a>"
 									+" </li>";
 					$("#issueDetailFiles").append(control);
 				});
 				
-				/*$("#issueDetailActivityCount").text("Activity ("+this.issueLogs.size()+") ");
-				$.each(this.issueLogs, function(file){
-									
-				});*/
+				$("#issueDetailActivity").empty();
+				$("#issueDetailActivityCount").text("Activity ("+data.logs.length+") ");
+				$.each(data.logs, function(log){
+					$("#issueDetailActivity").append("<li> <p> "+log.log+"</p> </li>")
+				});
 				
-			/*	$("#issueDetailCommentCount").text("Comment ("+this.files.length+") ");
-				$.each(this.files, function(file){
+				$("#issueDetailComment").empty();
+				$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
+				$.each(data.replies, function(reply){
+					let control = '<div class="d-flex flex-row comment-row m-0">'
+									+ '	<div class="p-2">'
+									+ '		<div class="comment_img">C</div>'
+									+ '	</div>'
+									+ '	 <div class="comment-text w-100">'
+									+ '		<h6 class="font-medium mb-1">Cindy'
+									+ '		<span class="text-muted float-right">Jan 18, 2020</span></h6>'
+									+ '		<div class="mb-1 d-block"><span>화이팅</span></div>'
+									+ '		<div class="comment-footer">'
+									+ '		<button type="button" class="btn btn-info btn-sm">Edit</button>'
+									+ '		<button type="button" class="btn btn-secondary btn-sm">Delete</button>'
+									+ '		</div>'
+									+ '	</div>'
+									+ '</div>';
+					$("#issueDetailComment").append(control);
+				});
+				
+				$("#issueDetailAssignees").text(data.assigned);
+				
+				if(data.labelIdx > 0){
+					$("#issueDetailLabel").text(data.labelName);
+					$("#issueDetailLabel").css("background-color", data.labelColor);					
+				}
+				else
+					$("#issueDetailLabel").text("none");
+				
+				if(data.priorityCode != null)
+					$("#issueDetailPriority").addClass("priorityBadge "+data.priorityCode.toLowerCase());
+				 else
+					$("#issueDetailPriority").text("none");
 					
-				});*/
-			})
+				if(data.dueDate != null)
+					$("#issueDetailDueDate").text(data.dueDate);
+				else
+					$("#issueDetailDueDate").text("none");
 		},
 		error : function(){
 			console.log("GetIssueDetail error");
@@ -186,7 +223,7 @@ function addLabel(lbidx, lbcolor, lbnm) {
 	changeNoticeView("detail");
 }
 
-function changeNoticeView(view){
+function changeKanbanView(view){
 	if(view == "list"){
 		$("#kanbanDetailBox").addClass("hidden");
 		$("#kanbanMainBox").removeClass("hidden");
@@ -197,30 +234,4 @@ function changeNoticeView(view){
 }
 
 
-
-
-function checkLabel() {
-	console.log("체크하니?");
-	console.log('라벨컬러 :' + $('#labelcolor').val().trim());
-	console.log('라벨네임 :' + $('#labelname').val().trim());
-	let lcolor = false;
-	let lname = false;
-	
-	if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
-		  lcolor = false;
-		}else {lcolor = true;}
-
-	if($('#labelname').val().trim() == "" || $('#labelname').val().trim() == null) {
-		  lname = false;
-		}else {lname = true;}
-	
-
-
-	if(lcolor == true && lname == true) {
-		
-	}else {
-		
-		console.log('????');
-		return false;}
-  };
 	

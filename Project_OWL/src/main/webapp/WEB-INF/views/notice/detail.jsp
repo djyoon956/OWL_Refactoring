@@ -13,7 +13,7 @@ font-size: 16px;
 color: #f8f9fa;
 }
 </style>
-<div class="container-fluid mt-2" style="padding: 25px;" id="detailBox" class="hidden">
+<div class="container-fluid mt-2 hidden" style="padding: 25px;" id="noticeDetailBox">
     <div class="row">
         <div class="card w-100">
             <div class="card-title mb-0">

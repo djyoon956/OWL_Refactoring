@@ -3,17 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <style>
-    .comment_img {
-        background-color: #326295;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        border-radius: 50%;
-        text-align: center;
-        font-weight: 900;
-        font-size: 16px;
-        color: #f8f9fa;
-    }
+    
 </style>
 
 <div class="container-fluid mt-2 hidden" style="padding: 25px;" id="kanbanDetailBox" >
@@ -144,46 +134,47 @@
         
         <!-- Option -->
         <div class="col-4">
-            <div class="form-group">
+            <div class="form-group bold">
                 <div class="row">
                     <div class="col-4">Assignees </div>
-                    <div class="col-8">  Chloe </div>
+                    <div class="col-8" id="issueDetailAssignees">  Chloe </div>
                 </div>
             </div>
             <hr>
-            <div class="form-group">
+            <div class="form-group bold" >
                 <div class="row">
                     <div class="col-4">Label</div>
                     <div class="col-8">
-                        <div style="background-color: #F4D452;padding:2px; padding-left:5px;">Dev</div>
+                        <div id="issueDetailLabel" style="padding:2px; padding-left:5px;">Dev</div>
                     </div>
                 </div>
             </div>
             <hr>
-            <div class="form-group">
+            <div class="form-group bold">
                 <div class="row">
                     <div class="col-4">Priority</div>
                     <div class="col-8">
-                        <span class="badge badge-pill badge-danger font-14">High</span>
+                        <span id="issueDetailPriority"></span>
                     </div>
                 </div>
             </div>
             <hr>
-            <div class="form-group">
+            <div class="form-group bold">
                 <div class="row">
                     <div class="col-4">Due Date</div>
-                    <div class="col-8"><i class="fas fa-calendar mr-1"></i> 2020/01/20 </div>
+                    <div class="col-8" ><i class="fas fa-calendar mr-1"></i> <span id="issueDetailDueDate"></span></div>
                 </div>
             </div>
             <hr>
-            <div class="form-group">
+            <div class="form-group bold">
                 <div class="row">
                     <button class="btn w-100"><i class="fas fa-check mr-2 text-danger"></i>Close issue</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="text-center"><button class="btn btn-primary mr-1">목록</button>
+    <div class="text-center">
+    	<button class="btn btn-primary mr-1" onclick="changeNoticeView('list')"><i class="fas fa-chevron-left"></i>뒤로가기</button>
         <button class="btn btn-primary ml-1">수정</button>
     </div>
 </div>

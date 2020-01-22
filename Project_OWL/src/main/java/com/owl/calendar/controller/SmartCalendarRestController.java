@@ -29,8 +29,8 @@ public class SmartCalendarRestController {
 	public boolean insertCalendar(@RequestParam(value = "calendarId") int calendarId, 
 												@RequestParam(value = "title") String title,
 												@RequestParam(value = "location",required = false) String content,
-												@RequestParam(value = "start") String startDate,
-												@RequestParam(value = "end") String endDate,
+												@RequestParam(value = "start",required = false) String startDate,
+												@RequestParam(value = "end",required = false) String endDate,
 												@RequestParam(value = "allDay") boolean allDay,
 												Principal principal) {
 		boolean result = false;
@@ -48,13 +48,17 @@ public class SmartCalendarRestController {
 		
 
 		if(allDay) {			
-			calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd").parse(startDate));
-			calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd").parse(endDate));		
+			if(!startDate.isEmpty()) {
+				calendar.setStartDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(startDate));
+			}
+			if(!endDate.isEmpty()) {
+				calendar.setEndDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(endDate));		
+			}	
 			calendar.setAllDay(1);
 	
 		}else {
-			calendar.setStartDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(startDate));
-			calendar.setEndDate(new SimpleDateFormat("yyyy-mm-dd HH:mm").parse(endDate));
+			calendar.setStartDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(startDate));
+			calendar.setEndDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(endDate));	
 			calendar.setAllDay(0);
 		}		
 		calendar.setEmail(principal.getName());

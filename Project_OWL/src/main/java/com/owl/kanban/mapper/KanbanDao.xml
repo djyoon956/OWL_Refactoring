@@ -66,8 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.Issue">
-		SELECT I.PROJECTIDX, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR
-		FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
+		SELECT I.PROJECTIDX, I.CONTENT, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR, I.DUEDATE, I.PRIORITYCODE, I.CREATOR, I.ORDERNUM, I.COLIDX
+			FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
 		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2}
 	</select>
 	
@@ -79,6 +79,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getIssueLogs" resultType="com.owl.kanban.dto.IssueLog">
 		SELECT LOGIDX, LOG, LOGTIME, ISSUEIDX FROM owl.ISSUELOG
+		WHERE ISSUEIDX = #{issueIdx}
+	</select>
+	<select id="getIssueReplies" resultType="com.owl.kanban.dto.Reply">
+		SELECT ISSUEIDX, ISSUERLYIDX, CREATEDATE, CREATOR, CONTENT 
+			FROM owl.ISSUERLY
 		WHERE ISSUEIDX = #{issueIdx}
 	</select>
 	

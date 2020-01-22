@@ -177,8 +177,7 @@ public class KanbanService {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(issue + " : 이슈리스트 ");
+
 		return issue;
 	}
 	
@@ -290,12 +289,13 @@ public class KanbanService {
 	
 	public Issue getIssueDetail(int projectIdx, int issueIdx) {
 		KanbanDao dao = getKanbanDao();
-		Issue issue = new Issue();
+		Issue issue = null;
 
 		try {
-			// issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
+			issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
 			issue.setFiles(dao.getIssueFiles(issueIdx));
 			issue.setLogs(dao.getIssueLogs(issueIdx));
+			issue.setReplies(dao.getIssueReplies(issueIdx));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

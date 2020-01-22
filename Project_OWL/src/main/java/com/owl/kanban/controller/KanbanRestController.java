@@ -230,14 +230,8 @@ public class KanbanRestController {
 	
 	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)
 	public Issue getIssueDetail(int projectIdx, int issueIdx) {
-		System.out.println("in getIssueDetail : " + issueIdx);
+		System.out.println("in getIssueDetail : " + issueIdx + "/"+projectIdx);
 		
 		return service.getIssueDetail(projectIdx, issueIdx);
 	}
-	
-	private NoticeDao getNoticeDao() {
-		return sqlSession.getMapper(NoticeDao.class);
-	}
-	
-
 }

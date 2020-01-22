@@ -103,7 +103,7 @@
 	border-bottom-color: #F9AFA4;
 }
 
-#kanbanArea {
+#kanbanArea, #kanbanIn {
 	height: 600px;
 	overflow-y: scroll;
  	display: flex;

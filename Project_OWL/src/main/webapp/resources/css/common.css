@@ -4,6 +4,10 @@
 	display: none;
 }
 
+.bold {
+	font-weight: bold;
+}
+
 /*footer css 적용*/
 .main_footer {
   background-color: #fff; 
