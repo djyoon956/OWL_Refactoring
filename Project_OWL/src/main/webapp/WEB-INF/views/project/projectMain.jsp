@@ -160,6 +160,8 @@
             else if (target === "calendar")
                 setCalendarData();
             else if (target === "kanban"){
+                $("#-1Column > .columnBody").empty();
+                $("#-99Column > .columnBody").empty();
                 $("#kanbanIn").empty();
                 setKanbanData();
             	setIssueData(); 
@@ -241,27 +243,6 @@
         						console.log("칼럼 안 ");
     							addColumn(obj);
     						}
-    						
-    						/* if(obj.colIdx != -1 || obj.colIdx != 0)
-
-    						addColumn(obj);
-    						 /* if(obj.colIdx == 0) {
-    							if(obj.issueTitle != null) { 
-    							 addKanbanIssue(obj.colIdx, obj); 
-    							}
-        					} else {
-            				
-    						if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
-    							 addKanbanIssue(obj.colIdx, obj); 
-    		   					}
-    						else{ // 칼럼 박스가 존재하지 않을때
-        						
-    							 addColumn(obj);
-    							 addKanbanIssue(obj.colIdx,obj);
-    							  if(obj.issueTitle != null) { addKanbanIssue(obj.colIdx,obj); }; 
-    							 
-    						}
-        					}  */
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
@@ -283,12 +264,8 @@
 						console.log(data);
 						 $.each(data,function(index,obj) {
 							
-							 addKanbanIssue(obj.colIdx, obj); 
+							 addIssue(obj.colIdx, obj); 
 						});
-    					 $( ".sortableCol").sortable({
-    				        connectWith: ".connectedSortable",
-    				        dropOnEmpty: true       
-    				     }).disableSelection(); 
 					},
 					error: function() {
 						console.log("getIssue.do error");
