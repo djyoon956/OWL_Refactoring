@@ -34,7 +34,13 @@
 		      });
 
 			
-			$("#InsertIssueBtn").on("click", function () {		
+			$("#InsertIssueBtn").on("click", function () {
+			if($('#issueTitle').val() == ""){
+					return; 
+				}
+			if($('#isContent').val() == ""){
+				return; 
+			}		
 			console.log('InsertIssueBtn 클릭되니1');
  				console.log('InsertIssueBtn 클릭되니1');
  				/* 			console.log('$("#projectIdx").val()' + '${project.projectIdx}');
