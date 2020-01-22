@@ -42,8 +42,6 @@ function initKanban(projectIdx){
 					+	'<ul class="connectedSortable sortableCol columnBody cursor">'
 					+	'</ul>'
 					+ '</div>';
-
-		/*$('#kanbanArea').append(column);*/
 		$('#kanbanIn').append(column);
 		
 	}
@@ -89,7 +87,7 @@ function initKanban(projectIdx){
 				+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
 				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 				+				'<ul class="list-style-none">'
-				+					'<li class="pl-3"><a  href="#" onClick="setKanbanDetail('+obj.issueIdx+');return false;" data-toggle="modal">Detail</a></li>'
+				+					'<li class="pl-3"><a onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
 				+					'<li class="pl-3"><a href="#" onclick="deleteIssue(' + obj.issueIdx +');">Remove Issue</a></li>'
 				+				'</ul>'
 				+			'</div>'
@@ -220,7 +218,7 @@ function setKanbanDetail(issueIdx){
 		}
 	})
 	
-	changeNoticeView("detail");
+	changeKanbanView("detail");
 }
 
 function changeKanbanView(view){

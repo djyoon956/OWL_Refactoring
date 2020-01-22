@@ -101,7 +101,7 @@ public class KanbanRestController {
 		
 		return colobj;
 	}
-
+  
 	
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
 	public Issue insertIssue(@RequestParam(value = "projectIdx") int projectIdx
