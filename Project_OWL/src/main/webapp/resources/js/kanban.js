@@ -151,9 +151,11 @@ function setKanbanDetail(issueIdx){
 				});
 				
 				$("#issueDetailAssignees").text(data.assigned);
-				$("#issueDetailLabel").css("background-color", data.labelColor);
-				if(data.labelIdx > 0)
+				
+				if(data.labelIdx > 0){
 					$("#issueDetailLabel").text(data.labelName);
+					$("#issueDetailLabel").css("background-color", data.labelColor);					
+				}
 				else
 					$("#issueDetailLabel").text("none");
 				

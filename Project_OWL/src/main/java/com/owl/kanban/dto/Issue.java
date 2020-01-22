@@ -38,7 +38,10 @@ public class Issue {
 	private String labelColor;
 	
 	public String getDueDate() {
-		return new SimpleDateFormat("yyyy-MM-dd").format(dueDate);
+		if (dueDate == null)
+			return null;
+		else
+			return new SimpleDateFormat("yyyy-MM-dd").format(dueDate);
 	}
 	
 	public enum IssueProgressType {

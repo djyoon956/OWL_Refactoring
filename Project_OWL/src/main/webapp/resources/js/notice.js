@@ -146,7 +146,7 @@ function changeNoticeView(view){
 		$("#noticeBox").removeClass("hidden");
 	}else if(view == "writeBox"){
 		$("#noticeBox").addClass("hidden");
-		$("#DetailBox").addClass("hidden");
+		$("#detailBox").addClass("hidden");
 		$("#writeBox").removeClass("hidden");
 	}else if(view == "detailBox"){
 		$("#noticeBox").addClass("hidden");
