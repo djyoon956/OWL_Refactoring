@@ -18,6 +18,7 @@ function setTheme(theme, font){
 	$(".projectBody .tab-content").css("background-color", theme);
 	$(".projectBody #tab-menu").css("background-color", theme);
 	$(".projectBody #tab-menu .nav-item > .nav-link").css("color", subColor);
+	
 	//$(".nav-tabs .nav-link.active").css("background-color","none");
 	//$(".projectBody#tab-menu.nav-item>.nav-link.active").css("background-color", "none");
 	//$(".projectBody #tab-menu .nav-item>.nav-link.active").css("color", "black");
