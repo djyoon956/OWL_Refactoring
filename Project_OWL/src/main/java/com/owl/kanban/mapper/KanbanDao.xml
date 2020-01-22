@@ -91,4 +91,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteColumn">
 		DELETE FROM COLNAME WHERE COLIDX =#{colIdx}
 	</delete>
+	
+		<delete id="deleteIssue">
+		DELETE FROM ISSUE WHERE ISSUEIDX =#{issueIdx}
+	</delete>
 </mapper>

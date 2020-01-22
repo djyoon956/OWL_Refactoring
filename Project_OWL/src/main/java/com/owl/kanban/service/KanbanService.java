@@ -221,6 +221,19 @@ public class KanbanService {
 		return result;
 	};
 	
+	public boolean deleteIssue(int issueIdx) {
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		try {
+			result = dao.deleteIssue(issueIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
+	
 	public boolean updateIssueOrder() {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
