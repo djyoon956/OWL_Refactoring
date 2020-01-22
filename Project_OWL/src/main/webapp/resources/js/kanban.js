@@ -52,7 +52,7 @@
 
 	
 	function addKanbanIssue(colIdx,obj){
-		 let issue = '<li class="issuePiece">'
+		 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
 				+		'<div class="dropdown">'
 				+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
 				+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
@@ -62,7 +62,7 @@
 				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 				+				'<ul class="list-style-none">'
 				+					'<li class="pl-3"><a  href="#" onClick="setKanbanDetail('+obj.issueIdx+');return false;" data-toggle="modal">Detail</a></li>'
-				+					'<li class="pl-3"><a href="#">Remove Issue</a></li>'
+				+					'<li class="pl-3"><a href="#" onclick="deleteIssue(' + obj.issueIdx +');">Remove Issue</a></li>'
 				+				'</ul>'
 				+			'</div>'
 				+		'</div>'
@@ -77,6 +77,19 @@
 			$("#"+colIdx+"Column > .columnBody").append(issue);
 		}
 	
+	function deleteIssue(obj){
+		var issueIndex = obj;
+		console.log("issue : " + issueIndex);
+		console.log()
+		$.ajax({
+	      		url:"DeleteIssue.do",
+	      		method:"POST",
+	      		data:{issueIdx: issueIndex},
+	      		success:function(data){
+	      			$("#"+issueIndex+"Issue").remove();
+	      		}
+	      	});	
+	}
 	
 	function makeIssueForm (data) {
 		let fr = '<div class="modal-dialog modal-lg">'
