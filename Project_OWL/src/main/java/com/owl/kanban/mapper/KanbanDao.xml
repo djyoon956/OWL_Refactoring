@@ -95,7 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM COLNAME WHERE COLIDX =#{colIdx}
 	</delete>
 	
-		<delete id="deleteIssue">
+	<delete id="deleteIssue">
 		DELETE FROM ISSUE WHERE ISSUEIDX =#{issueIdx}
 	</delete>
 	
@@ -105,5 +105,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE ISSUEIDX = #{issue}
 		</foreach>
 	</update>
-	
+
+	<delete id="deleteLabel">
+		DELETE FROM LABEL WHERE LABELIDX =#{labelIdx}
+	</delete>	
 </mapper>

@@ -3,6 +3,7 @@ package com.owl.member.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,10 @@ import com.owl.member.service.MemberService;
 
 @Controller
 public class MemberController {
-
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	@Autowired
 	private MemberService service;
 
@@ -30,7 +34,7 @@ public class MemberController {
 			}
 
 			member.setName(member.getName());
-			member.setPassword(member.getPassword());
+			member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
 
 			service.updateMember(member);
 			model.addAttribute("member", member);
@@ -42,15 +46,19 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "DeleteAccount.do")
-	public String deleteMember(String email, Model model) {
+	public String deleteMember(HttpServletRequest request,String email, Model model) {
 		// 테스트 데이터
 		boolean result = service.deleteMember(email);
+		request.getSession().removeAttribute("member");
+		request.getSession().removeAttribute("setting");
+		System.out.println("멤버 delete");
 		String view = "";
 		if (result) {
 			view = "member/deleteOk";
 		} else {
-			view = "include/modal/myProfileSetting";
+			view = "member/myProfileSetting";
 		}
+		System.out.println(request.getSession());
 		return view;
 	}
 
@@ -58,6 +66,6 @@ public class MemberController {
 	public String showResetPasswordView(String memberId, Model model) {
 		System.out.println("ResetPassword");
 		model.addAttribute("email", memberId);
-		return "member/deleteOk2";
+		return "member/resetPassword";
 	}
 }

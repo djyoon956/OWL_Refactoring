@@ -25,8 +25,11 @@ function setDetailData(boardIdx){
 		url: "GetNotice.do",
 		data: {boardIdx: boardIdx},
 		success: function (notice) {
-			$("#detailBox #noticeTitle").text(notice.title);
-			$("#detailBox #noticeContent").html(notice.content);
+			console.log("------------------------");
+			console.log(notice);
+			console.log("------------------------");
+			$("#noticeTitle").text(notice.title);
+			$("#noticeContent").html(notice.content);
 			console.log("file");
 			console.log(notice.files);
 			$("#noticeFiles").empty();
@@ -47,7 +50,6 @@ function setDetailData(boardIdx){
 }
 
 function setNoticeData() {
-	changeNoticeView("noticeBox");
 	 $.ajax({
 		type: "POST",
 		url: "GetNotices.do",
@@ -76,6 +78,7 @@ function setNoticeData() {
 }
 
 function writeNotice() {
+	console.log("writeNotice()");
 	$("#noticeNote").summernote({
 		height: 310,
         placeholder: "내용을 입력하세요.",
@@ -85,7 +88,6 @@ function writeNotice() {
             air: []
           }
 	});
-	
 	changeNoticeView("writeBox");
 }
 
@@ -144,6 +146,7 @@ function changeNoticeView(view){
 		$("#writeBox").addClass("hidden");
 		$("#noticeBox").removeClass("hidden");
 	}else if(view == "writeBox"){
+		console.log("라이트 박스 엘스");
 		$("#noticeBox").addClass("hidden");
 		$("#noticeDetailBox").addClass("hidden");
 		$("#writeBox").removeClass("hidden");
