@@ -69,7 +69,13 @@ public class KanbanRestController {
 		System.out.println(columns);
 		return columns;		
 	}
-
+	@RequestMapping("GetIssue.do")	
+	public List<ColumnList> getIssue(int projectIdx){
+		List<ColumnList> collist = service.getIssue(projectIdx);
+		System.out.println(collist);
+		return collist;
+		
+	}
 	@RequestMapping("UpdateColumn.do")
 	public int updateColumn(Column column) {
 		Column col = new Column();
@@ -136,7 +142,8 @@ public class KanbanRestController {
 		System.out.println(priorityCode);
 		System.out.println(multipartFiles);
 		System.out.println(multipartFiles.size());
-
+		System.out.println("칼럼");
+		System.out.println(colIdx);
 		
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
