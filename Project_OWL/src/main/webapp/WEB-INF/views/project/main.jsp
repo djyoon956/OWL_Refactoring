@@ -245,6 +245,10 @@
     				        dropOnEmpty: true,
     				        update: function(event, ui) {
 								console.log("in sortableCol update");
+								console.log(ui.item);
+								console.log($(this).attr('id'));
+								console.log($(this).parent().parent().attr('id'));
+								console.log("--------------");
 								let columnIdx = $(this).parent().attr("id").replace("Column","");
 								let issues = [];
 								$.each($(this)[0].children, function(){
