@@ -81,7 +81,7 @@
 			        	
 	 		        	if(data != null){
 			        		successAlert("Issue 추가 완료");
-			        		addKanbanIssue('0', data);
+			        		addKanbanIssue('-1', data);
 			        		
 			        	}else{
 			        		errorAlert("Issue 추가 실패");
