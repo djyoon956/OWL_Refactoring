@@ -34,7 +34,15 @@
 		      });
 
 			
-			$("#InsertIssueBtn").on("click", function () {		
+			$("#InsertIssueBtn").on("click", function () {
+			if($('#issueTitle').val() == ""){
+				warningAlert("제목을 작성해주십시오");
+					return; 
+			}
+			if($('#isContent').val() == ""){
+				warningAlert("내용을 작성해주십시오");
+				return; 
+			}		
 			console.log('InsertIssueBtn 클릭되니1');
  				console.log('InsertIssueBtn 클릭되니1');
  				/* 

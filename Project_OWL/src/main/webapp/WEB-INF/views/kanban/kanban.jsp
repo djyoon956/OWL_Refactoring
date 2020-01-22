@@ -331,10 +331,9 @@
         	data : { 'colname' : $("#editcolName").val(),'projectIdx' : ${project.projectIdx},'colIdx' :  $("#editcolIdx").val()}, 
         	success : function(data) {
             	console.log("업데이트 칼럼 성공 ");
-            	console.log(data);
             	console.log($("#" + data + "Column span").text());
-            	$("#" + data + "Column > h4 > span").text($("#editcolName").val());
-        	//	$("#"+data+"Column > .columnBody").append(issue);
+            $("#" + data + "Column span").text($("#editcolName").val());
+        		$("#editcolName").val("");
             	$('#editColumnModal').modal('hide');
             },
             error : function() {
