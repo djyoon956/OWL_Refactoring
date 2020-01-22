@@ -210,8 +210,45 @@
 		}	
 
 function setKanbanDetail(issueIdx){
-	console.log("in setKanbanDetail : "+issueIdx);
-	
+	console.log("in setKanbanDetail : "+issueIdx + "/" + projectIdx);
+
+	$.ajax({
+		url : "GetIssueDetail.do",
+		data : {projectIdx : issueIdx, issueIdx : issueIdx},
+		success : function (data){
+			console.log("GetIssueDetail success");
+			console.log(data);
+			//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
+			$.each(data, function(){
+				$("#issueTitle").text(this.issueTitle);
+				$("#issueContent").html(this.content);
+				
+				$("#issueFiles").empty();
+				$("#issueFileCount").text("첨부파일 ("+this.files.length+") ");
+				$.each(this.files, function(){
+					let path = "/upload/"+ projectIdx +"/file/"+this.fileName;
+					console.log(path);
+					let control = "<li class='mb-2' style='font-size: 16px'>"
+									+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+this.fileName+" ("+this.fileSize+" KB)</span></a>"
+									+" </li>";
+					$("#issueFiles").append(control);
+				});
+				
+				/*$("#issueActivityCount").text("Activity ("+this.issueLogs.size()+") ");
+				$.each(this.issueLogs, function(file){
+									
+				});*/
+				
+			/*	$("#issueCommentCount").text("Comment ("+this.files.length+") ");
+				$.each(this.files, function(file){
+					
+				});*/
+			})
+		},
+		error : function(){
+			console.log("GetIssueDetail error");
+		}
+	})
 	
 	changeNoticeView("detail");
 }
