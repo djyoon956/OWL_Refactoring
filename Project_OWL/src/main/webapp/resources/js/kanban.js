@@ -52,6 +52,7 @@
 
 	
 	function addKanbanIssue(colIdx,obj){
+
 		 let issue = '<li class="issuePiece">'
 				+		'<div class="dropdown">'
 				+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
@@ -181,31 +182,6 @@
 </div>*/
 		    
 	}
-	function addIssue(colIdx,obj){
-		 let issue = '<li class="issuePiece">'
-				+		'<div class="dropdown">'
-				+			'<label> <span class="badgeIcon float-left" id= "'+ obj.labelIdx +'"></span>'
-				+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
-				+			'</label>'
-				+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-				+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
-				+				'<ul class="list-style-none">'
-				+					'<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>'
-				+					'<li class="pl-3"><a href="#">Remove Issue</a></li>'
-				+				'</ul>'
-				+			'</div>'
-				+		'</div>'
-				+		'<div>'
-				+			'<label>'
-				+			'<span class="assigneetitle">'
-				+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>'
-				+			'</label>'
-				+		'</div>'
-				+	'</li>';
-		
-			$("#"+colIdx+"Column > .columnBody").append(issue);
-		}	
 
 function setKanbanDetail(issueIdx){
 	console.log("in setKanbanDetail : "+issueIdx);

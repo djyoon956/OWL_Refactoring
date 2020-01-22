@@ -35,24 +35,6 @@ public class KanbanRestController {
 	@Autowired
 	private KanbanService service;
 	
-	
-	@RequestMapping("GetKanban.do")
-	public List<Notice> getNotices(int projectIdx) {
-		System.out.println("getNotices : " + projectIdx);
-		NoticeDao dao = getNoticeDao();
-		List<Notice> notices = null;
-		try {
-			notices = dao.getNoticesByProjectIdx(projectIdx);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return notices;
-	}
-	
-	
 	@RequestMapping("GetLabelList.do")
 	public List<Label> getLabelList(int projectIdx) {
 		System.out.println("getLabelList : " + projectIdx);

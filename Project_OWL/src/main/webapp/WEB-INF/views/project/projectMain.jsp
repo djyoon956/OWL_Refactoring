@@ -264,7 +264,8 @@
 						console.log(data);
 						 $.each(data,function(index,obj) {
 							
-							 addIssue(obj.colIdx, obj); 
+							 addKanbanIssue(obj.colIdx, obj); 
+					
 						});
 					},
 					error: function() {
