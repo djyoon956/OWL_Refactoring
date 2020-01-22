@@ -75,6 +75,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2}
 	</select>
 	
+	<select id="getIssueFiles" resultType="com.owl.notice.dto.File">
+		SELECT FILEIDX, ISSUEIDX, WRITER, FILENAME, FILESIZE 
+			FROM owl.FILE
+		WHERE ISSUEIDX  = #{issueIdx}
+	</select>
 	
 	<update id="updateColumn" parameterType="com.owl.kanban.dto.Column">
 		UPDATE COLNAME SET COLNAME = #{colname} WHERE PROJECTIDX = #{projectIdx} AND COLIDX=#{colIdx}

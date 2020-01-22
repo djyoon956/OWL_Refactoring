@@ -38,4 +38,6 @@ public interface KanbanDao {
 	public int updateIssueOrder(List<Issue> issues) throws ClassNotFoundException, SQLException;
 	
 	public int deleteColumn(int colIdx) throws ClassNotFoundException, SQLException;
+	
+	public List<File> getIssueFiles(int issueIdx) throws ClassNotFoundException, SQLException;
 }

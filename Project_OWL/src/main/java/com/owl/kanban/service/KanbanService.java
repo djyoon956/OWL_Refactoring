@@ -229,7 +229,21 @@ public class KanbanService {
 		return result;
 	}
 	
-	
+	public void getIssueDetail(int projectIdx, int issueIdx) {
+		KanbanDao dao = getKanbanDao();
+		Issue issue = null;
+		/*
+		try {
+			
+			//issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+	}
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
