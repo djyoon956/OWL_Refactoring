@@ -177,7 +177,7 @@ function setKanbanDetail(issueIdx){
 	changeNoticeView("detail");
 }
 
-function changeNoticeView(view){
+function changeKanbanView(view){
 	if(view == "list"){
 		$("#kanbanDetailBox").addClass("hidden");
 		$("#kanbanMainBox").removeClass("hidden");
@@ -186,4 +186,5 @@ function changeNoticeView(view){
 		$("#kanbanDetailBox").removeClass("hidden");
 	}
 }
+
 	
