@@ -52,10 +52,10 @@
 
 	
 	function addKanbanIssue(colIdx,obj){
-		//console.log("???" +obj.labelName);
-		//console.log(typeof(obj.labelName));
-		if($.type(obj.labelName) == 'object') 
-			obj.labelName == "";
+		if(obj.labelName == null) 
+			obj.labelName = "";
+		if(obj.assigned == null) 
+			obj.assigned  = "none";
 		 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
 				+		'<div class="dropdown">'
 				+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
@@ -107,26 +107,26 @@ function setKanbanDetail(issueIdx){
 			console.log(data);
 			//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
 			$.each(data, function(){
-				$("#issueTitle").text(this.issueTitle);
-				$("#issueContent").html(this.content);
+				$("#issueDetailTitle").text(this.issueTitle);
+				$("#issueDetailContent").html(this.content);
 				
-				$("#issueFiles").empty();
-				$("#issueFileCount").text("첨부파일 ("+this.files.length+") ");
+				$("#issueDetailFiles").empty();
+				$("#issueDetailFileCount").text("첨부파일 ("+this.files.length+") ");
 				$.each(this.files, function(){
 					let path = "/upload/"+ projectIdx +"/file/"+this.fileName;
 					console.log(path);
 					let control = "<li class='mb-2' style='font-size: 16px'>"
 									+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+this.fileName+" ("+this.fileSize+" KB)</span></a>"
 									+" </li>";
-					$("#issueFiles").append(control);
+					$("#issueDetailFiles").append(control);
 				});
 				
-				/*$("#issueActivityCount").text("Activity ("+this.issueLogs.size()+") ");
+				/*$("#issueDetailActivityCount").text("Activity ("+this.issueLogs.size()+") ");
 				$.each(this.issueLogs, function(file){
 									
 				});*/
 				
-			/*	$("#issueCommentCount").text("Comment ("+this.files.length+") ");
+			/*	$("#issueDetailCommentCount").text("Comment ("+this.files.length+") ");
 				$.each(this.files, function(file){
 					
 				});*/

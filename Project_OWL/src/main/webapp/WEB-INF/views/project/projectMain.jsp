@@ -61,7 +61,7 @@
             setTheme("${setting.themeColor}", "${setting.font}");
             initNotice("${project.projectIdx}");
             
-            let oldMenu = $("#projectMenu li:first");
+            let oldMenu = $("#projectMenu li:nth-child(2)");
             $("#projectMenu li").on("click", function () {
                 if($(this).children(".nav-link").attr("href") == "#project")
 					return;
@@ -290,7 +290,7 @@
     </style>
 </head>
 
-<body>
+<body class="projectBody">
     <!-- LOADER -->
     <div class="preloader">
         <div class="lds-ripple">
@@ -391,6 +391,5 @@
     <!-- MODAL -->
     <jsp:include page="modal/memberAdd.jsp" />
     <jsp:include page="modal/joinProjectMember.jsp" />
-      <jsp:include page="modal/memberCheck.jsp" /> 
-
+     <jsp:include page="modal/memberCheck.jsp" /> 
 </body>
