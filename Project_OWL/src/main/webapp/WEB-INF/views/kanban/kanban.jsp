@@ -266,13 +266,10 @@
 	
 	$('#addIssueModal').on('hidden.bs.modal', function(){
 		console.log('hidden 작동하니?');
-		//$('#addIssueForm')[0].reset();
-		console.log("before"+$('#issueTitle').val());
+		
 		$('#issueTitle').val("");
-		console.log("after"+$('#issueTitle').val());
-		//$('#issueTitle')[0].reset();
-		//$('#content').html("");
-		//$('#datepicker-autoclose').val("");
+		$('#isContent').val("");
+		$('#datepicker-autoclose').val("");
 		//$('select').find('option:first').attr('selected', 'selected');
 		
 	});
