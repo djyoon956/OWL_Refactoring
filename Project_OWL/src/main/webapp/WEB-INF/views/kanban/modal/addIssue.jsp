@@ -47,8 +47,10 @@
 
 			    let formData = new FormData();
 			    formData.append("projectIdx",'${project.projectIdx}');
-			    formData.append('issueTitle',$('#issueTitle2').val());
-			    formData.append('content', $('#content').summernote('code'));
+
+			    formData.append('issueTitle',$('#issueTitle').val());
+			    formData.append('content', $('#isContent').summernote('code'));
+
 			    formData.append('orderNum', ordernum++);
 			    formData.append('priorityCode', $('#priorityCode').val());			    
 			    formData.append('assigned', $('#assigned').val());
@@ -141,10 +143,10 @@
  				<div class="row">
 					<div class="col-8">
 						<div class="form-group">
-							<input type="text" class="form-control input-default" placeholder="Issue Title" name="issueTitle" id="issueTitle2">
+							<input type="text" class="form-control input-default" placeholder="Issue Title" name="issueTitle" id="issueTitle">
 						</div>
 						<div class="form-group">
- 							 <textarea class="form-control bg-light" rows="10" cols="50" placeholder="Issue Content" id="content" name="content"></textarea>
+ 							 <textarea class="form-control bg-light" rows="10" cols="50" placeholder="Issue Content" id="isContent" name="content"></textarea>
 							 <input type="file" name="multipartFiles" id="multipartFiles" multiple="multiple"> 
 						</div>
 					</div>
