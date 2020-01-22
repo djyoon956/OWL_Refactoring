@@ -42,30 +42,15 @@ public class SmartCalendarService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return result;
 	};
 
-	public boolean deleteMyCalendar(String email) {
+	public boolean deleteCalendar(int calIdx) {
 		boolean result = false;
 		SmartCalendarDao dao = getSmartCalendarDao();
 
 		try {
-			result = dao.deleteMyCalendar(email) > 0 ? true : false;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	};
-	
-	public boolean deleteProjectCalendar(String email, int projectIdx) {
-		boolean result = false;
-		SmartCalendarDao dao = getSmartCalendarDao();
-
-		try {
-			result = dao.deleteProjectCalendar(email, projectIdx) > 0 ? true : false;
+			result = dao.deleteCalendar(calIdx) > 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -89,12 +74,12 @@ public class SmartCalendarService {
 		return calendars;
 	}
 	
-	public List<SmartCalendar> getProjectCalendars(int projectIdx) {
+	public List<SmartCalendar> getProjectCalendar(int projectIdx) {
 		SmartCalendarDao dao = getSmartCalendarDao();
 
 		List<SmartCalendar> calendars = new ArrayList<SmartCalendar>();
 		try {
-			calendars = dao.getProjectCalendars(projectIdx);
+			calendars = dao.getProjectCalendar(projectIdx);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

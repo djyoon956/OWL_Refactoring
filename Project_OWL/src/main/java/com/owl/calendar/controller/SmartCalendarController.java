@@ -29,26 +29,7 @@ public class SmartCalendarController {
 
 	@RequestMapping("Calendar.do")
 	public String showView(Principal principal, Model model) {
-		System.out.println("Calendar");
 		List<ProjectList> projects = projectService.getProjectLists(principal.getName());
-		/*
-		System.out.println(projects);
-		List<SmartCalendar> calendarDatas = service.getMemberCalendars(principal.getName());
-		System.out.println(calendarDatas);
-		Map<Integer, List<SmartCalendar>> datas = new HashMap<Integer, List<SmartCalendar>>();
-		// Project Calendar
-		projects.forEach(project -> {
-			List<SmartCalendar> projectCalendars = calendarDatas.stream()
-																					.filter(x->(x.getType() == CalendarType.PROJECT) && (x.getProjectIdx() == project.getProjectIdx()))
-																					.collect(Collectors.toList());
-			datas.put(project.getProjectIdx(), projectCalendars);
-		});
-		
-		// My Calendar
-		List<SmartCalendar>myCalendars = calendarDatas.stream()
-																			.filter(calendar->calendar.getType() == CalendarType.MY)
-																			.collect(Collectors.toList());
-		*/
 		model.addAttribute("projectList", projects);
 		return "calendar/calendar3";
 	}

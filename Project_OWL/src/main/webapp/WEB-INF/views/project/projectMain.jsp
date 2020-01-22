@@ -4,6 +4,7 @@
 <c:set var="project" value="${project}" scope="request" />
 <html>
 
+<c:set var="projectIdx" value="${project.projectIdx }" scope="request"/>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,30 +30,44 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!-- Toast Ui -->
-    <link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
-    <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
-    <script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
-    <script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
-    <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
-    <script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
-
+	<!-- Toast Calendar -->
+	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
+	<!-- If you use the default popups, use this. -->
+	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
+    <script src="resources/js/kanban.js"></script>
     <script type="text/javascript">
         $(function () {
-            setTheme("${setting.themeColor}", "${setting.font}");
-            initNotice();
-
-            $('#calendar').tuiCalendar({
-                defaultView: 'month',
-                taskView: true
+            $.ajax({
+        		url:"GetProjectList.do",
+        		data: {projectIdx: ${project.projectIdx}},
+        		success:function(data){  
+            		console.log(data);      		
+        		    calendar = new CalendarInfo();
+        				calendar.id = String(data.projectIdx);
+        			    calendar.name = data.projectName;
+        			    calendar.color = '#ffffff';
+        			    calendar.bgColor = data.projectColor;
+        			    calendar.dragBgColor = data.projectColor;
+        			    calendar.borderColor = data.projectColor;
+        			    addCalendar(calendar);
+        			    console.log(calendar);			    						
+        		    setSchedules();
+        		}
             });
-
-            let oldMenu = $("#projectMenu li:first");
+            
+            setTheme("${setting.themeColor}", "${setting.font}");
+            initNotice("${project.projectIdx}");
+            
+            let oldMenu = $("#projectMenu li:nth-child(2)");
             $("#projectMenu li").on("click", function () {
-                oldMenu.removeClass("active");
+                if($(this).children(".nav-link").attr("href") == "#project")
+					return;
+				
                 let oldTab = $(oldMenu.children(".nav-link").attr("href"));
+                oldMenu.removeClass("active");
                 oldTab.removeClass("active show");
 
                 $(this).addClass("active");
@@ -63,8 +78,41 @@
                 setChageView(currentTab.attr("id"));
             });
 
-            $('#joinProjectMemberModal').on('hidden.bs.modal', function(){
-               $("#addMemberBox").empty();
+            $('#memberCheckModal').on('show.bs.modal', function(){
+				console.log("open MemberCheckModal");
+				$("#projectMemebers").empty();
+			 	$.ajax({
+			 		type: "POST",
+                    url: "GetProjectMember.do",
+                    data: { projectIdx: ${project.projectIdx}},
+                    success: function (data) {
+                         console.log("GetProjectMember success");
+                        $("#projectMemebersBox").empty();
+                        let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
+                        $.each(data, function(index, element){
+                     
+                            let control = "<li class='mt-3'>"
+		                				+ "	<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
+		                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
+
+               				if(index == 0){
+               					control += "<span class='ml-5 roleBadge pm'></span>";
+               				}else{
+            					control += "<span class='ml-5 roleBadge member'></span>";		
+               				}	
+           					control+= "</li>";	
+           					
+           					$("#projectMemebersBox").append(control);
+                         }) 
+                    },
+                    error: function () {
+                        console.log("GetProjectMember error");
+                    }
+				}) 
+              });
+
+            $('#memberEditModal').on('hidden.bs.modal', function(){
+                $("#addMemberBox").empty();
                $("#addMemberOk").val("초대 메일 전송");
              });
             
@@ -103,15 +151,22 @@
                     }
                 });
             })
-        }) 
+          
+        }); 
+        
         function setChageView(target) {
             console.log("setChageView : " + target);
             if (target === "dash")
                 setDashBoardData();
             else if (target === "calendar")
                 setCalendarData();
-            else if (target === "kanban")
+            else if (target === "kanban"){
+                $("#-1Column > .columnBody").empty();
+                $("#-99Column > .columnBody").empty();
+                $("#kanbanIn").empty();
                 setKanbanData();
+            	setIssueData(); 
+            }
             else if (target === "notice")
                 setNoticeData('${project.projectIdx}');
             else if (target === "drive")
@@ -123,83 +178,10 @@
         }
 
         function setCalendarData() {
-            console.log("in setCalendarData");
-
+            console.log("in setCalendarData");           
+            refreshScheduleVisibility();
         }
 
-/* 		function addKanbanIssue(colIdx,obj){
-			let issue =		'<li class="issuePiece">';
-				issue +=			'<div class="dropdown">';
-				issue +=				'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'; 
-				issue +=				'<span class="issueTitle">' + obj.issueTitle + '</span>';
-				issue +=				'</label>'; 
-				issue +=				'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">'; 
-				issue +=				'<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-				issue +=				'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
-				issue +=					'<ul class="list-style-none">';
-				issue +=						'<li class="pl-3"><a href="#editIssueModal"data-toggle="modal">Edit Issue</a></li>';
-				issue +=						'<li class="pl-3"><a href="#">Remove Issue</a></li>';
-				issue +=					'</ul>';
-				issue +=				'</div>';
-				issue +=			'</div>';
-				issue +=			'<div>';
-				issue +=				'<label>';
-				issue +=				'<span class="assigneetitle">';
-				issue +=				'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>';
-				issue +=				'</label>';
-				issue +=			'</div>';
-				issue +=		'</li>';
-		
-			console.log("이슈")
-			console.log($("#"+colIdx+"Column > .columnBody"))
-			$("#"+colIdx+"Column > .columnBody").append(issue);
-		}
-
-		function addColumn(obj){
-			console.log("addColumn :" + obj.colIdx);
-			let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-						+ '<div class="columnTitle text-center mt-2 dropdown">'
-						+ '<h4>' + obj.colname
-						+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-						+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-						+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-						+				'<ul class="list-style-none">'
-						+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>'
-						+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
-						+				'</ul>'
-						+			'</div>'
-						+		'</h4>'
-						+	'</div>'
-						+	'<ul class="connectedSortable columnBody cursor sortableCol">'
-						+	'	<li class="issuePiece d-none">Item 1</li>'
-						+	'</ul>'
-						+ '</div>';
-
-			$('#kanbanArea').append(column);
-		}
-        function setKanbanData() {
-            console.log("in setKanbanData");
-            $.ajax({
-   			 url : 'GetColumn.do',
-   			 data : {'projectIdx' :  ${project.projectIdx} },
-   			 success : function(data) {
-   				//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
-   				$.each(data,function(index,obj) {
-   					if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
-   						addKanbanIssue(obj.colIdx, obj);
-   	   					}
-   					else{ // 칼럼 박스가 존재하지 않을때
-   						addColumn(obj);
-   	   					addKanbanIssue(obj.colIdx, obj);
-   					}
-   				});
-   			},
-   			 error : function() {
-   				console.log("getColum.do error");
-   			}
-   		}); 
-        } */
-        
 
         function setDriveData() {
             console.log("in setDriveData");
@@ -227,15 +209,15 @@
             }
 
             $("#addMemberCount").text((addProjectMembers.length+1) + "명");
-            let control = "<div class='input-group'>" +
-                "<input type='hidden' class='addProjectMembers' name='addProjectMembers' value='" + addEmail + "'>" +
-                "	<div class='form-control'>" +
-                "		<i class='fas fa-envelope mr-2 iconSizeBig'></i>" + addEmail +
-                "	</div>" +
-                "	<div class='input-group-append memberDeleteButton'>" +
-                "		<span class='input-group-text'><i class='far fa-times-circle font-weight-bold iconSizeBig'></i></span>" +
-                "	</div>" +
-                "</div>";
+            let control = "<div class='input-group'>" 
+			               + "<input type='hidden' class='addProjectMembers' name='addProjectMembers' value='" + addEmail + "'>" 
+			               + "	<div class='form-control'>" 
+			               + "		<i class='fas fa-envelope mr-2 iconSizeBig'></i>" + addEmail 
+			               + "	</div>" 
+			               + "	<div class='input-group-append memberDeleteButton'>" 
+			               + "		<span class='input-group-text'><i class='far fa-times-circle font-weight-bold iconSizeBig'></i></span>" 
+			               + "	</div>" 
+			               + "</div>";
             $("#addMemberBox").prepend(control);
 
             $(".memberDeleteButton").click(function () {
@@ -243,84 +225,53 @@
             })
         }
         // 칸반 --> 
-    	function addKanbanIssue(colIdx,obj){
-    		 let issue = '<li class="issuePiece">'
-    				+		'<div class="dropdown">'
-    				+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
-    				+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
-    				+			'</label>'
-    				+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-    				+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-    				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
-    				+				'<ul class="list-style-none">'
-    				+					'<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>'
-    				+					'<li class="pl-3"><a href="#">Remove Issue</a></li>'
-    				+				'</ul>'
-    				+			'</div>'
-    				+		'</div>'
-    				+		'<div>'
-    				+			'<label>'
-    				+			'<span class="assigneetitle">'
-    				+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>'
-    				+			'</label>'
-    				+		'</div>'
-    				+	'</li>';
-    		
-    			$("#"+colIdx+"Column > .columnBody").append(issue);
-    		}
-
-    		function addColumn(obj){
-    			let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-    						+ '<div class="columnTitle text-center mt-2 dropdown">'
-    						+ '<h4>' + obj.colname
-    						+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-    						+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-    						+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-    						+				'<ul class="list-style-none">'
-    						+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
-    						+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"' 
-    						+   '>Edit Column</a></li>'
-    						+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
-    						+				'</ul>'
-    						+			'</div>'
-    						+		'</h4>'
-    						+	'</div>'
-    						+	'<ul class="connectedSortable sortableCol columnBody cursor">'
-    						+	'</ul>'
-    						+ '</div>';
-
-    			$('#kanbanArea').append(column);
-    		}
     	    function setKanbanData() {
-    	        console.log("in setKanbanData");
     	        $.ajax({
     				 url : 'GetColumn.do',
     				 data : {'projectIdx' :  ${project.projectIdx} },
     				 success : function(data) {
-    					//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
+    					console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
+    					console.log("칸반");
     					$.each(data,function(index,obj) {
-    						if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
-    							 addKanbanIssue(obj.colIdx, obj); 
-    		   					}
-    						else{ // 칼럼 박스가 존재하지 않을때
-    							 addColumn(obj);
-    		   					addKanbanIssue(obj.colIdx, obj); 
+    						if(obj.colIdx != -1 && obj.colIdx != -99){
+    							addColumn(obj);
     						}
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
     				        dropOnEmpty: true       
     				     }).disableSelection();
+    				
     				},
     				 error : function() {
     					console.log("getColum.do error");
     				}
     			}); 
     	    }
+			function setIssueData(){
+				$.ajax({
+					url : "GetIssue.do",
+					data : {'projectIdx' :  ${project.projectIdx} },
+					success : function(data) {
+						console.log("셋 이슈 데이터");
+						console.log(data);
+						 $.each(data,function(index,obj) {
+							
+							 addKanbanIssue(obj.colIdx, obj); 
+					
+						});
+					},
+					error: function() {
+						console.log("getIssue.do error");
+					}
+				})
+			}
+    	    
     	    function closeFn() {
-    	      	$("#closeIssue").hide();
-    	    	$("#openIssue").hide();
+    	      	$("#-99Column").hide();
+    	    	$("#-1Column").hide();
     	       }
+
     </script>
     <style type="text/css">
         .iconSizeBig {
@@ -331,7 +282,7 @@
     </style>
 </head>
 
-<body>
+<body class="projectBody">
     <!-- LOADER -->
     <div class="preloader">
         <div class="lds-ripple">
@@ -363,6 +314,9 @@
                             <div id="tab-btn">
                                 <ul id="projectMenu" class="nav nav-tabs" role="tablist"
                                     style="border-bottom-width: 0px;">
+                                  <li class="nav-item" style="width:auto; margin-left: 10px; margin-right: 10px;">
+                                        <a class="nav-link" href="#project" style="font-size: 20px; height: 51.979166px; padding-top: 12px; width: max-content;">${project.projectName}</a>
+                                    </li>
                                     <li class="nav-item active">
                                         <a class="nav-link" data-toggle="tab" href="#dash">Dash Board</a>
                                     </li>
@@ -390,7 +344,8 @@
                                 <i class="fas fa-user-cog iconSizeBig pt-2"></i></a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <ul class="list-style-none">
-                                    <li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트멤버 설정</a></li>
+                                    <li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트 멤버 추가</a></li>
+                                    <li class="pl-3"><a href="#memberCheckModal" data-toggle="modal">프로젝트 멤버 확인</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -414,7 +369,7 @@
                         <jsp:include page="../drive/drive.jsp" />
                     </div>
                     <div class=" tab-pane fade" id="kanbanDetail" role="tabpanel">
-                        <jsp:include page="../kanban/kanbanDetail.jsp" />
+                        <jsp:include page="../kanban/detail.jsp" />
                     </div>
                 </div>
             </div>
@@ -425,8 +380,8 @@
 
     </div>
 
-    <!-- pm의 설정  modal -->
-    <jsp:include page="modal/projectMemberEdit.jsp" />
+    <!-- MODAL -->
+    <jsp:include page="modal/memberAdd.jsp" />
     <jsp:include page="modal/joinProjectMember.jsp" />
-
+     <jsp:include page="modal/memberCheck.jsp" /> 
 </body>

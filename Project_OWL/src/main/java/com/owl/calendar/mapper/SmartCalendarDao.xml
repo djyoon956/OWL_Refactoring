@@ -14,26 +14,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<update id="updateCalendar" parameterType="com.owl.calendar.dto.SmartCalendar">
+		UPDATE SMARTCALENDAR SET EMAIL=#{email}
+													<if test="type != null">
+													, TYPE=#{type}
+													</if>
+													<if test="title != null">
+													, TITLE=#{title}
+													</if>
+													<if test="content != null">
+													, CONTENT=#{content}
+													</if>
+													<if test="startDate != null">
+													, STARTDATE=#{startDate}
+													</if>
+													<if test="endDate != null">
+													, ENDDATE=#{endDate}
+													</if>
+													, ALLDAY=	#{allDay}
+													<choose>
+														<when test="projectIdx > 0">
+														, PROJECTIDX =	#{projectIdx}
+														</when>
+														<when test="projectIdx == 0">
+														, PROJECTIDX = null
+														</when>
+													</choose>																																			
+		WHERE CALIDX=#{calIdx}	
 	</update>
 	
-	<delete id="deleteMyCalendar">
-	DELETE FROM SMARTCALENDAR WHERE EMAIL =#{email}
+	<delete id="deleteCalendar">
+	DELETE FROM SMARTCALENDAR WHERE CALIDX =#{calIdx}
 	</delete>
-	
-	<delete id="deleteProjectCalendar">
-	DELETE FROM SMARTCALENDAR WHERE EMAIL =#{email} AND PROJECTIDX =#{projectIdx}
-	</delete>
-	
-<!-- 	<select id="getMemberCalendars" parameterType="String" resultType="com.owl.calendar.dto.SmartCalendar">
-		SELECT P.PROJECTIDX, C.CALIDX, C.TITLE, C.CONTENTS, C.STARTDATE, C.ENDDATE, C.ALARM, C.TYPE 
-			FROM OWL.SMARTCALENDAR C JOIN OWL.PROJECTLIST P
-		ON P.PROJECTIDX = C.PROJECTIDX AND P.EMAIL = #{email}
-	</select> -->
+
 	<select id="getMyAllCalendars" resultType="com.owl.calendar.dto.SmartCalendar" parameterType="String" >
 	SELECT CALIDX, TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALLDAY, EMAIL, PROJECTIDX FROM SMARTCALENDAR WHERE EMAIL = #{email}; 
 	</select>
 	
-	<select id="getProjectCalendars" parameterType="Integer">
+	<select id="getProjectCalendar" resultType="com.owl.calendar.dto.SmartCalendar" parameterType="int">
+	SELECT CALIDX, TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALLDAY, EMAIL, PROJECTIDX FROM SMARTCALENDAR WHERE PROJECTIDX =#{projectIdx}; 
 	</select>
 	
 </mapper>

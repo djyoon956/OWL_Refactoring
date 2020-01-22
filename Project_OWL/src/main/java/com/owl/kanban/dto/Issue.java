@@ -1,12 +1,8 @@
 package com.owl.kanban.dto;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.owl.notice.dto.File;
 
@@ -29,9 +25,14 @@ public class Issue {
 	private String assigned;
 	private String creator;
 	private int labelIdx;
+	private int orderNum;
 	private int colIdx;
 	private List<File> files;
-	private HashMap<Integer, IssueLog> issueLogs;
+	private List<IssueLog> logs;
+	
+	//ui용 
+	private String labelName;
+	private String labelColor;
 	
 	public enum IssueProgressType {
 		REQUESTED,

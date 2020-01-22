@@ -33,9 +33,9 @@ $(function() {
 $('#editColumnModal').on('show.bs.modal', function(event) {          
 	editColIdx = $(event.relatedTarget).data('updatecol-id');
 	editColname = $(event.relatedTarget).data('upcolname-id');
-	console.log("에딧 모달");
-	console.log(editColIdx);
-	console.log(editColname);
+	//console.log("에딧 모달");
+	//console.log(editColIdx);
+	//console.log(editColname);
   	
   $("#editcolName").val(editColname);
   $("#editcolIdx").val(editColIdx);
@@ -54,7 +54,6 @@ $('#editColumnModal').on('show.bs.modal', function(event) {
 			</div>
 			<div class="modal-body" style="margin-left: 10px">
 				<form action="" method="post">
-					<%-- <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}"> --%>
 					<div class="row">
 						<h5>Column name</h5>
 						<input type="text" class="form-control input-default" name="colname" id="editcolName">

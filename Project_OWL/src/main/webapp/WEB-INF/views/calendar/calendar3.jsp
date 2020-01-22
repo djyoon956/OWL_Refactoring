@@ -127,12 +127,11 @@ $(function(){
 					calendar = new CalendarInfo();
 					calendar.id = String(element.projectIdx);
 				    calendar.name = element.projectName;
-				    calendar.color = '#262626';
+				    calendar.color = '#ffffff';
 				    calendar.bgColor = element.projectColor;
 				    calendar.dragBgColor = element.projectColor;
 				    calendar.borderColor = element.projectColor;
-				    addCalendar(calendar);
-				    console.log(calendar);			    						
+				    addCalendar(calendar);		    						
     			})
     			var calendarList = document.getElementById('calendarList');
     		    var html = [];
@@ -160,7 +159,7 @@ function setSchedules() {
 function generateSchedule(viewName) {         
 
 	$.ajax({
-		url:"getMyAllCalendars.do",
+		url:"GetMyAllCalendars.do",
 		dataType:"json",
 		async: false,
 		success:function(data){
@@ -169,12 +168,8 @@ function generateSchedule(viewName) {
 			$.each(data, function(index, element){
 		    	let calendar;
 		    	let schedule = new ScheduleInfo();
-		    	console.log("element.projectIdx : "+element.projectIdx);
 				$.each(CalendarList, function(index, obj){
-					console.log("obj.id :"+obj.id);
-					console.log(obj.id == element.projectIdx);
 		    		if(obj.id == element.projectIdx){
-		    			console.log(obj.id);
 		    			calendar = obj;
 		    			return false;
 		    		}
@@ -195,7 +190,7 @@ function GetCalendar(calendar, element){
 	            end: element.endDate,
 	            category: element.allDay >0 ? 'allday' : 'time',
 	            dueDateClass: '',
-	            color: "#fff",
+	            color: "#ffffff",
 	            bgColor: calendar.bgColor,
 	            dragBgColor: calendar.bgColor,
 	            borderColor: calendar.borderColor,

@@ -90,7 +90,7 @@ color: #f8f9fa;
               </div>
           </div>
         <div class="card-body mt-0 p-0">
-        	<jsp:include page="./Reply.jsp"/>
+        	<%-- <jsp:include page="./Reply.jsp"/> --%>
           		 	<!-- <textarea class="form-control bg-light w-100" rows="10" cols="10" placeholder="Leave a comment" name="" id="issueReply"></textarea> -->
           			<button class="btn btn-secondary mt-1 mr-1">comment</button>
           			<button class="btn btn-secondary mt-1 ml-1"><i class="fas fa-at"></i></button>

@@ -6,7 +6,7 @@
     var useDetailPopup = true;
     var datePicker, selectedCalendar;
 
-    cal = new Calendar('#calendar', {
+    cal = new Calendar('#dashCalendar', {
         defaultView: 'month',
         useCreationPopup: useCreationPopup,
         useDetailPopup: useDetailPopup,
@@ -23,7 +23,10 @@
             },
             locationPlaceholder: function() {
             	     return 'Content';
-         }
+         },
+         month: {
+             visibleWeeksCount: 2 // visible week count in monthly
+           }
         }
     });
 
@@ -41,20 +44,6 @@
         'beforeCreateSchedule': function(e) {
             console.log('beforeCreateSchedule', e);
             saveNewSchedule(e);
-            //캘린더 일정 DB Insert
-    		$.ajax({
-        		url:"InsertCalendar.do",
-        		method:"POST",
-        		data:{calendarId: e.calendarId,
-        			       title: e.title,
-        			       location: e.location,
-        			       start: $("#tui-full-calendar-schedule-start-date").val(),
-        			       end: $("#tui-full-calendar-schedule-end-date").val(),
-        			       allDay: e.isAllDay
-        			      },
-        		success:function(data){	
-        		}
-    		});
         },
         'beforeUpdateSchedule': function(e) {
             var schedule = e.schedule;
@@ -64,88 +53,10 @@
             cal.updateSchedule(schedule.id, schedule.calendarId, changes);
             let changeStart = changes.start ==null? null : changes.start._date;
             let changeEnd = changes.end ==null? null : changes.end._date;
-            //스윗alart 띄우기
-            if(changes.calendarId != null || schedule.calendarId != 0){
-	        	Swal.fire({
-	      		  title: '정말 변경하시겠습니까?',
-	      		  text: '해당 프로젝트 멤버들과 변경된 일정이 공유됩니다.',
-	      		  icon: 'warning',
-	      		  showCancelButton: true,
-	      		  confirmButtonColor: '#3085d6',
-	      		  cancelButtonColor: '#d33',
-	      		  confirmButtonText: 'Yes'
-	      		}).then((result) => {
-	      		  if (result.value) {
-		                $.ajax({ 
-		            		url:"UpdateCalendar.do",
-		            		method:"POST",  
-		            		data:{scheduleId: schedule.id,
-		    	    				 calendarId: changes.calendarId,        				  
-		    	    			     title: changes.title,
-		    	    			     location: changes.location,
-		    	    			     start: changeStart,
-		    	    			     end: changeEnd,
-		    	    			     allDay: changes.isAllDay
-		            			      },
-		            		success:function(data){			            			
-		            		}	
-		        		});	      			
-	      		  }
-	      		  	location.reload();
-	      		});           	
-            }else{
-	            $.ajax({ 
-	        		url:"UpdateCalendar.do",
-	        		method:"POST",  
-	        		data:{scheduleId: schedule.id,
-		    				 calendarId: changes.calendarId,        				  
-		    			     title: changes.title,
-		    			     location: changes.location,
-		    			     start: changeStart,
-		    			     end: changeEnd,
-		    			     allDay: changes.isAllDay
-	        			      },
-	        		success:function(data){	
-	        		}
-	            });
-        } 
             refreshScheduleVisibility();
         },
         'beforeDeleteSchedule': function(e) {
             console.log('beforeDeleteSchedule', e);
-           
-          //캘린더 일정 DB delete
-            if(e.schedule.calendarId != 0){
-	            	Swal.fire({
-	  	      		  title: '정말 삭제하시겠습니까?',
-	  	      		  text: '프로젝트 멤버들에게도 해당 일정이 삭제됩니다.',
-	  	      		  icon: 'warning',
-	  	      		  showCancelButton: true,
-	  	      		  confirmButtonColor: '#3085d6',
-	  	      		  cancelButtonColor: '#d33',
-	  	      		  confirmButtonText: 'Yes'
-	  	      		}).then((result) => {
-	  	      		  if (result.value) {
-	  	      			 cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);	  
-	  	      			$.ajax({
-	  	            		url:"DeleteCalendar.do",
-	  	            		method:"POST",
-	  	            		data:{scheduleId: e.schedule.id},
-	  	            		success:function(data){	
-	  	            		}
-	  	            	});
-	  	      		 }
-	  	      	});
-	         }else{
-	         cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);
-            	$.ajax({
-            		url:"DeleteCalendar.do",
-            		method:"POST",
-            		data:{scheduleId: e.schedule.id},
-            		success:function(data){	
-            		}
-            	});
-	         }	           
         },
         'afterRenderSchedule': function(e) {
             var schedule = e.schedule;

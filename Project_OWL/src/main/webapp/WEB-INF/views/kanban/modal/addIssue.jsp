@@ -2,10 +2,17 @@
 	<!-- Summernote -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
-<script>
- $(function() {
-/*datwpicker*/
 
+<script>
+
+ var ordernum = 1; 
+	
+
+ $(function() {
+
+	 let selectoption = '<option value="">Select</option>';
+	
+/*datwpicker*/
 	 $('.mydatepicker').datepicker();
 		 $('#datepicker-autoclose').datepicker({
 			 dateFormat: 'yy-mm-dd' ,
@@ -27,25 +34,37 @@
 		      });
 
 			
-			$("#InsertIssueBtn").on("click", function () {		
-				console.log('InsertIssueBtn 클릭되니1');
+			$("#InsertIssueBtn").on("click", function () {
+			if($('#issueTitle').val() == ""){
+				warningAlert("제목을 작성해주십시오");
+					return; 
+			}
+			if($('#isContent').val() == ""){
+				warningAlert("내용을 작성해주십시오");
+				return; 
+			}		
+			console.log('InsertIssueBtn 클릭되니1');
  				console.log('InsertIssueBtn 클릭되니1');
-				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
+ 				/* 			console.log('$("#projectIdx").val()' + '${project.projectIdx}');
 				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
 				console.log('$("#content").summernote("code")' + $('#content').summernote('code'));
 				console.log(' $("#assigned").val()' +  $('#assigned').val());
 				console.log('$("#labelIdx").val()' + $('#labelIdx').val());
 				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
-				console.log($('#multipartFile').val());
+				console.log($('#multipartFile').val()); */
 
 			    let formData = new FormData();
 			    formData.append("projectIdx",'${project.projectIdx}');
+
 			    formData.append('issueTitle',$('#issueTitle').val());
-			    formData.append('content', $('#content').summernote('code'));
+			    formData.append('content', $('#isContent').summernote('code'));
+
+			    formData.append('orderNum', ordernum++);
 			    formData.append('priorityCode', $('#priorityCode').val());			    
 			    formData.append('assigned', $('#assigned').val());
 			    formData.append('labelIdx', $('#labelIdx').val());
 			    formData.append('dueDate', $('#datepicker-autoclose').val());
+			    formData.append('colIdx', '-1');
 			    $.each($("#multipartFiles")[0].files, function(i, file) {
 			    	formData.append('multipartFiles', file);
 			    }); 
@@ -67,46 +86,32 @@
 			        	console.log("ajax in");
 			        	console.log(data);
 
-			        	console.log(data.labelName);
-			        	console.log(data.labelColor);
+			        	//console.log(data.labelName);
+			        	//console.log(data.labelColor);
 			        	
 	 		        	if(data != null){
 			        		successAlert("Issue 추가 완료");
-
-			        		let newIssue = "";
-			        		newIssue  += '<li class="issuePiece">';
-			        		newIssue  += '<div class="dropdown">';
-			        		newIssue  += '<label>';
-			        		newIssue  += '<span class="badgeIcon float-left" style="background-color:'+data.labelColor+'">'+data.labelName+'</span>';
-			        		newIssue  += '<span class="issueTitle">'+istitle+'</span>';
-			        		newIssue  += '</label>';
-			        		newIssue  += '<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float:right">';
-			        		newIssue  += '<i class="fas fa-ellipsis-v fa-sm"></i></a>';
-			        		newIssue  += '<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">';
-			        		newIssue  += '<ul class="list-style-none">';
-			        		newIssue  += '<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>';
-			        		newIssue  += '<li class="pl-3"><a href="#">Remove Issue</a></li>';
-			        		newIssue  += '</ul></div></div>';
-			        		newIssue  += '<div><label>';
-			        		newIssue  += '<span class="assigneetitle"><i class="fas fa-user-check"></i>&nbsp; Assignee</span>';
-			        		newIssue  += '<span class="assignee" style="margin-left:3px">'+isassignee+'</span>';
-			        		newIssue  += '</label></div></li>';
-			        	
-			        		$('#openAppend').append(newIssue);
-	
+			        		addKanbanIssue('-1', data);
+			        		
 			        	}else{
 			        		errorAlert("Issue 추가 실패");
-			        	} 
+			        	}
+
+	 		       	$( ".sortableCol").sortable({
+				        connectWith: ".connectedSortable",
+				        dropOnEmpty: true       
+				     }).disableSelection(); 
 			        },
 			        error: function (e) {
 			        	errorAlert("Issue 추가 실패");
 			        }
 			    });
 		 	});
+
+
+
+
 	 });
-
-
- 
 
 </script>
 
@@ -141,7 +146,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			<form action="InsertIssue.do" method="post" enctype="multipart/form-data">
+			<form action="InsertIssue.do" method="post" enctype="multipart/form-data" id="addIssueForm">
 			    <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
  				<div class="row">
 					<div class="col-8">
@@ -149,7 +154,7 @@
 							<input type="text" class="form-control input-default" placeholder="Issue Title" name="issueTitle" id="issueTitle">
 						</div>
 						<div class="form-group">
- 							 <textarea class="form-control bg-light" rows="10" cols="50" placeholder="Issue Content" id="content" name="content"></textarea>
+ 							 <textarea class="form-control bg-light" rows="10" cols="50" placeholder="Issue Content" id="isContent" name="content"></textarea>
 							 <input type="file" name="multipartFiles" id="multipartFiles" multiple="multiple"> 
 						</div>
 					</div>
@@ -174,7 +179,9 @@
 						<div class="row">
 						<div class="col-4">Label</div>	
 						<div class="col-8">
-							<select class="select2 form-control custom-select" name="labelIdx" id="labelIdx"></select>
+							<select class="select2 form-control custom-select" name="labelIdx" id="labelIdx">
+								
+							</select>
 						</div>									
 					</div>
 						</div>
@@ -184,7 +191,7 @@
 						<div class="col-4">Priority</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="priorityCode" id="priorityCode">
-								<option value="" id="">Select Priority</option>
+								<option value="" id="">Select</option>
 								<option value="LOW">low</option>
 								<option value="MEDIUM">medium</option>
 								<option value="HIGH">high</option>

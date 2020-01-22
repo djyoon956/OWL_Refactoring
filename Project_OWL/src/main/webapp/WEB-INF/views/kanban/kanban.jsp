@@ -123,84 +123,9 @@
 }
 </style>
 <script>
-/* 	function addKanbanIssue(colIdx,obj){
-	 let issue = '<li class="issuePiece">'
-			+		'<div class="dropdown">'
-			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
-			+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
-			+			'</label>'
-			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
-			+				'<ul class="list-style-none">'
-			+					'<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>'
-			+					'<li class="pl-3"><a href="#">Remove Issue</a></li>'
-			+				'</ul>'
-			+			'</div>'
-			+		'</div>'
-			+		'<div>'
-			+			'<label>'
-			+			'<span class="assigneetitle">'
-			+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>'
-			+			'</label>'
-			+		'</div>'
-			+	'</li>';
-	
-		$("#"+colIdx+"Column > .columnBody").append(issue);
-	}
-
-	function addColumn(obj){
-		console.log("addColumn :" + obj.colIdx);
-		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-					+ '<div class="columnTitle text-center mt-2 dropdown">'
-					+ '<h4>' + obj.colname
-					+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-					+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-					+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-					+				'<ul class="list-style-none">'
-					+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
-					+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
-					+   '>Edit Column</a></li>'
-					+					'<li class="pl-3"><a href="#">Remove Column</a></li>'
-					+				'</ul>'
-					+			'</div>'
-					+		'</h4>'
-					+	'</div>'
-					+	'<ul class="connectedSortable sortableCol columnBody cursor">'
-					+	'</ul>'
-					+ '</div>';
-
-		$('#kanbanArea').append(column);
-	}
-    function setKanbanData() {
-        console.log("in setKanbanData");
-        $.ajax({
-			 url : 'GetColumn.do',
-			 data : {'projectIdx' :  ${project.projectIdx} },
-			 success : function(data) {
-				//console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
-				$.each(data,function(index,obj) {
-					if($('#'+obj.colIdx+'Column').length > 0) {// 칼럼 박스가 존재할때
-						 addKanbanIssue(obj.colIdx, obj); 
-	   					}
-					else{ // 칼럼 박스가 존재하지 않을때
-						 addColumn(obj);
-	   					addKanbanIssue(obj.colIdx, obj); 
-					}
-				});
-				$( ".sortableCol").sortable({
-			        connectWith: ".connectedSortable",
-			        dropOnEmpty: true       
-			     }).disableSelection();
-			},
-			 error : function() {
-				console.log("getColum.do error");
-			}
-		}); 
-    } */
   $(function(){
 
-			let selectoption = '<option value="">Select</option>';
+	let selectoption = '<option value="">Select</option>';
 			 	
 	//프로젝트 내 라벨 리스트 출력 
 	  $.ajax({
@@ -214,8 +139,8 @@
 
 				
 				let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
-				let lblist = ""; //add issue에 select box에 보여줄 것 
 				
+				let opt = ""; //add issue에 select box에 보여줄 것
 				 $.each(data,function(index, obj) {
 				
 
@@ -225,71 +150,67 @@
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
 					lablist +=  '<button class="btn-link link-gray">Edit</button>';
-					lablist +=  '</div>'
+					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
 					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
 					lablist +=  '</div></div><hr>';
 
-					lblist += '<option value="'+obj.labelIdx+'">'+obj.labelName+'</option>'
+					 //opt += '<option value="'+obj.labelIdx+'"style="background-color:'+obj.labelColor+'">'+obj.labelName+'</option>';
 					
 					 });
 
 					$('#labelList').append(lablist);
 
-					$('#labelIdx').append(selectoption);
-					$('#labelIdx').append(lblist);
+					
+					//$('#labelIdx').append(selectoption);
+					//$('#labelIdx').append(opt);	
+				
 
-
-					 
 			},error : function() {
 				console.log("Showlabel error");
 			}
 		
 			});
+		
 		//칼럼 select  
 
     	//칸반내에서 움직일 수 있게 만들어 주는 function
-        function sortableFn (columnidx)  {
+/*         function sortableFn (columnidx)  {
             var value ='#' + columnidx;
              $( value ).sortable({
                  connectWith: ".connectedSortable",
                  dropOnEmpty: true        
                }).disableSelection();
-             } 
+             }  */
 
         
          $("#openIssueBtn").click(function() {
-            $("#openIssue").removeClass("d-none");
-     		$("#closeIssue").hide();
-     		$("#openIssue").show();
+            $("#-1Column").removeClass("d-none");
+     		$("#-99Column").hide();
+     		$("#-1Column").show();
           });
+
          
          $("#closeIssueBtn").click(function() {
-         	$("#closeIssue").removeClass("d-none");
-     		$("#openIssue").hide();
-     		$("#closeIssue").show();
+         	$("#-99Column").removeClass("d-none");
+     		$("#-1Column").hide();
+     		$("#-99Column").show();
           });
 	
-        
-
          
 	$("#InsertColumnBtn").on("click", function () {	
-
 		console.log("InsertColumnBtn in");
 			$.ajax({
 				url : 'InsertColumn.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'colname' : $('#colname').val()},
-				success : function(columnidx) {
-					console.log(columnidx);
-					console.log(typeof(columnidx));
-					if(columnidx > 0) {
-		        		 
-		        		 let colnm = $('#colname').val();
-		        
-		        		addColumn(columnidx, colnm);
-
+				success : function(data) {
+					console.log('insertColumnBtn in');
+					console.log(data);
+					console.log(typeof(data));
+					if(data != null) {
+		        		 console.log('data : ' + data);
+		        		addColumn(data);
 		        		$('#addColumnModal').modal("hide");
-		        		$('#colname').val("");
 					}else {
 						errorAlert("Column 추가 실패");
 					}
@@ -301,21 +222,68 @@
 	});
 
 
+	//addIssueModal 모달이 오픈되면 !
+	$('#addIssueModal').on('show.bs.modal', function() {  
 	
+		console.log("addIssueModal open!");
+
+	 	$.ajax({
+	 		type: "POST",
+            url: "GetAddIssueForm.do",
+            data: { projectIdx: ${project.projectIdx}},
+            success: function (data) {
+            	$('#assigned').empty();
+            	
+				let member = data.member;
+				let label = data.label;
+				let optlabel;
+				let optmember;
+				
+               $.each(member, function(index, element) {
+
+					optmember += '<option value="Cathy">'+element.name+'('+element.email+')</option>';
+					
+					$('#assigned').append(selectoption);
+					$('#assigned').append(optmember);
+                   });
+
+               
+               $.each(label, function(index, element) {
+               	$('#labelIdx').empty();
+ 
+                  optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
+
+                  $('#labelIdx').append(selectoption);
+				  $('#labelIdx').append(optlabel);	
+                   });
+            },
+            error: function () {
+                console.log("GetProjectMember error");
+            }
+		}) 
+		});
+
+	
+	$('#addIssueModal').on('hidden.bs.modal', function(){
+		console.log('hidden 작동하니?');
+		
+		$('#issueTitle').val("");
+		$('#isContent').val("");
+		$('#datepicker-autoclose').val("");
+		//$('select').find('option:first').attr('selected', 'selected');
+		
+	});
+
+
 	$("#addLabelBtn").on("click", function () {	
 		
-		console.log("addLabelBtn in");
-		console.log($('#labelcolor').val());
-		console.log($('#labelname').val());
-
 		let lbcolor = $('#labelcolor').val();
 		let lbname = $('#labelname').val();
 			$.ajax({
 				url : 'InsertLabel.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
 				success : function(data) {
-					console.log(data);  // 라벨번호 
-
+					//console.log(data);  // 라벨번호 
 				let labelpiece = "";
 					labelpiece +=  '<div class="row labelList" id="'+data+'">';
 					labelpiece +=  '<div class="col-lg-8">';
@@ -336,27 +304,17 @@
 				}
 			});
 		});
-/* 	let editColIdx="";
-	let editColname="";
-    $('#editColumnModal').on('show.bs.modal', function(event) {          
-    	editColIdx = $(event.relatedTarget).data('updatecol-id');
-    	editColname = $(event.relatedTarget).data('upcolname-id');
-    	console.log("에딧 모달");
-    	console.log(editColIdx);
-    	console.log(editColname);
-       /* $(".modal-body").prepend("<b>[ " + updateCol +" ]</b>");
-       $("#deletebtn").attr("href","UpdateColumn.do?colIdx=" + updateCol); 
-    }); */
+
+	
     $("#editColumnBtn").click(function() {
         $.ajax({
         	url : 'UpdateColumn.do',
         	data : { 'colname' : $("#editcolName").val(),'projectIdx' : ${project.projectIdx},'colIdx' :  $("#editcolIdx").val()}, 
         	success : function(data) {
             	console.log("업데이트 칼럼 성공 ");
-            	//console.log(data);
-            	console.log($("#" + data + "Column"));
-            	$("#" + data + "Column > h4").html($("#editcolName").val());
-        		//$("#"+colIdx+"Column > .columnBody").append(issue);
+            	console.log($("#" + data + "Column span").text());
+            $("#" + data + "Column span").text($("#editcolName").val());
+        		$("#editcolName").val("");
             	$('#editColumnModal').modal('hide');
             },
             error : function() {
@@ -365,119 +323,123 @@
         });
     });
 });
-  </script>
+</script>
 
 <div id="totalbody" class="container-fluid mt-3">
-	<div class="row">
-		<div class="col-8" style="margin-left: 30px;">
+    <div id="kanbanMainBox">
 
-			<a href="#" data-toggle="modal" data-target="#addIssueModal">
-				<button id="addIssuebtn" class="btn btn-primary">
-					<i class="fas fa-italic"></i>&nbsp;New Issue
-				</button>
-			</a> 
-			
-			<a href="#" data-toggle="modal" data-target="#addColumnModal">
-				<button class="btn btn-primary">
-					<i class="fas fa-columns"></i>&nbsp;New Column
-				</button>
-			</a>
+        <div class="row">
+            <div class="col-2" style="margin-left: 30px;">
 
-			<button id="openIssueBtn" class="btn btn-primary">
-				<i class="fas fa-columns"></i>&nbsp;Open Issue
-			</button>
-			
-			
-			<button id="closeIssueBtn" class="btn btn-primary">
-				<i class="fas fa-columns"></i>&nbsp;Close Issue
-			</button>
+                <button id="openIssueBtn" class="btn btn-primary">
+                    <i class="fas fa-columns"></i>&nbsp;Open
+                </button>
 
-		</div>
-		<div class="col-2">
-			<a href="#" data-toggle="modal" data-target="#addLabelModal">
-				<button class="btn btn-primary">
-					<i class="fas fa-tag"></i>&nbsp;Make Label
-				</button>
-			</a>
-		</div>
-	</div>
 
-	<div class="row" id="kanbanArea">
-		<!--  open issue -->
-		<div class="columnSection leftdoor d-none" id="openIssue">
-			<div class="text-center mt-2  leftdoorheader">
-				<h4> Open Issue
-				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
-				</h4>
-			</div>
-			<ul class="connectedSortable columnBody sortableCol">
-				<!-- <li class="issuePiece d-none">Item 1</li> -->
-				<li class="issuePiece"></li>
-			</ul>
-		</div>
-		<!--  close issue -->
-		<div class="columnSection d-none leftdoor "  id="closeIssue">
-			<div class="text-center mt-2 leftdoorheader">
-				<h4>
-					Close Issue<span class="float-right">
-					<i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
-				</h4>
-			</div>
-			<ul class="connectedSortable columnBody sortableCol">
-				<li class="issuePiece"></li>
-			</ul>
-		</div>
-		<!-- 칼럼 -->
-<!-- 		<div class="columnSection">
-			<div class="columnTitle text-center mt-2 dropdown">
-				<h4>Undefined section
-					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
-					<i class="fas fa-ellipsis-v fa-sm"></i></a>
-					
-					<div class="dropdown-menu" aria-labelledby="dropdownColBtn">
-						<ul class="list-style-none">
-							<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>
-							<li class="pl-3"><a href="#">Remove Column</a></li>
-						</ul>
-					</div>
-				</h4>
-			</div>
+                <button id="closeIssueBtn" class="btn btn-primary">
+                    <i class="fas fa-columns"></i>&nbsp;Closed
+                </button>
 
-			<ul id="sortable000" class="connectedSortable columnBody cursor">
-				<li class="issuePiece d-none">Item 1</li>
-				무조건 있어야함!!!
-				<li class="issuePiece">
-					<div class="dropdown">
-						<label> <span class="badgeIcon float-left">Dev</span> 
-						<span class="issueTitle">Drive : Development</span>
-						</label> 
-						<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
-						<i class="fas fa-ellipsis-v fa-sm"></i></a>
-						<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-							<ul class="list-style-none">
-								<li class="pl-3"><a href="#editIssueModal"
-									data-toggle="modal">Edit Issue</a></li>
-								<li class="pl-3"><a href="#">Remove Issue</a></li>
-							</ul>
-						</div>
-					</div>
-					<div>
-						<label> 
-						<span class="assigneetitle">
-						<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span
-							class="assignee">Chloe</span>
-						</label>
-					</div>
-				</li>
-			</ul>
-		</div> -->
-		<!-- 끝 -->
-	</div>
+            </div>
+            <div class="col-8">
+                <a href="#" data-toggle="modal" data-target="#addIssueModal">
+                    <button id="addIssuebtn" class="btn btn-primary">
+                        <i class="fas fa-italic"></i>&nbsp;New Issue
+                    </button>
+                </a>
+
+                <a href="#" data-toggle="modal" data-target="#addColumnModal">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-columns"></i>&nbsp;New Column
+                    </button>
+                </a>
+                <a href="#" data-toggle="modal" data-target="#addLabelModal">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-tag"></i>&nbsp;Make Label
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <div class="row" id="kanbanArea">
+            <!--  open issue -->
+            <!--  openIssueColumn -->
+
+            <div class="columnSection leftdoor d-none" id="-1Column">
+                <div class="text-center mt-2 leftdoorheader">
+                    <h4> Open Issue
+                        <span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
+                    </h4>
+                </div>
+                <ul class="connectedSortable columnBody sortableCol">
+                    <!-- <li class="issuePiece d-none">Item 1</li> -->
+                    <!-- 	<li class="issuePiece"></li> -->
+                </ul>
+            </div>
+            <!--  close issue -->
+            <div class="columnSection d-none leftdoor" id="-99Column">
+                <div class="text-center mt-2 leftdoorheader">
+                    <h4>
+                        Close Issue<span class="float-right">
+                            <i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
+                    </h4>
+                </div>
+                <ul class="connectedSortable columnBody sortableCol">
+                    <li class="issuePiece d-none"></li>
+                </ul>
+            </div>
+            <div id="kanbanIn" class="row"></div>
+            <!-- 칼럼 -->
+            <!--  	<div class="columnSection">
+                <div class="columnTitle text-center mt-2 dropdown">
+                    <h4>Undefined section
+                        <a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
+                        <i class="fas fa-ellipsis-v fa-sm"></i></a>
+                        
+                        <div class="dropdown-menu" aria-labelledby="dropdownColBtn">
+                            <ul class="list-style-none">
+                                <li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>
+                                <li class="pl-3"><a href="#">Remove Column</a></li>
+                            </ul>
+                        </div>
+                    </h4>
+                </div>
+    
+                <ul id="sortable000" class="connectedSortable columnBody cursor">
+                    <li class="issuePiece">
+                            <div class="dropdown">
+                                <label> <span class="badgeIcon float-left" style="background-color: yellow">title</span>
+                                <span class="issueTitle">title</span>
+                                </label>
+                                <a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
+                                <i class="fas fa-ellipsis-v fa-sm"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
+                                    <ul class="list-style-none">
+                                        <li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
+                                    <li class="pl-3"><a href="#">Remove Issue</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                            <label>
+                                <span class="assigneetitle">
+                                <i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">yoon</span>
+                            </label>
+                        </div>
+                        </li>
+                </ul>
+            </div> -->
+            <!-- 끝 -->
+
+        </div>
+    </div>
+    
+    <!-- kanbanDetailBox  -->
+    <jsp:include page="detail.jsp" />
 </div>
 
 <!-- add issue modal -->
 <jsp:include page="modal/addIssue.jsp" />
-<jsp:include page="modal/editIssue.jsp" />
 <jsp:include page="modal/addColumn.jsp" />
 <jsp:include page="modal/editColumn.jsp" />
 <jsp:include page="modal/addLabel.jsp" />

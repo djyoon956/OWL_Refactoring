@@ -37,12 +37,13 @@ public class NoticeRestController {
 			, @RequestParam(value = "title") String title
 			, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 			, Principal principal, HttpServletRequest request) {		
-		System.out.println("insert notice");
+		System.out.println("insert notice222");
 		Notice notice = new Notice();
 		notice.setProjectIdx(projectIdx);
 		notice.setContent(content);
 		notice.setTitle(title);
 		notice.setEmail(principal.getName());
+		System.out.println(multipartFiles.size());
 		
 		boolean result= false;
 		try {
@@ -56,8 +57,7 @@ public class NoticeRestController {
 	
 	@RequestMapping(value = "GetNotice.do", method = RequestMethod.POST)
 	public Notice getNotice(int boardIdx) {
-		System.out.println("getNotice");
-		System.out.println(boardIdx);
+		
 		return service.getNotice(boardIdx);
 	}
 }

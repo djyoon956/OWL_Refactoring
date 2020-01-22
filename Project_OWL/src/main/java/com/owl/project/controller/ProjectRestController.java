@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.drive.dto.DriveFolder;
+import com.owl.member.dto.Member;
 import com.owl.project.dto.Project;
 import com.owl.project.dto.ProjectList;
 import com.owl.project.service.ProjectService;
@@ -70,6 +71,15 @@ public class ProjectRestController {
 		return result;
 	}
 	
+	@RequestMapping("GetProjectList.do")
+	public ProjectList getProjectList(int projectIdx, Principal principal, Model model) {
+		ProjectList projectList = null;
+		projectList = service.getProjectList(projectIdx, principal.getName());
+		model.addAttribute("projectList", projectList);
+		System.out.println("단일 캘린더 " + projectList);
+		return projectList;
+	}
+	
 	@RequestMapping("ProjectList.do")
 	public List<ProjectList> getDriveList(Principal principal, Model model){
 		List<ProjectList> projectList  = null;
@@ -103,5 +113,11 @@ public class ProjectRestController {
 		} catch (Exception e) {
 			System.out.println("이거 에러..>" + e.getMessage());
 		}
+	}
+	
+	@RequestMapping(value = "GetProjectMember.do", method = RequestMethod.POST)
+	public List<Member> getProjectMembers(int projectIdx) {
+		System.out.println("getProjectMembers : "+projectIdx);
+		return service.getProjectMembers(projectIdx);
 	}
 }

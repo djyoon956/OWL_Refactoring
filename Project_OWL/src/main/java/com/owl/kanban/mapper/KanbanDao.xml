@@ -16,14 +16,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<insert id="insertIssue" parameterType="com.owl.kanban.dto.Issue">
-		INSERT INTO owl.ISSUE(creator, issuetitle, content, issueprogress, projectidx, duedate, prioritycode, assigned, labelidx, colidx) 
-		VALUES(#{creator}, #{issueTitle}, #{content}, #{issueProgress}, #{projectIdx}
+		INSERT INTO owl.ISSUE(ordernum, creator, issuetitle, content, issueprogress, projectidx, duedate, prioritycode, assigned, labelidx, colidx) 
+		VALUES(#{orderNum}, #{creator}, #{issueTitle}, #{content}, #{issueProgress}, #{projectIdx}
 					, #{dueDate, jdbcType=DATE} , #{priorityCode, jdbcType=VARCHAR}, #{assigned, jdbcType=VARCHAR}
 					, <choose>
 					    <when test="labelIdx != 0"> #{labelIdx} </when>
 					    <otherwise> null </otherwise>
 					  </choose>
-					, <choose> 
+					 
+					 , <choose> 
 						<when test="colIdx != 0"> #{colIdx} </when>
 					    <otherwise> null </otherwise>
 					  </choose>
@@ -33,13 +34,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	</selectKey>
 	</insert>
 
+
+	<insert id="insertIssueFile" >
+		INSERT INTO owl.File(ISSUEIDX, WRITER, FILENAME, FILESIZE)
+		VALUES(#{issueIdx}, #{writer}, #{fileName}, #{fileSize})
+	</insert>
+
+
 	<insert id="insertLabel" parameterType="com.owl.project.dto.Label">
 		INSERT INTO owl.label(projectidx, labelcolor, labelname) VALUE(#{projectIdx}, #{labelColor}, #{labelName})
 			<selectKey keyProperty="labelIdx" resultType="int" order="AFTER">
 				SELECT LAST_INSERT_ID()
 			</selectKey>
 	</insert>
-
 
 	<select id="getLabelList" resultType="com.owl.project.dto.Label">
 		select labelidx, labelname, labelcolor from label WHERE projectidx = #{projectIdx}
@@ -49,13 +56,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getLabelinfo" resultType="com.owl.project.dto.Label">
 		select  labelname, labelcolor from label WHERE labelIdx = #{labelIdx}
 	</select>
-	<select id="getColumn" resultType="com.owl.kanban.dto.ColumnList">
-		SELECT I.PROJECTIDX, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR, C.COLIDX, C.COLNAME
-		FROM COLNAME C LEFT JOIN ISSUE I ON I.PROJECTIDX = C.PROJECTIDX 
-		AND C.COLIDX = I.COLIDX LEFT JOIN LABEL L 
-		ON C .PROJECTIDX = C.PROJECTIDX AND L.LABELIDX = I.LABELIDX WHERE C.PROJECTIDX=#{projectIdx}
-	</select> 
+	
+	<select id="getColumn" resultType="com.owl.kanban.dto.Column">
+  		select colidx, colname from colname where projectidx=#{projectIdx}
+	</select>
+	<select id="getIssue" resultType="com.owl.kanban.dto.Issue">
+		SELECT i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
+	FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX where i.projectidx=#{projectIdx}
+	</select>
+	
+	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.Issue">
+		SELECT I.PROJECTIDX, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR
+		FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
+		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2}
+	</select>
+	
+	<select id="getIssueFiles" resultType="com.owl.notice.dto.File">
+		SELECT FILEIDX, ISSUEIDX, WRITER, FILENAME, FILESIZE 
+			FROM owl.FILE
+		WHERE ISSUEIDX  = #{issueIdx}
+	</select>
+	
+	<select id="getIssueLogs" resultType="com.owl.kanban.dto.IssueLog">
+		SELECT LOGIDX, LOG, LOGTIME, ISSUEIDX FROM owl.ISSUELOG
+		WHERE ISSUEIDX = #{issueIdx}
+	</select>
+	
 	<update id="updateColumn" parameterType="com.owl.kanban.dto.Column">
 		UPDATE COLNAME SET COLNAME = #{colname} WHERE PROJECTIDX = #{projectIdx} AND COLIDX=#{colIdx}
 	</update>
+	
+	<delete id="deleteColumn">
+		DELETE FROM COLNAME WHERE COLIDX =#{colIdx}
+	</delete>
+	
+		<delete id="deleteIssue">
+		DELETE FROM ISSUE WHERE ISSUEIDX =#{issueIdx}
+	</delete>
 </mapper>

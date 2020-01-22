@@ -1,9 +1,13 @@
 package com.owl.calendar.controller;
 
 import java.security.Principal;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +25,7 @@ public class SmartCalendarRestController {
 	@Autowired
 	SmartCalendarService service;
 	
-	@RequestMapping(value="insertCalendar.do", method = RequestMethod.POST)
+	@RequestMapping(value="InsertCalendar.do", method = RequestMethod.POST)
 	public boolean insertCalendar(@RequestParam(value = "calendarId") int calendarId, 
 												@RequestParam(value = "title") String title,
 												@RequestParam(value = "location",required = false) String content,
@@ -62,29 +66,82 @@ public class SmartCalendarRestController {
 		return result;
 	}
 
-	@RequestMapping(value="deleteMyCalendar.do", method = RequestMethod.POST)
-	public boolean deleteMyCalendar(Principal principal) {
+	@RequestMapping(value="DeleteCalendar.do", method = RequestMethod.POST)
+	public boolean deleteMyCalendar(@RequestParam(value = "scheduleId") int calIdx) {
 		boolean result = false;
-		result = service.deleteMyCalendar(principal.getName());	
-		System.out.println(result);
+		result = service.deleteCalendar(calIdx);	
 		return result;
 	}
 	
-	@RequestMapping(value="deleteProjectCalendar.do", method = RequestMethod.POST)
-	public boolean deleteProejctCalendar(@RequestParam(value = "calendarId") int projectIdx, Principal principal) {
-		boolean result = false;
-		System.out.println(projectIdx);
-		result = service.deleteProjectCalendar(principal.getName(), projectIdx);
-		System.out.println(result);
-		return result;
-	}
-	
-	
-	@RequestMapping(value="getMyAllCalendars.do")
+	@RequestMapping(value="GetMyAllCalendars.do")
 	public List<SmartCalendar> getMyAllCalendars(Principal principal){
 		List<SmartCalendar> calendar = null;
 		calendar = service.getMyAllCalendars(principal.getName());		
-		System.out.println(calendar);
 		return calendar;
+	}
+	
+	@RequestMapping(value="GetProjectCalendar.do")
+	public List<SmartCalendar> getProjectCalendar(int projectIdx){
+		List<SmartCalendar> calendar = null;
+		calendar = service.getProjectCalendar(projectIdx);
+		return calendar;
+	}
+	
+	@RequestMapping(value="UpdateCalendar.do", method = RequestMethod.POST)
+	public boolean updateCalendar(@RequestParam(value = "scheduleId") int calIdx, 
+												  @RequestParam(value = "calendarId" ,required = false) String projectIdx, 												  
+												  @RequestParam(value = "title" ,required = false) String title,
+												  @RequestParam(value = "location",required = false) String content,
+												  @RequestParam(value = "start" ,required = false) String startDate,
+												  @RequestParam(value = "end" ,required = false) String endDate,
+												  @RequestParam(value = "allDay" ,required = false) boolean allDay,
+												Principal principal) {
+		boolean result = false;
+		SmartCalendar calendar = new SmartCalendar();
+		try {
+		if(projectIdx !=null) { // 프로젝트 변경했을 때
+			int chageIdx = Integer.parseInt(projectIdx);
+			calendar.setProjectIdx(chageIdx);
+			if(chageIdx == 0)
+				calendar.setType(CalendarType.MY);
+			else 
+				calendar.setType(CalendarType.PROJECT);
+		}else { // 프로젝트 변경 없을 때
+			calendar.setProjectIdx(-1);
+		}
+			
+		calendar.setTitle(title);
+		calendar.setContent(content);	
+		calendar.setCalIdx(calIdx);
+		System.out.println("----------------");
+		System.out.println(startDate);
+		System.out.println(endDate);
+	    System.out.println(allDay);
+			if(allDay) {
+				if(!startDate.isEmpty()) {
+					calendar.setStartDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(startDate));
+				}
+				if(!endDate.isEmpty()) {
+					calendar.setEndDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(endDate));		
+				}	
+					calendar.setAllDay(1);
+			}else{
+				if(!startDate.isEmpty()) {
+					calendar.setStartDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(startDate));
+				}
+				if(!endDate.isEmpty()) {
+					calendar.setEndDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(endDate));		
+				}
+				calendar.setAllDay(0);
+			}
+		System.out.println(calendar.getStartDate());
+		System.out.println(calendar.getEndDate());
+		calendar.setEmail(principal.getName());
+		result = service.updateCalendar(calendar);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 }

@@ -3,24 +3,25 @@ package com.owl.kanban.service;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.helper.UploadHelper;
 import com.owl.kanban.dao.KanbanDao;
 import com.owl.kanban.dto.Column;
-import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
-import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.File;
-import com.owl.notice.dto.File.FileType;
+import com.owl.project.dao.ProjectDao;
 import com.owl.project.dto.Label;
 
 @Service
@@ -29,12 +30,12 @@ public class KanbanService {
 	private SqlSession sqlSession;
 
 	@Transactional
-	public Label insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
+	public Issue insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
 		System.out.println(issue.getDueDate());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		Label label = null;
+		Issue colList = null;
 		try {
 			
 			result = dao.insertIssue(issue) > 0 ? true : false;
@@ -42,17 +43,22 @@ public class KanbanService {
 			
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
-
 			
+			System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
+			
+			
+			System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
 			if(result) {
-				label = dao.getLabelinfo(issue.getLabelIdx()); 
+				colList = dao.getIssuebyIssueIdx(issue.getProjectIdx(), issue.getIssueIdx());
 			}
+			
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 		} 
 		
+		System.out.println("service colist : " + colList);
 		
-		return label;
+		return colList;
 	}
 
 	private List<File> insertIssueFiles(KanbanDao dao, String email, int projectIdx, int issueIdx, List<MultipartFile> multipartFiles, String uploadPath) {
@@ -68,12 +74,11 @@ public class KanbanService {
 			}
 
 			File file = new File();
-			file.setFileFrom(FileType.ISSUE);
-			file.setBelongTo(issueIdx);
+			file.setIssueIdx(issueIdx);
 			file.setFileName(fileName);
 			file.setWriter(email);
-			file.setFileSize(String.valueOf(multipartFile.getSize()));
-			
+			file.setFileSize(String.valueOf(multipartFile.getSize()/1024));
+			System.out.println("file값" +file.toString());
 			try {
 				dao.insertIssueFile(file);
 			} catch (Exception e) {
@@ -93,7 +98,7 @@ public class KanbanService {
 		
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		
+
 		try {
 			
 			result = dao.insertColumn(column) > 0 ? true : false;
@@ -103,8 +108,10 @@ public class KanbanService {
 			e.printStackTrace();
 		}
 		
+		System.out.println("컬럼정보" + column.toString());
 		System.out.println("insert service 결과 : " + result);
 		System.out.println("insert service 컬럼 아이디엑스  : " + column.getColIdx());
+		
 		
 		return result;
 	}
@@ -151,18 +158,29 @@ public class KanbanService {
 	}
 	
 	
-	public List<ColumnList> getColum(int projectIdx){
+	public List<Column> getColum(int projectIdx){
 		KanbanDao dao = getKanbanDao();
-		List<ColumnList> colList = null;
-		
+		List<Column> colList = null;
 		try {
 			colList = dao.getColumn(projectIdx);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(colList + " : 칼럼리스트 ");
 		return colList;
+	}
+	
+	public List<Issue> getIssue(int projectIdx){
+		KanbanDao dao = getKanbanDao();
+		List<Issue> issue = null;
+		
+		try {
+			issue = dao.getIssue(projectIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(issue + " : 이슈리스트 ");
+		return issue;
 	}
 	
 	public boolean updateColumn(Column column) {
@@ -194,9 +212,89 @@ public class KanbanService {
 		return null;
 	}
 	
+	public boolean deleteColumn(int colIdx) {
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		try {
+			result = dao.deleteColumn(colIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
 	
+	public boolean deleteIssue(int issueIdx) {
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		try {
+			result = dao.deleteIssue(issueIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
+	
+
+	public Map<String, Object> getIssueform(int projectIdx) {
+		System.out.println("getIssueform in");
+		
+		Map<String, Object> object = new HashMap<>();
+		KanbanDao daok = getKanbanDao();
+		ProjectDao daop = getProjectDao();
+		
+		try {
+			List<Label> label = daok.getLabelList(projectIdx);
+			List<Member> member = daop.getProjectMembers(projectIdx);
+			
+			object.put("label", label);
+			object.put("member", member);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		//System.out.println("object" + object);
+		
+		return object;
+	}
+	
+
+	public boolean updateIssueOrder() {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		
+		return result;
+	}
+
+	
+	public Issue getIssueDetail(int projectIdx, int issueIdx) {
+		KanbanDao dao = getKanbanDao();
+		Issue issue = new Issue();
+
+		try {
+			// issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
+			issue.setFiles(dao.getIssueFiles(issueIdx));
+			issue.setLogs(dao.getIssueLogs(issueIdx));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return issue;
+	}
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
+	}
+	
+	private ProjectDao getProjectDao() {
+		return sqlSession.getMapper(ProjectDao.class);
 	}
 }
