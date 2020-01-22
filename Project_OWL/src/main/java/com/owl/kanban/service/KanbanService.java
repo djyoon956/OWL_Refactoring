@@ -273,20 +273,21 @@ public class KanbanService {
 	}
 
 	
-	public void getIssueDetail(int projectIdx, int issueIdx) {
+	public Issue getIssueDetail(int projectIdx, int issueIdx) {
 		KanbanDao dao = getKanbanDao();
-		Issue issue = null;
-		/*
+		Issue issue = new Issue();
+
 		try {
-			
-			//issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
-			
+			// issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
+			issue.setFiles(dao.getIssueFiles(issueIdx));
+			issue.setLogs(dao.getIssueLogs(issueIdx));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		*/
+
+		return issue;
 	}
 	
 	private KanbanDao getKanbanDao() {

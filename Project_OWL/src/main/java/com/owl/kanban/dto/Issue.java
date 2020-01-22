@@ -28,7 +28,7 @@ public class Issue {
 	private int orderNum;
 	private int colIdx;
 	private List<File> files;
-	private HashMap<Integer, IssueLog> issueLogs;
+	private List<IssueLog> logs;
 	
 	//ui용 
 	private String labelName;
