@@ -289,7 +289,7 @@
     </style>
 </head>
 
-<body>
+<body class="projectBody">
     <!-- LOADER -->
     <div class="preloader">
         <div class="lds-ripple">
