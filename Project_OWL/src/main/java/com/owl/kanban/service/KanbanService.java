@@ -320,6 +320,25 @@ public class KanbanService {
 		}
 	}
 	
+	
+	public boolean UpdateLabel(Label label) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			System.out.println("label :" + label);
+			result = dao.updateLabel(label) > 0 ? true : false;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("result가 뭐니?" + result);
+		return result;
+	}
+	
+	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
 	}

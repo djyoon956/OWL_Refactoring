@@ -109,4 +109,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteLabel">
 		DELETE FROM LABEL WHERE LABELIDX =#{labelIdx}
 	</delete>	
+	
+	
+	<update id="updateLabel" parameterType="com.owl.project.dto.Label">
+		UPDATE LABEL SET LABELNAME = #{labelName}, LABELCOLOR =#{labelColor} WHERE LABELIDX = #{labelIdx}
+	</update>
+	
 </mapper>

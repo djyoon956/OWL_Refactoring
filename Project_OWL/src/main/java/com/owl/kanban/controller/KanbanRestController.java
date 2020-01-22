@@ -55,6 +55,7 @@ public class KanbanRestController {
 		System.out.println(columns);
 		return columns;		
 	}
+	
 	//이슈리스트 select 
 	@RequestMapping("GetIssue.do")	
 	public List<Issue> getIssue(int projectIdx){
@@ -62,6 +63,8 @@ public class KanbanRestController {
 		System.out.println(issue);
 		return issue;
 	}
+	
+	
 	//라벨리스트  select 
 	@RequestMapping("UpdateColumn.do")
 	public int updateColumn(Column column) {
@@ -230,4 +233,43 @@ public class KanbanRestController {
 		service.updateMoveIssue(columnIdx, issues);
 		return result;
 	}
+	
+	
+	
+	@RequestMapping("UpdateLabel.do")
+	public int UpdateLabel(Label label) {
+		System.out.println("UpdateLabel in");
+		
+		System.out.println(label.getLabelIdx());
+		System.out.println(label.getLabelColor());
+		System.out.println(label.getLabelName());
+		
+		Label lb = new Label();
+		lb.setLabelIdx(label.getLabelIdx());
+		lb.setLabelColor(label.getLabelColor());
+		lb.setLabelName(label.getLabelName());
+
+		boolean result = false;
+		result = service.UpdateLabel(label);	
+		
+		int labelIdx = -1;		
+		
+		if(result) {
+			labelIdx = lb.getLabelIdx();
+		};
+
+		return labelIdx;
+	}
+	
+	
+	@RequestMapping(value="DeleteLabel.do", method = RequestMethod.POST)
+	public boolean deleteLabel(@RequestParam(value = "labelIdx") int labelIdx) {
+		System.out.println("label controller in+++++++++++++++");
+		boolean result = false;
+		result = service.deleteLabel(labelIdx);
+		System.out.println("delete label " + result);
+		return result;
+	}
+	
+	
 }

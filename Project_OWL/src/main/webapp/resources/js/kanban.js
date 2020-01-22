@@ -7,7 +7,7 @@ let projectIdx;
 					+  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbnm+'</span>'
 					+  '</div>'
 					+  '<div class="col-lg-2">'
-					+  '<button class="btn-link link-gray" onclick="editLabel(' + lbidx +')";>Edit</button>'
+					+ '<button class="btn-link link-gray" onclick="editLabel(' + lbidx +','+"'"+lbcolor+"'"+','+"'"+lbnm+"'"+')";>Edit</button>'
 					+  '</div>'
 					+  '<div class="col-lg-2">'
 					+  '<button class="btn-link link-gray" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
@@ -228,22 +228,68 @@ function changeKanbanView(view){
 
 function editLabel(idx, color, name) {
 	
-	console.log(idx);
-	console.log(color);
-	console.log(name);
+	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
 
-	$('#addLabelBtn').hide();
 	$('#labelcolor').focus();
 
 	$('#addLabelBtn').addClass("hidden");
+	$('#editLabelBtn').removeClass("hidden");
+	$('#backBtn').removeClass("hidden");
 	
 	$('#labelcolor').val(color);
 	$('#labelname').val(name);
-	
 
 	$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
+	//$('#'+idx+'Label').childern('div').attr('disabled', true);
+	//$('#'+idx+'Label').attr('class', "hidden");
 	
-}
+	console.log('이전값');
+	console.log(color);
+	console.log(name);
+	
+	
+	$('#editLabelBtn').click(function() {
+		console.log('change 값');
+		console.log($('#labelcolor').val());
+		console.log($('#labelname').val());
+		
+		$.ajax({
+			url : "UpdateLabel.do",
+			data : {'labelIdx' : idx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
+			success : function(data) {
+				
+				console.log('data in' + data);
+				$('#'+idx+'Label').next().remove();
+				$('#'+idx+'Label').remove();
+				
+				addLabel(idx, $('#labelcolor').val(), $('#labelname').val());
+				
+			}, error : function () {
+				console.log('EditLabel error');
+			}
+		});
+	});
+	
+	
+	$('#backBtn').click(function() {
+		
+		$('#labelcolor').val("");
+		$('#labelname').val("");
+		
+		$('#addLabelBtn').removeClass("hidden");
+		$('#editLabelBtn').addClass("hidden");
+		$('#backBtn').addClass("hidden");
+	});
+	
+	};
+
+	
+	
+	
+	
+	
+
+
 
 
 	

@@ -52,4 +52,6 @@ public interface KanbanDao {
 	public List<Reply> getIssueReplies(int issueIdx) throws ClassNotFoundException, SQLException;
 	
 	public int updateMoveIssue(Map<String, Object> data) throws ClassNotFoundException, SQLException;
+		
+	public int updateLabel(Label label) throws ClassNotFoundException, SQLException;
 }

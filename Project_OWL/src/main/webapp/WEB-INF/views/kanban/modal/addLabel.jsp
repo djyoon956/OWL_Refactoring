@@ -85,8 +85,8 @@
 							</div>
 							<hr>
 							<input type="button" class="btn btn-primary text-right" id="addLabelBtn" value="Create label" />
-							<input type="button" class="btn btn-primary text-right" id="editLabelBtn" value="Edit" />
-							<input type="button" class="btn btn-primary text-right" id="backBtn" value="Back" />
+							<input type="button" class="hidden btn btn-primary text-right " id="editLabelBtn" value="Edit" />
+							<input type="button" class="hidden btn btn-primary text-right" id="backBtn" value="Back" />
 							
 
 						</div>
