@@ -391,6 +391,5 @@
     <!-- MODAL -->
     <jsp:include page="modal/memberAdd.jsp" />
     <jsp:include page="modal/joinProjectMember.jsp" />
-      <jsp:include page="modal/memberCheck.jsp" /> 
-
+     <jsp:include page="modal/memberCheck.jsp" /> 
 </body>

@@ -1,5 +1,85 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <script type="text/javascript">
+//왼쪽에 위치한 프로젝트 리스트 목록 출력 및 팝업창에서의 프로젝트 리스트 출력
+function setSchedules() {
+    cal.clear();
+    generateSchedule(cal.getViewName());
+    cal.createSchedules(ScheduleList);
+    refreshScheduleVisibility();
+}
+
+function generateSchedule(viewName) {         
+	$.ajax({
+		url:"GetProjectCalendar.do",
+		dataType:"json",
+		async: false,
+		data: {projectIdx: ${project.projectIdx}},
+		success:function(data){
+	    	ScheduleList = [];
+			$.each(data, function(index, element){
+		    	let calendar;
+		    	let schedule = new ScheduleInfo();
+				$.each(CalendarList, function(index, obj){
+		    		if(obj.id == element.projectIdx){
+		    			calendar = obj;
+		    			return false;
+		    		}
+		    	})		    	
+		    	GetCalendar(calendar, element);				
+			});
+	    }
+
+    });
+}
+
+function GetCalendar(calendar, element){
+	 let data = {
+	            id: String(element.calIdx),
+	            title: element.title,
+	            isAllDay: element.allDay >0 ? true : false,
+	            start: element.startDate,
+	            end: element.endDate,
+	            category: element.allDay >0 ? 'allday' : 'time',
+	            dueDateClass: '',
+	            color: "#ffffff",
+	            bgColor: calendar.bgColor,
+	            dragBgColor: calendar.bgColor,
+	            borderColor: calendar.borderColor,
+	            location: element.content,
+	             raw: {
+	                class: "public"
+	            },
+	            state: "Busy" 
+	        };
+        
+	        if (calendar) {
+	        	data.calendarId = calendar.id;
+	        	data.color = calendar.color;
+	        	data.bgColor = calendar.bgColor;
+	        	data.borderColor = calendar.borderColor;
+	        }
+
+	        cal.createSchedules([data]);
+
+	        refreshScheduleVisibility();
+}
+
+function refreshScheduleVisibility() {
+    var calendarElements = Array.prototype.slice.call(document.querySelectorAll('#calendarList input'));
+
+    CalendarList.forEach(function(calendar) {
+        cal.toggleSchedules(calendar.id, !calendar.checked, false);
+    });
+
+    cal.render(false);
+
+    calendarElements.forEach(function(input) {
+        var span = input.nextElementSibling;
+        span.style.backgroundColor = input.checked ? span.style.borderColor : 'transparent';
+    });
+}
+	</script>   
             <!-- CONTENT MAIN -->
             <div class="container-fluid" style="padding:20px">
                 <div class="row">
@@ -168,4 +248,14 @@
                        </div>
                    </div>
                  </div>
+    <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
+	<script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
+	<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
+	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
+	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
+    <script src="resources/plugin/calendar/schedules.js"></script>
+    <script src="resources/plugin/calendar/dashCalendar.js"></script>             
             	<!-- </div> -->
