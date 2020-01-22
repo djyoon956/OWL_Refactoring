@@ -38,6 +38,7 @@
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
     <script src="resources/js/kanban.js"></script>
+    <link rel="stylesheet" type="text/css" href="resources/css/kanban.css" />
     <script type="text/javascript">
         $(function () {
             $.ajax({
@@ -60,6 +61,7 @@
             
             setTheme("${setting.themeColor}", "${setting.font}");
             initNotice("${project.projectIdx}");
+            initKanban("${project.projectIdx}");
             
             let oldMenu = $("#projectMenu li:nth-child(2)");
             $("#projectMenu li").on("click", function () {
