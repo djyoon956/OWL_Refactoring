@@ -233,20 +233,16 @@
             data: { projectIdx: ${project.projectIdx}},
             success: function (data) {
             	$('#assigned').empty();
-              // console.log('넘어온 값은?');
-              // console.log(data)
-              // console.log(data.member);
-              // console.log(data.label);
+            	
 				let member = data.member;
 				let label = data.label;
 				let optlabel;
 				let optmember;
+				
                $.each(member, function(index, element) {
-                 //  console.log('each문 in element');
-                 //  console.log(element.name);
-                  // console.log(element.email);
 
 					optmember += '<option value="Cathy">'+element.name+'('+element.email+')</option>';
+					
 					$('#assigned').append(selectoption);
 					$('#assigned').append(optmember);
                    });
@@ -255,10 +251,6 @@
                $.each(label, function(index, element) {
                	$('#labelIdx').empty();
  
-                 // console.log('each문 in data'); 
-                 // console.log(element.labelIdx);
-                  
-                  
                   optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
 
                   $('#labelIdx').append(selectoption);
@@ -271,21 +263,30 @@
 		}) 
 		});
 
+	
+	$('#addIssueModal').on('hidden.bs.modal', function(){
+		console.log('hidden 작동하니?');
+		//$('#addIssueForm')[0].reset();
+		console.log("before"+$('#issueTitle').val());
+		$('#issueTitle').val("");
+		console.log("after"+$('#issueTitle').val());
+		//$('#issueTitle')[0].reset();
+		//$('#content').html("");
+		//$('#datepicker-autoclose').val("");
+		//$('select').find('option:first').attr('selected', 'selected');
+		
+	});
+
 
 	$("#addLabelBtn").on("click", function () {	
 		
-		console.log("addLabelBtn in");
-		console.log($('#labelcolor').val());
-		console.log($('#labelname').val());
-
 		let lbcolor = $('#labelcolor').val();
 		let lbname = $('#labelname').val();
 			$.ajax({
 				url : 'InsertLabel.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
 				success : function(data) {
-					console.log(data);  // 라벨번호 
-
+					//console.log(data);  // 라벨번호 
 				let labelpiece = "";
 					labelpiece +=  '<div class="row labelList" id="'+data+'">';
 					labelpiece +=  '<div class="col-lg-8">';
