@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.kanban.dto.Column;
-import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.kanban.dto.Issue.IssueProgressType;
 import com.owl.kanban.dto.Issue.PriorityType;
@@ -71,7 +70,14 @@ public class KanbanRestController {
 		System.out.println(columns);
 		return columns;		
 	}
-
+	//이슈리스트 select 
+	@RequestMapping("GetIssue.do")	
+	public List<Issue> getIssue(int projectIdx){
+		List<Issue> issue = service.getIssue(projectIdx);
+		System.out.println(issue);
+		return issue;
+	}
+	//라벨리스트  select 
 	@RequestMapping("UpdateColumn.do")
 	public int updateColumn(Column column) {
 		Column col = new Column();
@@ -115,7 +121,7 @@ public class KanbanRestController {
 
 	
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
-	public ColumnList insertIssue(@RequestParam(value = "projectIdx") int projectIdx
+	public Issue insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
 							, @RequestParam(value = "content") String content
 							, @RequestParam(value = "orderNum") int orderNum
@@ -138,7 +144,8 @@ public class KanbanRestController {
 		System.out.println(priorityCode);
 		System.out.println(multipartFiles);
 		System.out.println(multipartFiles.size());
-
+		System.out.println("칼럼");
+		System.out.println(colIdx);
 		
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
@@ -166,7 +173,7 @@ public class KanbanRestController {
 		System.out.println(issue);
 		boolean result = false;
 		
-		ColumnList collist = null;
+		Issue collist = null;
 		
 		collist = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
 
@@ -205,6 +212,13 @@ public class KanbanRestController {
 		return result;
 	}
 	
+	@RequestMapping(value="DeleteIssue.do", method = RequestMethod.POST)
+	public boolean deleteIssue(@RequestParam(value = "issueIdx") int issueIdx) {
+		boolean result = false;
+		result = service.deleteIssue(issueIdx);
+		System.out.println("delete issue " + result);
+		return result;
+	}
 	
 	
 	@RequestMapping(value="GetAddIssueForm.do", method = RequestMethod.POST)
@@ -218,6 +232,13 @@ public class KanbanRestController {
 		
 	}
 	
+	
+	
+	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)
+	public void getIssueDetail(int issueIdx) {
+		System.out.println("in getIssueDetail : " + issueIdx);
+		
+	}
 	
 	private NoticeDao getNoticeDao() {
 		return sqlSession.getMapper(NoticeDao.class);

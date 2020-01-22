@@ -185,16 +185,16 @@
 
         
          $("#openIssueBtn").click(function() {
-            $("#0Column").removeClass("d-none");
-     		$("#closeIssueColumn").hide();
-     		$("#0Column").show();
+            $("#-1Column").removeClass("d-none");
+     		$("#-99Column").hide();
+     		$("#-1Column").show();
           });
 
          
          $("#closeIssueBtn").click(function() {
-         	$("#closeIssueColumn").removeClass("d-none");
-     		$("#0Column").hide();
-     		$("#closeIssueColumn").show();
+         	$("#-99Column").removeClass("d-none");
+     		$("#-1Column").hide();
+     		$("#-99Column").show();
           });
 	
          
@@ -329,110 +329,116 @@
 </script>
 
 <div id="totalbody" class="container-fluid mt-3">
-	<div class="row">
-		<div class="col-2" style="margin-left: 30px;">
+    <div id="kanbanMainBox">
 
-			<button id="openIssueBtn" class="btn btn-primary">
-				<i class="fas fa-columns"></i>&nbsp;Open
-			</button>
-			
-			
-			<button id="closeIssueBtn" class="btn btn-primary">
-				<i class="fas fa-columns"></i>&nbsp;Closed
-			</button>
+        <div class="row">
+            <div class="col-2" style="margin-left: 30px;">
 
-		</div>
-		<div class="col-8">
-			<a href="#" data-toggle="modal" data-target="#addIssueModal">
-				<button id="addIssuebtn" class="btn btn-primary">
-					<i class="fas fa-italic"></i>&nbsp;New Issue
-				</button>
-			</a> 
-			
-			<a href="#" data-toggle="modal" data-target="#addColumnModal">
-				<button class="btn btn-primary">
-					<i class="fas fa-columns"></i>&nbsp;New Column
-				</button>
-			</a>
-			<a href="#" data-toggle="modal" data-target="#addLabelModal">
-				<button class="btn btn-primary">
-					<i class="fas fa-tag"></i>&nbsp;Make Label
-				</button>
-			</a>
-		</div>
-	</div>
+                <button id="openIssueBtn" class="btn btn-primary">
+                    <i class="fas fa-columns"></i>&nbsp;Open
+                </button>
 
-	<div class="row" id="kanbanArea">
-		<!--  open issue -->
-		<!--  openIssueColumn -->
-	
-		<div class="columnSection leftdoor d-none" id="0Column">
-			<div class="text-center mt-2 leftdoorheader">
-				<h4> Open Issue
-				<span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
-				</h4>
-			</div>
-			<ul class="connectedSortable columnBody sortableCol">
-				<!-- <li class="issuePiece d-none">Item 1</li> -->
-			<!-- 	<li class="issuePiece"></li> -->
-			</ul>
-		</div>
-		<!--  close issue -->
-		<div class="columnSection d-none leftdoor" id="closeIssueColumn">
-			<div class="text-center mt-2 leftdoorheader">
-				<h4>
-					Close Issue<span class="float-right">
-					<i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
-				</h4>
-			</div>
-			<ul class="connectedSortable columnBody sortableCol">
-				<li class="issuePiece"></li>
-			</ul>
-		</div>
-		<div id="kanbanIn" class="row"></div>
-		<!-- 칼럼 -->
-	 <!--  	<div class="columnSection">
-			<div class="columnTitle text-center mt-2 dropdown">
-				<h4>Undefined section
-					<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
-					<i class="fas fa-ellipsis-v fa-sm"></i></a>
-					
-					<div class="dropdown-menu" aria-labelledby="dropdownColBtn">
-						<ul class="list-style-none">
-							<li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>
-							<li class="pl-3"><a href="#">Remove Column</a></li>
-						</ul>
-					</div>
-				</h4>
-			</div>
 
-			<ul id="sortable000" class="connectedSortable columnBody cursor">
-				<li class="issuePiece">
-						<div class="dropdown">
-							<label> <span class="badgeIcon float-left" style="background-color: yellow">title</span>
-							<span class="issueTitle">title</span>
-							</label>
-							<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
-							<i class="fas fa-ellipsis-v fa-sm"></i></a>
-							<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-								<ul class="list-style-none">
-									<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
-								<li class="pl-3"><a href="#">Remove Issue</a></li>
-								</ul>
-							</div>
-						</div>
-						<div>
-						<label>
-							<span class="assigneetitle">
-							<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">yoon</span>
-						</label>
-					</div>
-					</li>
-			</ul>
-		</div> -->
-		<!-- 끝 -->
+                <button id="closeIssueBtn" class="btn btn-primary">
+                    <i class="fas fa-columns"></i>&nbsp;Closed
+                </button>
 
-	</div>
+            </div>
+            <div class="col-8">
+                <a href="#" data-toggle="modal" data-target="#addIssueModal">
+                    <button id="addIssuebtn" class="btn btn-primary">
+                        <i class="fas fa-italic"></i>&nbsp;New Issue
+                    </button>
+                </a>
+
+                <a href="#" data-toggle="modal" data-target="#addColumnModal">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-columns"></i>&nbsp;New Column
+                    </button>
+                </a>
+                <a href="#" data-toggle="modal" data-target="#addLabelModal">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-tag"></i>&nbsp;Make Label
+                    </button>
+                </a>
+            </div>
+        </div>
+
+        <div class="row" id="kanbanArea">
+            <!--  open issue -->
+            <!--  openIssueColumn -->
+
+            <div class="columnSection leftdoor d-none" id="-1Column">
+                <div class="text-center mt-2 leftdoorheader">
+                    <h4> Open Issue
+                        <span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
+                    </h4>
+                </div>
+                <ul class="connectedSortable columnBody sortableCol">
+                    <!-- <li class="issuePiece d-none">Item 1</li> -->
+                    <!-- 	<li class="issuePiece"></li> -->
+                </ul>
+            </div>
+            <!--  close issue -->
+            <div class="columnSection d-none leftdoor" id="-99Column">
+                <div class="text-center mt-2 leftdoorheader">
+                    <h4>
+                        Close Issue<span class="float-right">
+                            <i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
+                    </h4>
+                </div>
+                <ul class="connectedSortable columnBody sortableCol">
+                    <li class="issuePiece d-none"></li>
+                </ul>
+            </div>
+            <div id="kanbanIn" class="row"></div>
+            <!-- 칼럼 -->
+            <!--  	<div class="columnSection">
+                <div class="columnTitle text-center mt-2 dropdown">
+                    <h4>Undefined section
+                        <a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
+                        <i class="fas fa-ellipsis-v fa-sm"></i></a>
+                        
+                        <div class="dropdown-menu" aria-labelledby="dropdownColBtn">
+                            <ul class="list-style-none">
+                                <li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>
+                                <li class="pl-3"><a href="#">Remove Column</a></li>
+                            </ul>
+                        </div>
+                    </h4>
+                </div>
+    
+                <ul id="sortable000" class="connectedSortable columnBody cursor">
+                    <li class="issuePiece">
+                            <div class="dropdown">
+                                <label> <span class="badgeIcon float-left" style="background-color: yellow">title</span>
+                                <span class="issueTitle">title</span>
+                                </label>
+                                <a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
+                                <i class="fas fa-ellipsis-v fa-sm"></i></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
+                                    <ul class="list-style-none">
+                                        <li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
+                                    <li class="pl-3"><a href="#">Remove Issue</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                            <label>
+                                <span class="assigneetitle">
+                                <i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">yoon</span>
+                            </label>
+                        </div>
+                        </li>
+                </ul>
+            </div> -->
+            <!-- 끝 -->
+
+        </div>
+    </div>
+    
+    <!-- kanbanDetailBox  -->
+    <jsp:include page="detail.jsp" />
 </div>
 
 <!-- add issue modal -->

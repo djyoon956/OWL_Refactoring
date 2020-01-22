@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.owl.helper.UploadHelper;
 import com.owl.kanban.dao.KanbanDao;
 import com.owl.kanban.dto.Column;
-import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
 import com.owl.notice.dto.File;
@@ -31,12 +30,12 @@ public class KanbanService {
 	private SqlSession sqlSession;
 
 	@Transactional
-	public ColumnList insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
+	public Issue insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
 		System.out.println(issue.getDueDate());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		ColumnList colList = null;
+		Issue colList = null;
 		try {
 			
 			result = dao.insertIssue(issue) > 0 ? true : false;
@@ -162,18 +161,27 @@ public class KanbanService {
 	public List<Column> getColum(int projectIdx){
 		KanbanDao dao = getKanbanDao();
 		List<Column> colList = null;
-		
 		try {
 			colList = dao.getColumn(projectIdx);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(colList + " : 칼럼리스트 ");
 		return colList;
 	}
 	
-	
+	public List<Issue> getIssue(int projectIdx){
+		KanbanDao dao = getKanbanDao();
+		List<Issue> issue = null;
+		
+		try {
+			issue = dao.getIssue(projectIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(issue + " : 이슈리스트 ");
+		return issue;
+	}
 	
 	public boolean updateColumn(Column column) {
 		KanbanDao dao = getKanbanDao();
@@ -217,6 +225,18 @@ public class KanbanService {
 		return result;
 	};
 	
+	public boolean deleteIssue(int issueIdx) {
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		try {
+			result = dao.deleteIssue(issueIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
 	
 
 	public Map<String, Object> getIssueform(int projectIdx) {
@@ -238,12 +258,36 @@ public class KanbanService {
 			e.printStackTrace();
 		} 
 		
-		System.out.println("object" + object);
+		//System.out.println("object" + object);
 		
 		return object;
 	}
 	
+
+	public boolean updateIssueOrder() {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		
+		return result;
+	}
+
 	
+	public void getIssueDetail(int projectIdx, int issueIdx) {
+		KanbanDao dao = getKanbanDao();
+		Issue issue = null;
+		/*
+		try {
+			
+			//issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+	}
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
