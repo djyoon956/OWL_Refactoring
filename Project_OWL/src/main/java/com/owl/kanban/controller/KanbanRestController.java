@@ -225,13 +225,20 @@ public class KanbanRestController {
 		return object;
 		
 	}
-	
-	
-	
+
 	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)
 	public Issue getIssueDetail(int projectIdx, int issueIdx) {
 		System.out.println("in getIssueDetail : " + issueIdx + "/"+projectIdx);
 		
 		return service.getIssueDetail(projectIdx, issueIdx);
+	}
+	
+	@RequestMapping(value = "MoveIssue.do", method = RequestMethod.POST)
+	public boolean moveIssue( int columnIdx, int[] issues) {
+		boolean result = false;
+		System.out.println("in MoveIssue.do");
+		System.out.println(columnIdx);
+		service.updateMoveIssue(columnIdx, issues);
+		return result;
 	}
 }

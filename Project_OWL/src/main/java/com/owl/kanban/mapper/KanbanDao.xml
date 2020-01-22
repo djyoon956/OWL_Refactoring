@@ -99,9 +99,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM ISSUE WHERE ISSUEIDX =#{issueIdx}
 	</delete>
 	
+	<update id="updateMoveIssue" parameterType="map">
+		<foreach collection="issues" item="issue" separator=";" index="index">
+			UPDATE owl.ISSUE SET COLIDX = #{colIdx} ,  ORDERNUM = #{index} 
+			WHERE ISSUEIDX = #{issue}
+		</foreach>
+	</update>
+
 	<delete id="deleteLabel">
 		DELETE FROM LABEL WHERE LABELIDX =#{labelIdx}
-	</delete>
-	
-	
+	</delete>	
 </mapper>

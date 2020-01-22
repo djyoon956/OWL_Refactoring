@@ -116,6 +116,7 @@
             $('#memberEditModal').on('hidden.bs.modal', function(){
                 $("#addMemberBox").empty();
                $("#addMemberOk").val("초대 메일 전송");
+               $("#addMemberCount").text("0명");
              });
             
             $("#addMemberOk").click(function () {
@@ -241,7 +242,33 @@
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
-    				        dropOnEmpty: true       
+    				        dropOnEmpty: true,
+    				        update: function(event, ui) {
+								console.log("in sortableCol update");
+								let columnIdx = $(this).parent().attr("id").replace("Column","");
+								let issues = [];
+								$.each($(this)[0].children, function(){
+									issues.push($(this).attr("id").replace("Issue","").trim())
+								})
+								
+								if(issues.length == 0)
+									return;
+								
+								$.ajaxSettings.traditional = true; 
+								$.ajax({
+									type : "POST",
+									url : "MoveIssue.do",
+									data : { projectIdx :  ${project.projectIdx}
+												, columnIdx : columnIdx
+												,  issues : issues },
+									success : function(data) {
+										console.log("success move issue");
+									},
+									error: function() {
+										console.log("error move issue");
+									}
+								})
+       				        }       
     				     }).disableSelection();
     				
     				},
