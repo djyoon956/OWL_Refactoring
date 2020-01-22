@@ -305,6 +305,21 @@ public class KanbanService {
 		return issue;
 	}
 	
+	public void updateMoveIssue(int columnIdx, int[] issues) {
+		System.out.println("in service updateMoveIssue");
+		KanbanDao dao = getKanbanDao();
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("colIdx", columnIdx);
+		parameters.put("issues", issues);
+		try {
+			System.out.println(dao.updateMoveIssue(parameters));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
 	}
