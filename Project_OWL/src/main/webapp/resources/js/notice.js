@@ -47,6 +47,7 @@ function setDetailData(boardIdx){
 }
 
 function setNoticeData() {
+	changeNoticeView("noticeBox");
 	 $.ajax({
 		type: "POST",
 		url: "GetNotices.do",
@@ -70,8 +71,6 @@ function setNoticeData() {
 				$("#emptyNoticeBox").removeClass("hidden");
 				$("#noticeTableBox").addClass("hidden");
 			}
-			
-			changeNoticeView("noticeBox");
 		}
 	}); 
 }
@@ -141,16 +140,16 @@ function writeNoticeError(){
 
 function changeNoticeView(view){
 	if(view == "noticeBox"){
-		$("#detailBox").addClass("hidden");
+		$("#noticeDetailBox").addClass("hidden");
 		$("#writeBox").addClass("hidden");
 		$("#noticeBox").removeClass("hidden");
 	}else if(view == "writeBox"){
 		$("#noticeBox").addClass("hidden");
-		$("#detailBox").addClass("hidden");
+		$("#noticeDetailBox").addClass("hidden");
 		$("#writeBox").removeClass("hidden");
 	}else if(view == "detailBox"){
 		$("#noticeBox").addClass("hidden");
 		$("#writeBox").addClass("hidden");
-		$("#detailBox").removeClass("hidden");
+		$("#noticeDetailBox").removeClass("hidden");
 	}
 }
