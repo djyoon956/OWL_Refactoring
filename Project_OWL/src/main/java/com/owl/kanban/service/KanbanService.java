@@ -145,14 +145,14 @@ public class KanbanService {
 		System.out.println("getLabelList : " + projectIdx);
 		KanbanDao dao = getKanbanDao();
 		List<Label> lblist = null;
+		
 		try {
 			lblist = dao.getLabelList(projectIdx);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
+		System.out.println("lblist뭐니?"   + lblist);
 		return lblist;
 	}
 	
@@ -229,6 +229,22 @@ public class KanbanService {
 		KanbanDao dao = getKanbanDao();
 		try {
 			result = dao.deleteIssue(issueIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
+	
+	public boolean deleteLabel(int labelIdx) {
+		System.out.println("deleteLabel service in++++++++++++");
+		System.out.println("labelIdx" +labelIdx);
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		try {
+			result = dao.deleteLabel(labelIdx) > 0 ? true : false;
+			System.out.println("result" + result);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

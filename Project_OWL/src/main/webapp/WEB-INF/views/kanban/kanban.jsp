@@ -134,8 +134,23 @@
 <script>
   $(function(){
 
+	  function check() {
+		console.log("체크하니?");
+	
+		if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
+			return false;
+			}
+
+		if($('#labelname').val().trim() == "" || $('#labelname').val().trim() == null) {
+			return false;
+			} 
+	  };
+	  
 	let selectoption = '<option value="">Select</option>';
-			 	
+
+	$('#addLabelModal').on('show.bs.modal', function() {  
+
+	 	console.log("열려라 label modal");
 	//프로젝트 내 라벨 리스트 출력 
 	  $.ajax({
 			url : 'GetLabelList.do',
@@ -148,12 +163,10 @@
 
 				
 				let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
-				
-				let opt = ""; //add issue에 select box에 보여줄 것
+			
 				 $.each(data,function(index, obj) {
 				
-
-					lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'">';
+					lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
 					lablist +=  '<div class="col-lg-8">';
 					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
 					lablist +=  '</div>';
@@ -161,38 +174,18 @@
 					lablist +=  '<button class="btn-link link-gray">Edit</button>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
+					lablist +=  '<button class="btn-link link-gray" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
 					lablist +=  '</div></div><hr>';
-
-					 //opt += '<option value="'+obj.labelIdx+'"style="background-color:'+obj.labelColor+'">'+obj.labelName+'</option>';
-					
-					 });
+				});
 
 					$('#labelList').append(lablist);
-
-					
-					//$('#labelIdx').append(selectoption);
-					//$('#labelIdx').append(opt);	
-				
 
 			},error : function() {
 				console.log("Showlabel error");
 			}
-		
 			});
-		
-		//칼럼 select  
+	});
 
-    	//칸반내에서 움직일 수 있게 만들어 주는 function
-/*         function sortableFn (columnidx)  {
-            var value ='#' + columnidx;
-             $( value ).sortable({
-                 connectWith: ".connectedSortable",
-                 dropOnEmpty: true        
-               }).disableSelection();
-             }  */
-
-        
          $("#openIssueBtn").click(function() {
             $("#-1Column").removeClass("d-none");
      		$("#-99Column").hide();
@@ -206,7 +199,6 @@
      		$("#-99Column").show();
           });
 	
-         
 	$("#InsertColumnBtn").on("click", function () {	
 		console.log("InsertColumnBtn in");
 			$.ajax({
@@ -257,7 +249,7 @@
                    });
 
                
-               $.each(label, function(index, element) {
+                $.each(label, function(index, element) {
                	$('#labelIdx').empty();
  
                   optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
@@ -295,33 +287,35 @@
 
 
 	$("#addLabelBtn").on("click", function () {	
-		
+
+		let lcolor = false;
+		let lname = false;
+
 		let lbcolor = $('#labelcolor').val();
 		let lbname = $('#labelname').val();
+
+		
+		if($('#labelcolor').val().trim() != "" && $('#labelcolor').val().trim() != null) lcolor = true;
+		if($('#labelname').val().trim() != "" && $('#labelname').val().trim() != null) lname = true;
+
+		if(lcolor == true && lname == true) {
 			$.ajax({
 				url : 'InsertLabel.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
-				success : function(data) {
-					//console.log(data);  // 라벨번호 
-				let labelpiece = "";
-					labelpiece +=  '<div class="row labelList" id="'+data+'">';
-					labelpiece +=  '<div class="col-lg-8">';
-					labelpiece +=  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbname+'</span>';
-					labelpiece +=  '</div>';
-					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<button class="btn-link link-gray">Edit</button>';
-					labelpiece +=  '</div>'
-					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<button class="btn-link link-gray">Delete</button>';
-					labelpiece +=  '</div></div><hr>';
-						
-				$('#labelList').append(labelpiece);
+				success : function(labelIdx) {
 					
+				addLabel(labelIdx, lbcolor, lbname);
+
+				$('#labelcolor').val("");
+			    $('#labelname').val("");
 				},
 				error : function(e) {
 		        	errorAlert("label 추가 error");
 				}
 			});
+			
+		}else {return false;}
+
 		});
 
 	
@@ -341,6 +335,8 @@
             }
         });
     });
+
+
 });
 </script>
 

@@ -1,5 +1,22 @@
 
+function addLabel(lbidx, lbcolor, lbnm) {
+	
 
+	let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
+			+  '<div class="col-lg-8">'
+			+  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbnm+'</span>'
+			+  '</div>'
+			+  '<div class="col-lg-2">'
+			+  '<button class="btn-link link-gray">Edit</button>'
+			+  '</div>'
+			+  '<div class="col-lg-2">'
+			+  '<button class="btn-link link-gray" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
+			+  '</div></div><hr>';
+	
+	
+	$('#labelList').append(lablist);
+
+}
 
 	function addColumn(obj){
 		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
@@ -92,13 +109,40 @@
 	      		method:"POST",
 	      		data:{issueIdx: issueIndex},
 	      		success:function(data){
+
 	      			$("#"+issueIndex+"Issue").remove();
+	      			
 	      		}
 	      	});	
 	}
 
 
-function setKanbanDetail(issueIdx){
+	
+	
+	function deleteLabel(labelidx) {
+		
+		$.ajax ({
+			url : "DeleteLabel.do",
+			method : "POST",
+			data : {'labelIdx' : labelidx},
+			success: function(data) {
+				console.log("deleteLabel success in");
+				
+				$("#"+labelidx+"Label").next().remove();
+      			$("#"+labelidx+"Label").remove();
+
+				
+			}, error : function() {
+				console.log("deleteLabel error");
+				
+			}
+			
+		})
+		
+	}
+	
+	
+	function setKanbanDetail(issueIdx){
 	console.log("in setKanbanDetail : "+issueIdx + "/" + projectIdx);
 
 	$.ajax({
@@ -151,4 +195,32 @@ function changeNoticeView(view){
 		$("#kanbanDetailBox").removeClass("hidden");
 	}
 }
+
+
+
+
+function checkLabel() {
+	console.log("체크하니?");
+	console.log('라벨컬러 :' + $('#labelcolor').val().trim());
+	console.log('라벨네임 :' + $('#labelname').val().trim());
+	let lcolor = false;
+	let lname = false;
+	
+	if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
+		  lcolor = false;
+		}else {lcolor = true;}
+
+	if($('#labelname').val().trim() == "" || $('#labelname').val().trim() == null) {
+		  lname = false;
+		}else {lname = true;}
+	
+
+
+	if(lcolor == true && lname == true) {
+		
+	}else {
+		
+		console.log('????');
+		return false;}
+  };
 	

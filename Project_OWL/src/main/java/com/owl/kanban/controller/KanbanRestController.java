@@ -195,11 +195,22 @@ public class KanbanRestController {
 		return result;
 	}
 	
+	
 	@RequestMapping(value="DeleteIssue.do", method = RequestMethod.POST)
 	public boolean deleteIssue(@RequestParam(value = "issueIdx") int issueIdx) {
 		boolean result = false;
 		result = service.deleteIssue(issueIdx);
 		System.out.println("delete issue " + result);
+		return result;
+	}
+	
+	
+	@RequestMapping(value="DeleteLabel.do", method = RequestMethod.POST)
+	public boolean deleteLabel(@RequestParam(value = "labelIdx") int labelIdx) {
+		System.out.println("label controller in+++++++++++++++");
+		boolean result = false;
+		result = service.deleteLabel(labelIdx);
+		System.out.println("delete label " + result);
 		return result;
 	}
 	
