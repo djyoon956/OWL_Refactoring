@@ -4,7 +4,9 @@ import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,24 +39,6 @@ public class KanbanRestController {
 	
 	@Autowired
 	private KanbanService service;
-	
-	
-	@RequestMapping("GetKanban.do")
-	public List<Notice> getNotices(int projectIdx) {
-		System.out.println("getNotices : " + projectIdx);
-		NoticeDao dao = getNoticeDao();
-		List<Notice> notices = null;
-		try {
-			notices = dao.getNoticesByProjectIdx(projectIdx);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return notices;
-	}
-	
 	
 	@RequestMapping("GetLabelList.do")
 	public List<Label> getLabelList(int projectIdx) {
@@ -221,14 +205,18 @@ public class KanbanRestController {
 		return result;
 	}
 	
-	/*
-	@RequestMapping(value="GetIssueform.do")
-	public boolean getIssueform(int projectIdx) {
-		boolean result = false;
-		result = service.deleteColumn(colIdx);
-		return result;
+	
+	@RequestMapping(value="GetAddIssueForm.do", method = RequestMethod.POST)
+	public Map<String, Object> getIssueform(int projectIdx) {
+		System.out.println("getIssueform controller in");
+		Map<String, Object> object = new HashMap<>();
+		
+		object = service.getIssueform(projectIdx);
+		
+		return object;
+		
 	}
-	*/
+	
 	
 	
 	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)

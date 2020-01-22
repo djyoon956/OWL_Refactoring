@@ -3,12 +3,16 @@ package com.owl.kanban.service;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.helper.UploadHelper;
@@ -17,6 +21,7 @@ import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
 import com.owl.notice.dto.File;
+import com.owl.project.dao.ProjectDao;
 import com.owl.project.dto.Label;
 
 @Service
@@ -233,6 +238,32 @@ public class KanbanService {
 		return result;
 	};
 	
+
+	public Map<String, Object> getIssueform(int projectIdx) {
+		System.out.println("getIssueform in");
+		
+		Map<String, Object> object = new HashMap<>();
+		KanbanDao daok = getKanbanDao();
+		ProjectDao daop = getProjectDao();
+		
+		try {
+			List<Label> label = daok.getLabelList(projectIdx);
+			List<Member> member = daop.getProjectMembers(projectIdx);
+			
+			object.put("label", label);
+			object.put("member", member);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		//System.out.println("object" + object);
+		
+		return object;
+	}
+	
+
 	public boolean updateIssueOrder() {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
@@ -240,6 +271,7 @@ public class KanbanService {
 		
 		return result;
 	}
+
 	
 	public Issue getIssueDetail(int projectIdx, int issueIdx) {
 		KanbanDao dao = getKanbanDao();
@@ -260,5 +292,9 @@ public class KanbanService {
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
+	}
+	
+	private ProjectDao getProjectDao() {
+		return sqlSession.getMapper(ProjectDao.class);
 	}
 }
