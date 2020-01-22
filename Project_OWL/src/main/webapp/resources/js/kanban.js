@@ -91,109 +91,7 @@
 	      	});	
 	}
 	
-	function makeIssueForm (data) {
-		let fr = '<div class="modal-dialog modal-lg">'
-			+ '<div class="modal-content">'
-			+ '<div class="modal-header">'
-			+ '<h5 class="modal-title">New Issue</h5>'
-			+ '<button type="button" class="close" data-dismiss="modal">'
-			+ '<span>&times;</span>'
-			+ '</button>'
-			+ '</div>'
-			+ '<div class="modal-body">'
-		    + '<form action="InsertIssue.do" method="post" enctype="multipart/form-data">'
-		    + '<input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">'
- 		    + '<div class="row">'
-		    + '<div class="col-8">'
-		    + '<div class="form-group">'
-		    + '<input type="text" class="form-control input-default" placeholder="Issue Title" name="issueTitle" id="issueTitle">'
-		    + '</div>'
-		    + '<div class="form-group">'
- 		    + '<textarea class="form-control bg-light" rows="10" cols="50" placeholder="Issue Content" id="content" name="content"></textarea>'
-		    + '<input type="file" name="multipartFiles" id="multipartFiles" multiple="multiple">'
-		    + '</div>'
-		    + '</div>'
-		    + '<div class="col-4">'
-		    + '<div class="form-group">'
-		    + '<div class="row">'
-		    + '<div class="col-4">Assignees</div>'	
-		    + '<div class="col-8">'
-		    + '<select class="select2 form-control custom-select" name="assigned" id="assigned">'
-		    + '<option value="">Select Assignee</option>'
-		    + '<option value="Cathy">Cathy</option>'
-		    + '<option value="Cindy">Cindy</option>'
-		    + '<option value="Colin">Colin</option>'
-		    +  '<option value="Chloe">Chloe</option>'
-		    +  '</select>'
-		    + '</div>'
-		    + '</div>'
-		    + '</div>'
-		    + '<hr>'
-		    + '<div class="form-group">'
-		    + '<div class="row">'
-		    + '<div class="col-4">Label</div>'	
-		    +  '<div class="col-8">'
-		    
-		    
-/*			<select class="select2 form-control custom-select" name="assigned" id="assigned">
-		<option value="">Select Assignee</option>
-		<option value="Cathy">Cathy</option>
-		<option value="Cindy">Cindy</option>
-		<option value="Colin">Colin</option>
-		<option value="Chloe">Chloe</option>
-		</select>
-		</div>
-					
-		</div>
-		</div>
-		<hr>
-		<div class="form-group">
-		<div class="row">
-		<div class="col-4">Label</div>	
-		<div class="col-8">
-		<select class="select2 form-control custom-select" name="labelIdx" id="labelIdx">
-								
-		</select>
-		</div>									
-		</div>
-		</div>
-		<hr>
-		<div class="form-group">
-		<div class="row">
-		<div class="col-4">Priority</div>	
-		<div class="col-8">
-		<select class="select2 form-control custom-select" name="priorityCode" id="priorityCode">
-		<option value="" id="">Select Priority</option>
-		<option value="LOW">low</option>
-		<option value="MEDIUM">medium</option>
-		<option value="HIGH">high</option>
-		<option value="URGENT">urgent</option>
-								
-		</select>
-		</div>									
-		</div>
-		</div>
-		<hr>
-		<div class="form-group">
-		<div class="row">
-		<div class="col-4">Due Date</div>	
-		<div class="col-8">                                
-        <input type="text" class="form-control" id="datepicker-autoclose" placeholder="yyyy-mm-dd" name="dueDate" >
-        </div>	
-		</div>
-		</div>
-		</div>
-		</div> 
-		<div class="modal-footer text-right">
-		<input type="button" class="btn btn-primary" id="InsertIssueBtn" value="Save changes">
-		<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-		</div>
-		</form>
-		</div>
-	</div>
-</div>*/
-		    
-	}
+
 	function addIssue(colIdx,obj){
 		 let issue = '<li class="issuePiece">'
 				+		'<div class="dropdown">'
@@ -221,8 +119,45 @@
 		}	
 
 function setKanbanDetail(issueIdx){
-	console.log("in setKanbanDetail : "+issueIdx);
-	
+	console.log("in setKanbanDetail : "+issueIdx + "/" + projectIdx);
+
+	$.ajax({
+		url : "GetIssueDetail.do",
+		data : {projectIdx : issueIdx, issueIdx : issueIdx},
+		success : function (data){
+			console.log("GetIssueDetail success");
+			console.log(data);
+			//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
+			$.each(data, function(){
+				$("#issueTitle").text(this.issueTitle);
+				$("#issueContent").html(this.content);
+				
+				$("#issueFiles").empty();
+				$("#issueFileCount").text("첨부파일 ("+this.files.length+") ");
+				$.each(this.files, function(){
+					let path = "/upload/"+ projectIdx +"/file/"+this.fileName;
+					console.log(path);
+					let control = "<li class='mb-2' style='font-size: 16px'>"
+									+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+this.fileName+" ("+this.fileSize+" KB)</span></a>"
+									+" </li>";
+					$("#issueFiles").append(control);
+				});
+				
+				/*$("#issueActivityCount").text("Activity ("+this.issueLogs.size()+") ");
+				$.each(this.issueLogs, function(file){
+									
+				});*/
+				
+			/*	$("#issueCommentCount").text("Comment ("+this.files.length+") ");
+				$.each(this.files, function(file){
+					
+				});*/
+			})
+		},
+		error : function(){
+			console.log("GetIssueDetail error");
+		}
+	})
 	
 	changeNoticeView("detail");
 }

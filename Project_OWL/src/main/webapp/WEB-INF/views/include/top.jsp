@@ -166,6 +166,7 @@ display: block;
 	position: fixed;
 	right:0;
 	overflow: hidden;
+	z-index : -20;
 }
  
 #userImg, .coloricon {
@@ -499,7 +500,7 @@ display: block;
             
             <!-- toggle content Start-->
             <!-- user toggle  -->
-			<div class="toggleOption " id="userToggle"  style="padding-top: 0px; z-index: 20;">
+			<div class="toggleOption " id="userToggle"  style="padding-top: 0px;">
 				<div class="text-center setting-box mt-5">
 					<div class="user-img c-pointer position-relative">
 					<a href="#" data-toggle="modal" data-target="#myProfileSetModal">
@@ -519,7 +520,7 @@ display: block;
 			</div>
 			
 			<!-- 채팅 목록 토글 -->
-			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: 20;">
+			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: -20;">
 
 				
 				<div class="setting-box">
@@ -585,7 +586,7 @@ display: block;
 		</div>
 		
 					<!--  알람 토글  -->
-			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px; z-index: 20;">
+			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px;">
 					
 					<div class="setting-box" >
 				        <div class="card top_card ">

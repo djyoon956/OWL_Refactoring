@@ -4,6 +4,7 @@
 <c:set var="project" value="${project}" scope="request" />
 <html>
 
+<c:set var="projectIdx" value="${project.projectIdx }" scope="request"/>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
