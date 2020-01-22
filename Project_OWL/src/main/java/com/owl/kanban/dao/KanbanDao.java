@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
+import com.owl.kanban.dto.IssueLog;
 import com.owl.member.dto.Member;
 import com.owl.notice.dto.File;
 import com.owl.project.dto.Label;
@@ -41,4 +42,6 @@ public interface KanbanDao {
 	public int deleteIssue(int issueIdx) throws ClassNotFoundException, SQLException;
 	
 	public List<File> getIssueFiles(int issueIdx) throws ClassNotFoundException, SQLException;
+	
+	public List<IssueLog> getIssueLogs(int issueIdx) throws ClassNotFoundException, SQLException;
 }

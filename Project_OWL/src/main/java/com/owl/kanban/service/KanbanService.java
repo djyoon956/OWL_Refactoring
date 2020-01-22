@@ -248,6 +248,7 @@ public class KanbanService {
 		try {
 			// issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
 			issue.setFiles(dao.getIssueFiles(issueIdx));
+			issue.setLogs(dao.getIssueLogs(issueIdx));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
