@@ -50,7 +50,6 @@ function setDetailData(boardIdx){
 }
 
 function setNoticeData() {
-	changeNoticeView("noticeBox");
 	 $.ajax({
 		type: "POST",
 		url: "GetNotices.do",
@@ -142,7 +141,6 @@ function writeNoticeError(){
 }
 
 function changeNoticeView(view){
-	console.log("changeNoticeView(view)");
 	if(view == "noticeBox"){
 		$("#noticeDetailBox").addClass("hidden");
 		$("#writeBox").addClass("hidden");
