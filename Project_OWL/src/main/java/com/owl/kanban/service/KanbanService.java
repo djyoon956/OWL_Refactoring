@@ -220,6 +220,19 @@ public class KanbanService {
 		return result;
 	};
 	
+	public boolean deleteIssue(int issueIdx) {
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		try {
+			result = dao.deleteIssue(issueIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
+	
 	public boolean updateIssueOrder() {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
@@ -228,7 +241,21 @@ public class KanbanService {
 		return result;
 	}
 	
-	
+	public void getIssueDetail(int projectIdx, int issueIdx) {
+		KanbanDao dao = getKanbanDao();
+		Issue issue = null;
+		/*
+		try {
+			
+			//issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+	}
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);

@@ -2,9 +2,6 @@
 
 
 	function addColumn(obj){
-		console.log('addColumn function in');
-		console.log(obj)
-		console.log("addColumn :" + obj.colIdx);
 		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
 					+ '<div class="columnTitle text-center mt-2 dropdown">'
 					+ '<h4>' + obj.colname
@@ -26,6 +23,7 @@
 
 		/*$('#kanbanArea').append(column);*/
 		$('#kanbanIn').append(column);
+		
 	}
 	
 	function deleteColumn(obj){
@@ -45,7 +43,7 @@
       	      		method:"POST",
       	      		data:{colIdx: colIndex},
       	      		success:function(data){
-      	      			
+      	      			$("#"+colIndex+"Column").remove();
       	      		}
       	      	});	
       		 }			
@@ -63,7 +61,7 @@
 				+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
 				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 				+				'<ul class="list-style-none">'
-				+					'<li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>'
+				+					'<li class="pl-3"><a  href="#" onClick="setKanbanDetail('+obj.issueIdx+');return false;" data-toggle="modal">Detail</a></li>'
 				+					'<li class="pl-3"><a href="#">Remove Issue</a></li>'
 				+				'</ul>'
 				+			'</div>'
@@ -209,5 +207,20 @@
 			$("#"+colIdx+"Column > .columnBody").append(issue);
 		}	
 
+function setKanbanDetail(issueIdx){
+	console.log("in setKanbanDetail : "+issueIdx);
+	
+	
+	changeNoticeView("detail");
+}
 
+function changeNoticeView(view){
+	if(view == "list"){
+		$("#kanbanDetailBox").addClass("hidden");
+		$("#kanbanMainBox").removeClass("hidden");
+	}else if(view == "detail"){
+		$("#kanbanMainBox").addClass("hidden");
+		$("#kanbanDetailBox").removeClass("hidden");
+	}
+}
 	

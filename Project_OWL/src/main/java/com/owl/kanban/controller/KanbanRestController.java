@@ -210,6 +210,13 @@ public class KanbanRestController {
 		return result;
 	}
 	
+	@RequestMapping(value="DeleteIssue.do", method = RequestMethod.POST)
+	public boolean deleteIssue(@RequestParam(value = "issueIdx") int issueIdx) {
+		boolean result = false;
+		result = service.deleteIssue(issueIdx);
+		System.out.println("delete issue " + result);
+		return result;
+	}
 	
 	/*
 	@RequestMapping(value="GetIssueform.do")
@@ -219,6 +226,13 @@ public class KanbanRestController {
 		return result;
 	}
 	*/
+	
+	
+	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)
+	public void getIssueDetail(int issueIdx) {
+		System.out.println("in getIssueDetail : " + issueIdx);
+		
+	}
 	
 	private NoticeDao getNoticeDao() {
 		return sqlSession.getMapper(NoticeDao.class);

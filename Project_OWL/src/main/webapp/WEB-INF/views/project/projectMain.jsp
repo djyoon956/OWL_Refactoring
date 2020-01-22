@@ -277,6 +277,7 @@
     	      	$("#-99Column").hide();
     	    	$("#-1Column").hide();
     	       }
+
     </script>
     <style type="text/css">
         .iconSizeBig {
