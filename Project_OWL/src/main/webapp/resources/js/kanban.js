@@ -1,5 +1,24 @@
 let projectIdx;
 
+function addLabel(lbidx, lbcolor, lbnm) {
+	
+
+	let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
+			+  '<div class="col-lg-8">'
+			+  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbnm+'</span>'
+			+  '</div>'
+			+  '<div class="col-lg-2">'
+			+  '<button class="btn-link link-gray">Edit</button>'
+			+  '</div>'
+			+  '<div class="col-lg-2">'
+			+  '<button class="btn-link link-gray" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
+			+  '</div></div><hr>';
+	
+	
+	$('#labelList').append(lablist);
+	
+}
+
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 }
@@ -95,11 +114,38 @@ function initKanban(projectIdx){
 	      		method:"POST",
 	      		data:{issueIdx: issueIndex},
 	      		success:function(data){
+
 	      			$("#"+issueIndex+"Issue").remove();
+	      			
 	      		}
 	      	});	
 	}
 
+	
+	
+	function deleteLabel(labelidx) {
+		
+		$.ajax ({
+			url : "DeleteLabel.do",
+			method : "POST",
+			data : {'labelIdx' : labelidx},
+			success: function(data) {
+				console.log("deleteLabel success in");
+				
+				$("#"+labelidx+"Label").next().remove();
+      			$("#"+labelidx+"Label").remove();
+
+				
+			}, error : function() {
+				console.log("deleteLabel error");
+				
+			}
+			
+		})
+		
+	}
+	
+	
 
 function setKanbanDetail(issueIdx){
 	$.ajax({
@@ -186,5 +232,6 @@ function changeKanbanView(view){
 		$("#kanbanDetailBox").removeClass("hidden");
 	}
 }
+
 
 	
