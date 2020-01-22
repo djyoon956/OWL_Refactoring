@@ -266,7 +266,7 @@ function refreshScheduleVisibility() {
 			    </div>
 			    </div>
             </div>
-	<script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
+    <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
 	<script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
 	<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
 	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
