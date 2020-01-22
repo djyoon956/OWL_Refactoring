@@ -83,7 +83,7 @@ body {
                                 <h3 class="text-primary"><b>이용해 주셔서 감사합니다.</b></h3> <br>
                                 <h4 class="graycolor">Thank you for using &nbsp;<img class="" src="resources/images/owl_logo_fit.png" style="width: 45px"></h4>
                                 <form class="mt-5 mb-5">                                   
-                                    <div class="text-center mb-2 mt-4"><a href="Index.do" class="btn btn-primary">Go to Main</a>
+                                    <div class="text-center mb-2 mt-4"><a href="Logout.do" class="btn btn-primary">Go to Main</a>
                                     </div>
                                 </form>
 
