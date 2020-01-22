@@ -115,10 +115,7 @@
 			success: function (data) {
 				console.log(data);
 				if(data){
-					$(".mySetting").each(function(){
-						$(this).attr("style", "background-color : "+data.themeColor+" !important;");
-					})
-					$(".mainBody").css("font-family",data.font);
+					setTheme(data.themeColor, data.font);
 				}
 			}
 		});
