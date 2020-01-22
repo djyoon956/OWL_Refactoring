@@ -125,35 +125,6 @@
 <script>
   $(function(){
 
-
-
-	/* 	 $.ajax({
-				url : "GetLabelList.do",
-				type : "POST",
-				data : {'projectIdx' : ${project.projectIdx}},
-				success : function(data) {
-					console.log("GetIssueform get");
-					console.log(data);
-
-					let opt = "";
-					$.each(data, function(index, obj){
-						console.log("here!");
-						console.log(obj);
-					   opt += '<option value="'+obj.labelIdx+'"style="background-color:'+obj.labelColor+'">'+obj.labelName+'</option>';
-						})
-						
-						//console.log('---');
-						//console.log(opt);
-						$('#labelIdx').append(selectoption);
-						$('#labelIdx').append(opt);	
-					
-				}, error : function(e) {
-					errorAlert("GetIssueform error");
-					}
-				 }); */
-
-	  
-
 	let selectoption = '<option value="">Select</option>';
 			 	
 	//프로젝트 내 라벨 리스트 출력 
@@ -184,15 +155,15 @@
 					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
 					lablist +=  '</div></div><hr>';
 
-					 opt += '<option value="'+obj.labelIdx+'"style="background-color:'+obj.labelColor+'">'+obj.labelName+'</option>';
+					 //opt += '<option value="'+obj.labelIdx+'"style="background-color:'+obj.labelColor+'">'+obj.labelName+'</option>';
 					
 					 });
 
 					$('#labelList').append(lablist);
 
 					
-					$('#labelIdx').append(selectoption);
-					$('#labelIdx').append(opt);	
+					//$('#labelIdx').append(selectoption);
+					//$('#labelIdx').append(opt);	
 				
 
 			},error : function() {
@@ -228,7 +199,6 @@
 	
          
 	$("#InsertColumnBtn").on("click", function () {	
-
 		console.log("InsertColumnBtn in");
 			$.ajax({
 				url : 'InsertColumn.do',
@@ -250,6 +220,56 @@
 					}
 				});
 	});
+
+
+	//addIssueModal 모달이 오픈되면 !
+	$('#addIssueModal').on('show.bs.modal', function() {  
+	
+		console.log("addIssueModal open!");
+
+	 	$.ajax({
+	 		type: "POST",
+            url: "GetAddIssueForm.do",
+            data: { projectIdx: ${project.projectIdx}},
+            success: function (data) {
+            	$('#assigned').empty();
+              // console.log('넘어온 값은?');
+              // console.log(data)
+              // console.log(data.member);
+              // console.log(data.label);
+				let member = data.member;
+				let label = data.label;
+				let optlabel;
+				let optmember;
+               $.each(member, function(index, element) {
+                 //  console.log('each문 in element');
+                 //  console.log(element.name);
+                  // console.log(element.email);
+
+					optmember += '<option value="Cathy">'+element.name+'('+element.email+')</option>';
+					$('#assigned').append(selectoption);
+					$('#assigned').append(optmember);
+                   });
+
+               
+               $.each(label, function(index, element) {
+               	$('#labelIdx').empty();
+ 
+                 // console.log('each문 in data'); 
+                 // console.log(element.labelIdx);
+                  
+                  
+                  optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
+
+                  $('#labelIdx').append(selectoption);
+				  $('#labelIdx').append(optlabel);	
+                   });
+            },
+            error: function () {
+                console.log("GetProjectMember error");
+            }
+		}) 
+		});
 
 
 	$("#addLabelBtn").on("click", function () {	

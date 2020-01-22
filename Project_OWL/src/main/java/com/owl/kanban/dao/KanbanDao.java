@@ -36,4 +36,5 @@ public interface KanbanDao {
 	public int updateColumn(Column column) throws ClassNotFoundException, SQLException;
 	
 	public int deleteColumn(int colIdx) throws ClassNotFoundException, SQLException;
+	
 }
