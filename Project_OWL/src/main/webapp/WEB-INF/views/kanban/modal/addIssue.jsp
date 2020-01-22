@@ -47,7 +47,7 @@
 
 			    let formData = new FormData();
 			    formData.append("projectIdx",'${project.projectIdx}');
-			    formData.append('issueTitle',$('#issueTitle').val());
+			    formData.append('issueTitle',$('#issueTitle2').val());
 			    formData.append('content', $('#content').summernote('code'));
 			    formData.append('orderNum', ordernum++);
 			    formData.append('priorityCode', $('#priorityCode').val());			    
@@ -136,12 +136,12 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			<form action="InsertIssue.do" method="post" enctype="multipart/form-data">
+			<form action="InsertIssue.do" method="post" enctype="multipart/form-data" id="addIssueForm">
 			    <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
  				<div class="row">
 					<div class="col-8">
 						<div class="form-group">
-							<input type="text" class="form-control input-default" placeholder="Issue Title" name="issueTitle" id="issueTitle">
+							<input type="text" class="form-control input-default" placeholder="Issue Title" name="issueTitle" id="issueTitle2">
 						</div>
 						<div class="form-group">
  							 <textarea class="form-control bg-light" rows="10" cols="50" placeholder="Issue Content" id="content" name="content"></textarea>
@@ -181,7 +181,7 @@
 						<div class="col-4">Priority</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="priorityCode" id="priorityCode">
-								<option value="" id="">Select Priority</option>
+								<option value="" id="">Select</option>
 								<option value="LOW">low</option>
 								<option value="MEDIUM">medium</option>
 								<option value="HIGH">high</option>
