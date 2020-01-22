@@ -165,18 +165,18 @@ public class KanbanService {
 		return colList;
 	}
 	
-	public List<ColumnList> getIssue(int projectIdx){
+	public List<Issue> getIssue(int projectIdx){
 		KanbanDao dao = getKanbanDao();
-		List<ColumnList> colList = null;
+		List<Issue> issue = null;
 		
 		try {
-			colList = dao.getIssueList(projectIdx);
+			issue = dao.getIssue(projectIdx);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println(colList + " : 이슈리스트 ");
-		return colList;
+		System.out.println(issue + " : 이슈리스트 ");
+		return issue;
 	}
 	
 	public boolean updateColumn(Column column) {
@@ -229,7 +229,21 @@ public class KanbanService {
 		return result;
 	}
 	
-	
+	public void getIssueDetail(int projectIdx, int issueIdx) {
+		KanbanDao dao = getKanbanDao();
+		Issue issue = null;
+		/*
+		try {
+			
+			//issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+	}
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);

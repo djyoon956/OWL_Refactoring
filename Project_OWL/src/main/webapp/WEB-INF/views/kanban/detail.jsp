@@ -16,7 +16,7 @@
     }
 </style>
 
-<div class="container-fluid mt-2" style="padding: 25px;">
+<div class="container-fluid mt-2 hidden" style="padding: 25px;" id="kanbanDetailBox" >
     <div class="row">
         <div class="col-8">
             <div class="card">
