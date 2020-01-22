@@ -2,6 +2,7 @@ package com.owl.kanban.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
@@ -47,5 +48,6 @@ public interface KanbanDao {
 	public List<IssueLog> getIssueLogs(int issueIdx) throws ClassNotFoundException, SQLException;
 
 	public List<Reply> getIssueReplies(int issueIdx) throws ClassNotFoundException, SQLException;
-
+	
+	public int updateMoveIssue(Map<String, Object> data) throws ClassNotFoundException, SQLException;
 }
