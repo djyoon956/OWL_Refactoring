@@ -149,8 +149,6 @@
 	let selectoption = '<option value="">Select</option>';
 
 	$('#addLabelModal').on('show.bs.modal', function() {  
-
-	 	console.log("열려라 label modal");
 	//프로젝트 내 라벨 리스트 출력 
 	  $.ajax({
 			url : 'GetLabelList.do',
@@ -171,7 +169,7 @@
 					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button class="btn-link link-gray">Edit</button>';
+					lablist +=  '<button class="btn-link link-gray" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
 					lablist +=  '<button class="btn-link link-gray" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
@@ -198,16 +196,15 @@
      		$("#-1Column").hide();
      		$("#-99Column").show();
           });
-	
+
+     	
 	$("#InsertColumnBtn").on("click", function () {	
 		console.log("InsertColumnBtn in");
 			$.ajax({
 				url : 'InsertColumn.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'colname' : $('#colname').val()},
 				success : function(data) {
-					//console.log('insertColumnBtn in');
-					//console.log(data);
-					//console.log(typeof(data));
+			
 					if(data != null) {
 		        		 console.log('data : ' + data);
 		        		addColumn(data);
@@ -262,17 +259,14 @@
                 console.log("GetProjectMember error");
             }
 		}) 
-		});
+	});
 
 	
 	$('#addIssueModal').on('hidden.bs.modal', function(){
 		console.log('hidden 작동하니?');
 		
 		$('#issueTitle').val("");
-
 		$('#isContent').summernote("reset");
-		
-		
 		
 		console.log($('#priorityCode').val());
 		//$('#priorityCode option:eq(0)').attr('selected', 'selected');
@@ -294,7 +288,6 @@
 		let lbcolor = $('#labelcolor').val();
 		let lbname = $('#labelname').val();
 
-		
 		if($('#labelcolor').val().trim() != "" && $('#labelcolor').val().trim() != null) lcolor = true;
 		if($('#labelname').val().trim() != "" && $('#labelname').val().trim() != null) lname = true;
 
