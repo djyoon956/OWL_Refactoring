@@ -45,8 +45,7 @@ public class KanbanService {
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
 			
 			System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
-			
-			
+
 			System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
 			if(result) {
 				colList = dao.getIssuebyIssueIdx(issue.getProjectIdx(), issue.getIssueIdx());

@@ -52,6 +52,8 @@
 
 	
 	function addKanbanIssue(colIdx,obj){
+		console.log("addKanbanIssue in");
+		console.log(obj);
 		if(obj.labelName == null) 
 			obj.labelName = "";
 		if(obj.assigned == null) 

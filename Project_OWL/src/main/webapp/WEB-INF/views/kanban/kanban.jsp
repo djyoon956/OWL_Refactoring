@@ -3,6 +3,11 @@
 
 <!-- 여기는 칸반 jsp -->
 <style>
+
+.columnSection {
+	margin-left : 10px;
+}
+
 .assigneetitle {
 	margin-left: 5px;
 	font-weight: bold;
@@ -116,10 +121,14 @@
 	background-color: #e9e9e9;
 	margin-top: 20px;
 	border : 1px solid #CBD7E3;
+	margin-left : 0;
+	hegiht: 300px;
 }
 
 .leftdoorheader {
 	padding : 12px 20px 12px 20px;
+	
+	
 }
 </style>
 <script>
@@ -204,9 +213,9 @@
 				url : 'InsertColumn.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'colname' : $('#colname').val()},
 				success : function(data) {
-					console.log('insertColumnBtn in');
-					console.log(data);
-					console.log(typeof(data));
+					//console.log('insertColumnBtn in');
+					//console.log(data);
+					//console.log(typeof(data));
 					if(data != null) {
 		        		 console.log('data : ' + data);
 		        		addColumn(data);
@@ -241,7 +250,7 @@
 				
                $.each(member, function(index, element) {
 
-					optmember += '<option value="Cathy">'+element.name+'('+element.email+')</option>';
+					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
 					
 					$('#assigned').append(selectoption);
 					$('#assigned').append(optmember);
@@ -268,9 +277,19 @@
 		console.log('hidden 작동하니?');
 		
 		$('#issueTitle').val("");
-		$('#isContent').val("");
-		$('#datepicker-autoclose').val("");
-		//$('select').find('option:first').attr('selected', 'selected');
+
+		$('#isContent').summernote("reset");
+		
+		
+		
+		console.log($('#priorityCode').val());
+		//$('#priorityCode option:eq(0)').attr('selected', 'selected');
+		console.log($('#priorityCode option:eq(0)').val());
+		console.log("after  :" +$('#priorityCode').val());
+		
+		//$('#priorityCode').find('option:first').attr('selected', 'selected')
+		//$('#datepicker-autoclose').remove();
+		//$('#priorityCode').find('option:first').attr('selected', 'selected');
 		
 	});
 
@@ -390,47 +409,7 @@
                 </ul>
             </div>
             <div id="kanbanIn" class="row"></div>
-            <!-- 칼럼 -->
-            <!--  	<div class="columnSection">
-                <div class="columnTitle text-center mt-2 dropdown">
-                    <h4>Undefined section
-                        <a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
-                        <i class="fas fa-ellipsis-v fa-sm"></i></a>
-                        
-                        <div class="dropdown-menu" aria-labelledby="dropdownColBtn">
-                            <ul class="list-style-none">
-                                <li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>
-                                <li class="pl-3"><a href="#">Remove Column</a></li>
-                            </ul>
-                        </div>
-                    </h4>
-                </div>
-    
-                <ul id="sortable000" class="connectedSortable columnBody cursor">
-                    <li class="issuePiece">
-                            <div class="dropdown">
-                                <label> <span class="badgeIcon float-left" style="background-color: yellow">title</span>
-                                <span class="issueTitle">title</span>
-                                </label>
-                                <a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
-                                <i class="fas fa-ellipsis-v fa-sm"></i></a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-                                    <ul class="list-style-none">
-                                        <li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
-                                    <li class="pl-3"><a href="#">Remove Issue</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div>
-                            <label>
-                                <span class="assigneetitle">
-                                <i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">yoon</span>
-                            </label>
-                        </div>
-                        </li>
-                </ul>
-            </div> -->
-            <!-- 끝 -->
+           
 
         </div>
     </div>

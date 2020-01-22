@@ -21,7 +21,7 @@
 		 }); 
 		
 		/*Summer Note*/
-		 $('#content').summernote({
+		 $('#isContent').summernote({
 		        placeholder: 'Write Issue content',
 		        height: 120,
 		        toolbar: [
@@ -37,20 +37,21 @@
 			$("#InsertIssueBtn").on("click", function () {		
 			console.log('InsertIssueBtn 클릭되니1');
  				console.log('InsertIssueBtn 클릭되니1');
- 				/* 			console.log('$("#projectIdx").val()' + '${project.projectIdx}');
+ 				/* 
+ 				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
 				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
 				console.log('$("#content").summernote("code")' + $('#content').summernote('code'));
 				console.log(' $("#assigned").val()' +  $('#assigned').val());
 				console.log('$("#labelIdx").val()' + $('#labelIdx').val());
 				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
-				console.log($('#multipartFile').val()); */
+				console.log($('#multipartFile').val()); 
+				*/
 
 			    let formData = new FormData();
 			    formData.append("projectIdx",'${project.projectIdx}');
 
 			    formData.append('issueTitle',$('#issueTitle').val());
 			    formData.append('content', $('#isContent').summernote('code'));
-
 			    formData.append('orderNum', ordernum++);
 			    formData.append('priorityCode', $('#priorityCode').val());			    
 			    formData.append('assigned', $('#assigned').val());
@@ -84,6 +85,7 @@
 	 		        	if(data != null){
 			        		successAlert("Issue 추가 완료");
 			        		addKanbanIssue('-1', data);
+			        		$('#addIssueModal').modal("hide");
 			        		
 			        	}else{
 			        		errorAlert("Issue 추가 실패");
@@ -156,11 +158,11 @@
 						<div class="col-4">Assignees</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="assigned" id="assigned">
-								<option value="">Select Assignee</option>
+						<!-- 		<option value="">Select Assignee</option>
 								<option value="Cathy">Cathy</option>
 								<option value="Cindy">Cindy</option>
 								<option value="Colin">Colin</option>
-								<option value="Chloe">Chloe</option>
+								<option value="Chloe">Chloe</option> -->
 							</select>
 						</div>
 					
