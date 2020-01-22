@@ -84,7 +84,10 @@
 								<input type="text" class="form-control input-default" name="labelname" id="labelname">
 							</div>
 							<hr>
-							<input type="button" class="btn btn-primary text-right" id="addLabelBtn" value="Create label"  />
+							<input type="button" class="btn btn-primary text-right" id="addLabelBtn" value="Create label" />
+							<input type="button" class="btn btn-primary text-right" id="editLabelBtn" value="Edit" />
+							<input type="button" class="btn btn-primary text-right" id="backBtn" value="Back" />
+							
 
 						</div>
 						<!-- label list section -->

@@ -1,28 +1,28 @@
 let projectIdx;
 
-function addLabel(lbidx, lbcolor, lbnm) {
-	
+	function addLabel(lbidx, lbcolor, lbnm) {
 
-	let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
-			+  '<div class="col-lg-8">'
-			+  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbnm+'</span>'
-			+  '</div>'
-			+  '<div class="col-lg-2">'
-			+  '<button class="btn-link link-gray">Edit</button>'
-			+  '</div>'
-			+  '<div class="col-lg-2">'
-			+  '<button class="btn-link link-gray" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
-			+  '</div></div><hr>';
+		let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
+					+  '<div class="col-lg-8">'
+					+  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbnm+'</span>'
+					+  '</div>'
+					+  '<div class="col-lg-2">'
+					+  '<button class="btn-link link-gray" onclick="editLabel(' + lbidx +')";>Edit</button>'
+					+  '</div>'
+					+  '<div class="col-lg-2">'
+					+  '<button class="btn-link link-gray" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
+					+  '</div></div><hr>';
 	
 	
 	$('#labelList').append(lablist);
+	}
+
 	
-}
+	function initKanban(projectIdx){
+		this.projectIdx= projectIdx;
+	}
 
-function initKanban(projectIdx){
-	this.projectIdx= projectIdx;
-}
-
+	
 	function addColumn(obj){
 		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
 					+ '<div class="columnTitle text-center mt-2 dropdown">'
@@ -114,17 +114,13 @@ function initKanban(projectIdx){
 	      		method:"POST",
 	      		data:{issueIdx: issueIndex},
 	      		success:function(data){
-
 	      			$("#"+issueIndex+"Issue").remove();
-	      			
 	      		}
 	      	});	
 	}
 
 	
-	
 	function deleteLabel(labelidx) {
-		
 		$.ajax ({
 			url : "DeleteLabel.do",
 			method : "POST",
@@ -140,9 +136,7 @@ function initKanban(projectIdx){
 				console.log("deleteLabel error");
 				
 			}
-			
 		})
-		
 	}
 	
 	
@@ -223,6 +217,7 @@ function setKanbanDetail(issueIdx){
 	changeNoticeView("detail");
 }
 
+
 function changeKanbanView(view){
 	if(view == "list"){
 		$("#kanbanDetailBox").addClass("hidden");
@@ -231,6 +226,25 @@ function changeKanbanView(view){
 		$("#kanbanMainBox").addClass("hidden");
 		$("#kanbanDetailBox").removeClass("hidden");
 	}
+}
+
+function editLabel(idx, color, name) {
+	
+	console.log(idx);
+	console.log(color);
+	console.log(name);
+
+	$('#addLabelBtn').hide();
+	$('#labelcolor').focus();
+
+	$('#addLabelBtn').addClass("hidden");
+	
+	$('#labelcolor').val(color);
+	$('#labelname').val(name);
+	
+
+	$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
+	
 }
 
 
