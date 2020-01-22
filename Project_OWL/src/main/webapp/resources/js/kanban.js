@@ -52,10 +52,8 @@
 
 	
 	function addKanbanIssue(colIdx,obj){
-		//console.log("???" +obj.labelName);
-		//console.log(typeof(obj.labelName));
-		if($.type(obj.labelName) == 'object') 
-			obj.labelName == "";
+		if(obj.labelName == null) 
+			obj.labelName = "";
 		 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
 				+		'<div class="dropdown">'
 				+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
