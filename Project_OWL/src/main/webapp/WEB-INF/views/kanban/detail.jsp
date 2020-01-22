@@ -22,11 +22,11 @@
             <div class="card">
                 <div class="card-title mb-0">
                     <div class="ml-3">
-                        <h2 id="issueTitle">Drive Development</h2>
+                        <h2 id="issueDetailTitle">Drive Development</h2>
                     </div>
                 </div>
                 <hr class="mt-1">
-                <div class="card-body mt-0 mb-0" id="issueContent" style="border: 1px solid; border-color:#e9e9e9;">
+                <div class="card-body mt-0 mb-0" id="issueDetailContent" style="border: 1px solid; border-color:#e9e9e9;">
                     <p>Task </p>
                     <p>- 드라이브 디폴트 폴더 생성</p>
                     <p>- 계층형 구조 </p>
@@ -40,12 +40,12 @@
                             <a  data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanFileBox" aria-expanded="true" aria-controls="kanbanFileBox">
                                 <h5 class="mb-0">
                                     <i class="fas fa-download mr-2 " aria-hidden="true"></i>
-                                    <span id="issueFileCount">첨부파일 (3)</span>
+                                    <span id="issueDetailFileCount">첨부파일 (3)</span>
                                 </h5>
                             </a>
                         </div>
                         <div id="kanbanFileBox" class="collapse multi-collapse">
-                            <ul class=" m-4" id="issueFiles">
+                            <ul class=" m-4" id="issueDetailFiles">
                                 <li class="mb-2" style="font-size: 16px">
                                     <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
                                 </li>
@@ -65,12 +65,12 @@
                             <a data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanActivityBox" aria-expanded="true" aria-controls="kanbanActivityBox">
                                 <h5 class="mb-0">
                                     <i class="fas fa-bars mr-2" aria-hidden="true"></i>
-                                    <span id="issueActivityCount">Activity (4)</span>
+                                    <span id="issueDetailActivityCount">Activity (4)</span>
                                 </h5>
                             </a>
                         </div>
                         <div id="kanbanActivityBox" class=" collapse multi-collapse" >
-                            <ul class="timeline w-100" id="issueActivity">
+                            <ul class="timeline w-100" id="issueDetailActivity">
                                 <li>
                                     <p> Crystal opened this issue 1/11</p>
                                 </li>
@@ -93,13 +93,13 @@
                             <a data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanCommentBox" aria-expanded="true" aria-controls="kanbanCommentBox">
                                 <h5 class="mb-0">
                                     <i class="fas fa-comments mr-2" aria-hidden="true"></i>
-                                    <span id=issueCommentCount>Comments (10)</span>
+                                    <span id=issueDetailCommentCount>Comments (10)</span>
                                 </h5>
                             </a>
                         </div>
                         <div id="kanbanCommentBox" class=" collapse show multi-collapse">
                             <div class="card-body mt-0" style="border: 1px solid; border-color:#e9e9e9; border-radius: 0.25rem;background-color:#e9e9e9;">
-                                <div class="comment-widgets scrollable" id="issueComment">
+                                <div class="comment-widgets scrollable" id="issueDetailComment">
                                     <div class="d-flex flex-row comment-row m-0">
                                         <div class="p-2">
                                             <div class="comment_img">C</div>

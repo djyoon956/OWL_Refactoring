@@ -61,7 +61,7 @@
             setTheme("${setting.themeColor}", "${setting.font}");
             initNotice("${project.projectIdx}");
             
-            let oldMenu = $("#projectMenu li:first");
+            let oldMenu = $("#projectMenu li:nth-child(2)");
             $("#projectMenu li").on("click", function () {
                 if($(this).children(".nav-link").attr("href") == "#project")
 					return;
@@ -265,7 +265,8 @@
 						console.log(data);
 						 $.each(data,function(index,obj) {
 							
-							 addIssue(obj.colIdx, obj); 
+							 addKanbanIssue(obj.colIdx, obj); 
+					
 						});
 					},
 					error: function() {
@@ -289,7 +290,7 @@
     </style>
 </head>
 
-<body>
+<body class="projectBody">
     <!-- LOADER -->
     <div class="preloader">
         <div class="lds-ripple">
