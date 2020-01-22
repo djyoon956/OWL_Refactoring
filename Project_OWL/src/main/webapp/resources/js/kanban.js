@@ -7,7 +7,7 @@ function initKanban(projectIdx){
 	function addColumn(obj){
 		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
 					+ '<div class="columnTitle text-center mt-2 dropdown">'
-					+ '<h4>' + obj.colname
+					+ '<h4><span>' + obj.colname + '</span>'
 					+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
 					+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
 					+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
@@ -55,6 +55,8 @@ function initKanban(projectIdx){
 
 	
 	function addKanbanIssue(colIdx,obj){
+		console.log("addKanbanIssue in");
+		console.log(obj);
 		if(obj.labelName == null) 
 			obj.labelName = "";
 		if(obj.assigned == null) 

@@ -228,9 +228,6 @@
         }
         // 칸반 --> 
     	    function setKanbanData() {
-    	       // console.log("in setKanbanData");
-    	       // $('#kanbanArea').empty();
-    	       //$('#kanbanArea').find(":not(('#openIssueColumn').children())").empty();
     	        $.ajax({
     				 url : 'GetColumn.do',
     				 data : {'projectIdx' :  ${project.projectIdx} },
@@ -238,12 +235,7 @@
     					console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
     					console.log("칸반");
     					$.each(data,function(index,obj) {
-    						console.log("칸반");
-    						
-    						console.log(obj.colIdx);
-
     						if(obj.colIdx != -1 && obj.colIdx != -99){
-        						console.log("칼럼 안 ");
     							addColumn(obj);
     						}
     					});
