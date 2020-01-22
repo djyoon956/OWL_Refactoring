@@ -7,10 +7,14 @@ function setTheme(theme, font){
 	}else{
 		subColor = "#326295";
 	}
-	
+	console.log("in set Theme");
+	console.log(theme);
+	console.log(font);
+	console.log(subColor);
 	$(".mySetting").each(function(){
 		$(this).attr("style", "background-color : "+theme+" !important;");
 	})
+	
 	$(".mainBody").css("font-family",font);
 	$(".mainBody").css("background-color", theme);
 	$(".projectBody").css("font-family",font);
@@ -18,8 +22,4 @@ function setTheme(theme, font){
 	$(".projectBody .tab-content").css("background-color", theme);
 	$(".projectBody #tab-menu").css("background-color", theme);
 	$(".projectBody #tab-menu .nav-item > .nav-link").css("color", subColor);
-	
-	//$(".nav-tabs .nav-link.active").css("background-color","none");
-	//$(".projectBody#tab-menu.nav-item>.nav-link.active").css("background-color", "none");
-	//$(".projectBody #tab-menu .nav-item>.nav-link.active").css("color", "black");
 }
