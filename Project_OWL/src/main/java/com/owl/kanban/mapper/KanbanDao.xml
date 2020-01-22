@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		select colidx, colname from colname c where projectidx=#{projectIdx}
 	</select>
 	<select id="getIssue" resultType="com.owl.kanban.dto.Issue">
-	SELECT ISSUETITLE, ISSUEIDX, ASSIGNED , colidx 
+	SELECT ISSUETITLE, ISSUEIDX, ASSIGNED , colidx, labelidx
 	FROM ISSUE  WHERE PROJECTIDX=#{projectIdx}
 	</select>
 	
