@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.owl.helper.UploadHelper;
 import com.owl.kanban.dao.KanbanDao;
 import com.owl.kanban.dto.Column;
-import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
 import com.owl.notice.dto.File;
@@ -26,12 +25,12 @@ public class KanbanService {
 	private SqlSession sqlSession;
 
 	@Transactional
-	public ColumnList insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
+	public Issue insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
 		System.out.println("insertIssue service in");
 		System.out.println(issue.getDueDate());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		ColumnList colList = null;
+		Issue colList = null;
 		try {
 			
 			result = dao.insertIssue(issue) > 0 ? true : false;

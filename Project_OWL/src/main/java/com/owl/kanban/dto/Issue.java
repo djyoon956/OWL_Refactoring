@@ -34,6 +34,10 @@ public class Issue {
 	private List<File> files;
 	private HashMap<Integer, IssueLog> issueLogs;
 	
+	//ui용 
+	private String labelName;
+	private String labelColor;
+	
 	public enum IssueProgressType {
 		REQUESTED,
 		OPEN,
