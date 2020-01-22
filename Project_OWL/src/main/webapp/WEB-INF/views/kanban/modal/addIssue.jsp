@@ -47,7 +47,7 @@
 
 			    let formData = new FormData();
 			    formData.append("projectIdx",'${project.projectIdx}');
-			    formData.append('issueTitle',$('#issueTitle').val());
+			    formData.append('issueTitle',$('#issueTitle2').val());
 			    formData.append('content', $('#content').summernote('code'));
 			    formData.append('orderNum', ordernum++);
 			    formData.append('priorityCode', $('#priorityCode').val());			    
