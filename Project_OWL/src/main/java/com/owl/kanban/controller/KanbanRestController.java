@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.kanban.dto.Column;
-import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.kanban.dto.Issue.IssueProgressType;
 import com.owl.kanban.dto.Issue.PriorityType;
@@ -123,7 +122,7 @@ public class KanbanRestController {
 
 	
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
-	public ColumnList insertIssue(@RequestParam(value = "projectIdx") int projectIdx
+	public Issue insertIssue(@RequestParam(value = "projectIdx") int projectIdx
 							, @RequestParam(value = "issueTitle") String issueTitle
 							, @RequestParam(value = "content") String content
 							, @RequestParam(value = "orderNum") int orderNum
@@ -175,7 +174,7 @@ public class KanbanRestController {
 		System.out.println(issue);
 		boolean result = false;
 		
-		ColumnList collist = null;
+		Issue collist = null;
 		
 		collist = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
 
@@ -214,6 +213,13 @@ public class KanbanRestController {
 		return result;
 	}
 	
+	@RequestMapping(value="DeleteIssue.do", method = RequestMethod.POST)
+	public boolean deleteIssue(@RequestParam(value = "issueIdx") int issueIdx) {
+		boolean result = false;
+		result = service.deleteIssue(issueIdx);
+		System.out.println("delete issue " + result);
+		return result;
+	}
 	
 	/*
 	@RequestMapping(value="GetIssueform.do")

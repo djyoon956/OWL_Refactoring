@@ -2,9 +2,6 @@
 
 
 	function addColumn(obj){
-		console.log('addColumn function in');
-		console.log(obj)
-		console.log("addColumn :" + obj.colIdx);
 		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
 					+ '<div class="columnTitle text-center mt-2 dropdown">'
 					+ '<h4>' + obj.colname
@@ -26,6 +23,7 @@
 
 		/*$('#kanbanArea').append(column);*/
 		$('#kanbanIn').append(column);
+		
 	}
 	
 	function deleteColumn(obj){
@@ -45,7 +43,7 @@
       	      		method:"POST",
       	      		data:{colIdx: colIndex},
       	      		success:function(data){
-      	      			
+      	      			$("#"+colIndex+"Column").remove();
       	      		}
       	      	});	
       		 }			

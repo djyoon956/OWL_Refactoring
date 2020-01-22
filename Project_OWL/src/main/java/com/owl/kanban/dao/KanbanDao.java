@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.owl.kanban.dto.Column;
-import com.owl.kanban.dto.ColumnList;
 import com.owl.kanban.dto.Issue;
 import com.owl.member.dto.Member;
 import com.owl.notice.dto.File;
@@ -31,13 +30,15 @@ public interface KanbanDao {
 	
 	public List<Column> getColumn(int projectIdx) throws ClassNotFoundException, SQLException;
 	
-	public ColumnList getIssuebyIssueIdx(int projectIdx, int issueIdx) throws ClassNotFoundException, SQLException;
+	public Issue getIssuebyIssueIdx(int projectIdx, int issueIdx) throws ClassNotFoundException, SQLException;
 	
 	public int updateColumn(Column column) throws ClassNotFoundException, SQLException;
 	
 	public int updateIssueOrder(List<Issue> issues) throws ClassNotFoundException, SQLException;
 	
 	public int deleteColumn(int colIdx) throws ClassNotFoundException, SQLException;
+	
+	public int deleteIssue(int issueIdx) throws ClassNotFoundException, SQLException;
 	
 	public List<File> getIssueFiles(int issueIdx) throws ClassNotFoundException, SQLException;
 }
