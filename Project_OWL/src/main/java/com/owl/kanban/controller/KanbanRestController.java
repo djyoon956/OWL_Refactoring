@@ -4,12 +4,15 @@ import java.security.Principal;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +28,8 @@ import com.owl.kanban.service.KanbanService;
 import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.Notice;
 import com.owl.project.dto.Label;
+
+import lombok.Setter;
 
 @RestController
 public class KanbanRestController {
@@ -200,20 +205,25 @@ public class KanbanRestController {
 		return result;
 	}
 	
-	/*
-	@RequestMapping(value="GetIssueform.do")
-	public boolean getIssueform(int projectIdx) {
-		boolean result = false;
-		result = service.deleteColumn(colIdx);
-		return result;
+	
+	@RequestMapping(value="GetAddIssueForm.do", method = RequestMethod.POST)
+	public Map<String, Object> getIssueform(int projectIdx) {
+		System.out.println("getIssueform controller in");
+		Map<String, Object> object = new HashMap<>();
+		
+		object = service.getIssueform(projectIdx);
+		
+		return object;
+		
 	}
-	*/
+	
 	
 	
 	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)
-	public void getIssueDetail(int issueIdx) {
+	public Issue getIssueDetail(int projectIdx, int issueIdx) {
 		System.out.println("in getIssueDetail : " + issueIdx);
 		
+		return service.getIssueDetail(projectIdx, issueIdx);
 	}
 	
 	private NoticeDao getNoticeDao() {

@@ -22,11 +22,11 @@
             <div class="card">
                 <div class="card-title mb-0">
                     <div class="ml-3">
-                        <h2>Drive Development</h2>
+                        <h2 id="issueTitle">Drive Development</h2>
                     </div>
                 </div>
                 <hr class="mt-1">
-                <div class="card-body mt-0 mb-0" style="border: 1px solid; border-color:#e9e9e9;">
+                <div class="card-body mt-0 mb-0" id="issueContent" style="border: 1px solid; border-color:#e9e9e9;">
                     <p>Task </p>
                     <p>- 드라이브 디폴트 폴더 생성</p>
                     <p>- 계층형 구조 </p>
@@ -34,18 +34,18 @@
                 </div>
 
                 <div class="accordion" id="kanbanAccordion">
+                	<!-- 첨부파일 -->
                     <div class="card mb-0">
                         <div class="card-header" id="kanbanFileBoxHeader">
                             <a  data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanFileBox" aria-expanded="true" aria-controls="kanbanFileBox">
                                 <h5 class="mb-0">
                                     <i class="fas fa-download mr-2 " aria-hidden="true"></i>
-                                    <span id="noticeFileCount">첨부파일 (3)</span>
+                                    <span id="issueFileCount">첨부파일 (3)</span>
                                 </h5>
-                                
                             </a>
                         </div>
                         <div id="kanbanFileBox" class="collapse multi-collapse">
-                            <ul class=" m-4" id="kanbanFiles">
+                            <ul class=" m-4" id="issueFiles">
                                 <li class="mb-2" style="font-size: 16px">
                                     <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
                                 </li>
@@ -58,17 +58,19 @@
                             </ul>
                         </div>
                     </div>
+                    
+                    <!-- Activity -->
                     <div class="card mb-0">
                         <div class="card-header" id="kanbanActivityBoxHeader">
                             <a data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanActivityBox" aria-expanded="true" aria-controls="kanbanActivityBox">
                                 <h5 class="mb-0">
                                     <i class="fas fa-bars mr-2" aria-hidden="true"></i>
-                                    <span id="noticeFileCount">Activity (4)</span>
+                                    <span id="issueActivityCount">Activity (4)</span>
                                 </h5>
                             </a>
                         </div>
                         <div id="kanbanActivityBox" class=" collapse multi-collapse" >
-                            <ul class="timeline w-100">
+                            <ul class="timeline w-100" id="issueActivity">
                                 <li>
                                     <p> Crystal opened this issue 1/11</p>
                                 </li>
@@ -84,18 +86,20 @@
                             </ul>
                         </div>
                     </div>
+                   
+                    <!-- Comments -->
                     <div class="card mb-0">
                         <div class="card-header" id="kanbanCommentBoxHeader">
                             <a data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanCommentBox" aria-expanded="true" aria-controls="kanbanCommentBox">
                                 <h5 class="mb-0">
                                     <i class="fas fa-comments mr-2" aria-hidden="true"></i>
-                                    <span id="noticeFileCount">Comments (10)</span>
+                                    <span id=issueCommentCount>Comments (10)</span>
                                 </h5>
                             </a>
                         </div>
                         <div id="kanbanCommentBox" class=" collapse show multi-collapse">
                             <div class="card-body mt-0" style="border: 1px solid; border-color:#e9e9e9; border-radius: 0.25rem;background-color:#e9e9e9;">
-                                <div class="comment-widgets scrollable">
+                                <div class="comment-widgets scrollable" id="issueComment">
                                     <div class="d-flex flex-row comment-row m-0">
                                         <div class="p-2">
                                             <div class="comment_img">C</div>
@@ -129,16 +133,16 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card-body mt-0 p-0">
                     <%-- <jsp:include page="./Reply.jsp"/> --%>
                     <!-- <textarea class="form-control bg-light w-100" rows="10" cols="10" placeholder="Leave a comment" name="" id="issueReply"></textarea> -->
                     <button class="btn btn-secondary mt-1 mr-1">comment</button>
                     <button class="btn btn-secondary mt-1 ml-1"><i class="fas fa-at"></i></button>
                 </div>
-                <!--  카드 끝  -->
             </div>
         </div>
+        
+        <!-- Option -->
         <div class="col-4">
             <div class="form-group">
                 <div class="row">
@@ -168,9 +172,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">Due Date</div>
-                    <div class="col-8"><i class="fas fa-calendar mr-1"></i>
-                        2020/01/20
-                    </div>
+                    <div class="col-8"><i class="fas fa-calendar mr-1"></i> 2020/01/20 </div>
                 </div>
             </div>
             <hr>
