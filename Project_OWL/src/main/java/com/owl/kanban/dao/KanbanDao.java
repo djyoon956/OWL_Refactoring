@@ -61,9 +61,7 @@ public interface KanbanDao {
 
 	public int insertIssueLog(int issueIdx, String log, String email) throws ClassNotFoundException, SQLException;
 	
-<<<<<<< HEAD
 	public int closeIssue(int issueIdx) throws ClassNotFoundException, SQLException;
-=======
+	
 	public Map<String, Integer> getIssueProgress(int projectIdx) throws ClassNotFoundException, SQLException;
->>>>>>> 800254c48c8cb18a72a05b08a61faade2e584cab
 }
