@@ -119,6 +119,8 @@ display: none !important;
 <script type="text/javascript">
 //왼쪽에 위치한 프로젝트 리스트 목록 출력 및 팝업창에서의 프로젝트 리스트 출력
 $(function(){
+	setTheme("${setting.themeColor}", "${setting.font}");
+	
 		$.ajax({
     		url:"ProjectList.do",
     		success:function(data){        		
