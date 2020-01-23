@@ -169,10 +169,10 @@
 					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button class="btn-link link-gray" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
+					lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button class="btn-link link-gray" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
+					lablist +=  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
 					lablist +=  '</div></div><hr>';
 				});
 
@@ -269,8 +269,8 @@
 
 					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
 					
-					
                    });
+               
                $('#assigned').append(optmember);
 
                 $.each(label, function(index, element) {
@@ -278,6 +278,7 @@
                   optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
 
                    });
+                
                 $('#labelIdx').append(optlabel);	
             
             },
