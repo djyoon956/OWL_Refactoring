@@ -231,120 +231,69 @@ function changeKanbanView(view){
 }
 
 function editLabel(idx, color, name) {
-	
-	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
-<<<<<<< HEAD
+	   
+	   //$('#labelList').$('#'+idx+'Label').removeAttr('style');
+	   console.log('들어온게 뭐니?');
+	   
+	   $('#labelcolor').focus();
 
-$('#labelcolor').focus();
-=======
-	console.log('들어온게 뭐니?');
-	
-	$('#labelcolor').focus();
->>>>>>> 28c1111dca12a1163441956f6a537750978bbc1f
+	   $('#addLabelBtn').addClass("hidden");
+	   $('#editLabelBtn').removeClass("hidden");
+	   $('#backBtn').removeClass("hidden");
+	   
+	   $('#labelcolor').val(color);
+	   $('#labelname').val(name);
 
-$('#addLabelBtn').addClass("hidden");
-$('#editLabelBtn').removeClass("hidden");
-$('#backBtn').removeClass("hidden");
+	   $('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
+	   //$('#'+idx+'Label').childern('div').attr('disabled', true);
+	   //$('#'+idx+'Label').attr('class', "hidden");
+	   
+	   console.log('이전값');
+	   console.log(color);
+	   console.log(name);
+	   console.log(idx);
+	   console.log("-----------------")
+	   
+	   $('#editLabelBtn').click(function() {
+	      console.log('change 값');
+	      console.log(idx);
+	      console.log($('#labelcolor').val());
+	      console.log($('#labelname').val());
+	      $('#labelColor').val("");
+	      $('#labelName').val("");
+	      
+	      
+	      $.ajax({
+	         url : "UpdateLabel.do",
+	         data : {'labelIdx' : idx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
+	         success : function(data) {
+	            
+	            console.log('data in' + data);
+	            $('#'+idx+'Label').next().remove();
+	            $('#'+idx+'Label').remove();
+	            
+	            addLabel(idx, $('#labelcolor').val(), $('#labelname').val());
+	            
+	            //location.reload(true);
+	            $('#labelColor').val("");
+	            $('#labelName').val("");
+	         }, error : function () {
+	            console.log('EditLabel error');
+	         }
+	      });
+	   });
+	   
+	   
+	   
+	   $('#backBtn').click(function() {
+	      
+	      $('#labelcolor').val("");
+	      $('#labelname').val("");
+	      
+	      $('#addLabelBtn').removeClass("hidden");
+	      $('#editLabelBtn').addClass("hidden");
+	      $('#backBtn').addClass("hidden");
 
-<<<<<<< HEAD
-$('#labelcolor').val(color);
-$('#labelname').val(name);
-
-$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
-//$('#'+idx+'Label').childern('div').attr('disabled', true);
-//$('#'+idx+'Label').attr('class', "hidden");
-
-console.log('이전값');
-console.log(color);
-console.log(name);
-
-
-$('#editLabelBtn').click(function() {
-	console.log('change 값');
-	console.log($('#labelcolor').val());
-	console.log($('#labelname').val());
-	
-	$.ajax({
-		url : "UpdateLabel.do",
-		data : {'labelIdx' : idx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
-		success : function(data) {
-			
-			console.log('data in' + data);
-			$('#'+idx+'Label').next().remove();
-			$('#'+idx+'Label').remove();
-			
-			addLabel(idx, $('#labelcolor').val(), $('#labelname').val());
-			
-		}, error : function () {
-			console.log('EditLabel error');
-		}
-=======
-	$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
-	//$('#'+idx+'Label').childern('div').attr('disabled', true);
-	//$('#'+idx+'Label').attr('class', "hidden");
-	
-	console.log('이전값');
-	console.log(color);
-	console.log(name);
-	console.log(idx);
-	
-	$('#editLabelBtn').click(function() {
-		console.log('change 값');
-		console.log(idx);
-		console.log($('#labelcolor').val());
-		console.log($('#labelname').val());
-		
-		$.ajax({
-			url : "UpdateLabel.do",
-			data : {'labelIdx' : idx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
-			success : function(data) {
-				
-				console.log('data in' + data);
-				$('#'+idx+'Label').next().remove();
-				$('#'+idx+'Label').remove();
-				
-				addLabel(idx, $('#labelcolor').val(), $('#labelname').val());
-				
-			}, error : function () {
-				console.log('EditLabel error');
-			}
-		});
-	});
-	
-	
-	
-	$('#backBtn').click(function() {
-		
-		$('#labelcolor').val("");
-		$('#labelname').val("");
-		
-		$('#addLabelBtn').removeClass("hidden");
-		$('#editLabelBtn').addClass("hidden");
-		$('#backBtn').addClass("hidden");
->>>>>>> 28c1111dca12a1163441956f6a537750978bbc1f
-	});
-});
-
-
-$('#backBtn').click(function() {
-	
-	$('#labelcolor').val("");
-	$('#labelname').val("");
-	
-	$('#addLabelBtn').removeClass("hidden");
-	$('#editLabelBtn').addClass("hidden");
-	$('#backBtn').addClass("hidden");
-});
-
-};
-
-
-
-
-
-
-
-
-
-
-	
+	   });
+	   
+	   };
