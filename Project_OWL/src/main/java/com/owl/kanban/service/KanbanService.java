@@ -44,6 +44,9 @@ public class KanbanService {
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
 			
+			System.out.println("???????" +issue.getIssueIdx()  +"/" +issue.getProjectIdx());
+			
+			dao.updateAllIncrease(issue.getIssueIdx(), issue.getProjectIdx());
 			System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
 
 			System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
@@ -90,6 +93,10 @@ public class KanbanService {
 		return files;
 	}
 
+	
+	
+	
+	
 
 	public boolean insertColumn(Column column) {
 		System.out.println("insertColumn Service in");
