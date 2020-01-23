@@ -219,6 +219,10 @@ function setKanbanDetail(issueIdx){
 changeKanbanView("detail");
 }
 
+function closeIssue(issueIdx) {
+	
+	
+}
 
 function changeKanbanView(view){
 	if(view == "list"){

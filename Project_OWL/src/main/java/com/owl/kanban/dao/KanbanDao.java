@@ -58,4 +58,6 @@ public interface KanbanDao {
 	public int updateLabel(Label label) throws ClassNotFoundException, SQLException;
 
 	public int insertIssueLog(int issueIdx, String log, String email) throws ClassNotFoundException, SQLException;
+	
+	public int closeIssue(int issueIdx) throws ClassNotFoundException, SQLException;
 }
