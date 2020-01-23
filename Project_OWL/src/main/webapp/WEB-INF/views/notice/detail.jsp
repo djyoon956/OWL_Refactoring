@@ -57,7 +57,7 @@ color: #f8f9fa;
     <div class="row">
     	<div class="col-6 ">
     		<div class="text-left">
-    			<button class="btn btn-primary mr-1" onclick="setNoticeData(${project.projectIdx})"><i class="fas fa-chevron-left"></i> 뒤로가기</button>
+    			<button class="btn btn-primary mr-1" onclick="changeNoticeView('noticeBox')"><i class="fas fa-chevron-left"></i> 뒤로가기</button>
    			</div>
     	</div>
     	<c:if test="${project.authority eq 'ROLE_PM'}">

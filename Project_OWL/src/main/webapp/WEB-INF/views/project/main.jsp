@@ -171,7 +171,7 @@
             	setIssueData(); 
             }
             else if (target === "notice")
-                setNoticeData('${project.projectIdx}');
+                setNoticeData();
             else if (target === "drive")
                 setDriveData();
         }
