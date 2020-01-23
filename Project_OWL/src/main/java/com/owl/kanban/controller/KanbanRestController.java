@@ -118,13 +118,15 @@ public class KanbanRestController {
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							, @RequestParam(value = "colIdx") int colIdx
 							, Principal principal, HttpServletRequest request) {	
+		
+		/*
 		System.out.println("in InsertIssue.do");
 		System.out.println("insertIssue controller in");
 		System.out.println(projectIdx);
 		System.out.println(issueTitle);
 		System.out.println(content);
 		System.out.println(assigned);
-		System.out.println(labelIdx);
+		System.out.println("labelIdx 나오니" + labelIdx);
 		System.out.println(dueDate);
 		System.out.println(orderNum);
 		System.out.println(priorityCode);
@@ -132,7 +134,7 @@ public class KanbanRestController {
 		System.out.println(multipartFiles.size());
 		System.out.println("칼럼");
 		System.out.println(colIdx);
-		
+		*/
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
@@ -146,7 +148,7 @@ public class KanbanRestController {
 		if(!assigned.isEmpty())
 			issue.setAssigned(assigned);
 		if (!labelIdx.isEmpty())
-			//issue.setLabelIdx(Integer.parseInt(labelIdx));
+			issue.setLabelIdx(Integer.parseInt(labelIdx));
 		if(!dueDate.isEmpty()) {
 			try {
 				issue.setDueDate(new SimpleDateFormat("yyyy-mm-dd").parse(dueDate));
