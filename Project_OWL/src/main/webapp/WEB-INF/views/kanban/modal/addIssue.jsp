@@ -166,11 +166,7 @@
 						<div class="col-4">Assignees</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="assigned" id="assigned">
-						<!-- 		<option value="">Select Assignee</option>
-								<option value="Cathy">Cathy</option>
-								<option value="Cindy">Cindy</option>
-								<option value="Colin">Colin</option>
-								<option value="Chloe">Chloe</option> -->
+
 							</select>
 						</div>
 					

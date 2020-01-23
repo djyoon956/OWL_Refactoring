@@ -236,14 +236,17 @@
 				let label = data.label;
 				let optlabel;
 				let optmember;
+
+				$('#assigned').append(selectoption);
+                $('#labelIdx').append(selectoption);
 				
                $.each(member, function(index, element) {
 
 					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
 					
-					$('#assigned').append(selectoption);
 					$('#assigned').append(optmember);
                    });
+
 
                
                 $.each(label, function(index, element) {
@@ -251,7 +254,6 @@
  
                   optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
 
-                  $('#labelIdx').append(selectoption);
 				  $('#labelIdx').append(optlabel);	
                    });
             },

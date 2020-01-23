@@ -229,7 +229,8 @@ function changeKanbanView(view){
 function editLabel(idx, color, name) {
 	
 	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
-
+	console.log('들어온게 뭐니?');
+	
 	$('#labelcolor').focus();
 
 	$('#addLabelBtn').addClass("hidden");
@@ -246,10 +247,11 @@ function editLabel(idx, color, name) {
 	console.log('이전값');
 	console.log(color);
 	console.log(name);
-	
+	console.log(idx);
 	
 	$('#editLabelBtn').click(function() {
 		console.log('change 값');
+		console.log(idx);
 		console.log($('#labelcolor').val());
 		console.log($('#labelname').val());
 		
@@ -269,6 +271,7 @@ function editLabel(idx, color, name) {
 			}
 		});
 	});
+	
 	
 	
 	$('#backBtn').click(function() {
