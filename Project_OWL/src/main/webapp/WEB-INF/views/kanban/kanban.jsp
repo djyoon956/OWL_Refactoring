@@ -355,6 +355,8 @@
             $("#" + data + "Column span").text($("#editcolName").val());
         		$("#editcolName").val("");
             	$('#editColumnModal').modal('hide');
+
+            	
             },
             error : function() {
             	errorAlert("칼럼 수정 error");

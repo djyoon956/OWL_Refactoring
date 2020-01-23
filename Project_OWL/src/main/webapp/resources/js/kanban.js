@@ -323,6 +323,7 @@ function editLabel(idx, color, name) {
 	$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', color);
 
 	//$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
+
 	
 	$('#'+idx+'Label').find('.edit').addClass("hidden");
 	//css('display', 'none');
