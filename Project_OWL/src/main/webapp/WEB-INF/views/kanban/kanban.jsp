@@ -184,6 +184,19 @@
 			});
 	});
 
+
+
+	$('#addLabelModal').on('hidden.bs.modal', function() {  
+			$('#labelcolor').val("");
+			$('#labelname').val("");
+			
+			$('#addLabelBtn').removeClass("hidden");
+			$('#editLabelBtn').addClass("hidden");
+			$('#backBtn').addClass("hidden");
+		});
+
+
+	
          $("#openIssueBtn").click(function() {
             $("#-1Column").removeClass("d-none");
      		$("#-99Column").hide();

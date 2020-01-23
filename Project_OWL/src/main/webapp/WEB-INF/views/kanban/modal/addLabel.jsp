@@ -77,7 +77,7 @@
 					<div class="row">
 						<!-- label make section -->
 						<div class="col-lg-5 newLabelSection">
-							<div class="form-group">
+							<div class="form-group" id="colorform">
 								<h5>Color</h5>
 								<input type="text" class="complex-colorpicker form-control"name="labelcolor" id="labelcolor"> <br> <br>
 								<h5>Label name</h5>

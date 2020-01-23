@@ -37,23 +37,22 @@ public class KanbanService {
 		boolean result = false;
 		Issue colList = null;
 		try {
-			
+		
 			result = dao.insertIssue(issue) > 0 ? true : false;
-			System.out.println(multipartFiles.size());
+			//System.out.println(multipartFiles.size());
 			
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
 			
-			System.out.println("???????" +issue.getIssueIdx()  +"/" +issue.getProjectIdx());
+			//System.out.println("???????" +issue.getIssueIdx()  +"/" +issue.getProjectIdx());
 			
 			dao.updateAllIncrease(issue.getIssueIdx(), issue.getProjectIdx());
-			System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
+			//System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
 
-			System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
+			//System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
 			if(result) {
 				colList = dao.getIssuebyIssueIdx(issue.getProjectIdx(), issue.getIssueIdx());
 			}
-			
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 		} 

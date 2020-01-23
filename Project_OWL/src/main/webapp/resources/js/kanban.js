@@ -17,9 +17,56 @@ let projectIdx;
 	$('#labelList').append(lablist);
 	}
 
-	
+	let editIdx = 0;
 	function initKanban(projectIdx){
 		this.projectIdx= projectIdx;
+		
+		$('#editLabelBtn').click(function() {
+			if(editIdx == 0)
+				return;
+			
+			//console.log(editIdx);
+			//console.log('change 값');
+			//console.log($('#labelcolor').val());
+			//console.log($('#labelname').val());
+			$('#labelColor').val("");
+			$('#labelName').val("");
+				
+			$.ajax({
+				url : "UpdateLabel.do",
+				data : {'labelIdx' : editIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
+				success : function(data) {
+					
+					console.log('data in' + data);
+					$('#'+editIdx+'Label').next().remove();
+					$('#'+editIdx+'Label').remove();
+					
+					addLabel(editIdx, $('#labelcolor').val(), $('#labelname').val());
+					
+					$('#labelColor').val("");
+					$('#labelName').val("");
+					editIdx = 0;
+					
+					$('#'+editIdx+'Label').attr('style', "background-color:#fff");
+
+				}, error : function () {
+					console.log('EditLabel error');
+				}
+			});
+		});
+		
+		$('#backBtn').click(function() {
+			editIdx = 0;
+			$('#labelcolor').val("");
+			$('#labelname').val("");
+			
+			$('#addLabelBtn').removeClass("hidden");
+			$('#editLabelBtn').addClass("hidden");
+			$('#backBtn').addClass("hidden");
+
+			$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', '#000000');
+			
+		});
 	}
 
 	
@@ -228,61 +275,21 @@ function changeKanbanView(view){
 
 function editLabel(idx, color, name) {
 	
-	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
-	console.log('들어온게 뭐니?');
-	
-	$('#labelcolor').focus();
+	$('.labelList').attr('style', "background-color:#fff");
 
+	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
+	editIdx = idx;
 	$('#addLabelBtn').addClass("hidden");
 	$('#editLabelBtn').removeClass("hidden");
 	$('#backBtn').removeClass("hidden");
 	
 	$('#labelcolor').val(color);
 	$('#labelname').val(name);
+	$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', color);
 
 	$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
 	//$('#'+idx+'Label').childern('div').attr('disabled', true);
 	//$('#'+idx+'Label').attr('class', "hidden");
-	
-	console.log('이전값');
-	console.log(color);
-	console.log(name);
-	console.log(idx);
-	
-	$('#editLabelBtn').click(function() {
-		console.log('change 값');
-		console.log(idx);
-		console.log($('#labelcolor').val());
-		console.log($('#labelname').val());
-		
-		$.ajax({
-			url : "UpdateLabel.do",
-			data : {'labelIdx' : idx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
-			success : function(data) {
-				
-				console.log('data in' + data);
-				$('#'+idx+'Label').next().remove();
-				$('#'+idx+'Label').remove();
-				
-				addLabel(idx, $('#labelcolor').val(), $('#labelname').val());
-				
-			}, error : function () {
-				console.log('EditLabel error');
-			}
-		});
-	});
-	
-	
-	
-	$('#backBtn').click(function() {
-		
-		$('#labelcolor').val("");
-		$('#labelname').val("");
-		
-		$('#addLabelBtn').removeClass("hidden");
-		$('#editLabelBtn').addClass("hidden");
-		$('#backBtn').addClass("hidden");
-	});
 	
 	};
 
