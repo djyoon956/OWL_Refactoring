@@ -146,7 +146,6 @@ function changeNoticeView(view){
 		$("#writeBox").addClass("hidden");
 		$("#noticeBox").removeClass("hidden");
 	}else if(view == "writeBox"){
-		console.log("라이트 박스 엘스");
 		$("#noticeBox").addClass("hidden");
 		$("#noticeDetailBox").addClass("hidden");
 		$("#writeBox").removeClass("hidden");
