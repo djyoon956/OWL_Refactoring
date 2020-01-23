@@ -945,8 +945,8 @@
       			url: "MyProjectsMates.do",
       			type: "POST",
       			dataType: 'json',
-      			data : { email :$('#memberEmail').val(),
-      				     name : $('#memberName').val()}, 
+      			data : { email : curEmail,
+      				     name : curName }, 
       			success: function (data) {
       				console.log("뷰단으로 데이터 들어 오나요?? >" + data);
 
