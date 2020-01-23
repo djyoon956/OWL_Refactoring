@@ -74,7 +74,7 @@
 
 .columnBody {
 	border: 2px solid #e9e9e9;
-	width: 310px;
+	width: 330px;
 	min-height: 20px;
 	max-height: 550px;
 	list-style-type: none;
@@ -104,8 +104,8 @@
 }
 
 #kanbanArea, #kanbanIn {
-	height: 600px;
- 	overflow-y: auto;
+	height: 700px;
+	overflow-y: auto;
  	display: flex;
 	flex-direction: row;
 	flex-wrap: nowarp;
@@ -221,6 +221,14 @@
 					if(data != null) {
 		        		 console.log('data : ' + data);
 		        		addColumn(data);
+
+    					$( ".sortableCol").sortable({
+    				        connectWith: ".connectedSortable",
+    				        dropOnEmpty: true,
+         
+    				     }).disableSelection();
+
+
 		        		$('#addColumnModal').modal("hide");
 					}else {
 						errorAlert("Column 추가 실패");
@@ -403,7 +411,7 @@
                         <span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
                     </h4>
                 </div>
-                <ul class="connectedSortable columnBody sortableCol">
+                <ul class="connectedSortable columnBody sortableCol" style="background-color:#bdbbbb">
                     <!-- <li class="issuePiece d-none">Item 1</li> -->
                     <!-- 	<li class="issuePiece"></li> -->
                 </ul>
@@ -416,11 +424,11 @@
                             <i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
                     </h4>
                 </div>
-                <ul class="connectedSortable columnBody sortableCol">
+                <ul class="connectedSortable columnBody sortableCol" style="background-color:#bdbbbb">
                     <li class="issuePiece d-none"></li>
                 </ul>
             </div>
-            <div id="kanbanIn" class="row"></div>
+            <div id="kanbanIn" ></div>
            
 
         </div>

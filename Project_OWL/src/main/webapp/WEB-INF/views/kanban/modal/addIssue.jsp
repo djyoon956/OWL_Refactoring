@@ -33,8 +33,12 @@
 		        ]
 		      });
 
+
+
 			
 			$("#InsertIssueBtn").on("click", function () {
+
+				console.log('InsertIssueBtn click');
 			if($('#issueTitle').val() == ""){
 				warningAlert("제목을 작성해주십시오");
 					return; 
@@ -55,6 +59,8 @@
 				console.log($('#multipartFile').val()); 
 				*/
 
+				console.log('labelIdx :' + $('#labelIdx').val());
+				
 			    let formData = new FormData();
 			    formData.append("projectIdx",'${project.projectIdx}');
 
