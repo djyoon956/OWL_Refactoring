@@ -33,7 +33,7 @@
                 
                <c:if test="${project.authority eq 'ROLE_PM'}">
 	                <div class="text-right mt-3 ">
-	                    <button class="btn btn-primary" onclick="writeNotice()"><i class="fas fa-pencil-alt"></i>&nbsp;  글쓰기</button>
+	                    <button class="btn btn-primary" onclick="writeNotice()"><i class="fas fa-pencil-alt"></i>&nbsp;글쓰기</button>
 	                </div>
                </c:if>
             </div>

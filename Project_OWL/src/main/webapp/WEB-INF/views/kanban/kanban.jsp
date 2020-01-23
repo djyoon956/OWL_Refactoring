@@ -245,8 +245,10 @@
             success: function (data) {
             	$('#assigned').empty();
             	$('#labelIdx').empty();
+            	
 				let member = data.member;
 				let label = data.label;
+				
 				let optlabel;
 				let optmember;
 
@@ -261,10 +263,8 @@
                    });
 
 
-               
                 $.each(label, function(index, element) {
                
- 
                   optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
 
 				  $('#labelIdx').append(optlabel);	
@@ -295,6 +295,15 @@
 	});
 
 
+
+	$('#addColumnModal').on('hidden.bs.modal', function() {  
+		$('#colname').val("");
+	
+	});
+	
+
+
+	
 	$("#addLabelBtn").on("click", function () {	
 
 		let lcolor = false;

@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<update id="updateAllIncrease">
-		update issue a set ordernum = ordernum + 1 where projectidx = #{projectIdx} and colidx= -1 and issueidx not in (#{issueIdx})
+		update issue a set ordernum = ordernum + 1 where projectidx = #{param1} and colidx= -1 and issueidx not in (#{param2})
 
 	</update>
 
@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.Issue">
 		SELECT I.PROJECTIDX, I.CONTENT, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR, I.DUEDATE, I.PRIORITYCODE, I.CREATOR, I.ORDERNUM, I.COLIDX
 			FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
-		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2}
+		WHERE I.ISSUEIDX=#{param1}
 	</select>
 	
 	<select id="getIssueFiles" resultType="com.owl.notice.dto.File">
@@ -84,7 +84,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getIssueLogs" resultType="com.owl.kanban.dto.IssueLog">
-		SELECT LOGIDX, LOG, LOGTIME, ISSUEIDX FROM owl.ISSUELOG
+		SELECT LOGIDX, LOG, LOGTIME, ISSUEIDX, creator , M.NAME AS 'CREATORNAME'
+			FROM owl.ISSUELOG L JOIN OWL.MEMBER M ON L.CREATOR = M.EMAIL
 		WHERE ISSUEIDX = #{issueIdx}
 	</select>
 	<select id="getIssueReplies" resultType="com.owl.kanban.dto.Reply">
@@ -119,4 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE LABEL SET LABELNAME = #{labelName}, LABELCOLOR =#{labelColor} WHERE LABELIDX = #{labelIdx}
 	</update>
 	
+	<insert id="insertIssueLog">
+		INSERT INTO owl.ISSUELOG (ISSUEIDX, LOG, CREATOR) values(#{param1}, #{param2}, #{param3})
+	</insert>
 </mapper>
