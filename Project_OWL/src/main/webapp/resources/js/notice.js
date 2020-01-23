@@ -16,27 +16,32 @@ function initNotice(projectIdx){
         let data = $('#noticeTable').DataTable().row( this ).data();
         setDetailData(data[0]);
     });
+	
+	$("#noticeNote").summernote({
+		height: 310,
+        placeholder: "내용을 입력하세요.",
+        popover: {
+            image: [],
+            link: [],
+            air: []
+          }
+	});
 }
 
-
+let detailNoticeIdx = 0;
 function setDetailData(boardIdx){
 	$.ajax({
 		type: "POST",
 		url: "GetNotice.do",
 		data: {boardIdx: boardIdx},
 		success: function (notice) {
-			console.log("------------------------");
-			console.log(notice);
-			console.log("------------------------");
+			detailNoticeIdx = boardIdx;
 			$("#noticeTitle").text(notice.title);
 			$("#noticeContent").html(notice.content);
-			console.log("file");
-			console.log(notice.files);
+			
 			$("#noticeFiles").empty();
 			$("#noticeFileCount").text("첨부파일 ("+notice.files.length+")");
 			$.each(notice.files, function(){
-				//noticeFiles
-				console.log(this);
 				let path = "/upload/"+ noticeProjectIdx +"/file/"+this.fileName;
 				console.log(path);
 				let control = "<li class='mb-2' style='font-size: 16px'>"
@@ -74,21 +79,13 @@ function setNoticeData() {
 				$("#emptyNoticeBox").removeClass("hidden");
 				$("#noticeTableBox").addClass("hidden");
 			}
+			
+			changeNoticeView("noticeBox");
 		}
 	}); 
 }
 
 function writeNotice() {
-	console.log("writeNotice()");
-	$("#noticeNote").summernote({
-		height: 310,
-        placeholder: "내용을 입력하세요.",
-        popover: {
-            image: [],
-            link: [],
-            air: []
-          }
-	});
 	changeNoticeView("writeBox");
 }
 
@@ -99,7 +96,11 @@ function cancelNotice(){
 }
 
 function writeNoticeOk(){
-	console.log("WriteNoticeOk");
+	if($("#title").val() == "" || $('#noticeNote').val()==""){
+		warningAlert("내용을 모두 작성해주세요.");
+		return;
+	}
+	
     let formData = new FormData();
     formData.append("projectIdx", noticeProjectIdx);
     formData.append("content",$('#noticeNote').summernote('code'));
@@ -107,9 +108,7 @@ function writeNoticeOk(){
     $.each($("#noticeMultipartFiles")[0].files, function(i, file) {
     	formData.append('multipartFiles', file);
     });
-    
-    console.log($('#noticeNote').summernote('code'));
-    console.log($("#title").val());
+
     let notice;
     $.ajax({
         type: "POST",
@@ -141,12 +140,36 @@ function writeNoticeError(){
 	setNoticeData(noticeProjectIdx);
 }
 
+function deleteNotice(){
+	$.ajax({
+		url : "DeleteNotice.do",
+		type : "POST",
+		data : {noticeIdx : detailNoticeIdx},
+		success : function(data){
+			if(data){
+				successAlert("삭제 완료!");
+				setNoticeData();
+			} else
+				warningAlert("삭제 실패!");
+		},
+		error : function(){
+			warningAlert("삭제 실패!");
+		}
+	})
+}
+
+function editNotice(){
+	
+}
+
 function changeNoticeView(view){
 	if(view == "noticeBox"){
+		detailNoticeIdx = 0;
 		$("#noticeDetailBox").addClass("hidden");
 		$("#writeBox").addClass("hidden");
 		$("#noticeBox").removeClass("hidden");
 	}else if(view == "writeBox"){
+		detailNoticeIdx = 0;
 		$("#noticeBox").addClass("hidden");
 		$("#noticeDetailBox").addClass("hidden");
 		$("#writeBox").removeClass("hidden");
@@ -156,3 +179,5 @@ function changeNoticeView(view){
 		$("#noticeDetailBox").removeClass("hidden");
 	}
 }
+
+
