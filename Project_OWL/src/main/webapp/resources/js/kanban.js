@@ -286,11 +286,7 @@ function closeIssue(issueIdx) {
            method:"POST",
            data:{issueIdx : issueIdx},
            success:function(data){
-              console.log("closeIssue 성공");
-              console.log(data);
               if(data == true){
-            	  $("#closeIssueDetailBtn").removeClass("fas fa-check");
-            	  $("#closeIssueDetailBtn").addClass("fas fa-ban");
               }
            }
         });  	
