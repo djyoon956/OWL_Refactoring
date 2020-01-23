@@ -390,7 +390,7 @@
                         <i class="fas fa-italic"></i>&nbsp;New Issue
                     </button>
                 </a>
-
+			<c:if test="${project.authority eq 'ROLE_PM'}">
                 <a href="#" data-toggle="modal" data-target="#addColumnModal">
                     <button class="btn btn-primary">
                         <i class="fas fa-columns"></i>&nbsp;New Column
@@ -401,6 +401,7 @@
                         <i class="fas fa-tag"></i>&nbsp;Make Label
                     </button>
                 </a>
+             </c:if>
             </div>
         </div>
 
