@@ -32,4 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FROM owl.FILE
 		WHERE BOARDIDX  = #{boardIdx}
 	</select>
+
+	<delete id="deleteNotice" parameterType="Integer">
+		DELETE FROM owl.BOARD WHERE BOARDIDX= #{noticeIdx}
+	</delete>
 </mapper>

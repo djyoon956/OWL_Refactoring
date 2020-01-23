@@ -15,6 +15,7 @@ function addLabel(lbidx, lbcolor, lbnm) {
 
 
 $('#labelList').append(lablist);
+
 }
 
    
@@ -66,7 +67,8 @@ $('#labelList').append(lablist);
 			$('#backBtn').addClass("hidden");
 
 			$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', '#000000');
-			
+			$('.labelList').find('.edit').removeClass("hidden");
+
 		});
 	}
 
@@ -122,6 +124,7 @@ function deleteColumn(obj){
 function addKanbanIssue(colIdx,obj){
 
 	console.log("addKanbanIssue in");
+	console.log("label" + obj.labelIdx);
 	console.log(obj);
 	if(obj.labelName == null) 
 		obj.labelName = "";
@@ -200,6 +203,8 @@ function setKanbanDetail(issueIdx){
 				console.log("GetIssueDetail success");
 				console.log(data);
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
+					$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
+				
 					$("#issueDetailTitle").text(data.issueTitle);
 					$("#issueDetailContent").html(data.content);
 					
@@ -278,7 +283,15 @@ changeKanbanView("detail");
 }
 
 function closeIssue(issueIdx) {
-	
+	   $.ajax({
+           url:"CloseIssue.do",
+           method:"POST",
+           data:{issueIdx : issueIdx},
+           success:function(data){
+              if(data == true){
+              }
+           }
+        });  	
 	
 }
 
@@ -294,7 +307,10 @@ function changeKanbanView(view){
 
 function editLabel(idx, color, name) {
 	
-	$('.labelList').attr('style', "background-color:#fff");
+	console.log('idx뭐니 : ' + idx);
+	//$('.labelList').attr('style', "background-color:#fff");
+	$('.labelList').find('.edit').removeClass("hidden");
+
 
 	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
 	editIdx = idx;
@@ -306,9 +322,11 @@ function editLabel(idx, color, name) {
 	$('#labelname').val(name);
 	$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', color);
 
-	$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
-	//$('#'+idx+'Label').childern('div').attr('disabled', true);
-	//$('#'+idx+'Label').attr('class', "hidden");
+	//$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
+
+	
+	$('#'+idx+'Label').find('.edit').addClass("hidden");
+	//css('display', 'none');
 	
 	};
 	

@@ -22,6 +22,8 @@
 			$("#settingtoggle").hide();
 		 	$("#chatToggle").animate({width:'toggle'},350);
 
+			console.log("채팅버튼 누르면 타는 함수>>>>>>>>>>" +${member.email});
+			console.log(${member.name});
 		 	//디비에서 같은 프로젝트에 속해 있는 유저 목록 뽑아서 채팅 기능에서 유저목록 보여 주기..	
 		 	$.ajax({
 				url: "MyProjectsMates.do",

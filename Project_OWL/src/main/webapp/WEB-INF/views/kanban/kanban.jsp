@@ -74,7 +74,7 @@
 
 .columnBody {
 	border: 2px solid #e9e9e9;
-	width: 310px;
+	width: 330px;
 	min-height: 20px;
 	max-height: 550px;
 	list-style-type: none;
@@ -104,8 +104,8 @@
 }
 
 #kanbanArea, #kanbanIn {
-	height: 600px;
-	overflow-y: scroll;
+	height: 700px;
+	overflow-y: auto;
  	display: flex;
 	flex-direction: row;
 	flex-wrap: nowarp;
@@ -169,10 +169,10 @@
 					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button class="btn-link link-gray" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
+					lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button class="btn-link link-gray" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
+					lablist +=  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
 					lablist +=  '</div></div><hr>';
 				});
 
@@ -221,6 +221,14 @@
 					if(data != null) {
 		        		 console.log('data : ' + data);
 		        		addColumn(data);
+
+    					$( ".sortableCol").sortable({
+    				        connectWith: ".connectedSortable",
+    				        dropOnEmpty: true,
+         
+    				     }).disableSelection();
+
+
 		        		$('#addColumnModal').modal("hide");
 					}else {
 						errorAlert("Column 추가 실패");
@@ -261,8 +269,8 @@
 
 					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
 					
-					
                    });
+               
                $('#assigned').append(optmember);
 
                 $.each(label, function(index, element) {
@@ -270,6 +278,7 @@
                   optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
 
                    });
+                
                 $('#labelIdx').append(optlabel);	
             
             },
@@ -346,6 +355,8 @@
             $("#" + data + "Column span").text($("#editcolName").val());
         		$("#editcolName").val("");
             	$('#editColumnModal').modal('hide');
+
+            	
             },
             error : function() {
             	errorAlert("칼럼 수정 error");
@@ -403,7 +414,7 @@
                         <span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
                     </h4>
                 </div>
-                <ul class="connectedSortable columnBody sortableCol">
+                <ul class="connectedSortable columnBody sortableCol" style="background-color:#bdbbbb">
                     <!-- <li class="issuePiece d-none">Item 1</li> -->
                     <!-- 	<li class="issuePiece"></li> -->
                 </ul>
@@ -416,11 +427,11 @@
                             <i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
                     </h4>
                 </div>
-                <ul class="connectedSortable columnBody sortableCol">
+                <ul class="connectedSortable columnBody sortableCol" style="background-color:#bdbbbb">
                     <li class="issuePiece d-none"></li>
                 </ul>
             </div>
-            <div id="kanbanIn" class="row"></div>
+            <div id="kanbanIn" ></div>
            
 
         </div>

@@ -54,6 +54,10 @@
 	margin-right: 7px;
 	border-radius: 2px;
 }
+
+#labelList {
+	overflow-y : auto;
+}
 </style>
 
 <script>
