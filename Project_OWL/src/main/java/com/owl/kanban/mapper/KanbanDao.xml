@@ -88,12 +88,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FROM owl.ISSUELOG L JOIN OWL.MEMBER M ON L.CREATOR = M.EMAIL
 		WHERE ISSUEIDX = #{issueIdx}
 	</select>
+	
 	<select id="getIssueReplies" resultType="com.owl.kanban.dto.Reply">
 		SELECT ISSUEIDX, ISSUERLYIDX, CREATEDATE, CREATOR, CONTENT 
 			FROM owl.ISSUERLY
 		WHERE ISSUEIDX = #{issueIdx}
 	</select>
-	
+
 	<update id="updateColumn" parameterType="com.owl.kanban.dto.Column">
 		UPDATE COLNAME SET COLNAME = #{colname} WHERE PROJECTIDX = #{projectIdx} AND COLIDX=#{colIdx}
 	</update>
@@ -127,4 +128,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="closeIssue" >
 		update issue set colidx = -99 , issueprogress='CLOSED'  where issueidx = #{issueIdx}
 	</update>
+	
+	<select id="getColumnName" resultType="String">
+		SELECT COLNAME FROM owl.COLNAME WHERE PROJECTIDX= #{param1} 	AND COLIDX= #{param2}
+	</select>
 </mapper>

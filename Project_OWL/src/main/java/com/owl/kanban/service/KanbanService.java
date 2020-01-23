@@ -37,23 +37,22 @@ public class KanbanService {
 		boolean result = false;
 		Issue colList = null;
 		try {
-			
+		
 			result = dao.insertIssue(issue) > 0 ? true : false;
-			System.out.println(multipartFiles.size());
+			//System.out.println(multipartFiles.size());
 			
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
 			
-			System.out.println("???????" +issue.getIssueIdx()  +"/" +issue.getProjectIdx());
+			//System.out.println("???????" +issue.getIssueIdx()  +"/" +issue.getProjectIdx());
 			
 			dao.updateAllIncrease(issue.getIssueIdx(), issue.getProjectIdx());
-			System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
+			//System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
 
-			System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
+			//System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
 			if(result) {
 				colList = dao.getIssuebyIssueIdx(issue.getIssueIdx());
 			}
-			
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 		} 
@@ -92,11 +91,6 @@ public class KanbanService {
 
 		return files;
 	}
-
-	
-	
-	
-	
 
 	public boolean insertColumn(Column column) {
 		System.out.println("insertColumn Service in");
@@ -187,7 +181,7 @@ public class KanbanService {
 
 		return issue;
 	}
-	
+		
 	public boolean updateColumn(Column column) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
@@ -312,12 +306,12 @@ public class KanbanService {
 		return issue;
 	}
 	
-	public void updateMoveIssue(int targetIssueIdx, int columnIdx, int[] issues, String email) {
+	public boolean updateMoveIssue(int projectIdx, int targetIssueIdx, int columnIdx, int[] issues, String email) {
 		System.out.println("in service updateMoveIssue");
 		KanbanDao dao = getKanbanDao();
-
+		boolean result = false;
+		
 		try {
-			System.out.println("-------------------------");
 			Issue issue = dao.getIssuebyIssueIdx(targetIssueIdx);
 			int oldColIdx = issue.getColIdx();
 			for (int i = 0; i < issues.length; i++) {
@@ -331,16 +325,21 @@ public class KanbanService {
 	
 				dao.updateMoveIssue(parameters);
 			}
-			System.out.println("-------------------------");
-			if(oldColIdx == columnIdx) {
-				String log = "";
+			
+			if (oldColIdx != columnIdx) {
+				System.out.println("-------------------------");
+				String log = "Moved this from " + dao.getColumnName(projectIdx, oldColIdx) + " to " + dao.getColumnName(projectIdx, columnIdx);
+				System.out.println(log);
 				insertLog(targetIssueIdx, log, email, dao);
 			}
+			result=true;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return result;
 	}
 	
 	
