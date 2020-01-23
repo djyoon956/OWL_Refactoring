@@ -268,9 +268,8 @@ public class KanbanRestController {
 		return result;
 	}
 	@RequestMapping(value = "CloseIssue.do", method = RequestMethod.POST)
-	public boolean closeIssue(@RequestParam(value = "issueIdx") int issueIdx) {
-		boolean result = false;
-		result = service.closeIssue(issueIdx);
+	public Issue closeIssue(@RequestParam(value = "issueIdx") int issueIdx) {
+		Issue result = service.closeIssue(issueIdx);
 		return result;
 	}
 	

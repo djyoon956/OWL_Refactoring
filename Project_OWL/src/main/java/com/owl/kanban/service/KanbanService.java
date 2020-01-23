@@ -351,6 +351,7 @@ public class KanbanService {
 			System.out.println("label :" + label);
 			result = dao.updateLabel(label) > 0 ? true : false;
 			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -359,16 +360,20 @@ public class KanbanService {
 		System.out.println("result가 뭐니?" + result);
 		return result;
 	}
-	public boolean closeIssue(int issueIdx) {
+	public Issue closeIssue(int issueIdx) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
+		Issue issueList = null;
 			try {
 				result = dao.closeIssue(issueIdx) > 0 ? true : false;
+				if(result) {
+					issueList = dao.getIssuebyIssueIdx(issueIdx);
+				}
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
 
-		return result;
+		return issueList;
 	}
 	
 	private void insertLog(int issueIdx, String log, String email, KanbanDao dao) throws ClassNotFoundException, SQLException {
