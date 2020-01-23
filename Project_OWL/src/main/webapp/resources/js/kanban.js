@@ -288,8 +288,9 @@ function closeIssue(issueIdx) {
            method:"POST",
            data:{issueIdx : issueIdx},
            success:function(data){
-              if(data == true){
-              }
+        	   console.log($("#closeIssueDetailBtn > i").siblings().text("Reopen"));
+        	$("#closeIssueDetailBtn > i").siblings().text("Reopen"); 
+        	  addKanbanIssue('-99', data);
            }
         });  	
 	
