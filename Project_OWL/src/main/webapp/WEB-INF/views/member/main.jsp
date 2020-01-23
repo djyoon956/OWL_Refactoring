@@ -22,23 +22,18 @@
 	<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
 	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
 	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
-	<!--  dashboard css -->
-	<link href="resources/css/dashBoard.css" rel="stylesheet">
-	<script src="resources/js/dashBoard.js"></script>
-	<script type="text/javascript">
-		$(function(){
-			setTheme("${setting.themeColor}", "${setting.font}");
-		})
-	</script>
+	
+		<!-- Chart.js -->
+ <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>    
+ <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+ 
+<!--  dashboard css -->
+<link href="resources/css/dashBoard.css" rel="stylesheet">
+<script src="resources/js/dashBoard.js"></script>
+
 <style>
 #dashCalendar > .tui-full-calendar-layout.tui-view-8.tui-view-13{
 display: none !important;
-}
-#dashCalendar div.tui-view-7{
-height: 480px !important;
-}
-#dashCalendar .tui-full-calendar-layout.tui-view-8.tui-view-13.tui-view-16{
-height: 480px !important;
 }
 </style>	 	
 </head>
@@ -63,9 +58,9 @@ height: 480px !important;
 		<!-- CONTENT BOX -->
         <div class="page-wrapper">
 		<!-- 대시보드  -->
-		<jsp:include page="../dashBoard/projectDashboard.jsp"/>
+		<jsp:include page="../dashBoard/mainDashboard.jsp"/>
 			<!-- BOTTOM -->
-            <jsp:include page="../include/bottom.jsp"/>
+        <jsp:include page="../include/bottom.jsp"/>
     </div>
  </div>
 </body>

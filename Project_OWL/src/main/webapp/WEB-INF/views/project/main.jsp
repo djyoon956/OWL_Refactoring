@@ -24,12 +24,11 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.js"></script>
-
+ 
     <!-- SummerNote -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 	<!-- Toast Calendar -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
 	<!-- If you use the default popups, use this. -->
@@ -79,7 +78,6 @@
 					});
 						var ctx = document.getElementById('chartProjectProgress').getContext('2d');
 						window.myDoughnut = new Chart(ctx, config1);
-						console.log(((closeCount)/openCount*100));
 
 						var ctx = document.getElementById('chartMyProgress').getContext('2d');
 						window.myDoughnut = new Chart(ctx, config2);
@@ -180,7 +178,43 @@
                     }
                 });
             })
-          
+			
+			var ctx = document.getElementById('canvas').getContext('2d');
+			window.myBar = new Chart(ctx, {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					responsive: true,
+					title: {
+						display: true,
+						text: '라벨 별 업무 진행도'
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: true
+					},
+					scales: {
+						yAxes: [{
+							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							display: true,
+							position: 'left',
+							id: 'y-axis-1',
+						}, {
+							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+							display: true,
+							position: 'right',
+							id: 'y-axis-2',
+							gridLines: {
+								drawOnChartArea: false
+							}
+						}],
+					}
+				}
+			});
+
+
+
+            
         }); 
         
         function setChageView(target) {
@@ -326,8 +360,7 @@
     	    function closeFn() {
     	      	$("#-99Column").hide();
     	    	$("#-1Column").hide();
-    	       }
-
+    	       }    	   
     </script>
     <style type="text/css">
         .iconSizeBig {
