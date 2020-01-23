@@ -1,8 +1,154 @@
 'use strict';
+var CalendarList = [];
+
+function CalendarInfo() {
+    this.id = null;
+    this.name = null;
+    this.checked = true;
+    this.color = null;
+    this.bgColor = null;
+    this.borderColor = null;
+    this.dragBgColor = null;
+}
+
+function addCalendar(calendar) {
+    CalendarList.push(calendar);
+}
+
+function findCalendar(id) {
+    var found;
+
+    CalendarList.forEach(function(calendar) {
+        if (calendar.id === id) {
+            found = calendar;
+        }
+    });
+
+    return found || CalendarList[0];
+}
+
+function hexToRGBA(hex) {
+    var radix = 16;
+    var r = parseInt(hex.slice(1, 3), radix),
+        g = parseInt(hex.slice(3, 5), radix),
+        b = parseInt(hex.slice(5, 7), radix),
+        a = parseInt(hex.slice(7, 9), radix) / 255 || 1;
+    var rgba = 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+
+    return rgba;
+}
+
+var ScheduleList = [];
+
+var SCHEDULE_CATEGORY = [
+    'milestone',
+    'task'
+];
+
+function ScheduleInfo() {
+    this.id = null;
+    this.calendarId = null;
+
+    this.title = null;
+    this.body = null;
+    this.isAllday = false;
+    this.start = null;
+    this.end = null;
+    this.category = '';
+    this.dueDateClass = '';
+
+    this.color = null;
+    this.bgColor = null;
+    this.dragBgColor = null;
+    this.borderColor = null;
+    this.customStyle = '';
+
+    this.isFocused = false;
+    this.isPending = false;
+    this.isVisible = true;
+    this.isReadOnly = false;
+    this.goingDuration = 0;
+    this.comingDuration = 0;
+    this.recurrenceRule = '';
+    this.state = '';
+
+    this.raw = {
+        memo: '',
+        hasToOrCc: false,
+        hasRecurrenceRule: false,
+        location: null,
+        class: 'public', // or 'private'
+        creator: {
+            name: '',
+            avatar: '',
+            company: '',
+            email: '',
+            phone: ''
+        }
+    };
+}
+
+function generateTime(schedule, start, end) {
+	var startDate = moment(start.getTime());
+	console.log(start);
+	console.log(startDate);
+	console.log("시작시점");
+    var endDate = moment(end.getTime());
+    console.log(end);
+    console.log(endDate);
+    console.log("종료시점");
+    var diffDate = endDate.diff(startDate, 'days');
+    
+    schedule.isAllday = chance.bool({likelihood: 30});
+    if (schedule.isAllday) {
+        schedule.category = 'allday';
+    } else if (chance.bool({likelihood: 30})) {
+        schedule.category = SCHEDULE_CATEGORY[chance.integer({min: 0, max: 1})];
+        if (schedule.category === SCHEDULE_CATEGORY[1]) {
+            schedule.dueDateClass = 'morning';
+        }
+    } else {
+        schedule.category = 'time';
+    }
+
+    startDate.add(chance.integer({min: 0, max: diffDate}), 'days');
+    startDate.hours(chance.integer({min: 0, max: 23}))
+    startDate.minutes(chance.bool() ? 0 : 30);
+    schedule.start = startDate.toDate();
+    endDate = moment(startDate);
+    if (schedule.isAllday) {
+        endDate.add(chance.integer({min: 0, max: 3}), 'days');
+    }
+
+    schedule.end = endDate
+        .add(chance.integer({min: 1, max: 4}), 'hour')
+        .toDate();
+
+    if (!schedule.isAllday && chance.bool({likelihood: 20})) {
+        schedule.goingDuration = chance.integer({min: 30, max: 120});
+        schedule.comingDuration = chance.integer({min: 30, max: 120});;
+
+        if (chance.bool({likelihood: 50})) {
+            schedule.end = schedule.start;
+        }
+    }
+}
+
+function generateNames() {
+    var names = [];
+    var i = 0;
+    var length = chance.integer({min: 1, max: 10});
+
+    for (; i < length; i += 1) {
+        names.push(chance.name());
+    }
+
+    return names;
+}
 
 (function(window, Calendar) {
     var cal, resizeThrottled;
-    var useCreationPopup = true;
+    var useCreationPopup = false;
     var useDetailPopup = true;
     var datePicker, selectedCalendar;
 
@@ -30,6 +176,7 @@
         }
     });
 
+    
     // event handlers
     cal.on({
         'clickMore': function(e) {
@@ -51,8 +198,6 @@
 
             console.log('beforeUpdateSchedule', e);
             cal.updateSchedule(schedule.id, schedule.calendarId, changes);
-            let changeStart = changes.start ==null? null : changes.start._date;
-            let changeEnd = changes.end ==null? null : changes.end._date;
             refreshScheduleVisibility();
         },
         'beforeDeleteSchedule': function(e) {
@@ -335,52 +480,6 @@
     }
 
 
-    function setDropdownCalendarType() {
-        var calendarTypeName = document.getElementById('calendarTypeName');
-        var calendarTypeIcon = document.getElementById('calendarTypeIcon');
-        var options = cal.getOptions();
-        var type = cal.getViewName();
-        var iconClassName;
-
-        if (type === 'day') {
-            type = 'Daily';
-            iconClassName = 'calendar-icon ic_view_day';
-        } else if (type === 'week') {
-            type = 'Weekly';
-            iconClassName = 'calendar-icon ic_view_week';
-        } else if (options.month.visibleWeeksCount === 2) {
-            type = '2 weeks';
-            iconClassName = 'calendar-icon ic_view_week';
-        } else if (options.month.visibleWeeksCount === 3) {
-            type = '3 weeks';
-            iconClassName = 'calendar-icon ic_view_week';
-        } else {
-            type = 'Monthly';
-            iconClassName = 'calendar-icon ic_view_month';
-        }
-
-        calendarTypeName.innerHTML = type;
-        calendarTypeIcon.className = iconClassName;
-    }
-
-    function setRenderRangeText() {
-        var renderRange = document.getElementById('renderRange');
-        var options = cal.getOptions();
-        var viewName = cal.getViewName();
-        var html = [];
-        if (viewName === 'day') {
-            html.push(moment(cal.getDate().getTime()).format('YYYY.MM.DD'));
-        } else if (viewName === 'month' &&
-            (!options.month.visibleWeeksCount || options.month.visibleWeeksCount > 4)) {
-            html.push(moment(cal.getDate().getTime()).format('YYYY.MM'));
-        } else {
-            html.push(moment(cal.getDateRangeStart().getTime()).format('YYYY.MM.DD'));
-            html.push(' ~ ');
-            html.push(moment(cal.getDateRangeEnd().getTime()).format(' MM.DD'));
-        }
-        renderRange.innerHTML = html.join('');
-    }
-
     function setEventListener() {
         $('#menu-navi').on('click', onClickNavi);
         $('.dropdown-menu a[role="menuitem"]').on('click', onClickMenu);
@@ -404,8 +503,6 @@
 
     window.cal = cal;
 
-    setDropdownCalendarType();
-    setRenderRangeText();
     setSchedules();
     setEventListener();
 })(window, tui.Calendar);
