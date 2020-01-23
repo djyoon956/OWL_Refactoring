@@ -50,6 +50,7 @@ function setDetailData(boardIdx){
 }
 
 function setNoticeData() {
+	console.log("in setNoticeData");
 	 $.ajax({
 		type: "POST",
 		url: "GetNotices.do",
@@ -146,7 +147,6 @@ function changeNoticeView(view){
 		$("#writeBox").addClass("hidden");
 		$("#noticeBox").removeClass("hidden");
 	}else if(view == "writeBox"){
-		console.log("라이트 박스 엘스");
 		$("#noticeBox").addClass("hidden");
 		$("#noticeDetailBox").addClass("hidden");
 		$("#writeBox").removeClass("hidden");

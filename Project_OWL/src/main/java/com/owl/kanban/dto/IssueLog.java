@@ -1,5 +1,6 @@
 package com.owl.kanban.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.Getter;
@@ -13,4 +14,15 @@ public class IssueLog {
 	private int logIdx;
 	private String log;
 	private Date time;
+	private String creator;
+	
+	// UI용
+	private String creatorName;
+	
+	public String getTime() {
+		if (time == null)
+			return null;
+		else
+			return new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss").format(time);
+	}
 }

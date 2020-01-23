@@ -231,7 +231,7 @@
             data: { projectIdx: ${project.projectIdx}},
             success: function (data) {
             	$('#assigned').empty();
-            	
+            	$('#labelIdx').empty();
 				let member = data.member;
 				let label = data.label;
 				let optlabel;
@@ -250,7 +250,7 @@
 
                
                 $.each(label, function(index, element) {
-               	$('#labelIdx').empty();
+               
  
                   optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
 

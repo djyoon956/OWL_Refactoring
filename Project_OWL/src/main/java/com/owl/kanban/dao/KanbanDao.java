@@ -19,6 +19,8 @@ public interface KanbanDao {
 
 	public int insertIssueFile(File file) throws ClassNotFoundException, SQLException;
 
+	public int updateAllIncrease(int issueIdx, int projectIdx) throws ClassNotFoundException, SQLException;
+	
 	public int insertColumn(Column column) throws ClassNotFoundException, SQLException;
 
 	public int insertLabel(Label label) throws ClassNotFoundException, SQLException;
@@ -33,7 +35,7 @@ public interface KanbanDao {
 
 	public List<Column> getColumn(int projectIdx) throws ClassNotFoundException, SQLException;
 
-	public Issue getIssuebyIssueIdx(int projectIdx, int issueIdx) throws ClassNotFoundException, SQLException;
+	public Issue getIssuebyIssueIdx(int issueIdx) throws ClassNotFoundException, SQLException;
 
 	public int updateColumn(Column column) throws ClassNotFoundException, SQLException;
 
@@ -42,7 +44,7 @@ public interface KanbanDao {
 	public int deleteColumn(int colIdx) throws ClassNotFoundException, SQLException;
 
 	public int deleteIssue(int issueIdx) throws ClassNotFoundException, SQLException;
-	
+
 	public int deleteLabel(int labelIdx) throws ClassNotFoundException, SQLException;
 
 	public List<File> getIssueFiles(int issueIdx) throws ClassNotFoundException, SQLException;
@@ -50,8 +52,10 @@ public interface KanbanDao {
 	public List<IssueLog> getIssueLogs(int issueIdx) throws ClassNotFoundException, SQLException;
 
 	public List<Reply> getIssueReplies(int issueIdx) throws ClassNotFoundException, SQLException;
-	
+
 	public int updateMoveIssue(Map<String, Object> data) throws ClassNotFoundException, SQLException;
-		
+
 	public int updateLabel(Label label) throws ClassNotFoundException, SQLException;
+
+	public int insertIssueLog(int issueIdx, String log, String email) throws ClassNotFoundException, SQLException;
 }
