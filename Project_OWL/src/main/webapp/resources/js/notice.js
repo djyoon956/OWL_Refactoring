@@ -148,7 +148,7 @@ function deleteNotice(){
 		success : function(data){
 			if(data){
 				successAlert("삭제 완료!");
-				changeNoticeView("noticeBox");
+				setNoticeData();
 			} else
 				warningAlert("삭제 실패!");
 		},
