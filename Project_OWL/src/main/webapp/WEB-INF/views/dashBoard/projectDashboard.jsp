@@ -43,9 +43,9 @@ function GetCalendar(calendar, element){
 	            category: element.allDay >0 ? 'allday' : 'time',
 	            dueDateClass: '',
 	            color: "#ffffff",
-	            bgColor: calendar.bgColor,
-	            dragBgColor: calendar.bgColor,
-	            borderColor: calendar.borderColor,
+	            bgColor: $("#proColor").val(),
+	            dragBgColor: $("#proColor").val(),
+	            borderColor: $("#proColor").val(),
 	            location: element.content,
 	             raw: {
 	                class: "public"
@@ -79,7 +79,22 @@ function refreshScheduleVisibility() {
         span.style.backgroundColor = input.checked ? span.style.borderColor : 'transparent';
     });
 }
-	</script>   
+	</script>  
+<style>
+.tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container{
+display: none;
+}
+#dashCalendar div.tui-view-7{
+height: 480px !important;
+}
+#dashCalendar .tui-full-calendar-layout.tui-view-8.tui-view-13.tui-view-16{
+height: 480px !important;
+}
+
+#dashCalendar .tui-full-calendar-layout.tui-view-8.tui-view-13{
+height: 480px !important;
+}
+</style>	 
             <!-- CONTENT MAIN -->
             <div class="container-fluid" style="padding:20px">
                 <div class="row">
@@ -133,12 +148,12 @@ function refreshScheduleVisibility() {
                     <!-- </div>  -->
                     <!-- calendar -->
                      <!-- <div class="col-lg-6"> -->
-                        <div class="card dash_shadow dash_radius">
-                            <div class="card-body">
+                        <div class="card dash_shadow dash_radius" >
+                            <div class="card-body" style="height: 580px;">
                             <h4 class="card-title">Calendar</h4>
+                            <input type="hidden" value="${project.projectColor}" id="proColor">
                                 <div class="d-md-flex align-items-center">
-                                   
-                                    <div id="dashCalendar" class="w-100 h-100"></div>
+                                    <div id="dashCalendar" class="w-100 h-100" style="height: 520px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -250,12 +265,9 @@ function refreshScheduleVisibility() {
                  </div>
     <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.min.js"></script>
 	<script src="https://uicdn.toast.com/tui.dom/v3.0.0/tui-dom.js"></script>
-	<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"></script>
-	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
 	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
-    <script src="resources/plugin/calendar/schedules.js"></script>
     <script src="resources/plugin/calendar/dashCalendar.js"></script>             
             	<!-- </div> -->
