@@ -21,7 +21,6 @@
 	appearance: none;
 }
 
-
 .link-gray {
     color: #586069!important;
 }
@@ -29,7 +28,6 @@
 .link-gray:hover {
     color: #326295!important;
 }
-
 
 .newLabelSection {
 	padding: 10px;
@@ -39,7 +37,6 @@
 
 .labelList {
 	margin-bottom: 5px;
-
 }
 
 .labelListSection {
@@ -47,7 +44,6 @@
 	padding-right: 10px;
 	overflow: auto;
 }
-
 
 .badgeIconinList {
 	display: inline-block;
@@ -59,7 +55,14 @@
 	border-radius: 2px;
 }
 
+#labelList {
+	overflow-y : auto;
+}
 </style>
+
+<script>
+
+</script>
 
 <div id="addLabelModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
@@ -73,25 +76,28 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="InsertLabel.do">
+				
 					<input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
 					<div class="row">
 						<!-- label make section -->
 						<div class="col-lg-5 newLabelSection">
-							<div class="form-group">
+							<div class="form-group" id="colorform">
 								<h5>Color</h5>
 								<input type="text" class="complex-colorpicker form-control"name="labelcolor" id="labelcolor"> <br> <br>
 								<h5>Label name</h5>
-								<input type="text" class="form-control input-default"name="labelname" id="labelname">
+								<input type="text" class="form-control input-default" name="labelname" id="labelname">
 							</div>
 							<hr>
-							<input type="button" class="btn btn-primary text-right" id="addLabelBtn" value="Create label">
+							<input type="button" class="btn btn-primary text-right" id="addLabelBtn" value="Create label" />
+							<input type="button" class="hidden btn btn-primary text-right " id="editLabelBtn" value="Edit" />
+							<input type="button" class="hidden btn btn-primary text-right" id="backBtn" value="Back" />
+							
 
 						</div>
 						<!-- label list section -->
 						<div class="col-lg-6 labelListSection" id="labelList">
 							
-								<div class="row labelList">
+<!-- 								<div class="row labelList">
 									<div class="col-lg-8">
 										<span class="badgeIconinList" style="background-color: #F4D452">test</span>
 									</div>
@@ -114,11 +120,11 @@
 										<a>Delete</a>
 									</div>
 								</div>
-								<hr>
+								<hr> -->
 						</div>
 
 					</div>
-				</form>
+				
 			</div>
 		</div>
 	</div>

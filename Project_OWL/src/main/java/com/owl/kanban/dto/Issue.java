@@ -1,5 +1,6 @@
 package com.owl.kanban.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,16 +24,25 @@ public class Issue {
 	private int projectIdx;
 	private PriorityType priorityCode;
 	private String assigned;
+	private String name;  //assignee 이름 (UI)
 	private String creator;
 	private int labelIdx;
 	private int orderNum;
 	private int colIdx;
 	private List<File> files;
 	private List<IssueLog> logs;
+	private List<Reply> replies;
 	
 	//ui용 
 	private String labelName;
 	private String labelColor;
+	
+	public String getDueDate() {
+		if (dueDate == null)
+			return null;
+		else
+			return new SimpleDateFormat("yyyy-MM-dd").format(dueDate);
+	}
 	
 	public enum IssueProgressType {
 		REQUESTED,

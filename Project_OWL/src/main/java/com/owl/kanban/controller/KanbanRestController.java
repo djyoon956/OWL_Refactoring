@@ -55,6 +55,7 @@ public class KanbanRestController {
 		System.out.println(columns);
 		return columns;		
 	}
+	
 	//이슈리스트 select 
 	@RequestMapping("GetIssue.do")	
 	public List<Issue> getIssue(int projectIdx){
@@ -62,6 +63,8 @@ public class KanbanRestController {
 		System.out.println(issue);
 		return issue;
 	}
+	
+	
 	//라벨리스트  select 
 	@RequestMapping("UpdateColumn.do")
 	public int updateColumn(Column column) {
@@ -101,7 +104,7 @@ public class KanbanRestController {
 		
 		return colobj;
 	}
-
+  
 	
 	@RequestMapping(value="InsertIssue.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })     
 	public Issue insertIssue(@RequestParam(value = "projectIdx") int projectIdx
@@ -115,13 +118,15 @@ public class KanbanRestController {
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							, @RequestParam(value = "colIdx") int colIdx
 							, Principal principal, HttpServletRequest request) {	
+		
+		/*
 		System.out.println("in InsertIssue.do");
 		System.out.println("insertIssue controller in");
 		System.out.println(projectIdx);
 		System.out.println(issueTitle);
 		System.out.println(content);
 		System.out.println(assigned);
-		System.out.println(labelIdx);
+		System.out.println("labelIdx 나오니" + labelIdx);
 		System.out.println(dueDate);
 		System.out.println(orderNum);
 		System.out.println(priorityCode);
@@ -129,7 +134,7 @@ public class KanbanRestController {
 		System.out.println(multipartFiles.size());
 		System.out.println("칼럼");
 		System.out.println(colIdx);
-		
+		*/
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
@@ -214,19 +219,59 @@ public class KanbanRestController {
 		return object;
 		
 	}
-	
-	
-	
-	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)
-	public Issue getIssueDetail(int projectIdx, int issueIdx) {
-		System.out.println("in getIssueDetail : " + issueIdx);
-		
-		return service.getIssueDetail(projectIdx, issueIdx);
-	}
-	
-	private NoticeDao getNoticeDao() {
-		return sqlSession.getMapper(NoticeDao.class);
-	}
-	
 
+	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)
+	public Issue getIssueDetail(int issueIdx) {
+		return service.getIssueDetail(issueIdx);
+	}
+	
+	@RequestMapping(value = "MoveIssue.do", method = RequestMethod.POST)
+	public boolean moveIssue(int projectIdx, int targetIssueIdx, int columnIdx, int[] issues, Principal principal) {
+
+		return service.updateMoveIssue(projectIdx, targetIssueIdx, columnIdx, issues, principal.getName());
+	}
+	
+	
+	
+	@RequestMapping("UpdateLabel.do")
+	public int UpdateLabel(Label label) {
+		System.out.println("UpdateLabel in");
+		
+		System.out.println(label.getLabelIdx());
+		System.out.println(label.getLabelColor());
+		System.out.println(label.getLabelName());
+		
+		Label lb = new Label();
+		lb.setLabelIdx(label.getLabelIdx());
+		lb.setLabelColor(label.getLabelColor());
+		lb.setLabelName(label.getLabelName());
+
+		boolean result = false;
+		result = service.UpdateLabel(label);	
+		
+		int labelIdx = -1;		
+		
+		if(result) {
+			labelIdx = lb.getLabelIdx();
+		};
+
+		return labelIdx;
+	}
+	
+	
+	@RequestMapping(value="DeleteLabel.do", method = RequestMethod.POST)
+	public boolean deleteLabel(@RequestParam(value = "labelIdx") int labelIdx) {
+		System.out.println("label controller in+++++++++++++++");
+		boolean result = false;
+		result = service.deleteLabel(labelIdx);
+		System.out.println("delete label " + result);
+		return result;
+	}
+	@RequestMapping(value = "CloseIssue.do", method = RequestMethod.POST)
+	public boolean closeIssue(@RequestParam(value = "issueIdx") int issueIdx) {
+		boolean result = false;
+		result = service.closeIssue(issueIdx);
+		return result;
+	}
+	
 }

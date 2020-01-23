@@ -90,7 +90,7 @@ max-width: 270px;
                        	<c:if test="${list.favorite == 1}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
 	                    		<input id="projectFavorite" type="hidden" value="${list.favorite}">
-	                    		<a href="#" class="sidebar-link">
+	                    		<a href="Project.do?projectIdx=${list.projectIdx}" class="sidebar-link">
 	                    			<i class="mdi mdi-checkbox-blank-circle" style="color: ${list.projectColor};"></i>
 	                    			<span class="hide-menu" id="projectName">${list.projectName}</span>
 	                    		</a>

@@ -30,6 +30,17 @@
 			setTheme("${setting.themeColor}", "${setting.font}");
 		})
 	</script>
+<style>
+#dashCalendar > .tui-full-calendar-layout.tui-view-8.tui-view-13{
+display: none !important;
+}
+#dashCalendar div.tui-view-7{
+height: 480px !important;
+}
+#dashCalendar .tui-full-calendar-layout.tui-view-8.tui-view-13.tui-view-16{
+height: 480px !important;
+}
+</style>	 	
 </head>
 
 <body class="mainBody">

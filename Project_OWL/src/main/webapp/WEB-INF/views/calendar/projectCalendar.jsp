@@ -111,6 +111,9 @@ top: 4px !important;
 top: 1px !important;
 height: 27px !important;
 }
+.tui-full-calendar-weekday-grid-line.tui-full-calendar-near-month-day{
+border-bottom : 1px solid #e5e5e5 !important;
+}
 </style>
 <script type="text/javascript">
 //왼쪽에 위치한 프로젝트 리스트 목록 출력 및 팝업창에서의 프로젝트 리스트 출력

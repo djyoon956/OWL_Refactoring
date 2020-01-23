@@ -13,7 +13,7 @@ font-size: 16px;
 color: #f8f9fa;
 }
 </style>
-<div class="container-fluid mt-2" style="padding: 25px;" id="detailBox" class="hidden">
+<div class="container-fluid mt-2 hidden" style="padding: 25px;" id="noticeDetailBox">
     <div class="row">
         <div class="card w-100">
             <div class="card-title mb-0">
@@ -57,14 +57,14 @@ color: #f8f9fa;
     <div class="row">
     	<div class="col-6 ">
     		<div class="text-left">
-    			<button class="btn btn-primary mr-1" onclick="setNoticeData(${project.projectIdx})"><i class="fas fa-chevron-left"></i> 뒤로가기</button>
+    			<button class="btn btn-primary mr-1" onclick="setNoticeData()"><i class="fas fa-chevron-left"></i> 뒤로가기</button>
    			</div>
     	</div>
     	<c:if test="${project.authority eq 'ROLE_PM'}">
 	    	<div class="col-6">
 		    	<div class="text-right">
-			        <button class="btn btn-primary ml-1">수정</button>
-			        <button class="btn btn-danger ml-1">삭제</button>
+			        <button class="btn btn-primary ml-1" onclick="editNotice()">수정</button>
+			        <button class="btn btn-danger ml-1" onclick="deleteNotice()">삭제</button>
 		    	</div>
 	    	</div>
     	</c:if>

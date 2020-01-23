@@ -60,4 +60,9 @@ public class NoticeRestController {
 		
 		return service.getNotice(boardIdx);
 	}
+	
+	@RequestMapping(value = "DeleteNotice.do", method = RequestMethod.POST)
+	public boolean deleteNotice(int noticeIdx) {
+		return service.deleteNotice(noticeIdx);
+	}
 }

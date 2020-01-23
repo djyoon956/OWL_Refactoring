@@ -3,6 +3,11 @@
 
 <!-- 여기는 칸반 jsp -->
 <style>
+
+.columnSection {
+	margin-left : 10px;
+}
+
 .assigneetitle {
 	margin-left: 5px;
 	font-weight: bold;
@@ -69,7 +74,7 @@
 
 .columnBody {
 	border: 2px solid #e9e9e9;
-	width: 310px;
+	width: 330px;
 	min-height: 20px;
 	max-height: 550px;
 	list-style-type: none;
@@ -98,9 +103,9 @@
 	border-bottom-color: #F9AFA4;
 }
 
-#kanbanArea {
-	height: 600px;
-	overflow-y: scroll;
+#kanbanArea, #kanbanIn {
+	height: 700px;
+	overflow-y: auto;
  	display: flex;
 	flex-direction: row;
 	flex-wrap: nowarp;
@@ -116,17 +121,34 @@
 	background-color: #e9e9e9;
 	margin-top: 20px;
 	border : 1px solid #CBD7E3;
+	margin-left : 0;
+	hegiht: 300px;
 }
 
 .leftdoorheader {
 	padding : 12px 20px 12px 20px;
+	
+	
 }
 </style>
 <script>
   $(function(){
 
-	let selectoption = '<option value="">Select</option>';
-			 	
+	  function check() {
+		console.log("체크하니?");
+	
+		if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
+			return false;
+			}
+
+		if($('#labelname').val().trim() == "" || $('#labelname').val().trim() == null) {
+			return false;
+			} 
+	  };
+	  
+	
+
+	$('#addLabelModal').on('show.bs.modal', function() {  
 	//프로젝트 내 라벨 리스트 출력 
 	  $.ajax({
 			url : 'GetLabelList.do',
@@ -139,51 +161,42 @@
 
 				
 				let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
-				
-				let opt = ""; //add issue에 select box에 보여줄 것
+			
 				 $.each(data,function(index, obj) {
 				
-
-					lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'">';
+					lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
 					lablist +=  '<div class="col-lg-8">';
 					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button class="btn-link link-gray">Edit</button>';
+					lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
 					lablist +=  '</div>';
 					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button  class="btn-link link-gray">Delete</button>';
+					lablist +=  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
 					lablist +=  '</div></div><hr>';
-
-					 //opt += '<option value="'+obj.labelIdx+'"style="background-color:'+obj.labelColor+'">'+obj.labelName+'</option>';
-					
-					 });
+				});
 
 					$('#labelList').append(lablist);
-
-					
-					//$('#labelIdx').append(selectoption);
-					//$('#labelIdx').append(opt);	
-				
 
 			},error : function() {
 				console.log("Showlabel error");
 			}
-		
 			});
-		
-		//칼럼 select  
+	});
 
-    	//칸반내에서 움직일 수 있게 만들어 주는 function
-/*         function sortableFn (columnidx)  {
-            var value ='#' + columnidx;
-             $( value ).sortable({
-                 connectWith: ".connectedSortable",
-                 dropOnEmpty: true        
-               }).disableSelection();
-             }  */
 
-        
+
+	$('#addLabelModal').on('hidden.bs.modal', function() {  
+			$('#labelcolor').val("");
+			$('#labelname').val("");
+			
+			$('#addLabelBtn').removeClass("hidden");
+			$('#editLabelBtn').addClass("hidden");
+			$('#backBtn').addClass("hidden");
+		});
+
+
+	
          $("#openIssueBtn").click(function() {
             $("#-1Column").removeClass("d-none");
      		$("#-99Column").hide();
@@ -196,20 +209,26 @@
      		$("#-1Column").hide();
      		$("#-99Column").show();
           });
-	
-         
+
+     	
 	$("#InsertColumnBtn").on("click", function () {	
 		console.log("InsertColumnBtn in");
 			$.ajax({
 				url : 'InsertColumn.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'colname' : $('#colname').val()},
 				success : function(data) {
-					console.log('insertColumnBtn in');
-					console.log(data);
-					console.log(typeof(data));
+			
 					if(data != null) {
 		        		 console.log('data : ' + data);
 		        		addColumn(data);
+
+    					$( ".sortableCol").sortable({
+    				        connectWith: ".connectedSortable",
+    				        dropOnEmpty: true,
+         
+    				     }).disableSelection();
+
+
 		        		$('#addColumnModal').modal("hide");
 					}else {
 						errorAlert("Column 추가 실패");
@@ -221,6 +240,7 @@
 				});
 	});
 
+	let selectoption = '<option value="">Select</option>';
 
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
@@ -233,76 +253,95 @@
             data: { projectIdx: ${project.projectIdx}},
             success: function (data) {
             	$('#assigned').empty();
-            	
+            	$('#labelIdx').empty();
+
+            
 				let member = data.member;
 				let label = data.label;
+				
 				let optlabel;
 				let optmember;
+
+				$('#assigned').append(selectoption);
+                $('#labelIdx').append(selectoption);
 				
                $.each(member, function(index, element) {
 
-					optmember += '<option value="Cathy">'+element.name+'('+element.email+')</option>';
+					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
 					
-					$('#assigned').append(selectoption);
-					$('#assigned').append(optmember);
                    });
-
                
-               $.each(label, function(index, element) {
-               	$('#labelIdx').empty();
- 
+               $('#assigned').append(optmember);
+
+                $.each(label, function(index, element) {
+		
                   optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
 
-                  $('#labelIdx').append(selectoption);
-				  $('#labelIdx').append(optlabel);	
                    });
+                
+                $('#labelIdx').append(optlabel);	
+            
             },
             error: function () {
                 console.log("GetProjectMember error");
             }
 		}) 
-		});
+	});
 
 	
 	$('#addIssueModal').on('hidden.bs.modal', function(){
 		console.log('hidden 작동하니?');
 		
 		$('#issueTitle').val("");
-		$('#isContent').val("");
-		$('#datepicker-autoclose').val("");
-		//$('select').find('option:first').attr('selected', 'selected');
+		$('#isContent').summernote("reset");
+		
+		console.log($('#priorityCode').val());
+		//$('#priorityCode option:eq(0)').attr('selected', 'selected');
+		console.log($('#priorityCode option:eq(0)').val());
+		console.log("after  :" +$('#priorityCode').val());
+		
+		//$('#priorityCode').find('option:first').attr('selected', 'selected')
+		//$('#datepicker-autoclose').remove();
+		//$('#priorityCode').find('option:first').attr('selected', 'selected');
 		
 	});
 
 
+
+	$('#addColumnModal').on('hidden.bs.modal', function() {  
+		$('#colname').val("");
+	});
+	
+
 	$("#addLabelBtn").on("click", function () {	
-		
+
+		let lcolor = false;
+		let lname = false;
+
 		let lbcolor = $('#labelcolor').val();
 		let lbname = $('#labelname').val();
+
+		if($('#labelcolor').val().trim() != "" && $('#labelcolor').val().trim() != null) lcolor = true;
+		if($('#labelname').val().trim() != "" && $('#labelname').val().trim() != null) lname = true;
+
+		if(lcolor == true && lname == true) {
 			$.ajax({
 				url : 'InsertLabel.do',
 				data : {'projectIdx' : ${project.projectIdx}, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
-				success : function(data) {
-					//console.log(data);  // 라벨번호 
-				let labelpiece = "";
-					labelpiece +=  '<div class="row labelList" id="'+data+'">';
-					labelpiece +=  '<div class="col-lg-8">';
-					labelpiece +=  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbname+'</span>';
-					labelpiece +=  '</div>';
-					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<button class="btn-link link-gray">Edit</button>';
-					labelpiece +=  '</div>'
-					labelpiece +=  '<div class="col-lg-2">';
-					labelpiece +=  '<button class="btn-link link-gray">Delete</button>';
-					labelpiece +=  '</div></div><hr>';
-						
-				$('#labelList').append(labelpiece);
+				success : function(labelIdx) {
 					
+				addLabel(labelIdx, lbcolor, lbname);
+
+				$('#labelcolor').val("");
+			    $('#labelname').val("");
 				},
 				error : function(e) {
 		        	errorAlert("label 추가 error");
 				}
 			});
+			
+		}else {return false;}
+
 		});
 
 	
@@ -316,12 +355,16 @@
             $("#" + data + "Column span").text($("#editcolName").val());
         		$("#editcolName").val("");
             	$('#editColumnModal').modal('hide');
+
+            	
             },
             error : function() {
             	errorAlert("칼럼 수정 error");
             }
         });
     });
+
+
 });
 </script>
 
@@ -371,7 +414,7 @@
                         <span class="float-right"><i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
                     </h4>
                 </div>
-                <ul class="connectedSortable columnBody sortableCol">
+                <ul class="connectedSortable columnBody sortableCol" style="background-color:#bdbbbb">
                     <!-- <li class="issuePiece d-none">Item 1</li> -->
                     <!-- 	<li class="issuePiece"></li> -->
                 </ul>
@@ -384,52 +427,12 @@
                             <i class="fas fa-times cursor_pointer" onclick="closeFn()"></i></span>
                     </h4>
                 </div>
-                <ul class="connectedSortable columnBody sortableCol">
+                <ul class="connectedSortable columnBody sortableCol" style="background-color:#bdbbbb">
                     <li class="issuePiece d-none"></li>
                 </ul>
             </div>
-            <div id="kanbanIn" class="row"></div>
-            <!-- 칼럼 -->
-            <!--  	<div class="columnSection">
-                <div class="columnTitle text-center mt-2 dropdown">
-                    <h4>Undefined section
-                        <a href="javascript:void(0)" data-toggle="dropdown" id="dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
-                        <i class="fas fa-ellipsis-v fa-sm"></i></a>
-                        
-                        <div class="dropdown-menu" aria-labelledby="dropdownColBtn">
-                            <ul class="list-style-none">
-                                <li class="pl-3"><a href="#editColumnModal" data-toggle="modal">Edit Column</a></li>
-                                <li class="pl-3"><a href="#">Remove Column</a></li>
-                            </ul>
-                        </div>
-                    </h4>
-                </div>
-    
-                <ul id="sortable000" class="connectedSortable columnBody cursor">
-                    <li class="issuePiece">
-                            <div class="dropdown">
-                                <label> <span class="badgeIcon float-left" style="background-color: yellow">title</span>
-                                <span class="issueTitle">title</span>
-                                </label>
-                                <a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right"> 
-                                <i class="fas fa-ellipsis-v fa-sm"></i></a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownIssueButton">
-                                    <ul class="list-style-none">
-                                        <li class="pl-3"><a href="#editIssueModal" data-toggle="modal">Edit Issue</a></li>
-                                    <li class="pl-3"><a href="#">Remove Issue</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div>
-                            <label>
-                                <span class="assigneetitle">
-                                <i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">yoon</span>
-                            </label>
-                        </div>
-                        </li>
-                </ul>
-            </div> -->
-            <!-- 끝 -->
+            <div id="kanbanIn" ></div>
+           
 
         </div>
     </div>

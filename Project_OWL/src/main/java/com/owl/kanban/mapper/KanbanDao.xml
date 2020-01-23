@@ -41,6 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 
+	<update id="updateAllIncrease">
+		update issue a set ordernum = ordernum + 1 where projectidx = #{param1} and colidx= -1 and issueidx not in (#{param2})
+
+	</update>
+
 	<insert id="insertLabel" parameterType="com.owl.project.dto.Label">
 		INSERT INTO owl.label(projectidx, labelcolor, labelname) VALUE(#{projectIdx}, #{labelColor}, #{labelName})
 			<selectKey keyProperty="labelIdx" resultType="int" order="AFTER">
@@ -60,15 +65,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getColumn" resultType="com.owl.kanban.dto.Column">
   		select colidx, colname from colname where projectidx=#{projectIdx}
 	</select>
+	
 	<select id="getIssue" resultType="com.owl.kanban.dto.Issue">
-		SELECT i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
-	FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX where i.projectidx=#{projectIdx}
+		SELECT i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED, i.ISSUEPROGRESS , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
+	FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX where i.projectidx=#{projectIdx} order by ordernum
 	</select>
 	
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.Issue">
-		SELECT I.PROJECTIDX, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR
-		FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
-		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2}
+		SELECT I.PROJECTIDX, I.CONTENT, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR, I.DUEDATE, I.PRIORITYCODE, I.CREATOR, I.ORDERNUM, I.COLIDX
+			FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
+		WHERE I.ISSUEIDX=#{param1}
 	</select>
 	
 	<select id="getIssueFiles" resultType="com.owl.notice.dto.File">
@@ -78,10 +84,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getIssueLogs" resultType="com.owl.kanban.dto.IssueLog">
-		SELECT LOGIDX, LOG, LOGTIME, ISSUEIDX FROM owl.ISSUELOG
+		SELECT LOGIDX, LOG, LOGTIME, ISSUEIDX, creator , M.NAME AS 'CREATORNAME'
+			FROM owl.ISSUELOG L JOIN OWL.MEMBER M ON L.CREATOR = M.EMAIL
 		WHERE ISSUEIDX = #{issueIdx}
 	</select>
 	
+	<select id="getIssueReplies" resultType="com.owl.kanban.dto.Reply">
+		SELECT ISSUEIDX, ISSUERLYIDX, CREATEDATE, CREATOR, CONTENT 
+			FROM owl.ISSUERLY
+		WHERE ISSUEIDX = #{issueIdx}
+	</select>
+
 	<update id="updateColumn" parameterType="com.owl.kanban.dto.Column">
 		UPDATE COLNAME SET COLNAME = #{colname} WHERE PROJECTIDX = #{projectIdx} AND COLIDX=#{colIdx}
 	</update>
@@ -90,7 +103,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM COLNAME WHERE COLIDX =#{colIdx}
 	</delete>
 	
-		<delete id="deleteIssue">
+	<delete id="deleteIssue">
 		DELETE FROM ISSUE WHERE ISSUEIDX =#{issueIdx}
 	</delete>
+	
+	<update id="updateMoveIssue" parameterType="map">
+		UPDATE owl.ISSUE SET COLIDX = #{colIdx} ,  ORDERNUM = (#{index}+1)
+		WHERE ISSUEIDX = #{issueIdx}
+	</update>
+
+	<delete id="deleteLabel">
+		DELETE FROM LABEL WHERE LABELIDX =#{labelIdx}
+	</delete>	
+	
+	
+	<update id="updateLabel" parameterType="com.owl.project.dto.Label">
+		UPDATE LABEL SET LABELNAME = #{labelName}, LABELCOLOR =#{labelColor} WHERE LABELIDX = #{labelIdx}
+	</update>
+	
+	<insert id="insertIssueLog">
+		INSERT INTO owl.ISSUELOG (ISSUEIDX, LOG, CREATOR) values(#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<update id="closeIssue" >
+		update issue set colidx = -99 , issueprogress='CLOSED'  where issueidx = #{issueIdx}
+	</update>
+	
+	<select id="getColumnName" resultType="String">
+		SELECT COLNAME FROM owl.COLNAME WHERE PROJECTIDX= #{param1} 	AND COLIDX= #{param2}
+	</select>
 </mapper>

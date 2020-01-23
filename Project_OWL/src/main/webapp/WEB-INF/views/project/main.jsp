@@ -4,7 +4,7 @@
 <c:set var="project" value="${project}" scope="request" />
 <html>
 
-<c:set var="projectIdx" value="${project.projectIdx }" scope="request"/>
+<c:set var="projectIdx" value="${project.projectIdx}" scope="request"/>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,8 +38,13 @@
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
     <script src="resources/js/kanban.js"></script>
+    <link rel="stylesheet" type="text/css" href="resources/css/kanban.css" />
     <script type="text/javascript">
-        $(function () {
+        $(function () {			
+            setTheme("${setting.themeColor}", "${setting.font}");
+            initNotice("${project.projectIdx}");
+            initKanban("${project.projectIdx}");
+
             $.ajax({
         		url:"GetProjectList.do",
         		data: {projectIdx: ${project.projectIdx}},
@@ -58,8 +63,31 @@
         		}
             });
             
-            setTheme("${setting.themeColor}", "${setting.font}");
-            initNotice("${project.projectIdx}");
+			$.ajax({
+				url : "GetIssue.do",
+				data : {'projectIdx' :  ${project.projectIdx} },
+				success : function(data) {
+					console.log(data);
+					var openCount = 0;
+					var closeCount = 0;
+					 $.each(data, function(index,element) {
+							if(element.issueProgress== "OPEN"){
+								openCount ++;		
+							}else if(elemnet.issueProgress == "CLOSED"){
+								closeCount ++;
+							}				
+					});
+						var ctx = document.getElementById('chartProjectProgress').getContext('2d');
+						window.myDoughnut = new Chart(ctx, config1);
+						console.log(((closeCount)/openCount*100));
+
+						var ctx = document.getElementById('chartMyProgress').getContext('2d');
+						window.myDoughnut = new Chart(ctx, config2);
+				},
+				error: function() {
+					console.log("getIssue.do error");
+				}
+			});
             
             let oldMenu = $("#projectMenu li:nth-child(2)");
             $("#projectMenu li").on("click", function () {
@@ -114,6 +142,7 @@
             $('#memberEditModal').on('hidden.bs.modal', function(){
                 $("#addMemberBox").empty();
                $("#addMemberOk").val("초대 메일 전송");
+               $("#addMemberCount").text("0명");
              });
             
             $("#addMemberOk").click(function () {
@@ -168,7 +197,7 @@
             	setIssueData(); 
             }
             else if (target === "notice")
-                setNoticeData('${project.projectIdx}');
+                setNoticeData();
             else if (target === "drive")
                 setDriveData();
         }
@@ -239,7 +268,34 @@
     					});
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
-    				        dropOnEmpty: true       
+    				        dropOnEmpty: true,
+    				        update: function(event, ui) {
+								let target = $(ui.item).attr("id").replace("Issue","");
+								let columnIdx = $(this).parent().attr("id").replace("Column","");
+								let issues = [];
+								$.each($(this)[0].children, function(){
+									issues.push($(this).attr("id").replace("Issue","").trim())
+								})
+								
+								if(issues.length == 0)
+									return;
+								
+								$.ajaxSettings.traditional = true; 
+								$.ajax({
+									type : "POST",
+									url : "MoveIssue.do",
+									data : { 	projectIdx :  ${project.projectIdx}
+												, targetIssueIdx : target
+												, columnIdx : columnIdx
+												, issues : issues },
+									success : function(data) {
+										console.log("success move issue");
+									},
+									error: function() {
+										console.log("error move issue");
+									}
+								})
+       				        }       
     				     }).disableSelection();
     				
     				},
@@ -332,9 +388,6 @@
                                     <li class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#drive">Drive</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#kanbanDetail">kanbanDetail</a>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -367,9 +420,6 @@
                     </div>
                     <div class=" tab-pane fade" id="drive" role="tabpanel">
                         <jsp:include page="../drive/drive.jsp" />
-                    </div>
-                    <div class=" tab-pane fade" id="kanbanDetail" role="tabpanel">
-                        <jsp:include page="../kanban/detail.jsp" />
                     </div>
                 </div>
             </div>

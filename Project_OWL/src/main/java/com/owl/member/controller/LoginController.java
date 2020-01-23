@@ -85,7 +85,7 @@ public class LoginController {
 		System.out.println(member);
 		request.getSession().setAttribute("member", member);
 		request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
-		
+
 		checkJoinProjectMember(request, member.getEmail());
 		
 		List<ProjectList> projectList = null;

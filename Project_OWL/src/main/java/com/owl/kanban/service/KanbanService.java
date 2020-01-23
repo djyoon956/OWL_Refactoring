@@ -11,8 +11,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.helper.UploadHelper;
@@ -37,21 +35,24 @@ public class KanbanService {
 		boolean result = false;
 		Issue colList = null;
 		try {
-			
+		
 			result = dao.insertIssue(issue) > 0 ? true : false;
-			System.out.println(multipartFiles.size());
+			//System.out.println(multipartFiles.size());
 			
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
 			
-			System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
+			//System.out.println("???????" +issue.getIssueIdx()  +"/" +issue.getProjectIdx());
 			
-			
-			System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
+			dao.updateAllIncrease(issue.getIssueIdx(), issue.getProjectIdx());
+			//System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
+
+			//System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
 			if(result) {
-				colList = dao.getIssuebyIssueIdx(issue.getProjectIdx(), issue.getIssueIdx());
+				colList = dao.getIssuebyIssueIdx(issue.getIssueIdx());
 			}
-			
+
+			insertLog(issue.getIssueIdx(), "Opened this issue", issue.getCreator(), dao);
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 		} 
@@ -90,7 +91,6 @@ public class KanbanService {
 
 		return files;
 	}
-
 
 	public boolean insertColumn(Column column) {
 		System.out.println("insertColumn Service in");
@@ -146,14 +146,14 @@ public class KanbanService {
 		System.out.println("getLabelList : " + projectIdx);
 		KanbanDao dao = getKanbanDao();
 		List<Label> lblist = null;
+		
 		try {
 			lblist = dao.getLabelList(projectIdx);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
+		System.out.println("lblist뭐니?"   + lblist);
 		return lblist;
 	}
 	
@@ -178,11 +178,10 @@ public class KanbanService {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(issue + " : 이슈리스트 ");
+
 		return issue;
 	}
-	
+		
 	public boolean updateColumn(Column column) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
@@ -238,6 +237,22 @@ public class KanbanService {
 		return result;
 	};
 	
+	public boolean deleteLabel(int labelIdx) {
+		System.out.println("deleteLabel service in++++++++++++");
+		System.out.println("labelIdx" +labelIdx);
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		try {
+			result = dao.deleteLabel(labelIdx) > 0 ? true : false;
+			System.out.println("result" + result);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
+	
 
 	public Map<String, Object> getIssueform(int projectIdx) {
 		System.out.println("getIssueform in");
@@ -273,21 +288,91 @@ public class KanbanService {
 	}
 
 	
-	public Issue getIssueDetail(int projectIdx, int issueIdx) {
+	public Issue getIssueDetail(int issueIdx) {
 		KanbanDao dao = getKanbanDao();
-		Issue issue = new Issue();
-
+		Issue issue = null;
 		try {
-			// issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
+			issue = dao.getIssuebyIssueIdx(issueIdx);
 			issue.setFiles(dao.getIssueFiles(issueIdx));
 			issue.setLogs(dao.getIssueLogs(issueIdx));
+			issue.setReplies(dao.getIssueReplies(issueIdx));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+		System.out.println("in getIssueDetail service "+issueIdx);
 		return issue;
+	}
+	
+	public boolean updateMoveIssue(int projectIdx, int targetIssueIdx, int columnIdx, int[] issues, String email) {
+		System.out.println("in service updateMoveIssue");
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			Issue issue = dao.getIssuebyIssueIdx(targetIssueIdx);
+			int oldColIdx = issue.getColIdx();
+			for (int i = 0; i < issues.length; i++) {
+				Map<String, Object> parameters = new HashMap<>();
+				parameters.put("colIdx", columnIdx);
+				System.out.println("colIdx : "+ columnIdx);
+				System.out.println("index : "+ i);
+				parameters.put("index", i);
+				System.out.println("issueIdx : "+ issues[i]);
+				parameters.put("issueIdx", issues[i]);
+	
+				dao.updateMoveIssue(parameters);
+			}
+			
+			if (oldColIdx != columnIdx) {
+				System.out.println("-------------------------");
+				String log = "Moved this from " + dao.getColumnName(projectIdx, oldColIdx) + " to " + dao.getColumnName(projectIdx, columnIdx);
+				System.out.println(log);
+				insertLog(targetIssueIdx, log, email, dao);
+			}
+			result=true;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
+	public boolean UpdateLabel(Label label) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			System.out.println("label :" + label);
+			result = dao.updateLabel(label) > 0 ? true : false;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("result가 뭐니?" + result);
+		return result;
+	}
+	public boolean closeIssue(int issueIdx) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+			try {
+				result = dao.closeIssue(issueIdx) > 0 ? true : false;
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		return result;
+	}
+	
+	private void insertLog(int issueIdx, String log, String email, KanbanDao dao) throws ClassNotFoundException, SQLException {
+		dao.insertIssueLog(issueIdx, log, email);
 	}
 	
 	private KanbanDao getKanbanDao() {
