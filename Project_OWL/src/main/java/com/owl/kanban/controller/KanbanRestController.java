@@ -265,6 +265,11 @@ public class KanbanRestController {
 		System.out.println("delete label " + result);
 		return result;
 	}
-	
+	@RequestMapping(value = "CloseIssue.do", method = RequestMethod.POST)
+	public boolean closeIssue(@RequestParam(value = "issueIdx") int issueIdx) {
+		boolean result = false;
+		result = service.closeIssue(issueIdx);
+		return result;
+	}
 	
 }

@@ -105,7 +105,7 @@
 
 #kanbanArea, #kanbanIn {
 	height: 600px;
-	overflow-y: scroll;
+ 	overflow-y: auto;
  	display: flex;
 	flex-direction: row;
 	flex-wrap: nowarp;

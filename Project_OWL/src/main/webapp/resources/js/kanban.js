@@ -200,6 +200,8 @@ function setKanbanDetail(issueIdx){
 				console.log("GetIssueDetail success");
 				console.log(data);
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
+					$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
+				
 					$("#issueDetailTitle").text(data.issueTitle);
 					$("#issueDetailContent").html(data.content);
 					
@@ -278,7 +280,19 @@ changeKanbanView("detail");
 }
 
 function closeIssue(issueIdx) {
-	
+	   $.ajax({
+           url:"CloseIssue.do",
+           method:"POST",
+           data:{issueIdx : issueIdx},
+           success:function(data){
+              console.log("closeIssue 성공");
+              console.log(data);
+              if(data == true){
+            	  $("#closeIssueDetailBtn").removeClass("fas fa-check");
+            	  $("#closeIssueDetailBtn").addClass("fas fa-ban");
+              }
+           }
+        });  	
 	
 }
 
