@@ -188,9 +188,10 @@
       
       <script>
       console.log("value : " + '${member.name}');
-      const curName = "'${member.name}'";
-      const curEmail = "'${member.email}'"; 
-      const curProfilePic = "'${member.profilePic}'";
+      const curName = "${member.name}";
+      const curEmail = "${member.email}"; 
+      //const curProfilePic = "'${member.profilePic}'";
+      const curProfilePic = 'resources/images/user/noprofile.jpg';
       const SPLIT_CHAR = '@spl@';
     	  
       console.log("현재 접속중인 유저 정보" + curName+"/"+curEmail+"/"+curProfilePic);
@@ -412,24 +413,28 @@
 			//채팅방 유적 목록 클릭시 실행 되는 펑션
           function onUserListClick(event){
                 window.roomFlag = 'tabUserList';//유저 리스트를 클릭했다는 플래그
-				console.log("유저 목폭 클릭 펑션 타나요?? >>");
+				console.log("유저 목폭 클릭 펑션 타나요?? >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 				console.log("이함수 에서 현재 접속한 유저의 챗방 키 값 뽑아 보자" + $('#curUserKey').val());
 				var curUserKey = $('#curUserKey').val();
-				this.aBackBtn.classList.remove('hiddendiv'); // 백버튼 노출 
-				this.aInvite.classList.remove('hiddendiv'); // 초대 버튼 노툴 			
+				document.getElementById('aBackBtn').classList.remove('hiddendiv'); // 백버튼 노출 
+				document.getElementById('aInvite').classList.remove('hiddendiv'); // 초대 버튼 노툴 			
 
-				var targetUserUid = event.getAttribute('data-targetUserUid'); 				
+				var targetUserUid = event.getAttribute('data-targetUserUid'); 
+				console.log("targetUserUid 는 제대로 찍히나요(온 유저 리스트 클릭시)>>>>>>>>>" + targetUserUid);				
 				var targetUserName = event.getAttribute('data-username'); 
 
+				console.log("온 유저 리스 클릭시에.. 타겟 유저 유 아 이 디 가져 오나요???" + targetUserUid);
 
+				
 				//바로 위 코드 까지는 워킹~~ 아래 코드는 해당 유저를 클릭시 이미 챗방이 만들어 져 잇으면 데이타를 가져오기 위한 코드
 				var roomListTarget = document.querySelectorAll('[data-roomType="ONE_VS_ONE"][data-roomOneVSOneTarget="'
 										+ targetUserUid +'"]')[0]; 
+				console.log("roomListTarget 이아이는 무슨 값??" + roomListTarget);
 				var roomTitle; 
 				var roomUserList; // 챗방 유저리스트  			
 				var roomUserName; // 챗방 유저 이름 
 				var roomId;
-				if(roomListTarget){ // null 이 아니면 
+				if(roomListTarget){ // null 이 아니면 여기가 핵심이다.  룰리스트 타겟있으면 새로운 방 아이디를 만들지 않는다.
 					roomListTarget.click(); 
 					}else{ // 메세지 로드 
 						roomTitle = targetUserName+'님 과의 대화'; 
@@ -464,7 +469,8 @@
 			 
 			} 
 
-		
+		//이함수 도 내가 따로... 방이 개설 되었을 때... 유저스 인 룸 카테고리 데이타를 저장 하려고... 만든 건데.. 사실상.. 메세지를 입력하고 엔터를 치면 작동하는 함수에서 이 역할을 담당한다.. 
+		// 그래서 이 함수도... 역사속으로........사용되지 않고 있는 함수다...
 		function storeRoomInfo(roomId, roomUserList){
 			 var roomRef = database.ref('UsersInRoom/' + roomId);
 			 roomUserList.forEach(function(value,index){
@@ -475,7 +481,8 @@
 			}
   		
 
-          function openChatRoom(roomId, roomTitle, roomUserList, roomUserName) { 
+          function openChatRoom(roomId, roomTitle, roomUserList, roomUserName) {
+        	  //loadRoomList(roomId); 
         	  window.isOpenRoom = true; // 방이 열린 상태인지 확인하는 플래그 값 
         	  if(roomTitle){ //상단 타이틀 변경 
             	  document.getElementById('spTitle').innerHTML = roomTitle; 
@@ -496,7 +503,9 @@
 					}
 				});
 
-			document.getElementById('iBtnSend').addEventListener('click', saveMessages);
+			document.getElementById('iBtnSend').addEventListener('click', function(){
+				saveMessages(roomId, roomUserList,roomUserName);
+				});
 
 			
         	console.log("오픈챗룸 함수 마지막 단 타나요????");
@@ -508,8 +517,7 @@
           /** * 메세지 로드 */ 
           function loadMessageList(roomId){ 
               console.log("메세지 로드 함수 타나요??");
-              console.log("아잭스에서 선언된 윈도우.. 글로벌 변수 찍히나 여기서??" + window.myUserKy);
-              console.log(typeof window.myUserky);
+              console.log("아잭스에서 선언된 윈도우.. 글로벌 변수 찍히나 여기서??" + window.myUserKy);             
               var myKey = $('#curUserKey').val();
                            
               var messageRef = database.ref('Messages/'+roomId);
@@ -564,18 +572,28 @@
 
 
           /** * 두번째 탭 채팅방 목록리스트 호출 */
-  		function loadRoomList(curRoomId) {
-			var ulRoomList = document.getElemntById('ulRoomList');
-			var curUserKey = $('#curUserKey').val();			
-			var roomRef = this.database.ref('UserRooms/'+ curUserKey);	
-								 
+  		function loadRoomList(uid, curRoomId) {
+  			document.getElementById('ulRoomList').innerHTML='';
+			var ulRoomList = document.getElementById('ulRoomList');
+			//var curUserKey = $('#curUserKey').val();			
+			var roomRef = database.ref('RoomsByUser/'+ uid);
+			console.log("현재 유저의 키 찍히나??>>>>>>>>>>>>>>>>>>>>>>" + uid)	;
+			console.log("loadRoomList 함수에서 찍히는 현재 유저의 uid >???>>>?????" + uid +"/"+roomRef);					 
 			roomRef.off(); 
 			roomRef.orderByChild('timestamp').on('value', function(snapshot){
+				console.log("loadRoomList 함수 아래다.. 쿼리문 날리고.. 데이타 들어 오나 확인중....." + ">>"+snapshot+"<<" + snapshot.exists());
+				console.log(snapshot+"/"+snapshot.numChildren());
+	
 				var arrRoomListHtml = []; 			
 				snapshot.forEach(function(data){
-						console.log("loadRoomList 평션 안에 스냅샵 먼가 찍히기는 하니???" + value);
-						var val = data.val();
-						var arrRoomUserName = val.roomUserName.split(SPLIT_CHAR); 
+						var val = data.val();				
+						console.log(val.roomId);
+						console.log(val.roomUserName);
+						console.log(val.timestamp);
+
+						
+						var arrRoomUserName = val.roomUserName.split('@spl@');
+						console.log("어레이 룸 유져 네임 에 찍히는 값은??" + arrRoomUserName); 
 						arrRoomUserName.splice(arrRoomUserName.indexOf(curName), 1); // 방 제목 타이틀에서는 자신의 이름을 제외합니다. 
 						var eachRoomTitle = arrRoomUserName.length > 1 ? arrRoomUserName[0] + " 외 " + (arrRoomUserName.length - 1) + "명 참여중" : arrRoomUserName[0] +'님과의 대화'; 
 						if(data.key === curRoomId && window.isOpenRoom){ //데이터 키가 현재 방ID와 같고 채팅방이 열려있는 경우에 현재 메세지 상단 제목을 갱신해줍니다. 
@@ -586,41 +604,46 @@
 						profileImg = val.profileImg, 
 						roomTitle = eachRoomTitle, 
 						roomUserName =val.roomUserName, 
-						roomUserlist = val.roomUserlist, 
+						roomUserList = val.roomUserList, 
 						roomType = val.roomType, 
 						roomOneVSOneTarget = val.roomOneVSOneTarget, 
 						datetime = timestampToTimeForRoomList(val.timestamp); 
 
-						arrRoomListHtml.push(roomListUp(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserlist, lastMessage, datetime));
+						arrRoomListHtml.push(roomListUp(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserList, lastMessage, datetime));
 					}); 
-				var reversedRoomList = arrRoomListHtml.reverse().join(''); // 역순 정렬, 끝에 싱글 코테이션 조인 해야 되나??? 오류 나올듯 도 한데.... 
+
+				console.log("너는 어레이 타입이니????" + Array.isArray(arrRoomListHtml));
+				console.log(arrRoomListHtml.length);
+				console.log("조인 붙이고" +arrRoomListHtml.reverse().join(''));
+				console.log("조인 안 아니아ㅣㄴ  붙이고" +arrRoomListHtml.reverse());
+				
+				//var reversedRoomList = arrRoomListHtml.reverse().join(''); // 역순 정렬, 끝에 싱글 코테이션 조인 해야 되나??? 오류 나올듯 도 한데.... 
+				var reversedRoomList = arrRoomListHtml.reverse();
+				console.log(typeof reversedRoomList);
+				console.log("너는 어레이 타입이니????" + Array.isArray(reversedRoomList));
+				console.log(reversedRoomList);
 
 				reversedRoomList.forEach(function(item, index){
+					console.log("여기를 타야 그 챗방 리스트를 뿌려 줄수 있다... 과연...." + item);
 					$('#ulRoomList').append(item);
-					});
+					}); 
 				
-					
-				/** * roomList 클릭 이벤트 적용 */ 
-				var arrLiList = document.ulRoomList.getElementsByTagName('li'); 
-				var arrLiListLength = arrLiList.length; 
-				for(var i=0; i < arrLiListLength; i++){ 
-					arrLiList[i].addEventListener('click', onRoomListClick(this)); 
-					}
 				});
   	  		}
 
   		function onRoomListClick(event){
   	  		window.roomFlag = 'tabRoomList'; //채팅방을 클릭했다는 것을 알기 위한 플래그
-  			this.aBackBtn.classList.remove('hiddendiv'); 
-  			this.aInvite.classList.remove('hiddendiv'); 
+  	  		document.getElementById('aBackBtn').classList.remove('hiddendiv'); 
+  	  		document.getElementById('aInvite').classList.remove('hiddendiv'); 
 
   			// 메세지 로드 
-  			var roomId = event.currentTarget.getAttribute('data-roomId'); 
-  			var roomTitle = event.currentTarget.getAttribute('data-roomTitle'); 
-  			var roomUserlist = event.currentTarget.getAttribute('data-roomUserlist').split(SPLIT_CHAR); // 챗방 유저리스트 
-  			var roomUserName = event.currentTarget.getAttribute('data-roomUserName').split(SPLIT_CHAR); // 챗방 유저 이름 
+  			var roomId = event.getAttribute('data-roomId'); 
+  			var roomTitle = event.getAttribute('data-roomTitle'); 
+  			var roomUserList = event.getAttribute('data-roomUserList').split('@spl@'); // 챗방 유저리스트  			
+  			var roomUserName = event.getAttribute('data-roomUserName').split('@spl@'); // 챗방 유저 이름 
   			openChatRoom(roomId, roomTitle, roomUserList, roomUserName);   
 
+            console.log("온 룸 리스트 클릭 함수 타냐?????");
   			// 메세지 화면 이동 
   			 $('#tabMessageList').click();
   	  		}
@@ -642,12 +665,16 @@
   	  			nowMinute = nowDate.getMinutes(); 
 	  		var result; 
 	  		if(year === nowYear && month === nowMonth && day === nowDay){ 
-		  		result = FirebaseChat.pad(hour) +":" + FirebaseChat.pad(minute); 
+		  		result = pad(hour) +":" + pad(minute); 
 		  	}else{ 
-			  	result = FirebaseChat.pad(year) +"-" + FirebaseChat.pad(month) + "-" + FirebaseChat.pad(day); 
+			  	result = pad(year) +"-" + pad(month) + "-" + pad(day); 
 			  	} 
 		  	return result; 
 
+		  	}
+
+	  	function pad(n) {
+	  		return n > 9 ? "" + n: "0" + n;  		
 		  	}
 
   		
@@ -716,15 +743,16 @@
 							uid: curUserKey, 
 							userName: curName, 
 							message: convertMsg, // 태그 입력 방지
-							profileImg: curProfilePic ? curProfilePic : '', 
+							profileImg: curProfilePic ? curProfilePic : 'resources/images/user/noprofile.jpg', 
 							timestamp: firebase.database.ServerValue.TIMESTAMP //서버시간 등록하기 
 					} 
 
 					//유저별 룸리스트 저장 
-					var roomUserListLength = roomUserList.length; 
+					var roomUserListLength = roomUserList.length;
+					 
 					if(roomUserList && roomUserListLength > 0){ 
 						for(var i = 0; i < roomUserListLength ; i++){ 
-							multiUpdates['RoomsByUser/     '+ roomUserList[i] +'/'+ roomId] = { 
+							multiUpdates['RoomsByUser/'+ roomUserList[i] +'/'+ roomId] = { 
 								roomId : roomId, 
 								roomUserName : roomUserName.join('@spl@'), 
 								roomUserList : roomUserList.join('@spl@'), 
@@ -733,13 +761,17 @@
 									roomUserListLength == 2 && i == 1 ? roomUserList[0] // 1대 1 대화 이고 i값이 1이면 
 									: '', // 나머지 
 								lastMessage : convertMsg, 
-								profileImg : curProfilePic ? curProfilePic : '', 
+								profileImg : curProfilePic ? curProfilePic : 'resources/images/user/noprofile.jpg', 
 								timestamp: firebase.database.ServerValue.TIMESTAMP 
 
 							}; 
 						} 
 					} 
-					database.ref().update(multiUpdates); 
+					database.ref().update(multiUpdates);
+
+					//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드
+					loadRoomList(curUserKey, roomId);
+					
 				} 
 		   }
 
@@ -815,9 +847,9 @@
 
           var rootRef = database.ref();
 
-          var userListUp = function(uid, name){
+          var userListUp = function(targetuid, name){
                
-        	  var userTemplate = '<li id="li' + uid +'" data-targetUserUid="' +uid + '" data-username="' + 
+        	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + 
 							  name + '" class="collection-item avatar list" onclick = "onUserListClick(this)">' +
           					 '<img src="' + 'value.img' + '" alt="" class="circle">' +
          					 '<span class="title">'+ name+ '</span>'+
@@ -825,14 +857,14 @@
           					 '<span class="small material-icons right hiddendiv mood yellow-text">mood</span>'+
           					 '</li>';
         	  $('#ulUserList').append(userTemplate);
-        	  console.log("undefined... 왜 찍히는 거야??" + userList);
+        	
               
               }
           
 	
           var messageListUp= function(key, profileImg, time, userName, message){
               console.log("messageListUp 함수..데이타 들어오냐??" + key+"/"+profileImg+"/"+time+"/"+userName+"/"+message);
-			  var userProPic = 	(profileImg ? profileImg : "");
+			  var userProPic = 	(profileImg ? profileImg : 'resources/images/user/noprofile.jpg');
         	  var messageTemplate = '<li id="li' + key  + '" class="collection-item avatar" data-key="' + key + '">'+
   									'<img src="'+ userProPic + 'img/noprofile.png'+'" alt="" class="circle">'+
   									'<span class="title">'+userName+'</span><span class="time">'+time+'</span>'+
@@ -844,11 +876,11 @@
         	  console.log("messageListUp 합수 타변 변수에 담기는 값들은??>>>" +messageTemplate);
           } 
 
-          var roomListUp = function(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserlist, lastMessage, datetime){
-        	    var userProPic = 	(profileImg ? profileImg : 'img/noprofile.png');
+          var roomListUp = function(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserList, lastMessage, datetime){
+        	    var userProPic = 	(curProfilePic ? curProfilePic : 'resources/images/user/noprofile.jpg');
 				var roomTemplate = '<li id="liRoom' + roomId + '" data-roomId="' + roomId + '" data-roomTitle="' 
-									+ roomTitle+ ' data-roomUserName="'+roomUserName+ '"data-roomType="'+roomType+'" data-roomOneVSOneTarget="'
-									+roomOneVSOneTarget+'" data-roomUserList="'+roomUserlist +'" class="collection-item avatar" >'
+									+ roomTitle+ '" data-roomUserName="'+roomUserName+ '" data-roomType="'+roomType+'" data-roomOneVSOneTarget="'
+									+roomOneVSOneTarget+'" data-roomUserList="'+roomUserList +'" class="collection-item avatar" onclick="onRoomListClick(this)">'
 	            					+'<img src="' + userProPic + '" alt="" class="circle">'
 	            					+'<span class="title">'+roomTitle+'</span>'
 	            					+'<p>'+lastMessage +'</p>'
@@ -862,11 +894,14 @@
           
           function onBackBtnClick(){ 
               window.isOpenRoom = false; 
-              this.aBackBtn.classList.add('hiddendiv'); 
-              this.aInvite.classList.add('hiddendiv'); 
+              document.getElementById('aBackBtn').classList.add('hiddendiv'); 
+              document.getElementById('aInvite').classList.add('hiddendiv'); 
+              console.log("백 버튼 누르면 룸 플래그 값은 ??" + window.roomFlag);
               document.getElementById(window.roomFlag).click(); 
-              this.spTitle.innerText = 'OWL Chat Room'; 
-              this.ulMessageList.innerHTML=''; 
+              document.getElementById('spTitle').innerText = 'OWL Chat Room'; 
+              document.getElementById('ulMessageList').innerHTML='';
+              
+               
               }
 
           
@@ -901,6 +936,9 @@
 				console.log("현재 사용자의 챗방 키는용???>>" + resolvedData + "<<<<<");
                 $('#curUserKey').val(resolvedData);
                 window.myUserKy = resolvedData;
+                loadRoomList(resolvedData, null);
+                
+                
             }); 
             
       		$.ajax({
@@ -943,9 +981,9 @@
 
       		
 		//온로드 뒤에 백 버튼 리스너 달기
-    		$('#aBackBtn').click(onBackBtnClick(this));
+    		$('#aBackBtn').click(onBackBtnClick);
 
-
+		
       	});	
           
       </script>

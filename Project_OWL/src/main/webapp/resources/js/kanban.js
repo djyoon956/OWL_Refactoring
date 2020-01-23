@@ -15,6 +15,7 @@ function addLabel(lbidx, lbcolor, lbnm) {
 
 
 $('#labelList').append(lablist);
+
 }
 
    
@@ -66,7 +67,8 @@ $('#labelList').append(lablist);
 			$('#backBtn').addClass("hidden");
 
 			$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', '#000000');
-			
+			$('.labelList').find('.edit').removeClass("hidden");
+
 		});
 	}
 
@@ -306,7 +308,10 @@ function changeKanbanView(view){
 
 function editLabel(idx, color, name) {
 	
-	$('.labelList').attr('style', "background-color:#fff");
+	console.log('idx뭐니 : ' + idx);
+	//$('.labelList').attr('style', "background-color:#fff");
+	$('.labelList').find('.edit').removeClass("hidden");
+
 
 	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
 	editIdx = idx;
@@ -318,9 +323,11 @@ function editLabel(idx, color, name) {
 	$('#labelname').val(name);
 	$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', color);
 
-	$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
-	//$('#'+idx+'Label').childern('div').attr('disabled', true);
-	//$('#'+idx+'Label').attr('class', "hidden");
+	//$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
+
+	
+	$('#'+idx+'Label').find('.edit').addClass("hidden");
+	//css('display', 'none');
 	
 	};
 	

@@ -27,7 +27,7 @@ public class ChatRestController {
 		List<MyProjectsMates> result = new ArrayList<MyProjectsMates>();
 		
 		try {
-			result = service.getMyProjectsMates("aaa@gmail.com", "윤다정");
+			result = service.getMyProjectsMates(email, name);
 			System.out.println("디비에서 데이타 뽑히나요??? : " + result);
 			
 		} catch (Exception e) {
