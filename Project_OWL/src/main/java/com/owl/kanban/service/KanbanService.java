@@ -359,6 +359,17 @@ public class KanbanService {
 		System.out.println("result가 뭐니?" + result);
 		return result;
 	}
+	public boolean closeIssue(int issueIdx) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+			try {
+				result = dao.closeIssue(issueIdx) > 0 ? true : false;
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		return result;
+	}
 	
 	private void insertLog(int issueIdx, String log, String email, KanbanDao dao) throws ClassNotFoundException, SQLException {
 		dao.insertIssueLog(issueIdx, log, email);
