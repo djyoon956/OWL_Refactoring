@@ -146,7 +146,7 @@
 			} 
 	  };
 	  
-	let selectoption = '<option value="">Select</option>';
+	
 
 	$('#addLabelModal').on('show.bs.modal', function() {  
 	//프로젝트 내 라벨 리스트 출력 
@@ -232,6 +232,7 @@
 				});
 	});
 
+	let selectoption = '<option value="">Select</option>';
 
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
@@ -245,7 +246,8 @@
             success: function (data) {
             	$('#assigned').empty();
             	$('#labelIdx').empty();
-            	
+
+            
 				let member = data.member;
 				let label = data.label;
 				
@@ -259,16 +261,17 @@
 
 					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
 					
-					$('#assigned').append(optmember);
+					
                    });
-
+               $('#assigned').append(optmember);
 
                 $.each(label, function(index, element) {
-               
+		
                   optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
 
-				  $('#labelIdx').append(optlabel);	
                    });
+                $('#labelIdx').append(optlabel);	
+            
             },
             error: function () {
                 console.log("GetProjectMember error");
@@ -298,12 +301,9 @@
 
 	$('#addColumnModal').on('hidden.bs.modal', function() {  
 		$('#colname').val("");
-	
 	});
 	
 
-
-	
 	$("#addLabelBtn").on("click", function () {	
 
 		let lcolor = false;

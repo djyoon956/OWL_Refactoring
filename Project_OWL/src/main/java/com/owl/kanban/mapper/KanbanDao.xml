@@ -124,4 +124,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertIssueLog">
 		INSERT INTO owl.ISSUELOG (ISSUEIDX, LOG, CREATOR) values(#{param1}, #{param2}, #{param3})
 	</insert>
+	
+	<update id="closeIssue" >
+		update issue set colidx = -99 , issueprogress='CLOSED'  where issueidx = #{issueIdx}
+	</update>
+	
+	<select id="getColumnName" resultType="String">
+		SELECT COLNAME FROM owl.COLNAME WHERE PROJECTIDX= #{param1} 	AND COLIDX= #{param2}
+	</select>
 </mapper>

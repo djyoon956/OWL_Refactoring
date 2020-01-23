@@ -34,6 +34,8 @@ public interface KanbanDao {
 	public List<Issue> getIssue(int projectIdx) throws ClassNotFoundException, SQLException;
 
 	public List<Column> getColumn(int projectIdx) throws ClassNotFoundException, SQLException;
+	
+	public String getColumnName(int projectIdx,int colIdx)throws ClassNotFoundException, SQLException;
 
 	public Issue getIssuebyIssueIdx(int issueIdx) throws ClassNotFoundException, SQLException;
 
@@ -58,6 +60,8 @@ public interface KanbanDao {
 	public int updateLabel(Label label) throws ClassNotFoundException, SQLException;
 
 	public int insertIssueLog(int issueIdx, String log, String email) throws ClassNotFoundException, SQLException;
+	
+	public int closeIssue(int issueIdx) throws ClassNotFoundException, SQLException;
 	
 	public Map<String, Integer> getIssueProgress(int projectIdx) throws ClassNotFoundException, SQLException;
 }
