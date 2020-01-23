@@ -40,7 +40,11 @@
     <script src="resources/js/kanban.js"></script>
     <link rel="stylesheet" type="text/css" href="resources/css/kanban.css" />
     <script type="text/javascript">
-        $(function () {
+        $(function () {			
+            setTheme("${setting.themeColor}", "${setting.font}");
+            initNotice("${project.projectIdx}");
+            initKanban("${project.projectIdx}");
+
             $.ajax({
         		url:"GetProjectList.do",
         		data: {projectIdx: ${project.projectIdx}},
@@ -59,9 +63,31 @@
         		}
             });
             
-            setTheme("${setting.themeColor}", "${setting.font}");
-            initNotice("${project.projectIdx}");
-            initKanban("${project.projectIdx}");
+			$.ajax({
+				url : "GetIssue.do",
+				data : {'projectIdx' :  ${project.projectIdx} },
+				success : function(data) {
+					console.log(data);
+					var openCount = 0;
+					var closeCount = 0;
+					 $.each(data, function(index,element) {
+							if(element.issueProgress== "OPEN"){
+								openCount ++;		
+							}else if(elemnet.issueProgress == "CLOSED"){
+								closeCount ++;
+							}				
+					});
+						var ctx = document.getElementById('chartProjectProgress').getContext('2d');
+						window.myDoughnut = new Chart(ctx, config1);
+						console.log(((closeCount)/openCount*100));
+
+						var ctx = document.getElementById('chartMyProgress').getContext('2d');
+						window.myDoughnut = new Chart(ctx, config2);
+				},
+				error: function() {
+					console.log("getIssue.do error");
+				}
+			});
             
             let oldMenu = $("#projectMenu li:nth-child(2)");
             $("#projectMenu li").on("click", function () {

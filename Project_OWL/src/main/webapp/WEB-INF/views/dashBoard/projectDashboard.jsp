@@ -82,36 +82,23 @@ function refreshScheduleVisibility() {
     });
 }
 
-var randomScalingFactor = function() {
-	return Math.round(Math.random() * 100);
-};
-
-var config = {
+var config1 = {
 	type: 'doughnut',
 	data: {
 		datasets: [{
 			data: [
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
-				randomScalingFactor(),
+				((closeCount)/openCount*100),
+				((openCount-closeCount)/openCount*100),
 			],
 			backgroundColor: [
 				window.chartColors.red,
-				window.chartColors.orange,
-				window.chartColors.yellow,
-				window.chartColors.green,
 				window.chartColors.blue,
 			],
 			label: 'Dataset 1'
 		}],
 		labels: [
-			'Red',
-			'Orange',
-			'Yellow',
-			'Green',
-			'Blue'
+			'Complete',
+			'Total'
 		]
 	},
 	options: {
@@ -121,21 +108,13 @@ var config = {
 		},
 		title: {
 			display: true,
-			text: 'Chart.js Doughnut Chart'
+			text: '프로젝트 진행률'
 		},
 		animation: {
 			animateScale: true,
 			animateRotate: true
 		}
 	}
-};
-
-window.onload = function() {
-	var ctx = document.getElementById('chart-area1').getContext('2d');
-	window.myDoughnut = new Chart(ctx, config);
-
-	var ctx = document.getElementById('chart-area2').getContext('2d');
-	window.myDoughnut = new Chart(ctx, config);
 };
 </script>  
 <style>
@@ -228,12 +207,12 @@ height: 480px !important;
 									<div class="row">
 										<div class="col-md-6">
 											<div id="canvas-holder">
-												<canvas id="chart-area1"></canvas>
+												<canvas id="chartProjectProgress"></canvas>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div id="canvas-holder">
-												<canvas id="chart-area2"></canvas>
+												<canvas id="chartMyProgress"></canvas>
 											</div>
 										</div>
 									</div>
