@@ -221,7 +221,12 @@ public class KanbanRestController {
 	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)
 	public Issue getIssueDetail(int issueIdx) {
 		System.out.println(issueIdx);
-		return service.getIssueDetail(issueIdx);
+		Issue issue =service.getIssueDetail(issueIdx);
+		System.out.println("------------------------------------------------------");
+		System.out.println(issue.getColIdx());
+		System.out.println(issue.getIssueIdx());
+		System.out.println(issue);
+		return issue;
 	}
 	
 	@RequestMapping(value = "MoveIssue.do", method = RequestMethod.POST)

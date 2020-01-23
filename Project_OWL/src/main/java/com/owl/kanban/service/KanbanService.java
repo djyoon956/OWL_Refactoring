@@ -296,7 +296,6 @@ public class KanbanService {
 	public Issue getIssueDetail(int issueIdx) {
 		KanbanDao dao = getKanbanDao();
 		Issue issue = null;
-
 		try {
 			issue = dao.getIssuebyIssueIdx(issueIdx);
 			issue.setFiles(dao.getIssueFiles(issueIdx));
@@ -308,6 +307,7 @@ public class KanbanService {
 			e.printStackTrace();
 		}
 
+		System.out.println("in getIssueDetail service "+issueIdx);
 		return issue;
 	}
 	
