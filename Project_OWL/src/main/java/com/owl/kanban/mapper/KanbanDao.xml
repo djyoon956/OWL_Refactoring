@@ -84,7 +84,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getIssueLogs" resultType="com.owl.kanban.dto.IssueLog">
-		SELECT LOGIDX, LOG, LOGTIME, ISSUEIDX FROM owl.ISSUELOG
+		SELECT LOGIDX, LOG, LOGTIME, ISSUEIDX, creator , M.NAME AS 'CREATORNAME'
+			FROM owl.ISSUELOG L JOIN OWL.MEMBER M ON L.CREATOR = M.EMAIL
 		WHERE ISSUEIDX = #{issueIdx}
 	</select>
 	<select id="getIssueReplies" resultType="com.owl.kanban.dto.Reply">
@@ -119,4 +120,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE LABEL SET LABELNAME = #{labelName}, LABELCOLOR =#{labelColor} WHERE LABELIDX = #{labelIdx}
 	</update>
 	
+	<insert id="insertIssueLog">
+		INSERT INTO owl.ISSUELOG (ISSUEIDX, LOG, CREATOR) values(#{param1}, #{param2}, #{param3})
+	</insert>
 </mapper>

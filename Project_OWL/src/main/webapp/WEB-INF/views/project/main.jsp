@@ -244,11 +244,7 @@
     				        connectWith: ".connectedSortable",
     				        dropOnEmpty: true,
     				        update: function(event, ui) {
-								console.log("in sortableCol update");
-								console.log(ui.item);
-								console.log($(this).attr('id'));
-								console.log($(this).parent().parent().attr('id'));
-								console.log("--------------");
+								let target = $(ui.item).attr("id").replace("Issue","");
 								let columnIdx = $(this).parent().attr("id").replace("Column","");
 								let issues = [];
 								$.each($(this)[0].children, function(){
@@ -262,9 +258,10 @@
 								$.ajax({
 									type : "POST",
 									url : "MoveIssue.do",
-									data : { projectIdx :  ${project.projectIdx}
+									data : { 	targetIssueIdx : target
+												, projectIdx :  ${project.projectIdx}
 												, columnIdx : columnIdx
-												,  issues : issues },
+												, issues : issues },
 									success : function(data) {
 										console.log("success move issue");
 									},
