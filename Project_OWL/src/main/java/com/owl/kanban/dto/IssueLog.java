@@ -20,6 +20,9 @@ public class IssueLog {
 	private String creatorName;
 	
 	public String getTime() {
-		return new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss").format(time);
+		if (time == null)
+			return null;
+		else
+			return new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss").format(time);
 	}
 }

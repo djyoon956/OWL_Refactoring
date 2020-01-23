@@ -87,7 +87,7 @@ function addKanbanIssue(colIdx,obj){
 			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
 			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 			+				'<ul class="list-style-none">'
-			+					'<li class="pl-3"><a onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
+			+					'<li class="pl-3"><a href="#" onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
 			+					'<li class="pl-3"><a href="#" onclick="deleteIssue(' + obj.issueIdx +');">Remove Issue</a></li>'
 			+				'</ul>'
 			+			'</div>'
@@ -143,78 +143,78 @@ function setKanbanDetail(issueIdx){
 	console.log("in setKanbanDetail     sfdsf");
 	console.log(projectIdx);
 	$.ajax({
-		type: "POST",
-	    url: "GetIssueDetail.do",
-		data : { issueIdx : issueIdx},
-		success : function (data) {
-			console.log("GetIssueDetail success");
-			console.log(data);
-			//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
-				$("#issueDetailTitle").text(data.issueTitle);
-				$("#issueDetailContent").html(data.content);
-				
-				$("#issueDetailFiles").empty();
-				$("#issueDetailFileCount").text("첨부파일 ("+data.files.length+") ");
-				$.each(data.files, function(file){
-					let path = "/upload/"+ projectIdx +"/file/"+file.fileName;
-					console.log(path);
-					let control = "<li class='mb-2' style='font-size: 16px'>"
-									+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+file.fileName+" ("+file.fileSize+" KB)</span></a>"
-									+" </li>";
-					$("#issueDetailFiles").append(control);
-				});
-				
-				$("#issueDetailActivity").empty();
-				$("#issueDetailActivityCount").text("Activity ("+data.logs.length+") ");
-				console.log("-------------------------");
-				$.each(data.logs, function(log){
-					console.log(log);
-					$("#issueDetailActivity").append("<li> <p> "+log.log+"</p> </li>")
-				});
-				
-				$("#issueDetailComment").empty();
-				$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
-				$.each(data.replies, function(reply){
-					let control = '<div class="d-flex flex-row comment-row m-0">'
-									+ '	<div class="p-2">'
-									+ '		<div class="comment_img">C</div>'
-									+ '	</div>'
-									+ '	 <div class="comment-text w-100">'
-									+ '		<h6 class="font-medium mb-1">Cindy'
-									+ '		<span class="text-muted float-right">Jan 18, 2020</span></h6>'
-									+ '		<div class="mb-1 d-block"><span>화이팅</span></div>'
-									+ '		<div class="comment-footer">'
-									+ '		<button type="button" class="btn btn-info btn-sm">Edit</button>'
-									+ '		<button type="button" class="btn btn-secondary btn-sm">Delete</button>'
-									+ '		</div>'
-									+ '	</div>'
-									+ '</div>';
-					$("#issueDetailComment").append(control);
-				});
-				
-				$("#issueDetailAssignees").text(data.assigned);
-				
-				if(data.labelIdx > 0){
-					$("#issueDetailLabel").text(data.labelName);
-					$("#issueDetailLabel").css("background-color", data.labelColor);					
-				}
-				else
-					$("#issueDetailLabel").text("none");
-				
-				if(data.priorityCode != null)
-					$("#issueDetailPriority").addClass("priorityBadge "+data.priorityCode.toLowerCase());
-				 else
-					$("#issueDetailPriority").text("none");
+			type: "POST",
+		    url: "GetIssueDetail.do",
+			data : { issueIdx : issueIdx},
+			success : function (data) {
+				console.log("GetIssueDetail success");
+				console.log(data);
+				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
+					$("#issueDetailTitle").text(data.issueTitle);
+					$("#issueDetailContent").html(data.content);
 					
-				if(data.dueDate != null)
-					$("#issueDetailDueDate").text(data.dueDate);
-				else
-					$("#issueDetailDueDate").text("none");
-	},
-	error : function(){
-		console.log("GetIssueDetail error");
-	}
-})
+					$("#issueDetailFiles").empty();
+					$("#issueDetailFileCount").text("첨부파일 ("+data.files.length+") ");
+					$.each(data.files, function(file){
+						let path = "/upload/"+ projectIdx +"/file/"+file.fileName;
+						console.log(path);
+						let control = "<li class='mb-2' style='font-size: 16px'>"
+										+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+file.fileName+" ("+file.fileSize+" KB)</span></a>"
+										+" </li>";
+						$("#issueDetailFiles").append(control);
+					});
+					
+					$("#issueDetailActivity").empty();
+					$("#issueDetailActivityCount").text("Activity ("+data.logs.length+") ");
+					console.log("-------------------------");
+					$.each(data.logs, function(log){
+						console.log(log);
+						$("#issueDetailActivity").append("<li> <p> "+log.log+"</p> </li>")
+					});
+					
+					$("#issueDetailComment").empty();
+					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
+					$.each(data.replies, function(reply){
+						let control = '<div class="d-flex flex-row comment-row m-0">'
+										+ '	<div class="p-2">'
+										+ '		<div class="comment_img">C</div>'
+										+ '	</div>'
+										+ '	 <div class="comment-text w-100">'
+										+ '		<h6 class="font-medium mb-1">Cindy'
+										+ '		<span class="text-muted float-right">Jan 18, 2020</span></h6>'
+										+ '		<div class="mb-1 d-block"><span>화이팅</span></div>'
+										+ '		<div class="comment-footer">'
+										+ '		<button type="button" class="btn btn-info btn-sm">Edit</button>'
+										+ '		<button type="button" class="btn btn-secondary btn-sm">Delete</button>'
+										+ '		</div>'
+										+ '	</div>'
+										+ '</div>';
+						$("#issueDetailComment").append(control);
+					});
+					
+					$("#issueDetailAssignees").text(data.assigned);
+					
+					if(data.labelIdx > 0){
+						$("#issueDetailLabel").text(data.labelName);
+						$("#issueDetailLabel").css("background-color", data.labelColor);					
+					}
+					else
+						$("#issueDetailLabel").text("none");
+					
+					if(data.priorityCode != null)
+						$("#issueDetailPriority").addClass("priorityBadge "+data.priorityCode.toLowerCase());
+					 else
+						$("#issueDetailPriority").text("none");
+						
+					if(data.dueDate != null)
+						$("#issueDetailDueDate").text(data.dueDate);
+					else
+						$("#issueDetailDueDate").text("none");
+		},
+		error : function(){
+			console.log("GetIssueDetail error");
+		}
+	})
 
 changeKanbanView("detail");
 }
