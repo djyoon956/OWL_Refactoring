@@ -230,6 +230,7 @@ public class KanbanRestController {
 		System.out.println("in MoveIssue.do");
 		System.out.println(columnIdx);
 		service.updateMoveIssue(targetIssueIdx, columnIdx, issues, principal.getName());
+		
 		return result;
 	}
 	

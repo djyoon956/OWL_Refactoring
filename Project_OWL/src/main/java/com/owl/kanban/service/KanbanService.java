@@ -294,7 +294,7 @@ public class KanbanService {
 	}
 
 	
-	public Issue getIssueDetail(int projectIdx, int issueIdx) {
+	public Issue getIssueDetail(int issueIdx) {
 		KanbanDao dao = getKanbanDao();
 		Issue issue = null;
 
@@ -312,12 +312,14 @@ public class KanbanService {
 		return issue;
 	}
 	
-	public void updateMoveIssue(int columnIdx, int[] issues) {
+	public void updateMoveIssue(int targetIssueIdx, int columnIdx, int[] issues, String email) {
 		System.out.println("in service updateMoveIssue");
 		KanbanDao dao = getKanbanDao();
 
 		try {
 			System.out.println("-------------------------");
+			Issue issue = dao.getIssuebyIssueIdx(targetIssueIdx);
+			int oldColIdx = issue.getColIdx();
 			for (int i = 0; i < issues.length; i++) {
 				Map<String, Object> parameters = new HashMap<>();
 				parameters.put("colIdx", columnIdx);
@@ -330,6 +332,10 @@ public class KanbanService {
 				dao.updateMoveIssue(parameters);
 			}
 			System.out.println("-------------------------");
+			if(oldColIdx == columnIdx) {
+				String log = "";
+				insertLog(targetIssueIdx, log, email, dao);
+			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -355,6 +361,9 @@ public class KanbanService {
 		return result;
 	}
 	
+	private void insertLog(int issueIdx, String log, String email, KanbanDao dao) throws ClassNotFoundException, SQLException {
+		dao.insertIssueLog(issueIdx, log, email);
+	}
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
