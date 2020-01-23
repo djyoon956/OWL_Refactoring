@@ -7,10 +7,10 @@ function addLabel(lbidx, lbcolor, lbnm) {
             +  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbnm+'</span>'
             +  '</div>'
             +  '<div class="col-lg-2">'
-            + '<button class="btn-link link-gray" onclick="editLabel(' + lbidx +','+"'"+lbcolor+"'"+','+"'"+lbnm+"'"+')";>Edit</button>'
+            + '<button class="btn-link link-gray edit" onclick="editLabel(' + lbidx +','+"'"+lbcolor+"'"+','+"'"+lbnm+"'"+')";>Edit</button>'
             +  '</div>'
             +  '<div class="col-lg-2">'
-            +  '<button class="btn-link link-gray" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
+            +  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
             +  '</div></div><hr>';
 
 

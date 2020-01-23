@@ -80,7 +80,7 @@ max-width: 270px;
             <li id="sidebarLable" class="sidebar-item hide-menu">MY</li>
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-account-outline"></i><span class="hide-menu">MY TASK</span></a>
                     <ul aria-expanded="false" class="mySetting collapse first-level" style="padding-bottom: 0px;">
-                        <li class="sidebar-item"><a href="#" class="sidebar-link"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">DASHBOARD</span></a></li>
+                        <li class="sidebar-item"><a href="Main.do" class="sidebar-link"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">DASHBOARD</span></a></li>
                         <li class="sidebar-item"><a href="Calendar.do" class="sidebar-link"><i class="mdi mdi-calendar"></i><span class="hide-menu">CALENDAR</span></a></li>
                     </ul>
                 </li>

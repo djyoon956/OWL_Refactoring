@@ -15,8 +15,8 @@
 		var ctx3 = document.getElementById('chartProjectThree').getContext('2d');
 		window.myDoughnut = new Chart(ctx3, configThree);
 
-		var ctx = document.getElementById('canvas').getContext('2d');
-		window.myLine = Chart.Line(ctx, {
+		var ctx4 = document.getElementById('canvas').getContext('2d');
+		window.myLine = Chart.Line(ctx4, {
 			data: lineChartData,
 			options: {
 				responsive: true,
@@ -24,7 +24,7 @@
 				stacked: false,
 				title: {
 					display: true,
-					text: ''
+					text: '나의 프로젝트 별 커밋 수(일주일 단위)'
 				},
 				scales: {
 					yAxes: [{
@@ -45,6 +45,47 @@
 					}],
 				}
 			}
+		});
+
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var chart = new Chart(ctx, {
+		    // The type of chart we want to create
+		    type: 'horizontalBar',
+
+		    // The data for our dataset
+		    data: {
+		        labels: ['Project1', 'Project2', 'Project3', 'Project4', 'Project5'],
+		        datasets: [{
+		            label: 'My First dataset',
+		            data: [60, 50, 70, 85, 20],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255, 99, 132, 1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)'
+		            ],
+		            borderWidth: 1
+		        }]
+		    },
+
+		    // Configuration options go here
+		    options: {
+		    	scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero: true
+		                }
+		            }]
+		        }
+			    }
 		});
  });
  
@@ -292,7 +333,7 @@ display: none;
                        </div>
                        <div class="col-lg-12">             		 
                         <div class="card dash_shadow dash_radius">
-                            <div class="card-body">
+                            <div class="card-body" style="margin-bottom: 10px;">
                               <h4 class="card-title" style="margin-bottom: 0px;">Project Chart</h4>
                                 <div class="align-items-center">
 									<div class="row">
@@ -332,39 +373,7 @@ display: none;
                             <div class="card-body">
                               <h4 class="card-title">Chart</h4>
                                 <div class="align-items-center">
-                                   <div class="w-100 pt-3">
-                                    <div class="d-flex no-block align-items-center">
-                                        <span>구매전략</span>
-                                        <div class="ml-auto">
-                                            <span>80%</span>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 80%; background-color: #ccccff" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                 <div class="w-100 pt-3">
-                                    <div class="d-flex no-block align-items-center">
-                                        <span>판매계획</span>
-                                        <div class="ml-auto">
-                                            <span>34%</span>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 34%; background-color:  #ffb1b9" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                                 <div class="w-100 pt-3">
-                                    <div class="d-flex no-block align-items-center">
-                                        <span>후기관리</span>
-                                        <div class="ml-auto">
-                                            <span>95%</span>
-                                        </div>
-                                    </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" role="progressbar" style="width: 95%; background-color:lightgray;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
+									<canvas id="myChart"></canvas>
                               </div>
                             </div>
                         </div>                                                                     
