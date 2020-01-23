@@ -93,11 +93,6 @@ public class KanbanService {
 		return files;
 	}
 
-	
-	
-	
-	
-
 	public boolean insertColumn(Column column) {
 		System.out.println("insertColumn Service in");
 		System.out.println(column.getProjectIdx() + "/" + column.getColname());
@@ -187,7 +182,7 @@ public class KanbanService {
 
 		return issue;
 	}
-	
+		
 	public boolean updateColumn(Column column) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
