@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<update id="updateAllIncrease">
-		update issue a set ordernum = ordernum + 1 where projectidx = #{projectIdx} and colidx= -1 and issueidx not in (#{issueIdx})
+		update issue a set ordernum = ordernum + 1 where projectidx = #{param1} and colidx= -1 and issueidx not in (#{param2})
 
 	</update>
 
@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.Issue">
 		SELECT I.PROJECTIDX, I.CONTENT, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED, L.LABELNAME, L.LABELCOLOR, I.DUEDATE, I.PRIORITYCODE, I.CREATOR, I.ORDERNUM, I.COLIDX
 			FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
-		WHERE I.PROJECTIDX=#{param1} AND I.ISSUEIDX=#{param2}
+		WHERE I.ISSUEIDX=#{param1}
 	</select>
 	
 	<select id="getIssueFiles" resultType="com.owl.notice.dto.File">
