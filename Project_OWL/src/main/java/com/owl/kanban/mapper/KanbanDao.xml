@@ -41,6 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 
+	<update id="updateAllIncrease">
+		update issue a set ordernum = ordernum + 1 where projectidx = #{param1} and colidx= -1 and issueidx not in (#{param2})
+
+	</update>
+
 	<insert id="insertLabel" parameterType="com.owl.project.dto.Label">
 		INSERT INTO owl.label(projectidx, labelcolor, labelname) VALUE(#{projectIdx}, #{labelColor}, #{labelName})
 			<selectKey keyProperty="labelIdx" resultType="int" order="AFTER">
@@ -60,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getColumn" resultType="com.owl.kanban.dto.Column">
   		select colidx, colname from colname where projectidx=#{projectIdx}
 	</select>
+	
 	<select id="getIssue" resultType="com.owl.kanban.dto.Issue">
 		SELECT i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
 	FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX where i.projectidx=#{projectIdx} order by ordernum

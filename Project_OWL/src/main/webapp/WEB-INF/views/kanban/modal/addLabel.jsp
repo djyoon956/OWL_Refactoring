@@ -93,7 +93,7 @@
 						<!-- label list section -->
 						<div class="col-lg-6 labelListSection" id="labelList">
 							
-								<div class="row labelList">
+<!-- 								<div class="row labelList">
 									<div class="col-lg-8">
 										<span class="badgeIconinList" style="background-color: #F4D452">test</span>
 									</div>
@@ -116,7 +116,7 @@
 										<a>Delete</a>
 									</div>
 								</div>
-								<hr>
+								<hr> -->
 						</div>
 
 					</div>
