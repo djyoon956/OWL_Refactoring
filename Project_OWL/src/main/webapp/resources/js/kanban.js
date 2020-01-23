@@ -1,137 +1,137 @@
 let projectIdx;
 
-	function addLabel(lbidx, lbcolor, lbnm) {
+function addLabel(lbidx, lbcolor, lbnm) {
 
-		let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
-					+  '<div class="col-lg-8">'
-					+  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbnm+'</span>'
-					+  '</div>'
-					+  '<div class="col-lg-2">'
-					+ '<button class="btn-link link-gray" onclick="editLabel(' + lbidx +','+"'"+lbcolor+"'"+','+"'"+lbnm+"'"+')";>Edit</button>'
-					+  '</div>'
-					+  '<div class="col-lg-2">'
-					+  '<button class="btn-link link-gray" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
-					+  '</div></div><hr>';
-	
-	
-	$('#labelList').append(lablist);
-	}
+	let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
+				+  '<div class="col-lg-8">'
+				+  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbnm+'</span>'
+				+  '</div>'
+				+  '<div class="col-lg-2">'
+				+ '<button class="btn-link link-gray" onclick="editLabel(' + lbidx +','+"'"+lbcolor+"'"+','+"'"+lbnm+"'"+')";>Edit</button>'
+				+  '</div>'
+				+  '<div class="col-lg-2">'
+				+  '<button class="btn-link link-gray" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
+				+  '</div></div><hr>';
 
-	
-	function initKanban(projectIdx){
-		this.projectIdx= projectIdx;
-	}
+
+$('#labelList').append(lablist);
+}
 
 	
-	function addColumn(obj){
-		let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-					+ '<div class="columnTitle text-center mt-2 dropdown">'
-					+ '<h4><span>' + obj.colname + '</span>'
-					+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-					+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-					+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-					+				'<ul class="list-style-none">'
-					+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
-					+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
-					+   '>Edit Column</a></li>'
-					+					'<li class="pl-3"><a href="#" onclick="deleteColumn(' + obj.colIdx +');">Remove Column</a></li>'
-					+				'</ul>'
-					+			'</div>'
-					+		'</h4>'
-					+	'</div>'
-					+	'<ul class="connectedSortable sortableCol columnBody cursor">'
-					+	'</ul>'
-					+ '</div>';
-		$('#kanbanIn').append(column);
-		
-	}
-	
-	function deleteColumn(obj){
-		var colIndex = obj;
-		Swal.fire({
-      		  title: '정말 삭제하시겠습니까?',
-      		  text: '컬럼 내에 있는 이슈와 파일들이 함께 삭제됩니다.',
-      		  icon: 'warning',
-      		  showCancelButton: true,
-      		  confirmButtonColor: '#3085d6',
-      		  cancelButtonColor: '#d33',
-      		  confirmButtonText: 'Yes'
-      		}).then((result) => {
-      		  if (result.value) {
-      			$.ajax({
-      	      		url:"DeleteColumn.do",
-      	      		method:"POST",
-      	      		data:{colIdx: colIndex},
-      	      		success:function(data){
-      	      			$("#"+colIndex+"Column").remove();
-      	      		}
-      	      	});	
-      		 }			
-      	});
-	}
+function initKanban(projectIdx){
+	this.projectIdx= projectIdx;
+}
 
-	
-	function addKanbanIssue(colIdx,obj){
-		console.log("addKanbanIssue in");
-		console.log(obj);
-		if(obj.labelName == null) 
-			obj.labelName = "";
-		if(obj.assigned == null) 
-			obj.assigned  = "none";
-		 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
-				+		'<div class="dropdown">'
-				+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
-				+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
-				+			'</label>'
-				+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-				+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
+
+function addColumn(obj){
+	let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
+				+ '<div class="columnTitle text-center mt-2 dropdown">'
+				+ '<h4><span>' + obj.colname + '</span>'
+				+ '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
+				+ '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+				+ '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
 				+				'<ul class="list-style-none">'
-				+					'<li class="pl-3"><a onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
-				+					'<li class="pl-3"><a href="#" onclick="deleteIssue(' + obj.issueIdx +');">Remove Issue</a></li>'
+				+	'<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
+				+    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
+				+   '>Edit Column</a></li>'
+				+					'<li class="pl-3"><a href="#" onclick="deleteColumn(' + obj.colIdx +');">Remove Column</a></li>'
 				+				'</ul>'
 				+			'</div>'
-				+		'</div>'
-				+		'<div>'
-				+			'<label>'
-				+			'<span class="assigneetitle">'
-				+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>'
-				+			'</label>'
-				+		'</div>'
-				+	'</li>';
-		
-			$("#"+colIdx+"Column > .columnBody").append(issue);
-		}
+				+		'</h4>'
+				+	'</div>'
+				+	'<ul class="connectedSortable sortableCol columnBody cursor">'
+				+	'</ul>'
+				+ '</div>';
+	$('#kanbanIn').append(column);
 	
-	function deleteIssue(obj){
-		var issueIndex = obj;
-		console.log("issue : " + issueIndex);
-		console.log()
-		$.ajax({
-	      		url:"DeleteIssue.do",
-	      		method:"POST",
-	      		data:{issueIdx: issueIndex},
-	      		success:function(data){
-	      			$("#"+issueIndex+"Issue").remove();
-	      		}
-	      	});	
+}
+
+function deleteColumn(obj){
+	var colIndex = obj;
+	Swal.fire({
+  		  title: '정말 삭제하시겠습니까?',
+  		  text: '컬럼 내에 있는 이슈와 파일들이 함께 삭제됩니다.',
+  		  icon: 'warning',
+  		  showCancelButton: true,
+  		  confirmButtonColor: '#3085d6',
+  		  cancelButtonColor: '#d33',
+  		  confirmButtonText: 'Yes'
+  		}).then((result) => {
+  		  if (result.value) {
+  			$.ajax({
+  	      		url:"DeleteColumn.do",
+  	      		method:"POST",
+  	      		data:{colIdx: colIndex},
+  	      		success:function(data){
+  	      			$("#"+colIndex+"Column").remove();
+  	      		}
+  	      	});	
+  		 }			
+  	});
+}
+
+
+function addKanbanIssue(colIdx,obj){
+	console.log("addKanbanIssue in");
+	console.log(obj);
+	if(obj.labelName == null) 
+		obj.labelName = "";
+	if(obj.assigned == null) 
+		obj.assigned  = "none";
+	 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
+			+		'<div class="dropdown">'
+			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
+			+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
+			+			'</label>'
+			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
+			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
+			+				'<ul class="list-style-none">'
+			+					'<li class="pl-3"><a onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
+			+					'<li class="pl-3"><a href="#" onclick="deleteIssue(' + obj.issueIdx +');">Remove Issue</a></li>'
+			+				'</ul>'
+			+			'</div>'
+			+		'</div>'
+			+		'<div>'
+			+			'<label>'
+			+			'<span class="assigneetitle">'
+			+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>'
+			+			'</label>'
+			+		'</div>'
+			+	'</li>';
+	
+		$("#"+colIdx+"Column > .columnBody").append(issue);
 	}
 
-	
-	function deleteLabel(labelidx) {
-		$.ajax ({
-			url : "DeleteLabel.do",
-			method : "POST",
-			data : {'labelIdx' : labelidx},
-			success: function(data) {
-				console.log("deleteLabel success in");
-				
-				$("#"+labelidx+"Label").next().remove();
-      			$("#"+labelidx+"Label").remove();
+function deleteIssue(obj){
+	var issueIndex = obj;
+	console.log("issue : " + issueIndex);
+	console.log()
+	$.ajax({
+      		url:"DeleteIssue.do",
+      		method:"POST",
+      		data:{issueIdx: issueIndex},
+      		success:function(data){
+      			$("#"+issueIndex+"Issue").remove();
+      		}
+      	});	
+}
 
-				
-			}, error : function() {
-				console.log("deleteLabel error");
+
+function deleteLabel(labelidx) {
+	$.ajax ({
+		url : "DeleteLabel.do",
+		method : "POST",
+		data : {'labelIdx' : labelidx},
+		success: function(data) {
+			console.log("deleteLabel success in");
+			
+			$("#"+labelidx+"Label").next().remove();
+  			$("#"+labelidx+"Label").remove();
+
+			
+		}, error : function() {
+			console.log("deleteLabel error");
 				
 			}
 		})
@@ -140,10 +140,12 @@ let projectIdx;
 	
 
 function setKanbanDetail(issueIdx){
+	console.log("in setKanbanDetail     sfdsf");
+	console.log(projectIdx);
 	$.ajax({
 		type: "POST",
-        url: "GetIssueDetail.do",
-		data : {projectIdx : this.projectIdx, issueIdx : issueIdx},
+	    url: "GetIssueDetail.do",
+		data : { issueIdx : issueIdx},
 		success : function (data) {
 			console.log("GetIssueDetail success");
 			console.log(data);
@@ -164,7 +166,9 @@ function setKanbanDetail(issueIdx){
 				
 				$("#issueDetailActivity").empty();
 				$("#issueDetailActivityCount").text("Activity ("+data.logs.length+") ");
+				console.log("-------------------------");
 				$.each(data.logs, function(log){
+					console.log(log);
 					$("#issueDetailActivity").append("<li> <p> "+log.log+"</p> </li>")
 				});
 				
@@ -206,23 +210,23 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailDueDate").text(data.dueDate);
 				else
 					$("#issueDetailDueDate").text("none");
-		},
-		error : function(){
-			console.log("GetIssueDetail error");
-		}
-	})
-	
-	changeKanbanView("detail");
+	},
+	error : function(){
+		console.log("GetIssueDetail error");
+	}
+})
+
+changeKanbanView("detail");
 }
 
 
 function changeKanbanView(view){
 	if(view == "list"){
-		$("#kanbanDetailBox").addClass("hidden");
-		$("#kanbanMainBox").removeClass("hidden");
-	}else if(view == "detail"){
-		$("#kanbanMainBox").addClass("hidden");
-		$("#kanbanDetailBox").removeClass("hidden");
+	$("#kanbanDetailBox").addClass("hidden");
+	$("#kanbanMainBox").removeClass("hidden");
+}else if(view == "detail"){
+	$("#kanbanMainBox").addClass("hidden");
+	$("#kanbanDetailBox").removeClass("hidden");
 	}
 }
 
@@ -230,64 +234,64 @@ function editLabel(idx, color, name) {
 	
 	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
 
-	$('#labelcolor').focus();
+$('#labelcolor').focus();
 
-	$('#addLabelBtn').addClass("hidden");
-	$('#editLabelBtn').removeClass("hidden");
-	$('#backBtn').removeClass("hidden");
-	
-	$('#labelcolor').val(color);
-	$('#labelname').val(name);
+$('#addLabelBtn').addClass("hidden");
+$('#editLabelBtn').removeClass("hidden");
+$('#backBtn').removeClass("hidden");
 
-	$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
-	//$('#'+idx+'Label').childern('div').attr('disabled', true);
-	//$('#'+idx+'Label').attr('class', "hidden");
+$('#labelcolor').val(color);
+$('#labelname').val(name);
+
+$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
+//$('#'+idx+'Label').childern('div').attr('disabled', true);
+//$('#'+idx+'Label').attr('class', "hidden");
+
+console.log('이전값');
+console.log(color);
+console.log(name);
+
+
+$('#editLabelBtn').click(function() {
+	console.log('change 값');
+	console.log($('#labelcolor').val());
+	console.log($('#labelname').val());
 	
-	console.log('이전값');
-	console.log(color);
-	console.log(name);
-	
-	
-	$('#editLabelBtn').click(function() {
-		console.log('change 값');
-		console.log($('#labelcolor').val());
-		console.log($('#labelname').val());
-		
-		$.ajax({
-			url : "UpdateLabel.do",
-			data : {'labelIdx' : idx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
-			success : function(data) {
-				
-				console.log('data in' + data);
-				$('#'+idx+'Label').next().remove();
-				$('#'+idx+'Label').remove();
-				
-				addLabel(idx, $('#labelcolor').val(), $('#labelname').val());
-				
-			}, error : function () {
-				console.log('EditLabel error');
-			}
-		});
+	$.ajax({
+		url : "UpdateLabel.do",
+		data : {'labelIdx' : idx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
+		success : function(data) {
+			
+			console.log('data in' + data);
+			$('#'+idx+'Label').next().remove();
+			$('#'+idx+'Label').remove();
+			
+			addLabel(idx, $('#labelcolor').val(), $('#labelname').val());
+			
+		}, error : function () {
+			console.log('EditLabel error');
+		}
 	});
-	
-	
-	$('#backBtn').click(function() {
-		
-		$('#labelcolor').val("");
-		$('#labelname').val("");
-		
-		$('#addLabelBtn').removeClass("hidden");
-		$('#editLabelBtn').addClass("hidden");
-		$('#backBtn').addClass("hidden");
-	});
-	
-	};
+});
 
+
+$('#backBtn').click(function() {
 	
+	$('#labelcolor').val("");
+	$('#labelname').val("");
 	
-	
-	
-	
+	$('#addLabelBtn').removeClass("hidden");
+	$('#editLabelBtn').addClass("hidden");
+	$('#backBtn').addClass("hidden");
+});
+
+};
+
+
+
+
+
+
 
 
 

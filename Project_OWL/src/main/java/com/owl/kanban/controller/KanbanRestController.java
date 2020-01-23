@@ -219,18 +219,17 @@ public class KanbanRestController {
 	}
 
 	@RequestMapping(value = "GetIssueDetail.do", method = RequestMethod.POST)
-	public Issue getIssueDetail(int projectIdx, int issueIdx) {
-		System.out.println("in getIssueDetail : " + issueIdx + "/"+projectIdx);
-		
-		return service.getIssueDetail(projectIdx, issueIdx);
+	public Issue getIssueDetail(int issueIdx) {
+		System.out.println(issueIdx);
+		return service.getIssueDetail(issueIdx);
 	}
 	
 	@RequestMapping(value = "MoveIssue.do", method = RequestMethod.POST)
-	public boolean moveIssue(int columnIdx, int[] issues) {
+	public boolean moveIssue(int targetIssueIdx,int columnIdx, int[] issues, Principal principal) {
 		boolean result = false;
 		System.out.println("in MoveIssue.do");
 		System.out.println(columnIdx);
-		service.updateMoveIssue(columnIdx, issues);
+		service.updateMoveIssue(targetIssueIdx, columnIdx, issues, principal.getName());
 		return result;
 	}
 	
