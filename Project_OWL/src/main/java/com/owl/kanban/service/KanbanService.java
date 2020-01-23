@@ -51,7 +51,7 @@ public class KanbanService {
 
 			System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
 			if(result) {
-				colList = dao.getIssuebyIssueIdx(issue.getProjectIdx(), issue.getIssueIdx());
+				colList = dao.getIssuebyIssueIdx(issue.getIssueIdx());
 			}
 			
 		} catch (Exception e) {
@@ -299,7 +299,7 @@ public class KanbanService {
 		Issue issue = null;
 
 		try {
-			issue = dao.getIssuebyIssueIdx(projectIdx, issueIdx);
+			issue = dao.getIssuebyIssueIdx(issueIdx);
 			issue.setFiles(dao.getIssueFiles(issueIdx));
 			issue.setLogs(dao.getIssueLogs(issueIdx));
 			issue.setReplies(dao.getIssueReplies(issueIdx));
