@@ -50,6 +50,7 @@ function setDetailData(boardIdx){
 }
 
 function setNoticeData() {
+	console.log("in setNoticeData");
 	 $.ajax({
 		type: "POST",
 		url: "GetNotices.do",
