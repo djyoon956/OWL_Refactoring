@@ -308,11 +308,21 @@ public class KanbanService {
 	public void updateMoveIssue(int columnIdx, int[] issues) {
 		System.out.println("in service updateMoveIssue");
 		KanbanDao dao = getKanbanDao();
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("colIdx", columnIdx);
-		parameters.put("issues", issues);
+
 		try {
-			System.out.println(dao.updateMoveIssue(parameters));
+			System.out.println("-------------------------");
+			for (int i = 0; i < issues.length; i++) {
+				Map<String, Object> parameters = new HashMap<>();
+				parameters.put("colIdx", columnIdx);
+				System.out.println("colIdx : "+ columnIdx);
+				System.out.println("index : "+ i);
+				parameters.put("index", i);
+				System.out.println("issueIdx : "+ issues[i]);
+				parameters.put("issueIdx", issues[i]);
+	
+				dao.updateMoveIssue(parameters);
+			}
+			System.out.println("-------------------------");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
