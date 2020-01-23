@@ -258,8 +258,8 @@
 								$.ajax({
 									type : "POST",
 									url : "MoveIssue.do",
-									data : { 	targetIssueIdx : target
-												, projectIdx :  ${project.projectIdx}
+									data : { 	projectIdx :  ${project.projectIdx}
+												, targetIssueIdx : target
 												, columnIdx : columnIdx
 												, issues : issues },
 									success : function(data) {

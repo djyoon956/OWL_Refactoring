@@ -312,12 +312,12 @@ public class KanbanService {
 		return issue;
 	}
 	
-	public void updateMoveIssue(int targetIssueIdx, int columnIdx, int[] issues, String email) {
+	public boolean updateMoveIssue(int projectIdx, int targetIssueIdx, int columnIdx, int[] issues, String email) {
 		System.out.println("in service updateMoveIssue");
 		KanbanDao dao = getKanbanDao();
-
+		boolean result = false;
+		
 		try {
-			System.out.println("-------------------------");
 			Issue issue = dao.getIssuebyIssueIdx(targetIssueIdx);
 			int oldColIdx = issue.getColIdx();
 			for (int i = 0; i < issues.length; i++) {
@@ -331,16 +331,21 @@ public class KanbanService {
 	
 				dao.updateMoveIssue(parameters);
 			}
-			System.out.println("-------------------------");
-			if(oldColIdx == columnIdx) {
-				String log = "";
+			
+			if (oldColIdx != columnIdx) {
+				System.out.println("-------------------------");
+				String log = "Moved this from " + dao.getColumnName(projectIdx, oldColIdx) + " to " + dao.getColumnName(projectIdx, columnIdx);
+				System.out.println(log);
 				insertLog(targetIssueIdx, log, email, dao);
 			}
+			result=true;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return result;
 	}
 	
 	

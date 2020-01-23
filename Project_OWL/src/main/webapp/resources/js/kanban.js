@@ -167,9 +167,17 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailActivity").empty();
 					$("#issueDetailActivityCount").text("Activity ("+data.logs.length+") ");
 					console.log("-------------------------");
-					$.each(data.logs, function(log){
+					$.each(data.logs, function(index, log){
 						console.log(log);
-						$("#issueDetailActivity").append("<li> <p> "+log.log+"</p> </li>")
+						let control = "<li> "		
+										+ "	<p style='padding-top: 3px;'>"
+										+ "		<b> "+log.creatorName+"</b>"
+										+ "		<span> "+log.log+"</span>"
+										+ "		<span class='text-muted ml-4'> "+log.logTime+"</span>"
+										+ "	</p>"
+										+ "</li>";
+						
+						$("#issueDetailActivity").append(control);
 					});
 					
 					$("#issueDetailComment").empty();
