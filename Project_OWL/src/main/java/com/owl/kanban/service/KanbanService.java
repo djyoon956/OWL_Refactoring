@@ -11,8 +11,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.helper.UploadHelper;
@@ -53,6 +51,8 @@ public class KanbanService {
 			if(result) {
 				colList = dao.getIssuebyIssueIdx(issue.getIssueIdx());
 			}
+
+			insertLog(issue.getIssueIdx(), "Opened this issue", issue.getCreator(), dao);
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 		} 
