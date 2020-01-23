@@ -146,7 +146,7 @@ public class KanbanRestController {
 		if(!assigned.isEmpty())
 			issue.setAssigned(assigned);
 		if (!labelIdx.isEmpty())
-			issue.setLabelIdx(Integer.parseInt(labelIdx));
+			//issue.setLabelIdx(Integer.parseInt(labelIdx));
 		if(!dueDate.isEmpty()) {
 			try {
 				issue.setDueDate(new SimpleDateFormat("yyyy-mm-dd").parse(dueDate));
