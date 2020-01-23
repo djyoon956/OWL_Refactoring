@@ -333,7 +333,7 @@ display: none;
                        </div>
                        <div class="col-lg-12">             		 
                         <div class="card dash_shadow dash_radius">
-                            <div class="card-body">
+                            <div class="card-body" style="margin-bottom: 10px;">
                               <h4 class="card-title" style="margin-bottom: 0px;">Project Chart</h4>
                                 <div class="align-items-center">
 									<div class="row">
