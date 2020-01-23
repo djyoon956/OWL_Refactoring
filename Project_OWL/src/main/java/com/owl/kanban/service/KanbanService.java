@@ -360,7 +360,7 @@ public class KanbanService {
 		System.out.println("result가 뭐니?" + result);
 		return result;
 	}
-	public Issue closeIssue(int issueIdx) {
+	public Issue closeIssue(int issueIdx,String email) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		Issue issueList = null;
@@ -369,6 +369,8 @@ public class KanbanService {
 				if(result) {
 					issueList = dao.getIssuebyIssueIdx(issueIdx);
 				}
+				
+				insertLog(issueIdx, "Closed this", email, dao);
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
