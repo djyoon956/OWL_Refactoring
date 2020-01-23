@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <script type="text/javascript">
+ <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>    
+ <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+ <script type="text/javascript"> 
 //왼쪽에 위치한 프로젝트 리스트 목록 출력 및 팝업창에서의 프로젝트 리스트 출력
 function setSchedules() {
     cal.clear();
@@ -79,7 +81,63 @@ function refreshScheduleVisibility() {
         span.style.backgroundColor = input.checked ? span.style.borderColor : 'transparent';
     });
 }
-	</script>  
+
+var randomScalingFactor = function() {
+	return Math.round(Math.random() * 100);
+};
+
+var config = {
+	type: 'doughnut',
+	data: {
+		datasets: [{
+			data: [
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+				randomScalingFactor(),
+			],
+			backgroundColor: [
+				window.chartColors.red,
+				window.chartColors.orange,
+				window.chartColors.yellow,
+				window.chartColors.green,
+				window.chartColors.blue,
+			],
+			label: 'Dataset 1'
+		}],
+		labels: [
+			'Red',
+			'Orange',
+			'Yellow',
+			'Green',
+			'Blue'
+		]
+	},
+	options: {
+		responsive: true,
+		legend: {
+			position: 'top',
+		},
+		title: {
+			display: true,
+			text: 'Chart.js Doughnut Chart'
+		},
+		animation: {
+			animateScale: true,
+			animateRotate: true
+		}
+	}
+};
+
+window.onload = function() {
+	var ctx = document.getElementById('chart-area1').getContext('2d');
+	window.myDoughnut = new Chart(ctx, config);
+
+	var ctx = document.getElementById('chart-area2').getContext('2d');
+	window.myDoughnut = new Chart(ctx, config);
+};
+</script>  
 <style>
 .tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container{
 display: none;
@@ -149,8 +207,9 @@ height: 480px !important;
                     <!-- calendar -->
                      <!-- <div class="col-lg-6"> -->
                         <div class="card dash_shadow dash_radius" >
-                            <div class="card-body" style="height: 580px;">
+                            <div class="card-body" style="height: 600px;">
                             <h4 class="card-title">Calendar</h4>
+                            <br>
                             <input type="hidden" value="${project.projectColor}" id="proColor">
                                 <div class="d-md-flex align-items-center">
                                     <div id="dashCalendar" class="w-100 h-100" style="height: 520px;"></div>
@@ -164,7 +223,27 @@ height: 480px !important;
               		 <div class="col-lg-6"> 
                         <div class="card dash_shadow dash_radius">
                             <div class="card-body">
-                              <h4 class="card-title">Progress</h4>
+                              <h4 class="card-title">Chart</h4>
+                                <div class="align-items-center">
+									<div class="row">
+										<div class="col-md-6">
+											<div id="canvas-holder">
+												<canvas id="chart-area1"></canvas>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div id="canvas-holder">
+												<canvas id="chart-area2"></canvas>
+											</div>
+										</div>
+									</div>
+                              </div>
+                            </div>
+                        </div>
+                        
+                       <div class="card dash_shadow dash_radius">
+                            <div class="card-body">
+                              <h4 class="card-title">Chart</h4>
                                 <div class="align-items-center">
                                    <div class="w-100 pt-3">
                                     <div class="d-flex no-block align-items-center">
@@ -202,8 +281,6 @@ height: 480px !important;
                               </div>
                             </div>
                         </div>
-                        
-                        
                     <!-- </div> -->
                  <!-- timeline  -->
                   <!-- <div class="col-lg-6"> -->
@@ -242,18 +319,6 @@ height: 480px !important;
 									<p class="float-right">Fri, 24 Jan, 2020</p>
 									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ccccff">구매전략</span>
 										<p>탈퇴 view 구현</p>
-								</li>
-								<li>
-									<p class="float-right">Sat, 25 Jan, 2020</p>
-									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ffb1b9">판매계획</span>
-										<p>채팅 view 구현</p>
-								</li>
-								<li>
-									<p class="float-right">Sun, 26 Jan, 2020</p>
-									<span class="badge badge-pill font-14 mb-1 font-medium" style="background-color: lightgray">후기관리</span>
-										<p>단체 채팅 기능 구현</p>
-									<span class="badge badge-pill font-14 mb-1 font-medium" style="background-color:#ccccff">구매전략</span>
-										<p>대시보드 기능 구현</p>
 								</li>
 							</ul>
                                     <!-- 끝 -->
