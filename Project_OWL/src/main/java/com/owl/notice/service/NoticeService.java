@@ -103,6 +103,19 @@ public class NoticeService {
 
 		return notice;
 	}
+	
+	public boolean deleteNotice(int noticeIdx) {
+		NoticeDao dao = getNoticeDao();
+		boolean result = false;
+		try {
+			result = dao.deleteNotice(noticeIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	private NoticeDao getNoticeDao() {
 		return sqlSession.getMapper(NoticeDao.class);
