@@ -35,7 +35,7 @@
                             </a>
                         </div>
                         <div id="kanbanFileBox" class="collapse multi-collapse">
-                            <ul class=" m-4" id="issueDetailFiles">
+                            <ul class=" m-4 list-style-none" id="issueDetailFiles">
                                 <li class="mb-2" style="font-size: 16px">
                                     <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
                                 </li>
