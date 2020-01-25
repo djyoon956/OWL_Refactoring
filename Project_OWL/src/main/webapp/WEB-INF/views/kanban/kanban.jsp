@@ -30,7 +30,7 @@
 	border-radius: 2px;
 }
 
-.badgeIcon2 {
+/* .badgeIcon2 {
 	display: inline-block;
 	background-color: #EC6550;
 	font-size: small;
@@ -39,7 +39,7 @@
 	color: black;
 	margin-right: 7px;
 	border-radius: 2px;
-}
+} */
 
 .floatRight {
 	float: right;
@@ -401,6 +401,13 @@
                         <i class="fas fa-tag"></i>&nbsp;Make Label
                     </button>
                 </a>
+                <!-- --------------------알람 만들면 지울예정 ------------------------ -->
+              <a href="#" data-toggle="modal" data-target="#confirmIssueModal">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-tag"></i>&nbsp;Confirm Issue
+                    </button>
+                </a>
+              <!-- ------------------------------------------------------------- -->
              </c:if>
             </div>
         </div>
@@ -447,3 +454,4 @@
 <jsp:include page="modal/addColumn.jsp" />
 <jsp:include page="modal/editColumn.jsp" />
 <jsp:include page="modal/addLabel.jsp" />
+<jsp:include page="modal/comfirmIssue.jsp" />

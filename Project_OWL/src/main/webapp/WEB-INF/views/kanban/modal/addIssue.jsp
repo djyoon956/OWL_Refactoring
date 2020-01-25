@@ -7,7 +7,6 @@
 
  var ordernum = 1; 
 	
-
  $(function() {
 
 	 let selectoption = '<option value="">Select</option>';
@@ -165,7 +164,7 @@
 					<div class="col-4">
 					<div class="form-group">
 					<div class="row">
-						<div class="col-4">Assignees</div>	
+						<div class="col-4">Assignee</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="assigned" id="assigned">
 
