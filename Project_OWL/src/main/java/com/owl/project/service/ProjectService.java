@@ -141,6 +141,21 @@ public class ProjectService {
 		return projectMembers;
 	}
 	
+	public boolean outProject(int projectIdx, String email) {
+		ProjectDao dao = getProjectDao();
+		System.out.println("in outProject service");
+		boolean result =false;
+		try {
+			result = dao.outProject(projectIdx, email) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("result : "+result);
+		return result;
+	}
+	
 	private ProjectDao getProjectDao() {
 		return sqlSession.getMapper(ProjectDao.class);
 	}

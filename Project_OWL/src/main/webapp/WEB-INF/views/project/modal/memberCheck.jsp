@@ -46,6 +46,9 @@
 			<div class="modal-body modal-scroll mx-3 mb-3"> 
 				<div>
 					<ul class="list-style-none assignedto text-center" id="projectMemebersBox">
+						
+						<li class="mt-3">	<img class="rounded-circle" width="40" onerror="this.src=&quot;resources/images/login/profile.png&quot;" src="resources/images/login/profile.png" alt="user"> 	
+						</li>
 					</ul>
 				</div>			
 			</div>

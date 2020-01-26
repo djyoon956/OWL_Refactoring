@@ -122,9 +122,9 @@
 		                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
 
                				if(index == 0){
-               					control += "<span class='ml-5 roleBadge pm'></span>";
+               					control += "<span class='ml-5 roleBadge pm' style='padding-top : 5px;'></span>";
                				}else{
-            					control += "<span class='ml-5 roleBadge member'></span>";		
+            					control += "<span class='ml-5 roleBadge member' style='padding-top : 5px;'></span>";		
                				}	
            					control+= "</li>";	
            					
@@ -360,7 +360,50 @@
     	    function closeFn() {
     	      	$("#-99Column").hide();
     	    	$("#-1Column").hide();
-    	       }    	   
+    	       }    
+ 	       function outProject(){
+ 	    	  Swal.fire({
+ 	    		  title: '[${project.projectName}] 탈퇴',
+ 	    		  text: "정말로 프로젝트에서 나가시겠습니까?",
+ 	    		  showCancelButton: true,
+ 	    		  confirmButtonColor: '#3085d6',
+ 	    		  cancelButtonColor: '#d33',
+ 	    		  confirmButtonText: '탈퇴',
+ 	    		  cancelButtonText: '취소'
+ 	    		}).then((result) => {
+ 	    		  if (result.value) {
+ 	 	    		  $.ajax({
+ 	 	 	    		  	type : "POST",
+							url : "OutProject.do",
+							data : {projectIdx :  ${project.projectIdx}},
+							success : function(data) {
+								if(data){
+									Swal.fire(
+								      '탈퇴 완료',
+								      '메인화면으로 이동합니다.',
+								      'success'
+								    ).then((result)=>{
+								    	location.href="Main.do";
+								    })
+								}else{
+									Swal.fire(
+								      '탈퇴 실패',
+								      '프로젝트 탈퇴 실패하였습니다.',
+								      'error'
+								    )
+								}
+							},
+							error: function() {
+								Swal.fire(
+							      '탈퇴 실패',
+							      'Your file has been deleted.',
+							      'error'
+							    )
+							}
+						})
+ 	    		  }
+ 	    		})
+ 	       }	   
     </script>
     <style type="text/css">
         .iconSizeBig {
@@ -432,6 +475,7 @@
                                 <ul class="list-style-none">
                                     <li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트 멤버 추가</a></li>
                                     <li class="pl-3"><a href="#memberCheckModal" data-toggle="modal">프로젝트 멤버 확인</a></li>
+                                    <li class="pl-3"><a href="#" onclick="outProject()">프로젝트 탈퇴</a></li>
                                 </ul>
                             </div>
                         </div>

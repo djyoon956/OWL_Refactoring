@@ -120,4 +120,10 @@ public class ProjectRestController {
 		System.out.println("getProjectMembers : "+projectIdx);
 		return service.getProjectMembers(projectIdx);
 	}
+	
+	@RequestMapping(value = "OutProject.do", method = RequestMethod.POST)
+	public boolean outProject(int projectIdx, Principal principal) {
+
+		return service.outProject(projectIdx, principal.getName());
+	}
 }

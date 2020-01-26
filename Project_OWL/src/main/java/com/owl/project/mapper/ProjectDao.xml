@@ -44,4 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE P.PROJECTIDX = #{projectIdx}
 		ORDER BY P.AUTHORITY
 	</select>
+	
+	<delete id="outProject" >
+		DELETE FROM owl.PROJECTLIST WHERE PROJECTIDX = #{param1} AND EMAIL = #{param2}
+	</delete>
 </mapper>
