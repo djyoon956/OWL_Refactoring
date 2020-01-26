@@ -204,7 +204,11 @@ function setKanbanDetail(issueIdx){
 			data : { issueIdx : issueIdx},
 			success : function (data) {
 				console.log("GetIssueDetail success");
+				console.log('-------------------데이터뭐니 ------------');
 				console.log(data);
+				console.log('-------------------------------');
+				console.log(data.replies);
+				console.log('-------------------------------');
 				
 				$("#issueIdxNum").val(issueIdx);
 
@@ -243,18 +247,19 @@ function setKanbanDetail(issueIdx){
 					
 					$("#issueDetailComment").empty();
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
-					$.each(data.replies, function(reply){
-						let control = '<div class="d-flex flex-row comment-row m-0">'
+					$.each(data.replies, function(index, element){
+						let creatornm =  element.creator.substring(0,1);
+						let control = '<div class="d-flex flex-row comment-row m-0" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
-										+ '		<div class="comment_img">C</div>'
+										+ '		<div class="comment_img">'+creatornm+'</div>'
 										+ '	</div>'
 										+ '	 <div class="comment-text w-100">'
-										+ '		<h6 class="font-medium mb-1">Cindy'
-										+ '		<span class="text-muted float-right">Jan 18, 2020</span></h6>'
-										+ '		<div class="mb-1 d-block"><span>화이팅</span></div>'
+										+ '		<h6 class="font-medium mb-1">'+element.creator
+										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
+										+ '		<div class="mb-1 d-block"><span>'+element.content+'</span></div>'
 										+ '		<div class="comment-footer">'
 										+ '		<button type="button" class="btn btn-info btn-sm">Edit</button>'
-										+ '		<button type="button" class="btn btn-secondary btn-sm">Delete</button>'
+										+ '		<button type="button" class="btn btn-secondary btn-sm" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
 										+ '		</div>'
 										+ '	</div>'
 										+ '</div>';
@@ -290,18 +295,6 @@ changeKanbanView("detail");
 
 }
 
-
-
-/*function InsertReply(){
-	
-	 $.ajax ({
-
-			url : "InsertReply.do",
-			data : {'issueIdx' : issueIdx, 'content': $('#replycontent').val(), }
-
-			})  
-
-}*/
 
 
 function closeIssue(issueIdx) {
@@ -351,4 +344,23 @@ function editLabel(idx, color, name) {
 	//css('display', 'none');
 	
 	};
+	
+	
+	function deleteReply(replyIdx) {
+		   $.ajax ({
+		      url : "DeleteReply.do",
+		      method : "POST",
+		      data : {'issuerlyidx' : replyIdx},
+		      success: function(data) {
+		         console.log("deleteReply success in");
+		         
+		           $("#"+replyIdx+"Reply").remove();
+
+		         
+		      }, error : function() {
+		         console.log("deleteLabel error");
+		            
+		         }
+		      })
+		   }	
 	

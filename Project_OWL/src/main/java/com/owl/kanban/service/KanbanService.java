@@ -1,7 +1,9 @@
 package com.owl.kanban.service;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -305,6 +307,7 @@ public class KanbanService {
 		}
 
 		System.out.println("in getIssueDetail service "+issueIdx);
+		System.out.println(issue);
 		return issue;
 	}
 	
@@ -385,26 +388,51 @@ public class KanbanService {
 	}
 	
 	
-	public boolean insertReply(Reply reply) {
+	public Reply insertReply(Reply reply) {
 		System.out.println("insertReply Service in");
 		System.out.println(reply);		
-		
-		
+
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-
+		Reply re = new Reply();
+		
 		try {
-			
 			result = dao.insertReply(reply) > 0 ? true : false;
+			System.out.println(reply.getIssueRlyIdx());
 			
+			if(result) {
+				re = dao.getReply(reply.getIssueRlyIdx());
+				re.setIssueRlyIdx(reply.getIssueRlyIdx());
+				System.out.println("-------------------------------------");
+				System.out.println(re);
+				System.out.println("date어떻게 나오니?" + re.getCreateDate());
+				System.out.println();
+			}
+			
+			System.out.println("date ?" + re);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		System.out.println("insertReply service : " + result);
-		return result;
+		return re;
 	}
+	
+	public boolean deleteReply(int issuerlyidx) {
+		System.out.println("deleteReply service in");
+		System.out.println("issuerlyidx" +issuerlyidx);
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		try {
+			result = dao.deleteReply(issuerlyidx) > 0 ? true : false;
+			System.out.println("result" + result);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	};
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);

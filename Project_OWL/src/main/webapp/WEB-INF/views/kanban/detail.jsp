@@ -1,38 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- 
-<script>
 
-$(function() {
-	console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-
-	  $('#replyBtn').click (function() {
-		 // console.log('issueIdx' + $('#issueIdxNum').val() );
-		  //console.log('content' + $('#replycontent').val());
-		  //console.log( 'email'  + '${member.email}');
-		  
-		  $.ajax ({
-					url : "InsertReply.do",
-					data : { 'issueIdx' : $('#issueIdxNum').val(), 'content': $('#replycontent').val(), 'creator' : ${member.email}},
-					success : function(data) {
-						console.log('InsertReply in');
-						console.log(data);
-					},error : function() {
-						console.log("InsertReply error");
-						}
-
-					})   
-			 }) 
-		
-})
-
-
-
-
-
-</script>
- -->
 <div class="container-fluid mt-2 hidden" style="padding: 25px;" id="kanbanDetailBox" >	
 	<input type="hidden" id="issueIdxNum">
 	
@@ -133,20 +102,7 @@ $(function() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-row comment-row m-0">
-                                        <div class="p-2">
-                                            <div class="comment_img">C</div>
-                                        </div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium mb-1">Colin
-                                            <span class="text-muted float-right">Jan  16, 2020</span></h6>
-                                            <div class="mb-1 d-block"><span>파이어베이스 알아?</span></div>
-                                            <div class="comment-footer">
-                                                <button type="button" class="btn btn-info btn-sm">Edit</button>
-                                                <button type="button" class="btn btn-secondary btn-sm">Delete</button>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>

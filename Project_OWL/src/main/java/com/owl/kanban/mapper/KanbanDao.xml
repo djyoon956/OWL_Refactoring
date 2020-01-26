@@ -116,7 +116,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM LABEL WHERE LABELIDX =#{labelIdx}
 	</delete>	
 	
-	
 	<update id="updateLabel" parameterType="com.owl.project.dto.Label">
 		UPDATE LABEL SET LABELNAME = #{labelName}, LABELCOLOR =#{labelColor} WHERE LABELIDX = #{labelIdx}
 	</update>
@@ -136,7 +135,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertReply" parameterType="com.owl.kanban.dto.Reply">
 		INSERT INTO issuerly(issueidx, content, creator) VALUE(#{issueIdx}, #{content}, #{creator})
-			
+		<selectKey keyProperty="issueRlyIdx" resultType="int" order ="AFTER">
+	   		select LAST_INSERT_ID()
+	 	</selectKey>
 	</insert>
+	
+	<select id="getReply" resultType="com.owl.kanban.dto.Reply">
+		SELECT CONTENT, CREATEDATE, CREATOR, ISSUEIDX FROM ISSUERLY WHERE issueRlyIdx = #{issueRlyIdx}
+	</select>
+	
+	<delete id="deleteReply">
+		DELETE FROM issuerly WHERE issuerlyidx =#{issuerlyidx}
+	</delete>	
+	
 	
 </mapper>

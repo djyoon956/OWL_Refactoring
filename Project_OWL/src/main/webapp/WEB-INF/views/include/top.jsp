@@ -159,9 +159,20 @@ display: block;
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
- .toggleOption {
+
+  .toggleOption {
 	margin-right:0px;
- 	margin-top:415px;
+ 	margin-top:697px;
+	background: #326295;
+	height: 2081%;
+	width: 310px;
+	position: absolute;
+	right:0;
+	
+	z-index : -20;
+} 
+/*   .toggleOption {
+	margin-right:0px;userEmail
 	background: #326295;
 	height: 100%;
 	width: 310px;
@@ -169,7 +180,9 @@ display: block;
 	right:0;
 	overflow: hidden;
 	z-index : -20;
-}
+} 
+ */
+
  
 #userImg, .coloricon {
 	border: 3px solid #fcf9f5;

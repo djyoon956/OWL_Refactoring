@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +24,8 @@ import com.owl.kanban.dto.Issue.IssueProgressType;
 import com.owl.kanban.dto.Issue.PriorityType;
 import com.owl.kanban.dto.Reply;
 import com.owl.kanban.service.KanbanService;
-import com.owl.notice.dao.NoticeDao;
-import com.owl.notice.dto.Notice;
 import com.owl.project.dto.Label;
 
-import lombok.Setter;
 
 @RestController
 public class KanbanRestController {
@@ -272,6 +267,7 @@ public class KanbanRestController {
 		System.out.println("delete label " + result);
 		return result;
 	}
+	
 	@RequestMapping(value = "CloseIssue.do", method = RequestMethod.POST)
 	public Issue closeIssue(@RequestParam(value = "issueIdx") int issueIdx, Principal principal) {
 		Issue result = service.closeIssue(issueIdx, principal.getName());
@@ -280,14 +276,25 @@ public class KanbanRestController {
 	
 	
 	@RequestMapping(value="InsertReply.do",method = RequestMethod.POST)
-	public boolean insertReply(Reply reply) {
+	public Reply insertReply(Reply reply) {
 		System.out.println("insertReply function in");
 		System.out.println("reply : " + reply);
 		
-		//System.out.println( "seviece에서 온 reply boolean result : " +service.insertReply(reply));
-		return service.insertReply(reply);
+		Reply re = null;
+		re = service.insertReply(reply);
+
+		return re;
 	}
 	
+	
+	@RequestMapping(value="DeleteReply.do", method = RequestMethod.POST)
+	public boolean DeleteReply(@RequestParam(value = "issuerlyidx") int issuerlyidx) {
+		System.out.println("label controller in+++++++++++++++");
+		boolean result = false;
+		result = service.deleteReply(issuerlyidx);
+		System.out.println("delete Reply " + result);
+		return result;
+	}
 	
 	
 }

@@ -48,6 +48,8 @@ public interface KanbanDao {
 	public int deleteIssue(int issueIdx) throws ClassNotFoundException, SQLException;
 
 	public int deleteLabel(int labelIdx) throws ClassNotFoundException, SQLException;
+	
+	public int deleteReply(int issuerlyidx) throws ClassNotFoundException, SQLException;
 
 	public List<File> getIssueFiles(int issueIdx) throws ClassNotFoundException, SQLException;
 
@@ -67,4 +69,5 @@ public interface KanbanDao {
 	
 	public int insertReply(Reply reply) throws ClassNotFoundException, SQLException;
 
+	public Reply getReply(int issueRlyIdx) throws ClassNotFoundException, SQLException;
 }

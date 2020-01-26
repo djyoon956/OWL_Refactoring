@@ -1,6 +1,7 @@
 package com.owl.kanban.dto;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.Getter;
@@ -16,4 +17,8 @@ public class Reply {
 	private String content;
 	private Date createDate;
 	private String creator;
+	
+	public String getWriteDate() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(createDate);
+	}
 }

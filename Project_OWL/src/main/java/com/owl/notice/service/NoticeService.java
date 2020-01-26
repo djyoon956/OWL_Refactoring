@@ -85,7 +85,7 @@ public class NoticeService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+			System.out.println("날짜는?" + notices);
 		return notices;
 	}
 

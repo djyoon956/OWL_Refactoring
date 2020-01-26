@@ -367,23 +367,43 @@
 
 
 	  $('#replyBtn').click (function() {
-
-		    console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+		
+		  console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 		 console.log('issueIdx' + $('#issueIdxNum').val() );
-		  console.log('content' + $('#replycontent').val());
-		  console.log( 'email'  + '${member.email}');
-		  
+		 console.log('content' + $('#replycontent').val());
+		  //console.log( 'email'  + '${member.name}');
+		 // ${member.name}
 		  $.ajax ({
 			 		type :"POST",
 					url : "InsertReply.do",
 					data : { 'issueIdx' : $('#issueIdxNum').val()
 								, 'content': $('#replycontent').val()
-								, 'creator' : '${member.email}'},
+								, 'creator' : '${member.name}'},
 					success : function(data) {
+						  $('#replycontent').val("");
 						console.log('InsertReply in');
 						console.log(data);
+						let name = data.creator.substring(0,1);
+						//console.log('name은?' + name);
+					let control = '<div class="d-flex flex-row comment-row m-0" id="'+data.issueRlyIdx+'Reply">'
+								+ '	<div class="p-2">'
+								+ '		<div class="comment_img">'+name+'</div>'
+								+ '	</div>'
+								+ '	 <div class="comment-text w-100">'
+								+ '		<h6 class="font-medium mb-1">' +data.creator
+								+ '		<span class="text-muted float-right">'+data.createDate+'</span></h6>'
+								+ '		<div class="mb-1 d-block"><span>'+data.content+'</span></div>'
+								+ '		<div class="comment-footer">'
+								+ '		<button type="button" class="btn btn-info btn-sm">Edit</button>'
+								+ '		<button type="button" class="btn btn-secondary btn-sm" onclick="deleteReply('+data.issueRlyIdx+')">Delete</button>'
+								+ '		</div>'
+								+ '	</div>'
+								+ '</div>';
+
+						$('#issueDetailComment').append(control);
+						
 					},error : function() {
-						console.log("InsertReply error");
+			        	errorAlert("InsertReply error");
 						}
 
 					})   
