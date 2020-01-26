@@ -33,8 +33,6 @@
 		      });
 
 
-
-			
 			$("#InsertIssueBtn").on("click", function () {
 
 				console.log('InsertIssueBtn click');

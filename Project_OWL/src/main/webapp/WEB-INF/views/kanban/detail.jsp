@@ -1,12 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- 
+<script>
 
-<style>
-    
-</style>
+$(function() {
+	console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 
-<div class="container-fluid mt-2 hidden" style="padding: 25px;" id="kanbanDetailBox" >
+	  $('#replyBtn').click (function() {
+		 // console.log('issueIdx' + $('#issueIdxNum').val() );
+		  //console.log('content' + $('#replycontent').val());
+		  //console.log( 'email'  + '${member.email}');
+		  
+		  $.ajax ({
+					url : "InsertReply.do",
+					data : { 'issueIdx' : $('#issueIdxNum').val(), 'content': $('#replycontent').val(), 'creator' : ${member.email}},
+					success : function(data) {
+						console.log('InsertReply in');
+						console.log(data);
+					},error : function() {
+						console.log("InsertReply error");
+						}
+
+					})   
+			 }) 
+		
+})
+
+
+
+
+
+</script>
+ -->
+<div class="container-fluid mt-2 hidden" style="padding: 25px;" id="kanbanDetailBox" >	
+	<input type="hidden" id="issueIdxNum">
+	
     <div class="row">
         <div class="col-8">
             <div class="card">
@@ -123,11 +152,26 @@
                         </div>
                     </div>
                 </div>
+                <br>
+
+<!--  
                 <div class="card-body mt-0 p-0">
                     <%-- <jsp:include page="./Reply.jsp"/> --%>
-                    <!-- <textarea class="form-control bg-light w-100" rows="10" cols="10" placeholder="Leave a comment" name="" id="issueReply"></textarea> -->
+                    <!-- <textarea class="form-control bg-light w-100" rows="10" cols="10" placeholder="Leave a comment" name="" id="issueReply"></textarea> 
                     <button class="btn btn-secondary mt-1 mr-1">comment</button>
                     <button class="btn btn-secondary mt-1 ml-1"><i class="fas fa-at"></i></button>
+                </div>
+        -->        
+                  <div class="row">
+					<form name="reply">
+						<div class="col-4" >
+							<i class="fab fa-replyd fa-4x"></i>
+						</div>
+						<div class="col-8 mt-1" style="text-align: left">
+						<textarea id="replycontent" name="replycontent" rows="2" cols="30" style="resize: none;"></textarea>
+						</div>
+						<button class="btn btn-secondary mr-1"  id="replyBtn">Comment</button>
+				</form>
                 </div>
             </div>
         </div>
@@ -175,6 +219,6 @@
     </div>
     <div class="text-center">
     	<button class="btn btn-primary mr-1" onclick="changeKanbanView('list')"><i class="fas fa-chevron-left"></i>뒤로가기</button>
-        <button class="btn btn-primary ml-1">수정</button>
+        <button class="btn btn-primary ml-1" >수정</button>
     </div>
 </div>
