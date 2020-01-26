@@ -55,7 +55,7 @@
 				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
 				console.log($('#multipartFile').val()); 
 				*/
-
+//console.log('프로젝트아이디엑스 값 나오니???????' + '${project.projectIdx}');
 				console.log('labelIdx :' + $('#labelIdx').val());
 				
 			    let formData = new FormData();

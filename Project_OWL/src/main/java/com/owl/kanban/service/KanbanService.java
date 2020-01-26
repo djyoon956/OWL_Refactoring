@@ -171,6 +171,7 @@ public class KanbanService {
 	}
 	
 	public List<Issue> getIssue(int projectIdx){
+		//System.out.println("여기서 projectIdx 는??????" + projectIdx) ;
 		KanbanDao dao = getKanbanDao();
 		List<Issue> issue = null;
 		

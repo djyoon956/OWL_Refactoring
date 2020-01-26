@@ -122,6 +122,7 @@ function deleteColumn(obj){
 
 
 function addKanbanIssue(colIdx,obj){
+	
 
 	console.log("addKanbanIssue in");
 	console.log("label" + obj.labelIdx);

@@ -170,7 +170,7 @@ $(function() {
 						<div class="col-8 mt-1" style="text-align: left">
 						<textarea id="replycontent" name="replycontent" rows="2" cols="30" style="resize: none;"></textarea>
 						</div>
-						<button class="btn btn-secondary mr-1"  id="replyBtn">Comment</button>
+						<button class="btn btn-secondary mr-1" id="replyBtn">Comment</button>
 				</form>
                 </div>
             </div>

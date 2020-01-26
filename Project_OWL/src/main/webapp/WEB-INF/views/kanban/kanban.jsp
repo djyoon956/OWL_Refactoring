@@ -366,16 +366,12 @@
 
 
 
-
-
-
-
 	  $('#replyBtn').click (function() {
 
 		    console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-		 // console.log('issueIdx' + $('#issueIdxNum').val() );
-		  //console.log('content' + $('#replycontent').val());
-		  //console.log( 'email'  + '${member.email}');
+		 console.log('issueIdx' + $('#issueIdxNum').val() );
+		  console.log('content' + $('#replycontent').val());
+		  console.log( 'email'  + '${member.email}');
 		  
 		  $.ajax ({
 					url : "InsertReply.do",
@@ -389,8 +385,6 @@
 
 					})   
 			 }) 
-    
-
 
 });
 </script>

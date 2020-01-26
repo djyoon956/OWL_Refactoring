@@ -52,8 +52,10 @@ public class KanbanRestController {
 	@RequestMapping("GetColumn.do")
 	public List<Column> getColum(int projectIdx) {
 		System.out.println("-------------------------");
+		
 		List<Column> columns= service.getColum(projectIdx);
-		System.out.println(columns);
+		System.out.println("여기니?");
+		System.out.println("???"+columns);
 		return columns;		
 	}
 	
@@ -119,7 +121,7 @@ public class KanbanRestController {
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							, @RequestParam(value = "colIdx") int colIdx
 							, Principal principal, HttpServletRequest request) {	
-		
+
 		/*
 		System.out.println("in InsertIssue.do");
 		System.out.println("insertIssue controller in");
@@ -226,9 +228,10 @@ public class KanbanRestController {
 		return service.getIssueDetail(issueIdx);
 	}
 	
+	
+	
 	@RequestMapping(value = "MoveIssue.do", method = RequestMethod.POST)
 	public boolean moveIssue(int projectIdx, int targetIssueIdx, int columnIdx, int[] issues, Principal principal) {
-
 		return service.updateMoveIssue(projectIdx, targetIssueIdx, columnIdx, issues, principal.getName());
 	}
 	
@@ -238,6 +241,7 @@ public class KanbanRestController {
 	public int UpdateLabel(Label label) {
 		System.out.println("UpdateLabel in");
 		
+		System.out.println(label.getProjectIdx());
 		System.out.println(label.getLabelIdx());
 		System.out.println(label.getLabelColor());
 		System.out.println(label.getLabelName());
@@ -286,7 +290,7 @@ public class KanbanRestController {
 		re.setCreator(reply.getCreator());
 	
 		
-			System.out.println( "seviece에서 온 reply boolean result : " +service.insertReply(reply));
+			//System.out.println( "seviece에서 온 reply boolean result : " +service.insertReply(reply));
 		
 		return service.insertReply(reply);
 	}
