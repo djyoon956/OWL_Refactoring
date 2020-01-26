@@ -279,19 +279,12 @@ public class KanbanRestController {
 	}
 	
 	
-	@RequestMapping("InsertReply.do")
+	@RequestMapping(value="InsertReply.do",method = RequestMethod.POST)
 	public boolean insertReply(Reply reply) {
 		System.out.println("insertReply function in");
 		System.out.println("reply : " + reply);
-	
-		Reply re = new Reply();
-		re.setIssueIdx(reply.getIssueIdx());
-		re.setContent(reply.getContent());
-		re.setCreator(reply.getCreator());
-	
 		
-			//System.out.println( "seviece에서 온 reply boolean result : " +service.insertReply(reply));
-		
+		//System.out.println( "seviece에서 온 reply boolean result : " +service.insertReply(reply));
 		return service.insertReply(reply);
 	}
 	

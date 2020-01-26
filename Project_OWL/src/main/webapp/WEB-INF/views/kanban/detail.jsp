@@ -163,7 +163,7 @@ $(function() {
                 </div>
         -->        
                   <div class="row">
-					<form name="reply">
+					
 						<div class="col-4" >
 							<i class="fab fa-replyd fa-4x"></i>
 						</div>
@@ -171,7 +171,7 @@ $(function() {
 						<textarea id="replycontent" name="replycontent" rows="2" cols="30" style="resize: none;"></textarea>
 						</div>
 						<button class="btn btn-secondary mr-1" id="replyBtn">Comment</button>
-				</form>
+				
                 </div>
             </div>
         </div>

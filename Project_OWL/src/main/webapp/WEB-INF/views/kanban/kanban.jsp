@@ -374,8 +374,11 @@
 		  console.log( 'email'  + '${member.email}');
 		  
 		  $.ajax ({
+			 		type :"POST",
 					url : "InsertReply.do",
-					data : { 'issueIdx' : $('#issueIdxNum').val(), 'content': $('#replycontent').val(), 'creator' : '${member.email}'},
+					data : { 'issueIdx' : $('#issueIdxNum').val()
+								, 'content': $('#replycontent').val()
+								, 'creator' : '${member.email}'},
 					success : function(data) {
 						console.log('InsertReply in');
 						console.log(data);
