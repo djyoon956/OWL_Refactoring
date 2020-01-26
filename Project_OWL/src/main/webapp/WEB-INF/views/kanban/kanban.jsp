@@ -365,6 +365,33 @@
     });
 
 
+
+
+
+
+
+	  $('#replyBtn').click (function() {
+
+		    console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+		 // console.log('issueIdx' + $('#issueIdxNum').val() );
+		  //console.log('content' + $('#replycontent').val());
+		  //console.log( 'email'  + '${member.email}');
+		  
+		  $.ajax ({
+					url : "InsertReply.do",
+					data : { 'issueIdx' : $('#issueIdxNum').val(), 'content': $('#replycontent').val(), 'creator' : '${member.email}'},
+					success : function(data) {
+						console.log('InsertReply in');
+						console.log(data);
+					},error : function() {
+						console.log("InsertReply error");
+						}
+
+					})   
+			 }) 
+    
+
+
 });
 </script>
 

@@ -194,7 +194,9 @@ function deleteLabel(labelidx) {
 
 function setKanbanDetail(issueIdx){
 	console.log("in setKanbanDetail     sfdsf");
-	console.log(projectIdx);
+//	console.log(projectIdx);
+	
+
 	$.ajax({
 			type: "POST",
 		    url: "GetIssueDetail.do",
@@ -202,6 +204,9 @@ function setKanbanDetail(issueIdx){
 			success : function (data) {
 				console.log("GetIssueDetail success");
 				console.log(data);
+				
+				$("#issueIdxNum").val(issueIdx);
+
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
 					$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 				
@@ -280,7 +285,23 @@ function setKanbanDetail(issueIdx){
 	})
 
 changeKanbanView("detail");
+
+
 }
+
+
+
+/*function InsertReply(){
+	
+	 $.ajax ({
+
+			url : "InsertReply.do",
+			data : {'issueIdx' : issueIdx, 'content': $('#replycontent').val(), }
+
+			})  
+
+}*/
+
 
 function closeIssue(issueIdx) {
 	   $.ajax({
@@ -324,7 +345,6 @@ function editLabel(idx, color, name) {
 	$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', color);
 
 	//$('#'+idx+'Label').attr('style', "background-color:#CBD7E3");
-
 	
 	$('#'+idx+'Label').find('.edit').addClass("hidden");
 	//css('display', 'none');

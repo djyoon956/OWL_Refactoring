@@ -24,6 +24,7 @@ import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
 import com.owl.kanban.dto.Issue.IssueProgressType;
 import com.owl.kanban.dto.Issue.PriorityType;
+import com.owl.kanban.dto.Reply;
 import com.owl.kanban.service.KanbanService;
 import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.Notice;
@@ -272,5 +273,24 @@ public class KanbanRestController {
 		Issue result = service.closeIssue(issueIdx, principal.getName());
 		return result;
 	}
+	
+	
+	@RequestMapping("InsertReply.do")
+	public boolean insertReply(Reply reply) {
+		System.out.println("insertReply function in");
+		System.out.println("reply : " + reply);
+	
+		Reply re = new Reply();
+		re.setIssueIdx(reply.getIssueIdx());
+		re.setContent(reply.getContent());
+		re.setCreator(reply.getCreator());
+	
+		
+			System.out.println( "seviece에서 온 reply boolean result : " +service.insertReply(reply));
+		
+		return service.insertReply(reply);
+	}
+	
+	
 	
 }

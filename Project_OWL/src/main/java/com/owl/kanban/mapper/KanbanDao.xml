@@ -132,4 +132,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getColumnName" resultType="String">
 		SELECT COLNAME FROM owl.COLNAME WHERE PROJECTIDX= #{param1} 	AND COLIDX= #{param2}
 	</select>
+	
+	
+	<insert id="insertReply" parameterType="com.owl.kanban.dto.Reply">
+		INSERT INTO issuerly(issueidx, content, creator) VALUE(#{issueIdx}, #{content}, #{creator})
+			<selectKey keyProperty="issueRlyIdx" resultType="int" order="AFTER">
+				SELECT LAST_INSERT_ID()
+			</selectKey>
+	</insert>
+	
 </mapper>

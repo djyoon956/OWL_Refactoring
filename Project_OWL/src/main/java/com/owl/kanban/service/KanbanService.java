@@ -17,6 +17,7 @@ import com.owl.helper.UploadHelper;
 import com.owl.kanban.dao.KanbanDao;
 import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
+import com.owl.kanban.dto.Reply;
 import com.owl.member.dto.Member;
 import com.owl.notice.dto.File;
 import com.owl.project.dao.ProjectDao;
@@ -380,6 +381,28 @@ public class KanbanService {
 	
 	private void insertLog(int issueIdx, String log, String email, KanbanDao dao) throws ClassNotFoundException, SQLException {
 		dao.insertIssueLog(issueIdx, log, email);
+	}
+	
+	
+	public boolean insertReply(Reply reply) {
+		System.out.println("insertReply Service in");
+		System.out.println(reply);		
+		
+		
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+
+		try {
+			
+			result = dao.insertReply(reply) > 0 ? true : false;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println("insertReply service : " + result);
+		return result;
 	}
 	
 	private KanbanDao getKanbanDao() {
