@@ -13,7 +13,6 @@ function addLabel(lbidx, lbcolor, lbnm) {
             +  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
             +  '</div></div><hr>';
 
-
 $('#labelList').append(lablist);
 
 }
@@ -245,7 +244,7 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailActivity").append(control);
 					});
 					
-					$("#issueDetailComment").empty();
+					//$("#issueDetailComment").empty();
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 						let creatornm =  element.creator.substring(0,1);
@@ -356,11 +355,9 @@ function editLabel(idx, color, name) {
 		         console.log("deleteReply success in");
 		         
 		           $("#"+replyIdx+"Reply").remove();
-
-		         
+  
 		      }, error : function() {
-		         console.log("deleteLabel error");
-		            
+		         console.log("deleteLabel error"); 
 		         }
 		      })
 		   }	
