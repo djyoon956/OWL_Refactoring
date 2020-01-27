@@ -362,3 +362,6 @@ function editLabel(idx, color, name) {
 		      })
 		   }	
 	
+	$("#editIssueDetailBtn").click(function() {
+		
+	});

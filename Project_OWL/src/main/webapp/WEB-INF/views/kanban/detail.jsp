@@ -170,6 +170,6 @@
     </div>
     <div class="text-center">
     	<button class="btn btn-primary mr-1" onclick="changeKanbanView('list')"><i class="fas fa-chevron-left"></i>뒤로가기</button>
-        <button class="btn btn-primary ml-1" >수정</button>
+        <button class="btn btn-primary ml-1" id="editIssueDetailBtn">수정</button>
     </div>
 </div>
