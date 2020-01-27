@@ -29,7 +29,7 @@
     	background-color: red;
     	font-weight: bold;
 	}
-	.p-urgent:after{
+	.urgent:after{
 		content: "Urgent"
 	}
 	.priorityBadge.high{
