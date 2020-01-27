@@ -88,7 +88,7 @@
                         <div id="kanbanCommentBox" class=" collapse show multi-collapse">
                             <div class="card-body mt-0" style="border: 1px solid; border-color:#e9e9e9; border-radius: 0.25rem;background-color:#e9e9e9;">
                                 <div class="comment-widgets scrollable" id="issueDetailComment">
-                                    <div class="d-flex flex-row comment-row m-0">
+<!--                                     <div class="d-flex flex-row comment-row m-0 mb-1">
                                         <div class="p-2">
                                             <div class="comment_img">C</div>
                                         </div>
@@ -101,8 +101,7 @@
                                                 <button type="button" class="btn btn-secondary btn-sm">Delete</button>
                                             </div>
                                         </div>
-                                    </div>
-
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -119,8 +118,8 @@
                 </div>
         -->        
                   <div class="row">
-						<i class="fab fa-replyd fa-5x" style="margin-left: 20px; margin-right: 20px"></i>
-						<textarea id="replycontent" name="replycontent" rows="2" cols="115" style="resize: none;" ></textarea>
+						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 20px; margin-right: 20px"></i></span>
+						<textarea id="replycontent" name="replycontent" rows="2" cols="110" style="resize: none;" ></textarea>
 						<button class="btn btn-secondary mr-1" id="replyBtn" style="margin-left: 5px">Comment</button>
 				
                 </div>
@@ -170,6 +169,6 @@
     </div>
     <div class="text-center">
     	<button class="btn btn-primary mr-1" onclick="changeKanbanView('list')"><i class="fas fa-chevron-left"></i>뒤로가기</button>
-        <button class="btn btn-primary ml-1" >수정</button>
+        <button class="btn btn-primary ml-1" id="editIssueDetailBtn">수정</button>
     </div>
 </div>
