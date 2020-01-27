@@ -154,3 +154,12 @@ text-align:center;
 .fileDefaultImage{
 	height: 70px;
 }
+
+.driveViewBtn {
+	background: transparent;
+	color: #326295;
+}
+.driveViewBtn.active{
+	background: #326295;
+	color: white;
+}

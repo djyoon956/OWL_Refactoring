@@ -1,20 +1,51 @@
-function initDrive(projectIdx){
+let driveViewType ;
+function initDrive(projectIdx){	
 	$("#driveUploadFile").fileupload({
 		url : "DriveFileUpload.do",
-		formData : {projectIdx : projectIdx
-							, folderIdx : $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1] },
+		formData : {projectIdx : projectIdx , folderIdx:1},
+		add: function(e, data){
+			$("#driveUploadFile").fileupload( 'option', 'formData').folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+			data.submit();
+		},
 		done : function(e, data){
 			console.log("in done");
-			let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
-			console.log(folderIdx);
-			setFolderData(folderIdx);
+			callFolderData();
+		},
+		fail : function(){
+			console.log("driveUploadFile fail");
 		}
+	});
+	
+	$("#driveTable").DataTable({
+	 	stateSave: true, // 페이지 상태 저장
+	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        fixedColumns: true,
+        autoWidth: false
 	});
 
 	$('#jstree').on( "select_node.jstree", function(event, data){
-	     let folderIdx = data.selected[data.selected.length - 1];
-	     setFolderData(folderIdx);
+	    setFolderData(data.node.id, data.node.text);
     });
+	
+	$(".driveViewBtn").click(function(){
+		$(this).attr("disabled", true);
+		$(this).addClass("active");
+		driveViewType= $(this).attr("id");
+		if(driveViewType == "tableView"){
+			$("#iconView").removeClass("active");
+			$("#iconView").attr("disabled", false);
+			$("#driveTableViewBox").removeClass("hidden");
+			$("#driveIconViewBox").addClass("hidden");
+		}
+		// icon View
+		else{
+			$("#tableView").removeClass("active");
+			$("#tableView").attr("disabled", false);
+			$("#driveIconViewBox").removeClass("hidden");
+			$("#driveTableViewBox").addClass("hidden");
+		}		
+		callFolderData();
+	})
 }
 
 var rowCount=0;
@@ -148,16 +179,27 @@ function checkBox(box) {
 	}
 }
 
-function setFolderData(folderIdx) {
-	console.log("in setFolderData : "+folderIdx);
+function callFolderData(){
+	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
+	setFolderData(folderIdx, folderName);
+}
+
+function setFolderData(folderIdx, folderName) {
 	$.ajax({
 		url : "GetFolderData.do",
 		data : { folderIdx : folderIdx },
 		success : function(data){
 			console.log("in GetFolderData success");
-			$("#driveBox").empty();
+			console.log(data);
+			let targetBox = driveViewType =="tableView"? $("#driveTableViewBox"): $("#driveIconViewBox");
+			console.log("targetBox");
+			console.log(targetBox);
+			
+			targetBox.empty();
 			let controls = [];
 			if(data.length == 0 ){
+				$("#directoryName").text("[ "+folderName+" ] folder");
 				$("#emptyDriveBox").removeClass("hidden");
 				return;
 			}
@@ -165,17 +207,7 @@ function setFolderData(folderIdx) {
 			$("#emptyDriveBox").addClass("hidden");
 			$.each(data, function(index, element) {
 				let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
-				let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;
-
-				if((index)%3 == 0 ){
-					let row = $("<div class='row'></div>");
-					row.append(controls[0]);
-					row.append(controls[1]);
-					row.append(controls[2]);
-					controls = [];
-					
-					$("#driveBox").append(row);
-				}
+				let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
 				
 				let control = '<div class="col-sm-4">'
 								+ '	<div class="card driveCard">'
@@ -199,6 +231,16 @@ function setFolderData(folderIdx) {
 								+ '</div>';
 				
 				controls.push(control);
+				
+				if((index+1)%3 == 0){
+					let row = $("<div class='row'></div>");
+					row.append(controls[0]);
+					console.log(controls[0]);
+					row.append(controls[1]);
+					row.append(controls[2]);
+					targetBox.append(row);
+					controls = [];
+				}
 			})
 		},
 		error : function(){

@@ -21,7 +21,6 @@ function addFolder(folder) {
 }
 
 $(function(){
-	
 	initDrive("${project.projectIdx}");
 	$.ajax({
 		url:"DriveList.do",
@@ -73,7 +72,7 @@ $(function(){
 				});
 
 			// default folder
-			setFolderData(folderList[0].id);
+			setFolderData(folderList[0].id,folderList[0].text);
 			
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
@@ -232,8 +231,12 @@ function sendFileToServer(formData,status){
 				<button type="button" class="driveBtn btn-primary" onclick="Allcheck()">전체선택</button>
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<div class="drivegroup">
-					<a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
-					<a><i class="fas fa-th-large fa-2x"></i></a>
+					<button class="btn driveViewBtn" id="tableView">
+						<i class="fas fa-list fa-2x"></i>
+					</button>
+					<button class="btn driveViewBtn active" id="iconView" disabled>
+						<i class="fas fa-th-large fa-2x"></i>
+					</button>
 				</div>
 			</div>
 			
@@ -253,9 +256,24 @@ function sendFileToServer(formData,status){
 					<div class="h-100 text-center mt-5 hidden"  id="emptyDriveBox">
 						<img src="resources/images/drive/notFound.png" style="height: 250px">
 						<h1 class="text-muted mt-5">File Not Found.</h1>
-						<h4>Please upload a file.</h4>
+						<h4 >Please upload a file in <span id="directoryName"></span></h4>
 					</div>
-					<div id="driveBox"></div>
+					<div id="driveIconViewBox"></div>
+					<div id="driveTableViewBox" class="hidden">
+						<table id="driveTable" class="table table-hover table-bordered text-center">
+							<thead>
+								<tr>
+									<th>file name</th>
+									<th>create date</th>
+									<th>size</th>
+								</tr>
+							</thead>
+							
+							<tbody>
+							
+							</tbody>
+						</table>
+					</div>
 					<!-- <div class="row">
 							<div class="col-sm-4">
 								<div class="card driveCard"  >

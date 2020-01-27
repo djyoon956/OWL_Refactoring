@@ -61,7 +61,7 @@ public class DriveRestController {
 	}
 
 	@RequestMapping("DriveFileUpload.do")
-	public void driveFileUpload(MultipartFile driveUploadFile, int projectIdx, String folderIdx, HttpServletRequest request, Principal principal) {
+	public void driveFileUpload(MultipartFile driveUploadFile, int projectIdx, int folderIdx, HttpServletRequest request, Principal principal) {
 		System.out.println("in driveFileUpload");
 		System.out.println(projectIdx);
 		System.out.println(folderIdx);
@@ -71,7 +71,7 @@ public class DriveRestController {
 
 		DriveFile driveFile = new DriveFile();
 		driveFile.setCreator(principal.getName());
-		driveFile.setDriveIdx(Integer.parseInt(folderIdx));
+		driveFile.setDriveIdx(folderIdx);
 		driveFile.setFileName(fileName);
 		driveFile.setFileSize((int) (driveUploadFile.getSize() / 1024));
 		
