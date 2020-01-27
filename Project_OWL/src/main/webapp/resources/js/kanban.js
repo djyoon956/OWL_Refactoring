@@ -248,26 +248,30 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 						let creatornm =  element.creator.substring(0,1);
-						let control = '<div class="d-flex flex-row comment-row m-0" id="'+element.issueRlyIdx+'Reply">'
+						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
 										+ '		<div class="comment_img">'+creatornm+'</div>'
 										+ '	</div>'
 										+ '	 <div class="comment-text w-100">'
-										+ '		<h6 class="font-medium mb-1">'+element.creator
+										+ '		<h6 class="font-medium mb-2">'+element.creator
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1 d-block"><span>'+element.content+'</span></div>'
-										+ '		<div class="comment-footer">'
+										+ '		<div class="comment-footer float-right">'
 										+ '		<button type="button" class="btn btn-info btn-sm">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
 										+ '		</div>'
 										+ '	</div>'
 										+ '</div>';
-						$("#issueDetailComment").append(control);
+						$("#issueDetailComment").prepend(control);
 					});
 					
 					$("#issueDetailAssignees").text(data.assigned);
 					
+					
+	
+					
 					if(data.labelIdx > 0){
+
 						$("#issueDetailLabel").text(data.labelName);
 						$("#issueDetailLabel").css("background-color", data.labelColor);					
 					}

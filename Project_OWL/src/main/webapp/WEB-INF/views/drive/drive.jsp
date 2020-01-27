@@ -72,6 +72,9 @@ $(function(){
 					"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow", "checkbox"]
 				});
 
+			// default folder
+			setFolderData(folderList[0].id);
+			
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
 				sel = ref.get_selected();
@@ -252,6 +255,7 @@ function sendFileToServer(formData,status){
 						<h1 class="text-muted mt-5">File Not Found.</h1>
 						<h4>Please upload a file.</h4>
 					</div>
+					<div id="driveBox"></div>
 					<!-- <div class="row">
 							<div class="col-sm-4">
 								<div class="card driveCard"  >
