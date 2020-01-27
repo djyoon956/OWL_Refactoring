@@ -14,11 +14,23 @@
     <meta name="author" content="">
     <title>OWL</title>
     <jsp:include page="include/headTag.jsp"/>
+    
 <style type="text/css">
+
 /* 첫 메인 css */
 .mainBack {
 background-color:#326295;
 }
+
+.introIcon {
+ 	border-radius:50%; 
+ 	margin-bottom: 20px;
+}
+
+.subfont {
+	font-size: 16px;
+}
+
 .e{
   position: absolute;
   left:50%;
@@ -314,6 +326,7 @@ background-color:#326295;
                 }, 1000)
          });
 	      openDialog();
+
 	})
 
 	function openDialog() {
@@ -396,16 +409,58 @@ background-color:#326295;
 			1.section DashBoard
 	</div>
 	<div class="page-wrapper" style="margin-left: 0; width: 100%; ; height:470px;">
-			2.section Calendar
+		<div class="offset-1">
+			<img src="resources/images/indexImage/CalendarEx.JPG" height="278px;" class="float-right" style="margin-right:8.33333%;" >
+			<h2>캘린더</h2> 
+		
+			 </div>
 	</div>
 	<div class="page-wrapper" style="margin-left: 0; width: 100%; ; height:470px;">
-			3.section Kanban
+			<div class="offset-1">
+			<img src="resources/images/indexImage/kanbanExample.png" height="278px;" class="float-right" style="margin-right:8.33333%;  box-shadow:0 10px 20px rgba(74,115,159,0.29); border-radius: 1rem; padding:4px;" >
+			<h2>프로젝트 멤버와 함께 칸반보드</h2> 
+			<h5>진행상황을 한눈에 볼 수 있습니다.</h5>
+			<h5>프로젝트를 효율적으로 진행할 수 있도록 도와줍니다.</h5>
+			<button class="btn btn-primary mt-1">시작하기 →</button>
+			 </div>
 	</div>
 	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;" >
 			4.section Drive
 	</div>
-	<div class="page-wrapper" style="margin-left: 0; width: 100%;height:470px;">
-			5.section 사이트 전반적인 설명
+	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;">
+		<div class="text-center" style="margin-bottom: 50px;"><h1>OWL YOUR WAY !</h1></div>
+	
+	<div class="row text-center" style="padding-left: 200px; padding-right:200px; margin-bottom: 30px;">
+	<div class="col-3">
+		<img class="introIcon" src="resources/images/indexIcon/global.png"  height="260" width="260" >
+		<h2>Team Work</h2>
+		<span class="subfont">OWL을 사용하면 팀 구성이 쉽고 </span><br>
+		<span class="subfont">어디서든 팀원간의 소통이 가능합니다</span>
+	</div>
+	<div class="col-3">
+		<img class="introIcon" src="resources/images/indexIcon/team.png"  height="260" width="260" >
+		<h2>Customizing</h2>
+		<span class="subfont">개인별 혹은 프로젝트별로 </span><br>
+		<span class="subfont">원하는대로 커스터마이징이 가능합니다</span>
+	</div>
+	<div class="col-3">
+		  <img class="introIcon" src="resources/images/indexIcon/chat.png"  height="260" width="260">
+		<h2>Chatting</h2>
+		<span class="subfont">일대일, 프로젝트별, 다수의 사람들과</span><br>
+		<span class="subfont">다양한 채팅을 즐겨보세요</span>
+	</div>
+	<div class="col-3">
+		 <img class="introIcon" src="resources/images/indexIcon/idea.png" height="260" width="260">
+		<h2>Alarm</h2>
+		<span class="subfont">알람을 통해서 프로젝트내에서 </span><br>
+		<span class="subfont">업무효율을 높여보세요</span>
+	</div>
+	
+      
+      
+    
+     
+      </div>
 	</div>
 	
 	

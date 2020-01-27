@@ -6,6 +6,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertFolder" parameterType="com.owl.drive.dto.DriveFolder">
 			INSERT INTO DRIVEFOLDER(FOLDERNAME, REF, DEPTH, PROJECTIDX) 
 			VALUES(#{folderName}, #{ref}, #{depth}, #{projectIdx})
+	</insert>
+	
+	<insert id="insertFile" parameterType="com.owl.drive.dto.DriveFile">
+		INSERT INTO owl.DRIVEFILE (FILENAME, FILESIZE, CREATOR, DRIVEIDX) 
+		VALUES(#{fileName}, #{fileSize}, #{creator}, #{driveIdx})
 	</insert>	
 
 	<select id="getDriveList"  resultType="com.owl.drive.dto.DriveFolder" parameterType="int">

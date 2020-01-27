@@ -2,10 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script src="resources/plugin/fileUpload/jquery.fileupload.js"></script>
+<script src="resources/plugin/fileUpload/jquery.iframe-transport.js"></script>
+<script src="resources/plugin/fileUpload/jquery.ui.widget.js"></script>
 <link href="resources/css/drive.css" rel="stylesheet">
 <script src="resources/js/drive.js"></script>
 <script>
 $(function(){
+	initDrive("${project.projectIdx}");
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
@@ -203,8 +207,8 @@ function makeNewFolder(){
 					<div class="defaultDriveMenu">
 				<button type="button" class="driveBtn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;
 				<div class="filebox" style="display:inline;">
-					<input type="file" id="driveFile">
-					<label for="driveFile" style="cursor: pointer; margin-bottom: 0px;"
+					<input type="file" id="driveUploadFile" name="driveUploadFile">
+					<label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
 						class="driveBtn btn-primary">업로드</label>&nbsp;&nbsp;
 				</div>
 				<button type="button" class="driveBtn btn-primary" onclick="Allcheck()">전체선택</button>
