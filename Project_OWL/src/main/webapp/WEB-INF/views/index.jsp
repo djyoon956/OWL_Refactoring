@@ -321,6 +321,9 @@ background-color:#326295;
 .driveul li:before {
   content: '✓   ';
 }
+.fadein {
+    opacity:0;
+}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -337,7 +340,19 @@ background-color:#326295;
                 }, 1000)
          });
 	      openDialog();
-
+	      
+	      $(window).scroll( function(){
+	          $('.fadein').each( function(i){
+	              
+	              var bottom_of_element = $(this).offset().top + $(this).outerHeight();
+	              var bottom_of_window = $(window).scrollTop() + $(window).height();
+	              
+	              if( bottom_of_window > bottom_of_element ){
+	                  $(this).animate({'opacity':'1'},500);
+	              }
+	              
+	          }); 
+	      });
 	})
 
 	function openDialog() {
@@ -426,7 +441,7 @@ background-color:#326295;
 		
 			 </div>
 	</div>
-	<div class="page-wrapper" style="margin-left: 0; width: 100%; ; height:470px;">
+	<div class="page-wrapper fadein" style="margin-left: 0; width: 100%; ; height:470px;">
 			<div class="offset-1">
 			<img src="resources/images/indexImage/kanbanExample.png" height="278px;" class="float-right indexImgBox" style="margin-right:8.33333%; padding:4px; padding-left:12px;" >
 			<h2>프로젝트 멤버와 함께 칸반보드</h2> 
