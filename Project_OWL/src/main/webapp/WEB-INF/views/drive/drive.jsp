@@ -38,17 +38,7 @@ $(function(){
 						"check_callback" : true,
 						'force_text' : true,
 						"themes" : { "stripes" : true },
-					    'data' : [folder,
-					        {
-					         'text' : '새 폴더',
-					         'state' : {
-					           'opened' : true
-					         },
-					         'children' : [
-					           { 'text' : '폴더1' },
-					           '폴더2'
-					         ]
-					      }]
+					    'data' : [folder]
 					  },
 					"types" : {
 						"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
@@ -56,7 +46,8 @@ $(function(){
 						"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
 					},
 					 "checkbox" : {
-						    "keep_selected_style" : false
+						    "keep_selected_style" : false,
+						    "three_state" : false
 						  },
 					"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow", "checkbox"]
 				});
@@ -64,10 +55,7 @@ $(function(){
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
 				sel = ref.get_selected();
-				if(!sel.length) {
-					sel = null;
-					sel = ref.create_node(sel, {"type":"root"});
-				}
+				if(!sel.length) { return false; }
 				sel = sel[0];
 				sel = ref.create_node(sel, {"type":"default"});
 				if(sel) {
