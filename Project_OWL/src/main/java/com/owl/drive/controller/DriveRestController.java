@@ -34,20 +34,19 @@ public class DriveRestController {
 	}
 
 	@RequestMapping(value = "insertFolder.do")
-	public boolean insertFolder(@RequestParam(value = "text") String folderName,
-								@RequestParam(value = "projectIdx") int projectIdx,
-								@RequestParam(value = "theRef") int ref,
-								DriveFolder drivefolder, HttpServletRequest request) {
+	public boolean insertFolder(DriveFolder drivefolder, HttpServletRequest request) {
 		boolean result = false;
+		System.out.println(drivefolder.getFolderName());
+		System.out.println(drivefolder.getProjectIdx());
+		System.out.println(drivefolder.getRef());
 		try {
-		System.out.println(folderName);
-		System.out.println(projectIdx);
-		System.out.println(ref);
+		
+
 		String uploadPath = request.getServletContext().getRealPath("upload");
-		UploadHelper.makeDriveDirectory(uploadPath, projectIdx, folderName);
-		drivefolder.setFolderName(folderName);
-		drivefolder.setProjectIdx(projectIdx);		
-		drivefolder.setRef(ref);
+		UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(), drivefolder.getFolderName());
+		drivefolder.setFolderName(drivefolder.getFolderName());
+		drivefolder.setProjectIdx(drivefolder.getProjectIdx());		
+		drivefolder.setRef(drivefolder.getRef());
 		drivefolder.setDepth(drivefolder.getDepth());
 		
 		result = service.insertDriveFolder(drivefolder);

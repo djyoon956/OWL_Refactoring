@@ -278,11 +278,13 @@ function setKanbanDetail(issueIdx){
 					else
 						$("#issueDetailLabel").text("none");
 					
-					if(data.priorityCode != null)
+					$("#issueDetailPriority").removeClass();
+					$("#issueDetailPriority").text("");
+					if(data.priorityCode != null){
 						$("#issueDetailPriority").addClass("priorityBadge "+data.priorityCode.toLowerCase());
-					 else
+					} else{
 						$("#issueDetailPriority").text("none");
-						
+					}
 					if(data.dueDate != null)
 						$("#issueDetailDueDate").text(data.dueDate);
 					else
@@ -308,10 +310,9 @@ function closeIssue(issueIdx) {
            success:function(data){
         	   console.log($("#closeIssueDetailBtn > i").siblings().text("Reopen"));
         	$("#closeIssueDetailBtn > i").siblings().text("Reopen"); 
-        	  addKanbanIssue('-99', data);
+        	setChageView("kanban");
            }
-        });  	
-	
+        });  		
 }
 
 function changeKanbanView(view){

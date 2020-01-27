@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.owl.drive.dao.DriveDao">
 	<insert id="insertFolder" parameterType="com.owl.drive.dto.DriveFolder">
 	<selectKey resultType="int" keyProperty="depth" order="BEFORE">
-        SELECT MAX(depth)+1 FROM DRIVEFOLDER WHERE REF=#{ref}
-    </selectKey> 
+        SELECT COALESCE(MAX(depth),0)+1 FROM DRIVEFOLDER WHERE REF=#{ref}
+    </selectKey>
 			INSERT INTO DRIVEFOLDER(FOLDERNAME, REF, DEPTH, PROJECTIDX) 
 			VALUES(#{folderName}, #{ref}, #{depth}, #{projectIdx})
 	</insert>
