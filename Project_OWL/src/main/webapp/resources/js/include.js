@@ -23,6 +23,7 @@ function setTheme(theme, font){
 	$(".projectBody").css("background-color", theme);
 	$(".projectBody .tab-content").css("background-color", theme);
 	$(".projectBody #tab-menu").css("background-color", theme);
+	$(".projectBody #tab-menu").css("font-family",font);
 	$(".projectBody #tab-menu").css("border-bottom", "1px double " + subColor);
 	/*$(".projectBody .nav-item.active a").css("border-bottom", "3px solid " + subColor);*/
 	$(".projectBody #tab-menu .nav-item > .nav-link").css("color", subColor);
