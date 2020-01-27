@@ -80,32 +80,27 @@ $(function(){
 				sel = sel[0];
 				sel = ref.create_node(sel, {"type":"default"});
 				if(sel) {
-					ref.edit(sel);
+					ref.edit(sel);					
 				} 
 			});	
 			//폴더 생성시 이름 수정까지 완료할 때
-/* 			$('#jstree').on('rename_node.jstree', function (e, data) {
-				var ref = $('#jstree').jstree(true),
-				sel = ref.get_selected();
-				let theRef;
-				if(sel == "j1_1"){
-					theRef = mainIdx;
-				}
+ 			$('#jstree').on('rename_node.jstree', function (e, data) {
+ 	 			console.log(data);
+				if(data.old =="New node"){					
 				  $.ajax({
 		        		url:"insertFolder.do",
 		        		method:"POST",
 		        		data:{projectIdx: ${project.projectIdx},
 		        			  text: data.text,
-		        			  theRef: theRef
+		        			  theRef: data.parent
 		        			 },
 		        		success:function(data){	
 		        		}
 		    		});
-				 
-				});	 */
+				}
+			});
 			
 			$("#renameFolder").click(function(){
-				console.log("삽입인데 이걸 타면 안됨");
 				console.log("rename");
 				var ref = $('#jstree').jstree(true),
 					sel = ref.get_selected();

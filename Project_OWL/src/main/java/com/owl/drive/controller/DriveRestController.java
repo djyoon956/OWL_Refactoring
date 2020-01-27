@@ -45,11 +45,10 @@ public class DriveRestController {
 		System.out.println(ref);
 		String uploadPath = request.getServletContext().getRealPath("upload");
 		UploadHelper.makeDriveDirectory(uploadPath, projectIdx, folderName);
-		int depth = 0;
 		drivefolder.setFolderName(folderName);
 		drivefolder.setProjectIdx(projectIdx);		
 		drivefolder.setRef(ref);
-		drivefolder.setDepth(++depth);
+		drivefolder.setDepth(drivefolder.getDepth());
 		
 		result = service.insertDriveFolder(drivefolder);
 		} catch (Exception e) {
