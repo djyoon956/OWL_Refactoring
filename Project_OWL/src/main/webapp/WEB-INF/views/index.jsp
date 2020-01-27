@@ -485,8 +485,6 @@ background-color:#326295;
 			<h4>프로젝트 내 업무 진행상황 확인가능!</h4>
 			<h4>컬럼 및 이슈설정을 통해 업무의 진행상태를 실시간 트래킹 하여</h4>
 			<h4>프로젝트를 효율적으로 진행할 수 있도록 도와줍니다.</h4>
-			<button class="btn btn-primary mt-1">시작하기 →</button>
-	
 	</div>
 	<div class="col-7" style=" padding-left :70px">
 	<img src="resources/images/indexImage/kanbanExample.png" height="420px"  width="850px" data-aos="fade-left" data-aos-duration="1500" >

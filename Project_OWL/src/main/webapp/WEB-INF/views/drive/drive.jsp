@@ -8,20 +8,38 @@
 <link href="resources/css/drive.css" rel="stylesheet">
 <script src="resources/js/drive.js"></script>
 <script>
+var folderList = [];
+
+function folderInfo() {
+    this.id = null;
+    this.parent = null;   
+    this.text = null;
+}
+
+function addFolder(folder) {
+	folderList.push(folder);
+}
+
 $(function(){
+	
 	initDrive("${project.projectIdx}");
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
 		data:{projectIdx:$("#theProject").val()},
 		success:function(data){
-			let mainFolder = "";
-			let mainIdx;
+			let folder;		
 			$.each(data, function(index, element){
-				mainFolder = element.folderName;  
-				mainIdx = element.driveIdx;
+				if(element.ref == 0){
+					element.ref = "#";
+				}				
+				folder = new folderInfo();
+				folder.id = element.driveIdx;
+			    folder.parent = element.ref;
+			    folder.text = element.folderName;
+			    addFolder(folder);
 			});
-			
+
 			//jstree 기능
 			var to = false;
 			$('#searchText').keyup(function () {
@@ -32,6 +50,7 @@ $(function(){
 				}, 100);
 			});
 
+			console.log(folderList);
 			$.jstree.defaults.core.themes.variant = "large";
 			$('#jstree').jstree({
 					"core" : {
@@ -39,7 +58,7 @@ $(function(){
 						"check_callback" : true,
 						'force_text' : true,
 						"themes" : { "stripes" : true },
-					    'data' : [mainFolder]
+					    'data' : folderList
 					  },
 					"types" : {
 						"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
@@ -54,7 +73,6 @@ $(function(){
 				});
 
 			$("#createFolder").click(function(){
-
 				var ref = $('#jstree').jstree(true),
 				sel = ref.get_selected();
 				console.log("체크 되는 것 : " + sel);
@@ -63,12 +81,31 @@ $(function(){
 				sel = ref.create_node(sel, {"type":"default"});
 				if(sel) {
 					ref.edit(sel);
-					//폴더 생성시 이름 수정까지 완료할 때
-					makeNewFolder();
 				} 
 			});	
+			//폴더 생성시 이름 수정까지 완료할 때
+/* 			$('#jstree').on('rename_node.jstree', function (e, data) {
+				var ref = $('#jstree').jstree(true),
+				sel = ref.get_selected();
+				let theRef;
+				if(sel == "j1_1"){
+					theRef = mainIdx;
+				}
+				  $.ajax({
+		        		url:"insertFolder.do",
+		        		method:"POST",
+		        		data:{projectIdx: ${project.projectIdx},
+		        			  text: data.text,
+		        			  theRef: theRef
+		        			 },
+		        		success:function(data){	
+		        		}
+		    		});
+				 
+				});	 */
 			
 			$("#renameFolder").click(function(){
+				console.log("삽입인데 이걸 타면 안됨");
 				console.log("rename");
 				var ref = $('#jstree').jstree(true),
 					sel = ref.get_selected();
@@ -166,21 +203,6 @@ function sendFileToServer(formData,status){
     status.setAbort(jqXHR);
 }
 
-function makeNewFolder(){
-	$('#jstree').on('rename_node.jstree', function (e, data) {
-		  //data.text is the new name:
-		  $.ajax({
-        		url:"insertFolder.do",
-        		method:"POST",
-        		data:{projectIdx: ${project.projectIdx},
-        			  text: data.text
-        			 },
-        		success:function(data){	
-        		}
-    		});
-		 
-		});	
-}
 </script>
 <div class="container-fluid mt-3">
 <input type="hidden" value="${project.projectIdx}" id="theProject">
