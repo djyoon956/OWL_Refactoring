@@ -389,10 +389,28 @@ background-color:#326295;
 			</div>
 
 			<!-- BOTTOM -->
-			 <jsp:include page="include/bottom.jsp"/>  
+			 
 		</div>
+	
+	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;">
+			1.section DashBoard
+	</div>
+	<div class="page-wrapper" style="margin-left: 0; width: 100%; ; height:470px;">
+			2.section Calendar
+	</div>
+	<div class="page-wrapper" style="margin-left: 0; width: 100%; ; height:470px;">
+			3.section Kanban
+	</div>
+	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;" >
+			4.section Drive
+	</div>
+	<div class="page-wrapper" style="margin-left: 0; width: 100%;height:470px;">
+			5.section 사이트 전반적인 설명
 	</div>
 	
+	
+	</div>
+	<jsp:include page="include/bottom.jsp"/>  
    <!--  Modal  -->
    <jsp:include page="member/modal/forgotPassword.jsp" />
    <jsp:include page="member/modal/joinConfirm.jsp" />
