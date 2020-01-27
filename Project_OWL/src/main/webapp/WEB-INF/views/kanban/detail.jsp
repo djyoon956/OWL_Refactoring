@@ -168,7 +168,7 @@
             <hr>
             <div class="form-group bold">
                 <div class="row">
-                    <button class="btn w-100" id="closeIssueDetailBtn"><i class="fas fa-check mr-2 text-danger"></i>Close issue</button>
+                    <button class="btn w-100" id="closeIssueDetailBtn"><i class="fas fa-check mr-2 text-danger"></i><span id="issueClosedChk">Close issue</span></button>
                 </div>
             </div>
         </div>
