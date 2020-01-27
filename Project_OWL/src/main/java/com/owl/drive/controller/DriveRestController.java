@@ -40,19 +40,6 @@ public class DriveRestController {
 		boolean result = false;
 		try {
 
-			String folderpath = request.getServletContext().getRealPath("upload") + "\\drive\\"
-					+ drivefolder.getProjectIdx() + "\\" + drivefolder.getFolderName();
-			System.out.println(folderpath);
-			if (folderpath.equals("")) { // 같은 폴더가 없을 때
-				checkDirectory(folderpath);
-				drivefolder.setDepth(0);
-			}
-			drivefolder.setFolderName(folderpath);
-			drivefolder.setRef(drivefolder.getRef());
-			drivefolder.setDepth(drivefolder.getDepth());
-			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
-			result = service.insertDriveFolder(drivefolder);
-
 		
 		String uploadPath = request.getServletContext().getRealPath("upload");
 		UploadHelper.makeDriveDirectory(uploadPath, projectIdx, folderName);
