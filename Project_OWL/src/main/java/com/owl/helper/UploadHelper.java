@@ -36,10 +36,17 @@ public class UploadHelper {
 		String path = Paths.get(uploadPath, "project", Integer.toString(projectIdx), "drive", folderName).toString();
 		makeDirectory(path);
 	}
-
+	
+	public static void deleteFile(String path) {
+		File file = new File(path);
+		if (file.exists())
+			file.delete();
+	}
+	
 	private static void makeDirectory(String path) {
 		File file = new File(path);
 		if (!file.exists())
 			file.mkdirs();
 	}
+
 }

@@ -9,7 +9,11 @@ import com.owl.drive.dto.DriveFolder;
 public interface DriveDao {
 	public int insertFolder(DriveFolder drivefolder) throws ClassNotFoundException, SQLException;
 
-	public int insertFile(DriveFile drivefile) throws ClassNotFoundException, SQLException;
+	public int insertFile(DriveFile file) throws ClassNotFoundException, SQLException;
 	
 	public List<DriveFolder> getDriveList(int projectIdx) throws ClassNotFoundException, SQLException;
+	
+	public List<DriveFile> getFileByFolderIdx(int folderIdx) throws ClassNotFoundException, SQLException;
+
+	public List<DriveFolder> getFolderByFolderIdx(int folderIdx) throws ClassNotFoundException, SQLException;
 }

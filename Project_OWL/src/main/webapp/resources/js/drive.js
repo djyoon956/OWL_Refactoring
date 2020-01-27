@@ -1,3 +1,14 @@
+function initDrive(projectIdx){
+	$("#driveUploadFile").fileupload({
+		url : "DriveFileUpload.do",
+		formData : {projectIdx : projectIdx},
+		done : function(e, data){
+			console.log("in done");
+			setFolderData(15);// 임시 바인딩
+		}
+	});
+}
+
 var rowCount=0;
 function createStatusbar(obj){
      rowCount++;
@@ -127,4 +138,19 @@ function checkBox(box) {
 		$('div.more').parent('div#css').css('background', '');
 		Returncheck();
 	}
+}
+
+function setFolderData(folderIdx) {
+	//
+	$.ajax({
+		url : "GetFolderData.do",
+		data : { folderIdx : folderIdx },
+		success : function(data){
+			console.log("in GetFolderData success");
+			console.log(data);
+		},
+		error : function(){
+			console.log("in GetFolderData error");
+		}
+	})
 }

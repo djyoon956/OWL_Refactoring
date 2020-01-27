@@ -2,22 +2,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script src="resources/plugin/fileUpload/jquery.fileupload.js"></script>
+<script src="resources/plugin/fileUpload/jquery.iframe-transport.js"></script>
+<script src="resources/plugin/fileUpload/jquery.ui.widget.js"></script>
 <link href="resources/css/drive.css" rel="stylesheet">
 <script src="resources/js/drive.js"></script>
 <script>
 $(function(){
+	initDrive("${project.projectIdx}");
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
 		data:{projectIdx:$("#theProject").val()},
 		success:function(data){
-			var folder = "";
+			let mainFolder = "";
+			let mainIdx;
 			$.each(data, function(index, element){
-				var str = element.folderName;  
-				let arrays = str.split("\\");
-				folder = arrays[arrays.length-1];
-				console.log(folder);
-
+				mainFolder = element.folderName;  
+				mainIdx = element.driveIdx;
 			});
 			
 			//jstree 기능
@@ -30,7 +32,6 @@ $(function(){
 				}, 100);
 			});
 
-			console.log("real : " + folder);
 			$.jstree.defaults.core.themes.variant = "large";
 			$('#jstree').jstree({
 					"core" : {
@@ -38,7 +39,7 @@ $(function(){
 						"check_callback" : true,
 						'force_text' : true,
 						"themes" : { "stripes" : true },
-					    'data' : [folder]
+					    'data' : [mainFolder]
 					  },
 					"types" : {
 						"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
@@ -53,17 +54,20 @@ $(function(){
 				});
 
 			$("#createFolder").click(function(){
+
 				var ref = $('#jstree').jstree(true),
 				sel = ref.get_selected();
+				console.log("체크 되는 것 : " + sel);
 				if(!sel.length) { return false; }
 				sel = sel[0];
 				sel = ref.create_node(sel, {"type":"default"});
 				if(sel) {
 					ref.edit(sel);
-					console.log("마지막은 날타지");
-				}
+					//폴더 생성시 이름 수정까지 완료할 때
+					makeNewFolder();
+				} 
 			});	
-
+			
 			$("#renameFolder").click(function(){
 				console.log("rename");
 				var ref = $('#jstree').jstree(true),
@@ -162,6 +166,21 @@ function sendFileToServer(formData,status){
     status.setAbort(jqXHR);
 }
 
+function makeNewFolder(){
+	$('#jstree').on('rename_node.jstree', function (e, data) {
+		  //data.text is the new name:
+		  $.ajax({
+        		url:"insertFolder.do",
+        		method:"POST",
+        		data:{projectIdx: ${project.projectIdx},
+        			  text: data.text
+        			 },
+        		success:function(data){	
+        		}
+    		});
+		 
+		});	
+}
 </script>
 <div class="container-fluid mt-3">
 <input type="hidden" value="${project.projectIdx}" id="theProject">
@@ -188,8 +207,8 @@ function sendFileToServer(formData,status){
 					<div class="defaultDriveMenu">
 				<button type="button" class="driveBtn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;
 				<div class="filebox" style="display:inline;">
-					<input type="file" id="driveFile">
-					<label for="driveFile" style="cursor: pointer; margin-bottom: 0px;"
+					<input type="file" id="driveUploadFile" name="driveUploadFile">
+					<label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
 						class="driveBtn btn-primary">업로드</label>&nbsp;&nbsp;
 				</div>
 				<button type="button" class="driveBtn btn-primary" onclick="Allcheck()">전체선택</button>
@@ -263,10 +282,10 @@ function sendFileToServer(formData,status){
 								<div class="card" id="driveCard">
 									<div class="more" style="margin-top: 10px;">
 										&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="checkbox" value="css" onclick="checkBox(this)"
-											style="width:18px; height:18px;">
-										<a style="float:right;" data-toggle="collapse" href="#detail"><i
-												class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
+										<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">
+										<a style="float:right;" data-toggle="collapse" href="#detail">
+											<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;
+										</a>
 									</div>
 									<div style="margin-left: 60%;">
 										<ul id="detail" class="collapse">
@@ -276,7 +295,10 @@ function sendFileToServer(formData,status){
 									</div>
 									<br>
 									<div class="card-body text-center">
-										<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
+										<span style="color:#326295;">
+											<i class="fas fa-folder fa-5x"></i>
+											<img class="fileDefaultImage" src="resources/images/drive/js.png" >
+										</span>
 										<br><br>
 										<h4 style="text-align: center;">css</h4>
 									</div>
