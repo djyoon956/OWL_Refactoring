@@ -481,13 +481,13 @@ background-color:#326295;
 	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; ; height:470px;">
 		<div class="row" style="padding-left: 150px; padding-right: 70px;">
 			<div class="col-5" style="margin-top:120px; padding-left: 30px;">
-			<h2>업무진행상황 체크시 필수적인 Kanban Board</h2> <br><br>
+			<h2>업무진행 체크시 필수인 Kanban Board</h2> <br><br>
 			<h4>프로젝트 내 업무 진행상황 확인가능!</h4>
 			<h4>컬럼 및 이슈설정을 통해 업무의 진행상태를 실시간 트래킹 하여</h4>
 			<h4>프로젝트를 효율적으로 진행할 수 있도록 도와줍니다.</h4>
 	</div>
-	<div class="col-7" style=" padding-left :70px">
-	<img src="resources/images/indexImage/kanbanExample.png" height="420px"  width="850px" data-aos="fade-left" data-aos-duration="1500" >
+	<div class="col-7" style=" padding-left :30px">
+	<img src="resources/images/indexImage/kanbanEx3.JPG" height="420px"  width="850px" data-aos="fade-left" data-aos-duration="1500" >
 	</div>	
 			
 		</div>
