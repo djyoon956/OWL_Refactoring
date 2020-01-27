@@ -453,17 +453,17 @@ background-color:#326295;
 			<h4>개인별, 프로젝트별 할당된 업무를 한눈에 확인할 수 있습니다.</h4>
 			</div>
 			<div class="col-7">
-			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="850px"  >
+			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="850px" data-aos="fade-left" data-aos-duration="1500">
 			</div>
 
 		</div>
 	</div>
 	
 	
-	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; ; height:470px;"  data-aos="fade-down">
+	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; ; height:470px;" >
 		<div class="row" style="padding-left: 150px; padding-right: 100px;">
 			<div class="col-7">
-			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="850px"  data-aos="fade-right">
+			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="850px"  data-aos="fade-right" data-aos-duration="1500" >
 			</div>
 			<div class="col-5" style="margin-top:100px; padding-left :30px">
 			<h2>체계적인 스케줄 관리에 필요한 Calendar</h2> <br><br>
@@ -487,7 +487,7 @@ background-color:#326295;
 	
 	</div>
 	<div class="col-7" style=" padding-left :70px">
-	<img src="resources/images/indexImage/kanbanExample.png" height="420px"  width="850px" data-aos="fade-left">
+	<img src="resources/images/indexImage/kanbanExample.png" height="420px"  width="850px" data-aos="fade-left" data-aos-duration="1500" >
 	</div>	
 			
 		</div>
@@ -498,7 +498,7 @@ background-color:#326295;
 	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; height:470px;" >
 		<div class="row" style="padding-left: 150px; padding-right: 100px;">
 			<div class="col-7">
-			<img src="resources/images/indexImage/drive.png" height="420px" width="850px" class="indexImgBox" style="padding:4px; padding-left:8px;padding-right:10px;"  data-aos="fade-right">
+			<img src="resources/images/indexImage/drive.png" height="420px" width="850px" class="indexImgBox" style="padding:4px; padding-left:8px;padding-right:10px;"  data-aos="fade-right" data-aos-duration="1500">
 			</div>
 			<div class="col-5" style="margin-top:100px; padding-left :30px">
 			<h2>드라이브를 통한 효율적인 문서 공유 및 관리</h2> <br><br>
@@ -518,25 +518,25 @@ background-color:#326295;
 	
 	<div class="row text-center" style="padding-left: 200px; padding-right:200px; margin-bottom: 30px;">
 	<div class="col-3">
-		<img class="introIcon" src="resources/images/indexIcon/global.png"  height="260" width="260" >
+		<img class="introIcon" src="resources/images/indexIcon/global.png"  height="260" width="260" data-aos="fade-up" data-aos-duration="1500" >
 		<h2>Team Work</h2>
 		<span class="subfont">OWL을 사용하면 팀 구성이 쉽고 </span><br>
 		<span class="subfont">어디서든 팀원간의 소통이 가능합니다</span>
 	</div>
 	<div class="col-3">
-		<img class="introIcon" src="resources/images/indexIcon/team.png"  height="260" width="260" >
+		<img class="introIcon" src="resources/images/indexIcon/team.png"  height="260" width="260" data-aos="fade-up" data-aos-duration="1500" >
 		<h2>Customizing</h2>
 		<span class="subfont">개인별 혹은 프로젝트별로 </span><br>
 		<span class="subfont">원하는대로 커스터마이징이 가능합니다</span>
 	</div>
 	<div class="col-3">
-		  <img class="introIcon" src="resources/images/indexIcon/chat.png"  height="260" width="260">
+		  <img class="introIcon" src="resources/images/indexIcon/chat.png"  height="260" width="260" data-aos="fade-up" data-aos-duration="1500" >
 		<h2>Chatting</h2>
 		<span class="subfont">일대일, 프로젝트별, 다수의 사람들과</span><br>
 		<span class="subfont">다양한 채팅을 즐겨보세요</span>
 	</div>
 	<div class="col-3">
-		 <img class="introIcon" src="resources/images/indexIcon/idea.png" height="260" width="260">
+		 <img class="introIcon" src="resources/images/indexIcon/idea.png" height="260" width="260" data-aos="fade-up" data-aos-duration="1500" >
 		<h2>Alarm</h2>
 		<span class="subfont">알람을 통해서 프로젝트내에서 </span><br>
 		<span class="subfont">업무효율을 높여보세요</span>
