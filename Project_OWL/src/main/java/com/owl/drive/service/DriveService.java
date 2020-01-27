@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.owl.drive.dao.DriveDao;
+import com.owl.drive.dto.DriveFile;
 import com.owl.drive.dto.DriveFolder;
 import com.owl.helper.UploadHelper;
 
@@ -45,6 +46,20 @@ public class DriveService {
 		return folders;
 	}
 	
+	public boolean insertFile(DriveFile file) {
+		DriveDao dao = getDriveDao();
+		boolean result = false;
+		
+		try {
+			result = dao.insertFile(file) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);

@@ -62,7 +62,7 @@ public class ProjectRestController {
 		project.setProjectName(project.getProjectName());		
 		projectlist.setProjectColor(projectlist.getProjectColor());
 		drivefolder.setDepth(0);
-		drivefolder.setRef(1);
+		drivefolder.setRef(0);
 		result = service.insertNewProject(project, projectlist, drivefolder, request);
 			
 		} catch (Exception e) {
