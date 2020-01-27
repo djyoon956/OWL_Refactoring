@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +19,6 @@ import com.owl.drive.dto.DriveFile;
 import com.owl.drive.dto.DriveFolder;
 import com.owl.drive.service.DriveService;
 import com.owl.helper.UploadHelper;
-
 
 @RestController
 public class DriveRestController {
@@ -52,7 +52,6 @@ public class DriveRestController {
 		drivefolder.setDepth(++depth);
 		
 		result = service.insertDriveFolder(drivefolder);
-			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -68,20 +67,20 @@ public class DriveRestController {
 
 	@RequestMapping("DriveFileUpload.do")
 	public void driveFileUpload(MultipartFile driveUploadFile, int projectIdx, HttpServletRequest request, Principal principal) {
-		System.out.println("in driveFileUpload : " + projectIdx);
-		System.out.println(driveUploadFile);
 		String fileName = driveUploadFile.getOriginalFilename();
-
 		String uploadpath = request.getServletContext().getRealPath("upload");
-		String filePath = "";
-		DriveFile driveFile = new DriveFile(); 
+
+		DriveFile driveFile = new DriveFile();
 		driveFile.setCreator(principal.getName());
 		driveFile.setDriveIdx(15);
 		driveFile.setFileName(fileName);
 		driveFile.setFileSize((int) (driveUploadFile.getSize() / 1024));
+		
+		String filePath = "";
 		try {
-			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, driveUploadFile.getBytes()); // full path
-			System.out.println("filePath : "+filePath);
+			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName,
+					driveUploadFile.getBytes()); // full path
+			System.out.println("filePath : " + filePath);
 			service.insertFile(driveFile);
 		} catch (IOException e) {
 			if (!filePath.isEmpty())
@@ -90,9 +89,9 @@ public class DriveRestController {
 		}
 	}
 
-	private void checkDirectory(String path) {
-		File file = new File(path);
-		if (!file.exists())
-			file.mkdirs();
+	@RequestMapping(value = "GetFolderData.do")
+	public List<DriveFile> getFolderData(int folderIdx) {
+		System.out.println("in getFolderData");
+		return service.getFolderData(folderIdx);
 	}
 }
