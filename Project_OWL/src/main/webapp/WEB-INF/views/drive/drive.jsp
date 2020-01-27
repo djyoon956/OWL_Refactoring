@@ -75,7 +75,6 @@ $(function(){
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
 				sel = ref.get_selected();
-				console.log("체크 되는 것 : " + sel);
 				if(!sel.length) { return false; }
 				sel = sel[0];
 				sel = ref.create_node(sel, {"type":"default"});
@@ -85,14 +84,13 @@ $(function(){
 			});	
 			//폴더 생성시 이름 수정까지 완료할 때
  			$('#jstree').on('rename_node.jstree', function (e, data) {
- 	 			console.log(data);
 				if(data.old =="New node"){					
 				  $.ajax({
 		        		url:"insertFolder.do",
 		        		method:"POST",
 		        		data:{projectIdx: ${project.projectIdx},
-		        			  text: data.text,
-		        			  theRef: data.parent
+		        			  folderName: data.text,
+		        			  ref: data.node.parent
 		        			 },
 		        		success:function(data){	
 		        		}
