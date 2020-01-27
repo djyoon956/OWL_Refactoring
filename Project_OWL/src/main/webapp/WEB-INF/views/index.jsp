@@ -326,6 +326,7 @@ background-color:#326295;
                 }, 1000)
          });
 	      openDialog();
+
 	})
 
 	function openDialog() {
@@ -411,7 +412,13 @@ background-color:#326295;
 			2.section Calendar
 	</div>
 	<div class="page-wrapper" style="margin-left: 0; width: 100%; ; height:470px;">
-			3.section Kanban
+			<div class="offset-1">
+			<img src="resources/images/kanbanExample.png" height="278px;" class="float-right" style="margin-right:8.33333%;" >
+			<h2>프로젝트 멤버와 함께 칸반보드</h2> 
+			<h5>진행상황을 한눈에 볼 수 있습니다.</h5>
+			<h5>프로젝트를 효율적으로 진행할 수 있도록 도와줍니다.</h5>
+			<button class="btn btn-primary mt-1">시작하기 →</button>
+			 </div>
 	</div>
 	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;" >
 			4.section Drive

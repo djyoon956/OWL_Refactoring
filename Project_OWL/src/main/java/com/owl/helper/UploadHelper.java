@@ -19,7 +19,7 @@ public class UploadHelper {
 	}
 
 	public static String uploadFileByProject(String uploadPath, String uploadType, int projectIdx, String fileName, byte[] content) {
-		uploadPath = Paths.get(uploadPath,Integer.toString(projectIdx), uploadType).toString();
+		uploadPath = Paths.get(uploadPath, "project", Integer.toString(projectIdx), uploadType).toString();
 		makeDirectory(uploadPath);
 
 		String path = Paths.get(uploadPath, fileName).toString();
