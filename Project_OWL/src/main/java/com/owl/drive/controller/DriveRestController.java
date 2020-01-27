@@ -88,9 +88,9 @@ public class DriveRestController {
 		}
 	}
 
-	@RequestMapping(value = "GetFolderData.do", method = RequestMethod.POST)
-	public void getFolderData(int folderIdx) {
+	@RequestMapping(value = "GetFolderData.do")
+	public List<DriveFile> getFolderData(int folderIdx) {
 		System.out.println("in getFolderData");
-		service.getFolderDatas(folderIdx);
+		return service.getFolderData(folderIdx);
 	}
 }

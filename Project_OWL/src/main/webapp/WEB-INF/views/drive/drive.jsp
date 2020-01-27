@@ -282,10 +282,10 @@ function makeNewFolder(){
 								<div class="card" id="driveCard">
 									<div class="more" style="margin-top: 10px;">
 										&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="checkbox" value="css" onclick="checkBox(this)"
-											style="width:18px; height:18px;">
-										<a style="float:right;" data-toggle="collapse" href="#detail"><i
-												class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
+										<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">
+										<a style="float:right;" data-toggle="collapse" href="#detail">
+											<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;
+										</a>
 									</div>
 									<div style="margin-left: 60%;">
 										<ul id="detail" class="collapse">
@@ -295,7 +295,10 @@ function makeNewFolder(){
 									</div>
 									<br>
 									<div class="card-body text-center">
-										<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
+										<span style="color:#326295;">
+											<i class="fas fa-folder fa-5x"></i>
+											<img class="fileDefaultImage" src="resources/images/drive/js.png" >
+										</span>
 										<br><br>
 										<h4 style="text-align: center;">css</h4>
 									</div>

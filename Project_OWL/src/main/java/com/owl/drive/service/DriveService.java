@@ -61,9 +61,21 @@ public class DriveService {
 		return result;
 	}
 	
-	public void getFolderData(int folderIdx) {
+	public List<DriveFile> getFolderData(int folderIdx) {
 		System.out.println("in getFolderDatas service : " + folderIdx);
 		DriveDao dao = getDriveDao();
+
+		List<DriveFile> files = null;
+		try {
+			files = dao.getFileByFolderIdx(folderIdx);
+			// get folder
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return files;
 	}
 	
 	private DriveDao getDriveDao() {

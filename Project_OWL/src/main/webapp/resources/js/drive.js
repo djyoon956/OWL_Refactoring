@@ -141,5 +141,16 @@ function checkBox(box) {
 }
 
 function setFolderData(folderIdx) {
-
+	//
+	$.ajax({
+		url : "GetFolderData.do",
+		data : { folderIdx : folderIdx },
+		success : function(data){
+			console.log("in GetFolderData success");
+			console.log(data);
+		},
+		error : function(){
+			console.log("in GetFolderData error");
+		}
+	})
 }

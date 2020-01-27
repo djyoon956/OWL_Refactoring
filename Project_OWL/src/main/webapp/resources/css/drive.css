@@ -150,3 +150,7 @@ background:#f0f3f7;
 opacity:0.4;
 text-align:center;
 }
+
+.fileDefaultImage{
+	height: 70px;
+}
