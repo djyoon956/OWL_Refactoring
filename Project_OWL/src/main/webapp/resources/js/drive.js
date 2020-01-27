@@ -141,13 +141,51 @@ function checkBox(box) {
 }
 
 function setFolderData(folderIdx) {
-	//
 	$.ajax({
 		url : "GetFolderData.do",
 		data : { folderIdx : folderIdx },
 		success : function(data){
 			console.log("in GetFolderData success");
 			console.log(data);
+			$("#dragandrophandler").empty();
+			let controls = [];
+			$.each(data, function(index, element) {
+				let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
+				let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;
+
+				if((index)%3 == 0 ){
+					let row = $("<div class='row'></div>");
+					row.append(controls[0]);
+					row.append(controls[1]);
+					row.append(controls[2]);
+					controls = [];
+					
+					$("#dragandrophandler").append(row);
+				}
+				
+				let control = '<div class="col-sm-4">'
+								+ '	<div class="card driveCard">'
+								+ '		<div class="more" style="margin-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
+								+ '			<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
+								+ '			<a style="float:right;" data-toggle="collapse" href="#detail">'
+								+ '				<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;'
+								+ '			</a>'
+								+ '		</div>'
+								+ '		<div style="margin-left: 60%;">'
+								+ '			<ul id="detail" class="collapse">'
+								+ '				<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>'
+								+ '				<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>'
+								+ '			</ul>'
+								+ '		</div>'
+								+ '		<div class="card-body text-center">'
+								+ '			<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/notFind.png\';" src="resources/images/drive/'+extension+'.png" >'
+								+ '			<h4 >'+fileName+'</h4>'
+								+ '		</div>'
+								+ '	</div>'
+								+ '</div>';
+				
+				controls.push(control);
+			})
 		},
 		error : function(){
 			console.log("in GetFolderData error");

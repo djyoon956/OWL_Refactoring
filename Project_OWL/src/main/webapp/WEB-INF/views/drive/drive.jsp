@@ -234,7 +234,7 @@ function makeNewFolder(){
 					<div id="dragandrophandler" style="height: 500px;">
 					<div class="row">
 							<div class="col-sm-4">
-								<div class="card" id="driveCard">
+								<div class="card driveCard"  >
 									<div class="more" style="margin-top: 10px;">
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="checkbox" value="css" onclick="checkBox(this)"
@@ -247,16 +247,14 @@ function makeNewFolder(){
 											<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
 										</ul>
 									</div>
-									<br>
 									<div class="card-body text-center">
-										<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-										<br><br>
+										<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>
 										<h4 style="text-align: center;">css</h4>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4">
-								<div class="card" id="driveCard">
+								<div class="card driveCard">
 									<div class="more" style="margin-top: 10px;">
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="checkbox" value="css" onclick="checkBox(this)"
@@ -270,16 +268,14 @@ function makeNewFolder(){
 											<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
 										</ul>
 									</div>
-									<br>
 									<div class="card-body text-center">
-										<span style="color:#326295;"><i class="fas fa-folder fa-5x"></i></span>
-										<br><br>
+										<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>
 										<h4 style="text-align: center;">css</h4>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4">
-								<div class="card" id="driveCard">
+								<div class="card driveCard">
 									<div class="more" style="margin-top: 10px;">
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">
@@ -293,14 +289,9 @@ function makeNewFolder(){
 											<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
 										</ul>
 									</div>
-									<br>
 									<div class="card-body text-center">
-										<span style="color:#326295;">
-											<i class="fas fa-folder fa-5x"></i>
-											<img class="fileDefaultImage" src="resources/images/drive/js.png" >
-										</span>
-										<br><br>
-										<h4 style="text-align: center;">css</h4>
+										<img class="fileDefaultImage mb-4" src="resources/images/drive/js.png" >
+										<h4 >css</h4>
 									</div>
 								</div>
 							</div>
