@@ -1,3 +1,15 @@
+function initDrive(projectIdx){
+	$("#driveUploadFile").fileupload({
+		url : "DriveFileUpload.do",
+		formData : {projectIdx : projectIdx},
+		done : function(e, data){
+			console.log("in done");
+			console.log(e);
+			console.log(data);
+		}
+	});
+}
+
 var rowCount=0;
 function createStatusbar(obj){
      rowCount++;
@@ -128,3 +140,4 @@ function checkBox(box) {
 		Returncheck();
 	}
 }
+
