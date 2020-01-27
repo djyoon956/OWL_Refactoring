@@ -14,7 +14,10 @@
     <meta name="author" content="">
     <title>OWL</title>
     <jsp:include page="include/headTag.jsp"/>
-    
+    <!-- 스크롤 애니메이션  -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+ 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+ 	
 <style type="text/css">
 
 /* 첫 메인 css */
@@ -363,8 +366,9 @@ background-color:#326295;
 	              
 	          }); 
 	      });
+	      AOS.init(); //스크롤 애니메이션 
 	})
-
+ 	
 	function openDialog() {
 	   let type="${show}";
 	   if(!type) return;
@@ -446,10 +450,10 @@ background-color:#326295;
 	</div>
 	
 	
-	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; ; height:470px;">
+	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; ; height:470px;"  data-aos="fade-down">
 		<div class="row" style="padding-left: 150px; padding-right: 100px;">
 			<div class="col-7">
-			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="850px"  >
+			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="850px"  data-aos="fade-right">
 			</div>
 			<div class="col-5" style="margin-top:100px; padding-left :30px">
 			<h2>체계적인 스케줄 관리에 필요한 Calendar</h2> <br><br>
@@ -473,7 +477,7 @@ background-color:#326295;
 	
 	</div>
 	<div class="col-7" style=" padding-left :70px">
-	<img src="resources/images/indexImage/kanbanExample.png" height="420px"  width="850px" >
+	<img src="resources/images/indexImage/kanbanExample.png" height="420px"  width="850px" data-aos="fade-left">
 	</div>	
 			
 		</div>
@@ -482,19 +486,19 @@ background-color:#326295;
 	
 	
 	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; height:470px;" >
-			4.section Drive
-	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;" >
-		<div class="offset-1" >
-			<img src="resources/images/indexImage/drive.png" width="576px" class="indexImgBox" style="padding:4px; padding-left:8px;padding-right:10px;" >
-			<div class="float-right" style="margin-right:8.33333%;padding-left:10px; line-height: 1.6em;">
-			<h2>드라이브를 통한 효율적인 문서 공유 및 관리</h2> 
-			<h5>전에는 없던 놀라운 문서 관리 기능!</h5>
+		<div class="row" style="padding-left: 150px; padding-right: 100px;">
+			<div class="col-7">
+			<img src="resources/images/indexImage/drive.png" height="420px" width="850px" class="indexImgBox" style="padding:4px; padding-left:8px;padding-right:10px;"  data-aos="fade-right">
+			</div>
+			<div class="col-5" style="margin-top:100px; padding-left :30px">
+			<h2>드라이브를 통한 효율적인 문서 공유 및 관리</h2> <br><br>
+			<h4>전에는 없던 놀라운 문서 관리 기능! </h4>
 			<ul class="driveul">
 				<h5><li>프로젝트 생성 시 기본 폴더 자동 생성</li></h5>
 				<h5><li>폴더 생성 기능</li></h5>
 				<h5><li>검색 기능</li></h5>
 			</ul>
-			</div> 
+			</div>
 		</div>
 	</div>
 	</div>
@@ -537,4 +541,5 @@ background-color:#326295;
    <jsp:include page="member/modal/forgotPassword.jsp" />
    <jsp:include page="member/modal/joinConfirm.jsp" />
    <jsp:include page="member/modal/joinOk.jsp" />
+
 </body>
