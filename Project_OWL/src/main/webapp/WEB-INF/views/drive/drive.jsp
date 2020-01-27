@@ -11,13 +11,11 @@ $(function(){
 		dataType:"json",
 		data:{projectIdx:$("#theProject").val()},
 		success:function(data){
-			var folder = "";
+			let mainFolder = "";
+			let mainIdx;
 			$.each(data, function(index, element){
-				var str = element.folderName;  
-				let arrays = str.split("\\");
-				folder = arrays[arrays.length-1];
-				console.log(folder);
-
+				mainFolder = element.folderName;  
+				mainIdx = element.driveIdx;
 			});
 			
 			//jstree 기능
@@ -30,7 +28,6 @@ $(function(){
 				}, 100);
 			});
 
-			console.log("real : " + folder);
 			$.jstree.defaults.core.themes.variant = "large";
 			$('#jstree').jstree({
 					"core" : {
@@ -38,7 +35,7 @@ $(function(){
 						"check_callback" : true,
 						'force_text' : true,
 						"themes" : { "stripes" : true },
-					    'data' : [folder]
+					    'data' : [mainFolder]
 					  },
 					"types" : {
 						"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
@@ -53,17 +50,20 @@ $(function(){
 				});
 
 			$("#createFolder").click(function(){
+
 				var ref = $('#jstree').jstree(true),
 				sel = ref.get_selected();
+				console.log("체크 되는 것 : " + sel);
 				if(!sel.length) { return false; }
 				sel = sel[0];
 				sel = ref.create_node(sel, {"type":"default"});
 				if(sel) {
 					ref.edit(sel);
-					console.log("마지막은 날타지");
-				}
+					//폴더 생성시 이름 수정까지 완료할 때
+					makeNewFolder();
+				} 
 			});	
-
+			
 			$("#renameFolder").click(function(){
 				console.log("rename");
 				var ref = $('#jstree').jstree(true),
@@ -162,6 +162,21 @@ function sendFileToServer(formData,status){
     status.setAbort(jqXHR);
 }
 
+function makeNewFolder(){
+	$('#jstree').on('rename_node.jstree', function (e, data) {
+		  //data.text is the new name:
+		  $.ajax({
+        		url:"insertFolder.do",
+        		method:"POST",
+        		data:{projectIdx: ${project.projectIdx},
+        			  text: data.text
+        			 },
+        		success:function(data){	
+        		}
+    		});
+		 
+		});	
+}
 </script>
 <div class="container-fluid mt-3">
 <input type="hidden" value="${project.projectIdx}" id="theProject">
