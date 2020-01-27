@@ -4,8 +4,7 @@ function initDrive(projectIdx){
 		formData : {projectIdx : projectIdx},
 		done : function(e, data){
 			console.log("in done");
-			console.log(e);
-			console.log(data);
+			setFolderData(15);// 임시 바인딩
 		}
 	});
 }
@@ -141,3 +140,6 @@ function checkBox(box) {
 	}
 }
 
+function setFolderData(folderIdx) {
+
+}
