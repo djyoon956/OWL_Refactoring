@@ -210,7 +210,7 @@ function setKanbanDetail(issueIdx){
 				console.log('-------------------------------');
 				
 				$("#issueIdxNum").val(issueIdx);
-
+				//issueProgress
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
 					$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 				
@@ -289,6 +289,8 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailDueDate").text(data.dueDate);
 					else
 						$("#issueDetailDueDate").text("none");
+					console.log("이슈 프로그레스");
+					console.log(data.issueProgress);
 		},
 		error : function(){
 			console.log("GetIssueDetail error");
