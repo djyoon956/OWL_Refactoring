@@ -232,7 +232,12 @@ function makeNewFolder(){
 			<div class="row" style="margin : 10px 10px; margin-top: 0px;">
 				<div class="col-lg-12">
 					<div id="dragandrophandler" style="height: 500px;">
-					<div class="row">
+					<div class="h-100 text-center mt-5 hidden"  id="emptyDriveBox">
+						<img src="resources/images/drive/notFound.png" style="height: 250px">
+						<h1 class="text-muted mt-5">File Not Found.</h1>
+						<h4>Please upload a file.</h4>
+					</div>
+					<!-- <div class="row">
 							<div class="col-sm-4">
 								<div class="card driveCard"  >
 									<div class="more" style="margin-top: 10px;">
@@ -295,7 +300,7 @@ function makeNewFolder(){
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
