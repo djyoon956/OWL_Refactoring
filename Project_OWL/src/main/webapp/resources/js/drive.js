@@ -7,6 +7,11 @@ function initDrive(projectIdx){
 			setFolderData(15);// 임시 바인딩
 		}
 	});
+
+	$('#jstree').on( "select_node.jstree", function(event, data){
+	     let folderIdx = data.selected[data.selected.length - 1];
+	     setFolderData(folderIdx);
+    });
 }
 
 var rowCount=0;
@@ -141,13 +146,15 @@ function checkBox(box) {
 }
 
 function setFolderData(folderIdx) {
+	console.log("in setFolderData : "+folderIdx);
 	$.ajax({
 		url : "GetFolderData.do",
 		data : { folderIdx : folderIdx },
 		success : function(data){
 			console.log("in GetFolderData success");
 			console.log(data);
-			$("#dragandrophandler").empty();
+			console.log(data.length);
+			$("#driveBox").empty();
 			let controls = [];
 			if(data.length == 0 ){
 				$("#emptyDriveBox").removeClass("hidden");
@@ -165,7 +172,7 @@ function setFolderData(folderIdx) {
 					row.append(controls[2]);
 					controls = [];
 					
-					$("#dragandrophandler").append(row);
+					$("#driveBox").append(row);
 				}
 				
 				let control = '<div class="col-sm-4">'
