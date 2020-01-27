@@ -80,32 +80,27 @@ $(function(){
 				sel = sel[0];
 				sel = ref.create_node(sel, {"type":"default"});
 				if(sel) {
-					ref.edit(sel);
+					ref.edit(sel);					
 				} 
 			});	
 			//폴더 생성시 이름 수정까지 완료할 때
-/* 			$('#jstree').on('rename_node.jstree', function (e, data) {
-				var ref = $('#jstree').jstree(true),
-				sel = ref.get_selected();
-				let theRef;
-				if(sel == "j1_1"){
-					theRef = mainIdx;
-				}
+ 			$('#jstree').on('rename_node.jstree', function (e, data) {
+ 	 			console.log(data);
+				if(data.old =="New node"){					
 				  $.ajax({
 		        		url:"insertFolder.do",
 		        		method:"POST",
 		        		data:{projectIdx: ${project.projectIdx},
 		        			  text: data.text,
-		        			  theRef: theRef
+		        			  theRef: data.parent
 		        			 },
 		        		success:function(data){	
 		        		}
 		    		});
-				 
-				});	 */
+				}
+			});
 			
 			$("#renameFolder").click(function(){
-				console.log("삽입인데 이걸 타면 안됨");
 				console.log("rename");
 				var ref = $('#jstree').jstree(true),
 					sel = ref.get_selected();
@@ -254,7 +249,12 @@ function sendFileToServer(formData,status){
 			<div class="row" style="margin : 10px 10px; margin-top: 0px;">
 				<div class="col-lg-12">
 					<div id="dragandrophandler" style="height: 500px;">
-					<div class="row">
+					<div class="h-100 text-center mt-5 hidden"  id="emptyDriveBox">
+						<img src="resources/images/drive/notFound.png" style="height: 250px">
+						<h1 class="text-muted mt-5">File Not Found.</h1>
+						<h4>Please upload a file.</h4>
+					</div>
+					<!-- <div class="row">
 							<div class="col-sm-4">
 								<div class="card driveCard"  >
 									<div class="more" style="margin-top: 10px;">
@@ -317,7 +317,7 @@ function sendFileToServer(formData,status){
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
