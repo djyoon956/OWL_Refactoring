@@ -149,6 +149,11 @@ function setFolderData(folderIdx) {
 			console.log(data);
 			$("#dragandrophandler").empty();
 			let controls = [];
+			if(data.length == 0 ){
+				$("#emptyDriveBox").removeClass("hidden");
+				return;
+			}
+				
 			$.each(data, function(index, element) {
 				let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
 				let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;
@@ -178,7 +183,7 @@ function setFolderData(folderIdx) {
 								+ '			</ul>'
 								+ '		</div>'
 								+ '		<div class="card-body text-center">'
-								+ '			<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/notFind.png\';" src="resources/images/drive/'+extension+'.png" >'
+								+ '			<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
 								+ '			<h4 >'+fileName+'</h4>'
 								+ '		</div>'
 								+ '	</div>'
