@@ -310,6 +310,10 @@ background-color:#326295;
   max-width: 1.5625rem; }
 .nav-header .brand-logo a span {
   font-size: 1.125rem; }
+.indexImgBox {
+ box-shadow:0 10px 20px rgba(74,115,159,0.29); 
+ border-radius: 1rem;
+}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -417,7 +421,7 @@ background-color:#326295;
 	</div>
 	<div class="page-wrapper" style="margin-left: 0; width: 100%; ; height:470px;">
 			<div class="offset-1">
-			<img src="resources/images/indexImage/kanbanExample.png" height="278px;" class="float-right" style="margin-right:8.33333%;  box-shadow:0 10px 20px rgba(74,115,159,0.29); border-radius: 1rem; padding:4px;" >
+			<img src="resources/images/indexImage/kanbanExample.png" height="278px;" class="float-right indexImgBox" style="margin-right:8.33333%; padding:4px; padding-left:12px;" >
 			<h2>프로젝트 멤버와 함께 칸반보드</h2> 
 			<h5>진행상황을 한눈에 볼 수 있습니다.</h5>
 			<h5>프로젝트를 효율적으로 진행할 수 있도록 도와줍니다.</h5>
