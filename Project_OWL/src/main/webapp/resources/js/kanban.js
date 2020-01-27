@@ -13,7 +13,6 @@ function addLabel(lbidx, lbcolor, lbnm) {
             +  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
             +  '</div></div><hr>';
 
-
 $('#labelList').append(lablist);
 
 }
@@ -245,7 +244,7 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailActivity").append(control);
 					});
 					
-					$("#issueDetailComment").empty();
+					//$("#issueDetailComment").empty();
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 						let creatornm =  element.creator.substring(0,1);
@@ -275,11 +274,13 @@ function setKanbanDetail(issueIdx){
 					else
 						$("#issueDetailLabel").text("none");
 					
-					if(data.priorityCode != null)
+					$("#issueDetailPriority").removeClass();
+					$("#issueDetailPriority").text("");
+					if(data.priorityCode != null){
 						$("#issueDetailPriority").addClass("priorityBadge "+data.priorityCode.toLowerCase());
-					 else
+					} else{
 						$("#issueDetailPriority").text("none");
-						
+					}
 					if(data.dueDate != null)
 						$("#issueDetailDueDate").text(data.dueDate);
 					else
@@ -305,10 +306,9 @@ function closeIssue(issueIdx) {
            success:function(data){
         	   console.log($("#closeIssueDetailBtn > i").siblings().text("Reopen"));
         	$("#closeIssueDetailBtn > i").siblings().text("Reopen"); 
-        	  addKanbanIssue('-99', data);
+        	setChageView("kanban");
            }
-        });  	
-	
+        });  		
 }
 
 function changeKanbanView(view){
@@ -355,11 +355,9 @@ function editLabel(idx, color, name) {
 		         console.log("deleteReply success in");
 		         
 		           $("#"+replyIdx+"Reply").remove();
-
-		         
+  
 		      }, error : function() {
-		         console.log("deleteLabel error");
-		            
+		         console.log("deleteLabel error"); 
 		         }
 		      })
 		   }	

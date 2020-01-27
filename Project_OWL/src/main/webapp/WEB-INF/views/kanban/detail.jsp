@@ -93,10 +93,10 @@
                                             <div class="comment_img">C</div>
                                         </div>
                                         <div class="comment-text w-100">
-                                            <h6 class="font-medium mb-1">Cindy 
+                                            <h6 class="font-medium mb-2">Cindy 
                                             <span class="text-muted float-right">Jan 18, 2020</span></h6>
                                             <div class="mb-1 d-block"><span>화이팅</span></div>
-                                            <div class="comment-footer">
+                                            <div class="comment-footer float-right">
                                                 <button type="button" class="btn btn-info btn-sm">Edit</button>
                                                 <button type="button" class="btn btn-secondary btn-sm">Delete</button>
                                             </div>
@@ -119,14 +119,9 @@
                 </div>
         -->        
                   <div class="row">
-					
-						<div class="col-4" >
-							<i class="fab fa-replyd fa-4x"></i>
-						</div>
-						<div class="col-8 mt-1" style="text-align: left">
-						<textarea id="replycontent" name="replycontent" rows="2" cols="30" style="resize: none;"></textarea>
-						</div>
-						<button class="btn btn-secondary mr-1" id="replyBtn">Comment</button>
+						<i class="fab fa-replyd fa-5x" style="margin-left: 20px; margin-right: 20px"></i>
+						<textarea id="replycontent" name="replycontent" rows="2" cols="115" style="resize: none;" ></textarea>
+						<button class="btn btn-secondary mr-1" id="replyBtn" style="margin-left: 5px">Comment</button>
 				
                 </div>
             </div>
@@ -168,7 +163,7 @@
             <hr>
             <div class="form-group bold">
                 <div class="row">
-                    <button class="btn w-100" id="closeIssueDetailBtn"><i class="fas fa-check mr-2 text-danger"></i>Close issue</button>
+                    <button class="btn w-100" id="closeIssueDetailBtn"><i class="fas fa-check mr-2 text-danger"></i><span id="issueClosedChk">Close issue</span></button>
                 </div>
             </div>
         </div>
