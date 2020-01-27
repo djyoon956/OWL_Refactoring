@@ -66,7 +66,7 @@ $(function(){
 				sel = ref.get_selected();
 				if(!sel.length) {
 					sel = null;
-					sel = ref.create_node(sel, {"type":"#"});
+					sel = ref.create_node(sel, {"type":"root"});
 				}
 				sel = sel[0];
 				sel = ref.create_node(sel, {"type":"default"});
