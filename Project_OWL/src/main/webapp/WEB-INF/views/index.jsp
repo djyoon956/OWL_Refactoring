@@ -314,6 +314,13 @@ background-color:#326295;
  box-shadow:0 10px 20px rgba(74,115,159,0.29); 
  border-radius: 1rem;
 }
+.driveul {
+  list-style: none;
+}
+
+.driveul li:before {
+  content: '✓   ';
+}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -429,7 +436,18 @@ background-color:#326295;
 			 </div>
 	</div>
 	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;" >
-			4.section Drive
+		<div class="offset-1" >
+			<img src="resources/images/indexImage/drive.png" width="576px" class="indexImgBox" style="padding:4px; padding-left:8px;padding-right:10px;" >
+			<div class="float-right" style="margin-right:8.33333%;padding-left:10px; line-height: 1.6em;">
+			<h2>드라이브를 통한 효율적인 문서 공유 및 관리</h2> 
+			<h5>전에는 없던 놀라운 문서 관리 기능!</h5>
+			<ul class="driveul">
+				<h5><li>프로젝트 생성 시 기본 폴더 자동 생성</li></h5>
+				<h5><li>폴더 생성 기능</li></h5>
+				<h5><li>검색 기능</li></h5>
+			</ul>
+			</div> 
+		</div>
 	</div>
 	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;">
 		<div class="text-center" style="margin-bottom: 50px;"><h1>OWL YOUR WAY !</h1></div>
