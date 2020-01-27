@@ -27,6 +27,16 @@ background-color:#326295;
  	margin-bottom: 20px;
 }
 
+
+.sectionPart {	
+	margin-top: 20px;
+	margin-bottom: 50px;
+/* 	padding-left: 100px;
+	padding-right: 100px; */
+	
+	
+}
+
 .subfont {
 	font-size: 16px;
 }
@@ -388,7 +398,7 @@ background-color:#326295;
 
 
 
-		<div class="page-wrapper" style="margin-left: 0; width: 100%;">
+		<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%;">
 		<!--  height:719px; -->
 			<!-- CONTENT MAIN -->
 			<div class="container-fluid mainBack" style="height:668px;">
@@ -405,29 +415,55 @@ background-color:#326295;
 			 
 		</div>
 	
-	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;">
+	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; height:470px;">
 			1.section DashBoard
 	</div>
-	<div class="page-wrapper" style="margin-left: 0; width: 100%; ; height:470px;">
-		<div class="offset-1">
-			<img src="resources/images/indexImage/CalendarEx.JPG" height="278px;" class="float-right" style="margin-right:8.33333%;" >
-			<h2>캘린더</h2> 
-		
-			 </div>
+	
+	
+	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; ; height:470px;">
+		<div class="row" style="padding-left: 150px; padding-right: 100px;">
+			<div class="col-7">
+			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="850px"  >
+			</div>
+			<div class="col-5" style="margin-top:100px; padding-left :30px">
+			<h2>체계적인 스케줄 관리에 필요한 Calendar</h2> <br><br>
+			<h4>완벽한 팀워크를 위해 가장 필수적인 첫걸음!  </h4>
+			<h4>OWL을 이용하면 개인 스케줄 관리 뿐만 아니라 </h4>
+			<h4>참여하는 프로젝트 내의 프로젝트도 함께 관리 할 수 있습니다.</h4>
+			</div>
+		</div>
+	
 	</div>
-	<div class="page-wrapper" style="margin-left: 0; width: 100%; ; height:470px;">
-			<div class="offset-1">
-			<img src="resources/images/indexImage/kanbanExample.png" height="278px;" class="float-right" style="margin-right:8.33333%;" >
-			<h2>프로젝트 멤버와 함께 칸반보드</h2> 
-			<h5>진행상황을 한눈에 볼 수 있습니다.</h5>
-			<h5>프로젝트를 효율적으로 진행할 수 있도록 도와줍니다.</h5>
+	
+	
+	
+	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; ; height:470px;">
+		<div class="row" style="padding-left: 150px; padding-right: 70px;">
+			<div class="col-5" style="margin-top:100px; padding-left: 30px;">
+			<h2>업무진행상황 체크시 필수적인 Kanban Board</h2> <br><br>
+			<h4>프로젝트 내 업무 진행상황을 한눈에!</h4>
+			<h4>컬럼 및 이슈설정을 통해 업무의 진행상태를 실시간 트래킹 하여</h4>
+			<h4>프로젝트를 효율적으로 진행할 수 있도록 도와줍니다.</h4>
 			<button class="btn btn-primary mt-1">시작하기 →</button>
-			 </div>
+	
 	</div>
-	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;" >
+	<div class="col-7" style=" padding-left :70px">
+	<img src="resources/images/indexImage/kanbanExample.png" height="420px"  width="850px" >
+	</div>
+
+			
+			
+		</div>
+			
+	</div>
+	
+	
+	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; height:470px;" >
 			4.section Drive
 	</div>
-	<div class="page-wrapper" style="margin-left: 0; width: 100%; height:470px;">
+	
+	
+	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; height:470px;">
 		<div class="text-center" style="margin-bottom: 50px;"><h1>OWL YOUR WAY !</h1></div>
 	
 	<div class="row text-center" style="padding-left: 200px; padding-right:200px; margin-bottom: 30px;">
@@ -455,11 +491,6 @@ background-color:#326295;
 		<span class="subfont">알람을 통해서 프로젝트내에서 </span><br>
 		<span class="subfont">업무효율을 높여보세요</span>
 	</div>
-	
-      
-      
-    
-     
       </div>
 	</div>
 	
