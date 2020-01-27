@@ -61,6 +61,11 @@ public class DriveService {
 		return result;
 	}
 	
+	public void getFolderData(int folderIdx) {
+		System.out.println("in getFolderDatas service : " + folderIdx);
+		DriveDao dao = getDriveDao();
+	}
+	
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);
 	}
