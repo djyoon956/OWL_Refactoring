@@ -1,10 +1,13 @@
 function initDrive(projectIdx){
 	$("#driveUploadFile").fileupload({
 		url : "DriveFileUpload.do",
-		formData : {projectIdx : projectIdx},
+		formData : {projectIdx : projectIdx
+							, folderIdx : $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1] },
 		done : function(e, data){
 			console.log("in done");
-			setFolderData(15);// 임시 바인딩
+			let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+			console.log(folderIdx);
+			setFolderData(folderIdx);
 		}
 	});
 
@@ -152,8 +155,6 @@ function setFolderData(folderIdx) {
 		data : { folderIdx : folderIdx },
 		success : function(data){
 			console.log("in GetFolderData success");
-			console.log(data);
-			console.log(data.length);
 			$("#driveBox").empty();
 			let controls = [];
 			if(data.length == 0 ){
@@ -161,6 +162,7 @@ function setFolderData(folderIdx) {
 				return;
 			}
 				
+			$("#emptyDriveBox").addClass("hidden");
 			$.each(data, function(index, element) {
 				let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
 				let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;

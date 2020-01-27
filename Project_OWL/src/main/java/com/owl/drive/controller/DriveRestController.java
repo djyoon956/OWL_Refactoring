@@ -1,6 +1,5 @@
 package com.owl.drive.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -9,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -64,13 +61,17 @@ public class DriveRestController {
 	}
 
 	@RequestMapping("DriveFileUpload.do")
-	public void driveFileUpload(MultipartFile driveUploadFile, int projectIdx, HttpServletRequest request, Principal principal) {
+	public void driveFileUpload(MultipartFile driveUploadFile, int projectIdx, String folderIdx, HttpServletRequest request, Principal principal) {
+		System.out.println("in driveFileUpload");
+		System.out.println(projectIdx);
+		System.out.println(folderIdx);
+	
 		String fileName = driveUploadFile.getOriginalFilename();
 		String uploadpath = request.getServletContext().getRealPath("upload");
 
 		DriveFile driveFile = new DriveFile();
 		driveFile.setCreator(principal.getName());
-		driveFile.setDriveIdx(15);
+		driveFile.setDriveIdx(Integer.parseInt(folderIdx));
 		driveFile.setFileName(fileName);
 		driveFile.setFileSize((int) (driveUploadFile.getSize() / 1024));
 		
