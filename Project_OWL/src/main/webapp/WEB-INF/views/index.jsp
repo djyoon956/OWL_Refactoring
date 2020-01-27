@@ -325,6 +325,7 @@ background-color:#326295;
     opacity:0;
 }
 </style>
+
 <script type="text/javascript">
 	$(function(){
 		 $("#joinOkModal").on('show.bs.modal', function () {
@@ -353,8 +354,9 @@ background-color:#326295;
 	              
 	          }); 
 	      });
+	    
 	})
-
+  AOS.init();
 	function openDialog() {
 	   let type="${show}";
 	   if(!type) return;
@@ -365,6 +367,8 @@ background-color:#326295;
 	   }
 	}
 </script>
+<link href="https://cdn.rawgit.com/michalsnik/aos/1.0.1/dist/aos.css">
+
 </head>
 
 <body>
@@ -441,7 +445,7 @@ background-color:#326295;
 		
 			 </div>
 	</div>
-	<div class="page-wrapper fadein" style="margin-left: 0; width: 100%; ; height:470px;">
+	<div class="page-wrapper"  data-aos="fade-down" style="margin-left: 0; width: 100%; ; height:470px;">
 			<div class="offset-1">
 			<img src="resources/images/indexImage/kanbanExample.png" height="278px;" class="float-right indexImgBox" style="margin-right:8.33333%; padding:4px; padding-left:12px;" >
 			<h2>프로젝트 멤버와 함께 칸반보드</h2> 
@@ -507,4 +511,5 @@ background-color:#326295;
    <jsp:include page="member/modal/forgotPassword.jsp" />
    <jsp:include page="member/modal/joinConfirm.jsp" />
    <jsp:include page="member/modal/joinOk.jsp" />
+    <script src="https://cdn.rawgit.com/michalsnik/aos/1.0.1/dist/aos.js"/>
 </body>
