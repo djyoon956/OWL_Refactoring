@@ -35,9 +35,6 @@ public class DriveRestController {
 
 	@RequestMapping(value = "insertFolder.do")
 	public int insertFolder(DriveFolder drivefolder, String[] refs, HttpServletRequest request) {
-		System.out.println("in insertFolder");
-		System.out.println(refs[0]);
-		System.out.println(refs.length);
 		
 		List<Integer> driveRefs = new ArrayList<Integer>();
 		if (refs.length == 2) { // default 하위
@@ -46,7 +43,6 @@ public class DriveRestController {
 			driveRefs.add(Integer.parseInt(refs[1]));
 			driveRefs.add(Integer.parseInt(refs[0]));
 		}
-
 	
 		try {
 			drivefolder.setFolderName(drivefolder.getFolderName());
@@ -75,12 +71,8 @@ public class DriveRestController {
 	}
 	
 	@RequestMapping(value="updateNewName.do")
-	public boolean updateNewNameFolder(String oldName ,@RequestParam(value = "folderName") String folderName , 
-														int projectIdx, @RequestParam(value = "driveIdx") int driveIdx ,HttpServletRequest request) {
-		boolean result = false;
-        String oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" + projectIdx + "\\drive\\" + oldName;
-        String newPath = request.getServletContext().getRealPath("upload") + "\\project\\" + projectIdx + "\\drive\\" + folderName;
-		UploadHelper.renameFolder(oldPath, newPath);		
+	public boolean updateNewNameFolder(String folderName , int driveIdx ,HttpServletRequest request) {
+		boolean result = false;	
 		result = service.updateNewNameFolder(folderName, driveIdx);	
 		return result;
 	}

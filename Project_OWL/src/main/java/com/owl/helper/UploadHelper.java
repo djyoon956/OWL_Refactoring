@@ -39,7 +39,6 @@ public class UploadHelper {
 
 
 	 public static void makeDriveDirectory(String uploadPath, int projectIdx, int[] refs, int driveIdx) { 
-		System.out.println("in makeDriveDirectory");
 		String refPath = "";
 		for (int i = 0; i < refs.length; i++) {
 			if (i == refs.length - 1)
@@ -47,11 +46,7 @@ public class UploadHelper {
 			else
 				refPath += refs[i] + File.separator;
 		}
-		System.out.println(refPath);
-		String path = Paths
-				.get(uploadPath, "project", Integer.toString(projectIdx), "drive", refPath, Integer.toString(driveIdx))
-				.toString();
-		System.out.println(path);
+		String path = Paths.get(uploadPath, "project", Integer.toString(projectIdx), "drive", refPath, Integer.toString(driveIdx)).toString();
 		makeDirectory(path);
 	}
 

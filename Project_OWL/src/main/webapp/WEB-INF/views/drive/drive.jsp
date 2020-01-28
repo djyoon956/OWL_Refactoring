@@ -118,7 +118,6 @@ $(function(){
 			
 			//폴더 생성시 이름 수정까지 완료할 때
  			$('#jstree').on('rename_node.jstree', function (e, data) {
-				console.log("in rename_node");
 				console.log(data.node.id); // 나
 				console.log("parent",data.node.parent);// 부모
 				console.log("parents",data.node.parents);// 부모
@@ -133,19 +132,15 @@ $(function(){
 		        			  refs : data.node.parents
 		        			 },
 		        		success:function(idx){
-			        		console.log("in insertFolder success");
-			        		console.log(idx);
-			        		
-			        		//data.node.id =idx;
+			        		data.node.id =idx;
 		        		}
 		    		});
 				}else{
+					let thisId = data.node.id;
 					$.ajax({
 		        		url:"updateNewName.do",
 		        		method:"POST",
-		        		data:{projectIdx: ${project.projectIdx},
-			        			 driveIdx: data.node.id,
-			        			 oldName: data.old,
+		        		data:{driveIdx: data.node.id,
 		        			     folderName: data.text
 		        			 },
 		        		success:function(data){
