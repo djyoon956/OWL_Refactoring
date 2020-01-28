@@ -433,7 +433,11 @@ function restoreFilefromTrash(driveFileIdx) {
 		url : "RestoreFile.do",
 		data : {'driveFileIdx' : driveFileIdx},
 		success : function(data) {
-			
+			console.log('restoreFilefromTrash in');
+			console.log(data);
+			 successAlert("파일 복원 완료");
+
+			setTrashData(driveProjectIdx);
 		},
 		error : function() {
 			console.log('restoreFilefromTrash');
@@ -441,6 +445,7 @@ function restoreFilefromTrash(driveFileIdx) {
 	}) 
 }
 	
+
 function renameFile(driveFileIdx){
 	$.ajax({
 		 url : "RenameDriveFile.do",

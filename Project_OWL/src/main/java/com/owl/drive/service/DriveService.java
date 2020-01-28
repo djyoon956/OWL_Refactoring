@@ -132,18 +132,30 @@ public class DriveService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return reseult;
 	}
-	
 	
 
 	public boolean restoreFilefromTrash(int driveFileIdx) {
 		System.out.println("in restoreFilefromTrash");
 		System.out.println(driveFileIdx);
+		boolean reseult = false;
+		DriveDao dao = getDriveDao();
+
+		try {
+			reseult = dao.restoreFilefromTrash(driveFileIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		return false;
+		return reseult;
 	}
+	
+
 	
 	
 	private DriveDao getDriveDao() {
