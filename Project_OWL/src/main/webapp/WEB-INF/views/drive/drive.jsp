@@ -76,7 +76,7 @@ $(function(){
 				}, 100);
 			});
 
-			console.log(folderList);
+
 			$.jstree.defaults.core.themes.variant = "large";
 			$('#jstree').jstree({
 					"core" : {
@@ -111,10 +111,10 @@ $(function(){
 					ref.edit(sel);					
 				} 
 			});	
+			
 			//폴더 생성시 이름 수정까지 완료할 때
  			$('#jstree').on('rename_node.jstree', function (e, data) {
- 	 			console.log(data);
-				if(data.old =="New node"){					
+				if(data.node.id.startsWith("j1_")){					
 				  $.ajax({
 		        		url:"insertFolder.do",
 		        		method:"POST",
@@ -122,20 +122,44 @@ $(function(){
 		        			  folderName: data.text,
 		        			  ref: data.node.parent
 		        			 },
-		        		success:function(data){	
+		        		success:function(idx){
+			        		data.node.id =idx;
+		        		}
+		    		});
+				}else{
+					$.ajax({
+		        		url:"updateNewName.do",
+		        		method:"POST",
+		        		data:{projectIdx: ${project.projectIdx},
+			        			 driveIdx: data.node.id,
+			        			 oldName: data.old,
+		        			     folderName: data.text
+		        			 },
+		        		success:function(data){
 		        		}
 		    		});
 				}
 			});
-			
-			$("#renameFolder").click(function(){
-				console.log("rename");
-				var ref = $('#jstree').jstree(true),
-					sel = ref.get_selected();
-				if(!sel.length) { return false; }
-				sel = sel[0];
-				ref.edit(sel);
-			});
+
+
+
+ 			$('#jstree').on('paste.jstree', function (e, data) {
+ 	 			console.log("paste");
+				console.log(data);
+
+ 			});
+
+ 			$('#jstree').on('move_node.jstree', function (e, data) {
+ 	 			console.log("move");
+				console.log(data);
+
+ 			});
+ 			
+ 			$('#jstree').on('copy.jstree', function (e, data) {
+ 	 			console.log("copy");
+				console.log(data);
+
+ 			});
 
 			$("#deleteFolder").click(function(){
 				console.log("delete");

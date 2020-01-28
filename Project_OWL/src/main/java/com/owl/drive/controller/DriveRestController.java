@@ -57,13 +57,14 @@ public class DriveRestController {
 		System.out.println(folderName);
 		System.out.println(projectIdx);
 		System.out.println(driveIdx);
-        String oldPath = request.getServletContext().getRealPath("upload") + "\\drive\\" + projectIdx + "\\" + oldName;
+        String oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" + projectIdx + "\\drive\\" + oldName;
         System.out.println(oldPath);
-        String newPath = request.getServletContext().getRealPath("upload") + "\\drive\\" + projectIdx + "\\" + folderName;
+        String newPath = request.getServletContext().getRealPath("upload") + "\\project\\" + projectIdx + "\\drive\\" + folderName;
         System.out.println(newPath);
 		UploadHelper.renameFolder(oldPath, newPath);
 
-		result = service.updateNewNameFolder(folderName, driveIdx);
+		
+		/* result = service.updateNewNameFolder(folderName, driveIdx); */
 		
 		return result;
 	}
