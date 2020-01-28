@@ -579,7 +579,6 @@ display: block;
     			<i class="mdi mdi-menu font-24 mt-1" style="right:12px;top:0px; position: absolute;"></i>
    			</div>
    			<hr>
-   				 <!-- <div class="card"> -->
                                 <div class="chat-box scrollable" style="height:510px;">
                                     <!--chat Row -->
                                     <ul class="chat-list">
