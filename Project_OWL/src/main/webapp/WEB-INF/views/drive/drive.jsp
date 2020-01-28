@@ -72,7 +72,7 @@ $(function(){
 				});
 
 			// default folder
-			setFolderData(folderList[0].id,folderList[0].text);
+			setDirectoryData(folderList[0].id,folderList[0].text);
 			
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
