@@ -286,13 +286,14 @@ function callFolderData(){
 	if(isTrash){
 		$("#driveName").hide();
 		setTrashData();
-	}
-	else{
-		// dir;
+
+	} else{
+
 		$('#driveSearchBtn').show();
 		$('#driveUploadBtn').show();
 		$('#trashName').addClass("hidden");
 		$("#driveName").show();
+		
 		setDirectoryData(folderIdx, folderName);
 	}	
 }
