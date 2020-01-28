@@ -109,11 +109,11 @@ public class DriveService {
 			return trashlist;
 		}
 
-	public boolean deleteFile(int driveFileIdx) {
+	public boolean deleteFileFromDrive(int driveFileIdx) {
 		boolean reseult = false;
 		DriveDao dao = getDriveDao();
 		try {
-			reseult = dao.deleteFile(driveFileIdx) > 0 ? true : false;
+			reseult = dao.deleteFileFromDrive(driveFileIdx) > 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

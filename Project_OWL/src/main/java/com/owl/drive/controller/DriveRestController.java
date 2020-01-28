@@ -115,6 +115,6 @@ public class DriveRestController {
 		System.out.println("in deleteDriveFile");
 		System.out.println(driveFileIdx);
 		
-		return service.deleteFile(driveFileIdx);
+		return service.deleteFileFromDrive(driveFileIdx);
 	}
 }

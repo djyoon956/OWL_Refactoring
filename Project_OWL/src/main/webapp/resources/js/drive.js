@@ -34,20 +34,11 @@ function initDrive(projectIdx){
                  callback: function(key, options) {
                      let driveFileIdx = $trigger[0].id;
                      if(key == "download"){
-                    	 $.ajax({
-                    		 url : "DeleteDriveFile.do",
-                    		 data : {driveFileIdx : driveFileIdx},
-                    		 success : function(){
-                    			 
-                    		 },
-                    		 error : function(){
-                    			 
-                    		 }
-                    	 })
+                    	 
                      }else if(key == "rename"){
                     	 
                      }else if(key == "delete"){
-                    	 
+                    	 deleteDriveFile(driveFileIdx);
                      }
                  },
                  items:{
@@ -354,5 +345,21 @@ function setTableView(data){
 	})
 }
 
-
+function deleteDriveFile(driveFileIdx){
+	$.ajax({
+		 url : "DeleteDriveFile.do",
+		 data : {driveFileIdx : driveFileIdx},
+		 success : function(data){
+			 if(data){
+				 callFolderData();
+				 successAlert("파일 삭제 완료");
+			 }else{
+				 errorAlert("파일 삭제 실패");
+			 }
+		 },
+		 error : function(){
+			 errorAlert("파일 삭제 실패");
+		 }
+	 })
+}
 
