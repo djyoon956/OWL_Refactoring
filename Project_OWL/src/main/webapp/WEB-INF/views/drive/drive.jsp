@@ -2,9 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<!-- File Upload -->
 <script src="resources/plugin/fileUpload/jquery.fileupload.js"></script>
 <script src="resources/plugin/fileUpload/jquery.iframe-transport.js"></script>
 <script src="resources/plugin/fileUpload/jquery.ui.widget.js"></script>
+<!-- Contect Menu -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
+
 <link href="resources/css/drive.css" rel="stylesheet">
 <script src="resources/js/drive.js"></script>
 <script>

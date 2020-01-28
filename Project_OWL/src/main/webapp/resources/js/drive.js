@@ -24,6 +24,34 @@ function initDrive(projectIdx){
         autoWidth: false
 	});
 
+	 $.contextMenu({
+         selector: '#driveTable tr',
+         trigger: 'left',
+         build : function($trigger, e){
+        	 console.log($trigger);
+        	 console.log($trigger);
+         },
+         callback: function(key, options) {
+             console.log(key);
+             console.log(options);
+             if(key == "download"){
+            	 $.ajax({
+            		 url : "DeleteFile.do",
+            		 data : {}
+            	 })
+             }else if(key == "rename"){
+            	 
+             }else if(key == "delete"){
+            	 
+             }
+         },
+         items:{
+             "download": {name: "다운로드", icon: "fas fa-download"},
+             "rename": {name: "이름 변경", icon: "edit"},
+             "delete": {name: "삭제", icon: "delete"},
+    	 	}
+     });
+	
 	$('#jstree').on( "select_node.jstree", function(event, data){
 		setDirectoryData(data.node.id, data.node.text);
     });
@@ -266,6 +294,8 @@ function setTableView(data){
 			element.createDate,
 			element.creatorName,
 			element.fileSize+" KB"
-        ]).draw();
+        ]).node().id = element.driveFileIdx;
+		
+		$('#driveTable').DataTable().draw();
 	})
 }
