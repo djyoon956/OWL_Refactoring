@@ -84,9 +84,15 @@ $(function(){
 					ref.edit(sel);					
 				} 
 			});	
+			$('#jstree').on('create_node.jstree', function (e, data) {
+		console.log("나 탄다");
+		console.log(data);
+
+			});
 			//폴더 생성시 이름 수정까지 완료할 때
  			$('#jstree').on('rename_node.jstree', function (e, data) {
  	 			console.log(data);
+ 	 			return;
 				if(data.old =="New node"){					
 				  $.ajax({
 		        		url:"insertFolder.do",
