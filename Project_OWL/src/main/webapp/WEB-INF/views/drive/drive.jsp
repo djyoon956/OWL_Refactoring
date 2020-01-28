@@ -2,9 +2,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<!-- File Upload -->
 <script src="resources/plugin/fileUpload/jquery.fileupload.js"></script>
 <script src="resources/plugin/fileUpload/jquery.iframe-transport.js"></script>
 <script src="resources/plugin/fileUpload/jquery.ui.widget.js"></script>
+<!-- Contect Menu -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
+
 <link href="resources/css/drive.css" rel="stylesheet">
 <script src="resources/js/drive.js"></script>
 
@@ -97,7 +103,7 @@ $(function(){
 				});
 
 			// default folder
-			setFolderData(folderList[0].id,folderList[0].text);
+			setDirectoryData(folderList[0].id,folderList[0].text);
 			
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
@@ -299,16 +305,14 @@ function sendFileToServer(formData,status){
 						<table id="driveTable" class="table table-hover table-bordered text-center">
 							<thead>
 								<tr>
-									<th>file name</th>
-									<th>create date</th>
-									<th>creator</th>
-									<th>size</th>
+									<th width="45">file name</th>
+									<th width="30%">create date</th>
+									<th width="15%">creator</th>
+									<th width="10%">size</th>
 								</tr>
 							</thead>
 							
-							<tbody>
-							
-							</tbody>
+							<tbody> </tbody>
 						</table>
 					</div>
 					<!-- <div class="row">

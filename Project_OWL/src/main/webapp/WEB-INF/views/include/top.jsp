@@ -100,6 +100,17 @@
 		} 
 		
 	});
+	$(".chatList").click(function() {
+			
+	});
+
+	$('.text-edit1').keyup(function () {
+	    if ($.trim($('.text-edit1').val()).length) {
+	        $(this).addClass('active-text');
+	    } else {
+	        $(this).removeClass('active-text');
+	    }
+	})
 	});
 
 
@@ -334,89 +345,76 @@ display: block;
 .activity.off {
 	background-color: lightgrey;
 }
-
-/*   on off 버튼 */
-/* input[type="checkbox"] {
-	display: none;
-} */
-
-/* .label__on-off {
-	overflow: hidden;
-	position: relative;
-	display: inline-block;
-	width: 44px;
-	height: 26px;
-	-webkit-border-radius: 13px;
-	-moz-border-radius: 13px;
-	border-radius: 13px;
-	background-color: #ed4956;
-	color: #fff;
-	font-weight: bold;
-	cursor: pointer;
-	-webkit-transition: all .3s;
-	-moz-transition: all .3s;
-	-ms-transition: all .3s;
-	-o-transition: all .3s;
-	transition: all .3s;
-}
-
-.label__on-off>* {
-	vertical-align: middle;
-	-webkit-transition: all .3s;
-	-moz-transition: all .3s;
-	-ms-transition: all .3s;
-	-o-transition: all .3s;
-	transition: all .3s;
-	font-size: 14px;
-}
-
-.label__on-off .marble {
-	position: absolute;
-	top: 1px;
-	left: 1px;
-	display: block;
-	width: 24px;
-	height: 24px;
-	background-color: #fff;
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	border-radius: 50%;
-	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-	box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-}
-
-.label__on-off .on {
-	display: none;
-	padding-left: 12px;
-}
-
-.label__on-off .off {
-	padding-left: 30px;
-	line-height: 25px;
-}
-
-.input__on-off:checked+.label__on-off {
-	background-color: #0bba82;
-}
-
-.input__on-off:checked+.label__on-off .on {
-	display: inline-block;
-}
-
-.input__on-off:checked+.label__on-off .off {
-	display: none;
-}
-
-.input__on-off:checked+.label__on-off .marble {
-	left: 20px;
-} */
 .accordionBody {  
 	max-height: 650px; 
 	overflow: auto;
 }
 .top_card {
 	border-radius: 0.25rem;
+}
+/* 채팅방 css */
+.bubbleWrapper {
+	padding: 10px 10px;
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: column;
+	align-self: flex-end;
+  	color: #fff;
+}
+.inlineContainer {
+  display: inline-flex;
+}
+.inlineContainer.own {
+  flex-direction: row-reverse;
+}
+.inlineIcon {
+  width:20px;
+  object-fit: contain;
+}
+/* .ownBubble {
+	min-width: 60px;
+	max-width: 700px;
+	padding: 6px 9px;
+ 	margin: 6px 8px;
+	background-color: #326295;
+	border-radius: 16px 16px 0 16px;
+}
+.otherBubble {
+	min-width: 60px;
+	max-width: 700px;
+	padding: 6px 9px;
+    margin: 6px 8px;
+	background-color: #6c89a8;
+	border-radius: 16px 16px 16px 0;
+} */
+.own {
+	align-self: flex-end;
+}
+.other {
+	align-self: flex-start;
+}
+span.own,
+span.other{
+  font-size: 14px;
+  color: grey;
+}
+
+/* 채팅 css */
+.chatImgBorder {
+	border: 2px solid #BDBDBD;
+}
+.chatbg{
+	background-color: #326295 !important;
+}
+#chatBackBtn:hover{
+	cursor: pointer;
+}
+.ownBubble {
+	border-radius: 16px 16px 0 16px;
+}
+.otherBubble {
+	border-radius: 16px 16px 16px 0;
+	background-color: #dbd9d9 !important;
 }
 </style>
 
@@ -538,7 +536,7 @@ display: block;
 			<div class="toggleOption" id="chatToggle" style="padding-top: 0px; z-index: -20;">
 
 				
-				<div class="setting-box">
+				<div class="setting-box hidden" id="chattingList">
 					<div class="ChatList" style="margin-top : 30px"> 
 					<a href="#" data-toggle="modal" data-target="#newChat" style=" float: right;" class="whiteColor">
 						<i class="fas fa-comment-medical fa-lg"></i>&emsp;</a>					
@@ -547,7 +545,7 @@ display: block;
 				</div>
 				<hr>
 					 <ul class="list-group" id="chatUserList">
-                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start"  style="height: 106px;">
+                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start chatList"  style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
                                <img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">
@@ -597,13 +595,125 @@ display: block;
                        </li> 	       
                     </ul>
                     <!-- 채팅 유정 목록 유엘 끝 -->
-				</div>				
+				</div>	
+				
+				<!--  채팅방 view -->	
+			<div class="setting-box" id="chattingRoomIn">
+					 <ul class="list-group" id="chatUserList">
+                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start" style="height: 650px;">
+             <div class="row">
+             <div class="text-left">
+    			<!-- <button class="btn btn-primary mr-1"> --><i class="fas fa-chevron-left font-22 ml-1" id="chatBackBtn"></i><!-- </button> -->
+    			</div>
+    			<div class="offset-3">
+    			<h4 class="d-inline">Family_c</h4><h4 class="text-muted d-inline ml-2">(5)</h4></div>
+    			<i class="mdi mdi-menu font-24 mt-1" style="right:12px;top:0px; position: absolute;"></i>
+   			</div>
+   			<hr>
+                <!-- <div class="d-flex w-100 justify-content-between" id="chatTitle">
+                               <div class="media">
+                               <img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">
+                               <h6>이정은</h6>
+                               <ul>
+		                      	<li class="d-flex justify-content-between float-left">
+		                      		<p class="from-me">	개웃겨</p>
+		                        </li>
+                           	  	</ul>
+                               </div>
+
+                                <small style="float:right;">AM 12:00</small>
+                    </div>  -->
+   <!--  <div class="bubbleWrapper">
+		<div class="inlineContainer">
+			 <img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">
+			 <span class="other">이정은</span>
+			<div class="otherBubble other">
+				개웃겨
+			</div><span class="other">08:41</span>
+		</div>
+	</div>
+	<div class="bubbleWrapper">
+		<div class="inlineContainer own">
+			<h6>콜린</h6>
+			<div class="ownBubble own">
+			룰은 지켜야죠
+			</div>
+		</div><span class="own">08:55</span>
+	</div> -->
+                                <div class="chat-box scrollable">
+                                    <!--chat Row -->
+                                    <ul class="chat-list">
+                                    <!--chat Row -->
+                                    <!-- background-color: #dbd9d9;  -->
+                                        <li class="chat-item mt-0" style="padding:10px; background-color: rgba(219, 217, 217, 0.3); ">
+                                           <div class="row">
+                                           <div class="col-11">
+                                               <div class="chat-img"> <i class="fas fa-bullhorn btn-circle" style="background-color: #326295;color: white;padding-top: 12px;padding-left: 12px;"></i>
+                                                	</div>	
+                                                	
+                                                	
+                                                	 <div class="chat-content pl-2" style="max-height: 42px; overflow: hidden">
+                                                	축 콜린 장가 가는 날 ㅎㅎㅎㅎㅎㅋㅋㅋㅋㅋㅋㅋㅋㅁㅁㅁㅁㅁㅁㅁㅁ
+                                                	</div>
+                                                	</div>
+                                                	<div class="col-1 p-0">
+                                                	<i class="fas fa-chevron-down font-20" style="padding-top:12px;"></i>
+                                                	</div>	
+                                                	</div>	
+                                           <!--  </div> -->
+                                        </li>
+                                        <!--chat Row -->
+                                        <li class="chat-item" style="margin-top:10px;">
+                                            <div class="chat-img"><img src="resources/images/user/group.png" alt="user" class="chatImgBorder"></div>
+                                            <div class="chat-content pl-2 ">
+                                                <h6 class="font-medium">콜린</h6>
+                                                <div class="box bg-light-info otherBubble">저 장가갑니다. 축하해주세요.</div>
+                                            </div>
+                                            <div class="chat-time">10:56 am</div>
+                                        </li>
+                                        <!--chat Row -->
+                                        <li class="chat-item" style="margin-top:10px;">
+                                            <div class="chat-img"><img src="resources/images/user/group.png" alt="user" class="chatImgBorder"></div>
+                                            <div class="chat-content pl-2">
+                                                <h6 class="font-medium">이정은</h6>
+                                                <div class="box bg-light-info otherBubble">아악 콜린 축하해요!!!</div>
+                                            </div>
+                                            <div class="chat-time">10:57 am</div>
+                                        </li>
+                                        <!--chat Row -->
+                                        <li class="odd chat-item ">
+                                            <div class="chat-content" style="margin-top:10px;">
+                                                <div class="box bg-light-inverse chatbg ownBubble">그래서 날짜는 언제인가요?</div>
+                                                <br>
+                                            </div>
+                                            <div class="chat-time">10:59 am</div>
+                                        </li>
+                                        
+                                        <!--chat Row -->
+                                    </ul>
+                                </div>
+ 							<div class="card-body border-top p-0" style="position: absolute;bottom:2px;">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="input-field m-t-0 m-b-0" >
+                                            <textarea id="textarea1" placeholder="메시지를 입력해주세요" class="form-control border-0 mb-0"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <a class="btn-circle btn-md btn-cyan float-right text-white chatbg mt-2" href="javascript:void(0)"><i class="fas fa-paper-plane"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                       </li>
+                    </ul>
+                    <!-- 채팅 유정 목록 유엘 끝 -->
+				</div>		
 		</div>
 		
 					<!--  알람 토글  -->
 			<div class="toggleOption" id="alarmToggle"  style="padding-top: 0px;">
 					
-					<div class="setting-box" >
+					<div class="setting-box">
 				        <div class="card top_card ">
                             <div class="card-body" style="padding:20px;">
                                 <div id="accordion-three" class="accordion">
