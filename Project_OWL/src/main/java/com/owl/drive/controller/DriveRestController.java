@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,14 +32,9 @@ public class DriveRestController {
 	}
 
 	@RequestMapping(value = "insertFolder.do")
-	public boolean insertFolder(DriveFolder drivefolder, HttpServletRequest request) {
-		boolean result = false;
-		System.out.println(drivefolder.getFolderName());
-		System.out.println(drivefolder.getProjectIdx());
-		System.out.println(drivefolder.getRef());
+	public int insertFolder(DriveFolder drivefolder, HttpServletRequest request) {
 		try {
 		
-
 		String uploadPath = request.getServletContext().getRealPath("upload");
 		UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(), drivefolder.getFolderName());
 		drivefolder.setFolderName(drivefolder.getFolderName());
@@ -46,13 +42,32 @@ public class DriveRestController {
 		drivefolder.setRef(drivefolder.getRef());
 		drivefolder.setDepth(drivefolder.getDepth());
 		
-		result = service.insertDriveFolder(drivefolder);
+		service.insertDriveFolder(drivefolder);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return result;
+		return drivefolder.getDriveIdx();
 	}
 
+	@RequestMapping(value="updateNewName.do")
+	public boolean updateNewNameFolder(String oldName ,@RequestParam(value = "folderName") String folderName , 
+														int projectIdx, @RequestParam(value = "driveIdx") int driveIdx ,HttpServletRequest request) {
+		boolean result = false;
+		System.out.println(oldName);
+		System.out.println(folderName);
+		System.out.println(projectIdx);
+		System.out.println(driveIdx);
+        String oldPath = request.getServletContext().getRealPath("upload") + "\\drive\\" + projectIdx + "\\" + oldName;
+        System.out.println(oldPath);
+        String newPath = request.getServletContext().getRealPath("upload") + "\\drive\\" + projectIdx + "\\" + folderName;
+        System.out.println(newPath);
+		UploadHelper.renameFolder(oldPath, newPath);
+
+		result = service.updateNewNameFolder(folderName, driveIdx);
+		
+		return result;
+	}
+	
 	@RequestMapping(value = "DriveList.do")
 	public List<DriveFolder> getDriveList(int projectIdx) {
 		List<DriveFolder> folders = null;
@@ -77,8 +92,7 @@ public class DriveRestController {
 		
 		String filePath = "";
 		try {
-			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName,
-					driveUploadFile.getBytes()); // full path
+			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, driveUploadFile.getBytes()); // full path
 			System.out.println("filePath : " + filePath);
 			service.insertFile(driveFile);
 		} catch (IOException e) {
@@ -93,4 +107,32 @@ public class DriveRestController {
 		System.out.println("in getFolderData");
 		return service.getFolderData(folderIdx);
 	}
+	
+	
+	@RequestMapping(value = "GetTrashList.do")
+	public List<DriveFile> getTrashList(int projectIdx) {
+		System.out.println("in getTrashList");
+		return service.getTrashList(projectIdx);
+	}
+	
+	@RequestMapping(value = "DeleteDriveFile.do")
+	public boolean deleteDriveFile(int driveFileIdx) {
+		System.out.println("in deleteDriveFile");
+		System.out.println(driveFileIdx);
+		
+		return service.deleteFileFromDrive(driveFileIdx);
+	}
+	
+	
+	@RequestMapping(value = "DeleteFileFromTrash.do")
+	public boolean deleteFilefromTrash(int driveFileIdx) {
+		System.out.println("in deleteFilefromTrash");
+		System.out.println(driveFileIdx);
+		
+		return service.deleteFilefromTrash(driveFileIdx);
+	}
+	
+	
+	
+	
 }

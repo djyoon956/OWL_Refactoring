@@ -1,5 +1,8 @@
 let driveViewType ;
+let driveProjectIdx;
 function initDrive(projectIdx){	
+	driveProjectIdx = projectIdx;
+	
 	$("#driveUploadFile").fileupload({
 		url : "DriveFileUpload.do",
 		formData : {projectIdx : projectIdx , folderIdx:1},
@@ -19,12 +22,54 @@ function initDrive(projectIdx){
 	$("#driveTable").DataTable({
 	 	stateSave: true, // 페이지 상태 저장
 	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+	 	"searching": false,
         fixedColumns: true,
         autoWidth: false
 	});
 
+	$("#driveTable").on('click', 'tbody tr', function () {
+		if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+        	$("#driveTable").DataTable().$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+	});
+
+	 $.contextMenu({
+         selector: '#driveTable tr',
+         build : function(trigger, e){
+        	 console.log(trigger);
+        	 console.log($(trigger[0]));
+        	 console.log($(trigger[0]).find("td").first());
+        	 console.log();
+        	 let renameElement = $(trigger[0]).find("td").first();
+        	 let oldText = $(trigger[0]).find("td").first().text();
+        	 "<input type='text' value='"+oldText+"'>";
+        	 console.log(trigger[0].id);
+        	 return {
+                 callback: function(key, options) {
+                     let driveFileIdx = trigger[0].id;
+                     if(key == "download"){
+                    	 
+                     }else if(key == "rename"){
+                    	 
+                     }else if(key == "delete"){
+                    	 deleteDriveFile(driveFileIdx);
+                     }
+                 },
+                 items:{
+                     "download": {name: "다운로드", icon: "fas fa-download"},
+                     "rename": {name: "이름 변경", icon: "edit"},
+                     "delete": {name: "삭제", icon: "delete"},
+            	 	}
+             };
+         },
+     });
+	
 	$('#jstree').on( "select_node.jstree", function(event, data){
-	    setFolderData(data.node.id, data.node.text);
+		setDirectoryData(data.node.id, data.node.text);
     });
 	
 	$(".driveViewBtn").click(function(){
@@ -34,19 +79,63 @@ function initDrive(projectIdx){
 		if(driveViewType == "tableView"){
 			$("#iconView").removeClass("active");
 			$("#iconView").attr("disabled", false);
-			$("#driveTableViewBox").removeClass("hidden");
-			$("#driveIconViewBox").addClass("hidden");
 		}
 		// icon View
 		else{
 			$("#tableView").removeClass("active");
 			$("#tableView").attr("disabled", false);
-			$("#driveIconViewBox").removeClass("hidden");
-			$("#driveTableViewBox").addClass("hidden");
 		}		
 		callFolderData();
 	})
+	
+	
+	
+	$('#trashBtn').click(function() {
+		setTrashData(projectIdx);
+	})
 }
+
+
+function setTrashData(projectIdx) {
+	$.ajax({
+		url : "GetTrashList.do",
+		data : {'projectIdx' : projectIdx},
+		success : function (data) {
+			console.log('GetTrashList in');
+			console.log(data);
+			console.log(data.length);
+			$('#driveSearchBtn').hide();
+			$('#driveUploadBtn').hide();
+			$('#driveUploadBtn').hide();
+			$('#trashName').removeClass("hidden");
+
+			if (data.length == 0) {
+				$("#emptyDriveBox").removeClass("hidden");
+				$('#emptyDriveBox').find('h4').remove();
+				$("#driveIconViewBox").addClass("hidden");
+				$("#driveTableViewBox").addClass("hidden");
+			return;
+	}
+			
+			$("#emptyDriveBox").addClass("hidden");
+			$('#driveTable').DataTable().clear();
+			$("#driveIconViewBox").empty();
+			//$('#perDeleteBtn').removeClass("hidden");
+
+			if(driveViewType =="tableView"){
+				console.log('tableView select');
+				setTableView(data);
+			}else{
+				console.log('IconView select');   //언제 ? 기본값인가?
+				setIconView('trash',data);}
+
+		},
+			error : function() {
+					console.log('GetTrashList error');
+			}
+	})
+}
+
 
 var rowCount=0;
 function createStatusbar(obj){
@@ -182,67 +271,166 @@ function checkBox(box) {
 function callFolderData(){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
-	setFolderData(folderIdx, folderName);
+	setDirectoryData(folderIdx, folderName);
 }
 
-function setFolderData(folderIdx, folderName) {
+function setDirectoryData(folderIdx, folderName) {
+	console.log("in setFolderData");
+	console.log("folderIdx : " + folderIdx);
+	console.log("view type : " + driveViewType);
 	$.ajax({
 		url : "GetFolderData.do",
 		data : { folderIdx : folderIdx },
 		success : function(data){
 			console.log("in GetFolderData success");
 			console.log(data);
-			let targetBox = driveViewType =="tableView"? $("#driveTableViewBox"): $("#driveIconViewBox");
-			console.log("targetBox");
-			console.log(targetBox);
-			
-			targetBox.empty();
-			let controls = [];
+
 			if(data.length == 0 ){
-				$("#directoryName").text("[ "+folderName+" ] folder");
+				$("#directoryName").text("[ "+folderName+" ] directory.");
 				$("#emptyDriveBox").removeClass("hidden");
+				$("#driveIconViewBox").addClass("hidden");
+				$("#driveTableViewBox").addClass("hidden");
 				return;
 			}
-				
+			
 			$("#emptyDriveBox").addClass("hidden");
-			let line = 4;
-			let control ="";
-			$.each(data, function(index, element) {
-				let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
-				let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
-				
-				control += '<div class="col-sm-3">'
-							+ '	<div class="card driveCard">'
-							+ '		<div class="more" style="margin-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-							+ '			<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
-							+ '			<a style="float:right;" data-toggle="collapse" href="#detail">'
-							+ '				<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;'
-							+ '			</a>'
-							+ '		</div>'
-							+ '		<div style="margin-left: 60%;">'
-							+ '			<ul id="detail" class="collapse">'
-							+ '				<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>'
-							+ '				<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>'
-							+ '			</ul>'
-							+ '		</div>'
-							+ '		<div class="card-body text-center">'
-							+ '			<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
-							+ '			<h4 >'+fileName+'</h4>'
-							+ '		</div>'
-							+ '	</div>'
-							+ '</div>';
-				
-				console.log("index : "+index);
-				if (index % line == line - 1 || index == data.length - 1) {
-					let row = $("<div class='row'></div>");
-					row.append(control);
-					targetBox.append(row);
-					control = "";
-				}
-			})
+			$('#driveTable').DataTable().clear();
+			$("#driveIconViewBox").empty();
+			
+			if(driveViewType =="tableView")
+				setTableView(data);
+			else
+				setIconView('drive',data);
 		},
 		error : function(){
 			console.log("in GetFolderData error");
 		}
 	})
 }
+
+function setIconView(flag, data){   //flag : drive, trash
+	console.log('setIconView in');
+	console.log(flag);
+	console.log('data는?');
+	console.log(data);
+	console.log(typeof(flag));
+	$("#driveIconViewBox").removeClass("hidden");
+	$("#driveTableViewBox").addClass("hidden");
+	
+
+	let control ="";
+	let line = 4;
+	$.each(data, function(index, element) {
+		console.log('element 뭐니 : '+ element);
+		console.log(element);
+		let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
+		let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
+		
+	
+		control += '<div class="col-sm-3">'
+				+ 	'<div class="card driveCard dropdown">'
+				+ 		'<div class="more" style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
+				+			'<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
+				+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
+				+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
+				+				'</a>'
+				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
+				+				'<ul class="list-style-none">';
+		
+				if(flag == "trash") {
+					control += '<li class="pl-2"><a href="#"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
+							+  '<li class="pl-2"><a href="#" onclick="deleteFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
+				}else {
+					control +=	'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+							+	'<li class="pl-2"><a href="#"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>';
+				}
+
+		control		+=				'</ul>'
+					+			'</div>'
+					+		'</div>'
+					+		'<div class="card-body text-center">'
+					+			'<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
+					+			'<h4>'+fileName+'</h4>'
+					+		'</div>'
+					+	 '</div>'
+					+  '</div>';
+		
+		if (index % line == line - 1 || index == data.length - 1) {
+			let row = $("<div class='row'></div>");
+			row.append(control);
+			$("#driveIconViewBox").append(row);
+			control = "";
+		}
+	});
+}
+
+function setTableView(data){
+	$("#driveTableViewBox").removeClass("hidden");
+	$("#driveIconViewBox").addClass("hidden");
+	
+	$.each(data, function(index, element) {
+		$('#driveTable').DataTable().row.add( [
+			element.fileName,
+			element.createDate,
+			element.creatorName,
+			element.fileSize+" KB"
+        ]).node().id = element.driveFileIdx;
+		
+		$('#driveTable').DataTable().draw();
+	})
+}
+
+function deleteDriveFile(driveFileIdx){
+	$.ajax({
+		 url : "DeleteDriveFile.do",
+		 data : {driveFileIdx : driveFileIdx},
+		 success : function(data){
+			 if(data){
+				 callFolderData();
+				 successAlert("파일 삭제 완료");
+			 }else{
+				 errorAlert("파일 삭제 실패");
+			 }
+		 },
+		 error : function(){
+			 errorAlert("파일 삭제 실패");
+		 }
+	 })
+}
+
+
+function deleteFilefromTrash(driveFileIdx) {
+
+	//console.log('deleteFilefromTrash in???');
+	//console.log('driveFileIdx : ' + driveFileIdx);
+	
+	Swal.fire({
+	    title: '완전히 삭제 하시겠습니까?',
+	    text: '완전히 삭제하면 복구 하실 수 없습니다.',
+	    icon: 'warning',
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    confirmButtonText: 'Yes'
+	  }).then((result) => {
+	    if (result.value) {
+	    	$.ajax({
+	    		url : "DeleteFileFromTrash.do",
+	    		data : {'driveFileIdx' : driveFileIdx},
+	    		success : function(data) {
+	    			//console.log('deleteFileFromTrash in');
+	    			setTrashData(driveProjectIdx);
+	    			
+	    		},
+	    		error : function() {
+	    			console.log('deleteFilefromTrash error');
+	    		}
+	    		
+	    	})  
+	   }         
+	});
+	
+}
+	
+
+
