@@ -88,13 +88,15 @@ function initDrive(projectIdx){
 	})
 	
 	
-	
+	//휴지통 버튼 click
 	$('#trashBtn').click(function() {
 		setTrashData(projectIdx);
 	})
+	
+	
 }
 
-
+//프로젝트 내 휴지통 리스트 보여주는 function 
 function setTrashData(projectIdx) {
 	$.ajax({
 		url : "GetTrashList.do",
@@ -119,13 +121,13 @@ function setTrashData(projectIdx) {
 			$("#emptyDriveBox").addClass("hidden");
 			$('#driveTable').DataTable().clear();
 			$("#driveIconViewBox").empty();
-			//$('#perDeleteBtn').removeClass("hidden");
+			$('#perDeleteBtn').removeClass("hidden");
 
 			if(driveViewType =="tableView"){
-				console.log('tableView select');
+				//console.log('tableView select');
 				setTableView(data);
 			}else{
-				console.log('IconView select');   //언제 ? 기본값인가?
+				//console.log('IconView select');   //언제 ? 기본값인가?
 				setIconView('trash',data);}
 
 		},
@@ -398,6 +400,7 @@ function deleteDriveFile(driveFileIdx){
 }
 
 
+//휴지통에서 영구 삭제 함수 
 function deleteFilefromTrash(driveFileIdx) {
 	
 	Swal.fire({
@@ -427,6 +430,8 @@ function deleteFilefromTrash(driveFileIdx) {
 	});
 }
 
+
+//휴지통에서 복원 함수 
 function restoreFilefromTrash(driveFileIdx) {
 	
 	$.ajax({
