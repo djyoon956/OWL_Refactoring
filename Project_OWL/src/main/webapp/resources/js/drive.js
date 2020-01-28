@@ -344,7 +344,7 @@ function setIconView(flag, data){   //flag : drive, trash
 				+				'<ul class="list-style-none">';
 		
 				if(flag == "trash") {
-					control += '<li class="pl-2"><a href="#"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
+					control += '<li class="pl-2"><a href="#" onclick="restoreFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
 							+  '<li class="pl-2"><a href="#" onclick="deleteFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
 				}else {
 					control +=	'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
@@ -406,6 +406,7 @@ function deleteDriveFile(driveFileIdx){
 
 
 function deleteFilefromTrash(driveFileIdx) {
+	
 	Swal.fire({
 	    title: '완전히 삭제 하시겠습니까?',
 	    text: '완전히 삭제하면 복구 하실 수 없습니다.',
@@ -432,6 +433,25 @@ function deleteFilefromTrash(driveFileIdx) {
 	   }         
 	});
 }
+
+function restoreFilefromTrash(driveFileIdx) {
+	
+	$.ajax({
+		url : "RestoreFile.do",
+		data : {'driveFileIdx' : driveFileIdx},
+		success : function(data) {
+			console.log('restoreFilefromTrash in');
+			console.log(data);
+			 successAlert("파일 복원 완료");
+
+			setTrashData(driveProjectIdx);
+		},
+		error : function() {
+			console.log('restoreFilefromTrash');
+		}
+	}) 
+}
+	
 
 function renameFile(driveFileIdx){
 	console.log("in renameFile");
@@ -468,5 +488,6 @@ $.fn.selectRange = function(start, end) {
 		}
 	});
 }
+
 
 
