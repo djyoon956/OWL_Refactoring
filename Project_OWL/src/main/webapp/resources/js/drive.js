@@ -287,9 +287,10 @@ function callDirectoryData(){
 	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
 	if(isTrash){
 		$("#driveName").hide();
-		
 		setTrashData();
+
 	} else{
+
 		$('#driveSearchBtn').show();
 		$('#driveUploadBtn').show();
 		$('#trashName').addClass("hidden");

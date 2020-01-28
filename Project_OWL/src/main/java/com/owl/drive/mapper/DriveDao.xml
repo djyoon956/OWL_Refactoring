@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateFolder" parameterType="com.owl.drive.dto.DriveFolder">
 			UPDATE DRIVEFOLDER SET FOLDERNAME =#{folderName}
 													,REF =#{ref}
-													,DEPTH =(SELECT COALESCE(MAX(D.depth),0)+1 FROM DRIVEFOLDER D WHERE REF=#{ref})
+													,DEPTH =(SELECT DEPTH FROM (SELECT COALESCE(MAX(depth),0)+1 FROM DRIVEFOLDER WHERE REF=43) AS TEMP)
 			WHERE DRIVEIDX =#{driveIdx}
 	</update>
 
