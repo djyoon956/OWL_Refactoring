@@ -19,12 +19,41 @@ function initDrive(projectIdx){
 	$("#driveTable").DataTable({
 	 	stateSave: true, // 페이지 상태 저장
 	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+	 	"searching": false,
         fixedColumns: true,
         autoWidth: false
 	});
 
+	 $.contextMenu({
+         selector: '#driveTable tr',
+         trigger: 'left',
+         build : function($trigger, e){
+        	 console.log($trigger);
+        	 console.log($trigger);
+         },
+         callback: function(key, options) {
+             console.log(key);
+             console.log(options);
+             if(key == "download"){
+            	 $.ajax({
+            		 url : "DeleteFile.do",
+            		 data : {}
+            	 })
+             }else if(key == "rename"){
+            	 
+             }else if(key == "delete"){
+            	 
+             }
+         },
+         items:{
+             "download": {name: "다운로드", icon: "fas fa-download"},
+             "rename": {name: "이름 변경", icon: "edit"},
+             "delete": {name: "삭제", icon: "delete"},
+    	 	}
+     });
+	
 	$('#jstree').on( "select_node.jstree", function(event, data){
-	    setFolderData(data.node.id, data.node.text);
+		setDirectoryData(data.node.id, data.node.text);
     });
 	
 	$(".driveViewBtn").click(function(){
@@ -34,18 +63,57 @@ function initDrive(projectIdx){
 		if(driveViewType == "tableView"){
 			$("#iconView").removeClass("active");
 			$("#iconView").attr("disabled", false);
-			$("#driveTableViewBox").removeClass("hidden");
-			$("#driveIconViewBox").addClass("hidden");
 		}
 		// icon View
 		else{
 			$("#tableView").removeClass("active");
 			$("#tableView").attr("disabled", false);
-			$("#driveIconViewBox").removeClass("hidden");
-			$("#driveTableViewBox").addClass("hidden");
 		}		
 		callFolderData();
 	})
+	
+	
+	
+	$('#trashBtn').click(function() {
+			$.ajax({
+				url : "GetTrashList.do",
+				data : {'projectIdx' : projectIdx},
+				success : function (data) {
+					console.log('GetTrashList in');
+					console.log(data);
+					console.log(data.length);
+					$('#driveSearchBtn').hide();
+					$('#driveUploadBtn').hide();
+					$('#driveUploadBtn').hide();
+					$('#trashName').removeClass("hidden");
+
+					if (data.length == 0) {
+						$("#emptyDriveBox").removeClass("hidden");
+						$('#emptyDriveBox').find('h4').remove();
+						$("#driveIconViewBox").addClass("hidden");
+						$("#driveTableViewBox").addClass("hidden");
+					return;
+			}
+					
+					$("#emptyDriveBox").addClass("hidden");
+					$('#driveTable').DataTable().clear();
+					$("#driveIconViewBox").empty();
+					//$('#perDeleteBtn').removeClass("hidden");
+
+					if(driveViewType =="tableView"){
+						console.log('tableView select');
+						setTableView(data);
+					}else{
+						console.log('IconView select');   //언제 ? 기본값인가?
+						setIconView(data);}
+
+		},error : function() {
+			console.log('GetTrashList error');
+		}
+	})
+})
+
+	
 }
 
 var rowCount=0;
@@ -128,6 +196,9 @@ function Allcheck() { //전체선택 onclick
 	button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 	button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 	button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+	//button += "<button type='button' class='btn hidden' id='perDeleteBtn'>영구삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+	
+
 	button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
 	button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
 	$('.defaultDriveMenu').append(button);
@@ -182,67 +253,99 @@ function checkBox(box) {
 function callFolderData(){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
-	setFolderData(folderIdx, folderName);
+	setDirectoryData(folderIdx, folderName);
 }
 
-function setFolderData(folderIdx, folderName) {
+function setDirectoryData(folderIdx, folderName) {
+	console.log("in setFolderData");
+	console.log("folderIdx : " + folderIdx);
+	console.log("view type : " + driveViewType);
 	$.ajax({
 		url : "GetFolderData.do",
 		data : { folderIdx : folderIdx },
 		success : function(data){
 			console.log("in GetFolderData success");
 			console.log(data);
-			let targetBox = driveViewType =="tableView"? $("#driveTableViewBox"): $("#driveIconViewBox");
-			console.log("targetBox");
-			console.log(targetBox);
-			
-			targetBox.empty();
-			let controls = [];
+
 			if(data.length == 0 ){
-				$("#directoryName").text("[ "+folderName+" ] folder");
+				$("#directoryName").text("[ "+folderName+" ] directory.");
 				$("#emptyDriveBox").removeClass("hidden");
+				$("#driveIconViewBox").addClass("hidden");
+				$("#driveTableViewBox").addClass("hidden");
 				return;
 			}
-				
+			
 			$("#emptyDriveBox").addClass("hidden");
-			let line = 4;
-			let control ="";
-			$.each(data, function(index, element) {
-				let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
-				let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
-				
-				control += '<div class="col-sm-3">'
-							+ '	<div class="card driveCard">'
-							+ '		<div class="more" style="margin-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-							+ '			<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
-							+ '			<a style="float:right;" data-toggle="collapse" href="#detail">'
-							+ '				<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;'
-							+ '			</a>'
-							+ '		</div>'
-							+ '		<div style="margin-left: 60%;">'
-							+ '			<ul id="detail" class="collapse">'
-							+ '				<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>'
-							+ '				<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>'
-							+ '			</ul>'
-							+ '		</div>'
-							+ '		<div class="card-body text-center">'
-							+ '			<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
-							+ '			<h4 >'+fileName+'</h4>'
-							+ '		</div>'
-							+ '	</div>'
-							+ '</div>';
-				
-				console.log("index : "+index);
-				if (index % line == line - 1 || index == data.length - 1) {
-					let row = $("<div class='row'></div>");
-					row.append(control);
-					targetBox.append(row);
-					control = "";
-				}
-			})
+			$('#driveTable').DataTable().clear();
+			$("#driveIconViewBox").empty();
+			
+			if(driveViewType =="tableView")
+				setTableView(data);
+			else
+				setIconView(data);
 		},
 		error : function(){
 			console.log("in GetFolderData error");
 		}
 	})
 }
+
+function setIconView(data){
+	
+	$("#driveIconViewBox").removeClass("hidden");
+	$("#driveTableViewBox").addClass("hidden");
+	
+	let control ="";
+	let line = 4;
+	$.each(data, function(index, element) {
+		let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
+		let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
+		
+		control += '<div class="col-sm-3">'
+					+ '	<div class="card driveCard">'
+					+ '		<div class="more" style="margin-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
+					+ '			<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
+					+ '			<a style="float:right;" data-toggle="collapse" href="#detail">'
+					+ '				<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;'
+					+ '			</a>'
+					+ '		</div>'
+					+ '		<div style="margin-left: 60%;">'
+					+ '			<ul id="detail" class="collapse">'
+					+ '				<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>'
+					+ '				<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>'
+					+ '			</ul>'
+					+ '		</div>'
+					+ '		<div class="card-body text-center">'
+					+ '			<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
+					+ '			<h4 >'+fileName+'</h4>'
+					+ '		</div>'
+					+ '	</div>'
+					+ '</div>';
+
+		if (index % line == line - 1 || index == data.length - 1) {
+			let row = $("<div class='row'></div>");
+			row.append(control);
+			$("#driveIconViewBox").append(row);
+			control = "";
+		}
+	});
+}
+
+function setTableView(data){
+	$("#driveTableViewBox").removeClass("hidden");
+	$("#driveIconViewBox").addClass("hidden");
+	
+	$.each(data, function(index, element) {
+		$('#driveTable').DataTable().row.add( [
+			element.fileName,
+			element.createDate,
+			element.creatorName,
+			element.fileSize+" KB"
+        ]).node().id = element.driveFileIdx;
+		
+		$('#driveTable').DataTable().draw();
+	})
+}
+
+
+

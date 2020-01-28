@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.owl.drive.dao.DriveDao;
 import com.owl.drive.dto.DriveFile;
 import com.owl.drive.dto.DriveFolder;
-import com.owl.helper.UploadHelper;
 
 @Service
 public class DriveService {
@@ -77,6 +76,38 @@ public class DriveService {
 		
 		return files;
 	}
+	
+	public boolean updateNewNameFolder(String folderName, int driveIdx) {
+		boolean result = false;
+		DriveDao dao = getDriveDao();
+
+		try {
+			result = dao.updateNewNameFolder(folderName, driveIdx)> 0 ? true : false;
+
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	
+	public List<DriveFile> getTrashList(int projectIdx) {
+		DriveDao dao = getDriveDao();
+		List<DriveFile> trashlist = new ArrayList<DriveFile>();
+
+		try {
+			trashlist = dao.getTrashList(projectIdx);
+			
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return trashlist;
+		}
 	
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);

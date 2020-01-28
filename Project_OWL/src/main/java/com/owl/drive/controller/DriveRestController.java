@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,12 +34,8 @@ public class DriveRestController {
 	@RequestMapping(value = "insertFolder.do")
 	public boolean insertFolder(DriveFolder drivefolder, HttpServletRequest request) {
 		boolean result = false;
-		System.out.println(drivefolder.getFolderName());
-		System.out.println(drivefolder.getProjectIdx());
-		System.out.println(drivefolder.getRef());
 		try {
 		
-
 		String uploadPath = request.getServletContext().getRealPath("upload");
 		UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(), drivefolder.getFolderName());
 		drivefolder.setFolderName(drivefolder.getFolderName());
@@ -53,6 +50,19 @@ public class DriveRestController {
 		return result;
 	}
 
+	@RequestMapping(value="updateNewName.do")
+	public boolean updateNewNameFolder(@RequestParam(value="oldName") String oldName
+														   ,@RequestParam(value="newName") String folderName
+														   ,int projectIdx, int driveIdx ,HttpServletRequest request) {
+		boolean result = false;
+        String oldPath = request.getServletContext().getRealPath("upload") + "\\drive\\" + projectIdx + "\\" + oldName;
+        String newPath = request.getServletContext().getRealPath("upload") + "\\drive\\" + projectIdx + "\\" + folderName;
+		UploadHelper.renameFolder(oldPath, newPath);
+		result = service.updateNewNameFolder(folderName, driveIdx);
+		
+		return result;
+	}
+	
 	@RequestMapping(value = "DriveList.do")
 	public List<DriveFolder> getDriveList(int projectIdx) {
 		List<DriveFolder> folders = null;
@@ -77,8 +87,7 @@ public class DriveRestController {
 		
 		String filePath = "";
 		try {
-			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName,
-					driveUploadFile.getBytes()); // full path
+			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, driveUploadFile.getBytes()); // full path
 			System.out.println("filePath : " + filePath);
 			service.insertFile(driveFile);
 		} catch (IOException e) {
@@ -93,4 +102,13 @@ public class DriveRestController {
 		System.out.println("in getFolderData");
 		return service.getFolderData(folderIdx);
 	}
+	
+	
+	@RequestMapping(value = "GetTrashList.do")
+	public List<DriveFile> getTrashList(int projectIdx) {
+		System.out.println("in getTrashList");
+		return service.getTrashList(projectIdx);
+	}
+	
+	
 }
