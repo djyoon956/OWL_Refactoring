@@ -2,7 +2,9 @@ package com.owl.drive.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntPredicate;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,40 +34,46 @@ public class DriveRestController {
 	}
 
 	@RequestMapping(value = "insertFolder.do")
-	public int insertFolder(DriveFolder drivefolder, HttpServletRequest request) {
+	public int insertFolder(DriveFolder drivefolder, String[] refs, HttpServletRequest request) {
+		
+		List<Integer> driveRefs = new ArrayList<Integer>();
+		if (refs.length == 2) { // default 하위
+			driveRefs.add(Integer.parseInt(refs[0]));
+		} else {
+			driveRefs.add(Integer.parseInt(refs[1]));
+			driveRefs.add(Integer.parseInt(refs[0]));
+		}
+	
 		try {
-		
-		String uploadPath = request.getServletContext().getRealPath("upload");
-		UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(), drivefolder.getFolderName());
-		drivefolder.setFolderName(drivefolder.getFolderName());
-		drivefolder.setProjectIdx(drivefolder.getProjectIdx());		
-		drivefolder.setRef(drivefolder.getRef());
-		drivefolder.setDepth(drivefolder.getDepth());
-		
-		service.insertDriveFolder(drivefolder);
+			drivefolder.setFolderName(drivefolder.getFolderName());
+			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
+			drivefolder.setRef(drivefolder.getRef());
+			drivefolder.setDepth(drivefolder.getDepth());
+			service.insertDriveFolder(drivefolder);
+
+			String uploadPath = request.getServletContext().getRealPath("upload");
+
+			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(),
+					driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+
 		return drivefolder.getDriveIdx();
 	}
 
-	@RequestMapping(value="updateNewName.do")
-	public boolean updateNewNameFolder(String oldName ,@RequestParam(value = "folderName") String folderName , 
+	@RequestMapping(value="updateFolder.do")
+	public boolean updateFolder(String oldName ,@RequestParam(value = "folderName") String folderName , 
 														int projectIdx, @RequestParam(value = "driveIdx") int driveIdx ,HttpServletRequest request) {
 		boolean result = false;
-		System.out.println(oldName);
-		System.out.println(folderName);
-		System.out.println(projectIdx);
-		System.out.println(driveIdx);
-        String oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" + projectIdx + "\\drive\\" + oldName;
-        System.out.println(oldPath);
-        String newPath = request.getServletContext().getRealPath("upload") + "\\project\\" + projectIdx + "\\drive\\" + folderName;
-        System.out.println(newPath);
-		UploadHelper.renameFolder(oldPath, newPath);
 
-		
-		/* result = service.updateNewNameFolder(folderName, driveIdx); */
-		
+		return result;
+	}
+	
+	@RequestMapping(value="updateNewName.do")
+	public boolean updateNewNameFolder(String folderName , int driveIdx ,HttpServletRequest request) {
+		boolean result = false;	
+		result = service.updateNewNameFolder(folderName, driveIdx);	
 		return result;
 	}
 	
