@@ -32,7 +32,11 @@
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
+	
 }
+/* .more {
+    visibility: hidden;
+} */
 </style>
 <script>
 var folderList = [];
@@ -246,8 +250,10 @@ function sendFileToServer(formData,status){
 					
 						</div>
 						
-					<button id="trashBtn" class="btn-link" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
-						
+					<div>
+						<button id="trashBtn" class="btn-link" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
+					</div>
+					
 <!-- 			<a href="Trash.do" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
 							<i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;<b>휴지통</b>
 						</a> -->
@@ -293,7 +299,8 @@ function sendFileToServer(formData,status){
 						<h4 >Please upload a file in <span id="directoryName"></span></h4>
 					</div>
 					
-					<div id="driveIconViewBox"></div>
+					<div id="driveIconViewBox"></div> 
+					
 					<div id="driveTableViewBox" class="hidden">
 						<table id="driveTable" class="table table-hover table-bordered text-center">
 							<thead>
