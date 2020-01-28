@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
-<html class="h-100">
+<html>
 <head>
 <meta charset="utf-8">
 <title>OWL</title>
@@ -9,9 +9,10 @@
  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
   <link href="resources/css/style.css" rel="stylesheet">
   <style type="text/css">
-  body {
+#forgotPwdBody {
 	background-color: #326295;
 	overflow-y: hidden;
+	height: 100vh;
 }
   </style>
   <script type="text/javascript">
@@ -71,10 +72,10 @@
 		})
   </script>
 </head>
-<body >
-	<div class="login-form-bg h-100">
+<body  id="forgotPwdBody">
+	<div class="login-form-bg h-100" >
         <div class="container h-100">
-            <div class="row justify-content-center h-100">
+            <div class="row justify-content-center h-100 align-items-center " >
                 <div class="col-xl-6">
                     <div class="form-input-content">
                         <div class="card login-form mb-0">
@@ -96,10 +97,5 @@
                 </div>
             </div>
         </div>
-        
-        
-     <script src="resources/plugins/common/common.min.js"></script>
-    <script src="resources/js/custom.min.js"></script>
-    <script src="resources/js/settings.js"></script>
 </body>
 </html>
