@@ -135,6 +135,20 @@ public class DriveService {
 		return reseult;
 	}
 	
+	public boolean renameFile(int driveFileIdx, String fileName) {
+		boolean result =false;
+		DriveDao dao = getDriveDao();
+
+		try {
+			result = dao.renameFile(driveFileIdx, fileName) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 	public boolean restoreFilefromTrash(int driveFileIdx) {
 		System.out.println("in restoreFilefromTrash");
@@ -154,10 +168,7 @@ public class DriveService {
 		
 		return reseult;
 	}
-	
 
-	
-	
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);
 	}

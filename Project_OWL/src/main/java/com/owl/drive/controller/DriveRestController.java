@@ -125,20 +125,20 @@ public class DriveRestController {
 	}
 	
 	@RequestMapping(value = "RenameDriveFile.do")
-	public boolean renameDriveFile(int driveFileIdx) {
+	public boolean renameDriveFile(int driveFileIdx, String fileName) {
 		System.out.println("in renameDriveFile");
 		System.out.println(driveFileIdx);
-		
-		return service.deleteFileFromDrive(driveFileIdx);
+
+		return service.renameFile(driveFileIdx, fileName);
 	}
 	
 	
 	@RequestMapping(value = "DeleteFileFromTrash.do")
-	public boolean deleteFilefromTrash(int driveFileIdx) {
+	public boolean deleteFilefromTrash(int driveFileIdx, String fileName) {
 		System.out.println("in deleteFilefromTrash");
 		System.out.println(driveFileIdx);
 		
-		return service.deleteFilefromTrash(driveFileIdx);
+		return service.renameFile(driveFileIdx, fileName);
 	}
 	
 	
