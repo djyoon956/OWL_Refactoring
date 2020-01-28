@@ -117,6 +117,16 @@
 		$("#chattingList").removeClass("hidden");
 		$("#chattingRoomIn").addClass("hidden");
 		});
+	$("#noticeAsideBtn").click(function() {
+		if($("#chatNotideAside").hasClass("hidden")) {
+		$("#chatNoticeDetail").addClass("hidden");
+		$("#chatNotideAside").removeClass("hidden");
+		}
+		});
+	$("#chatNotideAside").click(function() {
+		$("#chatNoticePreview").removeClass("hidden");
+		$("#chatNotideAside").addClass("hidden");
+		});
 	});
 
 
@@ -607,9 +617,14 @@ display: block;
                                            </div>
                                              <div class="row text-center" style="border-top: 1px solid  #BDBDBD">
                                            <div class="col-6" style="border-right:1px solid  #BDBDBD;padding:6px;">다시 열지 않음</div>
-                                           <div class="col-6" style="padding:6px;">접어두기</div>
+                                           <div class="col-6" style="padding:6px;" id="noticeAsideBtn">접어두기</div>
                                            </div>	
                                         </li>
+                                        <!--  채팅방 공지 접어두기 -->  
+                                        
+                                         <div class="chat-img hidden" id="chatNotideAside"style="position: absolute;right:0; top:0"> <i class="fas fa-bullhorn btn-circle op-5" style="background-color: #326295;color: white;padding-top: 12px;padding-left: 12px;"></i>
+                                               </div>
+                                          
                                         <!--chat Row -->
                                         <li class="chat-item" style="margin-top:10px;">
                                             <div class="chat-img"><img src="resources/images/user/group.png" alt="user" class="chatImgBorder"></div>

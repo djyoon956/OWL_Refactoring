@@ -42,11 +42,6 @@ function initDrive(projectIdx){
          build : function(trigger, e){
         	 console.log(trigger);
         	 console.log($(trigger[0]));
-        	 console.log($(trigger[0]).find("td").first());
-        	 console.log();
-        	 let renameElement = $(trigger[0]).find("td").first();
-        	 let oldText = $(trigger[0]).find("td").first().text();
-        	 "<input type='text' value='"+oldText+"'>";
         	 console.log(trigger[0].id);
         	 return {
                  callback: function(key, options) {
@@ -54,7 +49,11 @@ function initDrive(projectIdx){
                      if(key == "download"){
                     	 
                      }else if(key == "rename"){
-                    	 
+                       	 let renameElement = $(trigger[0]).find("td").first();
+                    	 let oldText = $(trigger[0]).find("td").first().text();
+                    	 renameElement.html( "<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"'>"
+                    			 							+ "<button class='btn btn-default btn-sm ml-2' style='height : 32px;' onclick='renameFile("+driveFileIdx+")'><i class='fas fa-check'></i></button>");
+                    	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
                      }else if(key == "delete"){
                     	 deleteDriveFile(driveFileIdx);
                      }
@@ -400,9 +399,6 @@ function deleteDriveFile(driveFileIdx){
 
 
 function deleteFilefromTrash(driveFileIdx) {
-
-	//console.log('deleteFilefromTrash in???');
-	//console.log('driveFileIdx : ' + driveFileIdx);
 	
 	Swal.fire({
 	    title: '완전히 삭제 하시겠습니까?',
@@ -429,7 +425,6 @@ function deleteFilefromTrash(driveFileIdx) {
 	    	})  
 	   }         
 	});
-	
 }
 
 function restoreFilefromTrash(driveFileIdx) {
@@ -446,5 +441,39 @@ function restoreFilefromTrash(driveFileIdx) {
 	}) 
 }
 	
+function renameFile(driveFileIdx){
+	$.ajax({
+		 url : "RenameDriveFile.do",
+		 data : {driveFileIdx : driveFileIdx},
+		 success : function(data){
+			 if(data){
+				 callFolderData();
+				 successAlert("파일 이름 변경 완료");
+			 }else{
+				 errorAlert("파일 이름 변경 실패");
+			 }
+		 },
+		 error : function(){
+			 errorAlert("파일 이름 변경 실패");
+		 }
+	 })
+}
+
+$.fn.selectRange = function(start, end) {
+	return this.each(function() {
+		if(this.setSelectionRange) {
+			this.focus();
+			this.setSelectionRange(start, end);
+		}
+		else if(this.createTextRange) {
+			let range = this.createTextRange();
+			range.collapse(true);
+			range.moveEnd('character', end);
+			range.moveStart('character', start);
+			range.select();
+		}
+	});
+}
+
 
 
