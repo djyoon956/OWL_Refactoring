@@ -110,5 +110,11 @@ public class DriveRestController {
 		return service.getTrashList(projectIdx);
 	}
 	
-	
+	@RequestMapping(value = "DeleteDriveFile.do")
+	public boolean deleteDriveFile(int driveFileIdx) {
+		System.out.println("in deleteDriveFile");
+		System.out.println(driveFileIdx);
+		
+		return service.deleteFile(driveFileIdx);
+	}
 }
