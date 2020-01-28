@@ -18,4 +18,6 @@ public class DriveFile {
 	private Date createDate;
 	private Date deleteDate;
 	private boolean isDelete;
+	
+	private  String creatorName;
 }

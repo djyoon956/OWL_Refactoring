@@ -77,8 +77,7 @@ public class DriveRestController {
 		
 		String filePath = "";
 		try {
-			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName,
-					driveUploadFile.getBytes()); // full path
+			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, driveUploadFile.getBytes()); // full path
 			System.out.println("filePath : " + filePath);
 			service.insertFile(driveFile);
 		} catch (IOException e) {

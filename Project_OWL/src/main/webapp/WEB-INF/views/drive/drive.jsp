@@ -265,6 +265,7 @@ function sendFileToServer(formData,status){
 								<tr>
 									<th>file name</th>
 									<th>create date</th>
+									<th>creator</th>
 									<th>size</th>
 								</tr>
 							</thead>

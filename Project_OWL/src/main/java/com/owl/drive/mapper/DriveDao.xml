@@ -21,8 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getFileByFolderIdx" resultType="com.owl.drive.dto.DriveFile" parameterType="int">
-		SELECT DRIVEFILEIDX, FILENAME, CREATOR, FILESIZE, CREATEDATE 
-			FROM owl.DRIVEFILE 
+		SELECT DRIVEFILEIDX, FILENAME, CREATOR, M.NAME AS 'CREATORNAME', FILESIZE, CREATEDATE 
+			FROM owl.DRIVEFILE F JOIN owl.MEMBER M ON F.CREATOR = M.EMAIL
 		WHERE DRIVEIDX = #{folderIdx} AND ISDELETE = 0
 	</select>
 </mapper>

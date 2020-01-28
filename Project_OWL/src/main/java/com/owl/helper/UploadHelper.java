@@ -48,5 +48,4 @@ public class UploadHelper {
 		if (!file.exists())
 			file.mkdirs();
 	}
-
 }
