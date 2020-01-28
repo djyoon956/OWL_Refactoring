@@ -1,5 +1,59 @@
 let projectIdx;
 
+
+let editIdx = 0;
+function initKanban(projectIdx){
+	this.projectIdx= projectIdx;
+	
+	$('#editLabelBtn').click(function() {
+		if(editIdx == 0)
+			return;
+		
+		//console.log(editIdx);
+		//console.log('change 값');
+		//console.log($('#labelcolor').val());
+		//console.log($('#labelname').val());
+		$('#labelColor').val("");
+		$('#labelName').val("");
+			
+		$.ajax({
+			url : "UpdateLabel.do",
+			data : {'labelIdx' : editIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
+			success : function(data) {
+				
+				console.log('data in' + data);
+				$('#'+editIdx+'Label').next().remove();
+				$('#'+editIdx+'Label').remove();
+				
+				addLabel(editIdx, $('#labelcolor').val(), $('#labelname').val());
+				
+				$('#labelColor').val("");
+				$('#labelName').val("");
+				editIdx = 0;
+				
+				$('#'+editIdx+'Label').attr('style', "background-color:#fff");
+
+			}, error : function () {
+				console.log('EditLabel error');
+			}
+		});
+	});
+	
+	$('#backBtn').click(function() {
+		editIdx = 0;
+		$('#labelcolor').val("");
+		$('#labelname').val("");
+		
+		$('#addLabelBtn').removeClass("hidden");
+		$('#editLabelBtn').addClass("hidden");
+		$('#backBtn').addClass("hidden");
+
+		$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', '#000000');
+		$('.labelList').find('.edit').removeClass("hidden");
+
+	});
+}
+
 function addLabel(lbidx, lbcolor, lbnm) {
 
    let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
@@ -18,59 +72,6 @@ $('#labelList').append(lablist);
 }
 
    
-	let editIdx = 0;
-	function initKanban(projectIdx){
-		this.projectIdx= projectIdx;
-		
-		$('#editLabelBtn').click(function() {
-			if(editIdx == 0)
-				return;
-			
-			//console.log(editIdx);
-			//console.log('change 값');
-			//console.log($('#labelcolor').val());
-			//console.log($('#labelname').val());
-			$('#labelColor').val("");
-			$('#labelName').val("");
-				
-			$.ajax({
-				url : "UpdateLabel.do",
-				data : {'labelIdx' : editIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
-				success : function(data) {
-					
-					console.log('data in' + data);
-					$('#'+editIdx+'Label').next().remove();
-					$('#'+editIdx+'Label').remove();
-					
-					addLabel(editIdx, $('#labelcolor').val(), $('#labelname').val());
-					
-					$('#labelColor').val("");
-					$('#labelName').val("");
-					editIdx = 0;
-					
-					$('#'+editIdx+'Label').attr('style', "background-color:#fff");
-
-				}, error : function () {
-					console.log('EditLabel error');
-				}
-			});
-		});
-		
-		$('#backBtn').click(function() {
-			editIdx = 0;
-			$('#labelcolor').val("");
-			$('#labelname').val("");
-			
-			$('#addLabelBtn').removeClass("hidden");
-			$('#editLabelBtn').addClass("hidden");
-			$('#backBtn').addClass("hidden");
-
-			$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', '#000000');
-			$('.labelList').find('.edit').removeClass("hidden");
-
-		});
-	}
-
 
 function addColumn(obj){
    let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'

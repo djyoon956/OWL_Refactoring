@@ -93,7 +93,7 @@ $(function(){
 				});
 
 			// default folder
-			setDirectoryData(folderList[0].id,folderList[0].text);
+			setFolderData(folderList[0].id,folderList[0].text);
 			
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
@@ -105,15 +105,9 @@ $(function(){
 					ref.edit(sel);					
 				} 
 			});	
-			$('#jstree').on('create_node.jstree', function (e, data) {
-		console.log("나 탄다");
-		console.log(data);
-
-			});
 			//폴더 생성시 이름 수정까지 완료할 때
  			$('#jstree').on('rename_node.jstree', function (e, data) {
  	 			console.log(data);
- 	 			return;
 				if(data.old =="New node"){					
 				  $.ajax({
 		        		url:"insertFolder.do",
@@ -260,8 +254,7 @@ function sendFileToServer(formData,status){
 				<button id="driveSearchBtn" type="button" class="driveBtn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;
 				<div class="filebox" style="display:inline;">
 					<input type="file" id="driveUploadFile" name="driveUploadFile" >
-					<label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
-						class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
+					<label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;" class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
 				</div>
 				<button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary" onclick="Allcheck()">전체선택</button>
 				&nbsp;&nbsp;&nbsp;&nbsp;
@@ -299,13 +292,15 @@ function sendFileToServer(formData,status){
 						<table id="driveTable" class="table table-hover table-bordered text-center">
 							<thead>
 								<tr>
-									<th  width="45%">file name</th>
-									<th  width="30%">create date</th>
-									<th width="15%">creator</th>
-									<th width="10%">size</th>
+									<th>file name</th>
+									<th>create date</th>
+									<th>creator</th>
+									<th>size</th>
 								</tr>
 							</thead>
+							
 							<tbody>
+							
 							</tbody>
 						</table>
 					</div>
