@@ -1,5 +1,8 @@
 let driveViewType ;
+let driveProjectIdx;
 function initDrive(projectIdx){	
+	driveProjectIdx = projectIdx;
+	
 	$("#driveUploadFile").fileupload({
 		url : "DriveFileUpload.do",
 		formData : {projectIdx : projectIdx , folderIdx:1},
@@ -24,14 +27,30 @@ function initDrive(projectIdx){
         autoWidth: false
 	});
 
+	$("#driveTable").on('click', 'tbody tr', function () {
+		if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+        	$("#driveTable").DataTable().$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+	});
+
 	 $.contextMenu({
          selector: '#driveTable tr',
-         build : function($trigger, e){
-        	 console.log($trigger);
-        	 console.log($trigger[0].id);
+         build : function(trigger, e){
+        	 console.log(trigger);
+        	 console.log($(trigger[0]));
+        	 console.log($(trigger[0]).find("td").first());
+        	 console.log();
+        	 let renameElement = $(trigger[0]).find("td").first();
+        	 let oldText = $(trigger[0]).find("td").first().text();
+        	 "<input type='text' value='"+oldText+"'>";
+        	 console.log(trigger[0].id);
         	 return {
                  callback: function(key, options) {
-                     let driveFileIdx = $trigger[0].id;
+                     let driveFileIdx = trigger[0].id;
                      if(key == "download"){
                     	 
                      }else if(key == "rename"){
