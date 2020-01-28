@@ -11,7 +11,7 @@ public interface DriveDao {
 
 	public int insertFile(DriveFile file) throws ClassNotFoundException, SQLException;
 	
-	public int updateFolder(DriveFolder drivefolder) throws ClassNotFoundException, SQLException;
+	public int updateNewNameFolder(String folderName, int driveIdx) throws ClassNotFoundException, SQLException;
 	
 	public List<DriveFolder> getDriveList(int projectIdx) throws ClassNotFoundException, SQLException;
 	

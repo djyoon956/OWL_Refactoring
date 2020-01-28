@@ -77,12 +77,12 @@ public class DriveService {
 		return files;
 	}
 	
-	public boolean updateFolder(DriveFolder drivefolder) {
+	public boolean updateNewNameFolder(String folderName, int driveIdx) {
 		boolean result = false;
 		DriveDao dao = getDriveDao();
 
 		try {
-			result = dao.updateFolder(drivefolder) > 0 ? true : false;
+			result = dao.updateNewNameFolder(folderName, driveIdx)> 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

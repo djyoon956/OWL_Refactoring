@@ -26,10 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE DRIVEIDX = #{folderIdx} AND ISDELETE = 0
 	</select>
 	
-	<update id="updateFolder" parameterType="com.owl.drive.dto.DriveFolder">
+	<update id="updateNewNameFolder" parameterType="com.owl.drive.dto.DriveFolder">
 		UPDATE DRIVEFOLDER SET FOLDERNAME =#{folderName}
-												,REF =#{ref}
-												,DEPTH =#{depth}
 		WHERE DRIVEIDX =#{driveIdx}
 	</update>
 </mapper>

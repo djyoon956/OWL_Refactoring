@@ -43,6 +43,12 @@ public class UploadHelper {
 			file.delete();
 	}
 	
+	public static boolean renameFolder(String oldPath, String newPath) {
+		File oldDirectory = new File(oldPath);
+		File newDirectory = new File(newPath);
+		return oldDirectory.renameTo(newDirectory);
+	}
+	
 	private static void makeDirectory(String path) {
 		File file = new File(path);
 		if (!file.exists())
