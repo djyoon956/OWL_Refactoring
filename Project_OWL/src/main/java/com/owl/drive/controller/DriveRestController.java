@@ -123,6 +123,14 @@ public class DriveRestController {
 		return service.deleteFileFromDrive(driveFileIdx);
 	}
 	
+	@RequestMapping(value = "RenameDriveFile.do")
+	public boolean renameDriveFile(int driveFileIdx) {
+		System.out.println("in renameDriveFile");
+		System.out.println(driveFileIdx);
+		
+		return service.deleteFileFromDrive(driveFileIdx);
+	}
+	
 	
 	@RequestMapping(value = "DeleteFileFromTrash.do")
 	public boolean deleteFilefromTrash(int driveFileIdx) {

@@ -31,7 +31,7 @@
    color: #326295;
 }
 
-.dataTable tbody tr.selected{
+.dataTable tbody tr.selecteds{
 	color :white;
 	background-color: #326295;
 	opacity: 0.5;
