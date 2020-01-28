@@ -103,6 +103,8 @@ $(function(){
 				});
 
 			// default folder
+			$("#jstree").jstree("clese_all");
+			$("#jstree").jstree(true).select_node(folderList[0].id);
 			setDirectoryData(folderList[0].id,folderList[0].text);
 			
 			$("#createFolder").click(function(){
@@ -148,20 +150,23 @@ $(function(){
 		    		});
 				}
 			});
-
-
-
- 			$('#jstree').on('paste.jstree', function (e, data) {
- 	 			console.log("paste");
-				console.log(data);
-
- 			});
-
  			$('#jstree').on('move_node.jstree', function (e, data) {
- 	 			console.log("move");
-				console.log(data);
-
- 			});
+				console.log("move");
+				jQuery.ajaxSettings.traditional = true				
+				  $.ajax({
+		        		url:"updateFolder.do",
+		        		method:"POST",
+		        		data:{driveIdx: data.node.id,
+			        		  projectIdx: ${project.projectIdx},
+		        			  folderName: data.node.text,
+		        			  ref: data.parent,
+		        			  refs: data.node.parents,
+		        			  oldRef: data.old_parent
+		        			 },
+		        		success:function(data){
+		        		}
+		    		});
+ 			});	
  			
  			$('#jstree').on('copy.jstree', function (e, data) {
  	 			console.log("copy");

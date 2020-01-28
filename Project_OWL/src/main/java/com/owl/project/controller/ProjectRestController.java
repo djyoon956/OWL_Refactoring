@@ -76,7 +76,6 @@ public class ProjectRestController {
 		ProjectList projectList = null;
 		projectList = service.getProjectList(projectIdx, principal.getName());
 		model.addAttribute("projectList", projectList);
-		System.out.println("단일 캘린더 " + projectList);
 		return projectList;
 	}
 	
@@ -90,8 +89,6 @@ public class ProjectRestController {
 	
 	@RequestMapping(value = "AddProjectMember.do", method = RequestMethod.POST)
 	public void AddProjectMember(int projectIdx, String projectName, String pm, String[] addProjectMembers, Principal principal) {
-		System.out.println("in AddProjectMember");
-		System.out.println("in " + projectIdx);
 		
 		try {
 			MimeMessage content = mailSender.createMimeMessage();
@@ -117,13 +114,11 @@ public class ProjectRestController {
 	
 	@RequestMapping(value = "GetProjectMember.do", method = RequestMethod.POST)
 	public List<Member> getProjectMembers(int projectIdx) {
-		System.out.println("getProjectMembers : "+projectIdx);
 		return service.getProjectMembers(projectIdx);
 	}
 	
 	@RequestMapping(value = "OutProject.do", method = RequestMethod.POST)
 	public boolean outProject(int projectIdx, Principal principal) {
-
 		return service.outProject(projectIdx, principal.getName());
 	}
 }

@@ -1,6 +1,7 @@
 package com.owl.helper;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
 
@@ -56,11 +57,23 @@ public class UploadHelper {
 			file.delete();
 	}
 	
-	public static void renameFolder(String oldPath, String newPath) {
-		File oldDirectory = new File(oldPath);
-		oldDirectory.renameTo(new File(newPath));
+	 public static void moveDriveDirectory(String oldPath, String uploadPath, int projectIdx, int[] refs, int driveIdx) { 						
+		 String refPath = "";
+		for (int i = 0; i < refs.length; i++) {
+			if (i == refs.length - 1)
+				refPath += refs[i];
+			else
+				refPath += refs[i] + File.separator;
+		}
+		  String newPath = Paths.get(uploadPath, "project", Integer.toString(projectIdx), "drive", refPath, Integer.toString(driveIdx)).toString();
+		
+	      File oldDirectory = new File(oldPath);
+	      File newDirectory = new File(newPath);
+	      boolean isMove = oldDirectory.renameTo(newDirectory);
+	      System.out.println("파일 이동 성공 : " + isMove);
 	}
-	
+
+	   
 	private static void makeDirectory(String path) {
 		File file = new File(path);
 		if (!file.exists())
