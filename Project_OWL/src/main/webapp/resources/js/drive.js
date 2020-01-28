@@ -49,11 +49,11 @@ function initDrive(projectIdx){
                  callback: function(key, options) {
                      let driveFileIdx = trigger[0].id;
                      if(key == "download"){
-                    	 
+                    	 downloadFile(driveFileIdx);
                      }else if(key == "rename"){
                        	 let renameElement = $(trigger[0]).find("td").first();
                     	 let oldText = $(trigger[0]).find("td").first().text();
-                    	 renameElement.html( "<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"'>"
+                    	 renameElement.html( "<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {renameFile("+driveFileIdx+")}'>"
                     			 							+ "<button class='btn btn-default btn-sm ml-2' style='height : 32px;' onclick='renameFile("+driveFileIdx+")'><i class='fas fa-check'></i></button>");
                     	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
                      }else if(key == "delete"){
@@ -77,6 +77,8 @@ function initDrive(projectIdx){
 	
 	$('#jstree').on( "select_node.jstree", function(event, data){
 		isTrash = false;
+		let path = data.instance.get_path(data.node, '<i class="fas fa-angle-right ml-2 mr-2"></i><i class="far fa-folder mr-2"></i>');
+	    $("#driveName").html('<i class="far fa-folder mr-2"></i>'+path);
 		callFolderData();
     });
 	
@@ -281,13 +283,17 @@ function checkBox(box) {
 function callFolderData(){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
-	if(isTrash)
+	if(isTrash){
+		$("#driveName").hide();
 		setTrashData();
+	}
 	else{
 		$('#driveSearchBtn').show();
 		$('#driveUploadBtn').show();
 		$('#trashName').addClass("hidden");
 
+		// dir;
+		$("#driveName").show();
 		setDirectoryData(folderIdx, folderName);
 	}	
 }
@@ -484,6 +490,14 @@ function renameFile(driveFileIdx){
 			 errorAlert("파일 이름 변경 실패");
 		 }
 	 })
+}
+
+
+function downloadFile(driveFileIdx){
+	console.log("in downloadFile : " + driveFileIdx);
+	let path ="/upload/project/"+driveProjectIdx+"/drive/";
+	console.log(path);
+	//$("<a href='<c:url value=\"/upload/\"/>'>테스트파일</a>")
 }
 
 $.fn.selectRange = function(start, end) {
