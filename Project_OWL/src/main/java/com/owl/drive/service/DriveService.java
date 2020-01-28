@@ -135,7 +135,20 @@ public class DriveService {
 		return reseult;
 	}
 	
-	
+	public boolean renameFile(int driveFileIdx, String fileName) {
+		boolean result =false;
+		DriveDao dao = getDriveDao();
+
+		try {
+			result = dao.renameFile(driveFileIdx, fileName) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	
 	private DriveDao getDriveDao() {

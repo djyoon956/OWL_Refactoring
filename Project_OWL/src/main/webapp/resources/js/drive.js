@@ -1,5 +1,6 @@
 let driveViewType ;
 let driveProjectIdx;
+let isTrash = false;
 function initDrive(projectIdx){	
 	driveProjectIdx = projectIdx;
 	
@@ -56,12 +57,18 @@ function initDrive(projectIdx){
                     	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
                      }else if(key == "delete"){
                     	 deleteDriveFile(driveFileIdx);
+                     }else if(key == "restore"){
+                    	 restoreFilefromTrash(driveFileIdx);
+                     }else if(key == "deleteFromTrash"){
+                    	 deleteFilefromTrash(driveFileIdx);
                      }
                  },
                  items:{
-                     "download": {name: "다운로드", icon: "fas fa-download"},
-                     "rename": {name: "이름 변경", icon: "edit"},
-                     "delete": {name: "삭제", icon: "delete"},
+                     "download": {name: "다운로드", icon: "fas fa-download", visible : !isTrash},
+                     "rename": {name: "이름 변경", icon: "edit", visible : !isTrash},
+                     "delete": {name: "삭제", icon: "delete", visible : !isTrash},
+                     "restore": {name: "복원", icon: "fas fa-undo", visible : isTrash},
+                     "deleteFromTrash": {name: "영구삭제", icon: "delete", visible : isTrash},
             	 	}
              };
          },
@@ -427,12 +434,14 @@ function deleteFilefromTrash(driveFileIdx) {
 }
 
 function renameFile(driveFileIdx){
+	console.log("in renameFile");
 	$.ajax({
 		 url : "RenameDriveFile.do",
-		 data : {driveFileIdx : driveFileIdx},
+		 data : {driveFileIdx : driveFileIdx
+			 		, fileName :  $("#driveFileRename").val()},
 		 success : function(data){
-			 if(data){
-				 callFolderData();
+			 if(data){ 
+				 $("#driveTable #"+driveFileIdx).find("td").first().html($("#driveFileRename").val());
 				 successAlert("파일 이름 변경 완료");
 			 }else{
 				 errorAlert("파일 이름 변경 실패");
