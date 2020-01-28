@@ -78,7 +78,7 @@ public class DriveService {
 	}
 	
 	
-	public List<DriveFile> getTrachList(int projectIdx) {
+	public List<DriveFile> getTrashList(int projectIdx) {
 		DriveDao dao = getDriveDao();
 		List<DriveFile> trashlist = new ArrayList<DriveFile>();
 

@@ -97,7 +97,7 @@ public class DriveRestController {
 	@RequestMapping(value = "GetTrashList.do")
 	public List<DriveFile> getTrashList(int projectIdx) {
 		System.out.println("in getTrashList");
-		return service.getTrachList(projectIdx);
+		return service.getTrashList(projectIdx);
 	}
 	
 	
