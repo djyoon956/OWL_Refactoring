@@ -45,9 +45,10 @@ public class UploadHelper {
 	
 	public static void renameFolder(String oldPath, String newPath) {
 		File oldDirectory = new File(oldPath);
-		File newDirectory = new File(newPath);
-		if( oldDirectory.exists() ) 
-			oldDirectory.renameTo(newDirectory);
+		boolean isMoved = oldDirectory.renameTo(new File(newPath));
+
+	System.out.println(isMoved);
+
 	}
 	
 	private static void makeDirectory(String path) {
