@@ -120,6 +120,24 @@ public class DriveService {
 		return reseult;
 	}
 	
+	
+	public boolean deleteFilefromTrash(int driveFileIdx) {
+		boolean reseult = false;
+		DriveDao dao = getDriveDao();
+		try {
+			reseult = dao.deleteFileFromTrash(driveFileIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return reseult;
+	}
+	
+	
+	
+	
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);
 	}

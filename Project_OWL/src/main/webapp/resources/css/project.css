@@ -31,12 +31,7 @@
    color: #326295;
 }
 
-.dataTable tbody tr:hover{
-	color :white;
-	background-color: #326295;
-	opacity: 0.5;
-}
-.dataTable tbody tr.active{
+.dataTable tbody tr.selected{
 	color :white;
 	background-color: #326295;
 	opacity: 0.5;
