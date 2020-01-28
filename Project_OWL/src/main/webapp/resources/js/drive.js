@@ -26,7 +26,6 @@ function initDrive(projectIdx){
 
 	 $.contextMenu({
          selector: '#driveTable tr',
-         trigger: 'left',
          build : function($trigger, e){
         	 console.log($trigger);
         	 console.log($trigger[0].id);

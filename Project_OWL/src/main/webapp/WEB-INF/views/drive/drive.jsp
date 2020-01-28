@@ -99,7 +99,7 @@ $(function(){
 				});
 
 			// default folder
-			setFolderData(folderList[0].id,folderList[0].text);
+			setDirectoryData(folderList[0].id,folderList[0].text);
 			
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
@@ -298,16 +298,14 @@ function sendFileToServer(formData,status){
 						<table id="driveTable" class="table table-hover table-bordered text-center">
 							<thead>
 								<tr>
-									<th>file name</th>
-									<th>create date</th>
-									<th>creator</th>
-									<th>size</th>
+									<th width="45">file name</th>
+									<th width="30%">create date</th>
+									<th width="15%">creator</th>
+									<th width="10%">size</th>
 								</tr>
 							</thead>
 							
-							<tbody>
-							
-							</tbody>
+							<tbody> </tbody>
 						</table>
 					</div>
 					<!-- <div class="row">
