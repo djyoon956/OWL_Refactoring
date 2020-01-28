@@ -285,15 +285,14 @@ function callFolderData(){
 	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
 	if(isTrash){
 		$("#driveName").hide();
+		
 		setTrashData();
-	}
-	else{
+	} else{
 		$('#driveSearchBtn').show();
 		$('#driveUploadBtn').show();
 		$('#trashName').addClass("hidden");
-
-		// dir;
 		$("#driveName").show();
+		
 		setDirectoryData(folderIdx, folderName);
 	}	
 }
