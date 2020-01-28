@@ -12,7 +12,13 @@
 #forgotPwdBody {
 	background-color: #326295;
 	overflow-y: hidden;
-	height: 100vh;
+	height: 100vh !important;
+}
+.forgotBox{
+border-radius: 15px;
+}
+.forgotButton{
+	padding:10px;
 }
   </style>
   <script type="text/javascript">
@@ -43,7 +49,7 @@
 						}
 					})		
 
-				$("#chageButton").click(function(){
+				$("#changeButton").click(function(){
 					$.ajax({
 						method: "POST",
 						url : "ResetPassword.do",
@@ -72,15 +78,15 @@
 		})
   </script>
 </head>
-<body  id="forgotPwdBody">
+<body id="forgotPwdBody">
 	<div class="login-form-bg h-100" >
         <div class="container h-100">
-            <div class="row justify-content-center h-100 align-items-center " >
+            <div class="row justify-content-center h-100 align-items-center" >
                 <div class="col-xl-6">
-                    <div class="form-input-content">
-                        <div class="card login-form mb-0">
-                            <div class="card-body pt-5">
-                                <h4 class="text-center">O W L</h4>
+                    <div class="form-input-content  text-center">
+                       <img src="resources/images/owl_plz_beige.png" alt="" height="30">
+                        <div class="card login-form mb-0 forgotBox mt-4">
+                            <div class="card-body pt-5 text-left">
                                     <div id ="resetBox" class="form-group">
                                     	<input type="hidden" id="email" value="${email}">
 						                <input type="password" name="pwd1" class="form-control pwd1" placeholder="New Password">
@@ -89,7 +95,7 @@
 						                <span class="text-success successletter" style="display: none;">You can change your Password</span>
 						                 <span class="text-danger failletter" style="display: none;">Passwords do not match.</span>
 						            </div>
-						            <input type="button" id="chageButton" class="btn login-form__btn submit w-100" value="Change my password">
+						            <input type="button" id="changeButton" class="btn login-form__btn submit w-100 forgotButton" value="Change my password">
                                 </div>
                             </div>
                         </div>
