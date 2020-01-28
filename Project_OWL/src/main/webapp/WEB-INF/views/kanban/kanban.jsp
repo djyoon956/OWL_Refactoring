@@ -393,9 +393,9 @@
 								+ '	 <div class="comment-text w-100">'
 								+ '		<h6 class="font-medium mb-2">' +data.creator
 								+ '		<span class="text-muted float-right">'+data.createDate+'</span></h6>'
-								+ '		<div class="mb-1 d-block"><span>'+data.content+'</span></div>'
+								+ '		<div class="mb-1 d-block" id="'+data.issueRlyIdx+'recontent">'+data.content+'</div>'
 								+ '		<div class="comment-footer float-right">'
-								+ '		<button type="button" class="btn btn-info btn-sm" onclick="editReply('+data.issueRlyIdx+','"'"+data.content+"'"')">Edit</button>'
+								+ '		<button type="button" class="btn btn-info btn-sm" onclick="editReply('+data.issueRlyIdx+')">Edit</button>'
 								+ '		<button type="button" class="btn btn-secondary btn-sm" onclick="deleteReply('+data.issueRlyIdx+')">Delete</button>'
 								+ '		</div>'
 								+ '	</div>'

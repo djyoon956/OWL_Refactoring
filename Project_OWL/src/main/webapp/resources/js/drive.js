@@ -288,11 +288,10 @@ function callFolderData(){
 		setTrashData();
 	}
 	else{
+		// dir;
 		$('#driveSearchBtn').show();
 		$('#driveUploadBtn').show();
 		$('#trashName').addClass("hidden");
-
-		// dir;
 		$("#driveName").show();
 		setDirectoryData(folderIdx, folderName);
 	}	
