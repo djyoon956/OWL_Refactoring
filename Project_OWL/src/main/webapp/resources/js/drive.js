@@ -94,7 +94,7 @@ function initDrive(projectIdx){
 					
 					$("#emptyDriveBox").addClass("hidden");
 					$('#driveTable').DataTable().clear();
-					//$("#driveIconViewBox").empty(); 다시 살리기
+					$("#driveIconViewBox").empty();
 					//$('#perDeleteBtn').removeClass("hidden");
 
 					if(driveViewType =="tableView"){
@@ -191,9 +191,6 @@ function Allcheck() { //전체선택 onclick
 	button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 	button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 	button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	//button += "<button type='button' class='btn hidden' id='perDeleteBtn'>영구삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	
-
 	button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
 	button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
 	$('.defaultDriveMenu').append(button);
@@ -272,7 +269,7 @@ function setDirectoryData(folderIdx, folderName) {
 			
 			$("#emptyDriveBox").addClass("hidden");
 			$('#driveTable').DataTable().clear();
-			//$("#driveIconViewBox").empty();
+			$("#driveIconViewBox").empty();
 			
 			if(driveViewType =="tableView")
 				setTableView(data);
