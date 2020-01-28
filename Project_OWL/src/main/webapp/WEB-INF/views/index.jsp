@@ -331,12 +331,6 @@ font-family: 'Montserrat', sans-serif;
 .driveul li:before {
   content: '✓   ';
 }
-.fadein {
-    opacity:0;
-}
-
-
-
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -354,18 +348,6 @@ font-family: 'Montserrat', sans-serif;
          });
 	      openDialog();
 	      
-	      $(window).scroll( function(){
-	          $('.fadein').each( function(i){
-	              
-	              var bottom_of_element = $(this).offset().top + $(this).outerHeight();
-	              var bottom_of_window = $(window).scrollTop() + $(window).height();
-	              
-	              if( bottom_of_window > bottom_of_element ){
-	                  $(this).animate({'opacity':'1'},500);
-	              }
-	              
-	          }); 
-	      });
 	      AOS.init(); //스크롤 애니메이션 
 	})
  	
@@ -445,7 +427,7 @@ font-family: 'Montserrat', sans-serif;
 			 
 		</div>
 	
-	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; height:470px;">
+	<div class="page-wrapper sectionPart w-100 ml-0" style="height:470px;">
 		<div class="row" style="padding-left: 150px; padding-right: 70px;">
 			<div class="col-5" style="margin-top:120px; padding-left :30px">
 			<h2>전체 흐름 이해를 위한 DashBoard </h2> <br><br>
@@ -461,7 +443,7 @@ font-family: 'Montserrat', sans-serif;
 	</div>
 	
 	
-	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; ; height:470px;" >
+	<div class="page-wrapper sectionPart w-100 ml-0" style="height:470px;" >
 		<div class="row" style="padding-left: 150px; padding-right: 100px;">
 			<div class="col-7">
 			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="850px"  data-aos="fade-right" data-aos-duration="1500" >
@@ -477,7 +459,7 @@ font-family: 'Montserrat', sans-serif;
 	</div>
 	
 	
-	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; ; height:470px;">
+	<div class="page-wrapper sectionPart w-100 ml-0" style="height:470px;">
 		<div class="row" style="padding-left: 150px; padding-right: 70px;">
 			<div class="col-5" style="margin-top:120px; padding-left: 30px;">
 			<h2>업무진행 체크시 필수인 Kanban Board</h2> <br><br>
@@ -494,7 +476,7 @@ font-family: 'Montserrat', sans-serif;
 	</div>
 	
 	
-	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; height:470px;" >
+	<div class="page-wrapper sectionPart w-100 ml-0" style="height:470px;" >
 		<div class="row" style="padding-left: 150px; padding-right: 100px;">
 			<div class="col-7">
 			<img src="resources/images/indexImage/drive.png" height="420px" width="850px" class="indexImgBox" style="padding:4px; padding-left:8px;padding-right:10px;"  data-aos="fade-right" data-aos-duration="1500">
@@ -512,7 +494,7 @@ font-family: 'Montserrat', sans-serif;
 	</div>
 	
 	
-	<div class="page-wrapper sectionPart" style="margin-left: 0; width: 100%; height:470px; margin-bottom:100px;">
+	<div class="page-wrapper sectionPart w-100 ml-0" style="height:470px; margin-bottom:100px;">
 		<div class="text-center" style="margin-bottom: 70px;"><h1>OWL YOUR WAY !</h1></div>
 	
 	<div class="row text-center" style="padding-left: 200px; padding-right:200px; margin-bottom: 30px;">
