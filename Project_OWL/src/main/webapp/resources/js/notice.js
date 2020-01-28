@@ -170,7 +170,6 @@ function deleteNotice(){
 }
 
 function editNoticeSetView(){
-   // $('#noticeNote').summernote('code') = content;
 	/*element.boardIdx,
 	element.title,
 	element.email,
@@ -178,11 +177,15 @@ function editNoticeSetView(){
 	element.readNum */
 	console.log("edit 화면 ");
 	changeNoticeView("editBox");
-	console.log("data 수정");
 	
-	
-    console.log($("#noticeTitle").text());
-	console.log($("#noticeContent").html());
+    console.log("파일 ");
+	console.log($("#noticeFiles").text());
+	$("#editTitle").val($("#noticeTitle").text());
+	$('#noticeEditNote').summernote('code',$("#noticeContent").html());
+	  $.each($("#noticeFiles").text(), function(i, file) {
+	    	//formData.append('multipartFiles', file);
+		  	
+	   });
 }
 
 function changeNoticeView(view){

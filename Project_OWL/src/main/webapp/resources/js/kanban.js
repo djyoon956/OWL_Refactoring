@@ -375,22 +375,22 @@ function editLabel(idx, color, name) {
 	
 	
 	
-	function editReply(issuerlyIdx){
+	function editReply(issueRlyIdx){
 		console.log('?????????????????????????????????????');
 		console.log('editReply in');
-		console.log(issuerlyidx);
-		console.log($('#'+issuerlyidx+'recontent').text());
+		console.log(issueRlyIdx);
+		console.log($('#'+issueRlyIdx+'recontent').text());
 				
-/*		$.ajax({
+		$.ajax({
 			url : "EditReply.do",
 		    method : "POST",
-		    data : {'issuerlyIdx' : issuerlyIdx, 'content' : $('#'+issuerlyidx+'recontent').text()},
+		    data : {'issueRlyIdx' : issueRlyIdx, 'content' : $('#'+issueRlyIdx+'recontent').text()},
 		    success : function(data) {
 		    	console.log(data);
 		    }, error : function() {
 		    	console.log('editReply in');
 		    }
-		})*/
+		})
 		
 	}
 	
