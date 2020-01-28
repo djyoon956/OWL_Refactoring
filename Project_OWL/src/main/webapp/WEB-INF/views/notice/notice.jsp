@@ -45,4 +45,6 @@
     
     <!-- Detail -->
     <jsp:include page="detail.jsp"/>
+    <!-- Detail -->
+    <jsp:include page="edit.jsp"/>
 </div>

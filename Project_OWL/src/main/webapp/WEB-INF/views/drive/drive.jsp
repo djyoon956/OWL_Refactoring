@@ -264,89 +264,101 @@ function sendFileToServer(formData,status){
 </script>
 
 
-
 <div class="container-fluid mt-3">
-<input type="hidden" value="${project.projectIdx}" id="theProject">
-	<div class="row">
-		<div class="col-md-3">
-					<h2 style="padding-left: 25px;">
-						<b>D r i v e</b>
-					</h2>
-					<hr>
-					<span id="createFolder" style="cursor: pointer; float: right;"><i class="fas fa-plus"></i></span>
-					<br>
-					<div class="row">
-					<div class="col-lg-12">
-					<div id="jstree" class="demo" style="margin-top:1em; min-height:200px;">
-					
-						</div>
-						
-					<div>
-						<button id="trashBtn" class="btn-link" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
-					</div>
-					
-<!-- 			<a href="Trash.do" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
+    <input type="hidden" value="${project.projectIdx}" id="theProject">
+    <div class="row">
+        <div class="col-md-3">
+            <h2 style="padding-left: 25px;">
+                <b>D r i v e</b>
+            </h2>
+            <hr>
+            <span id="createFolder" style="cursor: pointer; float: right;"><i class="fas fa-plus"></i></span>
+            <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="jstree" class="demo" style="margin-top:1em; min-height:200px;">
+
+                    </div>
+
+                    <div>
+                        <button id="trashBtn" class="btn-link" style="color:#326295;"><i
+                                class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
+                    </div>
+
+                    <!-- 			<a href="Trash.do" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
 							<i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;<b>휴지통</b>
 						</a> -->
-					</div>
-				</div>
-			</div>
-		<div class="col-md-9" style="padding-left: 0;">
-					<div class="defaultDriveMenu">
-				<span style="font-size : large; font-weight:bold" class="hidden" id="trashName"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</span>
-				<button id="driveSearchBtn" type="button" class="driveBtn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;
-				<div class="filebox" style="display:inline;">
-					<input type="file" id="driveUploadFile" name="driveUploadFile" >
-					<label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;" class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
-				</div>
-				<button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary" onclick="Allcheck()">전체선택</button>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<div class="drivegroup">
-					<button class="btn driveViewBtn" id="tableView">
-						<i class="fas fa-list fa-2x"></i>
-					</button>
-					<button class="btn driveViewBtn active" id="iconView" disabled>
-						<i class="fas fa-th-large fa-2x"></i>
-					</button>
-				</div>
-			</div>
-			
-			<div class="searchDriveMenu" style="display:none;">
-				<input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>
-				<a href='#' onclick='Return()'><i class='fas fa-times'></i></a>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<div class="drivegroup">
-					<a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
-					<a><i class="fas fa-th-large fa-2x"></i></a>
-				</div>
-			</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9" style="padding-left: 0;">
+            <div class="defaultDriveMenu pt-0">
+	            <div class="h-100">
+	            	<div style="height: 15%" class="mt-1 mb-3">
+	            		<span style="font-size: medium;font-weight: 700;"  id="driveName"> </span>
+	            	</div>
+	            	<div style="height: 70%">
+		                <span style="font-size : large; font-weight:bold" class="hidden" id="trashName">
+		                	<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통
+		               	</span>
+		                <button id="driveSearchBtn" type="button" class="driveBtn btn-primary"
+		                    onclick="Search()">검색</button>&nbsp;&nbsp;
+		                <div class="filebox" style="display:inline;">
+		                    <input type="file" id="driveUploadFile" name="driveUploadFile">
+		                    <label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
+		                        class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
+		                </div>
+		                <button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary"
+		                    onclick="Allcheck()">전체선택</button>
+		                &nbsp;&nbsp;&nbsp;&nbsp;
+		                <div class="drivegroup">
+		                    <button class="btn driveViewBtn" id="tableView">
+		                        <i class="fas fa-list fa-2x"></i>
+		                    </button>
+		                    <button class="btn driveViewBtn active" id="iconView" disabled>
+		                        <i class="fas fa-th-large fa-2x"></i>
+		                    </button>
+		                </div>
+	            	</div>
+	            </div>
+            </div>
 
-			<div class="row" style="margin : 10px 10px; margin-top: 0px;">
-				<div class="col-lg-12">
-					<div id="dragandrophandler" style="height: 500px;">
-					<div class="h-100 text-center mt-5 hidden" id="emptyDriveBox">
-						<img src="resources/images/drive/notFound.png" style="height: 250px">
-						<h1 class="text-muted mt-5">File Not Found.</h1>
-						<h4 >Please upload a file in <span id="directoryName"></span></h4>
-					</div>
-					
-					<div id="driveIconViewBox"></div> 
-					
-					<div id="driveTableViewBox" class="hidden">
-						<table id="driveTable" class="table table-hover table-bordered text-center">
-							<thead>
-								<tr>
-									<th width="45">file name</th>
-									<th width="30%">create date</th>
-									<th width="15%">creator</th>
-									<th width="10%">size</th>
-								</tr>
-							</thead>
-							
-							<tbody> </tbody>
-						</table>
-					</div>
-					<!-- <div class="row">
+            <div class="searchDriveMenu" style="display:none;">
+                <input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>
+                <a href='#' onclick='Return()'><i class='fas fa-times'></i></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="drivegroup">
+                    <a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
+                    <a><i class="fas fa-th-large fa-2x"></i></a>
+                </div>
+            </div>
+
+            <div class="row" style="margin : 10px 10px; margin-top: 0px;">
+                <div class="col-lg-12">
+                    <div id="dragandrophandler" style="height: 500px;">
+                        <div class="h-100 text-center mt-5 hidden" id="emptyDriveBox">
+                            <img src="resources/images/drive/notFound.png" style="height: 250px">
+                            <h1 class="text-muted mt-5">File Not Found.</h1>
+                            <h4>Please upload a file in <span id="directoryName"></span></h4>
+                        </div>
+
+                        <div id="driveIconViewBox"></div>
+
+                        <div id="driveTableViewBox" class="hidden">
+                            <table id="driveTable" class="table table-hover table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th width="45">file name</th>
+                                        <th width="30%">create date</th>
+                                        <th width="15%">creator</th>
+                                        <th width="10%">size</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody> </tbody>
+                            </table>
+                        </div>
+                        <!-- <div class="row">
 							<div class="col-sm-4">
 								<div class="card driveCard"  >
 									<div class="more" style="margin-top: 10px;">
@@ -410,9 +422,9 @@ function sendFileToServer(formData,status){
 								</div>
 							</div>
 						</div> -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>	
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

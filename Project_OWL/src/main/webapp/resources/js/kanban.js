@@ -258,7 +258,7 @@ function setKanbanDetail(issueIdx){
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1 d-block"><span>'+element.content+'</span></div>'
 										+ '		<div class="comment-footer float-right">'
-										+ '		<button type="button" class="btn btn-info btn-sm">Edit</button>'
+										+ '		<button type="button" class="btn btn-info btn-sm" onclick="editReply('+element.issueRlyIdx+', '+element.content+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
 										+ '		</div>'
 										+ '	</div>'
@@ -371,6 +371,30 @@ function editLabel(idx, color, name) {
 		         }
 		      })
 		   }	
+	
+	
+	
+	
+	function editReply(issuerlyidx, content){
+		console.log('?????????????????????????????????????');
+		console.log('editReply in');
+		console.log(issuerlyidx);
+		console.log(content);
+		
+		$.ajax({
+			url : "EditReply.do",
+		    method : "POST",
+		    data : {'issuerlyidx' : issuerlyidx, 'content' : content},
+		    success : function(data) {
+		    	console.log(data);
+		    }, error : function() {
+		    	console.log('editReply in');
+		    }
+		})
+		
+	}
+	
+	
 	
 	$("#editIssueDetailBtn").click(function() {
 		

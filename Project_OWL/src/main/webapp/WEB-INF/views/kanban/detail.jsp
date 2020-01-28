@@ -117,13 +117,13 @@
                     <button class="btn btn-secondary mt-1 ml-1"><i class="fas fa-at"></i></button>
                 </div>
         -->        
-                  <div class="row">
-						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 20px; margin-right: 20px"></i></span>
-						<textarea id="replycontent" name="replycontent" rows="2" cols="110" style="resize: none;" ></textarea>
-						<button class="btn btn-secondary mr-1" id="replyBtn" style="margin-left: 5px">Comment</button>
-				
                 </div>
+                  <div class="row container-fluid">
+						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
+						<input type="text" id="replycontent" name="replycontent" style="resize: none; width:75%">
+						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px">Comment</button>
             </div>
+            
         </div>
         
         <!-- Option -->
@@ -167,7 +167,7 @@
             </div>
         </div>
     </div>
-    <div class="text-center">
+    <div class="text-center mt-5">
     	<button class="btn btn-primary mr-1" onclick="changeKanbanView('list')"><i class="fas fa-chevron-left"></i>뒤로가기</button>
         <button class="btn btn-primary ml-1" id="editIssueDetailBtn">수정</button>
     </div>
