@@ -93,7 +93,7 @@ $(function(){
 				});
 
 			// default folder
-			setFolderData(folderList[0].id,folderList[0].text);
+			setDirectoryData(folderList[0].id,folderList[0].text);
 			
 			$("#createFolder").click(function(){
 				var ref = $('#jstree').jstree(true),
@@ -105,9 +105,15 @@ $(function(){
 					ref.edit(sel);					
 				} 
 			});	
+			$('#jstree').on('create_node.jstree', function (e, data) {
+		console.log("나 탄다");
+		console.log(data);
+
+			});
 			//폴더 생성시 이름 수정까지 완료할 때
  			$('#jstree').on('rename_node.jstree', function (e, data) {
  	 			console.log(data);
+ 	 			return;
 				if(data.old =="New node"){					
 				  $.ajax({
 		        		url:"insertFolder.do",
@@ -293,15 +299,13 @@ function sendFileToServer(formData,status){
 						<table id="driveTable" class="table table-hover table-bordered text-center">
 							<thead>
 								<tr>
-									<th>file name</th>
-									<th>create date</th>
-									<th>creator</th>
-									<th>size</th>
+									<th  width="45%">file name</th>
+									<th  width="30%">create date</th>
+									<th width="15%">creator</th>
+									<th width="10%">size</th>
 								</tr>
 							</thead>
-							
 							<tbody>
-							
 							</tbody>
 						</table>
 					</div>
