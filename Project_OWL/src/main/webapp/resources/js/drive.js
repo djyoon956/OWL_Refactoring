@@ -69,7 +69,7 @@ function initDrive(projectIdx){
 					
 					$("#emptyDriveBox").addClass("hidden");
 					$('#driveTable').DataTable().clear();
-					$("#driveIconViewBox").empty();
+					//$("#driveIconViewBox").empty(); 다시 살리기
 					//$('#perDeleteBtn').removeClass("hidden");
 
 					if(driveViewType =="tableView"){
@@ -77,15 +77,13 @@ function initDrive(projectIdx){
 						setTableView(data);
 					}else{
 						console.log('IconView select');   //언제 ? 기본값인가?
-						setIconView(data);}
+						setIconView('trash',data);}
 
 		},error : function() {
 			console.log('GetTrashList error');
 		}
 	})
 })
-
-	
 }
 
 var rowCount=0;
@@ -249,12 +247,12 @@ function setDirectoryData(folderIdx, folderName) {
 			
 			$("#emptyDriveBox").addClass("hidden");
 			$('#driveTable').DataTable().clear();
-			$("#driveIconViewBox").empty();
+			//$("#driveIconViewBox").empty();
 			
 			if(driveViewType =="tableView")
 				setTableView(data);
 			else
-				setIconView(data);
+				setIconView('drive',data);
 		},
 		error : function(){
 			console.log("in GetFolderData error");
@@ -262,8 +260,10 @@ function setDirectoryData(folderIdx, folderName) {
 	})
 }
 
-function setIconView(data){
-	
+function setIconView(flag, data){   //flag : drive, trash
+	console.log('setIconView in');
+	console.log(flag);
+	console.log(typeof(flag));
 	$("#driveIconViewBox").removeClass("hidden");
 	$("#driveTableViewBox").addClass("hidden");
 	
@@ -273,27 +273,35 @@ function setIconView(data){
 		let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
 		let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
 		
+	
 		control += '<div class="col-sm-3">'
-					+ '	<div class="card driveCard">'
-					+ '		<div class="more" style="margin-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-					+ '			<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
-					+ '			<a style="float:right;" data-toggle="collapse" href="#detail">'
-					+ '				<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;'
-					+ '			</a>'
-					+ '		</div>'
-					+ '		<div style="margin-left: 60%;">'
-					+ '			<ul id="detail" class="collapse">'
-					+ '				<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>'
-					+ '				<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>'
-					+ '			</ul>'
-					+ '		</div>'
-					+ '		<div class="card-body text-center">'
-					+ '			<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
-					+ '			<h4 >'+fileName+'</h4>'
-					+ '		</div>'
-					+ '	</div>'
-					+ '</div>';
+				+ 	'<div class="card driveCard dropdown">'
+				+ 		'<div class="more" style="margin-top: 15px; padding-right:20px;">&nbsp;&nbsp;&nbsp;&nbsp;'
+				+			'<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
+				+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right">'	
+				+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
+				+				'</a>'
+				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
+				+				'<ul class="list-style-none">';
+		
+				if(flag == "trash") {
+					control += '<li class="pl-2"><a href="#"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
+							+  '<li class="pl-2"><a href="#"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
+				}else {
+					control +=	'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+							+	'<li class="pl-2"><a href="#"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>';
+				}
 
+		control		+=				'</ul>'
+					+			'</div>'
+					+		'</div>'
+					+		'<div class="card-body text-center">'
+					+			'<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
+					+			'<h4>'+fileName+'</h4>'
+					+		'</div>'
+					+	 '</div>'
+					+  '</div>';
+		
 		if (index % line == line - 1 || index == data.length - 1) {
 			let row = $("<div class='row'></div>");
 			row.append(control);
