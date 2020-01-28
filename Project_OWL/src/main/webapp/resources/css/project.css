@@ -30,3 +30,14 @@
    border-bottom: 3px solid #326295;
    color: #326295;
 }
+
+.dataTable tbody tr:hover{
+	color :white;
+	background-color: #326295;
+	opacity: 0.5;
+}
+.dataTable tbody tr.active{
+	color :white;
+	background-color: #326295;
+	opacity: 0.5;
+}

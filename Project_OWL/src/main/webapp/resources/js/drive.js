@@ -24,6 +24,41 @@ function initDrive(projectIdx){
         autoWidth: false
 	});
 
+	 $.contextMenu({
+         selector: '#driveTable tr',
+         trigger: 'left',
+         build : function($trigger, e){
+        	 console.log($trigger);
+        	 console.log($trigger[0].id);
+        	 return {
+                 callback: function(key, options) {
+                     let driveFileIdx = $trigger[0].id;
+                     if(key == "download"){
+                    	 $.ajax({
+                    		 url : "DeleteDriveFile.do",
+                    		 data : {driveFileIdx : driveFileIdx},
+                    		 success : function(){
+                    			 
+                    		 },
+                    		 error : function(){
+                    			 
+                    		 }
+                    	 })
+                     }else if(key == "rename"){
+                    	 
+                     }else if(key == "delete"){
+                    	 
+                     }
+                 },
+                 items:{
+                     "download": {name: "다운로드", icon: "fas fa-download"},
+                     "rename": {name: "이름 변경", icon: "edit"},
+                     "delete": {name: "삭제", icon: "delete"},
+            	 	}
+             };
+         },
+     });
+	
 	$('#jstree').on( "select_node.jstree", function(event, data){
 		setDirectoryData(data.node.id, data.node.text);
     });
@@ -43,6 +78,49 @@ function initDrive(projectIdx){
 		}		
 		callFolderData();
 	})
+	
+	
+	
+	$('#trashBtn').click(function() {
+			$.ajax({
+				url : "GetTrashList.do",
+				data : {'projectIdx' : projectIdx},
+				success : function (data) {
+					console.log('GetTrashList in');
+					console.log(data);
+					console.log(data.length);
+					$('#driveSearchBtn').hide();
+					$('#driveUploadBtn').hide();
+					$('#driveUploadBtn').hide();
+					$('#trashName').removeClass("hidden");
+
+					if (data.length == 0) {
+						$("#emptyDriveBox").removeClass("hidden");
+						$('#emptyDriveBox').find('h4').remove();
+						$("#driveIconViewBox").addClass("hidden");
+						$("#driveTableViewBox").addClass("hidden");
+					return;
+			}
+					
+					$("#emptyDriveBox").addClass("hidden");
+					$('#driveTable').DataTable().clear();
+					$("#driveIconViewBox").empty();
+					//$('#perDeleteBtn').removeClass("hidden");
+
+					if(driveViewType =="tableView"){
+						console.log('tableView select');
+						setTableView(data);
+					}else{
+						console.log('IconView select');   //언제 ? 기본값인가?
+						setIconView(data);}
+
+		},error : function() {
+			console.log('GetTrashList error');
+		}
+	})
+})
+
+	
 }
 
 var rowCount=0;
@@ -125,6 +203,9 @@ function Allcheck() { //전체선택 onclick
 	button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 	button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 	button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+	//button += "<button type='button' class='btn hidden' id='perDeleteBtn'>영구삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+	
+
 	button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
 	button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
 	$('.defaultDriveMenu').append(button);
@@ -217,6 +298,7 @@ function setDirectoryData(folderIdx, folderName) {
 }
 
 function setIconView(data){
+	
 	$("#driveIconViewBox").removeClass("hidden");
 	$("#driveTableViewBox").addClass("hidden");
 	
@@ -266,6 +348,11 @@ function setTableView(data){
 			element.createDate,
 			element.creatorName,
 			element.fileSize+" KB"
-        ]).draw();
+        ]).node().id = element.driveFileIdx;
+		
+		$('#driveTable').DataTable().draw();
 	})
 }
+
+
+
