@@ -103,6 +103,14 @@
 	$(".chatList").click(function() {
 			
 	});
+
+	$('.text-edit1').keyup(function () {
+	    if ($.trim($('.text-edit1').val()).length) {
+	        $(this).addClass('active-text');
+	    } else {
+	        $(this).removeClass('active-text');
+	    }
+	})
 	});
 
 
@@ -363,7 +371,7 @@ display: block;
   width:20px;
   object-fit: contain;
 }
-.ownBubble {
+/* .ownBubble {
 	min-width: 60px;
 	max-width: 700px;
 	padding: 6px 9px;
@@ -378,7 +386,7 @@ display: block;
     margin: 6px 8px;
 	background-color: #6c89a8;
 	border-radius: 16px 16px 16px 0;
-}
+} */
 .own {
 	align-self: flex-end;
 }
@@ -400,6 +408,13 @@ span.other{
 }
 #chatBackBtn:hover{
 	cursor: pointer;
+}
+.ownBubble {
+	border-radius: 16px 16px 0 16px;
+}
+.otherBubble {
+	border-radius: 16px 16px 16px 0;
+	background-color: #dbd9d9 !important;
 }
 </style>
 
@@ -628,28 +643,47 @@ span.other{
                                 <div class="chat-box scrollable">
                                     <!--chat Row -->
                                     <ul class="chat-list">
+                                    <!--chat Row -->
+                                    <!-- background-color: #dbd9d9;  -->
+                                        <li class="chat-item mt-0" style="padding:10px; background-color: rgba(219, 217, 217, 0.3); ">
+                                           <div class="row">
+                                           <div class="col-11">
+                                               <div class="chat-img"> <i class="fas fa-bullhorn btn-circle" style="background-color: #326295;color: white;padding-top: 12px;padding-left: 12px;"></i>
+                                                	</div>	
+                                                	
+                                                	
+                                                	 <div class="chat-content pl-2" style="max-height: 42px; overflow: hidden">
+                                                	축 콜린 장가 가는 날 ㅎㅎㅎㅎㅎㅋㅋㅋㅋㅋㅋㅋㅋㅁㅁㅁㅁㅁㅁㅁㅁ
+                                                	</div>
+                                                	</div>
+                                                	<div class="col-1 p-0">
+                                                	<i class="fas fa-chevron-down font-20" style="padding-top:12px;"></i>
+                                                	</div>	
+                                                	</div>	
+                                           <!--  </div> -->
+                                        </li>
                                         <!--chat Row -->
                                         <li class="chat-item" style="margin-top:10px;">
                                             <div class="chat-img"><img src="resources/images/user/group.png" alt="user" class="chatImgBorder"></div>
-                                            <div class="chat-content pl-2">
+                                            <div class="chat-content pl-2 ">
                                                 <h6 class="font-medium">콜린</h6>
-                                                <div class="box bg-light-info">저 장가갑니다. 축하해주세요.</div>
+                                                <div class="box bg-light-info otherBubble">저 장가갑니다. 축하해주세요.</div>
                                             </div>
                                             <div class="chat-time">10:56 am</div>
                                         </li>
                                         <!--chat Row -->
                                         <li class="chat-item" style="margin-top:10px;">
                                             <div class="chat-img"><img src="resources/images/user/group.png" alt="user" class="chatImgBorder"></div>
-                                            <div class="chat-content">
+                                            <div class="chat-content pl-2">
                                                 <h6 class="font-medium">이정은</h6>
-                                                <div class="box bg-light-info">아악 콜린 축하해요!!!</div>
+                                                <div class="box bg-light-info otherBubble">아악 콜린 축하해요!!!</div>
                                             </div>
                                             <div class="chat-time">10:57 am</div>
                                         </li>
                                         <!--chat Row -->
                                         <li class="odd chat-item ">
-                                            <div class="chat-content  " style="margin-top:10px;">
-                                                <div class="box bg-light-inverse chatbg">그래서 날짜는 언제인가요?</div>
+                                            <div class="chat-content" style="margin-top:10px;">
+                                                <div class="box bg-light-inverse chatbg ownBubble">그래서 날짜는 언제인가요?</div>
                                                 <br>
                                             </div>
                                             <div class="chat-time">10:59 am</div>
@@ -658,7 +692,7 @@ span.other{
                                         <!--chat Row -->
                                     </ul>
                                 </div>
- 				<div class="card-body border-top p-0">
+ 							<div class="card-body border-top p-0" style="position: absolute;bottom:2px;">
                                 <div class="row">
                                     <div class="col-9">
                                         <div class="input-field m-t-0 m-b-0" >
@@ -666,7 +700,7 @@ span.other{
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <a class="btn-circle btn-md btn-cyan float-right text-white chatbg" href="javascript:void(0)"><i class="fas fa-paper-plane"></i></a>
+                                        <a class="btn-circle btn-md btn-cyan float-right text-white chatbg mt-2" href="javascript:void(0)"><i class="fas fa-paper-plane"></i></a>
                                     </div>
                                 </div>
                             </div>
