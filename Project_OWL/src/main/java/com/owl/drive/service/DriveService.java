@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.owl.drive.dao.DriveDao;
 import com.owl.drive.dto.DriveFile;
@@ -143,13 +144,43 @@ public class DriveService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return reseult;
 	}
 	
-	
-	
-	
+	public boolean renameFile(int driveFileIdx, String fileName) {
+		boolean result =false;
+		DriveDao dao = getDriveDao();
+
+		try {
+			result = dao.renameFile(driveFileIdx, fileName) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	public boolean restoreFilefromTrash(int driveFileIdx) {
+		System.out.println("in restoreFilefromTrash");
+		System.out.println(driveFileIdx);
+		boolean reseult = false;
+		DriveDao dao = getDriveDao();
+
+		try {
+			reseult = dao.restoreFilefromTrash(driveFileIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return reseult;
+	}
+
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);
 	}

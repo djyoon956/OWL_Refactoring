@@ -1,5 +1,7 @@
 let driveViewType ;
 let driveProjectIdx;
+let isTrash = false;
+
 function initDrive(projectIdx){	
 	driveProjectIdx = projectIdx;
 	
@@ -42,11 +44,6 @@ function initDrive(projectIdx){
          build : function(trigger, e){
         	 console.log(trigger);
         	 console.log($(trigger[0]));
-        	 console.log($(trigger[0]).find("td").first());
-        	 console.log();
-        	 let renameElement = $(trigger[0]).find("td").first();
-        	 let oldText = $(trigger[0]).find("td").first().text();
-        	 "<input type='text' value='"+oldText+"'>";
         	 console.log(trigger[0].id);
         	 return {
                  callback: function(key, options) {
@@ -54,15 +51,25 @@ function initDrive(projectIdx){
                      if(key == "download"){
                     	 
                      }else if(key == "rename"){
-                    	 
+                       	 let renameElement = $(trigger[0]).find("td").first();
+                    	 let oldText = $(trigger[0]).find("td").first().text();
+                    	 renameElement.html( "<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"'>"
+                    			 							+ "<button class='btn btn-default btn-sm ml-2' style='height : 32px;' onclick='renameFile("+driveFileIdx+")'><i class='fas fa-check'></i></button>");
+                    	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
                      }else if(key == "delete"){
                     	 deleteDriveFile(driveFileIdx);
+                     }else if(key == "restore"){
+                    	 restoreFilefromTrash(driveFileIdx);
+                     }else if(key == "deleteFromTrash"){
+                    	 deleteFilefromTrash(driveFileIdx);
                      }
                  },
                  items:{
-                     "download": {name: "다운로드", icon: "fas fa-download"},
-                     "rename": {name: "이름 변경", icon: "edit"},
-                     "delete": {name: "삭제", icon: "delete"},
+                     "download": {name: "다운로드", icon: "fas fa-download", visible : !isTrash},
+                     "rename": {name: "이름 변경", icon: "edit", visible : !isTrash},
+                     "delete": {name: "삭제", icon: "delete", visible : !isTrash},
+                     "restore": {name: "복원", icon: "fas fa-undo", visible : isTrash},
+                     "deleteFromTrash": {name: "영구삭제", icon: "delete", visible : isTrash},
             	 	}
              };
          },
@@ -89,14 +96,18 @@ function initDrive(projectIdx){
 	})
 	
 	
-	
+	//휴지통 버튼 click
 	$('#trashBtn').click(function() {
 		setTrashData(projectIdx);
 	})
+
 }
 
 
+
+//프로젝트 내 휴지통 리스트 보여주는 function 
 function setTrashData(projectIdx) {
+	isTrash = true;
 	$.ajax({
 		url : "GetTrashList.do",
 		data : {'projectIdx' : projectIdx},
@@ -105,7 +116,6 @@ function setTrashData(projectIdx) {
 			console.log(data);
 			console.log(data.length);
 			$('#driveSearchBtn').hide();
-			$('#driveUploadBtn').hide();
 			$('#driveUploadBtn').hide();
 			$('#trashName').removeClass("hidden");
 
@@ -123,12 +133,11 @@ function setTrashData(projectIdx) {
 			//$('#perDeleteBtn').removeClass("hidden");
 
 			if(driveViewType =="tableView"){
-				console.log('tableView select');
+				//console.log('tableView select');
 				setTableView(data);
 			}else{
-				console.log('IconView select');   //언제 ? 기본값인가?
+				//console.log('IconView select');   //언제 ? 기본값인가?
 				setIconView('trash',data);}
-
 		},
 			error : function() {
 					console.log('GetTrashList error');
@@ -257,8 +266,7 @@ function checkBox(box) {
 		button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 		button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 		button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button +=
-			"<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+		button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
 		button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
 		$('.defaultDriveMenu').append(button);
 
@@ -321,8 +329,8 @@ function setIconView(flag, data){   //flag : drive, trash
 	let control ="";
 	let line = 4;
 	$.each(data, function(index, element) {
-		console.log('element 뭐니 : '+ element);
-		console.log(element);
+		//console.log('element 뭐니 : '+ element);
+		//console.log(element);
 		let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
 		let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
 		
@@ -338,7 +346,7 @@ function setIconView(flag, data){   //flag : drive, trash
 				+				'<ul class="list-style-none">';
 		
 				if(flag == "trash") {
-					control += '<li class="pl-2"><a href="#"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
+					control += '<li class="pl-2"><a href="#" onclick="restoreFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
 							+  '<li class="pl-2"><a href="#" onclick="deleteFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
 				}else {
 					control +=	'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
@@ -359,7 +367,6 @@ function setIconView(flag, data){   //flag : drive, trash
 			let row = $("<div class='row'></div>");
 			row.append(control);
 			$("#driveIconViewBox").append(row);
-			control = "";
 		}
 	});
 }
@@ -399,10 +406,8 @@ function deleteDriveFile(driveFileIdx){
 }
 
 
+//휴지통에서 영구 삭제 함수 
 function deleteFilefromTrash(driveFileIdx) {
-
-	//console.log('deleteFilefromTrash in???');
-	//console.log('driveFileIdx : ' + driveFileIdx);
 	
 	Swal.fire({
 	    title: '완전히 삭제 하시겠습니까?',
@@ -425,12 +430,67 @@ function deleteFilefromTrash(driveFileIdx) {
 	    		error : function() {
 	    			console.log('deleteFilefromTrash error');
 	    		}
-	    		
 	    	})  
 	   }         
 	});
+}
+
+
+//휴지통에서 복원 함수 
+function restoreFilefromTrash(driveFileIdx) {
 	
+	$.ajax({
+		url : "RestoreFile.do",
+		data : {'driveFileIdx' : driveFileIdx},
+		success : function(data) {
+			console.log('restoreFilefromTrash in');
+			console.log(data);
+			 successAlert("파일 복원 완료");
+
+			setTrashData(driveProjectIdx);
+		},
+		error : function() {
+			console.log('restoreFilefromTrash');
+		}
+	}) 
 }
 	
+
+function renameFile(driveFileIdx){
+	console.log("in renameFile");
+	$.ajax({
+		 url : "RenameDriveFile.do",
+		 data : {driveFileIdx : driveFileIdx
+			 		, fileName :  $("#driveFileRename").val()},
+		 success : function(data){
+			 if(data){ 
+				 $("#driveTable #"+driveFileIdx).find("td").first().html($("#driveFileRename").val());
+				 successAlert("파일 이름 변경 완료");
+			 }else{
+				 errorAlert("파일 이름 변경 실패");
+			 }
+		 },
+		 error : function(){
+			 errorAlert("파일 이름 변경 실패");
+		 }
+	 })
+}
+
+$.fn.selectRange = function(start, end) {
+	return this.each(function() {
+		if(this.setSelectionRange) {
+			this.focus();
+			this.setSelectionRange(start, end);
+		}
+		else if(this.createTextRange) {
+			let range = this.createTextRange();
+			range.collapse(true);
+			range.moveEnd('character', end);
+			range.moveStart('character', start);
+			range.select();
+		}
+	});
+}
+
 
 

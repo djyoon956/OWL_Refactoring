@@ -62,4 +62,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteFileFromTrash" parameterType="int">
 		DELETE FROM owl.DRIVEFILE WHERE DRIVEFILEIDX = #{driveFileIdx}
 	</delete>
+	
+	<update id="renameFile">
+		UPDATE owl.DRIVEFILE SET 	FILENAME = #{param2}
+		WHERE  DRIVEFILEIDX = #{param1}
+	</update>
+	
+	
+	<update id="restoreFilefromTrash">
+		UPDATE DRIVEFILE SET ISDELETE = 0 WHERE DRIVEFILEIDX = #{drivefileIdx};
+	</update>
 </mapper>
