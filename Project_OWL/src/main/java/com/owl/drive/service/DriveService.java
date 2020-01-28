@@ -78,6 +78,24 @@ public class DriveService {
 		return files;
 	}
 	
+	
+	public List<DriveFile> getTrachList(int projectIdx) {
+		DriveDao dao = getDriveDao();
+		List<DriveFile> trashlist = new ArrayList<DriveFile>();
+
+		try {
+			trashlist = dao.getTrashList(projectIdx);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return trashlist;
+	}
+	
+	
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);
 	}
