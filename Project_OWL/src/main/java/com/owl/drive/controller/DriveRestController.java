@@ -32,8 +32,7 @@ public class DriveRestController {
 	}
 
 	@RequestMapping(value = "insertFolder.do")
-	public boolean insertFolder(DriveFolder drivefolder, HttpServletRequest request) {
-		boolean result = false;
+	public int insertFolder(DriveFolder drivefolder, HttpServletRequest request) {
 		try {
 		
 		String uploadPath = request.getServletContext().getRealPath("upload");
@@ -43,21 +42,27 @@ public class DriveRestController {
 		drivefolder.setRef(drivefolder.getRef());
 		drivefolder.setDepth(drivefolder.getDepth());
 		
-		result = service.insertDriveFolder(drivefolder);
+		service.insertDriveFolder(drivefolder);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return result;
+		return drivefolder.getDriveIdx();
 	}
 
 	@RequestMapping(value="updateNewName.do")
-	public boolean updateNewNameFolder(@RequestParam(value="oldName") String oldName
-														   ,@RequestParam(value="newName") String folderName
-														   ,int projectIdx, int driveIdx ,HttpServletRequest request) {
+	public boolean updateNewNameFolder(String oldName ,@RequestParam(value = "folderName") String folderName , 
+														int projectIdx, @RequestParam(value = "driveIdx") int driveIdx ,HttpServletRequest request) {
 		boolean result = false;
+		System.out.println(oldName);
+		System.out.println(folderName);
+		System.out.println(projectIdx);
+		System.out.println(driveIdx);
         String oldPath = request.getServletContext().getRealPath("upload") + "\\drive\\" + projectIdx + "\\" + oldName;
+        System.out.println(oldPath);
         String newPath = request.getServletContext().getRealPath("upload") + "\\drive\\" + projectIdx + "\\" + folderName;
+        System.out.println(newPath);
 		UploadHelper.renameFolder(oldPath, newPath);
+
 		result = service.updateNewNameFolder(folderName, driveIdx);
 		
 		return result;
