@@ -63,7 +63,7 @@ color: #f8f9fa;
     	<c:if test="${project.authority eq 'ROLE_PM'}">
 	    	<div class="col-6">
 		    	<div class="text-right">
-			        <button class="btn btn-primary ml-1" onclick="editNotice()">수정</button>
+			        <button class="btn btn-primary ml-1" id="editNoticeBtn">수정</button>
 			        <button class="btn btn-danger ml-1" onclick="deleteNotice()">삭제</button>
 		    	</div>
 	    	</div>

@@ -49,6 +49,7 @@ function setDetailData(boardIdx){
 								+" </li>";
 				$("#noticeFiles").append(control);
 			})
+			$("#editNoticeBtn").attr("onclick","editNoticeSetView("+ notice +")");
 			changeNoticeView("detailBox");
 		}
 	}); 
@@ -158,8 +159,17 @@ function deleteNotice(){
 	})
 }
 
-function editNotice(){
-	
+function editNoticeSetView(notice){
+	/*let formData = new FormData();
+    formData.append("projectIdx", noticeProjectIdx);
+    formData.append("content",$('#noticeNote').summernote('code'));
+    formData.append("title",$("#title").val());
+    $.each($("#noticeMultipartFiles")[0].files, function(i, file) {
+    	formData.append('multipartFiles', file);
+    });*/
+   // $('#noticeNote').summernote('code') = content;
+	console.log("data 수정")
+    console.log(notice);
 }
 
 function changeNoticeView(view){
