@@ -103,6 +103,8 @@ $(function(){
 				});
 
 			// default folder
+			$("#jstree").jstree("clese_all");
+			$("#jstree").jstree(true).select_node(folderList[0].id);
 			setDirectoryData(folderList[0].id,folderList[0].text);
 			
 			$("#createFolder").click(function(){

@@ -14,7 +14,7 @@ function initDrive(projectIdx){
 		},
 		done : function(e, data){
 			console.log("in done");
-			callFolderData();
+			callDirectoryData();
 		},
 		fail : function(){
 			console.log("driveUploadFile fail");
@@ -79,7 +79,9 @@ function initDrive(projectIdx){
 		isTrash = false;
 		let path = data.instance.get_path(data.node, '<i class="fas fa-angle-right ml-2 mr-2"></i><i class="far fa-folder mr-2"></i>');
 	    $("#driveName").html('<i class="far fa-folder mr-2"></i>'+path);
-		callFolderData();
+	    console.log("inin");
+	    console.log(data.instance.get_path(data.node, false));
+		callDirectoryData();
     });
 	
 	$(".driveViewBtn").click(function(){
@@ -95,14 +97,14 @@ function initDrive(projectIdx){
 			$("#tableView").removeClass("active");
 			$("#tableView").attr("disabled", false);
 		}
-			callFolderData();
+			callDirectoryData();
 	})
 	
 	
 	//휴지통 버튼 click
 	$('#trashBtn').click(function() {
 		isTrash = true;
-		callFolderData();
+		callDirectoryData();
 	})
 
 }
@@ -280,7 +282,7 @@ function checkBox(box) {
 	}
 }
 
-function callFolderData(){
+function callDirectoryData(){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
 	if(isTrash){
@@ -408,7 +410,7 @@ function deleteDriveFile(driveFileIdx){
 		 data : {driveFileIdx : driveFileIdx},
 		 success : function(data){
 			 if(data){
-				 callFolderData();
+				 callDirectoryData();
 				 successAlert("파일 삭제 완료");
 			 }else{
 				 errorAlert("파일 삭제 실패");
