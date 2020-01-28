@@ -138,7 +138,7 @@ public class DriveRestController {
 		System.out.println("in deleteFilefromTrash");
 		System.out.println(driveFileIdx);
 		
-		return service.renameFile(driveFileIdx, fileName);
+		return service.deleteFilefromTrash(driveFileIdx);
 	}
 	
 	

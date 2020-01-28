@@ -1,6 +1,7 @@
 let driveViewType ;
 let driveProjectIdx;
 let isTrash = false;
+
 function initDrive(projectIdx){	
 	driveProjectIdx = projectIdx;
 	
@@ -99,12 +100,14 @@ function initDrive(projectIdx){
 	$('#trashBtn').click(function() {
 		setTrashData(projectIdx);
 	})
-	
-	
+
 }
+
+
 
 //프로젝트 내 휴지통 리스트 보여주는 function 
 function setTrashData(projectIdx) {
+	isTrash = true;
 	$.ajax({
 		url : "GetTrashList.do",
 		data : {'projectIdx' : projectIdx},
@@ -113,7 +116,6 @@ function setTrashData(projectIdx) {
 			console.log(data);
 			console.log(data.length);
 			$('#driveSearchBtn').hide();
-			$('#driveUploadBtn').hide();
 			$('#driveUploadBtn').hide();
 			$('#trashName').removeClass("hidden");
 
@@ -128,7 +130,7 @@ function setTrashData(projectIdx) {
 			$("#emptyDriveBox").addClass("hidden");
 			$('#driveTable').DataTable().clear();
 			$("#driveIconViewBox").empty();
-			$('#perDeleteBtn').removeClass("hidden");
+			//$('#perDeleteBtn').removeClass("hidden");
 
 			if(driveViewType =="tableView"){
 				//console.log('tableView select');
@@ -136,7 +138,6 @@ function setTrashData(projectIdx) {
 			}else{
 				//console.log('IconView select');   //언제 ? 기본값인가?
 				setIconView('trash',data);}
-
 		},
 			error : function() {
 					console.log('GetTrashList error');
@@ -265,8 +266,7 @@ function checkBox(box) {
 		button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 		button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 		button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button +=
-			"<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+		button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
 		button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
 		$('.defaultDriveMenu').append(button);
 
@@ -329,8 +329,8 @@ function setIconView(flag, data){   //flag : drive, trash
 	let control ="";
 	let line = 4;
 	$.each(data, function(index, element) {
-		console.log('element 뭐니 : '+ element);
-		console.log(element);
+		//console.log('element 뭐니 : '+ element);
+		//console.log(element);
 		let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
 		let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
 		
@@ -367,7 +367,6 @@ function setIconView(flag, data){   //flag : drive, trash
 			let row = $("<div class='row'></div>");
 			row.append(control);
 			$("#driveIconViewBox").append(row);
-			control = "";
 		}
 	});
 }
@@ -431,7 +430,6 @@ function deleteFilefromTrash(driveFileIdx) {
 	    		error : function() {
 	    			console.log('deleteFilefromTrash error');
 	    		}
-	    		
 	    	})  
 	   }         
 	});
