@@ -7,6 +7,27 @@
 <script src="resources/plugin/fileUpload/jquery.ui.widget.js"></script>
 <link href="resources/css/drive.css" rel="stylesheet">
 <script src="resources/js/drive.js"></script>
+
+<style>
+.btn-link1 {
+	display: inline-block;
+	padding: 0;
+	font-size: inherit;
+	color: #0366d6;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: initial;
+	border: 0;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+</style>
 <script>
 var folderList = [];
 
@@ -200,6 +221,9 @@ function sendFileToServer(formData,status){
 }
 
 </script>
+
+
+
 <div class="container-fluid mt-3">
 <input type="hidden" value="${project.projectIdx}" id="theProject">
 	<div class="row">
@@ -215,21 +239,25 @@ function sendFileToServer(formData,status){
 					<div id="jstree" class="demo" style="margin-top:1em; min-height:200px;">
 					
 						</div>
-						<a href="Trash.do" id="trash" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
+						
+					<button id="trashBtn" class="btn-link" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
+						
+<!-- 			<a href="Trash.do" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
 							<i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;<b>휴지통</b>
-						</a>
+						</a> -->
 					</div>
 				</div>
 			</div>
 		<div class="col-md-9" style="padding-left: 0;">
 					<div class="defaultDriveMenu">
-				<button type="button" class="driveBtn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;
+				<span style="font-size : large; font-weight:bold" class="hidden" id="trashName"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</span>
+				<button id="driveSearchBtn" type="button" class="driveBtn btn-primary" onclick="Search()">검색</button>&nbsp;&nbsp;
 				<div class="filebox" style="display:inline;">
-					<input type="file" id="driveUploadFile" name="driveUploadFile">
+					<input type="file" id="driveUploadFile" name="driveUploadFile" >
 					<label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
-						class="driveBtn btn-primary">업로드</label>&nbsp;&nbsp;
+						class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
 				</div>
-				<button type="button" class="driveBtn btn-primary" onclick="Allcheck()">전체선택</button>
+				<button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary" onclick="Allcheck()">전체선택</button>
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<div class="drivegroup">
 					<button class="btn driveViewBtn" id="tableView">
@@ -254,11 +282,12 @@ function sendFileToServer(formData,status){
 			<div class="row" style="margin : 10px 10px; margin-top: 0px;">
 				<div class="col-lg-12">
 					<div id="dragandrophandler" style="height: 500px;">
-					<div class="h-100 text-center mt-5 hidden"  id="emptyDriveBox">
+					<div class="h-100 text-center mt-5 hidden" id="emptyDriveBox">
 						<img src="resources/images/drive/notFound.png" style="height: 250px">
 						<h1 class="text-muted mt-5">File Not Found.</h1>
 						<h4 >Please upload a file in <span id="directoryName"></span></h4>
 					</div>
+					
 					<div id="driveIconViewBox"></div>
 					<div id="driveTableViewBox" class="hidden">
 						<table id="driveTable" class="table table-hover table-bordered text-center">

@@ -43,6 +43,41 @@ function initDrive(projectIdx){
 		}		
 		callFolderData();
 	})
+	
+	
+	
+	$('#trashBtn').click(function() {
+	$.ajax({
+		url : "GetTrashList.do",
+		data : {'projectIdx' : projectIdx},
+		success : function (data) {
+			console.log('GetTrashList in');
+			console.log(data);
+			console.log(data.length);
+			$('#driveSearchBtn').hide();
+			$('#driveUploadBtn').hide();
+			$('#driveUploadBtn').hide();
+			$('#trashName').removeClass("hidden");
+
+			let datall = 0;
+			if (datall == 0) {
+				$("#emptyDriveBox").removeClass("hidden");
+				$('#emptyDriveBox').find('h4').remove();
+				$("#driveIconViewBox").addClass("hidden");
+				$("#driveTableViewBox").addClass("hidden");
+				return;
+			}
+		},error : function() {
+			
+			console.log('GetTrashList error');
+		}
+		
+	})
+	
+})
+	
+	
+	
 }
 
 var rowCount=0;
@@ -269,3 +304,6 @@ function setTableView(data){
         ]).draw();
 	})
 }
+
+
+
