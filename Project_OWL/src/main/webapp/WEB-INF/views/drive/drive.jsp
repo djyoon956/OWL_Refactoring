@@ -289,27 +289,35 @@ function sendFileToServer(formData,status){
             </div>
         </div>
         <div class="col-md-9" style="padding-left: 0;">
-            <div class="defaultDriveMenu">
-                <span style="font-size : large; font-weight:bold" class="hidden" id="trashName"><i
-                        class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</span>
-                <button id="driveSearchBtn" type="button" class="driveBtn btn-primary"
-                    onclick="Search()">검색</button>&nbsp;&nbsp;
-                <div class="filebox" style="display:inline;">
-                    <input type="file" id="driveUploadFile" name="driveUploadFile">
-                    <label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
-                        class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
-                </div>
-                <button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary"
-                    onclick="Allcheck()">전체선택</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="drivegroup">
-                    <button class="btn driveViewBtn" id="tableView">
-                        <i class="fas fa-list fa-2x"></i>
-                    </button>
-                    <button class="btn driveViewBtn active" id="iconView" disabled>
-                        <i class="fas fa-th-large fa-2x"></i>
-                    </button>
-                </div>
+            <div class="defaultDriveMenu pt-0">
+	            <div class="h-100">
+	            	<div style="height: 15%" class="mt-1 mb-3">
+	            		<span style="font-size: medium;font-weight: 700;"  id="driveName"> </span>
+	            	</div>
+	            	<div style="height: 70%">
+		                <span style="font-size : large; font-weight:bold" class="hidden" id="trashName">
+		                	<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통
+		               	</span>
+		                <button id="driveSearchBtn" type="button" class="driveBtn btn-primary"
+		                    onclick="Search()">검색</button>&nbsp;&nbsp;
+		                <div class="filebox" style="display:inline;">
+		                    <input type="file" id="driveUploadFile" name="driveUploadFile">
+		                    <label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
+		                        class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
+		                </div>
+		                <button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary"
+		                    onclick="Allcheck()">전체선택</button>
+		                &nbsp;&nbsp;&nbsp;&nbsp;
+		                <div class="drivegroup">
+		                    <button class="btn driveViewBtn" id="tableView">
+		                        <i class="fas fa-list fa-2x"></i>
+		                    </button>
+		                    <button class="btn driveViewBtn active" id="iconView" disabled>
+		                        <i class="fas fa-th-large fa-2x"></i>
+		                    </button>
+		                </div>
+	            	</div>
+	            </div>
             </div>
 
             <div class="searchDriveMenu" style="display:none;">
