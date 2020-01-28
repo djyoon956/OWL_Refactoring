@@ -84,27 +84,38 @@ $(function(){
 					ref.edit(sel);					
 				} 
 			});	
-			$('#jstree').on('create_node.jstree', function (e, data) {
-		console.log("나 탄다");
-		console.log(data);
 
-			});
-			//폴더 생성시 이름 수정까지 완료할 때
- 			$('#jstree').on('rename_node.jstree', function (e, data) {
- 	 			console.log(data);
- 	 			return;
-				if(data.old =="New node"){					
-				  $.ajax({
+			$('#jstree').on('create_node.jstree', function (e, data) {
+				 $.ajax({
 		        		url:"insertFolder.do",
 		        		method:"POST",
 		        		data:{projectIdx: ${project.projectIdx},
-		        			  folderName: data.text,
+		        			  folderName: data.node.text,
 		        			  ref: data.node.parent
 		        			 },
-		        		success:function(data){	
+		        		success:function(idx){	
+			        		data.node.id = idx;
 		        		}
 		    		});
-				}
+
+			});
+
+ 			$('#jstree').on('rename_node.jstree', function (e, data) {
+ 	 			console.log(data);
+ 	 			return;
+				  $.ajax({
+		        		url:"updateNewName.do",
+		        		method:"POST",
+		        		data:{projectIdx: ${project.projectIdx},
+				        		  oldName: data.old,
+			        			  folderName: data.text,
+			        			  driveIdx: data.node.id
+		        			 	},
+		        		success:function(data2){	
+			        		console.log("update 성공");  
+			        		  console.log(data.text);
+		        		}
+		    		});
 			});
 			
 			$("#renameFolder").click(function(){
