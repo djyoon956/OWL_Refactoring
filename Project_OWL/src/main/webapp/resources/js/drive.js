@@ -19,7 +19,7 @@ function initDrive(projectIdx){
 	$("#driveTable").DataTable({
 	 	stateSave: true, // 페이지 상태 저장
 	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-	 	search : false,
+	 	"searching": false,
         fixedColumns: true,
         autoWidth: false
 	});
