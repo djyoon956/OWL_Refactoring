@@ -338,7 +338,7 @@ function setIconView(flag, data){   //flag : drive, trash
 				+				'<ul class="list-style-none">';
 		
 				if(flag == "trash") {
-					control += '<li class="pl-2"><a href="#"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
+					control += '<li class="pl-2"><a href="#" onclick="restoreFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
 							+  '<li class="pl-2"><a href="#" onclick="deleteFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
 				}else {
 					control +=	'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
@@ -430,6 +430,20 @@ function deleteFilefromTrash(driveFileIdx) {
 	   }         
 	});
 	
+}
+
+function restoreFilefromTrash(driveFileIdx) {
+	
+	$.ajax({
+		url : "RestoreFile.do",
+		data : {'driveFileIdx' : driveFileIdx},
+		success : function(data) {
+			
+		},
+		error : function() {
+			console.log('restoreFilefromTrash');
+		}
+	}) 
 }
 	
 

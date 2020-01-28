@@ -133,6 +133,15 @@ public class DriveRestController {
 	}
 	
 	
+	@RequestMapping(value = "RestoreFile.do")
+	public boolean restoreFilefromTrash(int driveFileIdx) {
+		System.out.println("in restoreFilefromTrash");
+		System.out.println(driveFileIdx);
+		
+		return service.deleteFilefromTrash(driveFileIdx);
+	}
+	
+	
 	
 	
 }

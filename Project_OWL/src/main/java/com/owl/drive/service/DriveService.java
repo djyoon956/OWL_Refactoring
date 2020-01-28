@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.owl.drive.dao.DriveDao;
 import com.owl.drive.dto.DriveFile;
@@ -136,6 +137,13 @@ public class DriveService {
 	}
 	
 	
+
+	public boolean restoreFilefromTrash(int driveFileIdx) {
+		System.out.println("in restoreFilefromTrash");
+		System.out.println(driveFileIdx);
+		
+		return false;
+	}
 	
 	
 	private DriveDao getDriveDao() {
