@@ -147,6 +147,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteReply">
 		DELETE FROM issuerly WHERE issuerlyidx =#{issuerlyidx}
 	</delete>	
-	
+
+	<update id="updateReply" parameterType="com.owl.kanban.dto.Reply">
+		UPDATE ISSUERLY SET content = #{content} WHERE ISSUERLYIDX = #{issueRlyIdx}
+	</update>
 	
 </mapper>

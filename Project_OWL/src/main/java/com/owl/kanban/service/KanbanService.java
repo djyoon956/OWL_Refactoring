@@ -13,6 +13,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.owl.helper.UploadHelper;
@@ -429,6 +431,27 @@ public class KanbanService {
 		}
 		return result;
 	};
+	
+	
+	public boolean editReply(Reply reply) {
+		System.out.println("editReply service in");
+		System.out.println("reply" +reply);
+		boolean result = false;
+		KanbanDao dao = getKanbanDao();
+		
+		 try {
+			result = dao.updateReply(reply) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		return result;
+	}
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
