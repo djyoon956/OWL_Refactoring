@@ -401,25 +401,36 @@ function deleteDriveFile(driveFileIdx){
 
 function deleteFilefromTrash(driveFileIdx) {
 
-	console.log('deleteFilefromTrash in???');
-	console.log('driveFileIdx : ' + driveFileIdx);
-	$.ajax({
-		url : "DeleteFileFromTrash.do",
-		data : {'driveFileIdx' : driveFileIdx},
-		success : function(data) {
-			console.log('deleteFileFromTrash in');
-			console.log(data);
-			console.log('뭐니?');
-			//console.log(${project.projectIdx});
-			//setTrashData(projectIdx);
-			
-		},
-		error : function() {
-			console.log('deleteFilefromTrash error');
-		}
-		
-	})
+	//console.log('deleteFilefromTrash in???');
+	//console.log('driveFileIdx : ' + driveFileIdx);
+	
+	Swal.fire({
+	    title: '완전히 삭제 하시겠습니까?',
+	    text: '완전히 삭제하면 복구 하실 수 없습니다.',
+	    icon: 'warning',
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    confirmButtonText: 'Yes'
+	  }).then((result) => {
+	    if (result.value) {
+	    	$.ajax({
+	    		url : "DeleteFileFromTrash.do",
+	    		data : {'driveFileIdx' : driveFileIdx},
+	    		success : function(data) {
+	    			//console.log('deleteFileFromTrash in');
+	    			setTrashData(driveProjectIdx);
+	    			
+	    		},
+	    		error : function() {
+	    			console.log('deleteFilefromTrash error');
+	    		}
+	    		
+	    	})  
+	   }         
+	});
+	
 }
 	
-	
+
 
