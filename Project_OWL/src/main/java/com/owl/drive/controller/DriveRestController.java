@@ -62,8 +62,8 @@ public class DriveRestController {
 		return drivefolder.getDriveIdx();
 	}
 
-	@RequestMapping(value="updateFolder.do")
-	public boolean updateFolder(DriveFolder drivefolder, String[] refs, int oldRef, HttpServletRequest request) {
+	@RequestMapping(value="cutFolder.do")
+	public boolean cutFolder(DriveFolder drivefolder, String[] refs, int oldRef, HttpServletRequest request) {
 		boolean result = false;
 		String oldPath = "";
 		System.out.println(drivefolder);
@@ -90,6 +90,39 @@ public class DriveRestController {
 
 			String uploadPath = request.getServletContext().getRealPath("upload");
 			UploadHelper.moveDriveDirectory(oldPath, uploadPath, drivefolder.getProjectIdx(),
+						driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}		
+		return result;
+	}
+	
+	@RequestMapping(value="copyFolder.do")
+	public boolean copyFolder(DriveFolder drivefolder, String[] refs, int parent, HttpServletRequest request) {
+		boolean result = false;
+		
+		List<Integer> driveRefs = new ArrayList<Integer>();
+		if (refs.length == 2) { // default 하위
+			if(parent ==Integer.parseInt(refs[0])) {
+				driveRefs.add(Integer.parseInt(refs[0]));	
+			}else {				
+				driveRefs.add(Integer.parseInt(refs[0]));
+				driveRefs.add(parent);
+			}
+					
+		} else {
+			driveRefs.add(Integer.parseInt(refs[1]));
+			driveRefs.add(Integer.parseInt(refs[0]));			
+		}        
+		try {
+			drivefolder.setFolderName(drivefolder.getFolderName());
+			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
+			drivefolder.setRef(drivefolder.getRef());
+			drivefolder.setDepth(drivefolder.getDepth());
+			service.updateFolder(drivefolder);
+
+			String uploadPath = request.getServletContext().getRealPath("upload");
+			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(),
 						driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

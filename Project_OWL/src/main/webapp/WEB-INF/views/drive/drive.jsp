@@ -149,10 +149,10 @@ $(function(){
 				}
 			});
  			$('#jstree').on('move_node.jstree', function (e, data) {
-				console.log("move");
+				//잘라내기 후 paste 할 때
 				jQuery.ajaxSettings.traditional = true				
 				  $.ajax({
-		        		url:"updateFolder.do",
+		        		url:"cutFolder.do",
 		        		method:"POST",
 		        		data:{driveIdx: data.node.id,
 			        		  projectIdx: ${project.projectIdx},
@@ -165,13 +165,20 @@ $(function(){
 		        		}
 		    		});
  			});	
- 			
- 			$('#jstree').on('copy.jstree', function (e, data) {
- 	 			console.log("copy");
-				console.log(data);
 
+ 			$('#jstree').on('paste.jstree', function (e, data) {
+ 	 			//복사 후 paste 할 때
+ 	 			console.log("paste");
+				console.log(data);
+				console.log(data.parent); //나의 ref가 될 것
+				console.log(data.node[0].id); //driveIdx
+				console.log(data.node[0].text); //이름
+				console.log(data.node[0].parents);
  			});
 
+
+
+ 			
 			$("#deleteFolder").click(function(){
 				console.log("delete");
 				var ref = $('#jstree').jstree(true),
