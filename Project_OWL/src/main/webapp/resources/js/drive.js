@@ -205,41 +205,39 @@ function setFolderData(folderIdx, folderName) {
 			}
 				
 			$("#emptyDriveBox").addClass("hidden");
+			let line = 3;
+			let control ="";
 			$.each(data, function(index, element) {
 				let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
 				let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
 				
-				let control = '<div class="col-sm-4">'
-								+ '	<div class="card driveCard">'
-								+ '		<div class="more" style="margin-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-								+ '			<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
-								+ '			<a style="float:right;" data-toggle="collapse" href="#detail">'
-								+ '				<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;'
-								+ '			</a>'
-								+ '		</div>'
-								+ '		<div style="margin-left: 60%;">'
-								+ '			<ul id="detail" class="collapse">'
-								+ '				<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>'
-								+ '				<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>'
-								+ '			</ul>'
-								+ '		</div>'
-								+ '		<div class="card-body text-center">'
-								+ '			<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
-								+ '			<h4 >'+fileName+'</h4>'
-								+ '		</div>'
-								+ '	</div>'
-								+ '</div>';
+				control += '<div class="col-sm-4">'
+							+ '	<div class="card driveCard">'
+							+ '		<div class="more" style="margin-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
+							+ '			<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
+							+ '			<a style="float:right;" data-toggle="collapse" href="#detail">'
+							+ '				<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;'
+							+ '			</a>'
+							+ '		</div>'
+							+ '		<div style="margin-left: 60%;">'
+							+ '			<ul id="detail" class="collapse">'
+							+ '				<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>'
+							+ '				<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>'
+							+ '			</ul>'
+							+ '		</div>'
+							+ '		<div class="card-body text-center">'
+							+ '			<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
+							+ '			<h4 >'+fileName+'</h4>'
+							+ '		</div>'
+							+ '	</div>'
+							+ '</div>';
 				
-				controls.push(control);
-				
-				if((index+1)%3 == 0){
+				console.log("index : "+index);
+				if (index % line == line - 1 || index == data.length - 1) {
 					let row = $("<div class='row'></div>");
-					row.append(controls[0]);
-					console.log(controls[0]);
-					row.append(controls[1]);
-					row.append(controls[2]);
+					row.append(control);
 					targetBox.append(row);
-					controls = [];
+					control = "";
 				}
 			})
 		},
