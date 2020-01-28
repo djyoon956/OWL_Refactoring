@@ -77,19 +77,48 @@ public class DriveService {
 		return files;
 	}
 	
+<<<<<<< HEAD
 	public boolean updateNewNameFolder(String folderName, int driveIdx) {
+=======
+	
+	public List<DriveFile> getTrashList(int projectIdx) {
+		DriveDao dao = getDriveDao();
+		List<DriveFile> trashlist = new ArrayList<DriveFile>();
+
+		try {
+			trashlist = dao.getTrashList(projectIdx);
+			
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return trashlist;
+		}
+			
+			
+			
+	public boolean updateFolder(DriveFolder drivefolder) {
+>>>>>>> 88272a3511b8c79d8e7e6432af680b4cd74660af
 		boolean result = false;
 		DriveDao dao = getDriveDao();
 
 		try {
+<<<<<<< HEAD
 			result = dao.updateNewNameFolder(folderName, driveIdx)> 0 ? true : false;
+=======
+			result = dao.updateFolder(drivefolder) > 0 ? true : false;
+
+>>>>>>> 88272a3511b8c79d8e7e6432af680b4cd74660af
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return result;
 	};
+
 	
 	
 	private DriveDao getDriveDao() {

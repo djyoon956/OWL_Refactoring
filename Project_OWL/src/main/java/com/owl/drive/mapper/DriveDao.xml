@@ -21,13 +21,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getFileByFolderIdx" resultType="com.owl.drive.dto.DriveFile" parameterType="int">
-		SELECT DRIVEFILEIDX, FILENAME, CREATOR, FILESIZE, CREATEDATE 
-			FROM owl.DRIVEFILE 
+		SELECT DRIVEFILEIDX, FILENAME, CREATOR, M.NAME AS 'CREATORNAME', FILESIZE, CREATEDATE 
+			FROM owl.DRIVEFILE F JOIN owl.MEMBER M ON F.CREATOR = M.EMAIL
 		WHERE DRIVEIDX = #{folderIdx} AND ISDELETE = 0
 	</select>
+
 	
 	<update id="updateNewNameFolder" parameterType="com.owl.drive.dto.DriveFolder">
 		UPDATE DRIVEFOLDER SET FOLDERNAME =#{folderName}
 		WHERE DRIVEIDX =#{driveIdx}
 	</update>
+
+	<select id="getTrashList" resultType="com.owl.drive.dto.DriveFile" parameterType="int">
+	SELECT F.DRIVEFILEIDX, F.FILENAME, F.CREATOR, F.FILESIZE, F.CREATEDATE, F.DRIVEIDX
+		FROM PROJECT P LEFT JOIN DRIVEFOLDER D ON P.PROJECTIDX = D.PROJECTIDX 
+              		   LEFT JOIN DRIVEFILE F ON D.DRIVEIDX = F.DRIVEIDX
+		WHERE F.ISDELETE = 1 AND P.PROJECTIDX = #{projectIdx};
+	</select>
 </mapper>

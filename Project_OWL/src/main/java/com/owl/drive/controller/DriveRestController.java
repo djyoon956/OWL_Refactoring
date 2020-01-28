@@ -87,8 +87,7 @@ public class DriveRestController {
 		
 		String filePath = "";
 		try {
-			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName,
-					driveUploadFile.getBytes()); // full path
+			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, driveUploadFile.getBytes()); // full path
 			System.out.println("filePath : " + filePath);
 			service.insertFile(driveFile);
 		} catch (IOException e) {
@@ -103,4 +102,13 @@ public class DriveRestController {
 		System.out.println("in getFolderData");
 		return service.getFolderData(folderIdx);
 	}
+	
+	
+	@RequestMapping(value = "GetTrashList.do")
+	public List<DriveFile> getTrashList(int projectIdx) {
+		System.out.println("in getTrashList");
+		return service.getTrashList(projectIdx);
+	}
+	
+	
 }

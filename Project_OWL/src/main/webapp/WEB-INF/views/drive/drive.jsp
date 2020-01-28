@@ -264,14 +264,13 @@ function sendFileToServer(formData,status){
 						<table id="driveTable" class="table table-hover table-bordered text-center">
 							<thead>
 								<tr>
-									<th>file name</th>
-									<th>create date</th>
-									<th>size</th>
+									<th  width="45%">file name</th>
+									<th  width="30%">create date</th>
+									<th width="15%">creator</th>
+									<th width="10%">size</th>
 								</tr>
 							</thead>
-							
 							<tbody>
-							
 							</tbody>
 						</table>
 					</div>
