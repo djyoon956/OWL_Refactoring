@@ -365,22 +365,18 @@ public class KanbanService {
 		System.out.println("result가 뭐니?" + result);
 		return result;
 	}
-	public Issue closeIssue(int issueIdx,String email) {
+	public boolean closeIssue(int issueIdx,String email) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		Issue issueList = null;
 			try {
 				result = dao.closeIssue(issueIdx) > 0 ? true : false;
-				if(result) {
-					issueList = dao.getIssuebyIssueIdx(issueIdx);
-				}
 				
 				insertLog(issueIdx, "Closed this", email, dao);
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
 
-		return issueList;
+		return result;
 	}
 	
 	private void insertLog(int issueIdx, String log, String email, KanbanDao dao) throws ClassNotFoundException, SQLException {

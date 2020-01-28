@@ -205,13 +205,13 @@ function setFolderData(folderIdx, folderName) {
 			}
 				
 			$("#emptyDriveBox").addClass("hidden");
-			let line = 3;
+			let line = 4;
 			let control ="";
 			$.each(data, function(index, element) {
 				let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
 				let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
 				
-				control += '<div class="col-sm-4">'
+				control += '<div class="col-sm-3">'
 							+ '	<div class="card driveCard">'
 							+ '		<div class="more" style="margin-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
 							+ '			<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
