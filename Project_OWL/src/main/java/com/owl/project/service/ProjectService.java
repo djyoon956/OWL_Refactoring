@@ -72,17 +72,16 @@ public class ProjectService {
 			int projectIdx = project.getProjectIdx();
 			projectlist.setProjectIdx(projectIdx);
 			projectlist.setAuthority("ROLE_PM");
-
 			projectDao.insertProjectList(projectlist);	
 			
-			String folderName = project.getProjectName();
+			drivefolder.setFolderName(project.getProjectName());
+			drivefolder.setProjectIdx(projectIdx);			
+			driveDao.insertMainFolder(drivefolder);
+			
 			String uploadPath = request.getServletContext().getRealPath("upload");
-			UploadHelper.makeDriveDirectory(uploadPath, projectIdx, folderName);
+			UploadHelper.makeDefaultDirectory(uploadPath, projectIdx, drivefolder.getDriveIdx());
 			
-			drivefolder.setFolderName(folderName);
-			drivefolder.setProjectIdx(projectIdx);
-			
-			driveDao.insertFolder(drivefolder);
+
 			result = true;
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());

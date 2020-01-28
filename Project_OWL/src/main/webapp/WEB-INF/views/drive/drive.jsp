@@ -118,25 +118,29 @@ $(function(){
 			
 			//폴더 생성시 이름 수정까지 완료할 때
  			$('#jstree').on('rename_node.jstree', function (e, data) {
-				if(data.node.id.startsWith("j1_")){					
+				console.log(data.node.id); // 나
+				console.log("parent",data.node.parent);// 부모
+				console.log("parents",data.node.parents);// 부모
+				if(data.node.id.startsWith("j1_")){	
+				jQuery.ajaxSettings.traditional = true				
 				  $.ajax({
 		        		url:"insertFolder.do",
 		        		method:"POST",
 		        		data:{projectIdx: ${project.projectIdx},
 		        			  folderName: data.text,
-		        			  ref: data.node.parent
+		        			  ref: data.node.parent,
+		        			  refs : data.node.parents
 		        			 },
 		        		success:function(idx){
 			        		data.node.id =idx;
 		        		}
 		    		});
 				}else{
+					let thisId = data.node.id;
 					$.ajax({
 		        		url:"updateNewName.do",
 		        		method:"POST",
-		        		data:{projectIdx: ${project.projectIdx},
-			        			 driveIdx: data.node.id,
-			        			 oldName: data.old,
+		        		data:{driveIdx: data.node.id,
 		        			     folderName: data.text
 		        			 },
 		        		success:function(data){

@@ -17,7 +17,6 @@ import com.owl.drive.dto.DriveFolder;
 public class DriveService {
 	@Autowired
 	private SqlSession sqlSession;
-
 	public void insertDriveFolder(DriveFolder drivefolder) {
 		DriveDao dao = getDriveDao();
 		try {
@@ -79,9 +78,22 @@ public class DriveService {
 	public boolean updateNewNameFolder(String folderName, int driveIdx) {
 		boolean result = false;
 		DriveDao dao = getDriveDao();
-		System.out.println("service : " + folderName);
 		try {
 			result = dao.updateNewNameFolder(folderName, driveIdx)> 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+	
+	public boolean updateFolder(DriveFolder drivefolder) {
+		boolean result = false;
+		DriveDao dao = getDriveDao();
+		try {
+			result = dao.updateFolder(drivefolder)> 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
