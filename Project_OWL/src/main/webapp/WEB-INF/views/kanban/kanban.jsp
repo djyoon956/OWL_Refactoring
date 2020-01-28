@@ -74,7 +74,7 @@
 
 .columnBody {
 	border: 2px solid #e9e9e9;
-	width: 330px;
+	width: 320px;
 	min-height: 20px;
 	max-height: 550px;
 	list-style-type: none;
@@ -367,13 +367,14 @@
 
 
 	  $('#replyBtn').click (function() {
-		
-		  console.log('here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-		 console.log('issueIdx' + $('#issueIdxNum').val() );
-		 console.log('content' + $('#replycontent').val());
-		  //console.log( 'email'  + '${member.name}');
-		 // ${member.name}
-		  $.ajax ({
+		  
+		let replyct = $('#replycontent').val();
+		  console.log(replyct);
+		if(replyct == "" || replyct == null) {
+			return false;
+		}else {
+
+			  $.ajax ({
 			 		type :"POST",
 					url : "InsertReply.do",
 					data : { 'issueIdx' : $('#issueIdxNum').val()
@@ -392,9 +393,9 @@
 								+ '	 <div class="comment-text w-100">'
 								+ '		<h6 class="font-medium mb-2">' +data.creator
 								+ '		<span class="text-muted float-right">'+data.createDate+'</span></h6>'
-								+ '		<div class="mb-1 d-block"><span>'+data.content+'</span></div>'
+								+ '		<div class="mb-1 d-block" id="'+data.issueRlyIdx+'recontent">'+data.content+'</div>'
 								+ '		<div class="comment-footer float-right">'
-								+ '		<button type="button" class="btn btn-info btn-sm">Edit</button>'
+								+ '		<button type="button" class="btn btn-info btn-sm" onclick="editReply('+data.issueRlyIdx+')">Edit</button>'
 								+ '		<button type="button" class="btn btn-secondary btn-sm" onclick="deleteReply('+data.issueRlyIdx+')">Delete</button>'
 								+ '		</div>'
 								+ '	</div>'
@@ -407,6 +408,10 @@
 						}
 
 					})   
+
+			}
+
+
 			 }) 
 
 });

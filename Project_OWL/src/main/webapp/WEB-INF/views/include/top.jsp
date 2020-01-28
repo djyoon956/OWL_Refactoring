@@ -109,11 +109,13 @@
 		$("#chatNoticePreview").removeClass("hidden");
 		$("#chatNoticeDetail").addClass("hidden");
 		});
-	$(".chat_list-group-item").click(function() {
+	$("#chatUserList").click(function() {
+		console.log("채팅방 view");
 		$("#chattingRoomIn").removeClass("hidden");
 		$("#chattingList").addClass("hidden");
 	});
 	$("#chatBackBtn").click(function() {
+		console.log("백 버튼");
 		$("#chattingList").removeClass("hidden");
 		$("#chattingRoomIn").addClass("hidden");
 		});
@@ -572,14 +574,14 @@ display: block;
                          <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start" style="height: 650px;">
              <div class="row">
              <div class="text-left">
-    			<i class="fas fa-chevron-left font-22 ml-1" id="chatBackBtn"></i>
+             <a class="" href="javascript:void(0)" id="chatBackBtn"> 
+    			<i class="fas fa-chevron-left font-22 ml-1" ></i></a>
     			</div>
     			<div class="offset-3">
     			<h4 class="d-inline">Family_c</h4><h4 class="text-muted d-inline ml-2">(5)</h4></div>
     			<i class="mdi mdi-menu font-24 mt-1" style="right:12px;top:0px; position: absolute;"></i>
    			</div>
    			<hr>
-   				 <!-- <div class="card"> -->
                                 <div class="chat-box scrollable" style="height:510px;">
                                     <!--chat Row -->
                                     <ul class="chat-list">

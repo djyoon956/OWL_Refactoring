@@ -7,11 +7,15 @@ import com.owl.drive.dto.DriveFile;
 import com.owl.drive.dto.DriveFolder;
 
 public interface DriveDao {
+	public int insertMainFolder(DriveFolder drivefolder) throws ClassNotFoundException, SQLException;
+	
 	public int insertFolder(DriveFolder drivefolder) throws ClassNotFoundException, SQLException;
 
 	public int insertFile(DriveFile file) throws ClassNotFoundException, SQLException;
 	
 	public int updateNewNameFolder(String folderName, int driveIdx) throws ClassNotFoundException, SQLException;
+	
+	public int updateFolder(DriveFolder drivefolder) throws ClassNotFoundException, SQLException;
 	
 	public List<DriveFolder> getDriveList(int projectIdx) throws ClassNotFoundException, SQLException;
 	
@@ -24,4 +28,9 @@ public interface DriveDao {
 	public int deleteFileFromDrive(int driveFileIdx) throws ClassNotFoundException, SQLException;
 
 	public int deleteFileFromTrash(int driveFileIdx) throws ClassNotFoundException, SQLException;
+	
+	public int renameFile(int driveFileIdx, String fileName) throws ClassNotFoundException, SQLException;
+	
+	public int restoreFilefromTrash(int driveFileIdx) throws ClassNotFoundException, SQLException;
+	
 }

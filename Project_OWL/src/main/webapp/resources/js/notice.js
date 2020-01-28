@@ -26,6 +26,15 @@ function initNotice(projectIdx){
             air: []
           }
 	});
+	$("#noticeEditNote").summernote({
+		height: 310,
+        placeholder: "내용을 입력하세요.",
+        popover: {
+            image: [],
+            link: [],
+            air: []
+          }
+	});
 }
 
 let detailNoticeIdx = 0;
@@ -49,6 +58,9 @@ function setDetailData(boardIdx){
 								+" </li>";
 				$("#noticeFiles").append(control);
 			})
+			/*$("#editNoticeBtn").attr("onclick","editNoticeSetView( '"+ notice +"' )");*/
+			console.log("노티스 데이터");
+			console.log(notice);
 			changeNoticeView("detailBox");
 		}
 	}); 
@@ -79,7 +91,6 @@ function setNoticeData() {
 				$("#emptyNoticeBox").removeClass("hidden");
 				$("#noticeTableBox").addClass("hidden");
 			}
-			
 			changeNoticeView("noticeBox");
 		}
 	}); 
@@ -158,8 +169,23 @@ function deleteNotice(){
 	})
 }
 
-function editNotice(){
+function editNoticeSetView(){
+	/*element.boardIdx,
+	element.title,
+	element.email,
+	element.writeDate,
+	element.readNum */
+	console.log("edit 화면 ");
+	changeNoticeView("editBox");
 	
+    console.log("파일 ");
+	console.log($("#noticeFiles").text());
+	$("#editTitle").val($("#noticeTitle").text());
+	$('#noticeEditNote').summernote('code',$("#noticeContent").html());
+	  $.each($("#noticeFiles").text(), function(i, file) {
+	    	//formData.append('multipartFiles', file);
+		  	
+	   });
 }
 
 function changeNoticeView(view){
@@ -167,16 +193,22 @@ function changeNoticeView(view){
 		detailNoticeIdx = 0;
 		$("#noticeDetailBox").addClass("hidden");
 		$("#writeBox").addClass("hidden");
+		$("#editBox").addClass("hidden");
 		$("#noticeBox").removeClass("hidden");
 	}else if(view == "writeBox"){
 		detailNoticeIdx = 0;
 		$("#noticeBox").addClass("hidden");
 		$("#noticeDetailBox").addClass("hidden");
+		$("#editBox").addClass("hidden");
 		$("#writeBox").removeClass("hidden");
 	}else if(view == "detailBox"){
 		$("#noticeBox").addClass("hidden");
 		$("#writeBox").addClass("hidden");
+		$("#editBox").addClass("hidden");
 		$("#noticeDetailBox").removeClass("hidden");
+	}else if(view == "editBox"){
+		$("#noticeDetailBox").addClass("hidden");
+		$("#editBox").removeClass("hidden");
 	}
 }
 
