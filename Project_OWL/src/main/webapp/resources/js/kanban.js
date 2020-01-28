@@ -291,6 +291,10 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailDueDate").text("none");
 					console.log("이슈 프로그레스");
 					console.log(data.issueProgress);
+					if(data.issueProgress == 'CLOSED')
+						$("#issueClosedChk").text('Reopen issue');
+					else 
+						$("#issueClosedChk").text('Close issue');
 		},
 		error : function(){
 			console.log("GetIssueDetail error");
@@ -310,8 +314,7 @@ function closeIssue(issueIdx) {
            method:"POST",
            data:{issueIdx : issueIdx},
            success:function(data){
-        	   console.log($("#closeIssueDetailBtn > i").siblings().text("Reopen"));
-        	$("#closeIssueDetailBtn > i").siblings().text("Reopen"); 
+        	$("#issueClosedChk").text('Reopen issue');
         	setChageView("kanban");
            }
         });  		

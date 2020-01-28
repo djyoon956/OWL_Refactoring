@@ -86,6 +86,7 @@ $(function(){
 			});	
 			//폴더 생성시 이름 수정까지 완료할 때
  			$('#jstree').on('rename_node.jstree', function (e, data) {
+ 	 			console.log(data);
 				if(data.old =="New node"){					
 				  $.ajax({
 		        		url:"insertFolder.do",

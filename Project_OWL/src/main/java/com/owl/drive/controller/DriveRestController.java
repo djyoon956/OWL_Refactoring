@@ -92,4 +92,13 @@ public class DriveRestController {
 		System.out.println("in getFolderData");
 		return service.getFolderData(folderIdx);
 	}
+	
+	
+	@RequestMapping(value = "GetTrashList.do")
+	public List<DriveFile> getTrashList(int projectIdx) {
+		System.out.println("in getTrashList");
+		return service.getTrachList(projectIdx);
+	}
+	
+	
 }
