@@ -17,17 +17,15 @@ public class DriveService {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public boolean insertDriveFolder(DriveFolder drivefolder) {
+	public void insertDriveFolder(DriveFolder drivefolder) {
 		DriveDao dao = getDriveDao();
-		boolean result = false;
 		try {
-			result = dao.insertFolder(drivefolder) > 0 ? true : false;
+			dao.insertFolder(drivefolder);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
 	}
 
 	public List<DriveFolder> getDriveList(int projectIdx) {
@@ -80,10 +78,9 @@ public class DriveService {
 	public boolean updateNewNameFolder(String folderName, int driveIdx) {
 		boolean result = false;
 		DriveDao dao = getDriveDao();
-
+		System.out.println("service : " + folderName);
 		try {
 			result = dao.updateNewNameFolder(folderName, driveIdx)> 0 ? true : false;
-
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -108,6 +105,20 @@ public class DriveService {
 			}
 			return trashlist;
 		}
+
+	public boolean deleteFileFromDrive(int driveFileIdx) {
+		boolean reseult = false;
+		DriveDao dao = getDriveDao();
+		try {
+			reseult = dao.deleteFileFromDrive(driveFileIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return reseult;
+	}
 	
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);

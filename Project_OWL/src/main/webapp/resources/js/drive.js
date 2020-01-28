@@ -29,27 +29,25 @@ function initDrive(projectIdx){
          trigger: 'left',
          build : function($trigger, e){
         	 console.log($trigger);
-        	 console.log($trigger);
+        	 console.log($trigger[0].id);
+        	 return {
+                 callback: function(key, options) {
+                     let driveFileIdx = $trigger[0].id;
+                     if(key == "download"){
+                    	 
+                     }else if(key == "rename"){
+                    	 
+                     }else if(key == "delete"){
+                    	 deleteDriveFile(driveFileIdx);
+                     }
+                 },
+                 items:{
+                     "download": {name: "다운로드", icon: "fas fa-download"},
+                     "rename": {name: "이름 변경", icon: "edit"},
+                     "delete": {name: "삭제", icon: "delete"},
+            	 	}
+             };
          },
-         callback: function(key, options) {
-             console.log(key);
-             console.log(options);
-             if(key == "download"){
-            	 $.ajax({
-            		 url : "DeleteFile.do",
-            		 data : {}
-            	 })
-             }else if(key == "rename"){
-            	 
-             }else if(key == "delete"){
-            	 
-             }
-         },
-         items:{
-             "download": {name: "다운로드", icon: "fas fa-download"},
-             "rename": {name: "이름 변경", icon: "edit"},
-             "delete": {name: "삭제", icon: "delete"},
-    	 	}
      });
 	
 	$('#jstree').on( "select_node.jstree", function(event, data){
@@ -347,5 +345,21 @@ function setTableView(data){
 	})
 }
 
-
+function deleteDriveFile(driveFileIdx){
+	$.ajax({
+		 url : "DeleteDriveFile.do",
+		 data : {driveFileIdx : driveFileIdx},
+		 success : function(data){
+			 if(data){
+				 callFolderData();
+				 successAlert("파일 삭제 완료");
+			 }else{
+				 errorAlert("파일 삭제 실패");
+			 }
+		 },
+		 error : function(){
+			 errorAlert("파일 삭제 실패");
+		 }
+	 })
+}
 
