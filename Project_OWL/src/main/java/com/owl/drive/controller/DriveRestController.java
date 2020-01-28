@@ -2,6 +2,7 @@ package com.owl.drive.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntPredicate;
 
@@ -37,25 +38,27 @@ public class DriveRestController {
 		System.out.println("in insertFolder");
 		System.out.println(refs[0]);
 		System.out.println(refs.length);
+		
+		List<Integer> driveRefs = new ArrayList<Integer>();
 		if (refs.length == 2) { // default 하위
-			// refs[0]
+			driveRefs.add(Integer.parseInt(refs[0]));
 		} else {
-			// refs[1]+ refs[0]
+			driveRefs.add(Integer.parseInt(refs[1]));
+			driveRefs.add(Integer.parseInt(refs[0]));
 		}
 
+	
 		try {
+			drivefolder.setFolderName(drivefolder.getFolderName());
+			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
+			drivefolder.setRef(drivefolder.getRef());
+			drivefolder.setDepth(drivefolder.getDepth());
+			service.insertDriveFolder(drivefolder);
 
-		drivefolder.setFolderName(drivefolder.getFolderName());
-		drivefolder.setProjectIdx(drivefolder.getProjectIdx());		
-		drivefolder.setRef(drivefolder.getRef());
-		drivefolder.setDepth(drivefolder.getDepth());
-		service.insertDriveFolder(drivefolder);
+			String uploadPath = request.getServletContext().getRealPath("upload");
 
-		String uploadPath = request.getServletContext().getRealPath("upload");
-			/*
-			 * UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(),
-			 * refs, drivefolder.getDriveIdx());
-			 */
+			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(),
+					driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
