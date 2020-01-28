@@ -32,11 +32,30 @@ public class UploadHelper {
 		return path;
 	}
 
-	public static void makeDriveDirectory(String uploadPath, int projectIdx, String folderName) {
-		String path = Paths.get(uploadPath, "project", Integer.toString(projectIdx), "drive", folderName).toString();
+	public static void makeDefaultDirectory(String uploadPath, int projectIdx, int driveIdx) {
+		String path = Paths.get(uploadPath, "project", Integer.toString(projectIdx), "drive", Integer.toString(driveIdx)).toString();
 		makeDirectory(path);
 	}
-	
+
+
+	 public static void makeDriveDirectory(String uploadPath, int projectIdx, int[] refs, int driveIdx) { 
+
+		String refPath = "";
+		for (int i = 0; i < refs.length; i++) {
+			if (i == refs.length - 1)
+				refPath += i;
+			else
+				refPath += i + File.separator;
+		}
+		System.out.println(refPath);
+		String path = Paths
+				.get(uploadPath, "project", Integer.toString(projectIdx), "drive", refPath, Integer.toString(driveIdx))
+				.toString();
+		System.out.println(path);
+		//makeDirectory(path);
+
+	}
+
 	public static void deleteFile(String path) {
 		File file = new File(path);
 		if (file.exists())
@@ -45,10 +64,7 @@ public class UploadHelper {
 	
 	public static void renameFolder(String oldPath, String newPath) {
 		File oldDirectory = new File(oldPath);
-		boolean isMoved = oldDirectory.renameTo(new File(newPath));
-
-	System.out.println(isMoved);
-
+		oldDirectory.renameTo(new File(newPath));
 	}
 	
 	private static void makeDirectory(String path) {

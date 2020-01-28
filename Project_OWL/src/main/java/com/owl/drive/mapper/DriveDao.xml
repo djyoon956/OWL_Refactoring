@@ -3,6 +3,14 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.owl.drive.dao.DriveDao">
+	<insert id="insertMainFolder" parameterType="com.owl.drive.dto.DriveFolder">
+		INSERT INTO DRIVEFOLDER(FOLDERNAME, REF, DEPTH, PROJECTIDX) 
+		VALUES(#{folderName}, #{ref}, #{depth}, #{projectIdx});
+		<selectKey resultType="int" keyProperty="driveIdx" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
+	</insert>
+	
 	<insert id="insertFolder" parameterType="com.owl.drive.dto.DriveFolder">
 		INSERT INTO DRIVEFOLDER(FOLDERNAME, REF, DEPTH, PROJECTIDX) 
 		VALUES(#{folderName}, #{ref}, (SELECT COALESCE(MAX(D.depth),0)+1 FROM DRIVEFOLDER D WHERE REF=#{ref}) , #{projectIdx});
@@ -30,6 +38,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateNewNameFolder">
 		UPDATE DRIVEFOLDER SET FOLDERNAME =#{param1}
 		WHERE DRIVEIDX =#{param2}
+	</update>
+	
+	<update id="updateFolder" parameterType="com.owl.drive.dto.DriveFolder">
+			UPDATE DRIVEFOLDER SET FOLDERNAME =#{folderName}
+													,REF =#{ref}
+													,DEPTH =(SELECT COALESCE(MAX(D.depth),0)+1 FROM DRIVEFOLDER D WHERE REF=#{ref})
+			WHERE DRIVEIDX =#{driveIdx}
 	</update>
 
 	<select id="getTrashList" resultType="com.owl.drive.dto.DriveFile" parameterType="int">
