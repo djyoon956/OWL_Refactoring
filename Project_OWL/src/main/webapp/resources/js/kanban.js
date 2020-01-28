@@ -256,9 +256,9 @@ function setKanbanDetail(issueIdx){
 										+ '	 <div class="comment-text w-100">'
 										+ '		<h6 class="font-medium mb-2">'+element.creator
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
-										+ '		<div class="mb-1 d-block"><span>'+element.content+'</span></div>'
+										+ '		<div class="mb-1 d-block" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
 										+ '		<div class="comment-footer float-right">'
-										+ '		<button type="button" class="btn btn-info btn-sm" onclick="editReply('+element.issueRlyIdx+', '+element.content+')">Edit</button>'
+										+ '		<button type="button" class="btn btn-info btn-sm" onclick="editReply('+element.issueRlyIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
 										+ '		</div>'
 										+ '	</div>'
@@ -375,16 +375,16 @@ function editLabel(idx, color, name) {
 	
 	
 	
-	function editReply(issuerlyidx, content){
+	function editReply(issueRlyIdx){
 		console.log('?????????????????????????????????????');
 		console.log('editReply in');
-		console.log(issuerlyidx);
-		console.log(content);
-		
+		console.log(issueRlyIdx);
+		console.log($('#'+issueRlyIdx+'recontent').text());
+				
 		$.ajax({
 			url : "EditReply.do",
 		    method : "POST",
-		    data : {'issuerlyidx' : issuerlyidx, 'content' : content},
+		    data : {'issueRlyIdx' : issueRlyIdx, 'content' : $('#'+issueRlyIdx+'recontent').text()},
 		    success : function(data) {
 		    	console.log(data);
 		    }, error : function() {

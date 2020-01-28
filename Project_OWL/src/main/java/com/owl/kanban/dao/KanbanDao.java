@@ -70,4 +70,7 @@ public interface KanbanDao {
 	public int insertReply(Reply reply) throws ClassNotFoundException, SQLException;
 
 	public Reply getReply(int issueRlyIdx) throws ClassNotFoundException, SQLException;
+	
+	public int updateReply(Reply reply) throws ClassNotFoundException, SQLException;
+	
 }

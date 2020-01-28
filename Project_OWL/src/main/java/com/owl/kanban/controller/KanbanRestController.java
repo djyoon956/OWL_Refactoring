@@ -303,8 +303,8 @@ public class KanbanRestController {
 		System.out.println("뭐지????????????????????????????");
 		System.out.println(reply);
 		boolean result = false;
-		//result = service.deleteReply(issuerlyidx);
-		return result;
+		
+		return service.editReply(reply);
 	}
 	
 	
