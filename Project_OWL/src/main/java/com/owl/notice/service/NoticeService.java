@@ -116,6 +116,18 @@ public class NoticeService {
 		}
 		return result;
 	}
+	public boolean deleteFile(int fileIdx) {
+		NoticeDao dao = getNoticeDao();
+		boolean result = false;
+		try {
+			result = dao.deleteFile(fileIdx)> 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	@Transactional
 	public boolean updateNotice(Notice notice, List<MultipartFile> multipartFiles, String uploadPath) throws Exception{
 		NoticeDao dao = getNoticeDao();

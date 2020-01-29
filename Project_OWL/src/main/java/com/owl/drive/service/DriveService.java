@@ -9,7 +9,6 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.owl.drive.dao.DriveDao;
 import com.owl.drive.dto.DriveFile;
@@ -76,32 +75,26 @@ public class DriveService {
 		return results;
 	}
 	
-	public boolean updateNewNameFolder(String folderName, int driveIdx) {
-		boolean result = false;
+	public void updateNewNameFolder(String folderName, int driveIdx) {
 		DriveDao dao = getDriveDao();
 		try {
-			result = dao.updateNewNameFolder(folderName, driveIdx)> 0 ? true : false;
+			dao.updateNewNameFolder(folderName, driveIdx);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return result;
 	}
 	
-	public boolean updateFolder(DriveFolder drivefolder) {
-		boolean result = false;
+	public void updateFolder(DriveFolder drivefolder) {
 		DriveDao dao = getDriveDao();
 		try {
-			result = dao.updateFolder(drivefolder)> 0 ? true : false;
+			dao.updateFolder(drivefolder);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return result;
 	}
 
 	
@@ -111,7 +104,6 @@ public class DriveService {
 
 		try {
 			trashlist.put("files", dao.getTrashList(projectIdx));
-			
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {

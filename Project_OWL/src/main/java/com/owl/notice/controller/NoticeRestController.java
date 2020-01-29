@@ -65,6 +65,10 @@ public class NoticeRestController {
 	public boolean deleteNotice(int noticeIdx) {
 		return service.deleteNotice(noticeIdx);
 	}
+	@RequestMapping(value = "DeleteFile.do", method = RequestMethod.POST)
+	public boolean deleteFile(int fileIdx) {
+		return service.deleteFile(fileIdx);
+	}
 	@RequestMapping(value = "UpdateNotice.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public int updateNotice(@RequestParam(value = "boardIdx") int boardIdx
 			, @RequestParam(value = "content") String content

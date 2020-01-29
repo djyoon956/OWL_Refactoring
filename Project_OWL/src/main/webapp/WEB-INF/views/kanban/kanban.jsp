@@ -138,7 +138,6 @@
   $(function(){
 
 	  function check() {
-		console.log("체크하니?");
 	
 		if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
 			return false;
@@ -162,7 +161,6 @@
 				$('#labelList').empty();
 				$('#labelIdx').empty();
 
-				
 				let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
 			
 				 $.each(data,function(index, obj) {
@@ -186,7 +184,6 @@
 			}
 			});
 	});
-
 
 
 	$('#addLabelModal').on('hidden.bs.modal', function() {  
@@ -227,9 +224,34 @@
     					$( ".sortableCol").sortable({
     				        connectWith: ".connectedSortable",
     				        dropOnEmpty: true,
-         
+    				        update: function(event, ui) {
+								let target = $(ui.item).attr("id").replace("Issue","");
+								let columnIdx = $(this).parent().attr("id").replace("Column","");
+								let issues = [];
+								$.each($(this)[0].children, function(){
+									issues.push($(this).attr("id").replace("Issue","").trim())
+								})
+								
+								if(issues.length == 0)
+									return;
+								
+								$.ajaxSettings.traditional = true; 
+								$.ajax({
+									type : "POST",
+									url : "MoveIssue.do",
+									data : { 	projectIdx :  ${project.projectIdx}
+												, targetIssueIdx : target
+												, columnIdx : columnIdx
+												, issues : issues },
+									success : function(data) {
+										console.log("success move issue");
+									},
+									error: function() {
+										console.log("error move issue");
+									}
+								})
+       				        }       
     				     }).disableSelection();
-
 
 		        		$('#addColumnModal').modal("hide");
 					}else {
@@ -351,8 +373,7 @@
             $("#" + data + "Column span").text($("#editcolName").val());
         		$("#editcolName").val("");
             	$('#editColumnModal').modal('hide');
-
-            	
+	
             },
             error : function() {
             	errorAlert("칼럼 수정 error");
