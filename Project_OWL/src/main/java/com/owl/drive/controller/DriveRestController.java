@@ -33,6 +33,15 @@ public class DriveRestController {
 		return modelAndView;
 	}
 
+	/**
+	 * 드라이브 새 폴더 Insert
+	 * @author 윤다정
+	 * @since 2020/01/28
+	 * @param drivefolder
+	 * @param refs
+	 * @param request
+	 * @return drivefolder.getDriveIdx()
+	 */
 	@RequestMapping(value = "insertFolder.do")
 	public int insertFolder(DriveFolder drivefolder, String[] refs, HttpServletRequest request) {
 		
@@ -73,12 +82,12 @@ public class DriveRestController {
 			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
 									+ drivefolder.getProjectIdx() + "\\drive\\" +Integer.parseInt(refs[0])+"\\"+ oldRef +"\\"+ drivefolder.getDriveIdx();
 		} else {
-			driveRefs.add(Integer.parseInt(refs[1]));
-			driveRefs.add(Integer.parseInt(refs[0]));
+			driveRefs.add(Integer.parseInt(refs[1])); //default
+			driveRefs.add(Integer.parseInt(refs[0])); 
 			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
-									+ drivefolder.getProjectIdx()+ "\\drive\\" +Integer.parseInt(refs[1]) +"\\" +oldRef +"\\"+ drivefolder.getDriveIdx();
+									+ drivefolder.getProjectIdx()+ "\\drive\\" +Integer.parseInt(refs[1]) +"\\" + drivefolder.getDriveIdx();
 		}
-        
+
 		try {
 			drivefolder.setFolderName(drivefolder.getFolderName());
 			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
@@ -94,7 +103,17 @@ public class DriveRestController {
 		}		
 		return result;
 	}
-	
+	/**
+	 * 드라이브 폴더 Copy & Paste
+	 * @author 이정은
+	 * @since 2020/01/29 
+	 * @param drivefolder
+	 * @param refs
+	 * @param oldId
+	 * @param parent
+	 * @param request
+	 * @return drivefolder.getDriveIdx()
+	 */
 	@RequestMapping(value="copyFolder.do")
 	public int copyFolder(DriveFolder drivefolder, String[] refs, int oldId, int parent, HttpServletRequest request) {
 		boolean result = false;	
@@ -106,18 +125,14 @@ public class DriveRestController {
 				if(parent ==Integer.parseInt(refs[0])) {
 					driveRefs.add(Integer.parseInt(refs[0]));	 //default
 				}else {	
-					driveRefs.add(Integer.parseInt(refs[0])); //default	
+					driveRefs.add(Integer.parseInt(refs[0]));
 					driveRefs.add(parent);
 				}					
-		} else {
+		} else { //refs.length ==3
 			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
-					+ drivefolder.getProjectIdx() + "\\drive\\" +Integer.parseInt(refs[0])+ "\\"+Integer.parseInt(refs[1])+ "\\"+oldId;					
-				if(parent ==Integer.parseInt(refs[0])) {
-					driveRefs.add(Integer.parseInt(refs[0]));	 //default
-				}else {	
-					driveRefs.add(Integer.parseInt(refs[0])); //default	
-					driveRefs.add(parent);
-				}	
+					+ drivefolder.getProjectIdx() + "\\drive\\" +Integer.parseInt(refs[1])+ "\\"+Integer.parseInt(refs[0])+ "\\"+oldId;					
+				driveRefs.add(Integer.parseInt(refs[1])); //default	
+				driveRefs.add(parent);
 		}        
 		try {
 			drivefolder.setFolderName(drivefolder.getFolderName());
@@ -135,6 +150,15 @@ public class DriveRestController {
 		return drivefolder.getDriveIdx();
 	}
 
+	/**
+	 * 드라이브 폴더 이름 수정
+	 * @author 이정은
+	 * @since 2020/01/28
+	 * @param folderName
+	 * @param driveIdx
+	 * @param request
+	 * @return boolean result
+	 */
 	@RequestMapping(value="updateNewName.do")
 	public boolean updateNewNameFolder(String folderName , int driveIdx ,HttpServletRequest request) {
 		boolean result = false;	
@@ -142,6 +166,13 @@ public class DriveRestController {
 		return result;
 	}
 	
+	/**
+	 * 드라이브 폴더 전체 List 출력
+	 * @author 이정은
+	 * @since 2020/01/29
+	 * @param projectIdx
+	 * @return List<DriveFolder>
+	 */
 	@RequestMapping(value = "DriveList.do")
 	public List<DriveFolder> getDriveList(int projectIdx) {
 		List<DriveFolder> folders = null;

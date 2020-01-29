@@ -168,6 +168,12 @@ $(function(){
 
  			$('#jstree').on('paste.jstree', function (e, data) {
  	 			//복사 후 paste 할 때
+ 	 			console.log("새로운 ref : " + data.parent);
+ 	 			console.log("기존 ref : " + data.node[0].parents[0]);
+ 	 			console.log("default : " + data.node[0].parents[1]);
+ 	 			console.log(data.node[0].parents);
+ 	 			return;
+ 	 			if(data.mode =="copy_node"){ 	 	 			
 				jQuery.ajaxSettings.traditional = true				
 				  $.ajax({
 		        		url:"copyFolder.do",
@@ -182,6 +188,7 @@ $(function(){
 			        		data.node[0].id =idx;
 		        		}
 		    		});
+ 	 			}
  			});
 			
 			$("#deleteFolder").click(function(){
