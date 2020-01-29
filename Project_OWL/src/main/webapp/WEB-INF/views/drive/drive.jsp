@@ -278,9 +278,11 @@ function driveRefresh(){
 			});
 
 			$('#jstree').jstree(true).settings.core.data = folderList;
+			$("#jstree").jstree(true).load_node('#');
 			$('#jstree').jstree(true).refresh();
 			
 			callDirectoryData();
+			
 		}
 	});
 }
