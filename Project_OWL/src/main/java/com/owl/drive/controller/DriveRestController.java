@@ -80,8 +80,7 @@ public class DriveRestController {
 	 * @return boolean result
 	 */
 	@RequestMapping(value="cutFolder.do")
-	public boolean cutFolder(DriveFolder drivefolder, String[] refs, int oldRef, HttpServletRequest request) {
-		boolean result = false;
+	public int cutFolder(DriveFolder drivefolder, String[] refs, int oldRef, HttpServletRequest request) {
 		String oldPath = "";
 		List<Integer> driveRefs = new ArrayList<Integer>();
 		if (refs.length == 2) { // default 하위
@@ -106,7 +105,7 @@ public class DriveRestController {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
-		return result;
+		return drivefolder.getDriveIdx();
 	}
 	/**
 	 * 드라이브 폴더 Copy & Paste
@@ -165,10 +164,9 @@ public class DriveRestController {
 	 * @return boolean result
 	 */
 	@RequestMapping(value="updateNewName.do")
-	public boolean updateNewNameFolder(String folderName , int driveIdx ,HttpServletRequest request) {
-		boolean result = false;	
-		result = service.updateNewNameFolder(folderName, driveIdx);	
-		return result;
+	public int updateNewNameFolder(String folderName , int driveIdx ,HttpServletRequest request) {
+		service.updateNewNameFolder(folderName, driveIdx);	
+		return driveIdx;
 	}
 	
 	/**
