@@ -283,4 +283,12 @@ public class DriveRestController {
 
 		return service.restoreFilefromTrash(driveFileIdx);
 	}
+	
+	@RequestMapping(value = "GetDriveDownloadPath.do", method = RequestMethod.POST)
+	public void getDriveDownloadPath(int projectIdx, int folderIdx, String[] refs) {
+		System.out.println("in getDriveDownloadPath");
+		System.out.println(projectIdx);
+		System.out.println(folderIdx);
+		System.out.println(refs.length);
+	}
 }

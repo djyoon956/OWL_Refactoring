@@ -583,7 +583,7 @@ function downloadFile(driveFileIdx){
 	console.log("in downloadFile : " + driveFileIdx);
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
-	console.log();
+	console.log(refs);
 	let path ="/upload/project/"+driveProjectIdx+"/drive/";
 	$.ajax({
 		url : "GetDriveDownloadPath.do",
@@ -593,10 +593,11 @@ function downloadFile(driveFileIdx){
 					, refs : refs 
 					},
 		success : function(path){
-			
+			console.log("in downloadFile success");
+			console.log(path);
 		},
 		error : function(){
-			
+			console.log("in downloadFile error");
 		}
 	})
 	console.log(path);
