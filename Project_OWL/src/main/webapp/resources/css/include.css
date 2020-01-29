@@ -129,7 +129,7 @@
 }
 .collection-item.avatar.list{
     height:70px;
-    border-bottom:1px solid #e3e3e3;
+   /*  border-bottom:1px solid #e3e3e3; */
     position:relative;
     cursor:pointer;
     user-select:none;
