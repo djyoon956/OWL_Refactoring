@@ -10,9 +10,7 @@ function initDrive(projectIdx){
 		url : "DriveFileUpload.do",
 		formData : {projectIdx : projectIdx , folderIdx:1},
 		add: function(e, data){
-			console.log("in add");
 			let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
-			console.log($('#jstree').jstree().get_node(folderIdx).parents);
 			$("#driveUploadFiles").fileupload( 'option', 'formData').folderIdx = folderIdx;
 			$("#driveUploadFiles").fileupload( 'option', 'formData').refs = $('#jstree').jstree().get_node(folderIdx).parents;
 			data.submit();
@@ -31,15 +29,15 @@ function initDrive(projectIdx){
 	 	"searching": false,
          fixedColumns: true,
          autoWidth: false
-	});
-
-	$("#driveTable").on('click', 'tbody tr', function () {
+	}).on('click', 'tbody tr', function () {
 		if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
         } else {
         	$("#driveTable").DataTable().$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
+	}).on('dblclick', 'tbody tr.folder', function () {
+		setDirectoryData($(this).attr("id"), $(this).find("td").first().text());
 	});
 
 	 $.contextMenu({
@@ -218,7 +216,6 @@ function Search() {
 	$("div").find(".searchDriveMenu").each(function(){
 		$(this).attr('style', 'display:block');
 	});
-	
 }
 
 function Allcheck() { //전체선택 onclick
@@ -250,6 +247,7 @@ function Returncheck() {
 	button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
 	$('.defaultDriveMenu').append(button);
 }
+
 function Return() {
 	$("div").find(".defaultDriveMenu").each(function(){
 		$(this).attr('style', 'display:block');
@@ -343,25 +341,25 @@ function setIconView(data){
 		$.each(data.folders, function(index, element) {
 			console.log("in folder");
 			control += '<div class="col-sm-3">'
-				+ 	'<div class="card driveCard dropdown">'
-				+ 		'<div class="more" style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-				+			'<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
-				+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
-				+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
-				+				'</a>'
-				+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
-				+				'<ul class="list-style-none">'
-				+					'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
-				+					'<li class="pl-2"><a href="#"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>'
-				+				'</ul>'                                                                                                                                                         
-				+			'</div>'                                                                                                                                                        
-				+		'</div>'                                                                                                                                                            
-				+		'<div class="card-body text-center">'                                                                                                                               
-				+			'<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>'
-				+			'<h4>' +element.folderName+ '</h4>'                                                                                                                                         
-				+		'</div>'                                                                                                                                                            
-				+	 '</div>'                                                                                                                                                               
-				+  '</div>';     
+						+ 	'<div class="card driveCard dropdown" ondblclick="setDirectoryData('+element.driveIdx+',\''+element.folderName+'\')">'
+						+ 		'<div class="more" style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
+						+			'<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
+						+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
+						+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
+						+				'</a>'
+						+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
+						+				'<ul class="list-style-none">'
+						+					'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+						+					'<li class="pl-2"><a href="#"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>'
+						+				'</ul>'                                                                                                                                                         
+						+			'</div>'                                                                                                                                                        
+						+		'</div>'                                                                                                                                                            
+						+		'<div class="card-body text-center">'                                                                                                                               
+						+			'<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>'
+						+			'<h4>' +element.folderName+ '</h4>'                                                                                                                                         
+						+		'</div>'                                                                                                                                                            
+						+	 '</div>'                                                                                                                                                               
+						+  '</div>';     
 			
 			if (index % line == line - 1 || index == data.folders.length - 1) {
 				let row = $("<div class='row'></div>");
@@ -428,12 +426,14 @@ function setTableView(data){
 	})
 	if(!isTrash){		
 		$.each(data.folders, function(index, element) {
-			$('#driveTable').DataTable().row.add( [
-				element.folderName,
-				"",
-				"",
-				""
-				]).node().id = element.driveFileIdx;
+			let row =$('#driveTable').DataTable().row.add( [
+							element.folderName,
+							"",
+							"",
+							""
+							]);
+			row.node().id = element.driveIdx;
+			$(row.node()).addClass("folder");
 			
 			$('#driveTable').DataTable().draw();
 		})
