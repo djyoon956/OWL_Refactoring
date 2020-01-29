@@ -402,7 +402,6 @@ function editLabel(idx, color, name) {
 			    method : "POST",
 			    data : {'issueRlyIdx' : issueRlyIdx, 'content' : changecontent},
 			    success : function(data) {
-			    	
 			    	setKanbanDetail(issueIdx);
 			    	
 			    }, error : function() {
