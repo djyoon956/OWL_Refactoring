@@ -1,11 +1,11 @@
 package com.owl.drive.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.IntPredicate;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -239,6 +239,7 @@ public class DriveRestController {
 		return service.getFolderData(folderIdx);
 	}
 	
+	
 	/**
 	 * @author 배인영
 	 * @since 2020/01/29
@@ -250,7 +251,6 @@ public class DriveRestController {
 		System.out.println("in getTrashList");
 		return service.getTrashList(projectIdx);
 	}
-	
 
 	@RequestMapping(value = "DeleteDriveFile.do")
 	public boolean deleteDriveFile(int driveFileIdx) {
@@ -268,14 +268,41 @@ public class DriveRestController {
 		return service.renameFile(driveFileIdx, fileName);
 	}
 	
-	
+	/**
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return
+	 */
 	@RequestMapping(value = "DeleteFileFromTrash.do")
-	public boolean deleteFilefromTrash(int driveFileIdx, String fileName) {
-		System.out.println("in deleteFilefromTrash");
-		System.out.println(driveFileIdx);
+	public boolean deleteFilefromTrash(int driveFileIdx) {
+		System.out.println("in DeleteFileFromTrash");
+		
+		
 		return service.deleteFilefromTrash(driveFileIdx);
 	}
 
+	/**
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return boolean
+	 */
+	@RequestMapping(value = "DeleteFolderfromTrash.do")
+	public boolean DeleteFolderfromTrash(int driveFileIdx) {
+		System.out.println("in DeleteFolderfromTrash");
+		System.out.println(driveFileIdx);
+		
+		return service.deleteFolderfromTrash(driveFileIdx);
+	}
+		
+		
+	/**
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return
+	 */
 	@RequestMapping(value = "RestoreFile.do")
 	public boolean restoreFilefromTrash(int driveFileIdx) {
 		System.out.println("in restoreFilefromTrash");
@@ -283,12 +310,37 @@ public class DriveRestController {
 
 		return service.restoreFilefromTrash(driveFileIdx);
 	}
-	
+
+	/**
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return
+	 */
+	@RequestMapping(value = "RestoreFolder.do")
+	public boolean restoreFolderfromTrash(int driveFileIdx) {
+		System.out.println("in restoreFilefromTrash");
+		System.out.println(driveFileIdx);
+
+		return service.restoreFolderfromTrash(driveFileIdx);
+}
+
+	/**
+	 *  드라이브 파일 다운로드 경로 구하기
+	 * @author 윤다정
+	 * @since 2019/01/29
+	 * @param projectIdx
+	 * @param folderIdx
+	 * @param refs
+	 * @param request
+	 * @return downloadPath
+	 */
 	@RequestMapping(value = "GetDriveDownloadPath.do", method = RequestMethod.POST)
-	public void getDriveDownloadPath(int projectIdx, int folderIdx, String[] refs) {
-		System.out.println("in getDriveDownloadPath");
-		System.out.println(projectIdx);
-		System.out.println(folderIdx);
-		System.out.println(refs.length);
+	public String getDriveDownloadPath(int projectIdx, int folderIdx, String[] refs, String fileName, HttpServletRequest request) {
+		String path = UploadHelper.getDriveDownloadPath(projectIdx, folderIdx, fileName, refs);
+		
+		File temp = new File(path.replace("upload", request.getServletContext().getRealPath("upload")));
+
+		return temp.exists() ? path : "";
 	}
 }

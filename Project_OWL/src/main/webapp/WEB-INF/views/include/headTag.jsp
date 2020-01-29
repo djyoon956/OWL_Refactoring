@@ -26,6 +26,8 @@
 
 <script src="resources/js/include.js"></script>
 
+<!-- <script src="resources/js/materialize.min.js"></script> -->
+
 <script src="resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <script src="resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
 

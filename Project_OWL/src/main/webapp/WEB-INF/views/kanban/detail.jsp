@@ -139,7 +139,7 @@
                 <div class="row">
                     <div class="col-4">Label</div>
                     <div class="col-8">
-                        <div id="issueDetailLabel" style="padding:2px; padding-left:5px;">Dev</div>
+                        <div id="issueDetailLabel" style="padding-right:7px; padding-left:7px; " class="badgeIcon">Dev</div>
                     </div>
                 </div>
             </div>

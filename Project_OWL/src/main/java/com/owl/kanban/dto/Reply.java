@@ -18,11 +18,14 @@ public class Reply {
 	private Date createDate;
 	private String creator;
 	
-	public String getWriteDate() {
-		return new SimpleDateFormat("yyyy-MM-dd").format(createDate);
-	}
-	
-	
 	private String creatorName; //UI용
+	
+	public String getCreateDate() {
+		String result = "";
+		if (createDate != null)
+			result = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(createDate);
+
+		return result;
+	}
 	
 }

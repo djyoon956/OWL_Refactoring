@@ -45,6 +45,7 @@ function folderInfo() {
     this.id = null;
     this.parent = null;   
     this.text = null;
+    this.state ={};
 }
 
 function addFolder(folder) {
@@ -60,17 +61,14 @@ $(function(){
 				"animation" : 0,
 				"check_callback" : true,
 				'force_text' : true,
-				"themes" : { "stripes" : true },
-			    
+				"themes" : { "stripes" : true }
 			  },
+			"state" : {"opened" : true},
 			"types" : {
 				"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
 				"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
 				"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
 			},
-			 "checkbox" : {
-				    "three_state" : false
-				  },
 			"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
 
 		}).on('rename_node.jstree', function (e, data) {
@@ -85,7 +83,19 @@ $(function(){
 	        			  refs : data.node.parents
 	        			 },
 	        		success:function(idx){
-		        		data.node.id = idx;
+		        		data.node.id = idx; 
+/* 		        	let element = $("#jstree").find("#j1_1").first();
+		        		element.attr("id",idx);
+		        		element.attr("aria-labelledby", idx+"_anchor")
+		        		element.find("a").first().attr("id", idx+"_anchor");
+
+						let folder = new folderInfo();
+						folder.id = idx;
+					    folder.parent = data.node.parent;
+					    folder.text = data.text;
+					    $('#jstree').jstree(true).settings.core.data.push(folder);
+					    $('#jstree').jstree(true).refresh();
+					    $("#jstree").jstree("select_node", "#"+idx); */
 		        		driveRefresh();
 	        		}
 	    		});
@@ -145,6 +155,7 @@ $(function(){
  			}).on('delete_node.jstree', function (e, data) {
 				deleteDriveFolder(data.node.id, data.node.parent);
  			});
+
 	driveRefresh();
 	
 	$("#createFolder").click(function(){
@@ -284,12 +295,24 @@ function sendFileToServer(formData,status){
             <div class="defaultDriveMenu pt-0">
 	            <div class="h-100">
 	            	<div style="height: 15%" class="mt-1 mb-3">
-	            		<span style="font-size: medium;font-weight: 700;"  id="driveName"> </span>
+	            		<span style="font-size: medium;font-weight: 700;"  id="driveName"></span>
 	            	</div>
-	            	<div style="height: 70%">
+	            	<div style="height: 70%; position: relative;">
 		                <span style="font-size : large; font-weight:bold" class="hidden" id="trashName">
 		                	<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통
 		               	</span>
+		               	<div id="allCheck" class="hidden">
+		               		<button type='button' class='driveBtn btn-primary'>삭제</button>&nbsp;&nbsp;
+		               		<button type='button' class='driveBtn btn-primary'>이동</button>&nbsp;&nbsp;		               		
+							<button type='button' class='driveBtn btn-primary' onclick='ReturnCheck()'>선택해제</button>&nbsp;&nbsp;
+		               	</div>
+		               	<div id="theCheck" class="hidden">
+		               		<button type='button' class='driveBtn btn-primary'>업로드</button>&nbsp;&nbsp;
+		               		<button type='button' class='driveBtn btn-primary'>이동</button>&nbsp;&nbsp;
+		               		<button type='button' class='driveBtn btn-primary'>삭제</button>&nbsp;&nbsp;		               		
+							<button type='button' class='driveBtn btn-primary' onclick='ReturnCheck()'>선택해제</button>&nbsp;&nbsp;
+		               	</div>
+		               	<div id="default">
 		                <button id="driveSearchBtn" type="button" class="driveBtn btn-primary"
 		                    onclick="Search()">검색</button>&nbsp;&nbsp;
 		                <div class="filebox" style="display:inline;">
@@ -299,8 +322,9 @@ function sendFileToServer(formData,status){
 		                </div>
 		                <button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary"
 		                    onclick="Allcheck()">전체선택</button>
+		                </div>   
 		                &nbsp;&nbsp;&nbsp;&nbsp;
-		                <div class="drivegroup">
+		                <div class="drivegroup" style="position: absolute; right: 0px; top: 0px;">
 		                    <button class="btn driveViewBtn" id="tableView">
 		                        <i class="fas fa-list fa-2x"></i>
 		                    </button>
@@ -347,70 +371,6 @@ function sendFileToServer(formData,status){
                                 <tbody> </tbody>
                             </table>
                         </div>
-                        <!-- <div class="row">
-							<div class="col-sm-4">
-								<div class="card driveCard"  >
-									<div class="more" style="margin-top: 10px;">
-										&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="checkbox" value="css" onclick="checkBox(this)"
-											style="width:18px; height:18px;">
-										<a style="float:right;" data-toggle="collapse" href="#detail"><i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
-									</div>
-									<div style="margin-left: 60%;">
-										<ul id="detail" class="collapse">
-											<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
-											<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
-										</ul>
-									</div>
-									<div class="card-body text-center">
-										<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>
-										<h4 style="text-align: center;">css</h4>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-4">
-								<div class="card driveCard">
-									<div class="more" style="margin-top: 10px;">
-										&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="checkbox" value="css" onclick="checkBox(this)"
-											style="width:18px; height:18px;">
-										<a style="float:right;" data-toggle="collapse" href="#detail"><i
-												class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;</a>
-									</div>
-									<div style="margin-left: 60%;">
-										<ul id="detail" class="collapse">
-											<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
-											<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
-										</ul>
-									</div>
-									<div class="card-body text-center">
-										<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>
-										<h4 style="text-align: center;">css</h4>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-4">
-								<div class="card driveCard">
-									<div class="more" style="margin-top: 10px;">
-										&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">
-										<a style="float:right;" data-toggle="collapse" href="#detail">
-											<i class="fas fa-ellipsis-v fa-lg"></i> &nbsp;&nbsp;&nbsp;&nbsp;
-										</a>
-									</div>
-									<div style="margin-left: 60%;">
-										<ul id="detail" class="collapse">
-											<li><i class="fas fa-pencil-alt"></i>&nbsp; 이름 변경</li>
-											<li><i class="fas fa-trash-alt"></i>&nbsp; 삭제</li>
-										</ul>
-									</div>
-									<div class="card-body text-center">
-										<img class="fileDefaultImage mb-4" src="resources/images/drive/js.png" >
-										<h4 >css</h4>
-									</div>
-								</div>
-							</div>
-						</div> -->
                     </div>
                 </div>
             </div>
