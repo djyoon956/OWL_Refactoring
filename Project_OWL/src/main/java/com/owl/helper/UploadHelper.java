@@ -122,6 +122,15 @@ public class UploadHelper {
 		System.out.println("파일 이동 성공 : " + isMove);
 	}
 
+	public static String getDriveDownloadPath(String uploadPath,int projectIdx, int  driveIdx, String[] refs) {
+		return  Paths.get(uploadPath
+				, "project"
+				, Integer.toString(projectIdx)
+				, "drive"
+				, getParentPath(refs)
+				, Integer.toString(driveIdx)).toString();
+	}
+	
 	private static void makeDirectory(String path) {
 		File file = new File(path);
 		if (!file.exists())

@@ -284,11 +284,19 @@ public class DriveRestController {
 		return service.restoreFilefromTrash(driveFileIdx);
 	}
 	
+	/**
+	 *  드라이브 파일 실 경로 구하기
+	 * @author 윤다정
+	 * @since 2019/01/29
+	 * @param projectIdx
+	 * @param folderIdx
+	 * @param refs
+	 * @param request
+	 * @return downloadPath
+	 */
 	@RequestMapping(value = "GetDriveDownloadPath.do", method = RequestMethod.POST)
-	public void getDriveDownloadPath(int projectIdx, int folderIdx, String[] refs) {
-		System.out.println("in getDriveDownloadPath");
-		System.out.println(projectIdx);
-		System.out.println(folderIdx);
-		System.out.println(refs.length);
+	public String getDriveDownloadPath(int projectIdx, int folderIdx, String[] refs, HttpServletRequest request) {
+		String uploadPath = request.getServletContext().getRealPath("upload");
+		return UploadHelper.getDriveDownloadPath(uploadPath, projectIdx, folderIdx, refs);
 	}
 }

@@ -585,6 +585,8 @@ function downloadFile(driveFileIdx){
 	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
 	console.log(refs);
 	let path ="/upload/project/"+driveProjectIdx+"/drive/";
+	
+	jQuery.ajaxSettings.traditional = true;
 	$.ajax({
 		url : "GetDriveDownloadPath.do",
 		type : "POST",
