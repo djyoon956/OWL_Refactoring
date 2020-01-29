@@ -257,10 +257,6 @@ function sendFileToServer(formData,status){
  
     status.setAbort(jqXHR);
 }
-
-
-
-
 </script>
 
 
