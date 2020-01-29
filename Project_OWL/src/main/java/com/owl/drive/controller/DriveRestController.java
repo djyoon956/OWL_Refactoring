@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.IntPredicate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -178,7 +179,7 @@ public class DriveRestController {
 	}
 
 	@RequestMapping(value = "GetFolderData.do")
-	public List<DriveFile> getFolderData(int folderIdx) {
+	public Map<String, Object> getFolderData(int folderIdx) {
 		return service.getFolderData(folderIdx);
 	}
 	
