@@ -1402,6 +1402,26 @@ display: block;
           function onCreateClick(){
         	  roomTitle = $('#chatRoomTitle').val(); 
 
+
+        	  var arrInviteUserList = Array.prototype.slice.call($('.user-selected'));
+        	  console.log("arrInviteUserList 요거 값 들어 오나요???" + arrInviteUserList);
+        	  var arrInviteUserListLength = arrInviteUserList.length;
+        	  console.log("렝스는~~~~~~~~~~~~~~~~~~~~~~~~~~~" + arrInviteUserListLength); 
+        	  var arrInviteUserName = []; 
+        	  
+        	  for(var i=0; i < arrInviteUserListLength; i++){ 
+            	  var inviteUserUid = arrInviteUserList[i].getAttribute('data-targetUserUid'); 
+            	  var inviteUserName = arrInviteUserList[i].getAttribute('data-username') + '님';             	  
+            	  arrInviteUserList[i].outerHTML = ''; 
+            	  roomUserList.push(inviteUserUid); 
+            	  roomUserName.push(inviteUserName); 
+            	  arrInviteUserName.push(inviteUserName); 
+            	  } 
+        	  roomUserList.sort(); 
+        	  saveMessages(arrInviteUserName.join() + '이 초대되었습니다.');
+
+        	  
+
 			  var multiUpdates = {}; 
 				var messageRef = database.ref('Messages/'+ roomId);
 				var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
