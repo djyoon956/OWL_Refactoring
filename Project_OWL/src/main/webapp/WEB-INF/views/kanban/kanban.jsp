@@ -127,8 +127,11 @@
 
 .leftdoorheader {
 	padding : 12px 20px 12px 20px;
-	
-	
+}
+
+.inputBox {
+	width:75%; 
+	height:80%;
 }
 </style>
 <script>
@@ -393,10 +396,13 @@
 								+ '	 <div class="comment-text w-100">'
 								+ '		<h6 class="font-medium mb-2">' +data.creator
 								+ '		<span class="text-muted float-right">'+data.createDate+'</span></h6>'
-								+ '		<div class="mb-1 d-block" id="'+data.issueRlyIdx+'recontent">'+data.content+'</div>'
+								+ '		<div class="mb-1" id="'+data.issueRlyIdx+'recontent">'+data.content+'</div>'
+								+ '		<input type="text" class="hidden inputBox" id="'+data.issueRlyIdx+'editContent">'
 								+ '		<div class="comment-footer float-right">'
-								+ '		<button type="button" class="btn btn-info btn-sm" onclick="editReply('+data.issueRlyIdx+')">Edit</button>'
-								+ '		<button type="button" class="btn btn-secondary btn-sm" onclick="deleteReply('+data.issueRlyIdx+')">Delete</button>'
+								+ '		<button type="button" class="btn btn-info btn-sm" id="'+data.issueRlyIdx+'reEditBtn" onclick="editReply('+data.issueRlyIdx+','+data.issueIdx+')">Edit</button>'
+								+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+data.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+data.issueRlyIdx+')">Delete</button>'
+								+ '		<button type="button" class="btn btn-info btn-sm hidden" id="'+data.issueRlyIdx+'editChangeBtn">SaveChange</button>'
+								+ '		<button type="button" class="btn btn-secondary btn-sm hidden" id="'+data.issueRlyIdx+'editCancelBtn">Cancel</button>'
 								+ '		</div>'
 								+ '	</div>'
 								+ '</div>';
