@@ -41,6 +41,7 @@ function initDrive(projectIdx){
 		setDirectoryData($(this).attr("id"), $(this).find("td span").first().text());
 	});
 
+	
 	 $.contextMenu({
          selector: '#driveTable tbody tr',
          build : function(trigger, e){
@@ -67,9 +68,16 @@ function initDrive(projectIdx){
                     	 else
                     		 deleteDriveFile(driveFileIdx);
                      }else if(key == "restore"){
-                    	 restoreFilefromTrash(driveFileIdx);
+                    	 if(isFolder)
+                    		 restoreFolderfromTrash(driveFileIdx);
+                    	 else 
+                    		 restoreFileTrash(driveFileIdx);
                      }else if(key == "deleteFromTrash"){
-                    	 deleteFilefromTrash(driveFileIdx);
+                    	 if(isFolder)
+                        	 deleteFolderfromTrash(driveFileIdx);
+                    	 else
+                        	 deleteFilefromTrash(driveFileIdx);
+
                      }
                  },
                  items:{
@@ -124,12 +132,13 @@ function setTrashData() {
 		success : function (data) {
 			console.log('GetTrashList in');
 			console.log(data);
-			console.log(data.length);
+			console.log('data.folders.length : ' + data.folders.length);
+			console.log('data.files.length : ' +data.files.length);
 			$('#driveSearchBtn').hide();
 			$('#driveUploadBtn').hide();
 			$('#trashName').removeClass("hidden");
 
-			if (data.length == 0) {
+			if (data.folders.length == 0 && data.files.length == 0) {
 				$("#emptyDriveBox").removeClass("hidden");
 				$('#emptyDriveBox').find('h4').hide();
 				$("#driveIconViewBox").addClass("hidden");
@@ -143,10 +152,10 @@ function setTrashData() {
 			//$('#perDeleteBtn').removeClass("hidden");
 
 			if(driveViewType =="tableView"){
-				//console.log('tableView select');
+				console.log('tableView select');
 				setTableView(data);
 			}else{
-				//console.log('IconView select');   //언제 ? 기본값인가?
+				console.log('IconView select');   //언제 ? 기본값인가?
 				setIconView(data);}
 		},
 			error : function() {
@@ -390,7 +399,7 @@ function setIconView(data){
 					+				'<ul class="list-style-none">';
 		
 		if(isTrash) {
-			control += '<li class="pl-2"><a href="#" onclick="restoreFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
+			control += '<li class="pl-2"><a href="#" onclick="restoreFileTrash('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
 						+  '<li class="pl-2"><a href="#" onclick="deleteFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
 		}else {
 			control +=	'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
@@ -416,6 +425,8 @@ function setIconView(data){
 }
 
 function setTableView(data){
+	console.log('인영아 여기오니');
+	console.log(data);
 	$("#driveTableViewBox").removeClass("hidden");
 	$("#driveIconViewBox").addClass("hidden");
 
@@ -429,7 +440,8 @@ function setTableView(data){
 		
 		$('#driveTable').DataTable().draw();
 	})
-	if(!isTrash){		
+	
+	//if(!isTrash){		
 		$.each(data.folders, function(index, element) {
 			let row =$('#driveTable').DataTable().row.add( [
 							"<i class='fas fa-folder mr-3'></i><span>"+element.folderName+"</span>",
@@ -442,7 +454,7 @@ function setTableView(data){
 			
 			$('#driveTable').DataTable().draw();
 		})
-	}
+	//}
 }
 
 function deleteDriveFile(driveFileIdx){
@@ -486,7 +498,8 @@ function deleteDriveFolder(driveIdx){
 
 //휴지통에서 영구 삭제 함수 
 function deleteFilefromTrash(driveFileIdx) {
-	
+	console.log('여긴 휴지통에서 파일 삭제 함수');
+
 	Swal.fire({
 	    title: '완전히 삭제 하시겠습니까?',
 	    text: '완전히 삭제하면 복구 하실 수 없습니다.',
@@ -514,24 +527,86 @@ function deleteFilefromTrash(driveFileIdx) {
 }
 
 
+//휴지통에서 폴더 영구 삭제 함수 
+function deleteFolderfromTrash(driveFileIdx) {
+	console.log('여긴 휴지통에서 폴더 삭제 함수');
+	console.log(driveFileIdx);
+	Swal.fire({
+	    title: '완전히 삭제 하시겠습니까?',
+	    text: '완전히 삭제하면 해당 폴더 및 폴더내 파일을 복구 하실 수 없습니다.',
+	    icon: 'warning',
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    confirmButtonText: 'Yes'
+	  }).then((result) => {
+	    if (result.value) {
+	    	$.ajax({
+	    		url : "DeleteFolderfromTrash.do",
+	    		data : {'driveFileIdx' : driveFileIdx},
+	    		success : function(data) {
+	    			console.log('deleteFolderfromTrash in');
+	    			setTrashData(driveProjectIdx);
+	    			
+	    		},
+	    		error : function() {
+	    			console.log('deleteFilefromTrash error');
+	    		}
+	    	})  
+	   }         
+	});
+}
+
+
+
+
+
+
+
+
 //휴지통에서 복원 함수 
-function restoreFilefromTrash(driveFileIdx) {
+function restoreFileTrash(driveFileIdx) {
+	
+	console.log(driveFileIdx);
 	
 	$.ajax({
 		url : "RestoreFile.do",
 		data : {'driveFileIdx' : driveFileIdx},
 		success : function(data) {
-			console.log('restoreFilefromTrash in');
+			console.log('restorefromTrash in');
 			console.log(data);
 			 successAlert("파일 복원 완료");
 
 			setTrashData(driveProjectIdx);
 		},
 		error : function() {
-			console.log('restoreFilefromTrash');
+			console.log('restorefromTrash ERROR');
 		}
 	}) 
 }
+
+
+function restoreFolderfromTrash(driveFileIdx) {
+	console.log('restoreFolderfromTrash in');
+	console.log(driveFileIdx);
+	
+	$.ajax({
+		url : "RestoreFolder.do",
+		data : {'driveFileIdx' : driveFileIdx},
+		success : function(data) {
+			console.log('restoreFolderfromTrash in');
+			console.log(data);
+			 successAlert("폴더 복원 완료");
+
+			setTrashData(driveProjectIdx);
+		},
+		error : function() {
+			console.log('restoreFolderfromTrash ERROR');
+		}
+	}) 
+}
+
+
 	
 
 function renameFile(driveFileIdx){

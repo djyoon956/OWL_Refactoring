@@ -103,7 +103,9 @@ public class DriveService {
 		Map<String, Object> trashlist = new HashMap<String, Object>();
 
 		try {
-			trashlist.put("files", dao.getTrashList(projectIdx));
+			trashlist.put("files", dao.getFileListinTrash(projectIdx));
+			trashlist.put("folders", dao.getFolderListinTrash(projectIdx));
+			
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {
@@ -141,17 +143,34 @@ public class DriveService {
 	
 	
 	public boolean deleteFilefromTrash(int driveFileIdx) {
-		boolean reseult = false;
+		boolean result = false;
 		DriveDao dao = getDriveDao();
 		try {
-			reseult = dao.deleteFileFromTrash(driveFileIdx) > 0 ? true : false;
+			result = dao.deleteFileFromTrash(driveFileIdx) > 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return reseult;
+		return result;
 	}
+	
+	
+	public boolean deleteFolderfromTrash(int driveFileIdx) {
+		boolean result = false;
+		DriveDao dao = getDriveDao();
+		try {
+			result = dao.deleteFolderFromTrash(driveFileIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("deleteFolderfromTrash result :" +result);
+		return result;
+	}
+	
 	
 	public boolean renameFile(int driveFileIdx, String fileName) {
 		boolean result =false;
@@ -171,11 +190,11 @@ public class DriveService {
 	public boolean restoreFilefromTrash(int driveFileIdx) {
 		System.out.println("in restoreFilefromTrash");
 		System.out.println(driveFileIdx);
-		boolean reseult = false;
+		boolean result = false;
 		DriveDao dao = getDriveDao();
 
 		try {
-			reseult = dao.restoreFilefromTrash(driveFileIdx) > 0 ? true : false;
+			result = dao.restoreFilefromTrash(driveFileIdx) > 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -184,8 +203,28 @@ public class DriveService {
 			e.printStackTrace();
 		}
 		
-		return reseult;
+		return result;
 	}
+	
+	public boolean restoreFolderfromTrash(int driveFileIdx) {
+		System.out.println("in restoreFolderfromTrash");
+		System.out.println(driveFileIdx);
+		boolean result = false;
+		DriveDao dao = getDriveDao();
+
+		try {
+			result = dao.restoreFolderfromTrash(driveFileIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);

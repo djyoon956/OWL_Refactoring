@@ -51,6 +51,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE DRIVEIDX =#{driveIdx}
 	</update>
 
+
+	<select id="getFileListinTrash" resultType="com.owl.drive.dto.DriveFile" parameterType="int">
+	SELECT F.DRIVEFILEIDX, F.FILENAME, F.CREATOR, F.FILESIZE, F.CREATEDATE, F.DRIVEIDX
+		FROM PROJECT P LEFT JOIN DRIVEFOLDER D ON P.PROJECTIDX = D.PROJECTIDX 
+              		   LEFT JOIN DRIVEFILE F ON D.DRIVEIDX = F.DRIVEIDX
+		WHERE F.ISDELETE = 1 AND P.PROJECTIDX = #{projectIdx};
+	</select>
+	
+	
+	<select id="getFolderListinTrash" resultType="com.owl.drive.dto.DriveFolder" parameterType="int">
+		SELECT D.DRIVEIDX, D.FOLDERNAME, D.REF, D.DEPTH, D.PROJECTIDX
+		FROM PROJECT P LEFT JOIN DRIVEFOLDER D ON P.PROJECTIDX = D.PROJECTIDX 
+		WHERE D.ISDELETE = 1 AND P.PROJECTIDX = #{projectIdx};
+	</select>
+	
+	
 	<select id="getTrashList" resultType="com.owl.drive.dto.DriveFile" parameterType="int">
 	SELECT F.DRIVEFILEIDX, F.FILENAME, F.CREATOR, F.FILESIZE, F.CREATEDATE, F.DRIVEIDX
 		FROM PROJECT P LEFT JOIN DRIVEFOLDER D ON P.PROJECTIDX = D.PROJECTIDX 
@@ -72,13 +88,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM owl.DRIVEFILE WHERE DRIVEFILEIDX = #{driveFileIdx}
 	</delete>
 	
+	
+	<delete id="deleteFolderFromTrash" parameterType="int">
+		DELETE FROM owl.drivefolder WHERE DRIVEIDX = #{driveFileIdx}
+	</delete>
+	
+	
 	<update id="renameFile">
 		UPDATE owl.DRIVEFILE SET 	FILENAME = #{param2}
 		WHERE  DRIVEFILEIDX = #{param1}
 	</update>
 	
-	
 	<update id="restoreFilefromTrash">
-		UPDATE DRIVEFILE SET ISDELETE = 0 WHERE DRIVEFILEIDX = #{drivefileIdx};
+		UPDATE DRIVEFILE SET ISDELETE = 0 WHERE DRIVEFILEIDX = #{drivefileIdx}
 	</update>
+	
+	<update id="restoreFolderfromTrash">
+		UPDATE DRIVEFOLDER SET ISDELETE = 0 WHERE DRIVEIDX = #{drivefileIdx}
+	</update>
+	
+	
+	
 </mapper>

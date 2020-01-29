@@ -170,11 +170,16 @@ public class DriveRestController {
 		return driveIdx;
 	}
 	
+	/**
+	 * 드라이브 폴더 삭제 시 isDelete 1로 변경
+	 * @author 이정은
+	 * @since 2020/01/29
+	 * @param driveIdx
+	 * @return boolean result
+	 */
 	@RequestMapping(value="DeleteFolder.do", method = RequestMethod.POST)
 	public boolean deleteFolder(int driveIdx) {
-		boolean result = false;
-        result = service.deleteFolderFromDrive(driveIdx);		
-        return result;
+		return service.deleteFolderFromDrive(driveIdx);
 	}
 	
 	/**
@@ -246,7 +251,6 @@ public class DriveRestController {
 		System.out.println("in getTrashList");
 		return service.getTrashList(projectIdx);
 	}
-	
 
 	@RequestMapping(value = "DeleteDriveFile.do")
 	public boolean deleteDriveFile(int driveFileIdx) {
@@ -264,19 +268,61 @@ public class DriveRestController {
 		return service.renameFile(driveFileIdx, fileName);
 	}
 	
-	
+	/**
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return
+	 */
 	@RequestMapping(value = "DeleteFileFromTrash.do")
-	public boolean deleteFilefromTrash(int driveFileIdx, String fileName) {
-		System.out.println("in deleteFilefromTrash");
-		System.out.println(driveFileIdx);
+	public boolean deleteFilefromTrash(int driveFileIdx) {
+		System.out.println("in DeleteFileFromTrash");
+		
+		
 		return service.deleteFilefromTrash(driveFileIdx);
 	}
 
+	/**
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return boolean
+	 */
+	@RequestMapping(value = "DeleteFolderfromTrash.do")
+	public boolean DeleteFolderfromTrash(int driveFileIdx) {
+		System.out.println("in DeleteFolderfromTrash");
+		System.out.println(driveFileIdx);
+		
+		return service.deleteFolderfromTrash(driveFileIdx);
+	}
+		
+		
+	/**
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return
+	 */
 	@RequestMapping(value = "RestoreFile.do")
 	public boolean restoreFilefromTrash(int driveFileIdx) {
 		System.out.println("in restoreFilefromTrash");
 		System.out.println(driveFileIdx);
 
 		return service.restoreFilefromTrash(driveFileIdx);
+	}
+	
+	
+	/**
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return
+	 */
+	@RequestMapping(value = "RestoreFolder.do")
+	public boolean restoreFolderfromTrash(int driveFileIdx) {
+		System.out.println("in restoreFilefromTrash");
+		System.out.println(driveFileIdx);
+
+		return service.restoreFolderfromTrash(driveFileIdx);
 	}
 }
