@@ -10,15 +10,14 @@
             <div class="card">
                 <div class="card-title mb-0">
                     <div class="ml-3">
-                        <h2 id="issueDetailEditTitle">Drive Development</h2>
+                        <!-- <h2 id="issueDetailEditTitle">Drive Development</h2> -->
+                        <input type="text" class="form-control input-default"  name="issueTitle" id="issueDetailEditTitle">
                     </div>
                 </div>
                 <hr class="mt-1">
                 <div class="card-body mt-0 mb-0" id="issueDetailEditContent" style="border: 1px solid; border-color:#e9e9e9;">
-                    <p>Task </p>
-                    <p>- 드라이브 디폴트 폴더 생성</p>
-                    <p>- 계층형 구조 </p>
-                    <p>- 휴지통 기능</p>
+                     <textarea class="form-control bg-light" rows="10" cols="50" id="isContentEdit" name="content"></textarea>
+					  <input type="file" name="multipartFiles" id="multipartFilesEdit" multiple="multiple"> 
                 </div>
 
                 <div class="accordion" id="kanbanAccordion">
