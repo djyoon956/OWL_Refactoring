@@ -66,15 +66,17 @@ public class NoticeRestController {
 		return service.deleteNotice(noticeIdx);
 	}
 	@RequestMapping(value = "UpdateNotice.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public int updateNotice(@RequestParam(value = "projectIdx") int projectIdx
+	public int updateNotice(@RequestParam(value = "boardIdx") int boardIdx
 			, @RequestParam(value = "content") String content
 			, @RequestParam(value = "title") String title
 			, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 			, Principal principal, HttpServletRequest request) {		
 		System.out.println("update notice content" + content);
 		System.out.println("update notice title" + title);
+		System.out.println("update notice boardIdx" + boardIdx);
 		Notice notice = new Notice();
-		notice.setProjectIdx(projectIdx);
+		//notice.setProjectIdx(projectIdx);
+		notice.setBoardIdx(boardIdx);
 		notice.setContent(content);
 		notice.setTitle(title);
 		notice.setEmail(principal.getName());
