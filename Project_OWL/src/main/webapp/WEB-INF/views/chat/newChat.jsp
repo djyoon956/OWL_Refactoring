@@ -32,7 +32,7 @@ ul{
 				</form>
 				<!--  멤버 삭제   -->
 				<label class="m-t-20">멤버 리스트</label>
-				<ul id="ulUserList" class="collection" style="padding-left:0; padding-bottom:2px;">
+				<ul id="ulUserList" class="collection" style="padding-left:0;">
            
 <!-- 				 <div class="input-group ">
 					<div class="form-control pt-2 pb-2">
