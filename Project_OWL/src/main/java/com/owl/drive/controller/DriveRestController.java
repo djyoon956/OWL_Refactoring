@@ -326,7 +326,7 @@ public class DriveRestController {
 }
 
 	/**
-	 *  드라이브 파일 실 경로 구하기
+	 *  드라이브 파일 다운로드 경로 구하기
 	 * @author 윤다정
 	 * @since 2019/01/29
 	 * @param projectIdx
