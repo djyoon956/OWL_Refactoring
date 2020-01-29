@@ -68,11 +68,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getIssue" resultType="com.owl.kanban.dto.Issue">
 		SELECT i.PROJECTIDX, i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED, i.ISSUEPROGRESS , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
-	FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX where i.projectidx=#{projectIdx} order by ordernum
+		FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX where i.projectidx=#{projectIdx} order by ordernum
 	</select>
 	
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.Issue">
-		SELECT I.PROJECTIDX, I.CONTENT, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED,i.issueprogress,L.LABELNAME, L.LABELCOLOR, I.DUEDATE, I.PRIORITYCODE, I.CREATOR, I.ORDERNUM, I.COLIDX
+		SELECT I.PROJECTIDX, I.CONTENT, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED,i.issueprogress,L.LABELNAME, L.LABELCOLOR, l.labelidx, I.DUEDATE, I.PRIORITYCODE, I.CREATOR, I.ORDERNUM, I.COLIDX
 			FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
 		WHERE I.ISSUEIDX=#{param1}
 	</select>

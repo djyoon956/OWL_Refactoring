@@ -55,7 +55,7 @@ ul{
 				</div>  -->
 				 </ul>
                  <div class="modal-footer">
-                     <button type="button" class="btn btn-primary" data-dismiss="modal" id="onCreateClick">생성하기</button>
+                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onCreateClick()">생성하기</button>
                  </div>
 			</div>
 		</div>

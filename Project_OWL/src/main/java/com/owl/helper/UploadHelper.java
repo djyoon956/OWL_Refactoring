@@ -1,5 +1,6 @@
 package com.owl.helper;
 
+import java.awt.event.FocusEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
@@ -122,6 +123,16 @@ public class UploadHelper {
 		System.out.println("파일 이동 성공 : " + isMove);
 	}
 
+	public static String getDriveDownloadPath(int projectIdx, int folderIdx, String fileName, String[] refs) {
+		return Paths.get("upload"
+								, "project"
+								, Integer.toString(projectIdx)
+								, "drive"
+								, getParentPath(refs)
+								, Integer.toString(folderIdx)
+								, fileName).toString();
+	}
+	
 	private static void makeDirectory(String path) {
 		File file = new File(path);
 		if (!file.exists())
