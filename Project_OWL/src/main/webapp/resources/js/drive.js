@@ -465,27 +465,39 @@ function deleteDriveFile(driveFileIdx){
 	   	 })  
 	   }         
 	});
-	
-
 }
 
 function deleteDriveFolder(driveIdx, parentIdx){
-	$.ajax({
-		url : "DeleteFolder.do",
-		type : "POST",
-		data : {driveIdx : driveIdx},
-		success : function(data){
-			if(data){
-				callDirectoryData();
-				changeSelectedFolder(parentIdx);
-			}else{
-				errorAlert("폴더 삭제 실패");
-			}
-		},
-		error : function(){
-			errorAlert("폴더 삭제 실패");
-		}
-	})
+	Swal.fire({
+	    title: '폴더를 삭제하시겠습니까?',
+	    text: '해당 폴더는 휴지통으로 이동합니다.',
+	    imageUrl: 'https://i.imgur.com/vxFBTRJ.png',
+	    imageWidth: 150,
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    confirmButtonText: '삭제',
+	    cancelButtonText: '취소'
+	  }).then((result) => {
+	    if (result.value) {
+	    	$.ajax({
+	    		url : "DeleteFolder.do",
+	    		type : "POST",
+	    		data : {driveIdx : driveIdx},
+	    		success : function(data){
+	    			if(data){
+	    				callDirectoryData();
+	    				changeSelectedFolder(parentIdx);
+	    			}else{
+	    				errorAlert("폴더 삭제 실패");
+	    			}
+	    		},
+	    		error : function(){
+	    			errorAlert("폴더 삭제 실패");
+	    		}
+	    	})
+	   }         
+	});
 }
 
 
