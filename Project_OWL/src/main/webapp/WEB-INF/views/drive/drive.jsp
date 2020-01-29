@@ -279,7 +279,9 @@ function driveRefresh(){
 
 			$('#jstree').jstree(true).settings.core.data = folderList;
 			$('#jstree').jstree(true).refresh();
-			
+
+			console.log("0번째 : " ,folderList[0].id);
+			chageSelectedFolder(folderList[0].id);
 			callDirectoryData();
 		}
 	});

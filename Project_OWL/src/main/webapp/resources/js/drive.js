@@ -38,6 +38,9 @@ function initDrive(projectIdx){
             $(this).addClass('selected');
         }
 	}).on('dblclick', 'tbody tr.folder', function () {
+		console.log("더블");
+		console.log($(this).attr("id"))
+		chageSelectedFolder($(this).attr("id"));
 		setDirectoryData($(this).attr("id"), $(this).find("td span").first().text());
 	});
 
@@ -287,8 +290,11 @@ function checkBox(box) {
 }
 
 function callDirectoryData(){
+	console.log("in callDirectoryData");
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
+	console.log(folderIdx);
+	console.log(folderName);
 	if(isTrash){
 		$("#driveName").hide();
 		setTrashData();
@@ -464,6 +470,7 @@ function deleteDriveFile(driveFileIdx){
 }
 
 function deleteDriveFolder(driveIdx){
+	
 	$.ajax({
 		url : "DeleteFolder.do",
 		type : "POST",
@@ -472,6 +479,7 @@ function deleteDriveFolder(driveIdx){
 			if(data){
 				callDirectoryData();
 				successAlert("폴더 삭제 완료");
+				chageSelectedFolder($('#jstree').jstree().get_node(driveIdx).parent);
 				driveRefresh();
 			}else{
 				errorAlert("폴더 삭제 실패");
@@ -599,5 +607,13 @@ $.fn.selectRange = function(start, end) {
 	});
 }
 
-
+function chageSelectedFolder(id){
+	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
+	console.log(">"+id+"<");
+	console.log(folderIdx);
+	console.log(folderName);
+	$('#jstree').jstree("deselect_all");
+	$("#jstree").jstree("select_node", "#"+id);
+}
 
