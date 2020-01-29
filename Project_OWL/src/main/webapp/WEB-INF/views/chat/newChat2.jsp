@@ -7,11 +7,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OWL Chat</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="resources/css/materialize.min.css"  media="screen,projection"/>
-    <link rel="stylesheet" href="resources/css/custom.css">
+<!--     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="resources/css/materialize.min.css"  media="screen,projection"/> -->
+<!--     <link rel="stylesheet" href="resources/css/custom.css"> -->
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>   -->  
   </head>
   <body>
 
@@ -155,8 +155,8 @@
      --> --%>
     
       <!-- <script type="text/javascript" src="resources/js/jquery-3.2.1.min.js"></script> -->
-      <script type="text/javascript" src="resources/js/materialize.min.js"></script>
-      <script type="text/javascript" src="resources/js/underscore-min.js"></script>
+<!--       <script type="text/javascript" src="resources/js/materialize.min.js"></script>
+      <script type="text/javascript" src="resources/js/underscore-min.js"></script> -->
       
       
 	<!-- The core Firebase JS SDK is always required and must be listed first -->

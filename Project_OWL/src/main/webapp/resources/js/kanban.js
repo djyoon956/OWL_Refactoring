@@ -215,7 +215,11 @@ function setKanbanDetail(issueIdx){
 				//issueProgress,labelIdx
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
 					$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
-				
+					if(data.issueProgress == 'OPEN')
+						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
+					else if (data.issueProgress == 'CLOSED')
+						$("#closeIssueDetailBtn").attr("onclick","reOpenIssue("+issueIdx+")");
+					
 					$("#issueDetailTitle").text(data.issueTitle);
 					$("#issueDetailContent").html(data.content);
 					
@@ -402,7 +406,6 @@ function editLabel(idx, color, name) {
 			    method : "POST",
 			    data : {'issueRlyIdx' : issueRlyIdx, 'content' : changecontent},
 			    success : function(data) {
-			    	
 			    	setKanbanDetail(issueIdx);
 			    	
 			    }, error : function() {

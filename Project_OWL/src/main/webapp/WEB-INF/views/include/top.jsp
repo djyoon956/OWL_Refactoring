@@ -534,16 +534,20 @@ display: block;
 			<div class="setting-box hidden" id="chattingRoomIn">
 					 <ul class="list-group">
                          <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start" style="height: 650px;">
-             <div class="row">
-             <div class="text-left">
-             <a class="" href="javascript:void(0)" id="chatBackBtn"> 
-    			<i class="fas fa-chevron-left font-22 ml-1" ></i></a>
-    			</div>
-    			<div class="offset-3">
-    			<h4 class="d-inline">Family_c</h4><h4 class="text-muted d-inline ml-2">(5)</h4></div>
-    			<i class="mdi mdi-menu font-24 mt-1" style="right:12px;top:0px; position: absolute;"></i>
-   			</div>
-   			<hr>
+             				<div class="row">
+             					<div class="text-left">
+             						<a class="" href="javascript:void(0)" id="chatBackBtn"> 
+    									<i class="fas fa-chevron-left font-22 ml-1" >
+    									</i>
+    								</a>
+    							</div>
+    							<div class="offset-3">
+    								<h4 class="d-inline">Family_c</h4>
+    								<h4 class="text-muted d-inline ml-2">(5)</h4>
+    							</div>
+    							<i class="mdi mdi-menu font-24 mt-1" style="right:12px;top:0px; position: absolute;"></i>
+   							</div>
+   								<hr>
                                 <div class="chat-box scrollable" style="height:510px;">
                                     <!--chat Row -->
                                     <ul class="chat-list">
@@ -760,7 +764,7 @@ display: block;
     </nav>
 </header>
  <!-- <script type="text/javascript" src="resources/js/jquery-3.2.1.min.js"></script> -->
-      <script type="text/javascript" src="resources/js/materialize.min.js"></script>
+    <!--   <script type="text/javascript" src="resources/js/materialize.min.js"></script> -->
       <script type="text/javascript" src="resources/js/underscore-min.js"></script>
       
       
@@ -1048,8 +1052,10 @@ display: block;
             	  if(Array.prototype.slice.call(item.classList).indexOf('user-selected') == -1){ 
                 	  console.log("채팅방 에 유저 추가 할때 유저 리스트 유엘 백그라운 컬러 바뀌는 함수");
                 	  item.classList.add('user-selected'); 
+                	  $(this).find("i").removeClass("hidden");
                 	  }else{ 
-                    	  item.classList.remove('user-selected'); 
+                    	 item.classList.remove('user-selected'); 
+                   		 $(this).find("i").addClass("hidden");
                     	  console.log("체크 상태 해제");
                     	  } 
             	  }); 
@@ -1161,6 +1167,13 @@ display: block;
   	  		}
 
   		function onRoomListClick(event){
+  			
+  				console.log("채팅방 view");
+  				$("#chattingRoomIn").removeClass("hidden");
+  				$("#chattingList").addClass("hidden");
+  			
+
+  	  		
   	  		console.log("++++++++++++당신은 채팅방 리스트를 클릭했거나... 유저목록에서.. 이미 채팅한적이 있는 유저를 클릭했습니다.");
   	  		roomFlag = 'tabRoomList'; //채팅방을 클릭했다는 것을 알기 위한 플래그
   	  		document.getElementById('aBackBtn').classList.remove('hiddendiv'); 
@@ -1220,7 +1233,7 @@ display: block;
 			function saveMessages(inviteMessage) {
 				console.log("세이브 메세지 함수 여기까지 룸 아이디 오나요???" + roomId + " / " + roomUserList + " / " +roomUserName);
 				console.log("세이브 메세지 함수 여기까지 룸 아이디 오나요???" + roomUserList);
-				var msgDiv = document.getElementById('dvInputChat');
+				var msgDiv = document.getElementById('textarea1');
 				var msg = inviteMessage ? inviteMessage : msgDiv.innerHTML.trim(); 
 				console.log("메세지 왜 못 잡아??" + msg);
 				var curUserKey = $('#curUserKey').val();
@@ -1400,80 +1413,27 @@ display: block;
 			
           function onCreateClick(){
         	  roomTitle = $('#chatRoomTitle').val(); 
-
+			  console.log("룸 타이틀은요???" + roomTitle);
 
         	  var arrInviteUserList = Array.prototype.slice.call($('.user-selected'));
         	  console.log("arrInviteUserList 요거 값 들어 오나요???" + arrInviteUserList);
         	  var arrInviteUserListLength = arrInviteUserList.length;
         	  console.log("렝스는~~~~~~~~~~~~~~~~~~~~~~~~~~~" + arrInviteUserListLength); 
         	  var arrInviteUserName = []; 
-        	  
+        	  var updates = {}; 
         	  for(var i=0; i < arrInviteUserListLength; i++){ 
             	  var inviteUserUid = arrInviteUserList[i].getAttribute('data-targetUserUid'); 
-            	  var inviteUserName = arrInviteUserList[i].getAttribute('data-username') + '님';             	  
+            	  var inviteUserName = arrInviteUserList[i].getAttribute('data-username') + '님'; 
+            	  updates['UsersInRoom/'+ roomId +'/'+ inviteUserUid] = true; 
             	  arrInviteUserList[i].outerHTML = ''; 
             	  roomUserList.push(inviteUserUid); 
             	  roomUserName.push(inviteUserName); 
             	  arrInviteUserName.push(inviteUserName); 
             	  } 
         	  roomUserList.sort(); 
-        	  saveMessages(arrInviteUserName.join() + '이 초대되었습니다.');
-
+              database.ref().update(updates); //초대 메세지 
+              saveMessages(arrInviteUserName.join() + '이 초대되었습니다.');
         	  
-
-			  var multiUpdates = {}; 
-				var messageRef = database.ref('Messages/'+ roomId);
-				var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
-				//var convertMsg = convertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
-
-				//UsersInRoom 데이터 저장
-				if(document.getElementById('ulMessageList').getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
-					var roomUserListLength = roomUserList.length; 
-					for(var i=0; i < roomUserListLength; i++){ 
-						multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true; 
-					} 
-					//firebase.database().ref('usersInRoom/' + roomId);
-					database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
-					loadMessageList(); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
-				} 
-				
-				multiUpdates ={}; // 변수 초기화 
-
-				//메세지 저장 
-				multiUpdates['Messages/' + roomId + '/' + messageRefKey] = { 
-						uid: curUserKey, 
-						userName: curName, 
-						message: convertMsg, // 태그 입력 방지
-						profileImg: curProfilePic ? curProfilePic : 'noprofile.png', 
-						timestamp: firebase.database.ServerValue.TIMESTAMP //서버시간 등록하기 
-				} 
-
-				//유저별 룸리스트 저장 
-				var roomUserListLength = roomUserList.length;
-				 
-				if(roomUserList && roomUserListLength > 0){ 
-					for(var i = 0; i < roomUserListLength ; i++){ 
-						multiUpdates['RoomsByUser/'+ roomUserList[i] +'/'+ roomId] = { 
-							roomId : roomId, 
-							roomUserName : roomUserName.join('@spl@'), 
-							roomUserList : roomUserList.join('@spl@'), 
-							roomType : roomUserListLength > 2 ? 'MULTI' : 'ONE_VS_ONE', 
-							roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? roomUserList[1] : // 1대 1 대화이고 i 값이 0 이면 
-								roomUserListLength == 2 && i == 1 ? roomUserList[0] // 1대 1 대화 이고 i값이 1이면 
-								: '', // 나머지 
-							lastMessage : convertMsg, 
-							profileImg : curProfilePic ? curProfilePic : 'noprofile.png', 
-							timestamp: firebase.database.ServerValue.TIMESTAMP 
-
-						}; 
-					} 
-				} 
-				database.ref().update(multiUpdates);
-
-				//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드
-				loadRoomList(curUserKey);
-
-				
 
            }
 			
