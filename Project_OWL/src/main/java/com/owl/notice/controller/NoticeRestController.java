@@ -75,9 +75,6 @@ public class NoticeRestController {
 			, @RequestParam(value = "title") String title
 			, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 			, Principal principal, HttpServletRequest request) {		
-		System.out.println("update notice content" + content);
-		System.out.println("update notice title" + title);
-		System.out.println("update notice boardIdx" + boardIdx);
 		Notice notice = new Notice();
 		//notice.setProjectIdx(projectIdx);
 		notice.setBoardIdx(boardIdx);
