@@ -210,6 +210,7 @@ function setKanbanDetail(issueIdx){
 			success : function (data) {
 				console.log("이슈 디테일 ");
 				console.log(data);
+				console.log()
 				$("#issueIdxNum").val(issueIdx);
 				//issueProgress,labelIdx
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
@@ -237,7 +238,7 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailActivityCount").text("Activity ("+data.logs.length+") ");
 					console.log("-------------------------");
 					$.each(data.logs, function(index, log){
-						console.log(log);
+						//console.log(log);
 						let control = "<li> "		
 										+ "	<p style='padding-top: 3px;'>"
 										+ "		<b> "+log.creatorName+"</b>"
@@ -315,7 +316,7 @@ function setKanbanDetail(issueIdx){
 
 
 function closeIssue(issueIdx) {
-	console.log("여기오니?????????????????????");
+	console.log("여기오니 closeIssue?????????????????????");
 
 	   $.ajax({
            url:"CloseIssue.do",
@@ -323,14 +324,15 @@ function closeIssue(issueIdx) {
            data:{issueIdx : issueIdx},
            success:function(data){
         	$("#issueClosedChk").text('Reopen issue');
-        	setChageView("kanban");
+        	//setChageView("kanban");
+        	setKanbanDetail(issueIdx);
            }
         });  		
 }
 
 
 function reOpenIssue(issueIdx) {
-	console.log("여기오니?????????????????????");
+	console.log("여기오니 reOpenIssue?????????????????????");
 	$.ajax({
 		url:"ReopenIssue.do",
 		method:"POST",
@@ -338,10 +340,10 @@ function reOpenIssue(issueIdx) {
 		success:function(data) {
 			console.log('reOpenIssue in');
 			console.log(data);
-        	$("#issueClosedChk").text('close issue');
-        	setKanbanDetail(issueIdx);
+        	$("#issueClosedChk").text('closed issue');
+        	//setKanbanDetail(issueIdx);
         	//setChageView("kanban");
-
+        	setKanbanDetail(issueIdx);
 		},error :function() {
 			
 			console.log("ReopenIssue error");
