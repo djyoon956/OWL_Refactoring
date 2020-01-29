@@ -47,8 +47,7 @@
             $.ajax({
         		url:"GetProjectList.do",
         		data: {projectIdx: ${project.projectIdx}},
-        		success:function(data){  
-            		console.log(data);      		
+        		success:function(data){   		
         		    calendar = new CalendarInfo();
         				calendar.id = String(data.projectIdx);
         			    calendar.name = data.projectName;
@@ -66,7 +65,6 @@
 				url : "GetIssue.do",
 				data : {'projectIdx' :  ${project.projectIdx} },
 				success : function(data) {
-					console.log(data);
 					var openCount = 0;
 					var closeCount = 0;
 					 $.each(data, function(index,element) {
@@ -81,9 +79,6 @@
 
 						var ctx = document.getElementById('chartMyProgress').getContext('2d');
 						window.myDoughnut = new Chart(ctx, config2);
-				},
-				error: function() {
-					console.log("getIssue.do error");
 				}
 			});
             

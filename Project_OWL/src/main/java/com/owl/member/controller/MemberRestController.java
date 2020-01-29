@@ -82,20 +82,6 @@ public class MemberRestController {
 		return map;
 	}
 
-	// 회원정보 조회 (test)
-	@RequestMapping("GetMember.do")
-	public Member GetMember(String email, Model model) throws Exception {
-		Member member = null;
-
-		try {
-			member = service.getMember("qqq@gmail.com");
-			System.out.println("멤버 조회 : " + member);
-			model.addAttribute("member", member);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return member;
-	}
 
 	// 비밀번호 확인
 	@RequestMapping("chkDelPwd.do")

@@ -306,8 +306,8 @@ public class KanbanService {
 			e.printStackTrace();
 		}
 
-		System.out.println("in getIssueDetail service "+issueIdx);
-		System.out.println(issue);
+		//System.out.println("in getIssueDetail service "+issueIdx);
+		//System.out.println(issue);
 		return issue;
 	}
 	
@@ -366,13 +366,31 @@ public class KanbanService {
 		return result;
 	}
 	
-	public boolean closeIssue(int issueIdx,String email) {
+	public boolean closeIssue(int issueIdx, String email) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 			try {
 				result = dao.closeIssue(issueIdx) > 0 ? true : false;
 				
 				insertLog(issueIdx, "Closed this", email, dao);
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+		return result;
+	}
+	
+	
+	public boolean reopenIssue(int issueIdx, String email) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+			try {
+				result = dao.closeIssue(issueIdx) > 0 ? true : false;
+				
+				insertLog(issueIdx, "Reopen this", email, dao);
+				System.out.println("reopenIssue in");
+				System.out.println("result" + result);
+
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}

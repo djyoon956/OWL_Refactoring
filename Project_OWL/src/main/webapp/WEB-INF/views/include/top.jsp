@@ -93,7 +93,6 @@
 		});
 	});
 
-
 	function Search(){
 		$('.ChatList').empty();   
 		var plus = "";
@@ -550,7 +549,7 @@ display: block;
    								<hr>
                                 <div class="chat-box scrollable" style="height:510px;">
                                     <!--chat Row -->
-                                    <ul class="chat-list">
+                                    <ul id ="ulMessageList" class="chat-list">
                                     <!--chat Row -->
                                     <!-- background-color: #dbd9d9;  -->
                                     
@@ -871,7 +870,7 @@ display: block;
 					if(roomListTarget){ // null 이 아니면 여기가 핵심이다.  룰리스트 타겟있으면 새로운 방 아이디를 만들지 않는다.
 						roomListTarget.click(); 
 						}else{ // 메세지 로드 
-							roomTitle = targetUserName+'님 과의 대화'; 
+							//roomTitle = targetUserName+'님 과의 대화'; 
 							roomUserList = [targetUserUid, curUserKey]; // 챗방 유저리스트  			
 							roomUserName = [targetUserName, curName] // 챗방 유저 이름 
 							roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss(); 
@@ -970,7 +969,7 @@ display: block;
 				if(roomListTarget){ // null 이 아니면 여기가 핵심이다.  룰리스트 타겟있으면 새로운 방 아이디를 만들지 않는다.
 					roomListTarget.click(); 
 					}else{ // 메세지 로드 
-						roomTitle = targetUserName+'님 과의 대화'; 
+						//roomTitle = targetUserName+'님 과의 대화'; 
 						roomUserList = [targetUserUid, curUserKey]; // 챗방 유저리스트  			
 						roomUserName = [targetUserName, curName] // 챗방 유저 이름 
 						roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss(); 
@@ -1007,9 +1006,9 @@ display: block;
 			console.log("이즈 오픈 룸의 값은??" + window.isOpenRoom);
 
 			//아래 코드는 온로드 뒤에 실행 되게 위치 이동해야 함... 일단은 다른게 급하니... 남겨두고...
-			document.getElementById('iBtnSend').addEventListener('click', function(){
+			/* document.getElementById('iBtnSend').addEventListener('click', function(){
 				saveMessages();
-				});
+				}); */
 
 			
         	console.log("오픈챗룸 함수 마지막 단 타나요????");
@@ -1087,7 +1086,7 @@ display: block;
                      	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~데이타 값은~~~~~~~~~~~~~~~~~~" + data + " / " + data.val());
                      	var msgKey = data.val();
                      	console.log("데이타 값은~~~~~~~~~~~~~~~~~~" + data + " / " + data.key + "/"+msgKey.userName);
-           			 	messageListUp(data.key, msgKey.profileImg, msgKey.timestamp, msgKey.userName, msgKey.message);              				
+           			 	messageListUp(data.key, msgKey.profileImg, msgKey.timestamp, msgKey.userName, msgKey.message, msgKey.uid);              				
       		 		
 							
                      }); 
@@ -1138,7 +1137,7 @@ display: block;
 						var roomId = data.key,
 						lastMessage = val.lastMessage, 
 						profileImg = val.profileImg, 
-						roomTitle = eachRoomTitle, 
+						roomTitle = val.roomTitle, 
 						roomUserName =val.roomUserName, 
 						roomUserList = val.roomUserList, 
 						roomType = val.roomType, 
@@ -1176,8 +1175,8 @@ display: block;
   	  		
   	  		console.log("++++++++++++당신은 채팅방 리스트를 클릭했거나... 유저목록에서.. 이미 채팅한적이 있는 유저를 클릭했습니다.");
   	  		roomFlag = 'tabRoomList'; //채팅방을 클릭했다는 것을 알기 위한 플래그
-  	  		document.getElementById('aBackBtn').classList.remove('hiddendiv'); 
-  	  		document.getElementById('aInvite').classList.remove('hiddendiv'); 
+  	  		//document.getElementById('aBackBtn').classList.remove('hiddendiv'); 
+  	  		//document.getElementById('aInvite').classList.remove('hiddendiv'); 
 
   			// 메세지 로드 
   			roomId = event.getAttribute('data-roomId'); 
@@ -1233,17 +1232,18 @@ display: block;
 			function saveMessages(inviteMessage) {
 				console.log("세이브 메세지 함수 여기까지 룸 아이디 오나요???" + roomId + " / " + roomUserList + " / " +roomUserName);
 				console.log("세이브 메세지 함수 여기까지 룸 아이디 오나요???" + roomUserList);
-				var msgDiv = document.getElementById('textarea1');
-				var msg = inviteMessage ? inviteMessage : msgDiv.innerHTML.trim(); 
+				var msgDiv = $('#textarea1');
+				console.log("메세지는???~~~~~~~~~~~~~~~~" + msgDiv);
+				var msg = inviteMessage ? inviteMessage : $('#textarea1').val().trim(); 
 				console.log("메세지 왜 못 잡아??" + msg);
-				var curUserKey = $('#curUserKey').val();
-				var curUserName = $('#memberName').val();	
-				console.log("세이브 메세지 함수  현재 사용중인 유저 이름 가져오기  ~~~????>>>>>>" + curUserName);			
+				//var curUserKey = $('#curUserKey').val();
+				//var curUserName = $('#memberName').val();	
+				console.log("세이브 메세지 함수  현재 사용중인 유저 이름 가져오기  ~~~????>>>>>>" + curName);			
 				var curUserProfilePic = curProfilePic;
 				var convertMsg = myConvertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
 				if(msg.length > 0){ 
 					msgDiv.focus(); 
-					msgDiv.innerHTML = ''; 
+					msgDiv.val(""); 
 					var multiUpdates = {}; 
 					var messageRef = database.ref('Messages/'+ roomId);
 					var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
@@ -1277,7 +1277,8 @@ display: block;
 					if(roomUserList && roomUserListLength > 0){ 
 						for(var i = 0; i < roomUserListLength ; i++){ 
 							multiUpdates['RoomsByUser/'+ roomUserList[i] +'/'+ roomId] = { 
-								roomId : roomId, 
+								roomId : roomId,
+								roomTitle : roomTitle, 
 								roomUserName : roomUserName.join('@spl@'), 
 								roomUserList : roomUserList.join('@spl@'), 
 								roomType : roomUserListLength > 2 ? 'MULTI' : 'ONE_VS_ONE', 
@@ -1330,10 +1331,10 @@ display: block;
               	  var convertDate = year + "년 "+month+"월 "+ day +"일 ("+ week[date.getDay()] +") "; 
               	  var convertHour=""; 
               	  if(hour < 12){ 
-                  	  convertHour = "오전 " + FirebaseChat.pad(hour) +":" + FirebaseChat.pad(minute); 
+                  	  convertHour = "오전 " + pad(hour) +":" + pad(minute); 
                   	  }else if(hour === 12){ 
-                      	  convertHour = "오후 " + FirebaseChat.pad(hour) +":" + FirebaseChat.pad(minute); 
-                      	  }else{ convertHour = "오후 " + FirebaseChat.pad(hour - 12) +":" + FirebaseChat.pad(minute); 
+                      	  convertHour = "오후 " + pad(hour) +":" + pad(minute); 
+                      	  }else{ convertHour = "오후 " + pad(hour - 12) +":" + pad(minute); 
                       	  } 
               	  return convertDate + convertHour; 
 
@@ -1358,19 +1359,45 @@ display: block;
               }
           
 	
-          var messageListUp= function(key, profileImg, time, userName, message){
+          var messageListUp= function(key, profileImg, timestamp, userName, message, uid){
+              var time = timestampToTime(timestamp);
               console.log("messageListUp 함수..데이타 들어오냐??" + key+"/"+profileImg+"/"+time+"/"+userName+"/"+message);
 			  var userProPic = 	(profileImg ? 'resources/images/user/'+ profileImg : 'resources/images/user/noprofile.png');
-        	  var messageTemplate = '<li id="li' + key  + '" class="collection-item avatar" data-key="' + key + '">'+
-  									'<img src="'+ userProPic +'" alt="" class="rounded-circle">'+
-  									'<span class="title">'+userName+'</span><span class="time">'+time+'</span>'+
-  									'<p>'+message+'</p>'+
-  					 				'</li>'; 
+			  console.log("메세지 키값 찍어 보기 key / curUserKey" + key + " / " + curUserKey);
+			  var messageTemplate;	
+			  if(uid == curUserKey) {
+				  messageTemplate = '<li id="li' + key  + '" class="odd chat-item" style="margin-top:10px;" data-key="' + key + '">'+			
+					'<div class="chat-content">'+			
+					'<div class="box bg-light-inverse chatbg ownBubble">'+ message + '</div>'+
+					'<br>'+
+					'</div>'+
+					'<div class="chat-time">'+ time + '</div>'+
+					'</li>';
+
+				  }else{
+					  messageTemplate = '<li id="li' + key  + '" class="chat-item" style="margin-top:10px;" data-key="' + key + '">'+
+						'<div class="chat-img"><img src="'+ userProPic +'" alt="user" class="chatImgBorder"></div>'+
+						'<div class="chat-content pl-2 ">'+
+						'<h6 class="font-medium">'+ userName + '</h6>'+
+						'<div class="box bg-light-info otherBubble">'+ message + '</div>'+
+						'<div class="chat-time">'+ time + '</div>'+
+						'</li>';
+					  }
+        	   									 
           
         	  $('#ulMessageList').append(messageTemplate);
-        	  messageTemplate += '먼데 안들어가는 거야??';
+        	 
         	  console.log("messageListUp 합수 타변 변수에 담기는 값들은??>>>" +messageTemplate);
           } 
+
+
+         
+
+          
+
+          
+
+         
 
           var roomListUp = function(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserList, lastMessage, datetime){
         	    var userProPic = 	(curProfilePic ? curProfilePic : 'resources/images/user/noprofile.png');
@@ -1564,7 +1591,7 @@ display: block;
     		$('#aBackBtn').click(onBackBtnClick);
 
       	//메세지 입력창 키다운 이벤트 달기
-			document.getElementById('dvInputChat').addEventListener('keydown', pressEnter);
+			document.getElementById('textarea1').addEventListener('keydown', pressEnter);
 
 		//채팅 초대창 모달 띄우기
 			 //FirebaseChat 클래스 초기화

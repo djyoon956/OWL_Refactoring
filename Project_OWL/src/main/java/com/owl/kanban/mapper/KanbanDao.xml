@@ -128,6 +128,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update issue set colidx = -99 , issueprogress='CLOSED'  where issueidx = #{issueIdx}
 	</update>
 	
+	<update id="reopenIssue" >
+		update issue set colidx = -1 , issueprogress='OPEN' where issueidx = #{issueIdx}
+	</update>
+	
 	<select id="getColumnName" resultType="String">
 		SELECT COLNAME FROM owl.COLNAME WHERE PROJECTIDX= #{param1} AND COLIDX= #{param2}
 	</select>
