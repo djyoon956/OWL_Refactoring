@@ -75,7 +75,7 @@ $(function(){
 
 		}).on('rename_node.jstree', function (e, data) {
 			if(data.node.id.startsWith("j1_")){	
-			jQuery.ajaxSettings.traditional = true				
+			jQuery.ajaxSettings.traditional = true;				
 			  $.ajax({
 	        		url:"insertFolder.do",
 	        		method:"POST",
@@ -85,10 +85,9 @@ $(function(){
 	        			  refs : data.node.parents
 	        			 },
 	        		success:function(idx){
-		        		data.node.id =idx;
+		        		data.node.id = idx;
 		        		driveRefresh();
 	        		}
-  		
 	    		});
 			}else{
 				let thisId = data.node.id;
@@ -144,7 +143,7 @@ $(function(){
 		    		});
  	 			}
  			}).on('delete_node.jstree', function (e, data) {
-				deleteDriveFolder(data.node.id);
+				deleteDriveFolder(data.node.id, data.node.parent);
  			});
 	driveRefresh();
 	
@@ -248,44 +247,7 @@ function sendFileToServer(formData,status){
     status.setAbort(jqXHR);
 }
 
-function driveRefresh(){
-	folderList = [];
-	$.ajax({
-		url:"DriveList.do",
-		dataType:"json",
-		data:{projectIdx:$("#theProject").val()},
-		success:function(data){
-			let folder;		
-			$.each(data, function(index, element){
-				if(element.ref == 0){
-					element.ref = "#";
-				}				
-				folder = new folderInfo();
-				folder.id = element.driveIdx;
-			    folder.parent = element.ref;
-			    folder.text = element.folderName;
-			    addFolder(folder);
-			});
 
-			//jstree 기능
-			var to = false;
-			$('#searchText').keyup(function () {
-				if(to) { clearTimeout(to); }
-				to = setTimeout(function () {
-					var v = $('#searchText').val();
-					$('#jstree').jstree(true).search(v);
-				}, 100);
-			});
-
-			$('#jstree').jstree(true).settings.core.data = folderList;
-			$("#jstree").jstree(true).load_node('#');
-			$('#jstree').jstree(true).refresh();
-			
-			callDirectoryData();
-			
-		}
-	});
-}
 
 
 </script>

@@ -26,7 +26,7 @@ ul{
 					<label class="m-t-20">타이틀</label>
 					<div class="form-row">
 						<div class="form-group col-md-12 pr-0  pt-2 pb-2">
-							<input type="email" name="member" class="form-control"placeholder="채팅방 타이틀을 입력해주세요.">
+							<input id="chatRoomTitle" type="email" name="member" class="form-control"placeholder="채팅방 타이틀을 입력해주세요.">
 						</div>
 					</div>
 				</form>
@@ -55,7 +55,7 @@ ul{
 				</div>  -->
 				 </ul>
                  <div class="modal-footer">
-                     <button type="button" class="btn btn-primary" data-dismiss="modal">생성하기</button>
+                     <button type="button" class="btn btn-primary" data-dismiss="modal" id="onCreateClick">생성하기</button>
                  </div>
 			</div>
 		</div>
