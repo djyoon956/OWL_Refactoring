@@ -160,3 +160,6 @@ span.small.material-icons.right{
 .collection-item span.badge{
 	margin-top:calc(.75rem - 11px);
 	}	
+.blue-text{
+	color:#2196F3 !important;
+	}	

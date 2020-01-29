@@ -5,8 +5,6 @@
             <div class="col-md-10 offset-1">
                 <div class="compose-content">
                     <h3 class="text-center">Notice Edit</h3><br>
-
-                    <form action="WriteNotice.do" id="noticeEditForm" enctype="multipart/form-data">
                         <div class="form-group">
                             <input type="text" class="form-control bg-transparent" name="title" id="editTitle" placeholder="제목을 입력해주세요">
                         </div>
@@ -17,17 +15,12 @@
                        <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
                                 <i class="fas fa-download mr-2 " aria-hidden="true"></i>
-                                <span id="noticeEditFileCount">첨부파일 (4)</span>
+                                <span id="noticeEditFileCount">첨부파일</span>
                             </h5>
                     </div> 
                     
                         <ul class=" m-4" id="noticeEditFiles">
-                            <!-- <li class="mb-2" style="font-size: 16px">
-                                <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                            </li>
-                            <li class="mb-2" style="font-size: 16px">
-                                <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                            </li> -->
+
                         </ul>
                    </div>
                     <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>&nbsp;파일첨부</h5>
@@ -42,7 +35,6 @@
                                 class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2" onclick="noticeEditOk()" value="확인">
                             <input type="button" class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" onclick="cancelNotice()"  value="취소">
                         </div>
-                    </form>
                 </div>
             </div>
         </div>

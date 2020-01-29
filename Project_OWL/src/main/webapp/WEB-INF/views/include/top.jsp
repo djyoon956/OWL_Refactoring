@@ -516,7 +516,7 @@ display: block;
 				<br>
 				</div>
 				<hr>
-					 <ul class="list-group" id="chatUserList">
+					 <ul class="list-group" id="ulRoomList">
                          <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start chatList"  style="height: 106px;">
                            <div class="d-flex w-100 justify-content-between" id="chatTitle">
                                <div class="media">
@@ -571,7 +571,7 @@ display: block;
 				
 				<!--  채팅방 view -->	
 			<div class="setting-box hidden" id="chattingRoomIn">
-					 <ul class="list-group" id="chatUserList">
+					 <ul class="list-group">
                          <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start" style="height: 650px;">
              <div class="row">
              <div class="text-left">
@@ -1059,8 +1059,8 @@ display: block;
 
 			//챗방 초대를 위한 모달 창 세팅을 위한 함수
           function setAddUserList() {
-        	  $('#ulAddUserList').html($('#ulUserList').html()); 
-        	  var arrAddUserList = Array.prototype.slice.call($('#ulAddUserList li')); 
+        	  //$('#ulAddUserList').html($('#ulUserList').html()); 
+        	  var arrAddUserList = Array.prototype.slice.call($('#ulUserList li')); 
         	  console.log("setAddUserList 함수에서 arrAddUserList 요기에 담기는 값은?? " + arrAddUserList);
         	  console.log("setAddUserList 함수 탔을 때... 룸 유저 리스트 값은??>>>>" + roomUserList);
         	 
@@ -1077,7 +1077,7 @@ display: block;
         	  	  console.log("여기는 타기는 할까???");
         	  	
         	  	
-        	  	item.getElementsByClassName('done')[0].classList.remove('hiddendiv'); 
+        	  	//item.getElementsByClassName('done')[0].classList.remove('hiddendiv'); 
         	  	item.addEventListener('click',function(){
             	  	console.log("클릭 이벤트 리슨너가 왜 안들어가냐???-----------------------------------------------"); 
             	  if(Array.prototype.slice.call(item.classList).indexOf('blue-text') == -1){ 
@@ -1365,6 +1365,7 @@ display: block;
 
           var rootRef = database.ref();
 
+		  //채팅방 만들기 버튼 눌렀을 때 유저 목록 뿌려 주는 함수....	
           var userListUp = function(targetuid, name, userpic, email){
         	  var userProPic = 	(userpic ? 'resources/images/user/'+ userpic : 'resources/images/user/noprofile.png'); 
         	  let errorSource = "this.src='resources/images/login/profile.png'";
@@ -1381,6 +1382,7 @@ display: block;
        	  						  + '</div></li>';  */
       	            					 
         	  $('#ulUserList').append(userTemplate);
+
               }
           
 	
@@ -1426,28 +1428,135 @@ display: block;
                
               }
 
-          function onConfirmInviteClick(){
-              console.log("채팅 추가 버튼 클릭시 타는 함수!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-              console.log("제이쿼리 실험....." + $('.blue-text').eq(0));
-        	  //var arrInviteUserList = Array.prototype.slice.call(this.ulAddUserList.getElementsByClassName('blue-text')); 
-        	  var arrInviteUserList = Array.prototype.slice.call($('.blue-text'));
-        	  console.log("arrInviteUserList 요거 값 들어 오나요???" + arrInviteUserList);
-        	  var arrInviteUserListLength = arrInviteUserList.length;
-        	  console.log("렝스는~~~~~~~~~~~~~~~~~~~~~~~~~~~" + arrInviteUserListLength); 
-        	  var arrInviteUserName = []; 
-        	  var updates = {}; 
-        	  for(var i=0; i < arrInviteUserListLength; i++){ 
-            	  var inviteUserUid = arrInviteUserList[i].getAttribute('data-targetUserUid'); 
-            	  var inviteUserName = arrInviteUserList[i].getAttribute('data-username') + '님'; 
-            	  updates['UsersInRoom/'+ roomId +'/'+ inviteUserUid] = true; 
-            	  arrInviteUserList[i].outerHTML = ''; 
-            	  roomUserList.push(inviteUserUid); 
-            	  roomUserName.push(inviteUserName); 
-            	  arrInviteUserName.push(inviteUserName); 
-            	  } 
-        	  roomUserList.sort(); 
-              database.ref().update(updates); //초대 메세지 
-              saveMessages(arrInviteUserName.join() + '이 초대되었습니다.');
+
+
+		  function createRoomInfo(){
+			    roomTitle = $('#chatRoomTitle').val(); 
+				roomUserList = []; // 챗방 유저리스트  			
+				roomUserName = []; // 챗방 유저 이름 
+				roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss();
+
+
+				 
+					msgDiv.focus(); 
+					msgDiv.innerHTML = ''; 
+					var multiUpdates = {}; 
+					var messageRef = database.ref('Messages/'+ roomId);
+					var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
+					//var convertMsg = convertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
+
+					//UsersInRoom 데이터 저장
+					if(document.getElementById('ulMessageList').getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
+						var roomUserListLength = roomUserList.length; 
+						for(var i=0; i < roomUserListLength; i++){ 
+							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true; 
+						} 
+						//firebase.database().ref('usersInRoom/' + roomId);
+						database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
+						loadMessageList(); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
+					} 
+					
+					multiUpdates ={}; // 변수 초기화 
+
+					//메세지 저장 
+					multiUpdates['Messages/' + roomId + '/' + messageRefKey] = { 
+							uid: curUserKey, 
+							userName: curName, 
+							message: convertMsg, // 태그 입력 방지
+							profileImg: curProfilePic ? curProfilePic : 'noprofile.png', 
+							timestamp: firebase.database.ServerValue.TIMESTAMP //서버시간 등록하기 
+					} 
+
+					//유저별 룸리스트 저장 
+					var roomUserListLength = roomUserList.length;
+					 
+					if(roomUserList && roomUserListLength > 0){ 
+						for(var i = 0; i < roomUserListLength ; i++){ 
+							multiUpdates['RoomsByUser/'+ roomUserList[i] +'/'+ roomId] = { 
+								roomId : roomId, 
+								roomUserName : roomUserName.join('@spl@'), 
+								roomUserList : roomUserList.join('@spl@'), 
+								roomType : roomUserListLength > 2 ? 'MULTI' : 'ONE_VS_ONE', 
+								roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? roomUserList[1] : // 1대 1 대화이고 i 값이 0 이면 
+									roomUserListLength == 2 && i == 1 ? roomUserList[0] // 1대 1 대화 이고 i값이 1이면 
+									: '', // 나머지 
+								lastMessage : convertMsg, 
+								profileImg : curProfilePic ? curProfilePic : 'noprofile.png', 
+								timestamp: firebase.database.ServerValue.TIMESTAMP 
+
+							}; 
+						} 
+					} 
+					database.ref().update(multiUpdates);
+
+					//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드
+					loadRoomList(curUserKey);
+
+			  }
+			
+          function onCreateClick(){
+        	  roomTitle = $('#chatRoomTitle').val(); 
+			  roomUserList = [curUserKey]; // 챗방 유저리스트  			
+			  roomUserName = [curName]; // 챗방 유저 이름 
+			  roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss();
+
+
+
+
+
+			  var multiUpdates = {}; 
+				var messageRef = database.ref('Messages/'+ roomId);
+				var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
+				//var convertMsg = convertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
+
+				//UsersInRoom 데이터 저장
+				if(document.getElementById('ulMessageList').getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
+					var roomUserListLength = roomUserList.length; 
+					for(var i=0; i < roomUserListLength; i++){ 
+						multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true; 
+					} 
+					//firebase.database().ref('usersInRoom/' + roomId);
+					database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
+					loadMessageList(); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
+				} 
+				
+				multiUpdates ={}; // 변수 초기화 
+
+				//메세지 저장 
+				multiUpdates['Messages/' + roomId + '/' + messageRefKey] = { 
+						uid: curUserKey, 
+						userName: curName, 
+						message: convertMsg, // 태그 입력 방지
+						profileImg: curProfilePic ? curProfilePic : 'noprofile.png', 
+						timestamp: firebase.database.ServerValue.TIMESTAMP //서버시간 등록하기 
+				} 
+
+				//유저별 룸리스트 저장 
+				var roomUserListLength = roomUserList.length;
+				 
+				if(roomUserList && roomUserListLength > 0){ 
+					for(var i = 0; i < roomUserListLength ; i++){ 
+						multiUpdates['RoomsByUser/'+ roomUserList[i] +'/'+ roomId] = { 
+							roomId : roomId, 
+							roomUserName : roomUserName.join('@spl@'), 
+							roomUserList : roomUserList.join('@spl@'), 
+							roomType : roomUserListLength > 2 ? 'MULTI' : 'ONE_VS_ONE', 
+							roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? roomUserList[1] : // 1대 1 대화이고 i 값이 0 이면 
+								roomUserListLength == 2 && i == 1 ? roomUserList[0] // 1대 1 대화 이고 i값이 1이면 
+								: '', // 나머지 
+							lastMessage : convertMsg, 
+							profileImg : curProfilePic ? curProfilePic : 'noprofile.png', 
+							timestamp: firebase.database.ServerValue.TIMESTAMP 
+
+						}; 
+					} 
+				} 
+				database.ref().update(multiUpdates);
+
+				//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드
+				loadRoomList(curUserKey);
+
+				
 
            }
 			
@@ -1498,7 +1607,9 @@ display: block;
       					});
 
       				});
-                     
+
+					//채팅방 만들기 할 때 유저 리스업 되고 나서... 클릭 리스너 다는 함수..
+      				setAddUserList();
       				
       			},
       			error: function(xhr, status, error){
@@ -1509,7 +1620,7 @@ display: block;
       		});
 
 			//같은 프로젝트에 있는 유저들끼리의 챗방을 만들기 위한 아젝스.... 요게 가능 한가... 아....
-      		$.ajax({
+      		/* $.ajax({
       			url: "MyProjectsMatesFull.do",
       			type: "POST",
       			dataType: 'json',
@@ -1565,8 +1676,8 @@ display: block;
           			console.log("풀리스트 불러오는 아잭스 에러 터짐 ㅠㅠ");
       		         var errorMessage = xhr.status + ': ' + xhr.statusText
       		         alert('Error - ' + errorMessage);
-      		     }
-      		});
+      		     } 
+      		});*/
 
       		
 		//온로드 뒤에 백 버튼 리스너 달기
@@ -1586,7 +1697,7 @@ display: block;
 				
 
 		//초대 모달창에서 초대 버튼 클릭시  체크된 인원을 현재 챗방에 추가하는 클릭 리스너
-			$('#aConfirmInvite').click(onConfirmInviteClick);
+			$('#onCreateClick').click(onCreateClick);
 
 
       	});	
