@@ -45,6 +45,7 @@ function folderInfo() {
     this.id = null;
     this.parent = null;   
     this.text = null;
+    this.state ={};
 }
 
 function addFolder(folder) {
@@ -60,17 +61,14 @@ $(function(){
 				"animation" : 0,
 				"check_callback" : true,
 				'force_text' : true,
-				"themes" : { "stripes" : true },
-			    
+				"themes" : { "stripes" : true }
 			  },
+			"state" : {"opened" : true},
 			"types" : {
 				"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
 				"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
 				"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
 			},
-			 "checkbox" : {
-				    "three_state" : false
-				  },
 			"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
 
 		}).on('rename_node.jstree', function (e, data) {
@@ -85,7 +83,19 @@ $(function(){
 	        			  refs : data.node.parents
 	        			 },
 	        		success:function(idx){
-		        		data.node.id = idx;
+		        		data.node.id = idx; 
+/* 		        	let element = $("#jstree").find("#j1_1").first();
+		        		element.attr("id",idx);
+		        		element.attr("aria-labelledby", idx+"_anchor")
+		        		element.find("a").first().attr("id", idx+"_anchor");
+
+						let folder = new folderInfo();
+						folder.id = idx;
+					    folder.parent = data.node.parent;
+					    folder.text = data.text;
+					    $('#jstree').jstree(true).settings.core.data.push(folder);
+					    $('#jstree').jstree(true).refresh();
+					    $("#jstree").jstree("select_node", "#"+idx); */
 		        		driveRefresh();
 	        		}
 	    		});
@@ -145,6 +155,7 @@ $(function(){
  			}).on('delete_node.jstree', function (e, data) {
 				deleteDriveFolder(data.node.id, data.node.parent);
  			});
+
 	driveRefresh();
 	
 	$("#createFolder").click(function(){
@@ -284,12 +295,24 @@ function sendFileToServer(formData,status){
             <div class="defaultDriveMenu pt-0">
 	            <div class="h-100">
 	            	<div style="height: 15%" class="mt-1 mb-3">
-	            		<span style="font-size: medium;font-weight: 700;"  id="driveName"> </span>
+	            		<span style="font-size: medium;font-weight: 700;"  id="driveName"></span>
 	            	</div>
-	            	<div style="height: 70%">
+	            	<div style="height: 70%; position: relative;">
 		                <span style="font-size : large; font-weight:bold" class="hidden" id="trashName">
 		                	<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통
 		               	</span>
+		               	<div id="allCheck" class="hidden">
+		               		<button type='button' class='driveBtn btn-primary'>삭제</button>&nbsp;&nbsp;
+		               		<button type='button' class='driveBtn btn-primary'>이동</button>&nbsp;&nbsp;		               		
+							<button type='button' class='driveBtn btn-primary' onclick='ReturnCheck()'>선택해제</button>&nbsp;&nbsp;
+		               	</div>
+		               	<div id="theCheck" class="hidden">
+		               		<button type='button' class='driveBtn btn-primary'>업로드</button>&nbsp;&nbsp;
+		               		<button type='button' class='driveBtn btn-primary'>이동</button>&nbsp;&nbsp;
+		               		<button type='button' class='driveBtn btn-primary'>삭제</button>&nbsp;&nbsp;		               		
+							<button type='button' class='driveBtn btn-primary' onclick='ReturnCheck()'>선택해제</button>&nbsp;&nbsp;
+		               	</div>
+		               	<div id="default">
 		                <button id="driveSearchBtn" type="button" class="driveBtn btn-primary"
 		                    onclick="Search()">검색</button>&nbsp;&nbsp;
 		                <div class="filebox" style="display:inline;">
@@ -299,8 +322,9 @@ function sendFileToServer(formData,status){
 		                </div>
 		                <button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary"
 		                    onclick="Allcheck()">전체선택</button>
+		                </div>   
 		                &nbsp;&nbsp;&nbsp;&nbsp;
-		                <div class="drivegroup">
+		                <div class="drivegroup" style="position: absolute; right: 0px; top: 0px;">
 		                    <button class="btn driveViewBtn" id="tableView">
 		                        <i class="fas fa-list fa-2x"></i>
 		                    </button>

@@ -46,62 +46,9 @@
                             </ul>
                         </div>
                     </div>
-                    
-                    <!-- Activity -->
-                    <div class="card mb-0">
-                        <div class="card-header" id="kanbanActivityBoxHeader">
-                            <a data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanActivityBox" aria-expanded="true" aria-controls="kanbanActivityBox">
-                                <h5 class="mb-0">
-                                    <i class="fas fa-bars mr-2" aria-hidden="true"></i>
-                                    <span id="issueDetailActivityCount">Activity (4)</span>
-                                </h5>
-                            </a>
-                        </div>
-                        <div id="kanbanActivityBox" class=" collapse multi-collapse" >
-                            <ul class="timeline w-100" id="issueDetailActivity">
-                                <li>
-                                    <p> Crystal opened this issue 1/11</p>
-                                </li>
-                                <li>
-                                    <p>1/12 edited </p>
-                                </li>
-                                <li>
-                                    <p>1/14 edited</p>
-                                </li>
-                                <li>
-                                    <p>1/16 moved this issue from 'to do' to 'done'</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                   
-                    <!-- Comments -->
-                    <div class="card mb-0">
-                        <div class="card-header" id="kanbanCommentBoxHeader">
-                            <a data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanCommentBox" aria-expanded="true" aria-controls="kanbanCommentBox">
-                                <h5 class="mb-0">
-                                    <i class="fas fa-comments mr-2" aria-hidden="true"></i>
-                                    <span id=issueDetailCommentCount>Comments (10)</span>
-                                </h5>
-                            </a>
-                        </div>
-                        <div id="kanbanCommentBox" class=" collapse show multi-collapse">
-                            <div class="card-body mt-0" style="border: 1px solid; border-color:#e9e9e9; border-radius: 0.25rem;background-color:#e9e9e9;">
-                                <div class="comment-widgets scrollable" id="issueDetailComment">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               	 </div>
                 <br>
-      
-                </div>
-                  <div class="row container-fluid">
-						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
-						<input type="text" id="replycontent" name="replycontent" style="resize: none; width:75%">
-						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px">Comment</button>
             </div>
-            
         </div>
         
         <!-- Option -->
@@ -117,7 +64,7 @@
                 <div class="row">
                     <div class="col-4">Label</div>
                     <div class="col-8">
-                        <div id="issueDetailEditLabel" style="padding:2px; padding-left:5px;">Dev</div>
+                        <div id="issueDetailEditLabel" style="padding-right:7px; padding-left:7px;"  class="badgeIcon">Dev</div>
                     </div>
                 </div>
             </div>
