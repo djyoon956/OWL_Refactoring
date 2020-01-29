@@ -301,7 +301,7 @@ function setKanbanDetail(issueIdx){
 		}
 	})
 
-changeKanbanView("detail");
+	changeKanbanView("detail");
 }
 
 
@@ -332,7 +332,6 @@ function editLabel(idx, color, name) {
 	console.log('idx뭐니 : ' + idx);
 	//$('.labelList').attr('style', "background-color:#fff");
 	$('.labelList').find('.edit').removeClass("hidden");
-
 
 	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
 	//editIdx = idx;
@@ -370,7 +369,7 @@ function editLabel(idx, color, name) {
 	
 	
 	function editReply(issueRlyIdx, issueIdx){
-
+		
 		$('#'+issueRlyIdx+'recontent').hide(); //본 댓글
 		$('#'+issueRlyIdx+'editContent').removeClass('hidden');// 변경댓글
 		$('#'+issueRlyIdx+'reEditBtn').addClass("hidden"); //EDIT 버튼 
@@ -381,7 +380,6 @@ function editLabel(idx, color, name) {
 		let recontent= $('#'+issueRlyIdx+'recontent').text();
 		
 		$('#'+issueRlyIdx+'editContent').val(recontent);
-		
 		
 		$('#'+issueRlyIdx+'editChangeBtn').click ( function() {
 			
@@ -400,22 +398,16 @@ function editLabel(idx, color, name) {
 			    }
 			})
 		})
-		
+				
 		
 			$('.replyCcBtn').click(function() {
-				setKanbanDetail(issueIdx);
+					setKanbanDetail(issueIdx);
+			});
 
-		
-				});
-		
-		
 	}
 	
 	
 
-	
-	
-	
 	
 	$("#editIssueDetailBtn").click(function() {
 		

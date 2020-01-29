@@ -14,10 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
   </head>
   <body>
-<%--    <c:set var="member" value="${member}" scope="request"/>
-   <input type="hidden" id='memberName'value='${member.name}'>
-   <input type="hidden" id='memberEmail'value='${member.email}'>
-    <input type="hidden" id='memberProfilePic'value='${member.profilePic}'> --%>
+
     <input type="hidden" id='curUserKey'>
     <!-- header Top 영역 -->
     <header class="navbar-fixed">
@@ -193,46 +190,18 @@
       const curProfilePic = "${member.profilePic}";
      
       const SPLIT_CHAR = '@spl@';
+      var roomFlag;
+		var roomUserList; // 챗방 유저리스트  			
+		var roomUserName; // 챗방 유저 이름 
+		var roomId;		
+		var roomTitle; 	
     	  
       console.log("현재 접속중인 유저 정보" + curName+"/"+curEmail+"/"+curProfilePic);
 
-      /* var messageTemplate = '<li id="li' + key  + '" class="collection-item avatar" data-key="' + key + '">'+
-		'<img src="'+ profileImg ? profileImg : + 'img/noprofile.png'+'" alt="" class="circle">'+
-		'<span class="title">'+userName+'</span><span class="time">'+time+'</span>'+
-		'<p>'+message+'</p>'+
-			'</li>'; 
-
-			console.log("messageTemplate 여기에 담긴 값이 언디파인디인 이유는???") */
-          /**
-           *  FirebaseChat ES5 클래스
-           */
-          //function FirebaseChat(){
-        	 
-
-        	  
-
-         // }         
-          /**
-           * Dom 로딩 후 동작
-           */
-         // document.addEventListener('DOMContentLoaded', function() {
-              //FirebaseChat 클래스 초기화
-          //    window.fbChat = new FirebaseChat();
-
-              //다운로드 프로그레스 팝업 modal 설정
-        //      $('#dnModal').modal();
-              //채팅방 초대 modal 설정
-          //    $('#dvAddUser').modal();
-       //   });
+      
+   
           
-          
-          
-          
-          
-          
-          
-          
-          console.log('what???????????????');
+        
           // Your web app's Firebase configuration
           var firebaseConfig = {
             apiKey: "AIzaSyCUWhwHawfZnngksqB7RstHZJVC_fQloeg",
@@ -481,11 +450,7 @@
 
 
 
-		var roomFlag;
-		var roomUserList; // 챗방 유저리스트  			
-		var roomUserName; // 챗방 유저 이름 
-		var roomId;		
-		var roomTitle; 		
+			
 
 			//채팅방 유적 목록 클릭시 실행 되는 펑션
           function onUserListClick(event){

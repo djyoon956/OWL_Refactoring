@@ -21,4 +21,8 @@ public class Reply {
 	public String getWriteDate() {
 		return new SimpleDateFormat("yyyy-MM-dd").format(createDate);
 	}
+	
+	
+	private String creatorName; //UI용
+	
 }
