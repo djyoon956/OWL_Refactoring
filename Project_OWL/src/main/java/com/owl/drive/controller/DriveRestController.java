@@ -129,7 +129,7 @@ public class DriveRestController {
 		}		
 		return result;
 	}
-	
+
 	@RequestMapping(value="updateNewName.do")
 	public boolean updateNewNameFolder(String folderName , int driveIdx ,HttpServletRequest request) {
 		boolean result = false;	
@@ -144,12 +144,22 @@ public class DriveRestController {
 		return folders;
 	}
 
+	/**
+	 * 드라이브 해당하는 폴더에 파일 업로드
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param driveUploadFile
+	 * @param projectIdx
+	 * @param folderIdx
+	 */
 	@RequestMapping("DriveFileUpload.do")
-	public void driveFileUpload(MultipartFile driveUploadFile, int projectIdx, int folderIdx, HttpServletRequest request, Principal principal) {
+	public void driveFileUpload(List<MultipartFile> driveUploadFiles, int projectIdx, int folderIdx, HttpServletRequest request, Principal principal) {
 		System.out.println("in driveFileUpload");
 		System.out.println(projectIdx);
 		System.out.println(folderIdx);
+		System.out.println(driveUploadFiles.size());
 	
+		/*
 		String fileName = driveUploadFile.getOriginalFilename();
 		String uploadpath = request.getServletContext().getRealPath("upload");
 
@@ -169,11 +179,11 @@ public class DriveRestController {
 				UploadHelper.deleteFile(filePath);
 			e.printStackTrace();
 		}
+		*/
 	}
 
 	@RequestMapping(value = "GetFolderData.do")
 	public List<DriveFile> getFolderData(int folderIdx) {
-		System.out.println("in getFolderData");
 		return service.getFolderData(folderIdx);
 	}
 	
@@ -205,11 +215,9 @@ public class DriveRestController {
 	public boolean deleteFilefromTrash(int driveFileIdx, String fileName) {
 		System.out.println("in deleteFilefromTrash");
 		System.out.println(driveFileIdx);
-		
 		return service.deleteFilefromTrash(driveFileIdx);
 	}
-	
-	
+
 	@RequestMapping(value = "RestoreFile.do")
 	public boolean restoreFilefromTrash(int driveFileIdx) {
 		System.out.println("in restoreFilefromTrash");
@@ -217,8 +225,4 @@ public class DriveRestController {
 
 		return service.restoreFilefromTrash(driveFileIdx);
 	}
-	
-	
-	
-	
 }
