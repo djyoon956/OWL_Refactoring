@@ -204,9 +204,10 @@ function setKanbanDetail(issueIdx){
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
-				
+				console.log("이슈 디테일 ");
+				console.log(data);
 				$("#issueIdxNum").val(issueIdx);
-				//issueProgress
+				//issueProgress,labelIdx
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
 					$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 				
