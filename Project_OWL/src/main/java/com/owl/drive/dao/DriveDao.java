@@ -25,7 +25,7 @@ public interface DriveDao {
 
 	public List<DriveFile> getTrashList(int projectIdx) throws ClassNotFoundException, SQLException;
 	
-	public int deleteFolder(int driveIdx) throws ClassNotFoundException, SQLException;
+	public int deleteFolderFromDrive(int driveIdx) throws ClassNotFoundException, SQLException;
 
 	public int deleteFileFromDrive(int driveFileIdx) throws ClassNotFoundException, SQLException;
 

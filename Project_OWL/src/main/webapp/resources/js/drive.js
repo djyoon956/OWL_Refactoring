@@ -47,6 +47,7 @@ function initDrive(projectIdx){
         	 console.log(trigger);
         	 console.log($(trigger[0]));
         	 console.log(trigger[0].id);
+        	 let isFolder = $(trigger[0]).hasClass("folder");
         	 return {
                  callback: function(key, options) {
                      let driveFileIdx = trigger[0].id;
@@ -56,13 +57,15 @@ function initDrive(projectIdx){
                        	 let renameElement = $(trigger[0]).find("td").first();
                     	 let oldText = $(trigger[0]).find("td span").first().text();
                     	 
-                    	 let fun = $(trigger[0]).hasClass("folder")?"renameFolder("+driveFileIdx+")" : "renameFile("+driveFileIdx+")";
-                    	 console.log(fun);
-                    	 renameElement.html("<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {renameFile("+driveFileIdx+")}'>"
+                    	 let fun = isFolder ? "renameFolder("+driveFileIdx+")" : "renameFile("+driveFileIdx+")";
+                    	 renameElement.html("<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {"+fun+"}'>"
                     			 							+"<button class='btn btn-default btn-sm ml-2' style='height : 32px;' onclick='"+fun+"'><i class='fas fa-check'></i></button>");
                     	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
                      }else if(key == "delete"){
-                    	 deleteDriveFile(driveFileIdx);
+                    	 if(isFolder)
+                    		 deleteDriveFolder(driveFileIdx);
+                    	 else
+                    		 deleteDriveFile(driveFileIdx);
                      }else if(key == "restore"){
                     	 restoreFilefromTrash(driveFileIdx);
                      }else if(key == "deleteFromTrash"){
@@ -70,7 +73,7 @@ function initDrive(projectIdx){
                      }
                  },
                  items:{
-                     "download": {name: "다운로드", icon: "fas fa-download", visible : !isTrash},
+                     "download": {name: "다운로드", icon: "fas fa-download", visible : !isFolder && !isTrash},
                      "rename": {name: "이름 변경", icon: "edit", visible : !isTrash},
                      "delete": {name: "삭제", icon: "delete", visible : !isTrash},
                      "restore": {name: "복원", icon: "fas fa-undo", visible : isTrash},
@@ -294,16 +297,14 @@ function callDirectoryData(){
 		$('#driveUploadBtn').show();
 		$('#trashName').addClass("hidden");
 		$("#driveName").show();
-		
-		setDirectoryData(folderIdx, folderName);
+		if(folderIdx != null && folderName!= null)
+			setDirectoryData(folderIdx, folderName);
 	}	
 }
 
 function setDirectoryData(folderIdx, folderName) {
 	isTrash = false;
-	console.log("in setFolderData");
-	console.log("folderIdx : " + folderIdx);
-	console.log("view type : " + driveViewType);
+
 	$.ajax({
 		url : "GetFolderData.do",
 		data : { folderIdx : folderIdx },
@@ -462,6 +463,26 @@ function deleteDriveFile(driveFileIdx){
 	 })
 }
 
+function deleteDriveFolder(driveIdx){
+	$.ajax({
+		url : "DeleteFolder.do",
+		type : "POST",
+		data : {driveIdx : driveIdx},
+		success : function(data){
+			if(data){
+				callDirectoryData();
+				successAlert("폴더 삭제 완료");
+				driveRefresh();
+			}else{
+				errorAlert("폴더 삭제 실패");
+			}
+		},
+		error : function(){
+			errorAlert("폴더 삭제 실패");
+		}
+	})
+}
+
 
 //휴지통에서 영구 삭제 함수 
 function deleteFilefromTrash(driveFileIdx) {
@@ -541,8 +562,9 @@ function renameFolder(driveIdx){
 			     folderName: $("#driveFileRename").val() },
 			success : function(data){
 				if(data > 0){ 
-					$("#driveTable #"+driveFileIdx).find("td").first().html("<i class='fas fa-file-alt mr-3'></i><span>"+$("#driveFileRename").val()+"</span>");
+					$("#driveTable #"+driveIdx).find("td").first().html("<i class='fas fa-file-alt mr-3'></i><span>"+$("#driveFileRename").val()+"</span>");
 					successAlert("폴더 이름 변경 완료");
+					driveRefresh();
 				}else{
 					errorAlert("폴더 이름 변경 실패");
 				}
