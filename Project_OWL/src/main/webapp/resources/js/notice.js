@@ -183,8 +183,7 @@ function editNoticeSetView(){
 		  	var fileIndex = $(this).attr("id");
 		  	 console.log($(this).text());
 		  	console.log(fileIndex);
-let deleteIcon = "<div id= '" + fileIndex +"file'>" + $(this).text() + "<i class='far fa-times-circle font-weight-bold font-18 ml-1' onclick= 'deleteFIle("+ fileIndex +")'></i><div>";
-		  //	$(this).text().append(deleteIcon);
+		  	let deleteIcon = "<div id= '" + fileIndex +"file'>" + $(this).text() + "<i class='far fa-times-circle font-weight-bold font-18 ml-1' style=' cursor: pointer;' onclick= 'deleteFIle("+ fileIndex +")'></i><div>";
 		    $("#noticeEditFiles").append( deleteIcon );
 	   });
 	changeNoticeView("editBox");
@@ -231,7 +230,7 @@ function deleteFIle(fileIdx){
 		data : {fileIdx : fileIdx},
 		success : function(data){
 			if(data){
-				$("#"+ fileIdx +"file").remove();
+				$("#"+ fileIdx  +"file").remove();
 			} else
 				warningAlert("삭제 실패!");
 		},

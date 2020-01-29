@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>	
 
 	<select id="getDriveList"  resultType="com.owl.drive.dto.DriveFolder" parameterType="int">
-		SELECT DRIVEIDX, FOLDERNAME, REF, DEPTH, PROJECTIDX FROM DRIVEFOLDER WHERE PROJECTIDX = #{projectIdx};
+		SELECT DRIVEIDX, FOLDERNAME, REF, DEPTH, PROJECTIDX FROM DRIVEFOLDER WHERE PROJECTIDX = #{projectIdx} AND ISDELETE = 0;
 	</select>
 	
 	<select id="getFileByFolderIdx" resultType="com.owl.drive.dto.DriveFile" parameterType="int">

@@ -54,9 +54,12 @@ function initDrive(projectIdx){
                     	 downloadFile(driveFileIdx);
                      }else if(key == "rename"){
                        	 let renameElement = $(trigger[0]).find("td").first();
-                    	 let oldText = $(trigger[0]).find("td").first().text();
-                    	 renameElement.html( "<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {renameFile("+driveFileIdx+")}'>"
-                    			 							+ "<button class='btn btn-default btn-sm ml-2' style='height : 32px;' onclick='renameFile("+driveFileIdx+")'><i class='fas fa-check'></i></button>");
+                    	 let oldText = $(trigger[0]).find("td span").first().text();
+                    	 
+                    	 let fun = $(trigger[0]).hasClass("folder")?"renameFolder("+driveFileIdx+")" : "renameFile("+driveFileIdx+")";
+                    	 console.log(fun);
+                    	 renameElement.html("<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {renameFile("+driveFileIdx+")}'>"
+                    			 							+"<button class='btn btn-default btn-sm ml-2' style='height : 32px;' onclick='"+fun+"'><i class='fas fa-check'></i></button>");
                     	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
                      }else if(key == "delete"){
                     	 deleteDriveFile(driveFileIdx);
@@ -518,7 +521,7 @@ function renameFile(driveFileIdx){
 			 		, fileName :  $("#driveFileRename").val()},
 		 success : function(data){
 			 if(data){ 
-				 $("#driveTable #"+driveFileIdx).find("td").first().html($("#driveFileRename").val());
+				 $("#driveTable #"+driveFileIdx).find("td").first().html("<i class='fas fa-file-alt mr-3'></i><span>"+$("#driveFileRename").val()+"</span>");
 				 successAlert("파일 이름 변경 완료");
 			 }else{
 				 errorAlert("파일 이름 변경 실패");
@@ -528,6 +531,26 @@ function renameFile(driveFileIdx){
 			 errorAlert("파일 이름 변경 실패");
 		 }
 	 })
+}
+
+function renameFolder(driveIdx){
+	$.ajax({
+		url:"updateNewName.do",
+		method:"POST",
+		data:{driveIdx: driveIdx,
+			     folderName: $("#driveFileRename").val() },
+			success : function(data){
+				if(data > 0){ 
+					$("#driveTable #"+driveFileIdx).find("td").first().html("<i class='fas fa-file-alt mr-3'></i><span>"+$("#driveFileRename").val()+"</span>");
+					successAlert("폴더 이름 변경 완료");
+				}else{
+					errorAlert("폴더 이름 변경 실패");
+				}
+			},
+			error : function(){
+				errorAlert("폴더 이름 변경 실패");
+			}
+	})
 }
 
 

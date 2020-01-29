@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -167,6 +168,13 @@ public class DriveRestController {
 	public int updateNewNameFolder(String folderName , int driveIdx ,HttpServletRequest request) {
 		service.updateNewNameFolder(folderName, driveIdx);	
 		return driveIdx;
+	}
+	
+	@RequestMapping(value="DeleteFolder.do", method = RequestMethod.POST)
+	public boolean deleteFolder(int driveIdx) {
+		boolean result = false;
+		result = service.deleteFolder(driveIdx);
+		return result;
 	}
 	
 	/**

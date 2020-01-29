@@ -143,13 +143,8 @@ $(function(){
 		        		}
 		    		});
  	 			}
- 			}).on('delete_node.jstree', function (e, data) {
-				console.log("delete");
-				console.log(data);
-
-
-
  			});
+		
 	driveRefresh();
 	
 	$("#createFolder").click(function(){
@@ -163,18 +158,6 @@ $(function(){
 		} 
 	});
 
-
-	$("#deleteFolder").click(function(){
-		console.log("delete");
-		var ref = $('#jstree').jstree(true),
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		ref.delete_node(sel);
-	});		
-		
-
-	
-	
 
 	//file drag and drop 기능
 	var obj = $("#dragandrophandler");
@@ -283,8 +266,12 @@ function driveRefresh(){
 
 			$('#jstree').jstree(true).settings.core.data = folderList;
 			$('#jstree').jstree(true).refresh();
-			
-			callDirectoryData();
+
+			console.log("------------");
+			console.log(folderList[0].id);
+			$('#jstree').jstree('select_node', folderList[0].id);	
+			callDirectoryData();	
+	
 		}
 	});
 }
