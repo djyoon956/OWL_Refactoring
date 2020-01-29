@@ -145,41 +145,41 @@ public class DriveRestController {
 	}
 
 	/**
-	 * 드라이브 해당하는 폴더에 파일 업로드
+	 * 드라이브 해당 폴더에 다중 파일 업로드
 	 * @author 윤다정
 	 * @since 2020/01/29
-	 * @param driveUploadFile
+	 * @param driveUploadFiles
 	 * @param projectIdx
 	 * @param folderIdx
 	 */
 	@RequestMapping("DriveFileUpload.do")
-	public void driveFileUpload(List<MultipartFile> driveUploadFiles, int projectIdx, int folderIdx, HttpServletRequest request, Principal principal) {
+	public void driveFileUpload(@RequestParam("driveUploadFiles") List<MultipartFile> driveUploadFiles, int projectIdx, int folderIdx, HttpServletRequest request, Principal principal) {
 		System.out.println("in driveFileUpload");
 		System.out.println(projectIdx);
 		System.out.println(folderIdx);
 		System.out.println(driveUploadFiles.size());
 	
-		/*
-		String fileName = driveUploadFile.getOriginalFilename();
-		String uploadpath = request.getServletContext().getRealPath("upload");
+		driveUploadFiles.forEach(file -> {
+			String fileName = file.getOriginalFilename();
+			String uploadpath = request.getServletContext().getRealPath("upload");
 
-		DriveFile driveFile = new DriveFile();
-		driveFile.setCreator(principal.getName());
-		driveFile.setDriveIdx(folderIdx);
-		driveFile.setFileName(fileName);
-		driveFile.setFileSize((int) (driveUploadFile.getSize() / 1024));
-		
-		String filePath = "";
-		try {
-			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, driveUploadFile.getBytes()); // full path
-			System.out.println("filePath : " + filePath);
-			service.insertFile(driveFile);
-		} catch (IOException e) {
-			if (!filePath.isEmpty())
-				UploadHelper.deleteFile(filePath);
-			e.printStackTrace();
-		}
-		*/
+			DriveFile driveFile = new DriveFile();
+			driveFile.setCreator(principal.getName());
+			driveFile.setDriveIdx(folderIdx);
+			driveFile.setFileName(fileName);
+			driveFile.setFileSize((int) (file.getSize() / 1024));
+			
+			String filePath = "";
+			try {
+				filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, file.getBytes()); 
+				System.out.println("filePath : " + filePath);
+				service.insertFile(driveFile);
+			} catch (IOException e) {
+				if (!filePath.isEmpty())
+					UploadHelper.deleteFile(filePath);
+				e.printStackTrace();
+			}
+		});
 	}
 
 	@RequestMapping(value = "GetFolderData.do")
