@@ -158,7 +158,6 @@ public class KanbanService {
 			e.printStackTrace();
 		}
 		
-		System.out.println("lblist뭐니?"   + lblist);
 		return lblist;
 	}
 	
@@ -184,7 +183,6 @@ public class KanbanService {
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-
 		return issue;
 	}
 		
@@ -367,6 +365,7 @@ public class KanbanService {
 		System.out.println("result가 뭐니?" + result);
 		return result;
 	}
+	
 	public boolean closeIssue(int issueIdx,String email) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
@@ -401,10 +400,6 @@ public class KanbanService {
 			if(result) {
 				re = dao.getReply(reply.getIssueRlyIdx());
 				re.setIssueRlyIdx(reply.getIssueRlyIdx());
-				System.out.println("-------------------------------------");
-				System.out.println(re);
-				System.out.println("date어떻게 나오니?" + re.getCreateDate());
-				System.out.println();
 			}
 			
 			System.out.println("date ?" + re);
@@ -417,8 +412,7 @@ public class KanbanService {
 	}
 	
 	public boolean deleteReply(int issuerlyidx) {
-		System.out.println("deleteReply service in");
-		System.out.println("issuerlyidx" +issuerlyidx);
+
 		boolean result = false;
 		KanbanDao dao = getKanbanDao();
 		try {
@@ -434,8 +428,6 @@ public class KanbanService {
 	
 	
 	public boolean editReply(Reply reply) {
-		System.out.println("editReply service in");
-		System.out.println("reply" +reply);
 		boolean result = false;
 		KanbanDao dao = getKanbanDao();
 		
@@ -448,8 +440,6 @@ public class KanbanService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
 		return result;
 	}
 	
