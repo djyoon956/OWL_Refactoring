@@ -28,7 +28,9 @@
 				</form>
 				<!--  멤버 삭제   -->
 				<label class="m-t-20">멤버 리스트</label>
-				<div class="input-group ">
+				<ul id="ulUserList" class="collection">
+           
+				<!-- <div class="input-group ">
 					<div class="form-control pt-2 pb-2">
 						<i class="fas fa-user iconSizeBig"></i> 홍길동(hong@gmail.com)
 					</div>
@@ -37,7 +39,7 @@
 						<i class="far fa-times-circle font-weight-bold iconSizeBig"></i></span>
 					</div>
 				</div>
-				<!-- 끝 -->
+				끝
 				<div class="input-group ">
 					<div class="form-control pt-2 pb-2">
 						<i class="fas fa-user iconSizeBig"></i> 김콜린(kim@gmail.com)
@@ -46,7 +48,8 @@
 						<span class="input-group-text">
 						<i class="far fa-times-circle font-weight-bold iconSizeBig"></i> </span>
 					</div>
-				</div>
+				</div> -->
+				 </ul>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary" data-dismiss="modal">생성하기</button>
                  </div>
