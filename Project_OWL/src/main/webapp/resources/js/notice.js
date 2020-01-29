@@ -58,6 +58,7 @@ function setDetailData(boardIdx){
 								+" </li>";
 				$("#noticeFiles").append(control);
 			})
+			$("#noticeBoardIdx").text(boardIdx);
 			changeNoticeView("detailBox");
 		}
 	}); 
@@ -108,8 +109,9 @@ function writeNoticeOk(){
 		warningAlert("내용을 모두 작성해주세요.");
 		return;
 	}
-	
+	$("#noticeBoardIdx").text(boardIdx)
     let formData = new FormData();
+	
     formData.append("projectIdx", noticeProjectIdx);
     formData.append("content",$('#noticeNote').summernote('code'));
     formData.append("title",$("#title").val());
@@ -178,18 +180,18 @@ function editNoticeSetView(){
 	$("#noticeEditFileCount").text($("#noticeFileCount").text());
 	$("#noticeEditFiles").empty();
 	  $.each($("#noticeFiles li"), function(i, item) {
-		     console.log("파일 each문");
 		  	 console.log(item);
 		  	 console.log($(this).text());
 		  
 		  	$("#noticeEditFiles").append(item);
 	   });
-	
+	console.log("보드 idx");
+	console.log($("#noticeBoardIdx").text());
 }
 function noticeEditOk() {
 	
     let formData = new FormData();
-    formData.append("projectIdx", noticeProjectIdx);
+    formData.append("boardIdx", $("#noticeBoardIdx").text());
     formData.append("content",$('#noticeEditNote').summernote('code'));
     formData.append("title",$("#editTitle").val());
     $.each($("#noticeEditMultipartFiles")[0].files, function(i, file) {

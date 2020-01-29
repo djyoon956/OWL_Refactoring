@@ -13,6 +13,7 @@ font-size: 16px;
 color: #f8f9fa;
 }
 </style>
+<p class="hidden" id="noticeBoardIdx"></p> 
 <div class="container-fluid mt-2 hidden" style="padding: 25px;" id="noticeDetailBox">
     <div class="row">
         <div class="card w-100">
