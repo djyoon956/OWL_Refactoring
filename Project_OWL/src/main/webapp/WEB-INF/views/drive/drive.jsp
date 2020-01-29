@@ -266,10 +266,6 @@ function driveRefresh(){
 
 			$('#jstree').jstree(true).settings.core.data = folderList;
 			$('#jstree').jstree(true).refresh();
-
-			console.log("------------");
-			console.log(folderList[0].id);
-			$('#jstree').jstree('select_node', folderList[0].id);	
 			callDirectoryData();	
 	
 		}
