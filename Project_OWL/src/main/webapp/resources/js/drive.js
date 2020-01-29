@@ -5,11 +5,12 @@ let isTrash = false;  //false : drive , true : trash
 function initDrive(projectIdx){	
 	driveProjectIdx = projectIdx;
 	
-	$("#driveUploadFile").fileupload({
+	$("#driveUploadFiles").fileupload({
+		singleFileUploads: false,
 		url : "DriveFileUpload.do",
 		formData : {projectIdx : projectIdx , folderIdx:1},
 		add: function(e, data){
-			$("#driveUploadFile").fileupload( 'option', 'formData').folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+			$("#driveUploadFiles").fileupload( 'option', 'formData').folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 			data.submit();
 		},
 		done : function(e, data){
@@ -17,7 +18,7 @@ function initDrive(projectIdx){
 			callDirectoryData();
 		},
 		fail : function(){
-			console.log("driveUploadFile fail");
+			console.log("driveUploadFiles fail");
 		}
 	});
 	
