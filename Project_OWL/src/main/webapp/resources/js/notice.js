@@ -176,15 +176,26 @@ function editNoticeSetView(){
 	$("#editTitle").val($("#noticeTitle").text());
 	$('#noticeEditNote').summernote('code',$("#noticeContent").html());
 	$("#noticeEditFileCount").text($("#noticeFileCount").text());
+	$("#noticeEditFiles").empty();
 	  $.each($("#noticeFiles li"), function(i, item) {
 		     console.log("파일 each문");
 		  	 console.log(item);
 		  	 console.log($(this).text());
+		  
 		  	$("#noticeEditFiles").append(item);
 	   });
 	
 }
 function noticeEditOk() {
+	
+    let formData = new FormData();
+    formData.append("projectIdx", noticeProjectIdx);
+    formData.append("content",$('#noticeEditNote').summernote('code'));
+    formData.append("title",$("#editTitle").val());
+    $.each($("#noticeEditMultipartFiles")[0].files, function(i, file) {
+    	formData.append('multipartFiles', file);
+    });
+    
 	  let notice;
 	    $.ajax({
 	        type: "POST",
