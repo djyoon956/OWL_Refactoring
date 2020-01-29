@@ -25,45 +25,6 @@
 			$("#alarmToggle").hide();
 			$("#settingtoggle").hide();
 		 	$("#chatToggle").animate({width:'toggle'},350);
-			
-		 	$.ajax({
-				url: "MyProjectsMates.do",
-				type: "POST",
-				dataType: 'json',
-				data : { email :userEmail,
-					     name : userName}, 
-				success: function (data) {
-					console.log("뷰단으로 데이터 들어 오나요?? >" + data);
-
-					var userList = "";
-					$.each(data, function(index, value) {          				
-					  console.log(value);
-					  console.log(value.name + " / " + value.email);
-
-					userList += '<a href = "chatTest.do"'+ '<li id="li' + value.email +'" data-targetUserUid="' + value.email + '" data-username="' + value.name + '" class="collection-item avatar list">'
-	               + '<img src="' + 'value.img' + '" alt="" class="circle">' +
-	              '<span class="title">'+ value.name+ '</span>'+
-	              '<span class="small material-icons right hiddendiv done">done</span>'+
-	              '<span class="small material-icons right hiddendiv mood yellow-text">mood</span>'+
-	              '</li>' + '</a>';
-					  
-					});
-
-					$('#chatUserList').append(userList);
-
-					//firebase database 에 신규 회원일 경우 등록 해야 하는데.. 이미 존재 하는 유전 인지 아닌지 먼저 확인을 학고 등록 해야 겠지??
-					
-				},
-				error: function(xhr, status, error){
-	    			console.log("아잭스 에러 터짐 ㅠㅠ");
-			         var errorMessage = xhr.status + ': ' + xhr.statusText
-			         alert('Error - ' + errorMessage);
-			     }
-			});
-
-
-
-	 	
 		});
 
 		$("#alarmBtn").click(function() {
@@ -1371,16 +1332,9 @@ display: block;
         	  let errorSource = "this.src='resources/images/login/profile.png'";
         	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name + '" class="collection-item avatar list" onclick = "onUserListClick(this)" >' 
         	  				  + '<div class="input-group "><div class="form-control pt-2 pb-2"><img src="' + userProPic + '"  alt="" class="circle mr-3" height="35" width="35" onerror="'+errorSource+'" >'+ name + '('+email+')</div>'                      
-        	  				 // + '<div class="input-group-append"><span class="input-group-text">'+ name + '('+email+')</span></div>'
-        	  				 // +'<span class="small material-icons right done">done</span>'
-        	  				 // + '<span class="small material-icons right hiddendiv mood yellow-text">mood</span>'
+        	  				 
         	  				  + '</div></li>'; 
 
-/*         	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name + '" class="collection-item avatar list" onclick = "onUserListClick(this)">' 
-       	  				 		 + '<div class="row"><div class="col-2"><img src="' + userProPic + '"  alt="" class="circle" height="35" width="35" onerror="'+errorSource+'"></div>'                      
-       	  				 		 + '<div class="col-10"><span class="title" style="font-size : 14px;">'+ name + '('+email+')</span></div>'
-       	  						  + '</div></li>';  */
-      	            					 
         	  $('#ulUserList').append(userTemplate);
 
               }
@@ -1404,17 +1358,26 @@ display: block;
         	    var userProPic = 	(curProfilePic ? curProfilePic : 'resources/images/user/noprofile.png');
 				var roomTemplate = '<li id="liRoom' + roomId + '" data-roomId="' + roomId + '" data-roomTitle="' 
 									+ roomTitle+ '" data-roomUserName="'+roomUserName+ '" data-roomType="'+roomType+'" data-roomOneVSOneTarget="'
-									+roomOneVSOneTarget+'" data-roomUserList="'+roomUserList +'" class="collection-item avatar" onclick="onRoomListClick(this)">'
-	            					+'<img src="' + userProPic + '" alt="" class="circle">'
-	            					+'<span class="title">'+roomTitle+'</span>'
-	            					+'<p>'+lastMessage +'</p>'
-	            					+'<a href="#!" class="secondary-content">' +datetime +'</a>'
-	        						+'</li>';	
-
-
-
+									+roomOneVSOneTarget+'" data-roomUserList="'+roomUserList +
+									'" class="chat_list-group-item chat_list-group-item-action flex-column align-items-start chatList" onclick="onRoomListClick(this)">'
+	            					+'<div class="d-flex w-100 justify-content-between" id="chatTitle">'+
+	            		                '<div class="media">'+
+	            		                  '<img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">'+
+	            		                  '<h5 style="margin-top: 18px; color: #ffb1b9">'+roomTitle+'</h5>'+
+	            		                '</div>'+
+	            		                '<small style="float:right;">'+datetime+'</small>'+
+	            		             '</div>'+
+	            		              '<ul>'+
+             								'<li class="d-flex justify-content-between align-items-center">'+
+             			                                                      lastMessage+ 
+               									'<span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>'+
+               								'</li>'+
+          								'</ul>'+
+          							'</li>';	  
+	     
 					return roomTemplate;	
               }
+
           
           function onBackBtnClick(){ 
               window.isOpenRoom = false; 
