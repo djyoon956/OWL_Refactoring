@@ -429,9 +429,9 @@ function setTableView(data){
 		$.each(data.folders, function(index, element) {
 			let row =$('#driveTable').DataTable().row.add( [
 							"<i class='fas fa-folder mr-3'></i><span>"+element.folderName+"</span>",
-							"",
-							"",
-							""
+							"-",
+							"-",
+							"-"
 							]);
 			row.node().id = element.driveIdx;
 			$(row.node()).addClass("folder");

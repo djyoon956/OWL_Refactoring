@@ -104,7 +104,6 @@ public class DriveService {
 
 		try {
 			trashlist.put("files", dao.getTrashList(projectIdx));
-			
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {

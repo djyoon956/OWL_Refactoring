@@ -183,7 +183,7 @@ function editNoticeSetView(){
 		  	var fileIndex = $(this).attr("id");
 		  	 console.log($(this).text());
 		  	console.log(fileIndex);
-let deleteIcon = $(this).text() + "<i class='far fa-times-circle font-weight-bold font-18 ml-1' onclick= 'deleteFIle("+ fileIndex +")'></i><br>";
+let deleteIcon = "<div id= '" + fileIndex +"file'>" + $(this).text() + "<i class='far fa-times-circle font-weight-bold font-18 ml-1' onclick= 'deleteFIle("+ fileIndex +")'></i><div>";
 		  //	$(this).text().append(deleteIcon);
 		    $("#noticeEditFiles").append( deleteIcon );
 	   });
@@ -231,8 +231,7 @@ function deleteFIle(fileIdx){
 		data : {fileIdx : fileIdx},
 		success : function(data){
 			if(data){
-				successAlert("삭제 완료!");
-				setNoticeData();
+				$("#"+ fileIdx +"file").remove();
 			} else
 				warningAlert("삭제 실패!");
 		},
