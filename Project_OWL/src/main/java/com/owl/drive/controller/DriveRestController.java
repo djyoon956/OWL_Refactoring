@@ -27,6 +27,13 @@ public class DriveRestController {
 	@Autowired
 	private DriveService service;
 
+	/**
+	 * 드라이브로 페이지 이동
+	 * @author 이정은
+	 * @since 2020/01/29
+	 * @param modelAndView
+	 * @return modelAndView
+	 */
 	@RequestMapping("GetDrive.do")
 	public ModelAndView getDriveView(ModelAndView modelAndView) {
 		modelAndView.setViewName("drive/drive");
@@ -113,8 +120,7 @@ public class DriveRestController {
 	 * @return drivefolder.getDriveIdx()
 	 */
 	@RequestMapping(value="copyFolder.do")
-	public int copyFolder(DriveFolder drivefolder, String[] refs, int oldId, int parent, HttpServletRequest request) {
-		boolean result = false;	
+	public int copyFolder(DriveFolder drivefolder, String[] refs, int oldId, int parent, HttpServletRequest request) {	
 		String oldPath = "";
 		List<Integer> driveRefs = new ArrayList<Integer>();
 		if (refs.length == 2) { // default 하위

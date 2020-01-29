@@ -309,7 +309,6 @@ function setDirectoryData(folderIdx, folderName) {
 			console.log("in GetFolderData success");
 			console.log(data);
 
-			return;
 			if(data.folders.length == 0 && data.files.length == 0){
 				$("#directoryName").text("[ "+folderName+" ] directory.");
 				$("#emptyDriveBox").removeClass("hidden");
@@ -342,6 +341,7 @@ function setIconView(data){
 	let line = 4;
 	if(!isTrash){
 		$.each(data.folders, function(index, element) {
+			console.log("in folder");
 			control += '<div class="col-sm-3">'
 				+ 	'<div class="card driveCard dropdown">'
 				+ 		'<div class="more" style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
@@ -371,6 +371,7 @@ function setIconView(data){
 		});
 	}
 
+	control ="";
 	$.each(data.files, function(index, element) {
 		let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
 		let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
@@ -414,7 +415,17 @@ function setIconView(data){
 function setTableView(data){
 	$("#driveTableViewBox").removeClass("hidden");
 	$("#driveIconViewBox").addClass("hidden");
-	
+
+	$.each(data.files, function(index, element) {
+		$('#driveTable').DataTable().row.add( [
+			element.fileName,
+			element.createDate,
+			element.creatorName,
+			element.fileSize+" KB"
+        ]).node().id = element.driveFileIdx;
+		
+		$('#driveTable').DataTable().draw();
+	})
 	if(!isTrash){		
 		$.each(data.folders, function(index, element) {
 			$('#driveTable').DataTable().row.add( [
@@ -427,17 +438,6 @@ function setTableView(data){
 			$('#driveTable').DataTable().draw();
 		})
 	}
-	
-	$.each(data.files, function(index, element) {
-		$('#driveTable').DataTable().row.add( [
-			element.fileName,
-			element.createDate,
-			element.creatorName,
-			element.fileSize+" KB"
-        ]).node().id = element.driveFileIdx;
-		
-		$('#driveTable').DataTable().draw();
-	})
 }
 
 function deleteDriveFile(driveFileIdx){
