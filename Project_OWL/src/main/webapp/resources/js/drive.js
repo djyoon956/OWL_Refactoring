@@ -536,7 +536,7 @@ function deleteFolderfromTrash(driveFileIdx) {
 	console.log(driveFileIdx);
 	Swal.fire({
 	    title: '완전히 삭제 하시겠습니까?',
-	    text: '완전히 삭제하면 해당 폴더 및 폴더내 파일을 복구 하실 수 없습니다.',
+	    text: '삭제시 해당 폴더 및 폴더내 파일을 복구 하실 수 없습니다.',
 	    icon: 'warning',
 	    showCancelButton: true,
 	    confirmButtonColor: '#3085d6',
