@@ -1,5 +1,6 @@
 package com.owl.drive.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -295,8 +296,16 @@ public class DriveRestController {
 	 * @return downloadPath
 	 */
 	@RequestMapping(value = "GetDriveDownloadPath.do", method = RequestMethod.POST)
-	public String getDriveDownloadPath(int projectIdx, int folderIdx, String[] refs, HttpServletRequest request) {
-		String uploadPath = request.getServletContext().getRealPath("upload");
-		return UploadHelper.getDriveDownloadPath(uploadPath, projectIdx, folderIdx, refs);
+	public String getDriveDownloadPath(int projectIdx, int folderIdx, String[] refs, String fileName, HttpServletRequest request) {
+		String path = UploadHelper.getDriveDownloadPath(projectIdx, folderIdx, fileName, refs);
+		String realPath = path.replace("upload", request.getServletContext().getRealPath("upload"));
+		
+		File temp = new File(realPath);
+		if (!temp.exists()) {
+			path = "";
+		}
+
+		System.out.println(path);
+		return path;
 	}
 }

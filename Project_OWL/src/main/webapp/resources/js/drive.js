@@ -8,7 +8,7 @@ function initDrive(projectIdx){
 	$("#driveUploadFiles").fileupload({
 		singleFileUploads: false,
 		url : "DriveFileUpload.do",
-		formData : {projectIdx : projectIdx , folderIdx:1},
+		formData : {projectIdx : projectIdx},
 		add: function(e, data){
 			let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 			$("#driveUploadFiles").fileupload( 'option', 'formData').folderIdx = folderIdx;
@@ -52,7 +52,7 @@ function initDrive(projectIdx){
                  callback: function(key, options) {
                      let driveFileIdx = trigger[0].id;
                      if(key == "download"){
-                    	 downloadFile(driveFileIdx);
+                    	 downloadFile($(trigger[0]).find("td span").first().text());
                      }else if(key == "rename"){
                        	 let renameElement = $(trigger[0]).find("td").first();
                     	 let oldText = $(trigger[0]).find("td span").first().text();
@@ -61,7 +61,6 @@ function initDrive(projectIdx){
                     	 renameElement.html("<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {"+fun+"}'>"
                     			 							+"<button class='btn btn-default btn-sm ml-2' style='height : 32px;' onclick='"+fun+"'><i class='fas fa-check'></i></button>");
                     	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
-                     }else if(key == "delete"){
                     	 if(isFolder)
                     		 deleteDriveFolder(driveFileIdx);
                     	 else
@@ -579,10 +578,12 @@ function renameFolder(driveIdx){
 }
 
 
-function downloadFile(driveFileIdx){
-	console.log("in downloadFile : " + driveFileIdx);
+function downloadFile(fileName){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+	let ref = $('#jstree').jstree().get_node(folderIdx).parent;
 	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
+	
+	console.log(folderIdx);
 	console.log(refs);
 	let path ="/upload/project/"+driveProjectIdx+"/drive/";
 	
@@ -593,13 +594,21 @@ function downloadFile(driveFileIdx){
 		data : { projectIdx : driveProjectIdx
 					, folderIdx :folderIdx
 					, refs : refs 
+					, fileName : fileName
 					},
-		success : function(path){
+		success : function(downloadPath){
+			console.log(downloadPath)
 			console.log("in downloadFile success");
-			console.log(path);
+			if(downloadPath){
+				$(".defaultDriveMenu").append("<a href='"+downloadPath+"' id='tempLink' download ></a>")
+				$("#tempLink").get(0).click();
+				$("#tempLink").remove();
+			}else{
+				errorAlert("파일 다운로드에 실패하였습니다.");
+			}
 		},
 		error : function(){
-			console.log("in downloadFile error");
+			errorAlert("파일 다운로드에 실패하였습니다.");
 		}
 	})
 	console.log(path);
