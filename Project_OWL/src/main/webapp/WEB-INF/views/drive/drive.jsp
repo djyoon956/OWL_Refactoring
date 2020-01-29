@@ -144,11 +144,7 @@ $(function(){
 		    		});
  	 			}
  			}).on('delete_node.jstree', function (e, data) {
-				console.log("delete");
-				console.log(data);
-				//deleteDriveFolder(data.node.id);
-
-
+				deleteDriveFolder(data.node.id);
  			});
 	driveRefresh();
 	
