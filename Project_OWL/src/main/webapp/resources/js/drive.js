@@ -63,7 +63,7 @@ function initDrive(projectIdx){
                     	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
                      }else if(key == "delete"){
                     	 if(isFolder)
-                    		 ;
+                    		 deleteDriveFolder(driveFileIdx);
                     	 else
                     		 deleteDriveFile(driveFileIdx);
                      }else if(key == "restore"){
@@ -468,11 +468,13 @@ function deleteDriveFile(driveFileIdx){
 function deleteDriveFolder(driveIdx){
 	$.ajax({
 		url : "DeleteFolder.do",
+		type : "POST",
 		data : {driveIdx : driveIdx},
 		success : function(data){
 			if(data){
 				callDirectoryData();
 				successAlert("폴더 삭제 완료");
+				driveRefresh();
 			}else{
 				errorAlert("폴더 삭제 실패");
 			}
