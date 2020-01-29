@@ -101,12 +101,19 @@ public class UploadHelper {
 			file.delete();
 	}
 
-	public static void moveDriveDirectory(String oldPath, String uploadPath, int projectIdx, String[] refs, int driveIdx) {
+	public static void moveDriveDirectory(String oldPath, String uploadPath, int projectIdx, int[] refs, int driveIdx) {
+		String refPath = "";
+		for (int i = 0; i < refs.length; i++) {
+			if (i == refs.length - 1)
+				refPath += refs[i];
+			else
+				refPath += refs[i] + File.separator;
+		}
 		String newPath = Paths.get(uploadPath
 													, "project"
 													, Integer.toString(projectIdx)
 													, "drive"
-													, getParentPath(refs) 
+													, refPath
 													, Integer.toString(driveIdx)).toString();
 
 		File oldDirectory = new File(oldPath);

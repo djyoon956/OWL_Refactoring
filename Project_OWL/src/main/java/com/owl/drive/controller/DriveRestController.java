@@ -57,13 +57,17 @@ public class DriveRestController {
 		boolean result = false;
 		String oldPath = "";
 		
-		if (refs.length == 2) { // default 하위
-			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
-									+ drivefolder.getProjectIdx() + "\\drive\\" +Integer.parseInt(refs[0])+"\\"+ oldRef +"\\"+ drivefolder.getDriveIdx();
-		} else {
-			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
-									+ drivefolder.getProjectIdx()+ "\\drive\\" +Integer.parseInt(refs[1]) +"\\" +oldRef +"\\"+ drivefolder.getDriveIdx();
-		}
+		List<Integer>driveRefs = new ArrayList<>();
+	      if (refs.length == 2) { // default 하위
+	          driveRefs.add(Integer.parseInt(refs[0])); //default
+	          oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
+	                            + drivefolder.getProjectIdx() + "\\drive\\" +Integer.parseInt(refs[0])+"\\"+ oldRef +"\\"+ drivefolder.getDriveIdx();
+	       } else {
+	          driveRefs.add(Integer.parseInt(refs[1])); //default
+	          driveRefs.add(Integer.parseInt(refs[0])); //new ref
+	          oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
+	                            + drivefolder.getProjectIdx()+ "\\drive\\" +Integer.parseInt(refs[1]) +"\\" + drivefolder.getDriveIdx();
+	       }
         
 		try {
 			drivefolder.setFolderName(drivefolder.getFolderName());
@@ -73,7 +77,7 @@ public class DriveRestController {
 			service.updateFolder(drivefolder);
 
 			String uploadPath = request.getServletContext().getRealPath("upload");
-			UploadHelper.moveDriveDirectory(oldPath, uploadPath, drivefolder.getProjectIdx(), refs, drivefolder.getDriveIdx());
+			UploadHelper.moveDriveDirectory(oldPath, uploadPath, drivefolder.getProjectIdx(), driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
