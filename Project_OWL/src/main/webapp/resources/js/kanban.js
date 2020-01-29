@@ -23,7 +23,7 @@ function initKanban(projectIdx){
 			data : {'labelIdx' : editIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
 			success : function(data) {
 				
-				console.log('data in' + data);
+				//console.log('data in' + data);
 				$('#'+editIdx+'Label').next().remove();
 				$('#'+editIdx+'Label').remove();
 				
@@ -69,12 +69,11 @@ function addLabel(lbidx, lbcolor, lbnm) {
             +  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
             +  '</div></div><hr>';
 
-$('#labelList').append(lablist);
+   $('#labelList').append(lablist);
 
 }
 
    
-
 function addColumn(obj){
    let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
             + '<div class="columnTitle text-center mt-2 dropdown">'
@@ -94,6 +93,7 @@ function addColumn(obj){
             +   '<ul class="connectedSortable sortableCol columnBody cursor">'
             +   '</ul>'
             + '</div>';
+   
    $('#kanbanIn').append(column);
    
 }
@@ -197,21 +197,13 @@ function deleteLabel(labelidx) {
 
 function setKanbanDetail(issueIdx){
 	
-	
 	console.log("in setKanbanDetail     sfdsf");
-//	console.log(projectIdx);
 	
 	$.ajax({
 			type: "POST",
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
-				console.log("GetIssueDetail success");
-				console.log('-------------------데이터뭐니 ------------');
-				console.log(data);
-				console.log('-------------------------------');
-				console.log(data.replies);
-				console.log('-------------------------------');
 				
 				$("#issueIdxNum").val(issueIdx);
 				//issueProgress
@@ -268,7 +260,7 @@ function setKanbanDetail(issueIdx){
 										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
 										+ '		<button type="button" class="btn btn-info btn-sm hidden" id="'+element.issueRlyIdx+'editChangeBtn">SaveChange</button>'
-										+ '		<button type="button" class="btn btn-secondary btn-sm hidden" id="'+element.issueRlyIdx+'editCancelBtn">Cancel</button>'
+										+ '		<button type="button" class="btn btn-secondary btn-sm hidden replyCcBtn" id="'+element.issueRlyIdx+'editCancelBtn">Cancel</button>'
 										+ '		</div>'
 										+ '	</div>'
 										+ '</div>';
@@ -277,9 +269,7 @@ function setKanbanDetail(issueIdx){
 					
 					$("#issueDetailAssignees").text(data.assigned);
 					
-					
-	
-					
+
 					if(data.labelIdx > 0){
 
 						$("#issueDetailLabel").text(data.labelName);
@@ -299,8 +289,8 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailDueDate").text(data.dueDate);
 					else
 						$("#issueDetailDueDate").text("none");
-					console.log("이슈 프로그레스");
-					console.log(data.issueProgress);
+					//console.log("이슈 프로그레스");
+					//console.log(data.issueProgress);
 					if(data.issueProgress == 'CLOSED')
 						$("#issueClosedChk").text('Reopen issue');
 					else 
@@ -345,7 +335,7 @@ function editLabel(idx, color, name) {
 
 
 	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
-	editIdx = idx;
+	//editIdx = idx;
 	$('#addLabelBtn').addClass("hidden");
 	$('#editLabelBtn').removeClass("hidden");
 	$('#backBtn').removeClass("hidden");
@@ -392,6 +382,7 @@ function editLabel(idx, color, name) {
 		
 		$('#'+issueRlyIdx+'editContent').val(recontent);
 		
+		
 		$('#'+issueRlyIdx+'editChangeBtn').click ( function() {
 			
 			let changecontent = $('#'+issueRlyIdx+'editContent').val();
@@ -409,10 +400,19 @@ function editLabel(idx, color, name) {
 			    }
 			})
 		})
+		
+		
+			$('.replyCcBtn').click(function() {
+				setKanbanDetail(issueIdx);
+
+		
+				});
+		
+		
 	}
 	
 	
-	
+
 	
 	
 	

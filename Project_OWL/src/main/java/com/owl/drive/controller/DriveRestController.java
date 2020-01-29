@@ -228,13 +228,19 @@ public class DriveRestController {
 		return service.getFolderData(folderIdx);
 	}
 	
-	
+	/**
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param projectIdx
+	 * @return Map<String, Object>
+	 */
 	@RequestMapping(value = "GetTrashList.do")
-	public List<DriveFile> getTrashList(int projectIdx) {
+	public Map<String, Object> getTrashList(int projectIdx) {
 		System.out.println("in getTrashList");
 		return service.getTrashList(projectIdx);
 	}
 	
+
 	@RequestMapping(value = "DeleteDriveFile.do")
 	public boolean deleteDriveFile(int driveFileIdx) {
 		System.out.println("in deleteDriveFile");
