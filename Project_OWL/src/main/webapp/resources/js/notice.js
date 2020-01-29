@@ -232,7 +232,7 @@ function deleteFIle(fileIdx){
 		success : function(data){
 			if(data){
 				successAlert("삭제 완료!");
-				setNoticeData();
+				//setNoticeData();
 			} else
 				warningAlert("삭제 실패!");
 		},
