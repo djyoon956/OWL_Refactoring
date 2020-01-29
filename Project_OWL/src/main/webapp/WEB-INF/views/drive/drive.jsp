@@ -168,17 +168,22 @@ $(function(){
 
  			$('#jstree').on('paste.jstree', function (e, data) {
  	 			//복사 후 paste 할 때
- 	 			console.log("paste");
-				console.log(data);
-				console.log(data.parent); //나의 ref가 될 것
-				console.log(data.node[0].id); //driveIdx
-				console.log(data.node[0].text); //이름
-				console.log(data.node[0].parents);
+				jQuery.ajaxSettings.traditional = true				
+				  $.ajax({
+		        		url:"copyFolder.do",
+		        		method:"POST",
+		        		data:{oldId: data.node[0].id,
+			        		  projectIdx: ${project.projectIdx},
+		        			  folderName: data.node[0].text,
+		        			  parent: data.parent,
+		        			  refs: data.node[0].parents
+		        			 },
+		        		success:function(idx){
+			        		data.node[0].id =idx;
+		        		}
+		    		});
  			});
-
-
-
- 			
+			
 			$("#deleteFolder").click(function(){
 				console.log("delete");
 				var ref = $('#jstree').jstree(true),

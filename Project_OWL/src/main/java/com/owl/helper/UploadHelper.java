@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
 
+import org.apache.commons.io.FileUtils;
+
 public class UploadHelper {
 	public static String uploadFile(String uploadPath, String uploadType, String fileName, byte[] content) {
 		uploadPath = Paths.get(uploadPath, uploadType).toString();
@@ -69,6 +71,28 @@ public class UploadHelper {
 											, "drive"
 											, Integer.toString(driveIdx)).toString();
 		makeDirectory(path);
+		System.out.println(path);
+	}
+	 
+	 public static void copyDriveDirectory(String oldPath, String uploadPath, int projectIdx, int[] refs, int driveIdx) { 
+		String refPath = "";
+		 File oldDirectory = new File(oldPath);
+				for (int i = 0; i < refs.length; i++) {
+					if (i == refs.length - 1)
+						refPath += refs[i];
+					else
+						refPath += refs[i] + File.separator;
+				}
+				String path = Paths.get(uploadPath, "project", Integer.toString(projectIdx), "drive", refPath, Integer.toString(driveIdx)).toString();
+				makeDirectory(path);
+		File newDirectory = new File(path);
+		
+			try {
+			    FileUtils.copyDirectory(oldDirectory, newDirectory);
+			} catch (Exception e) {
+			    e.printStackTrace();
+			}	   
+	
 	}
 
 	public static void deleteFile(String path) {
