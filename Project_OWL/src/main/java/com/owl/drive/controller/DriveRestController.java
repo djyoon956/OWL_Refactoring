@@ -170,11 +170,16 @@ public class DriveRestController {
 		return driveIdx;
 	}
 	
+	/**
+	 * 드라이브 폴더 삭제 시 isDelete 1로 변경
+	 * @author 이정은
+	 * @since 2020/01/29
+	 * @param driveIdx
+	 * @return boolean result
+	 */
 	@RequestMapping(value="DeleteFolder.do", method = RequestMethod.POST)
 	public boolean deleteFolder(int driveIdx) {
-		boolean result = false;
-		result = service.deleteFolderFromDrive(driveIdx);
-		return result;
+		return service.deleteFolderFromDrive(driveIdx);
 	}
 	
 	/**
