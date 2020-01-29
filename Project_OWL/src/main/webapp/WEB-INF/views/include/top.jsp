@@ -93,7 +93,6 @@
 		});
 	});
 
-
 	function Search(){
 		$('.ChatList').empty();   
 		var plus = "";
