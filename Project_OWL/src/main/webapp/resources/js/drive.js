@@ -10,11 +10,14 @@ function initDrive(projectIdx){
 		url : "DriveFileUpload.do",
 		formData : {projectIdx : projectIdx , folderIdx:1},
 		add: function(e, data){
-			$("#driveUploadFiles").fileupload( 'option', 'formData').folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+			console.log("in add");
+			let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+			console.log($('#jstree').jstree().get_node(folderIdx).parents);
+			$("#driveUploadFiles").fileupload( 'option', 'formData').folderIdx = folderIdx;
+			$("#driveUploadFiles").fileupload( 'option', 'formData').refs = $('#jstree').jstree().get_node(folderIdx).parents;
 			data.submit();
 		},
 		done : function(e, data){
-			console.log("in done");
 			callDirectoryData();
 		},
 		fail : function(){
@@ -26,15 +29,14 @@ function initDrive(projectIdx){
 	 	stateSave: true, // 페이지 상태 저장
 	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 	 	"searching": false,
-        fixedColumns: true,
-        autoWidth: false
+         fixedColumns: true,
+         autoWidth: false
 	});
 
 	$("#driveTable").on('click', 'tbody tr', function () {
 		if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
-        }
-        else {
+        } else {
         	$("#driveTable").DataTable().$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
