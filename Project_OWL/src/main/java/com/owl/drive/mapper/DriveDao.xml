@@ -58,6 +58,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE F.ISDELETE = 1 AND P.PROJECTIDX = #{projectIdx};
 	</select>
 	
+	<delete id="deleteFolder">
+	DELETE FROM DRIVEFOLDER WHERE DRIVEIDX =#{driveIdx}
+	</delete>	
+	
 	<update id="deleteFileFromDrive" parameterType="int">
 		UPDATE owl.DRIVEFILE SET ISDELETE = 1, DELETEDATE = CURRENT_TIMESTAMP
 		WHERE  DRIVEFILEIDX = #{driveFileIdx}
