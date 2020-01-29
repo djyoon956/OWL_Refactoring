@@ -1,6 +1,5 @@
 package com.owl.helper;
 
-import java.awt.event.FocusEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
