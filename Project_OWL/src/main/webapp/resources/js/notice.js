@@ -171,14 +171,13 @@ function deleteNotice(){
 
 function editNoticeSetView(){
 	
-	
 	console.log($("#noticeFiles").text());
 	
 	$("#editTitle").val($("#noticeTitle").text());
 	$('#noticeEditNote').summernote('code',$("#noticeContent").html());
 	
-	//$("#noticeEditFiles").empty();
-	
+	$("#noticeEditFiles").empty();
+	$("#noticeEditMultipartFiles").val("");
 	  $.each($("#noticeFiles li"), function(i, item) {
 		  console.log(item);
 		  	var fileIndex = $(this).attr("id");
@@ -190,7 +189,7 @@ function editNoticeSetView(){
 	changeNoticeView("editBox");
 }
 function noticeEditOk() {
-	$('input:file').MultiFile('reset');
+	//$('input:file').MultiFile('reset');
     let formData = new FormData();
     formData.append("boardIdx", $("#noticeBoardIdx").text());
     formData.append("content",$('#noticeEditNote').summernote('code'));
