@@ -104,9 +104,9 @@ public class DriveRestController {
 		List<Integer> driveRefs = new ArrayList<Integer>();
 		if (refs.length == 2) { // default 하위
 			if(parent ==Integer.parseInt(refs[0])) {
-				driveRefs.add(Integer.parseInt(refs[0]));	
+				driveRefs.add(Integer.parseInt(refs[0]));	 //default
 			}else {				
-				driveRefs.add(Integer.parseInt(refs[0]));
+				driveRefs.add(Integer.parseInt(refs[0])); //default
 				driveRefs.add(parent);
 			}
 					
