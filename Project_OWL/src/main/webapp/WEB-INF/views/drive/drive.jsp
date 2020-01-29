@@ -168,17 +168,29 @@ $(function(){
 
  			$('#jstree').on('paste.jstree', function (e, data) {
  	 			//복사 후 paste 할 때
- 	 			console.log("paste");
-				console.log(data);
-				console.log(data.parent); //나의 ref가 될 것
-				console.log(data.node[0].id); //driveIdx
-				console.log(data.node[0].text); //이름
-				console.log(data.node[0].parents);
+ 	 			console.log("새로운 ref : " + data.parent);
+ 	 			console.log("기존 ref : " + data.node[0].parents[0]);
+ 	 			console.log("default : " + data.node[0].parents[1]);
+ 	 			console.log(data.node[0].parents);
+ 	 			return;
+ 	 			if(data.mode =="copy_node"){ 	 	 			
+				jQuery.ajaxSettings.traditional = true				
+				  $.ajax({
+		        		url:"copyFolder.do",
+		        		method:"POST",
+		        		data:{oldId: data.node[0].id,
+			        		  projectIdx: ${project.projectIdx},
+		        			  folderName: data.node[0].text,
+		        			  parent: data.parent,
+		        			  refs: data.node[0].parents
+		        			 },
+		        		success:function(idx){
+			        		data.node[0].id =idx;
+		        		}
+		    		});
+ 	 			}
  			});
-
-
-
- 			
+			
 			$("#deleteFolder").click(function(){
 				console.log("delete");
 				var ref = $('#jstree').jstree(true),
@@ -311,8 +323,8 @@ function sendFileToServer(formData,status){
 		                <button id="driveSearchBtn" type="button" class="driveBtn btn-primary"
 		                    onclick="Search()">검색</button>&nbsp;&nbsp;
 		                <div class="filebox" style="display:inline;">
-		                    <input type="file" id="driveUploadFile" name="driveUploadFile">
-		                    <label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
+		                    <input type="file" id="driveUploadFiles" name="driveUploadFiles" multiple>
+		                    <label for="driveUploadFiles" style="cursor: pointer; margin-bottom: 0px;"
 		                        class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
 		                </div>
 		                <button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary"

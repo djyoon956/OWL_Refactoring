@@ -65,4 +65,30 @@ public class NoticeRestController {
 	public boolean deleteNotice(int noticeIdx) {
 		return service.deleteNotice(noticeIdx);
 	}
+	@RequestMapping(value = "UpdateNotice.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	public int updateNotice(@RequestParam(value = "boardIdx") int boardIdx
+			, @RequestParam(value = "content") String content
+			, @RequestParam(value = "title") String title
+			, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
+			, Principal principal, HttpServletRequest request) {		
+		System.out.println("update notice content" + content);
+		System.out.println("update notice title" + title);
+		System.out.println("update notice boardIdx" + boardIdx);
+		Notice notice = new Notice();
+		//notice.setProjectIdx(projectIdx);
+		notice.setBoardIdx(boardIdx);
+		notice.setContent(content);
+		notice.setTitle(title);
+		notice.setEmail(principal.getName());
+		System.out.println(multipartFiles.size());
+		
+		boolean result= false;
+		try {
+			result = service.updateNotice(notice, multipartFiles, request.getServletContext().getRealPath("upload"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result ? notice.getBoardIdx() : -1;
+	}
 }

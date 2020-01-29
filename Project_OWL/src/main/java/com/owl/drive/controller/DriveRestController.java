@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.IntPredicate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,17 +34,17 @@ public class DriveRestController {
 		return modelAndView;
 	}
 
+	/**
+	 * 드라이브 새 폴더 Insert
+	 * @author 윤다정
+	 * @since 2020/01/28
+	 * @param drivefolder
+	 * @param refs
+	 * @param request
+	 * @return drivefolder.getDriveIdx()
+	 */
 	@RequestMapping(value = "insertFolder.do")
 	public int insertFolder(DriveFolder drivefolder, String[] refs, HttpServletRequest request) {
-		
-		List<Integer> driveRefs = new ArrayList<Integer>();
-		if (refs.length == 2) { // default 하위
-			driveRefs.add(Integer.parseInt(refs[0]));
-		} else {
-			driveRefs.add(Integer.parseInt(refs[1]));
-			driveRefs.add(Integer.parseInt(refs[0]));
-		}
-	
 		try {
 			drivefolder.setFolderName(drivefolder.getFolderName());
 			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
@@ -53,8 +54,7 @@ public class DriveRestController {
 
 			String uploadPath = request.getServletContext().getRealPath("upload");
 
-			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(),
-					driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
+			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(), refs, drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -62,25 +62,31 @@ public class DriveRestController {
 		return drivefolder.getDriveIdx();
 	}
 
+	/**
+	 * 드라이브 폴더 Cut & Paste
+	 * @author 이정은
+	 * @since 2020/01/28
+	 * @param drivefolder
+	 * @param refs
+	 * @param oldRef
+	 * @param request
+	 * @return boolean result
+	 */
 	@RequestMapping(value="cutFolder.do")
 	public boolean cutFolder(DriveFolder drivefolder, String[] refs, int oldRef, HttpServletRequest request) {
 		boolean result = false;
 		String oldPath = "";
-		System.out.println(drivefolder);
-		System.out.println(oldRef);
-		
 		List<Integer> driveRefs = new ArrayList<Integer>();
 		if (refs.length == 2) { // default 하위
-			driveRefs.add(Integer.parseInt(refs[0]));
+			driveRefs.add(Integer.parseInt(refs[0])); //default
 			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
 									+ drivefolder.getProjectIdx() + "\\drive\\" +Integer.parseInt(refs[0])+"\\"+ oldRef +"\\"+ drivefolder.getDriveIdx();
 		} else {
-			driveRefs.add(Integer.parseInt(refs[1]));
-			driveRefs.add(Integer.parseInt(refs[0]));
+			driveRefs.add(Integer.parseInt(refs[1])); //default
+			driveRefs.add(Integer.parseInt(refs[0])); 
 			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
-									+ drivefolder.getProjectIdx()+ "\\drive\\" +Integer.parseInt(refs[1]) +"\\" +oldRef +"\\"+ drivefolder.getDriveIdx();
+									+ drivefolder.getProjectIdx()+ "\\drive\\" +Integer.parseInt(refs[1]) +"\\" + drivefolder.getDriveIdx();
 		}
-        
 		try {
 			drivefolder.setFolderName(drivefolder.getFolderName());
 			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
@@ -89,47 +95,69 @@ public class DriveRestController {
 			service.updateFolder(drivefolder);
 
 			String uploadPath = request.getServletContext().getRealPath("upload");
-			UploadHelper.moveDriveDirectory(oldPath, uploadPath, drivefolder.getProjectIdx(),
-						driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
+			UploadHelper.moveDriveDirectory(oldPath, uploadPath, drivefolder.getProjectIdx(), driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
 		return result;
 	}
-	
+	/**
+	 * 드라이브 폴더 Copy & Paste
+	 * @author 이정은
+	 * @since 2020/01/29 
+	 * @param drivefolder
+	 * @param refs
+	 * @param oldId
+	 * @param parent
+	 * @param request
+	 * @return drivefolder.getDriveIdx()
+	 */
 	@RequestMapping(value="copyFolder.do")
-	public boolean copyFolder(DriveFolder drivefolder, String[] refs, int parent, HttpServletRequest request) {
-		boolean result = false;
-		
+	public int copyFolder(DriveFolder drivefolder, String[] refs, int oldId, int parent, HttpServletRequest request) {
+		boolean result = false;	
+		String oldPath = "";
 		List<Integer> driveRefs = new ArrayList<Integer>();
 		if (refs.length == 2) { // default 하위
-			if(parent ==Integer.parseInt(refs[0])) {
-				driveRefs.add(Integer.parseInt(refs[0]));	 //default
-			}else {				
-				driveRefs.add(Integer.parseInt(refs[0])); //default
+			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
+					+ drivefolder.getProjectIdx() + "\\drive\\" +Integer.parseInt(refs[0])+ "\\"+ oldId;		
+				if(parent ==Integer.parseInt(refs[0])) {
+					driveRefs.add(Integer.parseInt(refs[0]));	 //default
+				}else {	
+					driveRefs.add(Integer.parseInt(refs[0]));
+					driveRefs.add(parent);
+				}					
+		} else { //refs.length ==3
+			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
+					+ drivefolder.getProjectIdx() + "\\drive\\" +Integer.parseInt(refs[1])+ "\\"+Integer.parseInt(refs[0])+ "\\"+oldId;					
+				driveRefs.add(Integer.parseInt(refs[1])); //default	
 				driveRefs.add(parent);
-			}
-					
-		} else {
-			driveRefs.add(Integer.parseInt(refs[1]));
-			driveRefs.add(Integer.parseInt(refs[0]));			
 		}        
+
 		try {
 			drivefolder.setFolderName(drivefolder.getFolderName());
 			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
-			drivefolder.setRef(drivefolder.getRef());
+			drivefolder.setRef(parent);
 			drivefolder.setDepth(drivefolder.getDepth());
-			service.updateFolder(drivefolder);
+			service.insertDriveFolder(drivefolder);
 
 			String uploadPath = request.getServletContext().getRealPath("upload");
-			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(),
+			UploadHelper.copyDriveDirectory(oldPath, uploadPath, drivefolder.getProjectIdx(),
 						driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
-		return result;
+		return drivefolder.getDriveIdx();
 	}
-	
+
+	/**
+	 * 드라이브 폴더 이름 수정
+	 * @author 이정은
+	 * @since 2020/01/28
+	 * @param folderName
+	 * @param driveIdx
+	 * @param request
+	 * @return boolean result
+	 */
 	@RequestMapping(value="updateNewName.do")
 	public boolean updateNewNameFolder(String folderName , int driveIdx ,HttpServletRequest request) {
 		boolean result = false;	
@@ -137,6 +165,13 @@ public class DriveRestController {
 		return result;
 	}
 	
+	/**
+	 * 드라이브 폴더 전체 List 출력
+	 * @author 이정은
+	 * @since 2020/01/29
+	 * @param projectIdx
+	 * @return List<DriveFolder>
+	 */
 	@RequestMapping(value = "DriveList.do")
 	public List<DriveFolder> getDriveList(int projectIdx) {
 		List<DriveFolder> folders = null;
@@ -144,36 +179,46 @@ public class DriveRestController {
 		return folders;
 	}
 
+	/**
+	 * 드라이브 해당 폴더에 다중 파일 업로드
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param driveUploadFiles
+	 * @param projectIdx
+	 * @param folderIdx
+	 */
 	@RequestMapping("DriveFileUpload.do")
-	public void driveFileUpload(MultipartFile driveUploadFile, int projectIdx, int folderIdx, HttpServletRequest request, Principal principal) {
+	public void driveFileUpload(@RequestParam("driveUploadFiles") List<MultipartFile> driveUploadFiles, int projectIdx, int folderIdx, String[] refs, HttpServletRequest request, Principal principal) {
 		System.out.println("in driveFileUpload");
 		System.out.println(projectIdx);
 		System.out.println(folderIdx);
+		System.out.println(driveUploadFiles.size());
 	
-		String fileName = driveUploadFile.getOriginalFilename();
-		String uploadpath = request.getServletContext().getRealPath("upload");
+		driveUploadFiles.forEach(file -> {
+			String fileName = file.getOriginalFilename();
+			String uploadPath = request.getServletContext().getRealPath("upload");
 
-		DriveFile driveFile = new DriveFile();
-		driveFile.setCreator(principal.getName());
-		driveFile.setDriveIdx(folderIdx);
-		driveFile.setFileName(fileName);
-		driveFile.setFileSize((int) (driveUploadFile.getSize() / 1024));
-		
-		String filePath = "";
-		try {
-			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, driveUploadFile.getBytes()); // full path
-			System.out.println("filePath : " + filePath);
-			service.insertFile(driveFile);
-		} catch (IOException e) {
-			if (!filePath.isEmpty())
-				UploadHelper.deleteFile(filePath);
-			e.printStackTrace();
-		}
+			DriveFile driveFile = new DriveFile();
+			driveFile.setCreator(principal.getName());
+			driveFile.setDriveIdx(folderIdx);
+			driveFile.setFileName(fileName);
+			driveFile.setFileSize((int) (file.getSize() / 1024));
+			
+			String filePath = "";
+			try {
+				filePath = UploadHelper.uploadFileByProjectDrive(uploadPath, "drive", projectIdx, refs, folderIdx, fileName, file.getBytes());
+				System.out.println("filePath : " + filePath);
+				service.insertFile(driveFile);
+			} catch (IOException e) {
+				if (!filePath.isEmpty())
+					UploadHelper.deleteFile(filePath);
+				e.printStackTrace();
+			}
+		});
 	}
 
 	@RequestMapping(value = "GetFolderData.do")
-	public List<DriveFile> getFolderData(int folderIdx) {
-		System.out.println("in getFolderData");
+	public Map<String, Object> getFolderData(int folderIdx) {
 		return service.getFolderData(folderIdx);
 	}
 	
@@ -205,11 +250,9 @@ public class DriveRestController {
 	public boolean deleteFilefromTrash(int driveFileIdx, String fileName) {
 		System.out.println("in deleteFilefromTrash");
 		System.out.println(driveFileIdx);
-		
 		return service.deleteFilefromTrash(driveFileIdx);
 	}
-	
-	
+
 	@RequestMapping(value = "RestoreFile.do")
 	public boolean restoreFilefromTrash(int driveFileIdx) {
 		System.out.println("in restoreFilefromTrash");
@@ -217,8 +260,4 @@ public class DriveRestController {
 
 		return service.restoreFilefromTrash(driveFileIdx);
 	}
-	
-	
-	
-	
 }
