@@ -39,9 +39,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateNotice" parameterType="com.owl.notice.dto.Notice">
 		update owl.board set title = #{title}, content=#{content} where boardidx = #{boardIdx}
 	</update>
-	<update id="updateNoticeFile">
-		update owl.file set filename= #{fileName} ,filesize= #{fileSize} where boardidx = #{boardIdx}
-	</update>
 	<delete id="deleteFile" parameterType="Integer">
 		delete from owl.file where fileidx= #{fileIdx}
 	</delete>

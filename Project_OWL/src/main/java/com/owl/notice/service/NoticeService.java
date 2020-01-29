@@ -165,13 +165,13 @@ public class NoticeService {
 			file.setWriter(email);
 			file.setFileSize(String.valueOf(multipartFile.getSize()/1024));
 			
-			try {
-				dao.updateNoticeFile(file);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+//			try {
+//			//	dao.updateNoticeFile(file);
+//			} catch (ClassNotFoundException e) {
+//				e.printStackTrace();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
 			
 			files.add(file);
 		});
