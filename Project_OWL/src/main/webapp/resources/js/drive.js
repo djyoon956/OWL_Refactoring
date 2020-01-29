@@ -475,11 +475,6 @@ function deleteDriveFolder(driveIdx, parentIdx){
 		success : function(data){
 			if(data){
 				callDirectoryData();
-				successAlert("폴더 삭제 완료");
-				console.log("$$$$$$$$$1");
-				console.log(driveIdx);
-				console.log("$$$$$$$$$2");
-				console.log(parentIdx);
 				chageSelectedFolder(parentIdx);
 			}else{
 				errorAlert("폴더 삭제 실패");
