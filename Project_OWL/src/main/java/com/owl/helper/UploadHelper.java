@@ -141,8 +141,6 @@ public class UploadHelper {
 			refPath = refs[0];
 		else if (refs.length == 3)
 			refPath = refs[1] + File.separator + refs[0];
-
-		System.out.println("refPath : " + refPath);
 		
 		return refPath;
 	}
