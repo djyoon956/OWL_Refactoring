@@ -672,8 +672,6 @@ function downloadFile(fileName){
 					, fileName : fileName
 					},
 		success : function(downloadPath){
-			console.log(downloadPath)
-			console.log("in downloadFile success");
 			if(downloadPath){
 				$(".defaultDriveMenu").append("<a href='"+downloadPath+"' id='tempLink' download ></a>")
 				$("#tempLink").get(0).click();
@@ -686,8 +684,6 @@ function downloadFile(fileName){
 			errorAlert("파일 다운로드에 실패하였습니다.");
 		}
 	})
-	console.log(path);
-	//$("<a href='<c:url value=\"/upload/\"/>'>테스트파일</a>")
 }
 
 $.fn.selectRange = function(start, end) {
