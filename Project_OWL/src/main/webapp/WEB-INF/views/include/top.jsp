@@ -1047,9 +1047,10 @@ display: block;
             	  	console.log("클릭 이벤트 리슨너가 왜 안들어가냐???-----------------------------------------------"); 
             	  if(Array.prototype.slice.call(item.classList).indexOf('user-selected') == -1){ 
                 	  console.log("채팅방 에 유저 추가 할때 유저 리스트 유엘 백그라운 컬러 바뀌는 함수");
+                	  item.classList.add('user-selected'); 
                 	  $(this).find("i").removeClass("hidden");
                 	  }else{ 
-                    	 // item.classList.remove('user-selected'); 
+                    	 item.classList.remove('user-selected'); 
                    		 $(this).find("i").addClass("hidden");
                     	  console.log("체크 상태 해제");
                     	  } 
