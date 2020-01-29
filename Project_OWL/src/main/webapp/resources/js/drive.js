@@ -38,7 +38,7 @@ function initDrive(projectIdx){
             $(this).addClass('selected');
         }
 	}).on('dblclick', 'tbody tr.folder', function () {
-		chageSelectedFolder($(this).attr("id"), $(this).find("td span").first().text());
+		changeSelectedFolder($(this).attr("id"), $(this).find("td span").first().text());
 	});
 
 	 $.contextMenu({
@@ -226,33 +226,19 @@ function Search() {
 }
 
 function Allcheck() { //전체선택 onclick
+	//If 폴더면 전체 이동 안됨
 	$('div.more').parent('div.card').css('background', 'rgba(161, 163, 166, 0.3)');
 	$("input[type=checkbox]").prop("checked", true);
-
-	$('.defaultDriveMenu').empty();
-	var button = "";
-	button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-	button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
-	$('.defaultDriveMenu').append(button);
+	$("#default").addClass("hidden");
+	$("#allCheck").removeClass("hidden");
 }
 
-function Returncheck() {
+function ReturnCheck() { //선택 해제
 	$('div.more').parent('div.card').css('background', '');
 	$("input[type=checkbox]").prop("checked", false);
-
-	$('.defaultDriveMenu').empty();
-	var button = "";
-	button += "<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
-	button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn'>새폴더</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<button type='button' class='btn' onclick='Allcheck()'>전체선택</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-	button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-	button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
-	$('.defaultDriveMenu').append(button);
+	$("#allCheck").addClass("hidden");
+	$("#theCheck").addClass("hidden");
+	$("#default").removeClass("hidden");
 }
 
 function Return() {
@@ -264,25 +250,16 @@ function Return() {
 	});
 }
 
-function checkBox(box) {
-	var cardId = document.getElementById('css');
-	if (box.checked == true) {
-		$('div.more').parent('div#css').css('background', 'rgba(161, 163, 166, 0.3)');
-
-		$('.defaultDriveMenu').empty();
-		var button = "";
-		button += "<button type='button' class='btn' onclick='Search()'>검색</button>&nbsp;&nbsp;&nbsp;&nbsp;"
-		button += "<button type='button' class='btn'>업로드</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button += "<button type='button' class='btn'>이동</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button += "<button type='button' class='btn'>삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button += "<button type='button' class='btn' onclick='Returncheck()'>선택해제</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-		button += "<div class='drivegroup'><a><i class='fas fa-list fa-2x'></i></a><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-		button += "<a><i class='fas fa-th-large fa-2x'></i></a></div>"
-		$('.defaultDriveMenu').append(button);
-
+function checkBox(obj) {
+	console.log("여길 탄다");
+	if (obj.checked == true) {
+		$(obj).parent().parent().css('background', 'rgba(161, 163, 166, 0.3)');
+		console.log($("#allCheck").attr("class"));
+		$("#default").addClass("hidden");
+		$("#theCheck").removeClass("hidden");		
 	} else {
 		$('div.more').parent('div#css').css('background', '');
-		Returncheck();
+		ReturnCheck();
 	}
 }
 
@@ -351,8 +328,8 @@ function setIconView(data){
 			console.log("in folder");
 			control += '<div class="col-sm-3">'
 						+ 	'<div class="card driveCard dropdown" ondblclick="setDirectoryData('+element.driveIdx+',\''+element.folderName+'\')">'
-						+ 		'<div class="more" style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-						+			'<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
+						+ 		'<div class="more"  style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
+						+			'<input type="checkbox" id="'+element.driveIdx+'" onclick="checkBox(this)" style="width:18px; height:18px;">'
 						+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
 						+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
 						+				'</a>'
@@ -476,11 +453,7 @@ function deleteDriveFolder(driveIdx, parentIdx){
 			if(data){
 				callDirectoryData();
 				successAlert("폴더 삭제 완료");
-				console.log("$$$$$$$$$1");
-				console.log(driveIdx);
-				console.log("$$$$$$$$$2");
-				console.log(parentIdx);
-				chageSelectedFolder(parentIdx);
+				changeSelectedFolder(parentIdx);
 			}else{
 				errorAlert("폴더 삭제 실패");
 			}
@@ -624,7 +597,7 @@ $.fn.selectRange = function(start, end) {
 	});
 }
 
-function chageSelectedFolder(id, name){
+function changeSelectedFolder(id, name){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let folderName = $("#jstree").jstree(true).get_node(id).text;
 	console.log(">"+id+"<");
@@ -644,14 +617,17 @@ function driveRefresh(){
 		data:{projectIdx:$("#theProject").val()},
 		success:function(data){
 			let folder;		
-			$.each(data, function(index, element){
-				if(element.ref == 0){
-					element.ref = "#";
-				}				
+			$.each(data, function(index, element){				
 				folder = new folderInfo();
-				folder.id = element.driveIdx;
+				
+			    if(element.ref == 0){
+					element.ref = "#";
+					folder.state= {"opened" : true, "selected" : true};
+			    }			    
+			    folder.id = element.driveIdx;
 			    folder.parent = element.ref;
 			    folder.text = element.folderName;
+			    
 			    addFolder(folder);
 			});
 
@@ -664,7 +640,7 @@ function driveRefresh(){
 					$('#jstree').jstree(true).search(v);
 				}, 100);
 			});
-
+			
 			$('#jstree').jstree(true).settings.core.data = folderList;
 			$('#jstree').jstree(true).refresh();
 
