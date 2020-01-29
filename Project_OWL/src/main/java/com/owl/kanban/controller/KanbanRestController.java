@@ -49,8 +49,8 @@ public class KanbanRestController {
 		System.out.println("-------------------------");
 		
 		List<Column> columns= service.getColum(projectIdx);
-		System.out.println("여기니?");
-		System.out.println("???"+columns);
+		//System.out.println("여기니?");
+		//System.out.println("???"+columns);
 		return columns;		
 	}
 	
@@ -58,7 +58,7 @@ public class KanbanRestController {
 	@RequestMapping("GetIssue.do")	
 	public List<Issue> getIssue(int projectIdx){
 		List<Issue> issue = service.getIssue(projectIdx);
-		System.out.println(issue);
+		//System.out.println(issue);
 		return issue;
 	}
 	
@@ -155,8 +155,8 @@ public class KanbanRestController {
 			}
 		}
 
-		System.out.println("issue");
-		System.out.println(issue);
+		//System.out.println("issue");
+		//System.out.println(issue);
 		boolean result = false;
 		
 		Issue collist = null;
@@ -271,6 +271,17 @@ public class KanbanRestController {
 	@RequestMapping(value = "CloseIssue.do", method = RequestMethod.POST)
 	public boolean closeIssue(@RequestParam(value = "issueIdx") int issueIdx, Principal principal) {
 		boolean result = service.closeIssue(issueIdx, principal.getName());
+		//result.getIssueProgress(issueIdx);
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "ReopenIssue.do", method = RequestMethod.POST)
+	public boolean reopenIssue(@RequestParam(value = "issueIdx") int issueIdx, Principal principal) {
+		System.out.println("reopenIssue in!!!!!!!!!");
+		System.out.println("issueIdx : " + issueIdx);
+		System.out.println(principal.getName());
+		boolean result = service.reopenIssue(issueIdx, principal.getName());
 		//result.getIssueProgress(issueIdx);
 		return result;
 	}

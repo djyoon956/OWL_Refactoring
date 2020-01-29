@@ -1086,7 +1086,7 @@ display: block;
                      	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~데이타 값은~~~~~~~~~~~~~~~~~~" + data + " / " + data.val());
                      	var msgKey = data.val();
                      	console.log("데이타 값은~~~~~~~~~~~~~~~~~~" + data + " / " + data.key + "/"+msgKey.userName);
-           			 	messageListUp(data.key, msgKey.profileImg, msgKey.timestamp, msgKey.userName, msgKey.message);              				
+           			 	messageListUp(data.key, msgKey.profileImg, msgKey.timestamp, msgKey.userName, msgKey.message, msgKey.uid);              				
       		 		
 							
                      }); 
@@ -1331,10 +1331,10 @@ display: block;
               	  var convertDate = year + "년 "+month+"월 "+ day +"일 ("+ week[date.getDay()] +") "; 
               	  var convertHour=""; 
               	  if(hour < 12){ 
-                  	  convertHour = "오전 " + FirebaseChat.pad(hour) +":" + FirebaseChat.pad(minute); 
+                  	  convertHour = "오전 " + pad(hour) +":" + pad(minute); 
                   	  }else if(hour === 12){ 
-                      	  convertHour = "오후 " + FirebaseChat.pad(hour) +":" + FirebaseChat.pad(minute); 
-                      	  }else{ convertHour = "오후 " + FirebaseChat.pad(hour - 12) +":" + FirebaseChat.pad(minute); 
+                      	  convertHour = "오후 " + pad(hour) +":" + pad(minute); 
+                      	  }else{ convertHour = "오후 " + pad(hour - 12) +":" + pad(minute); 
                       	  } 
               	  return convertDate + convertHour; 
 
@@ -1359,21 +1359,43 @@ display: block;
               }
           
 	
-          var messageListUp= function(key, profileImg, time, userName, message){
+          var messageListUp= function(key, profileImg, timestamp, userName, message, uid){
+              var time = timestampToTime(timestamp);
               console.log("messageListUp 함수..데이타 들어오냐??" + key+"/"+profileImg+"/"+time+"/"+userName+"/"+message);
 			  var userProPic = 	(profileImg ? 'resources/images/user/'+ profileImg : 'resources/images/user/noprofile.png');
-        	  var messageTemplate = '<li id="li' + key  + '" class="chat-item" style="margin-top:10px;" data-key="' + key + '">'+
-  									'<div class="chat-img"><img src="'+ userProPic +'" alt="user" class="chatImgBorder"></div>'+
-  									'<div class="chat-content pl-2 ">'+
-  									'<h6 class="font-medium">'+ userName + '</h6>'+
-  									'<div class="box bg-light-info otherBubble">'+ message + '</div>'+
-  									'<div class="chat-time">'+ time + '</div>'+
-  									'</li>';									 
+			  console.log("메세지 키값 찍어 보기 key / curUserKey" + key + " / " + curUserKey);
+			  var messageTemplate;	
+			  if(uid == curUserKey) {
+				  messageTemplate = '<li id="li' + key  + '" class="odd chat-item" style="margin-top:10px;" data-key="' + key + '">'+			
+					'<div class="chat-content">'+			
+					'<div class="box bg-light-inverse chatbg ownBubble">'+ message + '</div>'+
+					'<br>'+
+					'</div>'+
+					'<div class="chat-time">'+ time + '</div>'+
+					'</li>';
+
+				  }else{
+					  messageTemplate = '<li id="li' + key  + '" class="chat-item" style="margin-top:10px;" data-key="' + key + '">'+
+						'<div class="chat-img"><img src="'+ userProPic +'" alt="user" class="chatImgBorder"></div>'+
+						'<div class="chat-content pl-2 ">'+
+						'<h6 class="font-medium">'+ userName + '</h6>'+
+						'<div class="box bg-light-info otherBubble">'+ message + '</div>'+
+						'<div class="chat-time">'+ time + '</div>'+
+						'</li>';
+					  }
+        	   									 
           
         	  $('#ulMessageList').append(messageTemplate);
-        	  messageTemplate += '먼데 안들어가는 거야??';
+        	 
         	  console.log("messageListUp 합수 타변 변수에 담기는 값들은??>>>" +messageTemplate);
           } 
+
+
+         
+
+          
+
+          
 
          
 
