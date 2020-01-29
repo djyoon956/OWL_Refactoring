@@ -38,10 +38,7 @@ function initDrive(projectIdx){
             $(this).addClass('selected');
         }
 	}).on('dblclick', 'tbody tr.folder', function () {
-		console.log("더블");
-		console.log($(this).attr("id"))
-		chageSelectedFolder($(this).attr("id"));
-		setDirectoryData($(this).attr("id"), $(this).find("td span").first().text());
+		chageSelectedFolder($(this).attr("id"), $(this).find("td span").first().text());
 	});
 
 	 $.contextMenu({
@@ -289,12 +286,13 @@ function checkBox(box) {
 	}
 }
 
+function getSelectedFolderId(){
+	return $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+}
 function callDirectoryData(){
-	console.log("in callDirectoryData");
-	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+	let folderIdx = getSelectedFolderId();
 	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
-	console.log(folderIdx);
-	console.log(folderName);
+
 	if(isTrash){
 		$("#driveName").hide();
 		setTrashData();
@@ -469,8 +467,7 @@ function deleteDriveFile(driveFileIdx){
 	 })
 }
 
-function deleteDriveFolder(driveIdx){
-	
+function deleteDriveFolder(driveIdx, parentIdx){
 	$.ajax({
 		url : "DeleteFolder.do",
 		type : "POST",
@@ -478,9 +475,7 @@ function deleteDriveFolder(driveIdx){
 		success : function(data){
 			if(data){
 				callDirectoryData();
-				successAlert("폴더 삭제 완료");
-				chageSelectedFolder($('#jstree').jstree().get_node(driveIdx).parent);
-				driveRefresh();
+				chageSelectedFolder(parentIdx);
 			}else{
 				errorAlert("폴더 삭제 실패");
 			}
@@ -586,7 +581,24 @@ function renameFolder(driveIdx){
 
 function downloadFile(driveFileIdx){
 	console.log("in downloadFile : " + driveFileIdx);
+	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
+	console.log();
 	let path ="/upload/project/"+driveProjectIdx+"/drive/";
+	$.ajax({
+		url : "GetDriveDownloadPath.do",
+		type : "POST",
+		data : { projectIdx : driveProjectIdx
+					, folderIdx :folderIdx
+					, refs : refs 
+					},
+		success : function(path){
+			
+		},
+		error : function(){
+			
+		}
+	})
 	console.log(path);
 	//$("<a href='<c:url value=\"/upload/\"/>'>테스트파일</a>")
 }
@@ -607,13 +619,51 @@ $.fn.selectRange = function(start, end) {
 	});
 }
 
-function chageSelectedFolder(id){
+function chageSelectedFolder(id, name){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
-	let folderName = $("#jstree").jstree(true).get_node(folderIdx).text;
+	let folderName = $("#jstree").jstree(true).get_node(id).text;
 	console.log(">"+id+"<");
-	console.log(folderIdx);
 	console.log(folderName);
+
 	$('#jstree').jstree("deselect_all");
 	$("#jstree").jstree("select_node", "#"+id);
+	
+	setDirectoryData(id, name);
 }
 
+function driveRefresh(){
+	folderList = [];
+	$.ajax({
+		url:"DriveList.do",
+		dataType:"json",
+		data:{projectIdx:$("#theProject").val()},
+		success:function(data){
+			let folder;		
+			$.each(data, function(index, element){
+				if(element.ref == 0){
+					element.ref = "#";
+				}				
+				folder = new folderInfo();
+				folder.id = element.driveIdx;
+			    folder.parent = element.ref;
+			    folder.text = element.folderName;
+			    addFolder(folder);
+			});
+
+			//jstree 기능
+			var to = false;
+			$('#searchText').keyup(function () {
+				if(to) { clearTimeout(to); }
+				to = setTimeout(function () {
+					var v = $('#searchText').val();
+					$('#jstree').jstree(true).search(v);
+				}, 100);
+			});
+
+			$('#jstree').jstree(true).settings.core.data = folderList;
+			$('#jstree').jstree(true).refresh();
+
+			callDirectoryData();
+		}
+	});
+}
