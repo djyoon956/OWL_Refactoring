@@ -143,6 +143,12 @@ $(function(){
 		        		}
 		    		});
  	 			}
+ 			}).on('delete_node.jstree', function (e, data) {
+				console.log("delete");
+				console.log(data);
+
+
+
  			});
 	driveRefresh();
 	
