@@ -39,7 +39,7 @@ public class ChatService {
 	}
 	
 	// chat  같은 프로젝트에 있는 유저를 뽑아내는 함수
-		public List<MyProjectsMates> getMyProjectsMates(String email, String name) {
+	public List<MyProjectsMates> getMyProjectsMates(String email, String name) {
 			ChatDao dao = getChatDao();
 			List<MyProjectsMates> myprojectsmates = new ArrayList<MyProjectsMates>();
 			
@@ -56,5 +56,25 @@ public class ChatService {
 			return myprojectsmates;
 			
 			
-		}
+	}
+	
+	// chat  같은 프로젝트에 있는 유저를 뽑아내는 함수 겹치는 사람도 같이 뽑는다..
+	public List<MyProjectsMates> getMyProjectsMatesFull(String email, String name) {
+				ChatDao dao = getChatDao();
+				List<MyProjectsMates> myprojectsmates = new ArrayList<MyProjectsMates>();
+				
+				try {
+					myprojectsmates = dao.getMyProjectsMatesFull(email,name);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				System.out.println("디비에서 같은 프로젝트 멤버 나오나요 사이즈는??"+ myprojectsmates.size());
+				System.out.println("디비에서 같은 프로젝트 멤버 나오나요 ??" + myprojectsmates);
+				
+				return myprojectsmates;
+				
+				
+	}
 }

@@ -401,7 +401,82 @@
 			     });
         	}
        
+				function writeProjectRoomData(name, email, imageUrl) {
+					
+					var roomListTarget = document.querySelectorAll('[data-roomType="MULTI"][data-roomOneVSOneTarget="'
+							+ targetUserUid +'"]')[0]; 
+					
+					if(roomListTarget){ // null 이 아니면 여기가 핵심이다.  룰리스트 타겟있으면 새로운 방 아이디를 만들지 않는다.
+						roomListTarget.click(); 
+						}else{ // 메세지 로드 
+							roomTitle = targetUserName+'님 과의 대화'; 
+							roomUserList = [targetUserUid, curUserKey]; // 챗방 유저리스트  			
+							roomUserName = [targetUserName, curName] // 챗방 유저 이름 
+							roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss(); 
+							console.log("새로운 상대와의 채팅이 시작 되면 룸 아이디 생성.. 그 값은요??>>>>>>>>>>>>" +roomId);
+							openChatRoom(); // 파라미터 추가
+							}
 
+
+
+									
+					var multiUpdates = {}; 
+					var messageRef = database.ref('Messages/'+ roomId);
+					var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
+					//var convertMsg = convertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
+
+					//UsersInRoom 데이터 저장
+					if(document.getElementById('ulMessageList').getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
+						var roomUserListLength = roomUserList.length; 
+						for(var i=0; i < roomUserListLength; i++){ 
+							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true; 
+						} 
+						//firebase.database().ref('usersInRoom/' + roomId);
+						database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
+						loadMessageList(); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
+					} 
+					
+					multiUpdates ={}; // 변수 초기화 
+
+					//메세지 저장 
+					multiUpdates['Messages/' + roomId + '/' + messageRefKey] = { 
+							uid: curUserKey, 
+							userName: curName, 
+							message: convertMsg, // 태그 입력 방지
+							profileImg: curProfilePic ? curProfilePic : 'noprofile.png', 
+							timestamp: firebase.database.ServerValue.TIMESTAMP //서버시간 등록하기 
+					} 
+
+					//유저별 룸리스트 저장 
+					var roomUserListLength = roomUserList.length;
+					 
+					if(roomUserList && roomUserListLength > 0){ 
+						for(var i = 0; i < roomUserListLength ; i++){ 
+							multiUpdates['RoomsByUser/'+ roomUserList[i] +'/'+ roomId] = { 
+								roomId : roomId, 
+								roomUserName : roomUserName.join('@spl@'), 
+								roomUserList : roomUserList.join('@spl@'), 
+								roomType : 'MULTI', 
+								roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? roomUserList[1] : // 1대 1 대화이고 i 값이 0 이면 
+									roomUserListLength == 2 && i == 1 ? roomUserList[0] // 1대 1 대화 이고 i값이 1이면 
+									: '', // 나머지 
+								lastMessage : convertMsg, 
+								profileImg : curProfilePic ? curProfilePic : 'noprofile.png', 
+								timestamp: firebase.database.ServerValue.TIMESTAMP 
+
+							}; 
+						} 
+					} 
+					database.ref().update(multiUpdates);
+
+					//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드
+					loadRoomList(curUserKey);
+
+
+					//프로젝트 룸 리스트 업 하는 것이 이 함수의 목적이고 아래와 같은 파라미터가 필요하다. 룸리스트 업 함수는 태그를 리턴하다.. 그래서 포쿤을 돌려서 붙이던가 해야 함...
+					var roomListTag = roomListUp(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserList, lastMessage, datetime);
+					
+		        	}	
 			
 
 
@@ -505,37 +580,24 @@
         	  var arrAddUserList = Array.prototype.slice.call($('#ulAddUserList li')); 
         	  console.log("setAddUserList 함수에서 arrAddUserList 요기에 담기는 값은?? " + arrAddUserList);
         	  console.log("setAddUserList 함수 탔을 때... 룸 유저 리스트 값은??>>>>" + roomUserList);
-        	  /* var cbArrayForEach = function(item){ 
-            	  var itemUserUid = item.getAttribute('data-targetUserUid'); 
-        	  	  if(roomUserList.indexOf(itemUserUid) === -1){ 
-            	  	item.getElementsByClassName('done')[0].classList.remove('hiddendiv'); 
-            	  	item.addEventListener('click',function(){ 
-                	  if(Array.prototype.slice.call(this.classList).indexOf('blue-text') == -1){ 
-                    	  this.classList.add('blue-text'); 
-                    	  }else{ 
-                        	  this.classList.remove('blue-text'); 
-                        	  } 
-                	  }); 
-            	  }else{ 
-                	  item.parentNode.removeChild(item); 
-                	  } 
-        	  }  */
+        	 
         	  arrAddUserList.forEach(cbArrayForEach);
            }
 
 
           var cbArrayForEach = function(item){
-              console.log("이치문 돌때 아이템 값은??" + item);
-              console.log("이치문 돌때...요값은 불러 지나???" +Array.prototype.slice(item.classList).indexOf('right')); 
+              item.removeAttribute('onclick');  
+              
         	  var itemUserUid = item.getAttribute('data-targetUserUid'); 
-        	  console.log("cbArrayForEach 함수에서 itemUserUid.. 가져 오나요??" +itemUserUid);
-        	  console.log("모달 창 을 띄울 당시의 룸 유저 리스는???" + roomUserList.indexOf(itemUserUid));
+        	 
     	  	  if(roomUserList.indexOf(itemUserUid) === -1){
         	  	  console.log("여기는 타기는 할까???");
-        	  	//item.removeEventListener('click', onUserListClick(this));   
+        	  	
+        	  	
         	  	item.getElementsByClassName('done')[0].classList.remove('hiddendiv'); 
-        	  	item.addEventListener('click',function(){ 
-            	  if(Array.prototype.slice(item.classList).indexOf('blue-text') == -1){ 
+        	  	item.addEventListener('click',function(){
+            	  	console.log("클릭 이벤트 리슨너가 왜 안들어가냐???-----------------------------------------------"); 
+            	  if(Array.prototype.slice.call(item.classList).indexOf('blue-text') == -1){ 
                 	  item.classList.add('blue-text'); 
                 	  }else{ 
                     	  item.classList.remove('blue-text'); 
@@ -940,8 +1002,13 @@
               }
 
           function onConfirmInviteClick(){
-        	  var arrInviteUserList = Array.prototype.slice.call(this.ulAddUserList.getElementsByClassName('blue-text')); 
-        	  var arrInviteUserListLength = arrInviteUserList.length; 
+              console.log("채팅 추가 버튼 클릭시 타는 함수!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+              console.log("제이쿼리 실험....." + $('.blue-text').eq(0));
+        	  //var arrInviteUserList = Array.prototype.slice.call(this.ulAddUserList.getElementsByClassName('blue-text')); 
+        	  var arrInviteUserList = Array.prototype.slice.call($('.blue-text'));
+        	  console.log("arrInviteUserList 요거 값 들어 오나요???" + arrInviteUserList);
+        	  var arrInviteUserListLength = arrInviteUserList.length;
+        	  console.log("렝스는~~~~~~~~~~~~~~~~~~~~~~~~~~~" + arrInviteUserListLength); 
         	  var arrInviteUserName = []; 
         	  var updates = {}; 
         	  for(var i=0; i < arrInviteUserListLength; i++){ 
@@ -980,7 +1047,7 @@
 	           
           console.log("널인가???" + curName + " / " + curEmail);
 
-
+			// 초기화 를 위한 온로드 함수... 같은 프로제트에 있는 유저목록과 프로젝트 채팅방을 만들기 위한 정보를 디비에서 뽑아낸다.	
           $(function(){
             console.log("아잭스 펑션을 타긴 하니??");
 			var curUserKey;
@@ -993,7 +1060,8 @@
                 
                 
             }); 
-            
+
+            //같은 프로젝트에 있는 유저 정보를 뽑아오는 아젝스...요걸로 채팅 가능한 유저들 리스트 화면 뿌려 준다.
       		$.ajax({
       			url: "MyProjectsMates.do",
       			type: "POST",
@@ -1003,7 +1071,7 @@
       			success: function (data) {
       				console.log("뷰단으로 데이터 들어 오나요?? >" + data);
 
-      				var userList;
+      				
       				$.each(data, function(index, value) {          				
       				  console.log(value);
       				  console.log(value.name + " / " + value.email + " / " + value.profilePic);
@@ -1019,10 +1087,7 @@
       					});
 
       				});
-                     console.log("채팅방 유저목록 붙이는 태그들..." +userList);
-					//$('#ulUserList').append(userList);
-
-					//firebase database 에 신규 회원일 경우 등록 해야 하는데.. 이미 존재 하는 유전 인지 아닌지 먼저 확인을 학고 등록 해야 겠지??
+                     
       				
       			},
       			error: function(xhr, status, error){
@@ -1030,7 +1095,67 @@
       		         var errorMessage = xhr.status + ': ' + xhr.statusText
       		         alert('Error - ' + errorMessage);
       		     }
-      		})
+      		});
+
+			//같은 프로젝트에 있는 유저들끼리의 챗방을 만들기 위한 아젝스.... 요게 가능 한가... 아....
+      		$.ajax({
+      			url: "MyProjectsMatesFull.do",
+      			type: "POST",
+      			dataType: 'json',
+      			data : { email : curEmail,
+      				     name : curName }, 
+      			success: function (data) {
+      				console.log("뷰단으로 데이터 들어 오나요?? >" + data);
+
+      			    var projectIdxGrouped = new Set();
+      			    
+      				$.each(data, function(index, value) {          				
+      				  console.log(value);
+      				  console.log("풀리스트" +value.name + " / " + value.email + " / " + value.profilePic + " / " + value.projectIdx);
+      				projectIdxGrouped.add(value.projectIdx);
+      				  
+      				  //var myResult = writeUserData(value.name, value.email, value.profilePic);
+      				  //console.log("유저 디비 저장 하는 펑션 실행 한뒤 리턴 값은?? 키여야 하는데>>>>>>>>>" + myResult);
+
+      				  //같은 프로젝트에 속해 있는 유저들간의  챗방을 만들기 위해서 우선 디비에서 같은 프로젝트에 속해 있는 유저 정보 뽑아 오고.. 
+      				  // 요 데이타를 그룹핑 하고... 함수에 태워서.... 채팅방을 만든다....
+						
+      				
+      				
+
+      				});
+	
+      				console.log("너의 프로젝트 아이디엑스는>>>>>>>>>>>>>>>>>>>>>>>" + projectIdxGrouped);
+      				
+      				var arrIdx = [...projectIdxGrouped];
+      				console.log("어레이로 바뀌었을까????????????????????????" + arrIdx);
+      				console.log(arrIdx.length);
+      				console.log(arrIdx[0]);
+                   
+      				$.each(data, function(index, value) {          				
+        				  
+      					for(var i=0; i<arrIdx.length; i++){
+                            if(arrIdx[i] == value.projectIdx){
+                                
+
+                                }
+    						}
+		
+
+        				});
+
+
+      				
+      				//바로 아래 함수는 위 아젝스에 받은 데이터..... 콜렉션을.. 그룹핑해서... 그 데이터를 가지고... 파이어 베이스에 데이터 저장을 위한 함수...
+      				//writeProjectRoomData(value.name, value.email, value.profilePic); 
+      				
+      			},
+      			error: function(xhr, status, error){
+          			console.log("풀리스트 불러오는 아잭스 에러 터짐 ㅠㅠ");
+      		         var errorMessage = xhr.status + ': ' + xhr.statusText
+      		         alert('Error - ' + errorMessage);
+      		     }
+      		});
 
       		
 		//온로드 뒤에 백 버튼 리스너 달기

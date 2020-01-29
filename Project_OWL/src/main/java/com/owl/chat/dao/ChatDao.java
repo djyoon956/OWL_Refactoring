@@ -20,4 +20,6 @@ public interface ChatDao {
 	public int deleteChatUser(ChatUser user) throws ClassNotFoundException, SQLException;
 	
 	public List<MyProjectsMates> getMyProjectsMates(String email, String name) throws ClassNotFoundException, SQLException;
+	
+	public List<MyProjectsMates> getMyProjectsMatesFull(String email, String name) throws ClassNotFoundException, SQLException;
 }
