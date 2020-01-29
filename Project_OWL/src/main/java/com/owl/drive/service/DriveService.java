@@ -2,7 +2,9 @@ package com.owl.drive.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,20 +60,20 @@ public class DriveService {
 		return result;
 	}
 	
-	public List<DriveFile> getFolderData(int folderIdx) {
+	public Map<String, Object> getFolderData(int folderIdx) {
 		DriveDao dao = getDriveDao();
 
-		List<DriveFile> files = null;
+		Map<String, Object> results = new HashMap<String, Object>();
 		try {
-			files = dao.getFileByFolderIdx(folderIdx);
-			// get folder
+			results.put("files", dao.getFileByFolderIdx(folderIdx));
+			results.put("folders", dao.getFolderByFolderIdx(folderIdx));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return files;
+		return results;
 	}
 	
 	public boolean updateNewNameFolder(String folderName, int driveIdx) {
@@ -103,12 +105,12 @@ public class DriveService {
 	}
 
 	
-	public List<DriveFile> getTrashList(int projectIdx) {
+	public Map<String, Object> getTrashList(int projectIdx) {
 		DriveDao dao = getDriveDao();
-		List<DriveFile> trashlist = new ArrayList<DriveFile>();
+		Map<String, Object> trashlist = new HashMap<String, Object>();
 
 		try {
-			trashlist = dao.getTrashList(projectIdx);
+			trashlist.put("files", dao.getTrashList(projectIdx));
 			
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
