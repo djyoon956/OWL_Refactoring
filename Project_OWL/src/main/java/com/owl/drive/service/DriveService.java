@@ -2,12 +2,13 @@ package com.owl.drive.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.owl.drive.dao.DriveDao;
 import com.owl.drive.dto.DriveFile;
@@ -58,58 +59,51 @@ public class DriveService {
 		return result;
 	}
 	
-	public List<DriveFile> getFolderData(int folderIdx) {
-		System.out.println("in getFolderDatas service : " + folderIdx);
+	public Map<String, Object> getFolderData(int folderIdx) {
 		DriveDao dao = getDriveDao();
 
-		List<DriveFile> files = null;
+		Map<String, Object> results = new HashMap<String, Object>();
 		try {
-			files = dao.getFileByFolderIdx(folderIdx);
-			// get folder
+			results.put("files", dao.getFileByFolderIdx(folderIdx));
+			results.put("folders", dao.getFolderByFolderIdx(folderIdx));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return files;
+		return results;
 	}
 	
-	public boolean updateNewNameFolder(String folderName, int driveIdx) {
-		boolean result = false;
+	public void updateNewNameFolder(String folderName, int driveIdx) {
 		DriveDao dao = getDriveDao();
 		try {
-			result = dao.updateNewNameFolder(folderName, driveIdx)> 0 ? true : false;
+			dao.updateNewNameFolder(folderName, driveIdx);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return result;
 	}
 	
-	public boolean updateFolder(DriveFolder drivefolder) {
-		boolean result = false;
+	public void updateFolder(DriveFolder drivefolder) {
 		DriveDao dao = getDriveDao();
 		try {
-			result = dao.updateFolder(drivefolder)> 0 ? true : false;
+			dao.updateFolder(drivefolder);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return result;
 	}
 
 	
-	public List<DriveFile> getTrashList(int projectIdx) {
+	public Map<String, Object> getTrashList(int projectIdx) {
 		DriveDao dao = getDriveDao();
-		List<DriveFile> trashlist = new ArrayList<DriveFile>();
+		Map<String, Object> trashlist = new HashMap<String, Object>();
 
 		try {
-			trashlist = dao.getTrashList(projectIdx);
+			trashlist.put("files", dao.getTrashList(projectIdx));
 			
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();

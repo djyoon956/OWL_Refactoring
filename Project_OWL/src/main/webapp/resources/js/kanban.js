@@ -2,6 +2,8 @@ let projectIdx;
 
 
 let editIdx = 0;
+
+
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
@@ -21,7 +23,7 @@ function initKanban(projectIdx){
 			data : {'labelIdx' : editIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
 			success : function(data) {
 				
-				console.log('data in' + data);
+				//console.log('data in' + data);
 				$('#'+editIdx+'Label').next().remove();
 				$('#'+editIdx+'Label').remove();
 				
@@ -67,12 +69,11 @@ function addLabel(lbidx, lbcolor, lbnm) {
             +  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + lbidx +')";>Delete</button>'
             +  '</div></div><hr>';
 
-$('#labelList').append(lablist);
+   $('#labelList').append(lablist);
 
 }
 
    
-
 function addColumn(obj){
    let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
             + '<div class="columnTitle text-center mt-2 dropdown">'
@@ -92,6 +93,7 @@ function addColumn(obj){
             +   '<ul class="connectedSortable sortableCol columnBody cursor">'
             +   '</ul>'
             + '</div>';
+   
    $('#kanbanIn').append(column);
    
 }
@@ -194,21 +196,14 @@ function deleteLabel(labelidx) {
    
 
 function setKanbanDetail(issueIdx){
-	console.log("in setKanbanDetail     sfdsf");
-//	console.log(projectIdx);
 	
-
+	console.log("in setKanbanDetail     sfdsf");
+	
 	$.ajax({
 			type: "POST",
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
-				console.log("GetIssueDetail success");
-				console.log('-------------------데이터뭐니 ------------');
-				console.log(data);
-				console.log('-------------------------------');
-				console.log(data.replies);
-				console.log('-------------------------------');
 				
 				$("#issueIdxNum").val(issueIdx);
 				//issueProgress
@@ -245,9 +240,12 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailActivity").append(control);
 					});
 					
-					//$("#issueDetailComment").empty();
+					$("#issueDetailComment").empty();
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
+						
+						console.log('issue idx 뭐니?');
+						
 						let creatornm =  element.creator.substring(0,1);
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
@@ -256,10 +254,13 @@ function setKanbanDetail(issueIdx){
 										+ '	 <div class="comment-text w-100">'
 										+ '		<h6 class="font-medium mb-2">'+element.creator
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
-										+ '		<div class="mb-1 d-block" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
+										+ '		<div class="mb-1" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
+										+ '		<input type="text" class="hidden inputBox" id="'+element.issueRlyIdx+'editContent">'
 										+ '		<div class="comment-footer float-right">'
-										+ '		<button type="button" class="btn btn-info btn-sm" onclick="editReply('+element.issueRlyIdx+')">Edit</button>'
-										+ '		<button type="button" class="btn btn-secondary btn-sm" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
+										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
+										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
+										+ '		<button type="button" class="btn btn-info btn-sm hidden" id="'+element.issueRlyIdx+'editChangeBtn">SaveChange</button>'
+										+ '		<button type="button" class="btn btn-secondary btn-sm hidden replyCcBtn" id="'+element.issueRlyIdx+'editCancelBtn">Cancel</button>'
 										+ '		</div>'
 										+ '	</div>'
 										+ '</div>';
@@ -268,9 +269,7 @@ function setKanbanDetail(issueIdx){
 					
 					$("#issueDetailAssignees").text(data.assigned);
 					
-					
-	
-					
+
 					if(data.labelIdx > 0){
 
 						$("#issueDetailLabel").text(data.labelName);
@@ -290,8 +289,8 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailDueDate").text(data.dueDate);
 					else
 						$("#issueDetailDueDate").text("none");
-					console.log("이슈 프로그레스");
-					console.log(data.issueProgress);
+					//console.log("이슈 프로그레스");
+					//console.log(data.issueProgress);
 					if(data.issueProgress == 'CLOSED')
 						$("#issueClosedChk").text('Reopen issue');
 					else 
@@ -303,10 +302,7 @@ function setKanbanDetail(issueIdx){
 	})
 
 changeKanbanView("detail");
-
-
 }
-
 
 
 function closeIssue(issueIdx) {
@@ -339,7 +335,7 @@ function editLabel(idx, color, name) {
 
 
 	//$('#labelList').$('#'+idx+'Label').removeAttr('style');
-	editIdx = idx;
+	//editIdx = idx;
 	$('#addLabelBtn').addClass("hidden");
 	$('#editLabelBtn').removeClass("hidden");
 	$('#backBtn').removeClass("hidden");
@@ -373,26 +369,51 @@ function editLabel(idx, color, name) {
 		   }	
 	
 	
-	
-	
-	function editReply(issueRlyIdx){
-		console.log('?????????????????????????????????????');
-		console.log('editReply in');
-		console.log(issueRlyIdx);
-		console.log($('#'+issueRlyIdx+'recontent').text());
-				
-		$.ajax({
-			url : "EditReply.do",
-		    method : "POST",
-		    data : {'issueRlyIdx' : issueRlyIdx, 'content' : $('#'+issueRlyIdx+'recontent').text()},
-		    success : function(data) {
-		    	console.log(data);
-		    }, error : function() {
-		    	console.log('editReply in');
-		    }
+	function editReply(issueRlyIdx, issueIdx){
+
+		$('#'+issueRlyIdx+'recontent').hide(); //본 댓글
+		$('#'+issueRlyIdx+'editContent').removeClass('hidden');// 변경댓글
+		$('#'+issueRlyIdx+'reEditBtn').addClass("hidden"); //EDIT 버튼 
+		$('#'+issueRlyIdx+'reDeleteBtn').addClass("hidden"); //Delete 버튼 
+		$('#'+issueRlyIdx+'editChangeBtn').removeClass('hidden'); //saveChange 버튼
+		$('#'+issueRlyIdx+'editCancelBtn').removeClass('hidden'); //cancel 버튼 
+		
+		let recontent= $('#'+issueRlyIdx+'recontent').text();
+		
+		$('#'+issueRlyIdx+'editContent').val(recontent);
+		
+		
+		$('#'+issueRlyIdx+'editChangeBtn').click ( function() {
+			
+			let changecontent = $('#'+issueRlyIdx+'editContent').val();
+
+			$.ajax({
+				url : "EditReply.do",
+			    method : "POST",
+			    data : {'issueRlyIdx' : issueRlyIdx, 'content' : changecontent},
+			    success : function(data) {
+			    	
+			    	setKanbanDetail(issueIdx);
+			    	
+			    }, error : function() {
+			    	console.log('editReply in');
+			    }
+			})
 		})
 		
+		
+			$('.replyCcBtn').click(function() {
+				setKanbanDetail(issueIdx);
+
+		
+				});
+		
+		
 	}
+	
+	
+
+	
 	
 	
 	

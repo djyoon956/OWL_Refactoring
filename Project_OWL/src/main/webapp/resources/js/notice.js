@@ -44,6 +44,8 @@ function setDetailData(boardIdx){
 		url: "GetNotice.do",
 		data: {boardIdx: boardIdx},
 		success: function (notice) {
+			console.log("노티스 ajax");
+			console.log(notice);
 			detailNoticeIdx = boardIdx;
 			$("#noticeTitle").text(notice.title);
 			$("#noticeContent").html(notice.content);
@@ -53,14 +55,12 @@ function setDetailData(boardIdx){
 			$.each(notice.files, function(){
 				let path = "/upload/"+ noticeProjectIdx +"/file/"+this.fileName;
 				console.log(path);
-				let control = "<li class='mb-2' style='font-size: 16px'>"
+				let control = "<li class='mb-2' style='font-size: 16px' id=" + this.fileIdx +">"
 								+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+this.fileName+" ("+this.fileSize+" KB)</span></a>"
 								+" </li>";
 				$("#noticeFiles").append(control);
 			})
-			/*$("#editNoticeBtn").attr("onclick","editNoticeSetView( '"+ notice +"' )");*/
-			console.log("노티스 데이터");
-			console.log(notice);
+			$("#noticeBoardIdx").text(boardIdx);
 			changeNoticeView("detailBox");
 		}
 	}); 
@@ -111,8 +111,8 @@ function writeNoticeOk(){
 		warningAlert("내용을 모두 작성해주세요.");
 		return;
 	}
-	
     let formData = new FormData();
+	
     formData.append("projectIdx", noticeProjectIdx);
     formData.append("content",$('#noticeNote').summernote('code'));
     formData.append("title",$("#title").val());
@@ -170,24 +170,77 @@ function deleteNotice(){
 }
 
 function editNoticeSetView(){
-	/*element.boardIdx,
-	element.title,
-	element.email,
-	element.writeDate,
-	element.readNum */
-	console.log("edit 화면 ");
-	changeNoticeView("editBox");
 	
-    console.log("파일 ");
+	
 	console.log($("#noticeFiles").text());
+	
 	$("#editTitle").val($("#noticeTitle").text());
 	$('#noticeEditNote').summernote('code',$("#noticeContent").html());
-	  $.each($("#noticeFiles").text(), function(i, file) {
-	    	//formData.append('multipartFiles', file);
-		  	
+	$("#noticeEditFileCount").text($("#noticeFileCount").text());
+	$("#noticeEditFiles").empty();
+	  $.each($("#noticeFiles li"), function(i, item) {
+		  console.log(item);
+		  	var fileIndex = $(this).attr("id");
+		  	 console.log($(this).text());
+		  	console.log(fileIndex);
+let deleteIcon = $(this).text() + "<i class='far fa-times-circle font-weight-bold font-18 ml-1' onclick= 'deleteFIle("+ fileIndex +")'></i><br>";
+		  //	$(this).text().append(deleteIcon);
+		    $("#noticeEditFiles").append( deleteIcon );
 	   });
+	changeNoticeView("editBox");
 }
-
+function noticeEditOk() {
+	
+    let formData = new FormData();
+    formData.append("boardIdx", $("#noticeBoardIdx").text());
+    formData.append("content",$('#noticeEditNote').summernote('code'));
+    formData.append("title",$("#editTitle").val());
+    
+    $.each($("#noticeEditMultipartFiles")[0].files, function(i, file) {
+    	formData.append('multipartFiles', file);
+    });
+    
+	  let notice;
+	    $.ajax({
+	        type: "POST",
+	        enctype: 'multipart/form-data',
+	        url: "UpdateNotice.do",
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        cache: false,
+	        success: function (data) {
+	        	console.log(data);
+	        	if(data> 0){
+	        		successAlert("공지사항 수정 완료");
+	        		cancelNotice();
+	        		setDetailData(data);
+	        	}
+	        	else
+	        		writeNoticeError();
+	        },
+	        error: function (e) {
+	        	writeNoticeError()
+	        }
+	    });
+}
+function deleteFIle(fileIdx){
+	$.ajax({
+		url : "DeleteFile.do",
+		type : "POST",
+		data : {fileIdx : fileIdx},
+		success : function(data){
+			if(data){
+				successAlert("삭제 완료!");
+				setNoticeData();
+			} else
+				warningAlert("삭제 실패!");
+		},
+		error : function(){
+			warningAlert("삭제 실패!");
+		}
+	})
+}
 function changeNoticeView(view){
 	if(view == "noticeBox"){
 		detailNoticeIdx = 0;

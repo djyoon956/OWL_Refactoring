@@ -96,10 +96,9 @@ $(function(){
 						"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
 					},
 					 "checkbox" : {
-						    "keep_selected_style" : false,
 						    "three_state" : false
 						  },
-					"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow", "checkbox"]
+					"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
 				});
 
 			// default folder
@@ -134,6 +133,7 @@ $(function(){
 		        		success:function(idx){
 			        		data.node.id =idx;
 		        		}
+      		
 		    		});
 				}else{
 					let thisId = data.node.id;
@@ -143,9 +143,16 @@ $(function(){
 		        		data:{driveIdx: data.node.id,
 		        			     folderName: data.text
 		        			 },
-		        		success:function(data){
+		        		success:function(idx){
+			        		data.node.id = idx;
+			        		console.log(data.node);
+			        		console.log($('#jstree').jstree().get_node(idx));
+			        		// $("#jstree").jstree('set_text', data.node ,data.text);
+			        		$("#jstree").jstree('rename_node', data.node , data.text ); 
+			        		
 		        		}
 		    		});
+			       
 				}
 			});
  			$('#jstree').on('move_node.jstree', function (e, data) {
@@ -161,24 +168,32 @@ $(function(){
 		        			  refs: data.node.parents,
 		        			  oldRef: data.old_parent
 		        			 },
-		        		success:function(data){
+		        		success:function(idx){
+			        		data.node.id = idx;
 		        		}
 		    		});
  			});	
 
  			$('#jstree').on('paste.jstree', function (e, data) {
  	 			//복사 후 paste 할 때
- 	 			console.log("paste");
-				console.log(data);
-				console.log(data.parent); //나의 ref가 될 것
-				console.log(data.node[0].id); //driveIdx
-				console.log(data.node[0].text); //이름
-				console.log(data.node[0].parents);
+ 	 			if(data.mode =="copy_node"){ 	 	 			
+				jQuery.ajaxSettings.traditional = true				
+				  $.ajax({
+		        		url:"copyFolder.do",
+		        		method:"POST",
+		        		data:{oldId: data.node[0].id,
+			        		  projectIdx: ${project.projectIdx},
+		        			  folderName: data.node[0].text,
+		        			  parent: data.parent, //새로운 ref
+		        			  refs: data.node[0].parents
+		        			 },
+		        		success:function(idx){
+			        		data.node[0].id =idx;
+		        		}
+		    		});
+ 	 			}
  			});
-
-
-
- 			
+			
 			$("#deleteFolder").click(function(){
 				console.log("delete");
 				var ref = $('#jstree').jstree(true),
@@ -268,6 +283,10 @@ function sendFileToServer(formData,status){
     status.setAbort(jqXHR);
 }
 
+function driveRefresh(){
+    $('#jstree').jstree(true).refresh();  	
+    console.log("refresh 완료");
+}
 </script>
 
 
@@ -311,8 +330,8 @@ function sendFileToServer(formData,status){
 		                <button id="driveSearchBtn" type="button" class="driveBtn btn-primary"
 		                    onclick="Search()">검색</button>&nbsp;&nbsp;
 		                <div class="filebox" style="display:inline;">
-		                    <input type="file" id="driveUploadFile" name="driveUploadFile">
-		                    <label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
+		                    <input type="file" id="driveUploadFiles" name="driveUploadFiles" multiple>
+		                    <label for="driveUploadFiles" style="cursor: pointer; margin-bottom: 0px;"
 		                        class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
 		                </div>
 		                <button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary"

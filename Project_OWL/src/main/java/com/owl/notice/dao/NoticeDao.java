@@ -18,4 +18,10 @@ public interface NoticeDao {
 	public Notice getNotice(int boardIdx) throws ClassNotFoundException, SQLException;
 
 	public List<File> getNoticeFiles(int boardIdx) throws ClassNotFoundException, SQLException;
+	
+	public int updateNotice(Notice notice) throws ClassNotFoundException, SQLException;
+	
+	public int updateNoticeFile(File file) throws ClassNotFoundException, SQLException;
+	
+	public int deleteFile(int fileIdx) throws ClassNotFoundException, SQLException;
 }
