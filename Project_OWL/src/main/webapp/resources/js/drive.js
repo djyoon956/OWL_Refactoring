@@ -331,37 +331,35 @@ function setIconView(data){
 
 	let control ="";
 	let line = 4;
-	if(!isTrash){
-		$.each(data.folders, function(index, element) {
-			console.log("in folder");
-			control += '<div class="col-sm-3">'
-						+ 	'<div class="card driveCard dropdown" ondblclick="setDirectoryData('+element.driveIdx+',\''+element.folderName+'\')">'
-						+ 		'<div class="more"  style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-						+			'<input type="checkbox" id="'+element.driveIdx+'" onclick="checkBox(this)" style="width:18px; height:18px;">'
-						+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
-						+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
-						+				'</a>'
-						+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
-						+				'<ul class="list-style-none">'
-						+					'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
-						+					'<li class="pl-2"><a href="#"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>'
-						+				'</ul>'                                                                                                                                                         
-						+			'</div>'                                                                                                                                                        
-						+		'</div>'                                                                                                                                                            
-						+		'<div class="card-body text-center">'                                                                                                                               
-						+			'<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>'
-						+			'<h4>' +element.folderName+ '</h4>'                                                                                                                                         
-						+		'</div>'                                                                                                                                                            
-						+	 '</div>'                                                                                                                                                               
-						+  '</div>';     
-			
-			if (index % line == line - 1 || index == data.folders.length - 1) {
-				let row = $("<div class='row'></div>");
-				row.append(control);
-				$("#driveIconViewBox").append(row);
-			}
-		});
-	}
+	$.each(data.folders, function(index, element) {
+		console.log("in folder");
+		control += '<div class="col-sm-3">'
+					+ 	'<div class="card driveCard dropdown folder" style="cursor:pointer;" ondblclick="changeSelectedFolder('+element.driveIdx+',\''+element.folderName+'\')">'
+					+ 		'<div class="more"  style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
+					+			'<input type="checkbox" id="'+element.driveIdx+'" onclick="checkBox(this)" style="width:18px; height:18px;">'
+					+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
+					+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
+					+				'</a>'
+					+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
+					+				'<ul class="list-style-none">'
+					+					'<li class="pl-2"><a href="#"  onclick="setRenameIconView('+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+					+					'<li class="pl-2"><a href="#" onclick="deleteDriveFolder('+element.driveIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>'
+					+				'</ul>'                                                                                                                                                         
+					+			'</div>'                                                                                                                                                        
+					+		'</div>'                                                                                                                                                            
+					+		'<div class="card-body text-center">'                                                                                                                               
+					+			'<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>'
+					+			'<h4>' +element.folderName+ '</h4>'                                                                                                                                         
+					+		'</div>'                                                                                                                                                            
+					+	 '</div>'                                                                                                                                                               
+					+  '</div>';     
+		
+		if (index % line == line - 1 || index == data.folders.length - 1) {
+			let row = $("<div class='row'></div>");
+			row.append(control);
+			$("#driveIconViewBox").append(row);
+		}
+	});
 
 	control ="";
 	$.each(data.files, function(index, element) {
@@ -381,9 +379,10 @@ function setIconView(data){
 		if(isTrash) {
 			control += '<li class="pl-2"><a href="#" onclick="restoreFileTrash('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
 						+  '<li class="pl-2"><a href="#" onclick="deleteFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
-		}else {
-			control +=	'<li class="pl-2"><a href="#" ><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
-					+	'<li class="pl-2"><a href="#"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>';
+		}else {downloadFile
+			control += '<li class="pl-2"><a href="#" onclick="downloadFile(\''+element.fileName+'\')" ><i class="fas fa-download"></i>&nbsp; 다운로드</a></li>'
+						+ '<li class="pl-2"><a href="#"  onclick="renameFile('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+						+	'<li class="pl-2"><a href="#"  onclick="deleteDriveFile('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>';
 		}
 
 		control	+=				'</ul>'
@@ -400,13 +399,12 @@ function setIconView(data){
 			let row = $("<div class='row'></div>");
 			row.append(control);
 			$("#driveIconViewBox").append(row);
+			control="";
 		}
 	});
 }
 
 function setTableView(data){
-	console.log('인영아 여기오니');
-	console.log(data);
 	$("#driveTableViewBox").removeClass("hidden");
 	$("#driveIconViewBox").addClass("hidden");
 
@@ -421,7 +419,7 @@ function setTableView(data){
 		$('#driveTable').DataTable().draw();
 	})
 	
-	//if(!isTrash){		
+		//if(!isTrash){		
 		$.each(data.folders, function(index, element) {
 			let row =$('#driveTable').DataTable().row.add( [
 							"<i class='fas fa-folder mr-3'></i><span>"+element.folderName+"</span>",
@@ -438,21 +436,37 @@ function setTableView(data){
 }
 
 function deleteDriveFile(driveFileIdx){
-	$.ajax({
-		 url : "DeleteDriveFile.do",
-		 data : {driveFileIdx : driveFileIdx},
-		 success : function(data){
-			 if(data){
-				 callDirectoryData();
-				 successAlert("파일 삭제 완료");
-			 }else{
-				 errorAlert("파일 삭제 실패");
-			 }
-		 },
-		 error : function(){
-			 errorAlert("파일 삭제 실패");
-		 }
-	 })
+	Swal.fire({
+	    title: '파일을 삭제하시겠습니까?',
+	    text: '해당 파일은 휴지통으로 이동합니다.',
+	    imageUrl: 'https://i.imgur.com/vxFBTRJ.png',
+	    imageWidth: 150,
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    confirmButtonText: '삭제',
+	    cancelButtonText: '취소'
+	  }).then((result) => {
+	    if (result.value) {
+	    	$.ajax({
+	   		 url : "DeleteDriveFile.do",
+	   		 data : {driveFileIdx : driveFileIdx},
+	   		 success : function(data){
+	   			 if(data){
+	   				 callDirectoryData();
+	   				 successAlert("파일 삭제 완료");
+	   			 }else{
+	   				 errorAlert("파일 삭제 실패");
+	   			 }
+	   		 },
+	   		 error : function(){
+	   			 errorAlert("파일 삭제 실패");
+	   		 }
+	   	 })  
+	   }         
+	});
+	
+
 }
 
 function deleteDriveFolder(driveIdx, parentIdx){
@@ -586,7 +600,9 @@ function restoreFolderfromTrash(driveFileIdx) {
 }
 
 
+function setRenameIconView(){
 	
+}	
 
 function renameFile(driveFileIdx){
 	console.log("in renameFile");
