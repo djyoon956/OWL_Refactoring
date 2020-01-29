@@ -131,7 +131,7 @@
 
 .inputBox {
 	width:75%; 
-	height:80%;
+	height:60%;
 }
 </style>
 <script>
@@ -198,7 +198,6 @@
 			$('#backBtn').addClass("hidden");
 		});
 
-
 	
          $("#openIssueBtn").click(function() {
             $("#-1Column").removeClass("d-none");
@@ -258,7 +257,6 @@
             	$('#assigned').empty();
             	$('#labelIdx').empty();
 
-            
 				let member = data.member;
 				let label = data.label;
 				
@@ -269,21 +267,16 @@
                 $('#labelIdx').append(selectoption);
 				
                $.each(member, function(index, element) {
-
 					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
-					
-                   });
+                 });
                
                $('#assigned').append(optmember);
 
                 $.each(label, function(index, element) {
-		
-                  optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>';
-
-                   });
+                 	 optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
+                 });
                 
                 $('#labelIdx').append(optlabel);	
-            
             },
             error: function () {
                 console.log("GetProjectMember error");
@@ -376,7 +369,6 @@
 		if(replyct == "" || replyct == null) {
 			return false;
 		}else {
-
 			  $.ajax ({
 			 		type :"POST",
 					url : "InsertReply.do",
@@ -384,41 +376,16 @@
 								, 'content': $('#replycontent').val()
 								, 'creator' : '${member.name}'},
 					success : function(data) {
-						  $('#replycontent').val("");
-						console.log('InsertReply in');
-						console.log(data);
-						let name = data.creator.substring(0,1);
-						//console.log('name은?' + name);
-					let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+data.issueRlyIdx+'Reply">'
-								+ '	<div class="p-2">'
-								+ '		<div class="comment_img">'+name+'</div>'
-								+ '	</div>'
-								+ '	 <div class="comment-text w-100">'
-								+ '		<h6 class="font-medium mb-2">' +data.creator
-								+ '		<span class="text-muted float-right">'+data.createDate+'</span></h6>'
-								+ '		<div class="mb-1" id="'+data.issueRlyIdx+'recontent">'+data.content+'</div>'
-								+ '		<input type="text" class="hidden inputBox" id="'+data.issueRlyIdx+'editContent">'
-								+ '		<div class="comment-footer float-right">'
-								+ '		<button type="button" class="btn btn-info btn-sm" id="'+data.issueRlyIdx+'reEditBtn" onclick="editReply('+data.issueRlyIdx+','+data.issueIdx+')">Edit</button>'
-								+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+data.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+data.issueRlyIdx+')">Delete</button>'
-								+ '		<button type="button" class="btn btn-info btn-sm hidden" id="'+data.issueRlyIdx+'editChangeBtn">SaveChange</button>'
-								+ '		<button type="button" class="btn btn-secondary btn-sm hidden" id="'+data.issueRlyIdx+'editCancelBtn">Cancel</button>'
-								+ '		</div>'
-								+ '	</div>'
-								+ '</div>';
-
-						$('#issueDetailComment').prepend(control);
 						
+						  $('#replycontent').val("");
+				    		setKanbanDetail(data.issueIdx);
+
 					},error : function() {
 			        	errorAlert("InsertReply error");
 						}
-
 					})   
-
 			}
-
-
-			 }) 
+		}) 
 
 });
 </script>
