@@ -53,128 +53,78 @@ function addFolder(folder) {
 
 $(function(){
 	initDrive("${project.projectIdx}");
-	$.ajax({
-		url:"DriveList.do",
-		dataType:"json",
-		data:{projectIdx:$("#theProject").val()},
-		success:function(data){
-			let folder;		
-			$.each(data, function(index, element){
-				if(element.ref == 0){
-					element.ref = "#";
-				}				
-				folder = new folderInfo();
-				folder.id = element.driveIdx;
-			    folder.parent = element.ref;
-			    folder.text = element.folderName;
-			    addFolder(folder);
-			});
 
-			//jstree 기능
-			var to = false;
-			$('#searchText').keyup(function () {
-				if(to) { clearTimeout(to); }
-				to = setTimeout(function () {
-					var v = $('#searchText').val();
-					$('#jstree').jstree(true).search(v);
-				}, 100);
-			});
+	$.jstree.defaults.core.themes.variant = "large";
+	$('#jstree').jstree({
+			"core" : {
+				"animation" : 0,
+				"check_callback" : true,
+				'force_text' : true,
+				"themes" : { "stripes" : true },
+			    
+			  },
+			"types" : {
+				"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
+				"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
+				"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
+			},
+			 "checkbox" : {
+				    "three_state" : false
+				  },
+			"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
 
-
-			$.jstree.defaults.core.themes.variant = "large";
-			$('#jstree').jstree({
-					"core" : {
-						"animation" : 0,
-						"check_callback" : true,
-						'force_text' : true,
-						"themes" : { "stripes" : true },
-					    'data' : folderList
-					  },
-					"types" : {
-						"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
-						"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
-						"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
-					},
-					 "checkbox" : {
-						    "three_state" : false
-						  },
-					"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
-				});
-
-			// default folder
-			setDirectoryData(folderList[0].id,folderList[0].text);
-			
-			$("#createFolder").click(function(){
-				var ref = $('#jstree').jstree(true),
-				sel = ref.get_selected();
-				if(!sel.length) { return false; }
-				sel = sel[0];
-				sel = ref.create_node(sel, {"type":"default"});
-				if(sel) {
-					ref.edit(sel);					
-				} 
-			});	
-			
-			//폴더 생성시 이름 수정까지 완료할 때
- 			$('#jstree').on('rename_node.jstree', function (e, data) {
-				console.log(data.node.id); // 나
-				console.log("parent",data.node.parent);// 부모
-				console.log("parents",data.node.parents);// 부모
-				if(data.node.id.startsWith("j1_")){	
-				jQuery.ajaxSettings.traditional = true				
-				  $.ajax({
-		        		url:"insertFolder.do",
-		        		method:"POST",
-		        		data:{projectIdx: ${project.projectIdx},
-		        			  folderName: data.text,
-		        			  ref: data.node.parent,
-		        			  refs : data.node.parents
-		        			 },
-		        		success:function(idx){
-			        		data.node.id =idx;
-		        		}
-      		
-		    		});
-				}else{
-					let thisId = data.node.id;
-					$.ajax({
-		        		url:"updateNewName.do",
-		        		method:"POST",
-		        		data:{driveIdx: data.node.id,
-		        			     folderName: data.text
-		        			 },
-		        		success:function(idx){
-			        		data.node.id = idx;
-			        		console.log(data.node);
-			        		console.log($('#jstree').jstree().get_node(idx));
-			        		// $("#jstree").jstree('set_text', data.node ,data.text);
-			        		$("#jstree").jstree('rename_node', data.node , data.text ); 
-			        		
-		        		}
-		    		});
-			       
-				}
-			});
- 			$('#jstree').on('move_node.jstree', function (e, data) {
-				//잘라내기 후 paste 할 때
-				jQuery.ajaxSettings.traditional = true				
-				  $.ajax({
-		        		url:"cutFolder.do",
-		        		method:"POST",
-		        		data:{driveIdx: data.node.id,
-			        		  projectIdx: ${project.projectIdx},
-		        			  folderName: data.node.text,
-		        			  ref: data.parent,
-		        			  refs: data.node.parents,
-		        			  oldRef: data.old_parent
-		        			 },
-		        		success:function(idx){
-			        		data.node.id = idx;
-		        		}
-		    		});
- 			});	
-
- 			$('#jstree').on('paste.jstree', function (e, data) {
+		}).on('rename_node.jstree', function (e, data) {
+			if(data.node.id.startsWith("j1_")){	
+			jQuery.ajaxSettings.traditional = true				
+			  $.ajax({
+	        		url:"insertFolder.do",
+	        		method:"POST",
+	        		data:{projectIdx: ${project.projectIdx},
+	        			  folderName: data.text,
+	        			  ref: data.node.parent,
+	        			  refs : data.node.parents
+	        			 },
+	        		success:function(idx){
+		        		data.node.id =idx;
+		        		driveRefresh();
+	        		}
+  		
+	    		});
+			}else{
+				let thisId = data.node.id;
+				$.ajax({
+	        		url:"updateNewName.do",
+	        		method:"POST",
+	        		data:{driveIdx: data.node.id,
+	        			     folderName: data.text
+	        			 },
+	        		success:function(idx){
+		        		data.node.id = idx;
+		        		console.log(data.node);	
+		        		driveRefresh();
+	        		}
+	    		});
+		       
+			}
+		}).on('move_node.jstree', function (e, data) {
+			//잘라내기 후 paste 할 때
+			jQuery.ajaxSettings.traditional = true				
+			  $.ajax({
+	        		url:"cutFolder.do",
+	        		method:"POST",
+	        		data:{driveIdx: data.node.id,
+		        		  projectIdx: ${project.projectIdx},
+	        			  folderName: data.node.text,
+	        			  ref: data.parent,
+	        			  refs: data.node.parents,
+	        			  oldRef: data.old_parent
+	        			 },
+	        		success:function(idx){
+		        		data.node.id = idx;
+		        		driveRefresh();
+	        		}
+	    		});
+			}).on('paste.jstree', function (e, data) {
  	 			//복사 후 paste 할 때
  	 			if(data.mode =="copy_node"){ 	 	 			
 				jQuery.ajaxSettings.traditional = true				
@@ -189,21 +139,40 @@ $(function(){
 		        			 },
 		        		success:function(idx){
 			        		data.node[0].id =idx;
+			        		driveRefresh();
 		        		}
 		    		});
  	 			}
- 			});
-			
-			$("#deleteFolder").click(function(){
+ 			}).on('delete_node.jstree', function (e, data) {
 				console.log("delete");
-				var ref = $('#jstree').jstree(true),
-					sel = ref.get_selected();
-				if(!sel.length) { return false; }
-				ref.delete_node(sel);
-			});		
-			
-		}
+				console.log(data);
+
+
+
+ 			});
+	driveRefresh();
+	
+	$("#createFolder").click(function(){
+		var ref = $('#jstree').jstree(true),
+		sel = ref.get_selected();
+		if(!sel.length) { return false; }
+		sel = sel[0];
+		sel = ref.create_node(sel, {"type":"default"});
+		if(sel) {
+			ref.edit(sel);					
+		} 
 	});
+
+
+	$("#deleteFolder").click(function(){
+		console.log("delete");
+		var ref = $('#jstree').jstree(true),
+			sel = ref.get_selected();
+		if(!sel.length) { return false; }
+		ref.delete_node(sel);
+	});		
+		
+
 	
 	
 
@@ -284,9 +253,43 @@ function sendFileToServer(formData,status){
 }
 
 function driveRefresh(){
-    $('#jstree').jstree(true).refresh();  	
-    console.log("refresh 완료");
+	folderList = [];
+	$.ajax({
+		url:"DriveList.do",
+		dataType:"json",
+		data:{projectIdx:$("#theProject").val()},
+		success:function(data){
+			let folder;		
+			$.each(data, function(index, element){
+				if(element.ref == 0){
+					element.ref = "#";
+				}				
+				folder = new folderInfo();
+				folder.id = element.driveIdx;
+			    folder.parent = element.ref;
+			    folder.text = element.folderName;
+			    addFolder(folder);
+			});
+
+			//jstree 기능
+			var to = false;
+			$('#searchText').keyup(function () {
+				if(to) { clearTimeout(to); }
+				to = setTimeout(function () {
+					var v = $('#searchText').val();
+					$('#jstree').jstree(true).search(v);
+				}, 100);
+			});
+
+			$('#jstree').jstree(true).settings.core.data = folderList;
+			$('#jstree').jstree(true).refresh();
+			
+			callDirectoryData();
+		}
+	});
 }
+
+
 </script>
 
 

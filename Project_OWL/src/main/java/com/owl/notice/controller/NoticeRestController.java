@@ -67,7 +67,7 @@ public class NoticeRestController {
 	}
 	@RequestMapping(value = "DeleteFile.do", method = RequestMethod.POST)
 	public boolean deleteFile(int fileIdx) {
-		return service.deleteNotice(fileIdx);
+		return service.deleteFile(fileIdx);
 	}
 	@RequestMapping(value = "UpdateNotice.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public int updateNotice(@RequestParam(value = "boardIdx") int boardIdx
