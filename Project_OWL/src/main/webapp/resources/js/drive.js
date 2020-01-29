@@ -28,7 +28,8 @@ function initDrive(projectIdx){
 	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 	 	"searching": false,
          fixedColumns: true,
-         autoWidth: false
+         autoWidth: false,
+         columnDefs: [ { targets: 0, className: 'dt-body-left' }]
 	}).on('click', 'tbody tr', function () {
 		if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
@@ -37,11 +38,11 @@ function initDrive(projectIdx){
             $(this).addClass('selected');
         }
 	}).on('dblclick', 'tbody tr.folder', function () {
-		setDirectoryData($(this).attr("id"), $(this).find("td").first().text());
+		setDirectoryData($(this).attr("id"), $(this).find("td span").first().text());
 	});
 
 	 $.contextMenu({
-         selector: '#driveTable tr',
+         selector: '#driveTable tbody tr',
          build : function(trigger, e){
         	 console.log(trigger);
         	 console.log($(trigger[0]));
@@ -416,7 +417,7 @@ function setTableView(data){
 
 	$.each(data.files, function(index, element) {
 		$('#driveTable').DataTable().row.add( [
-			element.fileName,
+			"<i class='fas fa-file-alt mr-3'></i><span>"+element.fileName+"</span>",
 			element.createDate,
 			element.creatorName,
 			element.fileSize+" KB"
@@ -427,7 +428,7 @@ function setTableView(data){
 	if(!isTrash){		
 		$.each(data.folders, function(index, element) {
 			let row =$('#driveTable').DataTable().row.add( [
-							element.folderName,
+							"<i class='fas fa-folder mr-3'></i><span>"+element.folderName+"</span>",
 							"",
 							"",
 							""
