@@ -1,6 +1,7 @@
 package com.owl.drive.dto;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,5 +16,14 @@ public class DriveFolder {
 	private String folderName;
 	private int ref;
 	private int depth;
-	private CommonsMultipartFile multipartFile;
+	private boolean isDelete;	
+	private Date deleteDate;
+	
+	public String getDeleteDate() {
+		String result = "";
+		if (deleteDate != null)
+			result = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(deleteDate);
+		
+		return result;
+	}
 }
