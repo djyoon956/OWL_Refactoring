@@ -13,29 +13,33 @@
                         <div class="form-group">
                             <textarea class="form-control bg-light" rows="10" cols="60" id="noticeEditNote" name="content"></textarea>
                         </div>
-                        <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>&nbsp;파일첨부</h5>
+              		  <div class="card m-b-0">
+                       <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <i class="fas fa-download mr-2 " aria-hidden="true"></i>
+                                <span id="noticeEditFileCount">첨부파일 (4)</span>
+                            </h5>
+                    </div> 
+                    
+                        <ul class=" m-4" id="noticeEditFiles">
+                            <!-- <li class="mb-2" style="font-size: 16px">
+                                <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
+                            </li>
+                            <li class="mb-2" style="font-size: 16px">
+                                <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
+                            </li> -->
+                        </ul>
+                   </div>
+                    <h5 class="m-b-20"><i class="fa fa-paperclip m-r-5 f-s-18"></i>&nbsp;파일첨부</h5>
                         <div class="form-group">
                             <div class="fallback">
                                 <input class="l-border-1" name="noticeMultipartFiles" id="noticeEditMultipartFiles" type="file" multiple="multiple">
                             </div>
-                            
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" >
-                        <ul class=" m-4" id="noticeEditFiles">
-                            <li class="mb-2" style="font-size: 16px">
-                                <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                            </li>
-                            <li class="mb-2" style="font-size: 16px">
-                                <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                            </li>
-                 
-                        </ul>
-                    </div>
-                            
-                            
-                        </div>
+                         </div>         
+                        
                         <div class="form-group text-center">
                             <input type="button"
-                                class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2" onclick="writeNoticeOk()" value="확인">
+                                class="btn btn-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10 mr-2" onclick="noticeEditOk()" value="확인">
                             <input type="button" class="btn btn-dark m-b-30 m-t-15 f-s-14 p-l-20 p-r-20" onclick="cancelNotice()"  value="취소">
                         </div>
                     </form>
