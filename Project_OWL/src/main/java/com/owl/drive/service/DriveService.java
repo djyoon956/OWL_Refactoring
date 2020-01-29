@@ -105,12 +105,12 @@ public class DriveService {
 	}
 
 	
-	public List<DriveFile> getTrashList(int projectIdx) {
+	public Map<String, Object> getTrashList(int projectIdx) {
 		DriveDao dao = getDriveDao();
-		List<DriveFile> trashlist = new ArrayList<DriveFile>();
+		Map<String, Object> trashlist = new HashMap<String, Object>();
 
 		try {
-			trashlist = dao.getTrashList(projectIdx);
+			trashlist.put("files", dao.getTrashList(projectIdx));
 			
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
