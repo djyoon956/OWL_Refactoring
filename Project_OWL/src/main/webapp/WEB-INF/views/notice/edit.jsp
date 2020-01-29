@@ -6,7 +6,7 @@
                 <div class="compose-content">
                     <h3 class="text-center">Notice Edit</h3><br>
 
-                    <form action="WriteNotice.do" id="noticeEditForm" enctype="multipart/form-data">
+                   <!--  <form action="WriteNotice.do" id="noticeEditForm" enctype="multipart/form-data"> -->
                         <div class="form-group">
                             <input type="text" class="form-control bg-transparent" name="title" id="editTitle" placeholder="제목을 입력해주세요">
                         </div>
@@ -17,7 +17,7 @@
                        <div class="card-header" id="headingOne">
                             <h5 class="mb-0">
                                 <i class="fas fa-download mr-2 " aria-hidden="true"></i>
-                                <span id="noticeEditFileCount">첨부파일 (4)</span>
+                                <span id="noticeEditFileCount">첨부파일</span>
                             </h5>
                     </div> 
                     
