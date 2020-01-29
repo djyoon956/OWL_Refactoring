@@ -297,16 +297,14 @@ function callDirectoryData(){
 		$('#driveUploadBtn').show();
 		$('#trashName').addClass("hidden");
 		$("#driveName").show();
-		
-		setDirectoryData(folderIdx, folderName);
+		if(folderIdx != null && folderName!= null)
+			setDirectoryData(folderIdx, folderName);
 	}	
 }
 
 function setDirectoryData(folderIdx, folderName) {
 	isTrash = false;
-	console.log("in setFolderData");
-	console.log("folderIdx : " + folderIdx);
-	console.log("view type : " + driveViewType);
+
 	$.ajax({
 		url : "GetFolderData.do",
 		data : { folderIdx : folderIdx },

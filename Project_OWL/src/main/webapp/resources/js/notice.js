@@ -176,8 +176,9 @@ function editNoticeSetView(){
 	
 	$("#editTitle").val($("#noticeTitle").text());
 	$('#noticeEditNote').summernote('code',$("#noticeContent").html());
-	$("#noticeEditFileCount").text($("#noticeFileCount").text());
-	$("#noticeEditFiles").empty();
+	
+	//$("#noticeEditFiles").empty();
+	
 	  $.each($("#noticeFiles li"), function(i, item) {
 		  console.log(item);
 		  	var fileIndex = $(this).attr("id");
@@ -189,16 +190,17 @@ function editNoticeSetView(){
 	changeNoticeView("editBox");
 }
 function noticeEditOk() {
-	
+	$('input:file').MultiFile('reset');
     let formData = new FormData();
     formData.append("boardIdx", $("#noticeBoardIdx").text());
     formData.append("content",$('#noticeEditNote').summernote('code'));
     formData.append("title",$("#editTitle").val());
+    $("#noticeEditMultipartFiles").empty();
     
     $.each($("#noticeEditMultipartFiles")[0].files, function(i, file) {
     	formData.append('multipartFiles', file);
     });
-    
+   
 	  let notice;
 	    $.ajax({
 	        type: "POST",
