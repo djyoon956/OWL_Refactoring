@@ -1,7 +1,5 @@
 package com.owl.drive.dto;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,5 +13,5 @@ public class DriveFolder {
 	private String folderName;
 	private int ref;
 	private int depth;
-	private CommonsMultipartFile multipartFile;
+	private boolean isDelete;	
 }
