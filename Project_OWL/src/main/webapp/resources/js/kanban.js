@@ -130,10 +130,9 @@ function deleteColumn(obj){
 
 function addKanbanIssue(colIdx,obj){
 	
-
-	console.log("addKanbanIssue in");
-	console.log("label" + obj.labelIdx);
-	console.log(obj);
+	//console.log("addKanbanIssue in");
+	//console.log("label" + obj.labelIdx);
+	//console.log(obj);
 	if(obj.labelName == null) 
 		obj.labelName = "";
 	if(obj.assigned == null) 
@@ -214,7 +213,7 @@ function setKanbanDetail(issueIdx){
 				$("#issueIdxNum").val(issueIdx);
 				//issueProgress,labelIdx
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
-					$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
+				//$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 					if(data.issueProgress == 'OPEN')
 						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 					else if (data.issueProgress == 'CLOSED')
@@ -316,6 +315,8 @@ function setKanbanDetail(issueIdx){
 
 
 function closeIssue(issueIdx) {
+	console.log("여기오니?????????????????????");
+
 	   $.ajax({
            url:"CloseIssue.do",
            method:"POST",
@@ -326,6 +327,31 @@ function closeIssue(issueIdx) {
            }
         });  		
 }
+
+
+function reOpenIssue(issueIdx) {
+	console.log("여기오니?????????????????????");
+	$.ajax({
+		url:"ReopenIssue.do",
+		method:"POST",
+		data : {issueIdx : issueIdx},
+		success:function(data) {
+			console.log('reOpenIssue in');
+			console.log(data);
+        	$("#issueClosedChk").text('close issue');
+        	setKanbanDetail(issueIdx);
+        	//setChageView("kanban");
+
+		},error :function() {
+			
+			console.log("ReopenIssue error");
+		}
+		
+	})
+	
+	
+}
+
 
 function changeKanbanView(view){
    if(view == "list"){
@@ -342,6 +368,7 @@ function changeKanbanView(view){
    $("#kanbanEditBox").removeClass("hidden");
  }
 }
+
 
 function editLabel(idx, color, name) {
 	
