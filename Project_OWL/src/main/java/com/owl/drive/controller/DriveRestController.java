@@ -35,15 +35,6 @@ public class DriveRestController {
 
 	@RequestMapping(value = "insertFolder.do")
 	public int insertFolder(DriveFolder drivefolder, String[] refs, HttpServletRequest request) {
-		
-		List<Integer> driveRefs = new ArrayList<Integer>();
-		if (refs.length == 2) { // default 하위
-			driveRefs.add(Integer.parseInt(refs[0]));
-		} else {
-			driveRefs.add(Integer.parseInt(refs[1]));
-			driveRefs.add(Integer.parseInt(refs[0]));
-		}
-	
 		try {
 			drivefolder.setFolderName(drivefolder.getFolderName());
 			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
@@ -53,8 +44,7 @@ public class DriveRestController {
 
 			String uploadPath = request.getServletContext().getRealPath("upload");
 
-			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(),
-					driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
+			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(), refs, drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -69,14 +59,11 @@ public class DriveRestController {
 		System.out.println(drivefolder);
 		System.out.println(oldRef);
 		
-		List<Integer> driveRefs = new ArrayList<Integer>();
 		if (refs.length == 2) { // default 하위
-			driveRefs.add(Integer.parseInt(refs[0]));
+
 			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
 									+ drivefolder.getProjectIdx() + "\\drive\\" +Integer.parseInt(refs[0])+"\\"+ oldRef +"\\"+ drivefolder.getDriveIdx();
 		} else {
-			driveRefs.add(Integer.parseInt(refs[1]));
-			driveRefs.add(Integer.parseInt(refs[0]));
 			oldPath = request.getServletContext().getRealPath("upload") + "\\project\\" 
 									+ drivefolder.getProjectIdx()+ "\\drive\\" +Integer.parseInt(refs[1]) +"\\" +oldRef +"\\"+ drivefolder.getDriveIdx();
 		}
@@ -89,8 +76,7 @@ public class DriveRestController {
 			service.updateFolder(drivefolder);
 
 			String uploadPath = request.getServletContext().getRealPath("upload");
-			UploadHelper.moveDriveDirectory(oldPath, uploadPath, drivefolder.getProjectIdx(),
-						driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
+			UploadHelper.moveDriveDirectory(oldPath, uploadPath, drivefolder.getProjectIdx(), refs, drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
@@ -100,20 +86,7 @@ public class DriveRestController {
 	@RequestMapping(value="copyFolder.do")
 	public boolean copyFolder(DriveFolder drivefolder, String[] refs, int parent, HttpServletRequest request) {
 		boolean result = false;
-		
-		List<Integer> driveRefs = new ArrayList<Integer>();
-		if (refs.length == 2) { // default 하위
-			if(parent ==Integer.parseInt(refs[0])) {
-				driveRefs.add(Integer.parseInt(refs[0]));	 //default
-			}else {				
-				driveRefs.add(Integer.parseInt(refs[0])); //default
-				driveRefs.add(parent);
-			}
-					
-		} else {
-			driveRefs.add(Integer.parseInt(refs[1]));
-			driveRefs.add(Integer.parseInt(refs[0]));			
-		}        
+  
 		try {
 			drivefolder.setFolderName(drivefolder.getFolderName());
 			drivefolder.setProjectIdx(drivefolder.getProjectIdx());
@@ -122,8 +95,7 @@ public class DriveRestController {
 			service.updateFolder(drivefolder);
 
 			String uploadPath = request.getServletContext().getRealPath("upload");
-			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(),
-						driveRefs.stream().mapToInt(i -> i).toArray(), drivefolder.getDriveIdx());
+			UploadHelper.makeDriveDirectory(uploadPath, drivefolder.getProjectIdx(), refs, drivefolder.getDriveIdx());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
@@ -153,7 +125,7 @@ public class DriveRestController {
 	 * @param folderIdx
 	 */
 	@RequestMapping("DriveFileUpload.do")
-	public void driveFileUpload(@RequestParam("driveUploadFiles") List<MultipartFile> driveUploadFiles, int projectIdx, int folderIdx, HttpServletRequest request, Principal principal) {
+	public void driveFileUpload(@RequestParam("driveUploadFiles") List<MultipartFile> driveUploadFiles, int projectIdx, int folderIdx, String[] refs, HttpServletRequest request, Principal principal) {
 		System.out.println("in driveFileUpload");
 		System.out.println(projectIdx);
 		System.out.println(folderIdx);
@@ -161,7 +133,7 @@ public class DriveRestController {
 	
 		driveUploadFiles.forEach(file -> {
 			String fileName = file.getOriginalFilename();
-			String uploadpath = request.getServletContext().getRealPath("upload");
+			String uploadPath = request.getServletContext().getRealPath("upload");
 
 			DriveFile driveFile = new DriveFile();
 			driveFile.setCreator(principal.getName());
@@ -171,7 +143,7 @@ public class DriveRestController {
 			
 			String filePath = "";
 			try {
-				filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, file.getBytes()); 
+				filePath = UploadHelper.uploadFileByProjectDrive(uploadPath, "drive", projectIdx, refs, folderIdx, fileName, file.getBytes());
 				System.out.println("filePath : " + filePath);
 				service.insertFile(driveFile);
 			} catch (IOException e) {
