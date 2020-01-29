@@ -4,6 +4,10 @@
 .lineSort {
     line-height: 64px;
 }	
+
+ul{
+ list-style:none;
+}
 </style>
 <div id="newChat" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
