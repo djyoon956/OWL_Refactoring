@@ -136,7 +136,6 @@ public class DriveService {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return reseult;
 	}
 	

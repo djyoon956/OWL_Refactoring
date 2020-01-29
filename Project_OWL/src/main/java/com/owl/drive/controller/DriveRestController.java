@@ -173,8 +173,8 @@ public class DriveRestController {
 	@RequestMapping(value="DeleteFolder.do", method = RequestMethod.POST)
 	public boolean deleteFolder(int driveIdx) {
 		boolean result = false;
-		result = service.deleteFolderFromDrive(driveIdx);
-		return result;
+        result = service.deleteFolderFromDrive(driveIdx);		
+        return result;
 	}
 	
 	/**
@@ -233,6 +233,7 @@ public class DriveRestController {
 	public Map<String, Object> getFolderData(int folderIdx) {
 		return service.getFolderData(folderIdx);
 	}
+	
 	
 	/**
 	 * @author 배인영
