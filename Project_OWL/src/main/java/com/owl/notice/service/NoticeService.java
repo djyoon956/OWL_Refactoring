@@ -116,6 +116,56 @@ public class NoticeService {
 		}
 		return result;
 	}
+	@Transactional
+	public boolean updateNotice(Notice notice, List<MultipartFile> multipartFiles, String uploadPath) throws Exception{
+		NoticeDao dao = getNoticeDao();
+		boolean result = false;
+		System.out.println(notice.getEmail());
+		try {
+			result = dao.updateNotice(notice) > 0 ? true : false;
+
+			System.out.println(multipartFiles.size());
+			if (multipartFiles.size() > 0) 
+				notice.setFiles(updateNoticeFiles(dao, notice.getEmail(),notice.getProjectIdx(),notice.getBoardIdx(), multipartFiles, uploadPath));
+
+		} catch (Exception e) {
+			System.out.println("Trans 예외 발생 : " + e.getMessage());
+			throw e; 
+		}
+
+		return result;
+	}
+	private List<File> updateNoticeFiles(NoticeDao dao, String email, int pojectIdx, int boardIdx, List<MultipartFile> multipartFiles, String uploadPath) {
+		List<File> files = new ArrayList<File>();
+
+		multipartFiles.forEach(multipartFile -> {
+			String fileName = multipartFile.getOriginalFilename();
+			System.out.println(fileName);
+			try {
+				UploadHelper.uploadFileByProject(uploadPath, "file", pojectIdx, fileName, multipartFile.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			File file = new File();
+			file.setBoardIdx(boardIdx);
+			file.setFileName(fileName);
+			file.setWriter(email);
+			file.setFileSize(String.valueOf(multipartFile.getSize()/1024));
+			
+			try {
+				dao.updateNoticeFile(file);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			files.add(file);
+		});
+
+		return files;
+	}
 
 	private NoticeDao getNoticeDao() {
 		return sqlSession.getMapper(NoticeDao.class);

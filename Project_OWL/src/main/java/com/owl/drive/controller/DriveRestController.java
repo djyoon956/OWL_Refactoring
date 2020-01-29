@@ -134,7 +134,7 @@ public class DriveRestController {
 		}		
 		return drivefolder.getDriveIdx();
 	}
-	
+
 	@RequestMapping(value="updateNewName.do")
 	public boolean updateNewNameFolder(String folderName , int driveIdx ,HttpServletRequest request) {
 		boolean result = false;	
@@ -149,36 +149,46 @@ public class DriveRestController {
 		return folders;
 	}
 
+	/**
+	 * 드라이브 해당 폴더에 다중 파일 업로드
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param driveUploadFiles
+	 * @param projectIdx
+	 * @param folderIdx
+	 */
 	@RequestMapping("DriveFileUpload.do")
-	public void driveFileUpload(MultipartFile driveUploadFile, int projectIdx, int folderIdx, HttpServletRequest request, Principal principal) {
+	public void driveFileUpload(@RequestParam("driveUploadFiles") List<MultipartFile> driveUploadFiles, int projectIdx, int folderIdx, HttpServletRequest request, Principal principal) {
 		System.out.println("in driveFileUpload");
 		System.out.println(projectIdx);
 		System.out.println(folderIdx);
+		System.out.println(driveUploadFiles.size());
 	
-		String fileName = driveUploadFile.getOriginalFilename();
-		String uploadpath = request.getServletContext().getRealPath("upload");
+		driveUploadFiles.forEach(file -> {
+			String fileName = file.getOriginalFilename();
+			String uploadpath = request.getServletContext().getRealPath("upload");
 
-		DriveFile driveFile = new DriveFile();
-		driveFile.setCreator(principal.getName());
-		driveFile.setDriveIdx(folderIdx);
-		driveFile.setFileName(fileName);
-		driveFile.setFileSize((int) (driveUploadFile.getSize() / 1024));
-		
-		String filePath = "";
-		try {
-			filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, driveUploadFile.getBytes()); // full path
-			System.out.println("filePath : " + filePath);
-			service.insertFile(driveFile);
-		} catch (IOException e) {
-			if (!filePath.isEmpty())
-				UploadHelper.deleteFile(filePath);
-			e.printStackTrace();
-		}
+			DriveFile driveFile = new DriveFile();
+			driveFile.setCreator(principal.getName());
+			driveFile.setDriveIdx(folderIdx);
+			driveFile.setFileName(fileName);
+			driveFile.setFileSize((int) (file.getSize() / 1024));
+			
+			String filePath = "";
+			try {
+				filePath = UploadHelper.uploadFileByProject(uploadpath, "drive", projectIdx, fileName, file.getBytes()); 
+				System.out.println("filePath : " + filePath);
+				service.insertFile(driveFile);
+			} catch (IOException e) {
+				if (!filePath.isEmpty())
+					UploadHelper.deleteFile(filePath);
+				e.printStackTrace();
+			}
+		});
 	}
 
 	@RequestMapping(value = "GetFolderData.do")
 	public List<DriveFile> getFolderData(int folderIdx) {
-		System.out.println("in getFolderData");
 		return service.getFolderData(folderIdx);
 	}
 	
@@ -210,11 +220,9 @@ public class DriveRestController {
 	public boolean deleteFilefromTrash(int driveFileIdx, String fileName) {
 		System.out.println("in deleteFilefromTrash");
 		System.out.println(driveFileIdx);
-		
 		return service.deleteFilefromTrash(driveFileIdx);
 	}
-	
-	
+
 	@RequestMapping(value = "RestoreFile.do")
 	public boolean restoreFilefromTrash(int driveFileIdx) {
 		System.out.println("in restoreFilefromTrash");
@@ -222,8 +230,4 @@ public class DriveRestController {
 
 		return service.restoreFilefromTrash(driveFileIdx);
 	}
-	
-	
-	
-	
 }

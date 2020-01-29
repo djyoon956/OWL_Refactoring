@@ -316,8 +316,8 @@ function sendFileToServer(formData,status){
 		                <button id="driveSearchBtn" type="button" class="driveBtn btn-primary"
 		                    onclick="Search()">검색</button>&nbsp;&nbsp;
 		                <div class="filebox" style="display:inline;">
-		                    <input type="file" id="driveUploadFile" name="driveUploadFile">
-		                    <label for="driveUploadFile" style="cursor: pointer; margin-bottom: 0px;"
+		                    <input type="file" id="driveUploadFiles" name="driveUploadFiles" multiple>
+		                    <label for="driveUploadFiles" style="cursor: pointer; margin-bottom: 0px;"
 		                        class="driveBtn btn-primary" id="driveUploadBtn">업로드</label>&nbsp;&nbsp;
 		                </div>
 		                <button id="driveAllSelectBtn" type="button" class="driveBtn btn-primary"

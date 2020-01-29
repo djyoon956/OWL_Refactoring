@@ -59,7 +59,6 @@ public class DriveService {
 	}
 	
 	public List<DriveFile> getFolderData(int folderIdx) {
-		System.out.println("in getFolderDatas service : " + folderIdx);
 		DriveDao dao = getDriveDao();
 
 		List<DriveFile> files = null;
