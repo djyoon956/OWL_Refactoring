@@ -163,3 +163,7 @@ text-align:center;
 	background: #326295;
 	color: white;
 }
+
+.dt-body-left:not(th){
+	text-align: left !important;
+}

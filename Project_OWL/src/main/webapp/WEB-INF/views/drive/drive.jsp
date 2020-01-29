@@ -96,10 +96,9 @@ $(function(){
 						"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
 					},
 					 "checkbox" : {
-						    "keep_selected_style" : false,
 						    "three_state" : false
 						  },
-					"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow", "checkbox"]
+					"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
 				});
 
 			// default folder
@@ -134,6 +133,7 @@ $(function(){
 		        		success:function(idx){
 			        		data.node.id =idx;
 		        		}
+      		
 		    		});
 				}else{
 					let thisId = data.node.id;
@@ -143,9 +143,16 @@ $(function(){
 		        		data:{driveIdx: data.node.id,
 		        			     folderName: data.text
 		        			 },
-		        		success:function(data){
+		        		success:function(idx){
+			        		data.node.id = idx;
+			        		console.log(data.node);
+			        		console.log($('#jstree').jstree().get_node(idx));
+			        		// $("#jstree").jstree('set_text', data.node ,data.text);
+			        		$("#jstree").jstree('rename_node', data.node , data.text ); 
+			        		
 		        		}
 		    		});
+			       
 				}
 			});
  			$('#jstree').on('move_node.jstree', function (e, data) {
@@ -161,7 +168,8 @@ $(function(){
 		        			  refs: data.node.parents,
 		        			  oldRef: data.old_parent
 		        			 },
-		        		success:function(data){
+		        		success:function(idx){
+			        		data.node.id = idx;
 		        		}
 		    		});
  			});	
@@ -275,6 +283,10 @@ function sendFileToServer(formData,status){
     status.setAbort(jqXHR);
 }
 
+function driveRefresh(){
+    $('#jstree').jstree(true).refresh();  	
+    console.log("refresh 완료");
+}
 </script>
 
 

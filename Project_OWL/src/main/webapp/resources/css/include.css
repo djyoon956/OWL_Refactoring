@@ -110,3 +110,53 @@
 {
     transition: 0.3s ease all;
 }
+
+
+/*아래는 채팅을 위한 css   */
+.collection .collection-item.avatar{
+    min-height:0;
+    border-bottom: none;
+}
+.collection .collection-item.avatar:hover{
+    background:#f7f7f7;
+}
+.collection{
+    margin-bottom:0;
+    margin-top:0;
+    border:none;
+    flex: 1 0 calc(100vh - 120px - 50px);
+    overflow: auto;
+}
+.collection-item.avatar.list{
+    height:70px;
+    border-bottom:1px solid #e3e3e3;
+    position:relative;
+    cursor:pointer;
+    user-select:none;
+}
+.collection-item.avatar.list > *{
+    position:absolute;
+    top:50%;
+    transform: translateY(-50%);
+}
+span.small.material-icons.right{
+    position:relative;
+}
+.title{
+	font-size:16px;
+	}
+.circle{
+	border-radius:50%;
+	}	
+.hiddendiv{
+	display:none;
+	white-space:pre-wrap;
+	word-wrap:break-word;
+	overflow-wrap:break-word;
+	padding-top:1.2rem;
+	position:absolute;
+	top:0;
+	}
+.collection-item span.badge{
+	margin-top:calc(.75rem - 11px);
+	}	
