@@ -112,6 +112,20 @@ public class DriveService {
 			return trashlist;
 		}
 
+	public boolean deleteFolderFromDrive(int driveIdx) {
+		boolean reseult = false;
+		DriveDao dao = getDriveDao();
+		try {
+			reseult = dao.deleteFolderFromDrive(driveIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return reseult;
+	}
+	
 	public boolean deleteFileFromDrive(int driveFileIdx) {
 		boolean reseult = false;
 		DriveDao dao = getDriveDao();

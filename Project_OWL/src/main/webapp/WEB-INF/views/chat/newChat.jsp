@@ -4,6 +4,10 @@
 .lineSort {
     line-height: 64px;
 }	
+
+ul{
+ list-style:none;
+}
 </style>
 <div id="newChat" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -28,9 +32,9 @@
 				</form>
 				<!--  멤버 삭제   -->
 				<label class="m-t-20">멤버 리스트</label>
-				<ul id="ulUserList" class="collection">
+				<ul id="ulUserList" class="collection" style="padding-left:0;">
            
-				<!-- <div class="input-group ">
+<!-- 				 <div class="input-group ">
 					<div class="form-control pt-2 pb-2">
 						<i class="fas fa-user iconSizeBig"></i> 홍길동(hong@gmail.com)
 					</div>
@@ -39,7 +43,7 @@
 						<i class="far fa-times-circle font-weight-bold iconSizeBig"></i></span>
 					</div>
 				</div>
-				끝
+			
 				<div class="input-group ">
 					<div class="form-control pt-2 pb-2">
 						<i class="fas fa-user iconSizeBig"></i> 김콜린(kim@gmail.com)
@@ -48,7 +52,7 @@
 						<span class="input-group-text">
 						<i class="far fa-times-circle font-weight-bold iconSizeBig"></i> </span>
 					</div>
-				</div> -->
+				</div>  -->
 				 </ul>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary" data-dismiss="modal" id="onCreateClick">생성하기</button>

@@ -1368,18 +1368,21 @@ display: block;
 		  //채팅방 만들기 버튼 눌렀을 때 유저 목록 뿌려 주는 함수....	
           var userListUp = function(targetuid, name, userpic, email){
         	  var userProPic = 	(userpic ? 'resources/images/user/'+ userpic : 'resources/images/user/noprofile.png'); 
-        	  var userTemplate = 
-            	  			 '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + 
-							  name + '" class="collection-item avatar list" onclick = "onUserListClick(this)">' +
-          					 '<img src="' + userProPic + '" alt="" class="circle" height="35" width="35">' +
-         					 '<span class="title">'+ name+ '</span>'+ '&nbsp;&nbsp;&nbsp;'+'<span class="title">'+ email + '</span>'
-          					 '<span class="small material-icons right hiddendiv done">done</span>'+
-          					 '<span class="small material-icons right hiddendiv mood yellow-text">mood</span>'+
-          					 '</li>'; 
-          					 
+        	  let errorSource = "this.src='resources/images/login/profile.png'";
+        	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name + '" class="collection-item avatar list" onclick = "onUserListClick(this)" >' 
+        	  				  + '<div class="input-group "><div class="form-control pt-2 pb-2"><img src="' + userProPic + '"  alt="" class="circle mr-3" height="35" width="35" onerror="'+errorSource+'" >'+ name + '('+email+')</div>'                      
+        	  				 // + '<div class="input-group-append"><span class="input-group-text">'+ name + '('+email+')</span></div>'
+        	  				 // +'<span class="small material-icons right done">done</span>'
+        	  				 // + '<span class="small material-icons right hiddendiv mood yellow-text">mood</span>'
+        	  				  + '</div></li>'; 
+
+/*         	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name + '" class="collection-item avatar list" onclick = "onUserListClick(this)">' 
+       	  				 		 + '<div class="row"><div class="col-2"><img src="' + userProPic + '"  alt="" class="circle" height="35" width="35" onerror="'+errorSource+'"></div>'                      
+       	  				 		 + '<div class="col-10"><span class="title" style="font-size : 14px;">'+ name + '('+email+')</span></div>'
+       	  						  + '</div></li>';  */
+      	            					 
         	  $('#ulUserList').append(userTemplate);
-        	
-        	  
+
               }
           
 	
