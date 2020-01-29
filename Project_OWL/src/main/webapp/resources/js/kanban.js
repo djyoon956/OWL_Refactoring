@@ -54,6 +54,11 @@ function initKanban(projectIdx){
 		$('.labelList').find('.edit').removeClass("hidden");
 
 	});
+	
+	$("#editIssueDetailBtn").click(function() {
+		console.log("edit 클릭 됨");
+		changeKanbanView("edit");
+	});
 }
 
 function addLabel(lbidx, lbcolor, lbnm) {
@@ -204,9 +209,10 @@ function setKanbanDetail(issueIdx){
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
-				
+				console.log("이슈 디테일 ");
+				console.log(data);
 				$("#issueIdxNum").val(issueIdx);
-				//issueProgress
+				//issueProgress,labelIdx
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
 					$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 				
@@ -320,11 +326,17 @@ function closeIssue(issueIdx) {
 function changeKanbanView(view){
    if(view == "list"){
    $("#kanbanDetailBox").addClass("hidden");
+   $("#kanbanEditBox").addClass("hidden");
    $("#kanbanMainBox").removeClass("hidden");
 }else if(view == "detail"){
    $("#kanbanMainBox").addClass("hidden");
+   $("#kanbanEditBox").addClass("hidden");
    $("#kanbanDetailBox").removeClass("hidden");
-   }
+}else if (view == "edit"){
+   $("#kanbanMainBox").addClass("hidden");
+   $("#kanbanDetailBox").addClass("hidden");	
+   $("#kanbanEditBox").removeClass("hidden");
+ }
 }
 
 function editLabel(idx, color, name) {
@@ -409,6 +421,4 @@ function editLabel(idx, color, name) {
 	
 
 	
-	$("#editIssueDetailBtn").click(function() {
-		
-	});
+	

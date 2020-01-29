@@ -1336,8 +1336,8 @@ display: block;
         	  var userProPic = 	(userpic ? 'resources/images/user/'+ userpic : 'resources/images/user/noprofile.png'); 
         	  let errorSource = "this.src='resources/images/login/profile.png'";
         	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name + '" class="collection-item avatar list">' 
-        	  				  + '<div class="input-group "><div class="form-control pt-2 pb-2"><img src="' + userProPic + '"  alt="" class="circle mr-3" height="35" width="35" onerror="'+errorSource+'" >'+ name + '('+email+')</div>'                      
-        	  				 
+        	  				  + '<div class="input-group "><div class="form-control pt-2 pb-2"><img src="' + userProPic + '"  alt="" class="circle mr-3" height="35" width="35" onerror="'+errorSource+'" >'+ name + '('+email+')'+
+        	  				  '<i class="fas fa-check float-right font-20 mt-1 mr-1 hidden" style="color:red"></i>'+'</div>'                      
         	  				  + '</div></li>'; 
 
         	  $('#ulUserList').append(userTemplate);
