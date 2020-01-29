@@ -764,7 +764,7 @@ display: block;
     </nav>
 </header>
  <!-- <script type="text/javascript" src="resources/js/jquery-3.2.1.min.js"></script> -->
-      <script type="text/javascript" src="resources/js/materialize.min.js"></script>
+    <!--   <script type="text/javascript" src="resources/js/materialize.min.js"></script> -->
       <script type="text/javascript" src="resources/js/underscore-min.js"></script>
       
       
