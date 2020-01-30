@@ -206,11 +206,6 @@ public class DriveRestController {
 	 */
 	@RequestMapping("DriveFileUpload.do")
 	public void driveFileUpload(@RequestParam("driveUploadFiles") List<MultipartFile> driveUploadFiles, int projectIdx, int folderIdx, String[] refs, HttpServletRequest request, Principal principal) {
-		System.out.println("in driveFileUpload");
-		System.out.println(projectIdx);
-		System.out.println(folderIdx);
-		System.out.println(driveUploadFiles.size());
-	
 		driveUploadFiles.forEach(file -> {
 			String fileName = file.getOriginalFilename();
 			String uploadPath = request.getServletContext().getRealPath("upload");
@@ -224,7 +219,6 @@ public class DriveRestController {
 			String filePath = "";
 			try {
 				filePath = UploadHelper.uploadFileByProjectDrive(uploadPath, "drive", projectIdx, refs, folderIdx, fileName, file.getBytes());
-				System.out.println("filePath : " + filePath);
 				service.insertFile(driveFile);
 			} catch (IOException e) {
 				if (!filePath.isEmpty())

@@ -327,7 +327,11 @@ function sendFileToServer(formData,status){
                             <h1 class="text-muted mt-5">File Not Found.</h1>
                             <h4>Please upload a file in <span id="directoryName"></span></h4>
                         </div>
-
+                        <div class="text-center ml-5 hidden driveUploadBox" >
+                            <img src="resources/images/drive/upload.png" style="height: 250px" >
+                            <h1 class="mt-4">Drag and Drop files here.</h1>
+                        </div>
+                        
                         <div id="driveIconViewBox"></div>
 						
 						<div id="driveSearchViewBox" class="hidden"></div>

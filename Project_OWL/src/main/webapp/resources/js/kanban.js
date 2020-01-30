@@ -7,6 +7,16 @@ let editIdx = 0;
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
+	
+	//addIssueModal 모달이 오픈되면 !
+	$('#addIssueModal').on('show.bs.modal', function() {  
+		console.log("addIssueModal open!");
+		//칸반으로 옮김 
+		getissueinfo("issueModalOpen",projectIdx);
+
+ });  
+	
+
 	$('#editLabelBtn').click(function() {
 		if(editIdx == 0)
 			return;
@@ -365,7 +375,6 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailActivityCount").text("Activity ("+data.logs.length+") ");
 					console.log("-------------------------");
 					$.each(data.logs, function(index, log){
-						//console.log(log);
 						let control = "<li> "		
 										+ "	<p style='padding-top: 3px;'>"
 										+ "		<b> "+log.creatorName+"</b>"
@@ -381,7 +390,6 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 						
-						console.log('issue idx 뭐니?');
 						
 						let creatornm =  element.creator.substring(0,1);
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
@@ -443,7 +451,6 @@ function setKanbanDetail(issueIdx){
 
 
 function closeIssue(issueIdx) {
-	console.log("여기오니 closeIssue?????????????????????");
 
 	   $.ajax({
            url:"CloseIssue.do",
@@ -459,14 +466,11 @@ function closeIssue(issueIdx) {
 
 
 function reOpenIssue(issueIdx) {
-	console.log("여기오니 reOpenIssue?????????????????????");
 	$.ajax({
 		url:"ReopenIssue.do",
 		method:"POST",
 		data : {issueIdx : issueIdx},
 		success:function(data) {
-			console.log('reOpenIssue in');
-			console.log(data);
         	$("#issueClosedChk").text('closed issue');
         	//setKanbanDetail(issueIdx);
         	setKanbanDetail(issueIdx);
@@ -710,6 +714,52 @@ function editLabel(idx, color, name) {
 	}
 
 
+	
+	function getissueinfo(flagelement, projectidx) {
+
+		if(flagelement == "issueModalOpen") {
+			
+		 	let selectoption = '<option value="">Select</option>';
+
+		 $.ajax({
+		 		type: "POST",
+	            url: "GetAddIssueForm.do",
+	            data: { projectIdx: projectidx},
+	            success: function (data) {
+	            	console.log('데이터가 뭐가오니?');
+	            	console.log(data);
+	            	$('#assigned').empty();
+	            	$('#labelIdx').empty();
+
+					let member = data.member;
+					let label = data.label;
+					
+					let optlabel;
+					let optmember;
+
+					$('#assigned').append(selectoption);
+	                $('#labelIdx').append(selectoption);
+					
+	               $.each(member, function(index, element) {
+						optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
+	                 });
+	               
+	               $('#assigned').append(optmember);
+
+	                $.each(label, function(index, element) {
+	                 	 optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
+	                 });
+	                
+	                $('#labelIdx').append(optlabel);	
+	            },
+	            error: function () {
+	                console.log("GetProjectMember error");
+	            }
+			})
+		
+	}
+	}
+	
 
 	function editLabel(){
 		

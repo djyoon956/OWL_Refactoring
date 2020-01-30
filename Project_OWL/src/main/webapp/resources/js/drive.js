@@ -6,7 +6,6 @@ function initDrive(projectIdx){
 	driveProjectIdx = projectIdx;
 	
 	setFileUpload();
-	setFileUpload2();
 	setDriveTable();
 	
 	$('#jstree').on( "select_node.jstree", function(event, data){
@@ -710,26 +709,6 @@ function driveRefresh(){
 	});
 }
 
-function setFileUpload2(){
-	let dropZone = $("#dragandrophandler");
-	dropZone.on('dragover', function (e){ // 파일 dropZone에 들어옴
-		console.log("in dragover");
-	    $(this).addClass('dragBorder');
-	    dropZone.text("이 곳에 파일을 Drag & Drop 해주세요.");
-	    return false;
-	}).on('dragleave', function (e) { // 파일 dropZone에서 나감
-		console.log("in dragleave");
-		 $(this).removeClass('dragBorder');
-	     dropZone.text('');
-		 return false;
-	}).on('drop', function (e)  {	 // 파일 dropZone에  drop
-		console.log("in drop");
-	     $(this).removeClass('dragBorder');
-	     dropZone.text('');
-	     return false;
-	});
-}
-
 function handleFileUpload(files, obj){
    for (var i = 0; i < files.length; i++){
         var fd = new FormData();
@@ -743,6 +722,28 @@ function handleFileUpload(files, obj){
 }
 
 function setFileUpload(){
+	let counter = 0;
+	$("#dragandrophandler").on('dragenter', function (e){ // 파일 dropZone에 들어옴
+		counter++;
+		
+	    $(this).addClass('dragBorder');
+    	$(".driveUploadBox").removeClass("hidden");
+	    return false;
+	}).on('dragleave', function (e) { // 파일 dropZone에서 나감
+		counter--;
+		 if (counter === 0) { 
+			 $(this).removeClass('dragBorder');
+				$(".driveUploadBox").addClass("hidden");
+		 }
+		 
+		return false; 
+	}).on('drop', function (e)  {	 // 파일 dropZone에  drop
+	    $(this).removeClass('dragBorder');
+	    $(".driveUploadBox").addClass("hidden");
+	    
+	     return false;
+	});
+	
 	$("#driveUploadFiles").fileupload({
 		singleFileUploads: false,
 		url : "DriveFileUpload.do",
@@ -755,6 +756,7 @@ function setFileUpload(){
 		},
 		dropZone: $('#dragandrophandler'),
 		done : function(e, data){
+			console.log("done");
 			callDirectoryData();
 		},
 		fail : function(){
