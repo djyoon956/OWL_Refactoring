@@ -501,12 +501,12 @@ public class KanbanService {
 		
 		return result;
 	}
-	public List<Issue> searchAssignee(int projectIdx, String content){
+	public List<Issue> searchAssignee(int projectIdx,String email){
 		KanbanDao dao = getKanbanDao();
 		List<Issue> issue = null;
 		
 		try {
-			issue = dao.searchAssignee(projectIdx, content);
+			issue = dao.searchAssignee(projectIdx, email);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -524,10 +524,42 @@ public class KanbanService {
 			issue = dao.searchLabel(labelIdx);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		
+		} 	
 		return issue;
 	}
+	
+	
+	
+	public List<Issue> searchPriority(String priorityidx){
+		KanbanDao dao = getKanbanDao();
+		List<Issue> issue = null;
+		try {
+			issue = dao.searchPriority(priorityidx);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return issue;
+	}
+	
+	public List<Member> getProjectMemberList(int projectIdx){
+		
+		System.out.println("getProjectMemberList in service");
+		ProjectDao daop = getProjectDao();
+		List<Member> member = null;
+		try {
+			member = daop.getProjectMembers(projectIdx);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(member);
+		return member;
+	}
+	
 	
 	
 	private KanbanDao getKanbanDao() {
