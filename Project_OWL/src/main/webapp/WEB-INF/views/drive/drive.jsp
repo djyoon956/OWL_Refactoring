@@ -178,51 +178,6 @@ $(function(){
 		ref.delete_node(sel);
 	});		
 		
-
-	
-	
-
-	//file drag and drop 기능
-	var obj = $("#dragandrophandler");
-	obj.on('dragenter', function (e){
-	    e.stopPropagation();
-	    e.preventDefault();
-	    $(this).addClass('dragBorder');
-		 obj.text("이 곳에 파일을 Drag & Drop 해주세요.");
-	});
-	obj.on('dragover', function (e) 
-	{
-	     e.stopPropagation();
-	     e.preventDefault();
-	});
-	obj.on('drop', function (e) 
-	{	 
-	     $(this).removeClass('dragBorder');
-	     obj.text('');
-	     e.preventDefault();
-	     var files = e.originalEvent.dataTransfer.files;	 
-	     //We need to send dropped files to Server
-	     handleFileUpload(files,obj);
-	});
-	$(document).on('dragenter', function (e) 
-	{
-	    e.stopPropagation();
-	    e.preventDefault();
-	});
-	$(document).on('dragover', function (e) 
-	{
-	  e.stopPropagation();
-	  e.preventDefault();
-	  obj.removeClass('dragBorder');
-	  obj.text('');
-	});
-	$(document).on('drop', function (e) 
-	{
-	    e.stopPropagation();
-	    e.preventDefault();
-	});	
-
-
 	//대소문자 구분 없이
 	$.extend($.expr[":"], {
 		"containsIN": function(elem, i, match, array) {

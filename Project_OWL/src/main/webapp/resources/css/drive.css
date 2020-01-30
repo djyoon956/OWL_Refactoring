@@ -144,11 +144,11 @@ margin-right:5px;
 }
 
 .dragBorder{
-border:2px double #326295;
-z-index:10;
-background:#f0f3f7;
-opacity:0.4;
-text-align:center;
+	border:2px double #326295;
+	z-index:10;
+	background:#f0f3f7;
+	opacity:0.4;
+	text-align:center;
 }
 
 .fileDefaultImage{

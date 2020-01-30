@@ -6,6 +6,7 @@ function initDrive(projectIdx){
 	driveProjectIdx = projectIdx;
 	
 	setFileUpload();
+	setFileUpload2();
 	setDriveTable();
 	
 	$('#jstree').on( "select_node.jstree", function(event, data){
@@ -128,18 +129,7 @@ function createStatusbar(obj){
         });
     }
 }
-function handleFileUpload(files,obj){
-   for (var i = 0; i < files.length; i++){
-        var fd = new FormData();
-        fd.append('file', files[i]);
-        console.log(fd);
-        var status = new createStatusbar(obj); //Using this we can set progress.
-        status.setFileNameSize(files[i].name,files[i].size);
-        console.log(status);
-        sendFileToServer(fd,status);
- 
-   }
-}
+
 
 function Search() {
 	$("div").find(".defaultDriveMenu").each(function(){
@@ -675,7 +665,7 @@ function driveRefresh(){
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
-		data:{projectIdx:$("#theProject").val()},
+		data:{projectIdx: driveProjectIdx},
 		success:function(data){
 			let folder;		
 			$.each(data, function(index, element){				
@@ -698,6 +688,38 @@ function driveRefresh(){
 			callDirectoryData();
 		}
 	});
+}
+
+function setFileUpload2(){
+	let dropZone = $("#dragandrophandler");
+	dropZone.on('dragover', function (e){ // 파일 dropZone에 들어옴
+		console.log("in dragover");
+	    $(this).addClass('dragBorder');
+	    dropZone.text("이 곳에 파일을 Drag & Drop 해주세요.");
+	    return false;
+	}).on('dragleave', function (e) { // 파일 dropZone에서 나감
+		console.log("in dragleave");
+		 $(this).removeClass('dragBorder');
+	     dropZone.text('');
+		 return false;
+	}).on('drop', function (e)  {	 // 파일 dropZone에  drop
+		console.log("in drop");
+	     $(this).removeClass('dragBorder');
+	     dropZone.text('');
+	     return false;
+	});
+}
+
+function handleFileUpload(files, obj){
+   for (var i = 0; i < files.length; i++){
+        var fd = new FormData();
+        fd.append('file', files[i]);
+        console.log(fd);
+        var status = new createStatusbar(obj); //Using this we can set progress.
+        status.setFileNameSize(files[i].name,files[i].size);
+        console.log(status);
+        sendFileToServer(fd,status);
+   }
 }
 
 function setFileUpload(){
