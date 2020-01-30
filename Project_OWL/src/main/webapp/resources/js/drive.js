@@ -227,9 +227,11 @@ function handleFileUpload(files,obj){
 function Search() {
 	$("div").find(".defaultDriveMenu").each(function(){
 		$(this).attr('style', 'display:none');
+		
 	});
 	$("div").find(".searchDriveMenu").each(function(){
 		$(this).attr('style', 'display:block');
+		$(this).children(".drivegroup").css('right', '30px');
 	});
 }
 
@@ -325,6 +327,8 @@ function setDirectoryData(folderIdx, folderName) {
 	})
 }
 
+/*var nameList = [];*/
+
 function setIconView(data){
 	$("#driveIconViewBox").removeClass("hidden");
 	$("#driveTableViewBox").addClass("hidden");	
@@ -359,6 +363,8 @@ function setIconView(data){
 			row.append(control);
 			$("#driveIconViewBox").append(row);
 		}
+		
+		/*nameList.push(element.folderName);*/
 	});
 
 	control ="";
@@ -401,6 +407,8 @@ function setIconView(data){
 			$("#driveIconViewBox").append(row);
 			control="";
 		}
+		
+		/*nameList.push(element.fileName);*/
 	});
 }
 
@@ -739,16 +747,6 @@ function driveRefresh(){
 			    folder.text = element.folderName;
 			    
 			    addFolder(folder);
-			});
-
-			//jstree 기능
-			var to = false;
-			$('#searchText').keyup(function () {
-				if(to) { clearTimeout(to); }
-				to = setTimeout(function () {
-					var v = $('#searchText').val();
-					$('#jstree').jstree(true).search(v);
-				}, 100);
 			});
 			
 			$('#jstree').jstree(true).settings.core.data = folderList;
