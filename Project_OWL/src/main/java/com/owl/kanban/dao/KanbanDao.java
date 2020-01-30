@@ -75,6 +75,10 @@ public interface KanbanDao {
 	
 	public int updateReply(Reply reply) throws ClassNotFoundException, SQLException;
 	
+	public List<Issue> searchAssignee(int projectIdx, String content) throws ClassNotFoundException, SQLException;
+
+	public List<Issue> searchLabel(int labelIdx) throws ClassNotFoundException, SQLException;
+
 	public int updateIssueTitle(Issue issue) throws ClassNotFoundException, SQLException;
 	
 	public int updateIssueContent(int issueIdx) throws ClassNotFoundException, SQLException;
@@ -84,4 +88,5 @@ public interface KanbanDao {
 	public int updateIssueDueDate(int issueIdx) throws ClassNotFoundException, SQLException;
 	
 	public int updateIssueAssigned(int issueIdx) throws ClassNotFoundException, SQLException;
+
 }

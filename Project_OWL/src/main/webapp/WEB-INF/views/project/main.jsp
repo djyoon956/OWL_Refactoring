@@ -69,7 +69,7 @@
 					 $.each(data, function(index,element) {
 							if(element.issueProgress== "OPEN"){
 								openCount ++;		
-							}else if(elemnet.issueProgress == "CLOSED"){
+							}else if(element.issueProgress == "CLOSED"){
 								closeCount ++;
 							}				
 					});
@@ -327,6 +327,7 @@
     				}
     			}); 
     	    }
+    	    
 			function setIssueData(){
 				$.ajax({
 					url : "GetIssue.do",
