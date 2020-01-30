@@ -681,17 +681,6 @@ function editLabel(idx, color, name) {
 		console.log($("#issueDetailAssignees").text());
 		console.log($("#issueDetailLabel").text());
 		
-		getIssueInfoForm("editIssue");
-		
-		if($("#issueDetailPriority").hasClass("low"))
-			$("#issueDetailPriority").val("low");
-		else if($("#issueDetailPriority").hasClass("medium"))
-			$("#issueDetailPriority").val("medium");
-		else if($("#issueDetailPriority").hasClass("high"))
-			$("#issueDetailPriority").val("high");
-		else if($("#issueDetailPriority").hasClass("urgent"))
-			$("#issueDetailPriority").val("urgent");
-		
 		$("#issueDetailEditTitle").val($("#issueDetailTitle").text());
 		$("#issueDetailEditContent").summernote('code', $("#issueDetailContent").html());
 		$("#assignedEdit").val($("#issueDetailAssignees").text());
@@ -711,7 +700,16 @@ function editLabel(idx, color, name) {
 			$("#editTitleBox").addClass("hidden");
 			$("#issueDetailTitle").removeClass("hidden");
 		}
-
+	}
+	function editContentViewBtn(){
+		$("#isContentEdit").summernote('code', $("#issueDetailContent").html());
+		if($("#editContentBox").hasClass("hidden")){
+			$("#issueDetailContent").addClass("hidden");
+			$("#editContentBox").removeClass("hidden");
+		} else {
+			$("#editContentBox").addClass("hidden");
+			$("#issueDetailContent").removeClass("hidden");
+		}
 	}
 
 	function editIssueTitleOk() {
@@ -725,11 +723,25 @@ function editLabel(idx, color, name) {
 		    	$("#editTitleBox").addClass("hidden");
 				$("#issueDetailTitle").removeClass("hidden");
 		    }, error : function() {
-		    	console.log('editReply in');
+		    	console.log('edit issue title in');
 		    }
 		});
 	}
-
+	function editIssueContentOk() {
+		$.ajax({
+			url : "UpdateIssueContent.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), content :$('#isContentEdit').summernote('code')},
+		    success : function(data){
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editContentBox").addClass("hidden");
+				$("#issueDetailContent").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue contnet in');
+		    }
+		});
+	}
 
 
 	function editLabel(){

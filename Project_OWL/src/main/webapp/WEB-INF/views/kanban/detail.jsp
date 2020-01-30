@@ -20,7 +20,7 @@
                        </div>
                         </div>
                         <div class="col-1 mr-0">
-								<i class="fas fa-cog font-16 flot-right pr-0" onclick="editTitleViewBtn()"style="cursor: pointer"></i>
+								<i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1" onclick="editTitleViewBtn()"style="cursor: pointer"></i>
 							</div>
 						</div>
                     </div>
@@ -28,13 +28,11 @@
                 <hr class="mt-1">
                 <div class="card-body mt-0 mb-0"  style="border: 1px solid; border-color:#e9e9e9;">
                 <div style="margin-left: 98%;"><i class="fas fa-cog font-16 flot-right pr-0" onclick="editContentViewBtn()"style="cursor: pointer"></i></div>
-                   <!-- <div id="issueDetailContent">
+                   <div id="issueDetailContent">
                     <p>Task </p>
                     <p>- 드라이브 디폴트 폴더 생성</p>
-                    <p>- 계층형 구조 </p>
-                    <p>- 휴지통 기능</p>
-                    </div> -->
-                    <div >
+                    </div> 
+                    <div id="editContentBox" class="hidden">
                     <textarea class="form-control bg-light p-0" id="isContentEdit" name="content"></textarea>
                     <button class="btn btn-primary" onclick="editIssueContentOk()">save</button>
                     </div>
