@@ -259,11 +259,15 @@ public class DriveRestController {
 		return service.getTrashList(projectIdx);
 	}
 
+	/**
+	 * 드라이브 파일 삭제
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return boolean 
+	 */
 	@RequestMapping(value = "DeleteDriveFile.do")
 	public boolean deleteDriveFile(int driveFileIdx) {
-		System.out.println("in deleteDriveFile");
-		System.out.println(driveFileIdx);
-		
 		return service.deleteFileFromDrive(driveFileIdx);
 	}
 	
