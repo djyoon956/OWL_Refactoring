@@ -267,49 +267,8 @@
 				});
 	});
 
- 	let selectoption = '<option value="">Select</option>';
 
-	//addIssueModal 모달이 오픈되면 !
-	$('#addIssueModal').on('show.bs.modal', function() {  
-		console.log("addIssueModal open!");
-		//칸반으로 옮김 
-		 $.ajax({
-	 		type: "POST",
-            url: "GetAddIssueForm.do",
-            data: { projectIdx: ${project.projectIdx}},
-            success: function (data) {
-                console.log('GetAddIssueForm in');
-                console.log(data);
-            	$('#assigned').empty();
-            	$('#labelIdx').empty();
 
-				let member = data.member;
-				let label = data.label;
-				
-				let optlabel;
-				let optmember;
-
-				$('#assigned').append(selectoption);
-                $('#labelIdx').append(selectoption);
-				
-               $.each(member, function(index, element) {
-					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
-                 });
-               
-               $('#assigned').append(optmember);
-
-                $.each(label, function(index, element) {
-                 	 optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
-                 });
-                
-                $('#labelIdx').append(optlabel);	
-            },
-            error: function () {
-                console.log("GetProjectMember error");
-            }
-		})  
-
- });  
 	
 	$('#addIssueModal').on('hidden.bs.modal', function(){
 		console.log('hidden 작동하니?');
