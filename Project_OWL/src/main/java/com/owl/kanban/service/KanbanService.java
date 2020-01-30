@@ -466,7 +466,7 @@ public class KanbanService {
 		
 		try {
 			result = dao.updateIssueTitle(issue) > 0 ? true : false;
-			insertLog(issue.getIssueIdx(), "update issue title this", email, dao);
+			insertLog(issue.getIssueIdx(), "update issue title", email, dao);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -474,14 +474,39 @@ public class KanbanService {
 		return result;
 	}
 	
-	
+	public boolean updateIssueContent(Issue issue, String email) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			result = dao.updateIssueContent(issue) > 0 ? true : false;
+			insertLog(issue.getIssueIdx(), "update issue content", email, dao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
-	public List<Issue> searchAssignee(int projectIdx, String content){
+	public boolean updateIssuePriority(Issue issue, String email) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			result = dao.updateIssuePriority(issue) > 0 ? true : false;
+			insertLog(issue.getIssueIdx(), "update issue priority", email, dao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	public List<Issue> searchAssignee(int projectIdx,String email){
 		KanbanDao dao = getKanbanDao();
 		List<Issue> issue = null;
 		
 		try {
-			issue = dao.searchAssignee(projectIdx, content);
+			issue = dao.searchAssignee(projectIdx, email);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -499,10 +524,42 @@ public class KanbanService {
 			issue = dao.searchLabel(labelIdx);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		
+		} 	
 		return issue;
 	}
+	
+	
+	
+	public List<Issue> searchPriority(String priorityidx){
+		KanbanDao dao = getKanbanDao();
+		List<Issue> issue = null;
+		try {
+			issue = dao.searchPriority(priorityidx);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return issue;
+	}
+	
+	public List<Member> getProjectMemberList(int projectIdx){
+		
+		System.out.println("getProjectMemberList in service");
+		ProjectDao daop = getProjectDao();
+		List<Member> member = null;
+		try {
+			member = daop.getProjectMembers(projectIdx);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(member);
+		return member;
+	}
+	
 	
 	
 	private KanbanDao getKanbanDao() {

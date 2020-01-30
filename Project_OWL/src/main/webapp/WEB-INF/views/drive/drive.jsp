@@ -203,7 +203,7 @@ $(function(){
 					
 			}else{
 				$(".driveCard").parent().hide();     
-			     let temp = $(".driveCardContent>input:containsIN('" + v + "')");
+			     let temp = $(".driveCardContent>input.fileName:containsIN('" + v + "')");
 				 let cloneTemp = $(temp).parent().parent().parent().parent();
 				 setSearchView(cloneTemp);
 			}	 

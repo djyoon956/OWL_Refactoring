@@ -15,8 +15,8 @@
                     </div>
                 </div>
                 <hr class="mt-1">
-                <div class="card-body mt-0 mb-0 p-0" id="issueDetailEditContent" style="border: 1px solid; border-color:#e9e9e9;">
-                     <textarea class="form-control bg-light p-0" id="isContentEdit" name="content"></textarea>
+            <!--     <div class="card-body mt-0 mb-0 p-0" id="issueDetailEditContent" style="border: 1px solid; border-color:#e9e9e9;" -->>
+                    <!--  <textarea class="form-control bg-light p-0" id="isContentEdit" name="content"></textarea> -->
 					
                 </div>
                 <div class="pt-1 pb-1">
@@ -81,14 +81,14 @@
                     <div class="col-4">Priority</div>
                     <div class="col-8">
                        <!--  <span id="issueDetailEditPriority"></span> -->
-                        <select class="select2 form-control custom-select" name="priorityCode" id="priorityCodeEdit">
+                       <!--  <select class="select2 form-control custom-select" name="priorityCode" id="priorityCodeEdit">
 								<option value="" id="">Select</option>
 								<option value="LOW">low</option>
 								<option value="MEDIUM">medium</option>
 								<option value="HIGH">high</option>
 								<option value="URGENT">urgent</option>
 								
-							</select>
+							</select> -->
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 <div class="row">
                     <div class="col-4">Due Date</div>
                     <div class="col-8" ><span id="issueDetailEditDueDate">
-                     <input type="text" class="form-control" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" >
+                    <!--  <input type="text" class="form-control" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" > -->
                     </span></div>
                 </div>
             </div>
