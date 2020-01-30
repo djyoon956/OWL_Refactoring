@@ -284,7 +284,6 @@ function sendFileToServer(formData,status){
 
 
 <div class="container-fluid mt-3">
-    <input type="hidden" value="${project.projectIdx}" id="theProject">
     <div class="row">
         <div class="col-md-3">
             <h2 style="padding-left: 25px;">
@@ -298,15 +297,9 @@ function sendFileToServer(formData,status){
                     <div id="jstree" class="demo" style="margin-top:1em; min-height:200px;">
 
                     </div>
-
                     <div>
-                        <button id="trashBtn" class="btn-link" style="color:#326295;"><i
-                                class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
+                        <button id="trashBtn" class="btn-link" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
                     </div>
-
-                    <!-- 			<a href="Trash.do" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
-							<i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;<b>휴지통</b>
-						</a> -->
                 </div>
             </div>
         </div>
