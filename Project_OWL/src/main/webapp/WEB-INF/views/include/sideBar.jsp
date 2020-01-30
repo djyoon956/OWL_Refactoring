@@ -20,6 +20,8 @@ max-width: 270px;
 
 </style>
 <script>
+var theName;
+
  $(function(){
 	 $(".complex-colorpicker").asColorPicker({
 	        mode: 'complex'
@@ -39,35 +41,36 @@ max-width: 270px;
 	}	
 	 
  $("#editBtn").click(function(){
-	 console.log($("#myProjectTitle").text());
-	 return;
+	 let thisProIdx = $("#projectIdx").val();
+	 console.log($('#'+thisProIdx+'> #projectFavorite').val());
+	 console.log($('#'+thisProIdx+'>.sidebar-link > i').css("color"));
+	 console.log($('#'+thisProIdx+'>.mid.mdi-checkbox-blank-circle').css('color'));
 	 let myFavorite =$(".favoriteCheckbox:checked").val() == "on" ? 1 : 0;
 		$.ajax({
 	        url:"EditMyProject.do",
 	        type: "POST",
-	        data: {projectIdx: 	$("#projectIdx").val(),
+	        data: {projectIdx: thisProIdx,
 		        	  projectColor: $("#nowColor").val(),
 		        	  favorite: myFavorite},
-	        success:function(data){
+	        success:function(newSet){
 	         console.log("update-------");
-	         console.log(data);
-/* 		         if(data.favorite ==1){
-			         let newFavorite = '<li class="sidebar-item" id="'+data.projectIdx+'" style="position:relative;">"
-				         					+ '<input id="projectFavorite" type="hidden" value="'+data.favorite+'">'
-		        	 						+ '<a href="Project.do?projectIdx="'+data.projectIdx+'" class="sidebar-link">'
-             								+ '<i class="mdi mdi-checkbox-blank-circle" style="color: "'+data.projectColor+'";"></i>'
-             								+ '<span class="hide-menu" id="projectName">${list.projectName}</span>'
-             								
-             			
-             		</a>
-             	</li> 
-	
-			      }else{
-	
-	
-	
-	
-				  } */
+	         console.log(newSet);
+	         $('#'+thisProIdx+'> #projectFavorite').val(newSet.favorite);
+	         $('#'+thisProIdx+'>.sidebar-link > i').attr('style', "color:"+newSet.projectColor+";");
+	         $('#wholeFavorite > #'+thisProIdx+'>.sidebar-link > i').attr('style', "color:"+newSet.projectColor+";");
+	         if(newSet.favorite == 1){
+		     
+		 	let thisLi = "<li class='sidebar-item' id="+newSet.projectIdx+" style='position:relative;'>"
+		 			+ "<input id='projectFavorite' type='hidden' value="+newSet.favorite+">"
+		 			+ "<a href='Project.do?projectIdx='"+newSet.projectIdx+" class='sidebar-link'>"
+        		 	+ "<i class='mdi mdi-checkbox-blank-circle' style='color:'"+newSet.projectColor+";></i>" 
+        		 	+ "<span class='hide-menu' id='projectName'>"+theName+"</span></a></li>";
+	       	 	$("#wholeFavorite").append(thisLi);
+
+		     }else if(newSet.favorite == 0){
+		    	 $('#wholeFavorite > #'+thisProIdx+'').remove();
+		    	 
+			 }
 	       }
 	   });
 	 });
@@ -92,7 +95,7 @@ max-width: 270px;
 		 var theColor = $(obj).siblings().children().eq(0).css("color")
 	        $("#nowColor").attr("value",theColor);
 	        $(".asColorPicker-trigger").children('span').css("background", theColor);  
-	      var theName =  $(obj).siblings().eq(1).text().trim();
+	      theName =  $(obj).siblings().eq(1).text().trim();
 	      $("#myProjectTitle").empty();
 	      $("#myProjectTitle").append('<i class="far fa-sun"></i> ');
 	      $("#myProjectTitle").append(theName + " 환경설정");
