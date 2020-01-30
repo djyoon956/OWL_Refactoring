@@ -63,7 +63,7 @@ $(function(){
 				'force_text' : true,
 				"themes" : { "stripes" : true }
 			  },
-			"state" : {"opened" : true},
+			"state" : {"opened" : true, "selected": true},
 			"types" : {
 				"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
 				"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
@@ -221,6 +221,29 @@ $(function(){
 	    e.stopPropagation();
 	    e.preventDefault();
 	});	
+
+
+	//대소문자 구분 없이
+	$.extend($.expr[":"], {
+		"containsIN": function(elem, i, match, array) {
+			return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+		}
+		});
+	
+	//검색 기능
+	let to = false;
+	$('#searchText').keyup(function () {
+		if(to) { clearTimeout(to); }
+		to = setTimeout(function () {
+			var searchText = $('#searchText').val();
+		     $(".driveCard").hide();
+		     var temp = $(".driveCard >.card-body > h4:containsIN('" + v + "')");
+		     $(temp).parent().parent().show();
+			$('#jstree').jstree(true).search(searchText);
+		}, 100);
+	});
+
+	
 });
 
 function sendFileToServer(formData,status){
@@ -336,10 +359,14 @@ function sendFileToServer(formData,status){
                 <input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>
                 <a href='#' onclick='Return()'><i class='fas fa-times'></i></a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="drivegroup">
-                    <a><i class="fas fa-list fa-2x"></i></a> <span>&nbsp;&nbsp;</span>
-                    <a><i class="fas fa-th-large fa-2x"></i></a>
-                </div>
+		                <div class="drivegroup" style="position: absolute; right: 0px; top: 0px;">
+		                    <button class="btn driveViewBtn" id="tableView">
+		                        <i class="fas fa-list fa-2x"></i>
+		                    </button>
+		                    <button class="btn driveViewBtn active" id="iconView" disabled>
+		                        <i class="fas fa-th-large fa-2x"></i>
+		                    </button>
+		                </div>
             </div>
 
             <div class="row" style="margin : 10px 10px; margin-top: 0px;">
