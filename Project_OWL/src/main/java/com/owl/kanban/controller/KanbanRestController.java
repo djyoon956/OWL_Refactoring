@@ -346,6 +346,24 @@ public class KanbanRestController {
 		boolean result = service.updateIssuePriority(issue, principal.getName());
 		
 		return result;
+	}
+	@RequestMapping(value="UpdateIssueDuedate.do", method = RequestMethod.POST)
+	public boolean updateIssueDuedate(@RequestParam(value = "dueDate", required = false) String dueDate,
+			int issueIdx, Principal principal) {
+		System.out.println("updateIssueDuedate in  듀데이트 ");
+		System.out.println(dueDate);
+		Issue issue = new Issue();
+	//	
+		issue.setIssueIdx(issueIdx);
+		if(!dueDate.isEmpty()) {
+			try {
+				issue.setDueDate(new SimpleDateFormat("yyyy-mm-dd").parse(dueDate));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		boolean result = service.updateIssueDuedate(issue, principal.getName());
+		return result;
 	}	
 	/**
 	 * 칸반 assignee로 검색
