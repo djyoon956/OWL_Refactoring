@@ -73,7 +73,6 @@ $(function(){
 			    addFolder(folder);
 			});
 
-			console.log(folderList);
 			$.jstree.defaults.core.themes.variant = "large";
 			$('#jstree').jstree({
 					"core" : {
@@ -183,7 +182,7 @@ $(function(){
 	//대소문자 구분 없이
 	$.extend($.expr[":"], {
 		"containsIN": function(elem, i, match, array) {
-			return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+			return (elem.value || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
 		}
 		});
 	
@@ -192,11 +191,17 @@ $(function(){
 	$('#searchText').keyup(function () {
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
-			var searchText = $('#searchText').val();
-		     $(".driveCard").hide();
-		     var temp = $(".driveCard >.card-body > h4:containsIN('" + v + "')");
-		     $(temp).parent().parent().show();
-			$('#jstree').jstree(true).search(searchText);
+			var v = $('#searchText').val();
+		     $(".driveCard").parent().hide();     
+		     var temp = $(".driveCardContent>input:containsIN('" + v + "')");
+		     console.log("temp");
+		     console.log($(temp).parent().parent().parent().parent());
+			 var cloneTemp = $(temp).parent().parent().parent().parent();
+			 setSearchView(cloneTemp);
+			 /* cloneTemp.appendTo('#driveSearchViewBox'); */
+			/* $(temp).parent().parent().parent().parent().show(); */
+ 
+			$('#jstree').jstree(true).search(v);
 		}, 100);
 	});
 
@@ -270,6 +275,10 @@ function sendFileToServer(formData,status){
 		                <span style="font-size : large; font-weight:bold" class="hidden" id="trashName">
 		                	<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통
 		               	</span>
+		               	<div id="searchFile" class="hidden">
+			                <input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>
+			                <a href='#' onclick='ReturnCheck()'><i class='fas fa-times'></i></a>
+		               	</div>		               	
 		               	<div id="allCheck" class="hidden">
 		               		<button type='button' class='driveBtn btn-primary'>삭제</button>&nbsp;&nbsp;
 		               		<button type='button' class='driveBtn btn-primary'>이동</button>&nbsp;&nbsp;		               		
@@ -305,20 +314,6 @@ function sendFileToServer(formData,status){
 	            </div>
             </div>
 
-            <div class="searchDriveMenu" style="display:none;">
-                <input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>
-                <a href='#' onclick='Return()'><i class='fas fa-times'></i></a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-		                <div class="drivegroup" style="position: absolute; right: 0px; top: 0px;">
-		                    <button class="btn driveViewBtn" id="tableView">
-		                        <i class="fas fa-list fa-2x"></i>
-		                    </button>
-		                    <button class="btn driveViewBtn active" id="iconView" disabled>
-		                        <i class="fas fa-th-large fa-2x"></i>
-		                    </button>
-		                </div>
-            </div>
-
             <div class="row" style="margin : 10px 10px; margin-top: 0px;">
                 <div class="col-lg-12">
                     <div id="dragandrophandler" style="height: 630px; overflow-y: auto; overflow-x:hidden;">
@@ -329,7 +324,9 @@ function sendFileToServer(formData,status){
                         </div>
 
                         <div id="driveIconViewBox"></div>
-
+						
+						<div id="driveSearchViewBox" class="hidden"></div>
+							
                         <div id="driveTableViewBox" class="hidden">
                             <table id="driveTable" class="table table-hover table-bordered text-center">
                                 <thead>

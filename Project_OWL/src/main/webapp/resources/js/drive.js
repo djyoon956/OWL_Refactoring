@@ -11,10 +11,17 @@ function initDrive(projectIdx){
 	
 	$('#jstree').on( "select_node.jstree", function(event, data){
 		isTrash = false;
+		
+		$("#searchFile").addClass("hidden");
+		$("#driveSearchViewBox").addClass("hidden");
+		$("#driveSearchViewBox").empty();
+		$("#default").removeClass("hidden");
+		
 		let path = data.instance.get_path(data.node, '<i class="fas fa-angle-right ml-2 mr-2"></i><i class="far fa-folder mr-2"></i>');
 	    $("#driveName").html('<i class="far fa-folder mr-2"></i>'+path);
 	    console.log(data.instance.get_path(data.node, false));
 		callDirectoryData();
+		
     });
 	
 	$(".driveViewBtn").click(function(){
@@ -132,14 +139,8 @@ function createStatusbar(obj){
 
 
 function Search() {
-	$("div").find(".defaultDriveMenu").each(function(){
-		$(this).attr('style', 'display:none');
-		
-	});
-	$("div").find(".searchDriveMenu").each(function(){
-		$(this).attr('style', 'display:block');
-		$(this).children(".drivegroup").css('right', '30px');
-	});
+	$("#default").addClass("hidden");
+	$("#searchFile").removeClass("hidden");
 }
 
 function Allcheck() { //전체선택 onclick
@@ -155,16 +156,8 @@ function ReturnCheck() { //선택 해제
 	$("input[type=checkbox]").prop("checked", false);
 	$("#allCheck").addClass("hidden");
 	$("#theCheck").addClass("hidden");
+	$("#searchFile").addClass("hidden");
 	$("#default").removeClass("hidden");
-}
-
-function Return() {
-	$("div").find(".defaultDriveMenu").each(function(){
-		$(this).attr('style', 'display:block');
-	});
-	$("div").find(".searchDriveMenu").each(function(){
-		$(this).attr('style', 'display:none');
-	});
 }
 
 function checkBox(obj) {
@@ -235,10 +228,35 @@ function setDirectoryData(folderIdx, folderName) {
 }
 
 /*var nameList = [];*/
+function setSearchView(obj){
+	$("#driveSearchViewBox").removeClass("hidden");
+	$("#driveTableViewBox").addClass("hidden");		
+	$("#driveIconViewBox").addClass("hidden");		
+	let line = 4;
+	let controls =[];
+	
+	$.each(obj,function(index, element){
+		$(element).attr("style","");
+		controls.push(element);
+		
+		
+		if (index % line == line - 1 || index == obj.length - 1) {
+			let row = $("<div class='row'></div>");
+			$.each(controls, function(index2, element2){
+				row.append(element2);
+			})
+			$("#driveSearchViewBox").append(row);
+			controls=[];
+		}	
+		
+	});
+}
+
 
 function setIconView(data){
 	$("#driveIconViewBox").removeClass("hidden");
 	$("#driveTableViewBox").addClass("hidden");	
+	$("#driveSearchViewBox").addClass("hidden");
 
 	let control ="";
 	let line = 4;
@@ -260,7 +278,7 @@ function setIconView(data){
 					+		'</div>'                                                                                                                                                            
 					+		'<div class="card-body text-center">'                                                                                                                               
 					+			'<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>'
-					+			'<div class="driveCardContent"><h4>' +element.folderName+ '</h4></div>'                                                                                                                                         
+					+			'<div class="driveCardContent"><h4>' +element.folderName+ '</h4><input type="hidden" value="'+element.folderName+'"></div>'                                                                                                                                         
 					+		'</div>'                                                                                                                                                            
 					+	 '</div>'                                                                                                                                                               
 					+  '</div>';     
@@ -322,6 +340,7 @@ function setIconView(data){
 function setTableView(data){
 	$("#driveTableViewBox").removeClass("hidden");
 	$("#driveIconViewBox").addClass("hidden");
+	$("#driveSearchViewBox").addClass("hidden");
 
 	$.each(data.files, function(index, element) {
 		$('#driveTable').DataTable().row.add( [
