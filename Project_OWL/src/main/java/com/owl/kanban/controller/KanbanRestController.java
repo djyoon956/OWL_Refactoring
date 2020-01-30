@@ -317,7 +317,14 @@ public class KanbanRestController {
 		
 		return service.editReply(reply);
 	}
-	
+	@RequestMapping(value="UpdateIssueTitle.do", method = RequestMethod.POST)
+	public boolean updateIssueTitle(Issue issue,Principal principal) {
+		System.out.println("updateIssueTitle in");
+		System.out.println(issue);
+		boolean result = service.updateIssueTitile(issue, principal.getName());
+		
+		return result;
+	}
 	
 	
 }

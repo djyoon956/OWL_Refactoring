@@ -16,17 +16,22 @@
                         <input type="text" class="form-control hidden" id="issueDetailTitleEdit">
                         </div>
                         <div class="col-1 mr-0">
-								<i class="fas fa-cog font-16 flot-right" onclick="editTitleViewBtn()"style="cursor: pointer"></i>
+								<i class="fas fa-cog font-16 flot-right pr-0" onclick="editTitleViewBtn()"style="cursor: pointer"></i>
 							</div>
 						</div>
                     </div>
                 </div>
                 <hr class="mt-1">
-                <div class="card-body mt-0 mb-0" id="issueDetailContent" style="border: 1px solid; border-color:#e9e9e9;">
+                <div class="card-body mt-0 mb-0"  style="border: 1px solid; border-color:#e9e9e9;">
+                <div class="row">
+                <div style="margin-left: 94%;"><i class="fas fa-cog font-16 flot-right pr-0" onclick="editContentViewBtn()"style="cursor: pointer"></i></div>
+                  </div>
+                   <div id="issueDetailContent">
                     <p>Task </p>
                     <p>- 드라이브 디폴트 폴더 생성</p>
                     <p>- 계층형 구조 </p>
                     <p>- 휴지통 기능</p>
+                    </div>
                 </div>
 
                 <div class="accordion" id="kanbanAccordion">
