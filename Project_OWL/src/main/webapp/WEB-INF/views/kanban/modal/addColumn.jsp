@@ -24,8 +24,6 @@
 	appearance: none;
 }
 
-
-
 </style>
 
 <div id="addColumnModal" class="modal fade" tabindex="-1" role="dialog"

@@ -152,7 +152,10 @@
 
 	$('#addLabelModal').on('show.bs.modal', function() {  
 	//프로젝트 내 라벨 리스트 출력 
-	  $.ajax({
+	let projectidx = ${project.projectIdx};
+	getLabelList("ShowLabelList", projectidx);
+	
+/* 	  $.ajax({
 			url : 'GetLabelList.do',
 			data : {'projectIdx' : ${project.projectIdx}},
 			success : function(data) {
@@ -182,7 +185,7 @@
 			},error : function() {
 				console.log("Showlabel error");
 			}
-			});
+			}); */
 	});
 
 
@@ -404,7 +407,6 @@
 					})   
 			}
 		}) 
-
 });
 </script>
 
@@ -423,6 +425,10 @@
                     <i class="fas fa-columns"></i>&nbsp;Closed
                 </button>
 
+                <button class="btn btn-primary btn-link hidden ml-3" id="searchReturnBtn"><i class="fas fa-arrow-circle-left fa-2x"></i></button>
+
+              
+              
             </div>
             <div class="col-8">
                 <a href="#" data-toggle="modal" data-target="#addIssueModal">
@@ -449,10 +455,57 @@
                 </a>
               <!-- ------------------------------------------------------------- -->
              </c:if>
+             <div class="float-right">
+                   <div class="input-group">
+                        <input type="text" id="searchContent" class="form-control" placeholder="검색어를 입력하세요" aria-describedby="basic-addon2" style="border:2px solid #326295 !important">
+                            <div class="input-group-append">
+                                 <span class="input-group-text" id="basic-addon2"><button class="btn btn-primary btn-link" id="kanbanSearchBtn"><i class="fas fa-search"></i></button></span>
+                        </div>
+                   </div>
+              	</div>
+               <div class="float-right">
+                     <select id="searchSelectBox" class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                        <option value="" selected="selected">Select</option>
+                        <option value="Label">Label</option>
+                        <option value="Assignee">Assignee</option>
+                        <option value="Priority">Priority</option>
+                     </select>
+                
+				</div>
+
+             
             </div>
         </div>
 
         <div class="row" id="kanbanArea">
+        
+        	  <div class="col-md-10 mt-4 ml-4 mr-4 hidden" id="searchBox" >
+	  			     <div class="table-responsive m-t-40" style="clear: both;">
+                        <table class="table table-hover">
+                            <thead>       
+                            <tr>
+	                	 		<th class="text-center">Label</th>
+	                	  		<th class="text-center">IssueTitle</th>
+	                	  		<th class="text-center">Assigned</th>
+	                	  		<th class="text-center">Priority</th>
+	                	  		<th class="text-center">Due Date</th>
+	                	  	</tr>
+                            </thead>
+                           <tbody>
+<!--                                  <tr>
+                                     <td class="text-center">4</td>
+                                     <td>Down Coat</td>
+                                     <td class="text-right"> 60 </td>
+                                     <td class="text-right">$5 </td>
+                                     <td class="text-right"> $300 </td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                     </div>
+                   </div>
+        
+        
+        
             <!--  open issue -->
             <!--  openIssueColumn -->
 
@@ -479,7 +532,8 @@
                     <li class="issuePiece d-none"></li>
                 </ul>
             </div>
-            <div id="kanbanIn" ></div>
+            <div id="kanbanIn"> </div>
+       
            
 
         </div>
