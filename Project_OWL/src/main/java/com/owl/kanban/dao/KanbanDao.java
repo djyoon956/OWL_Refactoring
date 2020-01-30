@@ -75,4 +75,8 @@ public interface KanbanDao {
 	
 	public int updateReply(Reply reply) throws ClassNotFoundException, SQLException;
 	
+	public List<Issue> searchAssignee(int projectIdx, String content) throws ClassNotFoundException, SQLException;
+
+	public List<Issue> searchLabel(int labelIdx) throws ClassNotFoundException, SQLException;
+
 }

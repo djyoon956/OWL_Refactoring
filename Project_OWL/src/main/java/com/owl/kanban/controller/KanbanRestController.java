@@ -308,16 +308,55 @@ public class KanbanRestController {
 		return result;
 	}
 	
-	
+	/**
+	 * 칸반 댓글 수정
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param reply
+	 * @return boolean
+	 */
 	@RequestMapping(value="EditReply.do", method = RequestMethod.POST)
 	public boolean editReply(Reply reply) {
-		System.out.println("뭐지????????????????????????????");
 		System.out.println(reply);
 		boolean result = false;
 		
 		return service.editReply(reply);
 	}
 	
+	
+	/**
+	 * 칸반 assignee로 검색
+	 * @author 배인영
+	 * @since 2020/01/30
+	 * @param projectIdx
+	 * @param content
+	 * @return
+	 */
+	@RequestMapping("SearchAssignee.do")	
+	public List<Issue> searchAssignee(int projectIdx, String searchContent){
+		System.out.println("searchAssignee in controller");
+		List<Issue> issue = service.searchAssignee(projectIdx, searchContent);
+		//System.out.println(issue);
+		return issue;
+	}
+	
+	/**
+	 * 칸반 라벨로 검색
+	 * @author 배인영
+	 * @since 2020/01/30
+	 * @param projectIdx
+	 * @param searchContent
+	 * @return
+	 */
+	@RequestMapping("SearchLabel.do")	
+	public List<Issue> searchLabel(int labelIdx){
+		
+		System.out.println("searchLabel in controller");
+		List<Issue> issue = service.searchLabel(labelIdx);
+		System.out.println("이슈는??????");
+		System.out.println(issue);
+		return issue;
+	}
 	
 	
 }
