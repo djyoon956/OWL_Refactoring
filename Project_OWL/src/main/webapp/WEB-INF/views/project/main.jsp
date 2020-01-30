@@ -55,8 +55,7 @@
         			    calendar.bgColor = data.projectColor;
         			    calendar.dragBgColor = data.projectColor;
         			    calendar.borderColor = data.projectColor;
-        			    addCalendar(calendar);
-        			    console.log(calendar);			    						
+        			    addCalendar(calendar);		    						
         		    setSchedules();
         		}
             });
@@ -100,7 +99,6 @@
             });
 
             $('#memberCheckModal').on('show.bs.modal', function(){
-				console.log("open MemberCheckModal");
 				$("#projectMemebers").empty();
 			 	$.ajax({
 			 		type: "POST",
@@ -139,7 +137,6 @@
              });
             
             $("#addMemberOk").click(function () {
-                console.log("in click");
                 let addProjectMembers = [];
                 $('.addProjectMembers').each(function(){
                 	addProjectMembers.push($(this).val());
@@ -213,7 +210,6 @@
         }); 
         
         function setChageView(target) {
-            console.log("setChageView : " + target);
             if (target === "dash")
                 setDashBoardData();
             else if (target === "calendar")
@@ -258,7 +254,6 @@
 
         function addProjectMember() {
             let addProjectMembers = $('.addProjectMembers').toArray();
-            console.log(addProjectMembers);
             let addEmail = $("#addProjectMemeberEmail").val();
             $("#addProjectMemeberEmail").val("");
             let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -288,7 +283,6 @@
     				 url : 'GetColumn.do',
     				 data : {'projectIdx' :  ${project.projectIdx} },
     				 success : function(data) {
-    					console.log(data);   //projectIdx, issueTitle, assigned, labelName, labelColor, colIdx, colname
     					console.log("칸반");
     					$.each(data,function(index,obj) {
     						if(obj.colIdx != -1 && obj.colIdx != -99){
@@ -340,7 +334,6 @@
 					data : {'projectIdx' :  ${project.projectIdx} },
 					success : function(data) {
 						console.log("셋 이슈 데이터");
-						console.log(data);
 						 $.each(data,function(index,obj) {
 							
 							 addKanbanIssue(obj.colIdx, obj); 

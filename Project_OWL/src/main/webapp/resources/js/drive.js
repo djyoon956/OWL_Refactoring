@@ -158,6 +158,7 @@ function ReturnCheck() { //선택 해제
 	$("#theCheck").addClass("hidden");
 	$("#searchFile").addClass("hidden");
 	$("#default").removeClass("hidden");
+	$('#searchText').empty();
 }
 
 function checkBox(obj) {

@@ -121,7 +121,6 @@ $(function(){
 	        			 },
 	        		success:function(idx){
 		        		data.node.id = idx;
-		        		console.log(data.node);	
 		        		driveRefresh();
 	        		}
 	    		});
@@ -183,24 +182,31 @@ $(function(){
 	$.extend($.expr[":"], {
 		"containsIN": function(elem, i, match, array) {
 			return (elem.value || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+		},
+		"containsININ": function(elem, i, match, array) {
+			return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
 		}
-		});
-	
+	});
+		
 	//검색 기능
 	let to = false;
 	$('#searchText').keyup(function () {
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
 			var v = $('#searchText').val();
-		     $(".driveCard").parent().hide();     
-		     var temp = $(".driveCardContent>input:containsIN('" + v + "')");
-		     console.log("temp");
-		     console.log($(temp).parent().parent().parent().parent());
-			 var cloneTemp = $(temp).parent().parent().parent().parent();
-			 setSearchView(cloneTemp);
-			 /* cloneTemp.appendTo('#driveSearchViewBox'); */
-			/* $(temp).parent().parent().parent().parent().show(); */
- 
+
+			if(driveViewType == "tableView"){
+	                $("#driveTable > tbody > tr").hide();
+	                let temp = $("#driveTable > tbody > tr > td:containsININ('" + v + "')");				
+	                $(temp).parent().show();				
+					$('#driveTable').DataTable().column().search(v).draw();
+					
+			}else{
+				$(".driveCard").parent().hide();     
+			     let temp = $(".driveCardContent>input:containsIN('" + v + "')");
+				 let cloneTemp = $(temp).parent().parent().parent().parent();
+				 setSearchView(cloneTemp);
+			}	 
 			$('#jstree').jstree(true).search(v);
 		}, 100);
 	});
@@ -209,7 +215,6 @@ $(function(){
 });
 
 function sendFileToServer(formData,status){
-	console.log(formData);
     var uploadURL ="http://hayageek.com/examples/jquery/drag-drop-file-upload/upload.php"; //Upload URL
     var extraData ={}; //Extra Data.
     var jqXHR=$.ajax({
