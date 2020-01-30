@@ -625,10 +625,19 @@ function renameCancel(obj, oldText, isFolder){
 }
 
 function renameFile(driveFileIdx){
+	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
+	console.log(folderIdx);
+	console.log(refs);
+	
+	jQuery.ajaxSettings.traditional = true;
 	$.ajax({
 		 url : "RenameDriveFile.do",
-		 data : {driveFileIdx : driveFileIdx
-			 		, fileName :  $("#driveFileRename").val()},
+		 data : { projectIdx : driveProjectIdx
+			 		, refs : refs
+			 		, driveIdx : folderIdx
+			 		, driveFileIdx : driveFileIdx
+			 		, newFileName :  $("#driveFileRename").val()},
 		 success : function(data){
 			 if(data){ 
 				 successAlert("파일 이름 변경 완료");

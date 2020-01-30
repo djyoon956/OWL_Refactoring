@@ -122,6 +122,21 @@ public class UploadHelper {
 		System.out.println("파일 이동 성공 : " + isMove);
 	}
 
+	public static boolean renameDriveFile(String uploadPath, int projectIdx, String[] refs, int driveIdx, String oldFileName, String newFileName) {
+		boolean result = false;
+		String path = Paths.get(uploadPath
+											, "project"
+											, Integer.toString(projectIdx)
+											, "drive"
+											, getParentPath(refs)
+											, Integer.toString(driveIdx)
+											, oldFileName).toString();
+		
+		System.out.println(path);
+		result = new File(path).renameTo(new File(path.replace(oldFileName, newFileName)));
+		return result;
+	}
+	
 	public static String getDriveDownloadPath(int projectIdx, int folderIdx, String fileName, String[] refs) {
 		return Paths.get("upload"
 								, "project"

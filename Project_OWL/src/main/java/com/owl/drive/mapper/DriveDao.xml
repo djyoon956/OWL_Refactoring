@@ -107,6 +107,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE DRIVEFOLDER SET ISDELETE = 0 WHERE DRIVEIDX = #{drivefileIdx}
 	</update>
 	
-	
+	<select id="getFileName" resultType="String" parameterType="int">
+		SELECT FILENAME FROM owl.DRIVEFILE where DRIVEFILEIDX = #{drivefileIdx}
+	</select>
 	
 </mapper>
