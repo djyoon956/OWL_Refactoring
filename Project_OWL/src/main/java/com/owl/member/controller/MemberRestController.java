@@ -155,4 +155,13 @@ public class MemberRestController {
 
 		return setting;
 	}
+	
+	@RequestMapping("GetMyProfile.do")
+	public Member getMember(Principal principal, Model model) {
+		Member member = null;
+		member = service.getMember(principal.getName());
+		model.addAttribute("member", member);
+		return member;
+	}
+	
 }

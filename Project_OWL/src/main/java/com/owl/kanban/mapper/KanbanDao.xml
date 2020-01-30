@@ -161,25 +161,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="searchAssignee" resultType="com.owl.kanban.dto.Issue">
 	 SELECT i.PROJECTIDX, i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED, i.ISSUEPROGRESS , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
 		FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX 
-        where i.projectidx=#{param1} and assigned = #{param2} order by ordernum;
+        where i.projectidx=#{param1} and assigned = #{param2} order by ordernum
 	</select>
 	
 	<select id="searchLabel" resultType="com.owl.kanban.dto.Issue">
 	 SELECT i.PROJECTIDX, i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED, i.ISSUEPROGRESS , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
 		FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX 
-        where l.labelidx = #{labelIdx} order by ordernum;
+        where l.labelidx = #{labelIdx} order by ordernum
 	</select>
 	
 	<update id="updateIssueTitle" parameterType="com.owl.kanban.dto.Issue">
 		update issue set issuetitle=#{issueTitle} where issueidx= #{issueIdx}
 	</update>
 	
-	<update id="updateIssueContent">
+	<update id="updateIssueContent" parameterType="com.owl.kanban.dto.Issue">
 		update issue set content=#{content} where issueidx= #{issueIdx}
 	</update>
-	
+	<!-- #{priorityCode, jdbcType=VARCHAR} -->
 	<update id="updateIssuePriority">
-		update issue set prioritycode=#{prioritycode} where issueidx= #{issueIdx}
+		update issue set prioritycode=#{priorityCode} where issueidx= #{issueIdx}
 	</update>
 	
 	<update id="updateIssueDueDate">

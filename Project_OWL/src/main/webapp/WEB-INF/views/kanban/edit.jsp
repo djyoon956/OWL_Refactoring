@@ -15,8 +15,8 @@
                     </div>
                 </div>
                 <hr class="mt-1">
-                <div class="card-body mt-0 mb-0 p-0" id="issueDetailEditContent" style="border: 1px solid; border-color:#e9e9e9;">
-                     <textarea class="form-control bg-light p-0" id="isContentEdit" name="content"></textarea>
+            <!--     <div class="card-body mt-0 mb-0 p-0" id="issueDetailEditContent" style="border: 1px solid; border-color:#e9e9e9;" -->>
+                    <!--  <textarea class="form-control bg-light p-0" id="isContentEdit" name="content"></textarea> -->
 					
                 </div>
                 <div class="pt-1 pb-1">
