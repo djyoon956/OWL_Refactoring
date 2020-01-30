@@ -24,6 +24,7 @@ import com.owl.kanban.dto.Issue.IssueProgressType;
 import com.owl.kanban.dto.Issue.PriorityType;
 import com.owl.kanban.dto.Reply;
 import com.owl.kanban.service.KanbanService;
+import com.owl.member.dto.Member;
 import com.owl.project.dto.Label;
 
 
@@ -330,7 +331,48 @@ public class KanbanRestController {
 		
 		return result;
 	}
-	
+	@RequestMapping(value="UpdateIssueContent.do", method = RequestMethod.POST)
+	public boolean updateIssueContent(Issue issue,Principal principal) {
+		System.out.println("updateIssueTitle in");
+		System.out.println(issue);
+		boolean result = service.updateIssueContent(issue, principal.getName());
+		
+		return result;
+	}
+	@RequestMapping(value="UpdateIssuePriority.do", method = RequestMethod.POST)
+	public boolean updateIssuePriority(Issue issue,Principal principal) {
+		System.out.println("updateIssueTitle in");
+		System.out.println(issue);
+		boolean result = service.updateIssuePriority(issue, principal.getName());
+		
+		return result;
+	}
+	@RequestMapping(value="UpdateIssueDuedate.do", method = RequestMethod.POST)
+	public boolean updateIssueDuedate(@RequestParam(value = "dueDate", required = false) String dueDate,
+			int issueIdx, Principal principal) {
+		System.out.println("updateIssueDuedate in  듀데이트 ");
+		System.out.println(dueDate);
+		Issue issue = new Issue();
+	//	
+		issue.setIssueIdx(issueIdx);
+		if(!dueDate.isEmpty()) {
+			try {
+				issue.setDueDate(new SimpleDateFormat("yyyy-mm-dd").parse(dueDate));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		boolean result = service.updateIssueDuedate(issue, principal.getName());
+		return result;
+	}
+	@RequestMapping(value="UpdateIssueAssgined.do", method = RequestMethod.POST)
+	public boolean updateIssueAssgined(Issue issue,Principal principal) {
+		System.out.println("updateIssueTitle in");
+		System.out.println(issue);
+		boolean result = service.updateIssueAssgined(issue, principal.getName());
+		
+		return result;
+	}
 	/**
 	 * 칸반 assignee로 검색
 	 * @author 배인영
@@ -340,9 +382,10 @@ public class KanbanRestController {
 	 * @return
 	 */
 	@RequestMapping("SearchAssignee.do")	
-	public List<Issue> searchAssignee(int projectIdx, String searchContent){
+	public List<Issue> searchAssignee(int projectIdx, String email){
 		System.out.println("searchAssignee in controller");
-		List<Issue> issue = service.searchAssignee(projectIdx, searchContent);
+		System.out.println(email);
+		List<Issue> issue = service.searchAssignee(projectIdx, email);
 		//System.out.println(issue);
 		return issue;
 	}
@@ -351,9 +394,8 @@ public class KanbanRestController {
 	 * 칸반 라벨로 검색
 	 * @author 배인영
 	 * @since 2020/01/30
-	 * @param projectIdx
 	 * @param searchContent
-	 * @return
+	 * @return List<Issue>
 	 */
 	@RequestMapping("SearchLabel.do")	
 	public List<Issue> searchLabel(int labelIdx){
@@ -365,5 +407,38 @@ public class KanbanRestController {
 		return issue;
 	}
 	
+	
+	/**
+	 * 칸반 라벨로 검색
+	 * @author 배인영
+	 * @since 2020/01/30
+	 * @param searchPriority
+	 * @return List<Issue>
+	 */
+	@RequestMapping("SearchPriority.do")	
+	public List<Issue> searchPriority(String priorityidx){
+		
+		System.out.println("searchPriority in controller");
+		List<Issue> issue = service.searchPriority(priorityidx);
+		System.out.println("이슈는??????");
+		System.out.println(issue);
+		return issue;
+	}
+	
+	
+	/**
+	 * 프로젝트 멤버리스트 select
+     * @since 2020/01/30
+	 * @param projectIdx
+	 * @return List<Member>
+	 */
+	@RequestMapping("GetProjectMemberList.do")	
+	public List<Member> getProjectMemberList(int projectIdx){
+		
+		System.out.println("getProjectMemberList in controller");
+		List<Member> member = service.getProjectMemberList(projectIdx);
+		System.out.println(member);
+		return member;
+	}
 	
 }

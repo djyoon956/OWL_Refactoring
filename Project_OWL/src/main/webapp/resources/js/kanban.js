@@ -1,3 +1,4 @@
+
 let projectIdx;
 
 
@@ -68,6 +69,7 @@ function initKanban(projectIdx){
 	})
 	
 	
+	
 	$('#searchSelectBox').change(function () {
 		
 		var selectMenu = $('#searchSelectBox option:selected').val();
@@ -75,94 +77,85 @@ function initKanban(projectIdx){
 		if(selectMenu == "Label") {
 			$('#searchContent').attr('list', 'LabelMenu');
 			getLabelList("SearchLabelList", projectIdx);
+		}else if(selectMenu == "Assignee") {
+			$('#searchContent').attr('list', 'MemberMenu');
+			getProjectMemberList(projectIdx);
+		}else if(selectMenu == "Priority") {
+			$('#searchContent').attr('list', 'PriorityMenu');
+
+			var prioritylist = '<datalist id="PriorityMenu">'
+						     + '<option value="LOW" data-id="LOW"></option>'
+						     + '<option value="MEDIUM" data-id="MEDIUM"></option>'
+						     + '<option value="HIGH" data-id="HIGH"></option>'
+						     + '<option value="URGENT" data-id="URGENT"></option>'
+						     + '</datalist>'; 
+			
+			$('#searchContent').append(prioritylist);
 		}
+			
 	})
 
 	
-	
 	//검색 
 	$('#kanbanSearchBtn').click(function(){
-		console.log('값이뭘까?');
-		console.log($('#searchSelectBox option:selected').val());
+		
+		$('#searchBox').find('tbody').empty();
+		//console.log($('#searchSelectBox option:selected').val());
 		
 		if($('#searchContent').val() == "" || $('#searchContent').val() == null) {
 			return;
 		}
 		
 		let selectMN = $('#searchSelectBox option:selected').val();
+		let contentVal = $('#searchContent').val();
 		
 		if(selectMN == "Assignee") {
 			
+			var memberemail = $('#MemberMenu option[value='+contentVal+']').attr('data-id');
+
 			$.ajax ({
 				url : "SearchAssignee.do",
-				data : {"projectIdx": projectIdx, "searchContent" : $('#searchContent').val()},
+				data : {"projectIdx" :projectIdx, "email" : memberemail},
 				method : "POST",
 				success : function(data) {
-					$('#searchContent').val("");
-					changeKanbanView("search");
+					searchAppend(data)
 
-					$.each(data, function(index, element) {
-	    	  
-						let labelnm = element.labelName == null ? "" : element.labelName;
-						let priorityCd = element.priorityCode == null ? "-" : element.priorityCode;
-						let dueDt = element.dueDate == null ? "-" : element.dueDate;
-				
-						var control = "";
-							control = '<tr><td class="text-center"><label><span class="badgeIcon" style="background-color:'+ element.labelColor+'">' + labelnm + '</span></td>'
-									+ '<td class="text-center"><a href="#" onclick="setKanbanDetail('+element.issueIdx+');">'+element.issueTitle+'</a></td>'
-									+ '<td class="text-center">'+element.assigned+'</td>'
-									+ '<td class="text-center">'+priorityCd+'</td>'
-									+ '<td class="text-center">'+dueDt+'</td></tr>';
-	    	 
-	    	  	  $('#searchBox').find('tbody').append(control);
-	      });
-
-			}
-		})
+				},error : function() {
+					console.log('SearchAssignee error');
+				} 
+			})
 			
 		}else if(selectMN == "Label") {
-			//console.log('label값 뭐니?????????');
-
-			var contentVal = $('#searchContent').val();
 			
 			var labelidx = $('#LabelMenu option[value='+contentVal+']').attr('data-id');
-			
+		
 			$.ajax ({
 				url : "SearchLabel.do",
 				data : {"labelIdx" : labelidx},
 				method : "POST",
 				success : function(data) {
-					console.log('SearchLabel in');
-					console.log(data);
-					
-					$('#searchContent').val("");
-					changeKanbanView("search");
-					
-				      $.each(data, function(index, element) {
-				    	  
-							let labelnm = element.labelName == null ? "" : element.labelName;
-							let priorityCd = element.priorityCode == null ? "-" : element.priorityCode;
-							let dueDt = element.dueDate == null ? "-" : element.dueDate;
-							
-				    	  var control = "";
-				    	  	  control = '<tr><td class="text-center"><label><span class="badgeIcon" style="background-color:'+ element.labelColor+'">' + labelnm + '</span></td>'
-							 	      + '<td class="text-center"><a href="#" onclick="setKanbanDetail('+element.issueIdx+');">'+element.issueTitle+'</a></td>'
-							          + '<td class="text-center">'+element.assigned+'</td>'
-							          + '<td class="text-center">'+priorityCd+'</td>'
-							          + '<td class="text-center">'+dueDt+'</td></tr>';
-				    	 
-				    	  	  $('#searchBox').find('tbody').append(control);
-				      });
+					searchAppend(data)
+				},error : function() {
+					console.log('SearchLabel error');
+				} 
+			})
+		}else if(selectMN == "Priority") {
+			
+			var priorityidx = $('#PriorityMenu option[value='+contentVal+']').attr('data-id');
+
+			$.ajax ({
+				url : "SearchPriority.do",
+				data : {"priorityidx" : priorityidx},
+				method : "POST",
+				success : function(data) {
+					searchAppend(data)
 
 				},error : function() {
 					console.log('SearchLabel error');
 				} 
 			})
-		}else if(selectMN == "Assignee") {
-			
 			
 		}
-		
 	});
 
 
@@ -184,18 +177,50 @@ function initKanban(projectIdx){
 	 });
 
 		$('.editViewBtn').on('click', function(e){
-			    console.log($(this).parent().siblings().find("span"));
-			    if( $(this).parent().siblings().find("select").hasClass("hidden")){
-				    $(this).parent().siblings().find("select").removeClass("hidden");
+			    console.log($(this).parent().siblings().find(".row"));
+			    if( $(this).parent().siblings().find(".row").hasClass("hidden")){
+				    $(this).parent().siblings().find(".row").removeClass("hidden");
 				    $(this).parent().siblings().find("span").addClass("hidden");
 			    } else {
 			    	$(this).parent().siblings().find("span").removeClass("hidden");
-				    $(this).parent().siblings().find("select").addClass("hidden");
+				    $(this).parent().siblings().find(".row").addClass("hidden");
 			    }
 			});
 
 	
+		
+		
+
+		
+		
 } //initKanban 끝
+
+
+
+
+
+
+function searchAppend(data) {
+	
+	$('#searchContent').val("");
+	changeKanbanView("search");
+	
+      $.each(data, function(index, element) {
+    	  
+			let labelnm = element.labelName == null ? "" : element.labelName;
+			let priorityCd = element.priorityCode == null ? "-" : element.priorityCode;
+			let dueDt = element.dueDate == null ? "-" : element.dueDate;
+			
+    	  var control = "";
+    	  	  control = '<tr><td class="text-center"><label><span class="badgeIcon" style="background-color:'+ element.labelColor+'">' + labelnm + '</span></td>'
+			 	      + '<td class="text-center"><a href="#" onclick="setKanbanDetail('+element.issueIdx+');">'+element.issueTitle+'</a></td>'
+			          + '<td class="text-center">'+element.assigned+'</td>'
+			          + '<td class="text-center">'+priorityCd+'</td>'
+			          + '<td class="text-center">'+dueDt+'</td></tr>';
+    	  	  $('#searchBox').find('tbody').append(control);
+      });
+}
+
 
 
 function addLabel(lbidx, lbcolor, lbnm) {
@@ -266,9 +291,6 @@ function deleteColumn(obj){
 
 function addKanbanIssue(colIdx,obj){
 	
-	//console.log("addKanbanIssue in");
-	//console.log("label" + obj.labelIdx);
-	//console.log(obj);
 	if(obj.labelName == null) 
 		obj.labelName = "";
 	if(obj.assigned == null) 
@@ -336,7 +358,7 @@ function deleteLabel(labelidx) {
 
 function setKanbanDetail(issueIdx){
 	
-	console.log("in setKanbanDetail     sfdsf");
+	console.log("in setKanbanDetail sfdsf");
 	
 	$.ajax({
 			type: "POST",
@@ -358,13 +380,9 @@ function setKanbanDetail(issueIdx){
 					
 					$("#issueDetailFiles").empty();
 					$("#issueDetailFileCount").text("첨부파일 ("+data.files.length+") ");
-					console.log("data.files");
-					console.log(data.files);
 					//let projectIdx = data.projectIdx;
 					$.each(data.files, function(index,file){
 						let path = "/upload/"+ projectIdx +"/file/"+file.fileName;
-						console.log("파일  이름 체크 중 ");
-						console.log(path);
 						let control = "<li class='mb-2' style='font-size: 16px'>"
 										+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+file.fileName+" ("+file.fileSize+" KB)</span></a>"
 										+" </li>";
@@ -489,16 +507,13 @@ function reOpenIssue(issueIdx) {
 function changeKanbanView(view){
    if(view == "list"){
    $("#kanbanDetailBox").addClass("hidden");
-   $("#kanbanEditBox").addClass("hidden");
    $("#kanbanMainBox").removeClass("hidden");
 }else if(view == "detail"){
    $("#kanbanMainBox").addClass("hidden");
-   $("#kanbanEditBox").addClass("hidden");
    $("#kanbanDetailBox").removeClass("hidden");
 }else if (view == "edit"){
    $("#kanbanMainBox").addClass("hidden");
    $("#kanbanDetailBox").addClass("hidden");	
-   $("#kanbanEditBox").removeClass("hidden");
  }else if (view == "search") {
    $('#searchBox').removeClass('hidden');
    $('#searchReturnBtn').removeClass('hidden');		
@@ -636,14 +651,10 @@ function editLabel(idx, color, name) {
 						var labellist = '<datalist id="LabelMenu">';
 				
 						$.each(data,function(index, obj) {
-							
 							labellist += '<option value="'+obj.labelName+'" data-id="'+obj.labelIdx+'"></option>';	
-						});
-				 	
+						});		 	
 						labellist += '</datalist>';
-
 						$('#searchContent').append(labellist);
-						
 					}
 			},error : function() {
 					console.log("Showlabel error");
@@ -664,17 +675,6 @@ function editLabel(idx, color, name) {
 		console.log($("#issueDetailAssignees").text());
 		console.log($("#issueDetailLabel").text());
 		
-		getIssueInfoForm("editIssue");
-		
-		if($("#issueDetailPriority").hasClass("low"))
-			$("#issueDetailPriority").val("low");
-		else if($("#issueDetailPriority").hasClass("medium"))
-			$("#issueDetailPriority").val("medium");
-		else if($("#issueDetailPriority").hasClass("high"))
-			$("#issueDetailPriority").val("high");
-		else if($("#issueDetailPriority").hasClass("urgent"))
-			$("#issueDetailPriority").val("urgent");
-		
 		$("#issueDetailEditTitle").val($("#issueDetailTitle").text());
 		$("#issueDetailEditContent").summernote('code', $("#issueDetailContent").html());
 		$("#assignedEdit").val($("#issueDetailAssignees").text());
@@ -694,7 +694,16 @@ function editLabel(idx, color, name) {
 			$("#editTitleBox").addClass("hidden");
 			$("#issueDetailTitle").removeClass("hidden");
 		}
-
+	}
+	function editContentViewBtn(){
+		$("#isContentEdit").summernote('code', $("#issueDetailContent").html());
+		if($("#editContentBox").hasClass("hidden")){
+			$("#issueDetailContent").addClass("hidden");
+			$("#editContentBox").removeClass("hidden");
+		} else {
+			$("#editContentBox").addClass("hidden");
+			$("#issueDetailContent").removeClass("hidden");
+		}
 	}
 
 	function editIssueTitleOk() {
@@ -708,13 +717,107 @@ function editLabel(idx, color, name) {
 		    	$("#editTitleBox").addClass("hidden");
 				$("#issueDetailTitle").removeClass("hidden");
 		    }, error : function() {
-		    	console.log('editReply in');
+		    	console.log('edit issue title in');
+		    }
+		});
+	}
+	
+	function editIssueContentOk() {
+		$.ajax({
+			url : "UpdateIssueContent.do",
+		    data : {issueIdx : $("#issueIdxNum").val(), content :$('#isContentEdit').summernote('code')},
+		    success : function(data){
+		    	console.log("UpdateIssueContent.do");
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editContentBox").addClass("hidden");
+				$("#issueDetailContent").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue contnet in');
 		    }
 		});
 	}
 
 
+	function getProjectMemberList(projectidx) {
+		
+		console.log(projectidx);
+		$.ajax({
+			url : "GetProjectMemberList.do",
+			data : {'projectIdx' : projectidx},
+			success : function(data) {
+				
+				console.log('GetProjectMemberList in');
+				console.log(data);
+				
+				var memberlist = '<datalist id="MemberMenu">';
+
+				$.each(data, function(index, obj) {
+					memberlist += '<option value="'+obj.name+'" data-id="'+obj.email+'">('+obj.email+')</option>';	
+				});		 	
+					memberlist += '</datalist>';
+				$('#searchContent').append(memberlist);
+				
+				
+			}, error : function() {
+				
+				
+			}
+			
+		})
+	}
 	
+	function editIssuePriorityOk() {
+		$.ajax({
+			url : "UpdateIssuePriority.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), priorityCode : $('#priorityCodeEdit').val()},
+		    success : function(data){
+		    	console.log("UpdateIssueLabel.do");
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editPriorityBox").addClass("hidden");
+				$("#issueDetailPriority").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue contnet in');
+		    }
+		});
+	}
+	function editIssueDueDateOk() {
+		$.ajax({
+			url : "UpdateIssueDuedate.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), 'dueDate' :$('#datepicker-editIssue').val()},
+		    success : function(data){
+		    	console.log("UpdateIssueDuedate.do");
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editDuedateBox").addClass("hidden");
+				$("#issueDetailDueDate").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue duedate in');
+		    	console.error();
+		    }
+		});
+	}
+	function editIssueAssignedOk() {
+		$.ajax({
+			url : "UpdateIssueAssgined.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), 'assigned' : $('#assignedEdit').val()},
+		    success : function(data){
+		    	console.log("UpdateIssueAssgined.do");
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editAssignedBox").addClass("hidden");
+				$("#issueDetailAssignees").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue duedate in');
+		    	console.error();
+		    }
+		});
+		
+	}
 	function getissueinfo(flagelement, projectidx) {
 
 		if(flagelement == "issueModalOpen") {
@@ -757,7 +860,7 @@ function editLabel(idx, color, name) {
 	            }
 			})
 		
-	}
+		}
 	}
 	
 

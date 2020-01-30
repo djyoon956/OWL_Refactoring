@@ -103,7 +103,8 @@
 	border-bottom-color: #F9AFA4;
 }
 
-#kanbanArea, #kanbanIn {
+ #kanbanIn {
+/*  #kanbanArea, */
 	height: 700px;
 	overflow-y: auto;
  	display: flex;
@@ -134,8 +135,33 @@
 	height:60%;
 }
 </style>
+ <!-- test textcomplete -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>  -->
 <script>
   $(function(){
+/* 		var mentions = ['yuku_t'];
+		
+		$('#replycontent').textcomplete({
+		    html: {
+		        match: /\B@(\w*)$/,
+		        search: function (term, callback) {
+		            callback($.map(mentions, function (mention) {
+		                return mention.indexOf(term) === 0 ? mention : null;
+		            }));
+		        },
+		        index: 1,
+		        replace: function (mention) {
+		            return '@' + mention + ' ';
+		        }
+		    }
+		}).overlay([
+		    {
+		        match: /\B@\w+/g,
+		        css: {
+		            'background-color': '#d8dfea'
+		        }
+		    }
+		]); */
 
 	  function check() {
 	
@@ -150,42 +176,10 @@
 	  
 	
 
-	$('#addLabelModal').on('show.bs.modal', function() {  
-	//프로젝트 내 라벨 리스트 출력 
-	let projectidx = ${project.projectIdx};
-	getLabelList("ShowLabelList", projectidx);
-	
-/* 	  $.ajax({
-			url : 'GetLabelList.do',
-			data : {'projectIdx' : ${project.projectIdx}},
-			success : function(data) {
-				console.log("Showlabel success");
-				console.log(data);
-				$('#labelList').empty();
-				$('#labelIdx').empty();
+	$('#addLabelModal').on('show.bs.modal', function() { 	//프로젝트 내 라벨 리스트 출력 
+		let projectidx = ${project.projectIdx};
+		getLabelList("ShowLabelList", projectidx);
 
-				let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
-			
-				 $.each(data,function(index, obj) {
-				
-					lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
-					lablist +=  '<div class="col-lg-8">';
-					lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
-					lablist +=  '</div>';
-					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
-					lablist +=  '</div>';
-					lablist +=  '<div class="col-lg-2">';
-					lablist +=  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
-					lablist +=  '</div></div><hr>';
-				});
-
-					$('#labelList').append(lablist);
-
-			},error : function() {
-				console.log("Showlabel error");
-			}
-			}); */
 	});
 
 
@@ -368,6 +362,12 @@
 					})   
 			}
 		}) 
+
+
+
+
+
+		
 });
 </script>
 
@@ -386,7 +386,7 @@
                     <i class="fas fa-columns"></i>&nbsp;Closed
                 </button>
 
-                <button class="btn btn-primary btn-link hidden ml-3" id="searchReturnBtn"><i class="fas fa-arrow-circle-left fa-2x"></i></button>
+                <button class="btn btn-primary btn-link hidden ml-3" id="searchReturnBtn"><i class="fas fa-arrow-circle-left fa-3x"></i></button>
 
             </div>
             <div class="col-8">
@@ -414,16 +414,30 @@
                 </a>
               <!-- ------------------------------------------------------------- -->
              </c:if>
+             
+             <!-- ------------Test------------------ -->
+<!--              <div class="float-right">
+                   <div class="input-group">
+                        <input type="text" id="searchTestContent" class="form-control" placeholder="테스트중" >
+                            <div class="input-group-append">
+                                 <span class="input-group-text" id="basic-addon2" style="background-color: #326295"><button class="btn btn-primary btn-link" id="kanbanSearchTestBtn"><i class="fas fa-search" style="color:#f8f9fa"></i></button></span>
+                        </div>
+                   </div>
+              	</div> -->
+              	
+             <!-- ----------------------------------- -->
+              	
+              	
              <div class="float-right">
                    <div class="input-group">
-                        <input type="text" id="searchContent" class="form-control" placeholder="검색어를 입력하세요" aria-describedby="basic-addon2" style="border:2px solid #326295 !important">
+                        <input type="text" id="searchContent" class="form-control" placeholder="검색어를 입력하세요" aria-describedby="basic-addon2" >
                             <div class="input-group-append">
-                                 <span class="input-group-text" id="basic-addon2"><button class="btn btn-primary btn-link" id="kanbanSearchBtn"><i class="fas fa-search"></i></button></span>
+                                 <span class="input-group-text" id="basic-addon2" style="background-color: #326295"><button class="btn btn-primary btn-link" id="kanbanSearchBtn"><i class="fas fa-search" style="color:#f8f9fa"></i></button></span>
                         </div>
                    </div>
               	</div>
                <div class="float-right">
-                     <select id="searchSelectBox" class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                     <select id="searchSelectBox" class="select2 form-control custom-select" style="width: 100%; height:36px;" >
                         <option value="" selected="selected">Select</option>
                         <option value="Label">Label</option>
                         <option value="Assignee">Assignee</option>
@@ -463,8 +477,6 @@
                      </div>
                    </div>
         
-        
-        
             <!--  open issue -->
             <!--  openIssueColumn -->
 
@@ -475,8 +487,7 @@
                     </h4>
                 </div>
                 <ul class="connectedSortable columnBody sortableCol" style="background-color:#bdbbbb">
-                    <!-- <li class="issuePiece d-none">Item 1</li> -->
-                    <!-- 	<li class="issuePiece"></li> -->
+
                 </ul>
             </div>
             <!--  close issue -->
@@ -492,16 +503,12 @@
                 </ul>
             </div>
             <div id="kanbanIn"> </div>
-       
-           
-
         </div>
     </div>
     
     <!-- kanbanDetailBox  -->
     <jsp:include page="detail.jsp" />
-        <!-- kanbanDetailBox  -->
-    <jsp:include page="edit.jsp" />
+
 </div>
 
 <!-- add issue modal -->

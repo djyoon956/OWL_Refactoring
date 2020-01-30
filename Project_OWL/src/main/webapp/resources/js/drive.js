@@ -6,7 +6,6 @@ function initDrive(projectIdx){
 	driveProjectIdx = projectIdx;
 	
 	setFileUpload();
-	setFileUpload2();
 	setDriveTable();
 	
 	$('#jstree').on( "select_node.jstree", function(event, data){
@@ -273,13 +272,16 @@ function setIconView(data){
 					+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 					+				'<ul class="list-style-none">'
 					+					'<li class="pl-2"><a href="#"  onclick="setRenameIconView(this,'+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+					+					'<li class="pl-2"><a href="#"  onclick="driveDetail(true,'+element.driveIdx+')"><i class="fas fa-info-circle"></i>&nbsp; 상세 정보</a></li>'
 					+					'<li class="pl-2"><a href="#" onclick="deleteDriveFolder('+element.driveIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>'
 					+				'</ul>'                                                                                                                                                         
 					+			'</div>'                                                                                                                                                        
 					+		'</div>'                                                                                                                                                            
 					+		'<div class="card-body text-center">'                                                                                                                               
 					+			'<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>'
-					+			'<div class="driveCardContent"><h4>' +element.folderName+ '</h4><input type="hidden" value="'+element.folderName+'"></div>'                                                                                                                                         
+					+			'<div class="driveCardContent"><h4>' +element.folderName+ '</h4>'
+					+				'<input class="fileName" type="hidden" value="'+element.folderName+'">'
+					+			'</div>'                                                                                                                                         
 					+		'</div>'                                                                                                                                                            
 					+	 '</div>'                                                                                                                                                               
 					+  '</div>';     
@@ -314,6 +316,7 @@ function setIconView(data){
 		}else {downloadFile
 			control += '<li class="pl-2"><a href="#" onclick="downloadFile(\''+element.fileName+'\')" ><i class="fas fa-download"></i>&nbsp; 다운로드</a></li>'
 						+ '<li class="pl-2"><a href="#"  onclick="setRenameIconView(this,'+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+						+ '<li class="pl-2"><a href="#"  onclick="driveDetail(false,'+element.driveFileIdx+')"><i class="fas fa-info-circle"></i>&nbsp; 상세 정보</a></li>'
 						+	'<li class="pl-2"><a href="#"  onclick="deleteDriveFile('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>';
 		}
 
@@ -322,7 +325,12 @@ function setIconView(data){
 					+		'</div>'
 					+		'<div class="card-body text-center">'
 					+			'<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
-					+			'<div class="driveCardContent"><h4>' + fileName + '</h4><input type="hidden" value="'+element.fileName+'"></div>'    
+					+			'<div class="driveCardContent"><h4>' + fileName + '</h4>'
+					+				'<input class="fileName" type="hidden" value="'+element.fileName+'">'
+					+				'<input class="fileSize" type="hidden" value="'+element.fileSize+'">'
+					+				'<input class="fileCreator" type="hidden" value="'+element.creator+'">'
+					+				'<input class="fileCreateDate" type="hidden" value="'+element.createDate+'">'
+					+			'</div>'    
 					+		'</div>'
 					+	 '</div>'
 					+  '</div>';
@@ -618,6 +626,64 @@ function renameFolder(driveIdx){
 	})
 }
 
+function driveDetail(isFolder, idx) {
+	let extension = "folder";
+	let creator = "-";
+	let size = "-";
+	let name = "";
+	let createDate = "-";
+	
+	if(driveViewType == "tableView"){
+		let row = $("#driveTable #"+idx).first();
+		name = row.find("td:eq(0)").text();
+
+		if(!isFolder){
+			extension = name.substr(name.lastIndexOf(".")+1);
+			createDate = row.find("td:eq(1)").text();
+			creator = row.find("td:eq(2)").text();
+			size = row.find("td:eq(3)").text() + " KB";
+		}
+	}else{
+		let element =  $(".driveCard").filter("#"+idx).first();
+		name = element.find(".driveCardContent>input.fileName").first().val();
+
+		if(!isFolder){	
+			extension = name.substr(name.lastIndexOf(".")+1);
+			createDate = element.find(".driveCardContent>input.fileCreateDate").first().val();
+			creator = element.find(".driveCardContent>input.fileCreator").first().val();
+			size = element.find(".driveCardContent>input.fileSize").first().val() + " KB";
+		}
+	}
+	
+	let html =	"<h4 class='mt-3 mb-4'>"
+					+'<img class=" mr-3" style="height : 40px;" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
+					+ name +"  </h4>" 
+					+ "<div class='row mb-3'>"
+					+ "	<div class='col-sm-6'>유형</div>"
+					+ "	<div class='col-sm-6 text-left'>"+extension+"</div>"
+					+ "</div>"
+					+ "<div class='row mb-3'>"
+					+ "	<div class='col-sm-6'>용량</div>"
+					+ "	<div class='col-sm-6 text-left'>"+size+"</div>"
+					+ "</div>"
+					+ "<div class='row mb-3'>"
+					+ "	<div class='col-sm-6'>위치</div>"
+					+ "	<div class='col-sm-6 text-left'>"+$("#driveName").html()+"<i class='fas fa-angle-right ml-2'></i></div>"
+					+ "</div>"
+					+ "<div class='row mb-3'>"
+					+ "	<div class='col-sm-6'>소유자</div>"
+					+ "	<div class='col-sm-6 text-left'>"+creator+"</div>"
+					+ "</div>"
+					+ "<div class='row mb-3'>"
+					+ "	<div class='col-sm-6'>생성일</div>"
+					+ "	<div class='col-sm-6 text-left'>"+createDate+"</div>"
+					+ "</div>"
+	
+	Swal.fire({
+		  title : '<i class="fas fa-info-circle mr-4"></i> 상세 보기',
+		  html : html,
+	})
+}
 
 function downloadFile(fileName){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
@@ -671,8 +737,6 @@ $.fn.selectRange = function(start, end) {
 function changeSelectedFolder(id, name){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let folderName = $("#jstree").jstree(true).get_node(id).text;
-	console.log(">"+id+"<");
-	console.log(folderName);
 
 	$('#jstree').jstree("deselect_all");
 	$("#jstree").jstree("select_node", "#"+id);
@@ -710,26 +774,6 @@ function driveRefresh(){
 	});
 }
 
-function setFileUpload2(){
-	let dropZone = $("#dragandrophandler");
-	dropZone.on('dragover', function (e){ // 파일 dropZone에 들어옴
-		console.log("in dragover");
-	    $(this).addClass('dragBorder');
-	    dropZone.text("이 곳에 파일을 Drag & Drop 해주세요.");
-	    return false;
-	}).on('dragleave', function (e) { // 파일 dropZone에서 나감
-		console.log("in dragleave");
-		 $(this).removeClass('dragBorder');
-	     dropZone.text('');
-		 return false;
-	}).on('drop', function (e)  {	 // 파일 dropZone에  drop
-		console.log("in drop");
-	     $(this).removeClass('dragBorder');
-	     dropZone.text('');
-	     return false;
-	});
-}
-
 function handleFileUpload(files, obj){
    for (var i = 0; i < files.length; i++){
         var fd = new FormData();
@@ -743,6 +787,28 @@ function handleFileUpload(files, obj){
 }
 
 function setFileUpload(){
+	let counter = 0;
+	$("#dragandrophandler").on('dragenter', function (e){ // 파일 dropZone에 들어옴
+		counter++;
+		
+	    $(this).addClass('dragBorder');
+    	$(".driveUploadBox").removeClass("hidden");
+	    return false;
+	}).on('dragleave', function (e) { // 파일 dropZone에서 나감
+		counter--;
+		 if (counter === 0) { 
+			 $(this).removeClass('dragBorder');
+				$(".driveUploadBox").addClass("hidden");
+		 }
+		 
+		return false; 
+	}).on('drop', function (e)  {	 // 파일 dropZone에  drop
+	    $(this).removeClass('dragBorder');
+	    $(".driveUploadBox").addClass("hidden");
+	    
+	     return false;
+	});
+	
 	$("#driveUploadFiles").fileupload({
 		singleFileUploads: false,
 		url : "DriveFileUpload.do",
@@ -755,6 +821,7 @@ function setFileUpload(){
 		},
 		dropZone: $('#dragandrophandler'),
 		done : function(e, data){
+			console.log("done");
 			callDirectoryData();
 		},
 		fail : function(){
@@ -798,6 +865,13 @@ function setDriveTable(){
                     	 
                     	 renameElement.html(getRenameElementContent(isFolder, driveFileIdx, oldText));
                     	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
+                     }else if(key == "detail"){
+                    	 driveDetail(isFolder, driveFileIdx);
+                     }else if(key == "delete"){
+                    	 if(isFolder)
+                    		 deleteDriveFolder(driveFileIdx);
+                    	 else 
+                    		 deleteDriveFile(driveFileIdx);
                      }else if(key == "restore"){
                     	 if(isFolder)
                     		 restoreFolderfromTrash(driveFileIdx);
@@ -813,6 +887,7 @@ function setDriveTable(){
                  items:{
                      "download": {name: "다운로드", icon: "fas fa-download", visible : !isFolder && !isTrash},
                      "rename": {name: "이름 변경", icon: "edit", visible : !isTrash},
+                     "detail": {name: "상세 보기", icon: "fas fa-info-circle", visible : !isTrash},
                      "delete": {name: "삭제", icon: "delete", visible : !isTrash},
                      "restore": {name: "복원", icon: "fas fa-undo", visible : isTrash},
                      "deleteFromTrash": {name: "영구삭제", icon: "delete", visible : isTrash},
