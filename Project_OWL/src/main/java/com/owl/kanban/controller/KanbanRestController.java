@@ -334,7 +334,7 @@ public class KanbanRestController {
 	public boolean updateIssueContent(Issue issue,Principal principal) {
 		System.out.println("updateIssueTitle in");
 		System.out.println(issue);
-		boolean result = service.updateIssueTitile(issue, principal.getName());
+		boolean result = service.updateIssueContent(issue, principal.getName());
 		
 		return result;
 	}

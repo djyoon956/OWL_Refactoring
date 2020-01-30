@@ -20,14 +20,15 @@
                        </div>
                         </div>
                         <div class="col-1 mr-0">
-								<i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1" onclick="editTitleViewBtn()"style="cursor: pointer"></i>
+								<i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted" onclick="editTitleViewBtn()"style="cursor: pointer"></i>
 							</div>
 						</div>
                     </div>
                 </div>
                 <hr class="mt-1">
                 <div class="card-body mt-0 mb-0"  style="border: 1px solid; border-color:#e9e9e9;">
-                <div style="margin-left: 98%;"><i class="fas fa-cog font-16 flot-right pr-0" onclick="editContentViewBtn()"style="cursor: pointer"></i></div>
+                <div style="margin-left: 98%;"><i class="fas fa-cog font-16 flot-right pr-0 text-muted" onclick="editContentViewBtn()"style="cursor: pointer"></i>
+                </div>
                    <div id="issueDetailContent">
                     <p>Task </p>
                     <p>- 드라이브 디폴트 폴더 생성</p>
@@ -125,15 +126,6 @@
                     </div>
                 </div>
                 <br>
-
-<!--  
-                <div class="card-body mt-0 p-0">
-                    <%-- <jsp:include page="./Reply.jsp"/> --%>
-                    <!-- <textarea class="form-control bg-light w-100" rows="10" cols="10" placeholder="Leave a comment" name="" id="issueReply"></textarea> 
-                    <button class="btn btn-secondary mt-1 mr-1">comment</button>
-                    <button class="btn btn-secondary mt-1 ml-1"><i class="fas fa-at"></i></button>
-                </div>
-        -->        
                 </div>
                   <div class="row container-fluid">
 						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
@@ -156,7 +148,7 @@
 							<span id="issueDetailAssignees"> Chloe</span>
 							</div>
 							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn" style="cursor: pointer"></i>
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
 							</div>
 						</div>
 					</div>
@@ -167,17 +159,6 @@
                 <div class="row">
                     <div class="col-4">Label</div>
                     <div class="col-8">
-                       <!--  <div><span id="issueDetailLabel"  style="padding-right:7px; padding-left:7px; " class="badgeIcon">>Dev</span>
-                         <a href="javascript:void(0)" data-toggle="dropdown" id="dropdownLabel"
-                                aria-haspopup="true" aria-expanded="false">
-                               <i class="fas fa-cog font-16 flot-right ml-1" onclick="editAssigned()" style="cursor:pointer"></i></a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownLabel">
-                                <ul class="list-style-none"> 
-                                    <li class="pl-3" onclick="editLabel()">view</li>
-                                    <li class="pl-3" onclick="editLabel()">dev</li>
-                                </ul> 
-                            </div>
-                        </div> -->
                         <div class="row">
 							<div class="col-10">
 							<select class="select2 custom-select hidden" name="labelIdx" id="labelIdxEdit">
@@ -185,7 +166,7 @@
 							<span id="issueDetailLabel"  style="padding-right:7px; padding-left:7px; " class="badgeIcon">Dev</span>
 							</div>
 							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn" style="cursor: pointer"></i>
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
 							</div>
 						</div>
                         
@@ -197,29 +178,27 @@
                 <div class="row">
                     <div class="col-4">Priority</div>
                     <div class="col-8">
-                        <!-- <span id="issueDetailPriority"></span>
-                   		<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownPriority"
-                                aria-haspopup="true" aria-expanded="false">
-                               <i class="fas fa-cog font-16 flot-right ml-1" onclick="editAssigned()" style="cursor:pointer"></i></a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownPriority">
-                                <ul class="list-style-none"> 
-                                    <li class="pl-3" onclick="editPriority()">high</li>
-                                    <li class="pl-3" onclick="editPriority()">medium</li>
-                                </ul> 
-                            </div> -->
                            <div class="row">
 							<div class="col-10">
-							<select class="select2 custom-select hidden" name=priorityCode id="priorityCodeEdit">
-								<option value="" id="">Select</option>
-								<option value="LOW">low</option>
-								<option value="MEDIUM">medium</option>
-								<option value="HIGH">high</option>
-								<option value="URGENT">urgent</option>
-							</select> 
-							<span id="issueDetailPriority" >high</span>
+							  <div class="row hidden" id="editLabelBox" >
+								<div class="col-8">
+									<select class="select2 custom-select" name=priorityCode id="priorityCodeEdit">
+										<option value="" id="">Select</option>
+										<option value="LOW">low</option>
+										<option value="MEDIUM">medium</option>
+										<option value="HIGH">high</option>
+										<option value="URGENT">urgent</option>
+									</select> 
+								</div>
+								<div class="col-1"> 
+							   		<button class="btn btn-primary" onclick="editIssueLabelOk()">save</button>
+							    </div>
+							</div>
+							<span id="issueDetailPriority">high</span>
+							
 							</div>
 							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn" style="cursor: pointer"></i>
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
 							</div>
 						</div>
                     </div>
@@ -230,7 +209,7 @@
                 <div class="row">
                     <div class="col-4">Due Date</div>
                     <div class="col-8" ><i class="fas fa-calendar mr-1"></i> <span id="issueDetailDueDate"></span>
-                     <i class="fas fa-cog flot-right ml-1" onclick="editDueDate()" style="cursor:pointer"></i>
+                     <i class="fas fa-cog flot-right ml-1 text-muted" onclick="editDueDate()" style="cursor:pointer"></i>
                     </div>
                 </div>
             </div>

@@ -184,16 +184,15 @@ function initKanban(projectIdx){
 	 });
 
 		$('.editViewBtn').on('click', function(e){
-			    console.log($(this).parent().siblings().find("span"));
-			    if( $(this).parent().siblings().find("select").hasClass("hidden")){
-				    $(this).parent().siblings().find("select").removeClass("hidden");
+			    console.log($(this).parent().siblings().find(".row"));
+			    if( $(this).parent().siblings().find(".row").hasClass("hidden")){
+				    $(this).parent().siblings().find(".row").removeClass("hidden");
 				    $(this).parent().siblings().find("span").addClass("hidden");
 			    } else {
 			    	$(this).parent().siblings().find("span").removeClass("hidden");
-				    $(this).parent().siblings().find("select").addClass("hidden");
+				    $(this).parent().siblings().find(".row").addClass("hidden");
 			    }
 			});
-
 	
 } //initKanban 끝
 
@@ -358,13 +357,9 @@ function setKanbanDetail(issueIdx){
 					
 					$("#issueDetailFiles").empty();
 					$("#issueDetailFileCount").text("첨부파일 ("+data.files.length+") ");
-					console.log("data.files");
-					console.log(data.files);
 					//let projectIdx = data.projectIdx;
 					$.each(data.files, function(index,file){
 						let path = "/upload/"+ projectIdx +"/file/"+file.fileName;
-						console.log("파일  이름 체크 중 ");
-						console.log(path);
 						let control = "<li class='mb-2' style='font-size: 16px'>"
 										+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+file.fileName+" ("+file.fileSize+" KB)</span></a>"
 										+" </li>";
@@ -716,6 +711,7 @@ function editLabel(idx, color, name) {
 		    method : "POST",
 		    data : {issueIdx : $("#issueIdxNum").val(), content :$('#isContentEdit').summernote('code')},
 		    success : function(data){
+		    	console.log("UpdateIssueContent.do");
 		    	console.log(data);
 		    	setKanbanDetail($("#issueIdxNum").val());
 		    	$("#editContentBox").addClass("hidden");
@@ -726,7 +722,22 @@ function editLabel(idx, color, name) {
 		});
 	}
 
-	
+	function editIssueLabelOk() {
+		$.ajax({
+			url : "UpdateIssueLabel.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), content :$('#isContentEdit').summernote('code')},
+		    success : function(data){
+		    	console.log("UpdateIssueContent.do");
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editContentBox").addClass("hidden");
+				$("#issueDetailContent").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue contnet in');
+		    }
+		});
+	}
 	function getissueinfo(flagelement, projectidx) {
 
 		if(flagelement == "issueModalOpen") {
