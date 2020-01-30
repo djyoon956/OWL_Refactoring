@@ -153,7 +153,7 @@
                     <div class="col-8"> <!-- <span  id="issueDetailAssignees" class="hidden"> Chloe</span> -->
 						<div class="row">
 							<div class="col-10">
-							<select class="select2 custom-select hidden" name="assigned" id="assigned">
+							<select class="select2 custom-select hidden" name="assigned" id="assignedEdit">
 								</select> 
 							<span id="issueDetailAssignees"> Chloe</span>
 							</div>
