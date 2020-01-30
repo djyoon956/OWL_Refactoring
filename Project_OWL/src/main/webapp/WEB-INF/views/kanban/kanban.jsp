@@ -500,8 +500,7 @@
     
     <!-- kanbanDetailBox  -->
     <jsp:include page="detail.jsp" />
-        <!-- kanbanDetailBox  -->
-    <jsp:include page="edit.jsp" />
+
 </div>
 
 <!-- add issue modal -->

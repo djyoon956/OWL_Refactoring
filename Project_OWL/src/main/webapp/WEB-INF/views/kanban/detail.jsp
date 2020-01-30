@@ -206,12 +206,36 @@
             </div>
             <hr>
             <div class="form-group bold">
-                <div class="row">
-                    <div class="col-4">Due Date</div>
-                    <div class="col-8" ><i class="fas fa-calendar mr-1"></i> <span id="issueDetailDueDate"></span>
-                     <i class="fas fa-cog flot-right ml-1 text-muted" onclick="editDueDate()" style="cursor:pointer"></i>
+               <div class="row">
+                  <div class="col-4">Due Date</div>
+                    <div class="col-8">
+                           <div class="row">
+							<div class="col-10">
+							  <div class="row hidden" id="editDuedateBox" >
+								<div class="col-8">
+									  <input type="text" class="form-control" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" > 
+								</div>
+								<div class="col-1"> 
+							   		<button class="btn btn-primary" onclick="editIssueDueDateOk()">save</button>
+							    </div>
+							</div>
+							<span id="issueDetailDueDate">2020-01-02</span>
+							
+							</div>
+							<div class="col-2">
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
+							</div>
+						</div>
                     </div>
                 </div>
+               <!--  <div class="row">
+                    <div class="col-4">Due Date</div>
+                    <div class="col-8" ><i class="fas fa-calendar mr-1"></i> <span id="issueDetailDueDate"></span>
+                     
+                     <input type="text" class="form-control" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" >
+                     <i class="fas fa-cog flot-right ml-1 text-muted" onclick="editDueDate()" style="cursor:pointer"></i>
+                    </div>
+                </div> -->
             </div>
             <hr>
             <div class="form-group bold">

@@ -484,16 +484,13 @@ function reOpenIssue(issueIdx) {
 function changeKanbanView(view){
    if(view == "list"){
    $("#kanbanDetailBox").addClass("hidden");
-   $("#kanbanEditBox").addClass("hidden");
    $("#kanbanMainBox").removeClass("hidden");
 }else if(view == "detail"){
    $("#kanbanMainBox").addClass("hidden");
-   $("#kanbanEditBox").addClass("hidden");
    $("#kanbanDetailBox").removeClass("hidden");
 }else if (view == "edit"){
    $("#kanbanMainBox").addClass("hidden");
    $("#kanbanDetailBox").addClass("hidden");	
-   $("#kanbanEditBox").removeClass("hidden");
  }else if (view == "search") {
    $('#searchBox').removeClass('hidden');
    $('#searchReturnBtn').removeClass('hidden');		
@@ -725,6 +722,22 @@ function editLabel(idx, color, name) {
 	function editIssuePriorityOk() {
 		$.ajax({
 			url : "UpdateIssuePriority.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), priorityCode : $('#priorityCodeEdit').val()},
+		    success : function(data){
+		    	console.log("UpdateIssueLabel.do");
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editPriorityBox").addClass("hidden");
+				$("#issueDetailPriority").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue contnet in');
+		    }
+		});
+	}
+	function editIssueDueDateOk() {
+		$.ajax({
+			url : "UpdateIssueDuedate.do",
 		    method : "POST",
 		    data : {issueIdx : $("#issueIdxNum").val(), priorityCode : $('#priorityCodeEdit').val()},
 		    success : function(data){
