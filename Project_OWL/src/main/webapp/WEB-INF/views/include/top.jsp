@@ -7,7 +7,8 @@
     const userEmail = "${member.email}";
     const userName = "${member.name}";
     console.log(userEmail + "/" + userName);
-	$(document).ready(function() {
+    $(function () {
+		
 		$("#userToggle").hide();
 		$("#alarmToggle").hide();
 		$("#settingToggle").hide();
@@ -97,8 +98,6 @@
   		url:"GetMyProfile.do",
   		dataType:"json",
   		success:function(data){
-  	  		console.log(data);
-      		console.log("이용자 정보");
       		$('#userImgTop').attr("src","upload/member/"+data.profilePic+"");
       		$('#userImgToggle').attr("src","upload/member/"+data.profilePic+"");
       		$("#userNameToggle").text(data.name);

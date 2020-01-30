@@ -21,6 +21,7 @@ public class UploadHelper {
 		uploadPath = Paths.get(uploadPath, uploadType).toString();
 		makeDirectory(uploadPath);
 		String path = Paths.get(uploadPath, fileName).toString();
+		System.out.println(path);
 		try (FileOutputStream fs = new FileOutputStream(path)) {
 			fs.write(content);
 		} catch (Exception e) {
