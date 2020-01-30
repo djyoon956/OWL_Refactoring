@@ -444,7 +444,7 @@ public class KanbanService {
 		return result;
 	};
 	
-	
+
 	public boolean editReply(Reply reply) {
 		boolean result = false;
 		KanbanDao dao = getKanbanDao();
@@ -460,6 +460,50 @@ public class KanbanService {
 		}
 		return result;
 	}
+	public boolean updateIssueTitile(Issue issue, String email) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			result = dao.updateIssueTitle(issue) > 0 ? true : false;
+			insertLog(issue.getIssueIdx(), "update issue title this", email, dao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
+
+	public List<Issue> searchAssignee(int projectIdx, String content){
+		KanbanDao dao = getKanbanDao();
+		List<Issue> issue = null;
+		
+		try {
+			issue = dao.searchAssignee(projectIdx, content);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		return issue;
+	}
+	
+	
+	
+	public List<Issue> searchLabel(int labelIdx){
+		KanbanDao dao = getKanbanDao();
+		List<Issue> issue = null;
+		
+		try {
+			issue = dao.searchLabel(labelIdx);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		return issue;
+	}
+	
 	
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);

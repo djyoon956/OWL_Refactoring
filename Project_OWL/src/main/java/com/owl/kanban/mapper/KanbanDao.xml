@@ -72,7 +72,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.Issue">
-		SELECT I.PROJECTIDX, I.CONTENT, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED,i.issueprogress,L.LABELNAME, L.LABELCOLOR, l.labelidx, I.DUEDATE, I.PRIORITYCODE, I.CREATOR, I.ORDERNUM, I.COLIDX
+		SELECT I.PROJECTIDX, I.CONTENT, I.ISSUETITLE,  I.ISSUEIDX, I.ASSIGNED,i.issueprogress,L.LABELNAME, L.LABELCOLOR, 
+		
+		l.labelidx, I.DUEDATE, I.PRIORITYCODE, I.CREATOR, I.ORDERNUM, I.COLIDX
 			FROM ISSUE I LEFT JOIN LABEL L  ON I.LABELIDX = L.LABELIDX
 		WHERE I.ISSUEIDX=#{param1}
 	</select>
@@ -156,4 +158,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE ISSUERLY SET content = #{content} WHERE ISSUERLYIDX = #{issueRlyIdx}
 	</update>
 	
+	<select id="searchAssignee" resultType="com.owl.kanban.dto.Issue">
+	 SELECT i.PROJECTIDX, i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED, i.ISSUEPROGRESS , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
+		FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX 
+        where i.projectidx=#{param1} and assigned = #{param2} order by ordernum;
+	</select>
+	
+	<select id="searchLabel" resultType="com.owl.kanban.dto.Issue">
+	 SELECT i.PROJECTIDX, i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED, i.ISSUEPROGRESS , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
+		FROM ISSUE  I left join label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX 
+        where l.labelidx = #{labelIdx} order by ordernum;
+	</select>
+	
+	<update id="updateIssueTitle" parameterType="com.owl.kanban.dto.Issue">
+		update issue set issuetitle=#{issueTitle} where issueidx= #{issueIdx}
+	</update>
+	
+	<update id="updateIssueContent">
+		update issue set content=#{content} where issueidx= #{issueIdx}
+	</update>
+	
+	<update id="updateIssuePriority">
+		update issue set prioritycode=#{prioritycode} where issueidx= #{issueIdx}
+	</update>
+	
+	<update id="updateIssueDueDate">
+		update issue set duedate=#{dueDate} where issueidx= #{issueIdx}
+	</update>
+	
+	<update id="updateIssueAssigned">
+		update issue set assigned=#{assigned} where issueidx= #{issueIdx}
+	</update>
 </mapper>
