@@ -460,6 +460,19 @@ public class KanbanService {
 		}
 		return result;
 	}
+	public boolean updateIssueTitile(Issue issue, String email) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			result = dao.updateIssueTitle(issue) > 0 ? true : false;
+			insertLog(issue.getIssueIdx(), "update issue title this", email, dao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 	
 

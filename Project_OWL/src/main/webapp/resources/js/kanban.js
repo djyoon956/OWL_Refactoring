@@ -51,18 +51,12 @@ function initKanban(projectIdx){
 
 	});
 	
-	$("#editIssueDetailBtn").click(function() {
-		console.log("edit 클릭 됨");
-		changeKanbanView("edit");
-	});
-	
 
 	//검색 후 원래 칸반으로 되돌아가는 버튼 
 	$('#searchReturnBtn').click(function() {
 
 		changeKanbanView("returnlist");
 	})
-	
 	
 	
 	$('#searchSelectBox').change(function () {
@@ -72,9 +66,7 @@ function initKanban(projectIdx){
 		if(selectMenu == "Label") {
 			$('#searchContent').attr('list', 'LabelMenu');
 			getLabelList("SearchLabelList", projectIdx);
-
 		}
-		
 	})
 
 	
@@ -177,15 +169,53 @@ function initKanban(projectIdx){
 			
 		}
 		
-
-		
-
-		
-		
 	});
-	
-	
-}  //initKanban End
+
+
+	 $('#isContentEdit').summernote({
+	        height: 300,
+	        toolbar: [
+	            ['style', ['bold', 'italic', 'underline', 'clear']],
+	            ['font', ['strikethrough', 'superscript']],
+	            ['fontsize'],
+	            ['color'],
+	            ['para', ['ul', 'ol', 'paragraph']],
+	        ]
+	      });
+	 $('#datepicker-editIssue').datepicker({
+		 dateFormat: 'yy-mm-dd' ,
+   		  autoclose: true,
+    	  todayHighlight: true
+	 });
+
+		$('.editViewBtn').on('click', function(e){
+			    console.log($(this).parent().siblings().find("span"));
+			    if( $(this).parent().siblings().find("select").hasClass("hidden")){
+				    $(this).parent().siblings().find("select").removeClass("hidden");
+				    $(this).parent().siblings().find("span").addClass("hidden");
+			    } else {
+			    	$(this).parent().siblings().find("span").removeClass("hidden");
+				    $(this).parent().siblings().find("select").addClass("hidden");
+			    }
+			});
+		
+		$("#issueDetailTitleEdit").focusout(function() {
+			$.ajax({
+				url : "UpdateIssueTitle.do",
+			    method : "POST",
+			    data : {issueIdx : $("#issueIdxNum").val(), issueTitle : $("#issueDetailTitleEdit").val()},
+			    success : function(data){
+			    	console.log(data);
+			    	setKanbanDetail($("#issueIdxNum").val());
+			    	$("#issueDetailTitleEdit").addClass("hidden");
+					$("#issueDetailTitle").removeClass("hidden");
+			    }, error : function() {
+			    	console.log('editReply in');
+			    }
+			});
+		});
+		
+} //initKanban 끝
 
 
 function addLabel(lbidx, lbcolor, lbnm) {
@@ -202,7 +232,6 @@ function addLabel(lbidx, lbcolor, lbnm) {
             +  '</div></div><hr>';
 
    $('#labelList').append(lablist);
-
 }
 
    
@@ -337,11 +366,9 @@ function setKanbanDetail(issueIdx){
 			success : function (data) {
 				console.log("이슈 디테일 ");
 				console.log(data);
-				console.log()
 				$("#issueIdxNum").val(issueIdx);
 				//issueProgress,labelIdx
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
-				//$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 					if(data.issueProgress == 'OPEN')
 						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 					else if (data.issueProgress == 'CLOSED')
@@ -352,8 +379,12 @@ function setKanbanDetail(issueIdx){
 					
 					$("#issueDetailFiles").empty();
 					$("#issueDetailFileCount").text("첨부파일 ("+data.files.length+") ");
-					$.each(data.files, function(file){
+					console.log("data.files");
+					console.log(data.files);
+					//let projectIdx = data.projectIdx;
+					$.each(data.files, function(index,file){
 						let path = "/upload/"+ projectIdx +"/file/"+file.fileName;
+						console.log("파일  이름 체크 중 ");
 						console.log(path);
 						let control = "<li class='mb-2' style='font-size: 16px'>"
 										+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+file.fileName+" ("+file.fileSize+" KB)</span></a>"
@@ -594,7 +625,8 @@ function editLabel(idx, color, name) {
 			});
 
 	}
-	
+
+
 
 	function getLabelList(flagelement,projectIdx) {
 			
@@ -652,7 +684,53 @@ function editLabel(idx, color, name) {
 		  });
 		}
 	
-	
 
+	function editIssueDetailView(){
+		changeKanbanView("edit");
+		/*
+		$("#issueDetailAssignees").val;
+		$("#issueDetailLabel").val;
+		$("#issueDetailPriority").val();
+		$("#issueDetailDueDate").val;*/
+		console.log("edit  Issue Detail  View ");
+		console.log($("#issueDetailAssignees").text());
+		console.log($("#issueDetailLabel").text());
+		
+		getIssueInfoForm("editIssue");
+		
+		if($("#issueDetailPriority").hasClass("low"))
+			$("#issueDetailPriority").val("low");
+		else if($("#issueDetailPriority").hasClass("medium"))
+			$("#issueDetailPriority").val("medium");
+		else if($("#issueDetailPriority").hasClass("high"))
+			$("#issueDetailPriority").val("high");
+		else if($("#issueDetailPriority").hasClass("urgent"))
+			$("#issueDetailPriority").val("urgent");
+		
+		$("#issueDetailEditTitle").val($("#issueDetailTitle").text());
+		$("#issueDetailEditContent").summernote('code', $("#issueDetailContent").html());
+		$("#assignedEdit").val($("#issueDetailAssignees").text());
+		$("#labelIdxEdit").val($("#issueDetailLabel").text());
+		$("#priorityCodeEdit").val($("#issueDetailPriority").val().toUpperCase());
+		
+		$("#datepicker-editIssue").val($("#issueDetailDueDate").text());
+	}	
 	
 	
+	function editTitleViewBtn(){
+		$("#issueDetailTitleEdit").val($("#issueDetailTitle").text());
+		if($("#issueDetailTitleEdit").hasClass("hidden")){
+			$("#issueDetailTitle").addClass("hidden");
+			$("#issueDetailTitleEdit").removeClass("hidden");
+		} else {
+			$("#issueDetailTitleEdit").addClass("hidden");
+			$("#issueDetailTitle").removeClass("hidden");
+		}
+
+	}
+
+
+	function editLabel(){
+		
+		
+	}

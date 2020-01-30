@@ -5,97 +5,23 @@ let isTrash = false;  //false : drive , true : trash
 function initDrive(projectIdx){	
 	driveProjectIdx = projectIdx;
 	
-	$("#driveUploadFiles").fileupload({
-		singleFileUploads: false,
-		url : "DriveFileUpload.do",
-		formData : {projectIdx : projectIdx},
-		add: function(e, data){
-			let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
-			$("#driveUploadFiles").fileupload( 'option', 'formData').folderIdx = folderIdx;
-			$("#driveUploadFiles").fileupload( 'option', 'formData').refs = $('#jstree').jstree().get_node(folderIdx).parents;
-			data.submit();
-		},
-		done : function(e, data){
-			callDirectoryData();
-		},
-		fail : function(){
-			console.log("driveUploadFiles fail");
-		}
-	});
-	
-	$("#driveTable").DataTable({
-	 	stateSave: true, // 페이지 상태 저장
-	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-	 	"searching": false,
-         fixedColumns: true,
-         autoWidth: false,
-         columnDefs: [ { targets: 0, className: 'dt-body-left' }]
-	}).on('click', 'tbody tr', function () {
-		if ( $(this).hasClass('selected') ) {
-            $(this).removeClass('selected');
-        } else {
-        	$("#driveTable").DataTable().$('tr.selected').removeClass('selected');
-            $(this).addClass('selected');
-        }
-	}).on('dblclick', 'tbody tr.folder', function () {
-		changeSelectedFolder($(this).attr("id"), $(this).find("td span").first().text());
-	});
-
-	
-	 $.contextMenu({
-         selector: '#driveTable tbody tr',
-         build : function(trigger, e){
-        	 console.log(trigger);
-        	 console.log($(trigger[0]));
-        	 console.log(trigger[0].id);
-        	 let isFolder = $(trigger[0]).hasClass("folder");
-        	 return {
-                 callback: function(key, options) {
-                     let driveFileIdx = trigger[0].id;
-                     if(key == "download"){
-                    	 downloadFile($(trigger[0]).find("td span").first().text());
-                     }else if(key == "rename"){
-                       	 let renameElement = $(trigger[0]).find("td").first();
-                    	 let oldText = $(trigger[0]).find("td span").first().text();
-                    	 
-                    	 let fun = isFolder ? "renameFolder("+driveFileIdx+")" : "renameFile("+driveFileIdx+")";
-                    	 renameElement.html("<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {"+fun+"}'>"
-                    			 							+"<button class='btn btn-default btn-sm ml-2' style='height : 32px;' onclick='"+fun+"'><i class='fas fa-check'></i></button>");
-                    	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
-                    	 if(isFolder)
-                    		 deleteDriveFolder(driveFileIdx);
-                    	 else
-                    		 deleteDriveFile(driveFileIdx);
-                     }else if(key == "restore"){
-                    	 if(isFolder)
-                    		 restoreFolderfromTrash(driveFileIdx);
-                    	 else 
-                    		 restoreFileTrash(driveFileIdx);
-                     }else if(key == "deleteFromTrash"){
-                    	 if(isFolder)
-                        	 deleteFolderfromTrash(driveFileIdx);
-                    	 else
-                        	 deleteFilefromTrash(driveFileIdx);
-
-                     }
-                 },
-                 items:{
-                     "download": {name: "다운로드", icon: "fas fa-download", visible : !isFolder && !isTrash},
-                     "rename": {name: "이름 변경", icon: "edit", visible : !isTrash},
-                     "delete": {name: "삭제", icon: "delete", visible : !isTrash},
-                     "restore": {name: "복원", icon: "fas fa-undo", visible : isTrash},
-                     "deleteFromTrash": {name: "영구삭제", icon: "delete", visible : isTrash},
-            	 	}
-             };
-         },
-     });
+	setFileUpload();
+	setFileUpload2();
+	setDriveTable();
 	
 	$('#jstree').on( "select_node.jstree", function(event, data){
 		isTrash = false;
+		
+		$("#searchFile").addClass("hidden");
+		$("#driveSearchViewBox").addClass("hidden");
+		$("#driveSearchViewBox").empty();
+		$("#default").removeClass("hidden");
+		
 		let path = data.instance.get_path(data.node, '<i class="fas fa-angle-right ml-2 mr-2"></i><i class="far fa-folder mr-2"></i>');
 	    $("#driveName").html('<i class="far fa-folder mr-2"></i>'+path);
 	    console.log(data.instance.get_path(data.node, false));
 		callDirectoryData();
+		
     });
 	
 	$(".driveViewBtn").click(function(){
@@ -113,7 +39,6 @@ function initDrive(projectIdx){
 		}
 			callDirectoryData();
 	})
-	
 	
 	//휴지통 버튼 click
 	$('#trashBtn').click(function() {
@@ -211,26 +136,11 @@ function createStatusbar(obj){
         });
     }
 }
-function handleFileUpload(files,obj){
-   for (var i = 0; i < files.length; i++){
-        var fd = new FormData();
-        fd.append('file', files[i]);
-        console.log(fd);
-        var status = new createStatusbar(obj); //Using this we can set progress.
-        status.setFileNameSize(files[i].name,files[i].size);
-        console.log(status);
-        sendFileToServer(fd,status);
- 
-   }
-}
+
 
 function Search() {
-	$("div").find(".defaultDriveMenu").each(function(){
-		$(this).attr('style', 'display:none');
-	});
-	$("div").find(".searchDriveMenu").each(function(){
-		$(this).attr('style', 'display:block');
-	});
+	$("#default").addClass("hidden");
+	$("#searchFile").removeClass("hidden");
 }
 
 function Allcheck() { //전체선택 onclick
@@ -246,16 +156,8 @@ function ReturnCheck() { //선택 해제
 	$("input[type=checkbox]").prop("checked", false);
 	$("#allCheck").addClass("hidden");
 	$("#theCheck").addClass("hidden");
+	$("#searchFile").addClass("hidden");
 	$("#default").removeClass("hidden");
-}
-
-function Return() {
-	$("div").find(".defaultDriveMenu").each(function(){
-		$(this).attr('style', 'display:block');
-	});
-	$("div").find(".searchDriveMenu").each(function(){
-		$(this).attr('style', 'display:none');
-	});
 }
 
 function checkBox(obj) {
@@ -325,31 +227,58 @@ function setDirectoryData(folderIdx, folderName) {
 	})
 }
 
+/*var nameList = [];*/
+function setSearchView(obj){
+	$("#driveSearchViewBox").removeClass("hidden");
+	$("#driveTableViewBox").addClass("hidden");		
+	$("#driveIconViewBox").addClass("hidden");		
+	let line = 4;
+	let controls =[];
+	
+	$.each(obj,function(index, element){
+		$(element).attr("style","");
+		controls.push(element);
+		
+		
+		if (index % line == line - 1 || index == obj.length - 1) {
+			let row = $("<div class='row'></div>");
+			$.each(controls, function(index2, element2){
+				row.append(element2);
+			})
+			$("#driveSearchViewBox").append(row);
+			controls=[];
+		}	
+		
+	});
+}
+
+
 function setIconView(data){
 	$("#driveIconViewBox").removeClass("hidden");
 	$("#driveTableViewBox").addClass("hidden");	
+	$("#driveSearchViewBox").addClass("hidden");
 
 	let control ="";
 	let line = 4;
 	$.each(data.folders, function(index, element) {
 		console.log("in folder");
 		control += '<div class="col-sm-3">'
-					+ 	'<div class="card driveCard dropdown folder" style="cursor:pointer;" ondblclick="changeSelectedFolder('+element.driveIdx+',\''+element.folderName+'\')">'
+					+ 	'<div class="card driveCard dropdown folder" id="'+element.driveIdx+'" style="cursor:pointer;" ondblclick="changeSelectedFolder('+element.driveIdx+',\''+element.folderName+'\')">'
 					+ 		'<div class="more"  style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-					+			'<input type="checkbox" id="'+element.driveIdx+'" onclick="checkBox(this)" style="width:18px; height:18px;">'
+					+			'<input type="checkbox"  onclick="checkBox(this)" style="width:18px; height:18px;">'
 					+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
 					+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
 					+				'</a>'
 					+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 					+				'<ul class="list-style-none">'
-					+					'<li class="pl-2"><a href="#"  onclick="setRenameIconView('+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+					+					'<li class="pl-2"><a href="#"  onclick="setRenameIconView(this,'+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
 					+					'<li class="pl-2"><a href="#" onclick="deleteDriveFolder('+element.driveIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>'
 					+				'</ul>'                                                                                                                                                         
 					+			'</div>'                                                                                                                                                        
 					+		'</div>'                                                                                                                                                            
 					+		'<div class="card-body text-center">'                                                                                                                               
 					+			'<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>'
-					+			'<h4>' +element.folderName+ '</h4>'                                                                                                                                         
+					+			'<div class="driveCardContent"><h4>' +element.folderName+ '</h4><input type="hidden" value="'+element.folderName+'"></div>'                                                                                                                                         
 					+		'</div>'                                                                                                                                                            
 					+	 '</div>'                                                                                                                                                               
 					+  '</div>';     
@@ -359,15 +288,17 @@ function setIconView(data){
 			row.append(control);
 			$("#driveIconViewBox").append(row);
 		}
+		
+		/*nameList.push(element.folderName);*/
 	});
 
 	control ="";
 	$.each(data.files, function(index, element) {
 		let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
-		let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
+		let fileName = element.fileName.length > 12 ? element.fileName.substr(0, 12)+ "..." : element.fileName;				
 
 		control += '<div class="col-sm-3">'
-					+ 	'<div class="card driveCard dropdown">'
+					+ 	'<div class="card driveCard dropdown" id="'+element.driveFileIdx+'">'
 					+ 		'<div class="more" style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
 					+			'<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
 					+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
@@ -381,7 +312,7 @@ function setIconView(data){
 						+  '<li class="pl-2"><a href="#" onclick="deleteFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
 		}else {downloadFile
 			control += '<li class="pl-2"><a href="#" onclick="downloadFile(\''+element.fileName+'\')" ><i class="fas fa-download"></i>&nbsp; 다운로드</a></li>'
-						+ '<li class="pl-2"><a href="#"  onclick="renameFile('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+						+ '<li class="pl-2"><a href="#"  onclick="setRenameIconView(this,'+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
 						+	'<li class="pl-2"><a href="#"  onclick="deleteDriveFile('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>';
 		}
 
@@ -390,7 +321,7 @@ function setIconView(data){
 					+		'</div>'
 					+		'<div class="card-body text-center">'
 					+			'<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
-					+			'<h4>'+fileName+'</h4>'
+					+			'<div class="driveCardContent"><h4>' + fileName + '</h4><input type="hidden" value="'+element.fileName+'"></div>'    
 					+		'</div>'
 					+	 '</div>'
 					+  '</div>';
@@ -401,12 +332,15 @@ function setIconView(data){
 			$("#driveIconViewBox").append(row);
 			control="";
 		}
+		
+		/*nameList.push(element.fileName);*/
 	});
 }
 
 function setTableView(data){
 	$("#driveTableViewBox").removeClass("hidden");
 	$("#driveIconViewBox").addClass("hidden");
+	$("#driveSearchViewBox").addClass("hidden");
 
 	$.each(data.files, function(index, element) {
 		$('#driveTable').DataTable().row.add( [
@@ -454,7 +388,6 @@ function deleteDriveFile(driveFileIdx){
 	   		 success : function(data){
 	   			 if(data){
 	   				 callDirectoryData();
-	   				 successAlert("파일 삭제 완료");
 	   			 }else{
 	   				 errorAlert("파일 삭제 실패");
 	   			 }
@@ -562,13 +495,6 @@ function deleteFolderfromTrash(driveFileIdx) {
 	});
 }
 
-
-
-
-
-
-
-
 //휴지통에서 복원 함수 
 function restoreFileTrash(driveFileIdx) {
 	
@@ -611,21 +537,55 @@ function restoreFolderfromTrash(driveFileIdx) {
 	}) 
 }
 
-
-function setRenameIconView(){
+function setRenameIconView(obj, idx){
+	let element = $(".driveCard").filter("#"+idx).first();
+	let renameElement = element.find(".driveCardContent").first();
+	let oldText ="";
+	let isFolder = element.hasClass("folder");
+	if(isFolder)
+		oldText = renameElement.find("h4:first").text();
+	else
+		oldText = renameElement.find("input:first").val();
 	
+	renameElement.html(getRenameElementContent(isFolder, idx, oldText));
+	$("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
 }	
 
+function getRenameElementContent(isFolder, idx, oldText){
+	let fun = isFolder ? "renameFolder("+idx+")" : "renameFile("+idx+")";
+	return "<input id='driveFileRename' type='text' style='width : 60%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {"+fun+"}'>"
+				+ "<button class='btn btn-default btn-sm ml-2 mr-1' style='height : 32px; width : 30px;' onclick='"+fun+"'><i class='fas fa-check'></i></button>"
+				+ "<button class='btn  btn-danger btn-sm' style='height : 32px; width : 30px;' onclick='renameCancel(this,\""+oldText+"\","+isFolder+")'><i class='fas fa-times'></i></button>";
+}
+
+function renameCancel(obj, oldText, isFolder){
+	if(driveViewType == "tableView"){
+		if(isFolder)
+			$(obj).parent().html("<i class='fas fa-folder mr-3'></i><span>"+oldText+"</span>");
+		else
+			$(obj).parent().html("<i class='fas fa-file-alt mr-3'></i><span>"+oldText+"</span>");
+	}else
+		$(obj).parent().html("<h4>"+oldText+"</h4>");
+}
+
 function renameFile(driveFileIdx){
-	console.log("in renameFile");
+	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
+	console.log(folderIdx);
+	console.log(refs);
+	
+	jQuery.ajaxSettings.traditional = true;
 	$.ajax({
 		 url : "RenameDriveFile.do",
-		 data : {driveFileIdx : driveFileIdx
-			 		, fileName :  $("#driveFileRename").val()},
+		 data : { projectIdx : driveProjectIdx
+			 		, refs : refs
+			 		, driveIdx : folderIdx
+			 		, driveFileIdx : driveFileIdx
+			 		, newFileName :  $("#driveFileRename").val()},
 		 success : function(data){
 			 if(data){ 
-				 $("#driveTable #"+driveFileIdx).find("td").first().html("<i class='fas fa-file-alt mr-3'></i><span>"+$("#driveFileRename").val()+"</span>");
 				 successAlert("파일 이름 변경 완료");
+				 callDirectoryData();
 			 }else{
 				 errorAlert("파일 이름 변경 실패");
 			 }
@@ -724,7 +684,7 @@ function driveRefresh(){
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
-		data:{projectIdx:$("#theProject").val()},
+		data:{projectIdx: driveProjectIdx},
 		success:function(data){
 			let folder;		
 			$.each(data, function(index, element){				
@@ -740,16 +700,6 @@ function driveRefresh(){
 			    
 			    addFolder(folder);
 			});
-
-			//jstree 기능
-			var to = false;
-			$('#searchText').keyup(function () {
-				if(to) { clearTimeout(to); }
-				to = setTimeout(function () {
-					var v = $('#searchText').val();
-					$('#jstree').jstree(true).search(v);
-				}, 100);
-			});
 			
 			$('#jstree').jstree(true).settings.core.data = folderList;
 			$('#jstree').jstree(true).refresh();
@@ -757,4 +707,116 @@ function driveRefresh(){
 			callDirectoryData();
 		}
 	});
+}
+
+function setFileUpload2(){
+	let dropZone = $("#dragandrophandler");
+	dropZone.on('dragover', function (e){ // 파일 dropZone에 들어옴
+		console.log("in dragover");
+	    $(this).addClass('dragBorder');
+	    dropZone.text("이 곳에 파일을 Drag & Drop 해주세요.");
+	    return false;
+	}).on('dragleave', function (e) { // 파일 dropZone에서 나감
+		console.log("in dragleave");
+		 $(this).removeClass('dragBorder');
+	     dropZone.text('');
+		 return false;
+	}).on('drop', function (e)  {	 // 파일 dropZone에  drop
+		console.log("in drop");
+	     $(this).removeClass('dragBorder');
+	     dropZone.text('');
+	     return false;
+	});
+}
+
+function handleFileUpload(files, obj){
+   for (var i = 0; i < files.length; i++){
+        var fd = new FormData();
+        fd.append('file', files[i]);
+        console.log(fd);
+        var status = new createStatusbar(obj); //Using this we can set progress.
+        status.setFileNameSize(files[i].name,files[i].size);
+        console.log(status);
+        sendFileToServer(fd,status);
+   }
+}
+
+function setFileUpload(){
+	$("#driveUploadFiles").fileupload({
+		singleFileUploads: false,
+		url : "DriveFileUpload.do",
+		formData : {projectIdx : driveProjectIdx},
+		add: function(e, data){
+			let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
+			$("#driveUploadFiles").fileupload( 'option', 'formData').folderIdx = folderIdx;
+			$("#driveUploadFiles").fileupload( 'option', 'formData').refs = $('#jstree').jstree().get_node(folderIdx).parents;
+			data.submit();
+		},
+		dropZone: $('#dragandrophandler'),
+		done : function(e, data){
+			callDirectoryData();
+		},
+		fail : function(){
+			console.log("driveUploadFiles fail");
+		}
+	});
+}
+
+function setDriveTable(){
+	$("#driveTable").DataTable({
+	 	stateSave: true, // 페이지 상태 저장
+	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+	 	"searching": false,
+         fixedColumns: true,
+         autoWidth: false,
+         columnDefs: [ { targets: 0, className: 'dt-body-left' }]
+	}).on('click', 'tbody tr', function () {
+		if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        } else {
+        	$("#driveTable").DataTable().$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+	}).on('dblclick', 'tbody tr.folder', function () {
+		changeSelectedFolder($(this).attr("id"), $(this).find("td span").first().text());
+	});
+
+	
+	 $.contextMenu({
+         selector: '#driveTable tbody tr',
+         build : function(trigger, e){
+        	 let isFolder = $(trigger[0]).hasClass("folder");
+        	 return {
+                 callback: function(key, options) {
+                     let driveFileIdx = trigger[0].id;
+                     if(key == "download"){
+                    	 downloadFile($(trigger[0]).find("td span").first().text());
+                     }else if(key == "rename"){
+                       	 let renameElement = $(trigger[0]).find("td").first();
+                    	 let oldText = $(trigger[0]).find("td span").first().text();
+                    	 
+                    	 renameElement.html(getRenameElementContent(isFolder, driveFileIdx, oldText));
+                    	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
+                     }else if(key == "restore"){
+                    	 if(isFolder)
+                    		 restoreFolderfromTrash(driveFileIdx);
+                    	 else 
+                    		 restoreFileTrash(driveFileIdx);
+                     }else if(key == "deleteFromTrash"){
+                    	 if(isFolder)
+                        	 deleteFolderfromTrash(driveFileIdx);
+                    	 else
+                        	 deleteFilefromTrash(driveFileIdx);
+                     }
+                 },
+                 items:{
+                     "download": {name: "다운로드", icon: "fas fa-download", visible : !isFolder && !isTrash},
+                     "rename": {name: "이름 변경", icon: "edit", visible : !isTrash},
+                     "delete": {name: "삭제", icon: "delete", visible : !isTrash},
+                     "restore": {name: "복원", icon: "fas fa-undo", visible : isTrash},
+                     "deleteFromTrash": {name: "영구삭제", icon: "delete", visible : isTrash},
+            	 	}
+             };
+         },
+     });
 }

@@ -259,20 +259,37 @@ public class DriveRestController {
 		return service.getTrashList(projectIdx);
 	}
 
+	/**
+	 * 드라이브 파일 삭제
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param driveFileIdx
+	 * @return boolean 
+	 */
 	@RequestMapping(value = "DeleteDriveFile.do")
 	public boolean deleteDriveFile(int driveFileIdx) {
-		System.out.println("in deleteDriveFile");
-		System.out.println(driveFileIdx);
-		
 		return service.deleteFileFromDrive(driveFileIdx);
 	}
 	
+	/**
+	 * 드라이브 파일 이름 변경
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param projectIdx
+	 * @param refs
+	 * @param driveIdx
+	 * @param driveFileIdx
+	 * @param newFileName
+	 * @return boolean
+	 */
 	@RequestMapping(value = "RenameDriveFile.do")
-	public boolean renameDriveFile(int driveFileIdx, String fileName) {
+	public boolean renameDriveFile(int projectIdx, String[] refs, int driveIdx, int driveFileIdx, String newFileName,
+			HttpServletRequest request) {
 		System.out.println("in renameDriveFile");
 		System.out.println(driveFileIdx);
-
-		return service.renameFile(driveFileIdx, fileName);
+		
+		String uploadPath = request.getServletContext().getRealPath("upload");
+		return service.renameFile( uploadPath,  projectIdx, refs,  driveIdx,  driveFileIdx,  newFileName);
 	}
 	
 	/**
