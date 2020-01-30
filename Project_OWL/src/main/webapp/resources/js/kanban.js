@@ -69,8 +69,9 @@ function initKanban(projectIdx){
 		 dateFormat: 'yy-mm-dd' ,
    		  autoclose: true,
     	  todayHighlight: true
-	 }); 
-}
+	 });
+
+} //initKanban 끝
 
 function addLabel(lbidx, lbcolor, lbnm) {
 
@@ -86,7 +87,6 @@ function addLabel(lbidx, lbcolor, lbnm) {
             +  '</div></div><hr>';
 
    $('#labelList').append(lablist);
-
 }
 
    
@@ -221,11 +221,9 @@ function setKanbanDetail(issueIdx){
 			success : function (data) {
 				console.log("이슈 디테일 ");
 				console.log(data);
-				console.log()
 				$("#issueIdxNum").val(issueIdx);
 				//issueProgress,labelIdx
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
-				//$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 					if(data.issueProgress == 'OPEN')
 						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
 					else if (data.issueProgress == 'CLOSED')
@@ -238,6 +236,7 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailFileCount").text("첨부파일 ("+data.files.length+") ");
 					console.log("data.files");
 					console.log(data.files);
+					//let projectIdx = data.projectIdx;
 					$.each(data.files, function(index,file){
 						let path = "/upload/"+ projectIdx +"/file/"+file.fileName;
 						console.log("파일  이름 체크 중 ");
@@ -463,60 +462,57 @@ function editLabel(idx, color, name) {
 			});
 
 	}
-	function getIssueInfoForm(opt) {
+	 let selectoption = '<option value="">Select</option>';
+		//addIssueModal 모달이 오픈되면 !
+		$('#addIssueModal').on('show.bs.modal', function() {
+			console.log("addIssueModal open!");
+			getIssueInfoForm("addIssue");
+		 });
 		
-	 	$.ajax({
-	 		type: "POST",
-            url: "GetAddIssueForm.do",
-            data: { projectIdx : projectIdx },
-            success: function (data) {
-            	console.log("opt는 ?????????????");
-            	console.log(opt);
-            	if(opt == "addIssue"){
-            	$('#assigned').empty();
-            	$('#labelIdx').empty();
+	 function getIssueInfoForm(opt) {
+			
+		 	$.ajax({
+		 		type: "POST",
+	            url: "GetAddIssueForm.do",
+	            data: { projectIdx : projectIdx },
+	            success: function (data) {
+	            	console.log("opt는 ?????????????");
+	            	console.log(opt);
+	            	if(opt == "addIssue"){
+	            	$('#assigned').empty();
+	            	$('#labelIdx').empty();
 
-				let member = data.member;
-				let label = data.label;
-				
-				let optlabel;
-				let optmember;
+					let member = data.member;
+					let label = data.label;
+					
+					let optlabel;
+					let optmember;
 
-				$('#assigned').append(selectoption);
-                $('#labelIdx').append(selectoption);
-				
-               $.each(member, function(index, element) {
-					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
-                 });
-               
-               $('#assigned').append(optmember);
+					$('#assigned').append(selectoption);
+	                $('#labelIdx').append(selectoption);
+					
+	               $.each(member, function(index, element) {
+						optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
+	                 });
+	               
+	               $('#assigned').append(optmember);
 
-                $.each(label, function(index, element) {
-                 	 optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
-                 });
-                
-                $('#labelIdx').append(optlabel);
-            	} else if (opt == 'editIssue'){
-            		
-            		console.log("edit ISSSUE");
-            	}
-            },
-            error: function () {
-                console.log("GetProjectMember error");
-            }
-		}) 
-		
-	}
-	
-	let selectoption = '<option value="">Select</option>';
-
-	//addIssueModal 모달이 오픈되면 !
-	$('#addIssueModal').on('show.bs.modal', function() {
-		console.log("projectIdx");
-		console.log(projectIdx);
-		console.log("addIssueModal open!");
-		getIssueInfoForm("addIssue");
-	 });
+	                $.each(label, function(index, element) {
+	                 	 optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
+	                 });
+	                
+	                $('#labelIdx').append(optlabel);
+	            	} else if (opt == 'editIssue'){
+	            		
+	            		console.log("edit ISSSUE");
+	            	}
+	            },
+	            error: function () {
+	                console.log("GetProjectMember error");
+	            }
+			}) 
+			
+		}
 	
 	function editIssueDetailView(){
 		changeKanbanView("edit");
@@ -547,13 +543,11 @@ function editLabel(idx, color, name) {
 		$("#priorityCodeEdit").val($("#issueDetailPriority").val().toUpperCase());
 		
 		$("#datepicker-editIssue").val($("#issueDetailDueDate").text());
-	}
-	
+	}	
 	function editIssueDetailOk() {
 		
 		
 	}
 	
-
-	
+ 
 	
