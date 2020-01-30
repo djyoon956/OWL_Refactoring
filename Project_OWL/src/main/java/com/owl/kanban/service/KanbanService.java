@@ -385,7 +385,7 @@ public class KanbanService {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 			try {
-				result = dao.closeIssue(issueIdx) > 0 ? true : false;
+				result = dao.reopenIssue(issueIdx) > 0 ? true : false;
 				
 				insertLog(issueIdx, "Reopen this", email, dao);
 				System.out.println("reopenIssue in");

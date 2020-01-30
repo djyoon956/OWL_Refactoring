@@ -324,8 +324,8 @@ function closeIssue(issueIdx) {
            data:{issueIdx : issueIdx},
            success:function(data){
         	$("#issueClosedChk").text('Reopen issue');
-        	//setChageView("kanban");
         	setKanbanDetail(issueIdx);
+        	setChageView("kanban");
            }
         });  		
 }
@@ -342,8 +342,8 @@ function reOpenIssue(issueIdx) {
 			console.log(data);
         	$("#issueClosedChk").text('closed issue');
         	//setKanbanDetail(issueIdx);
-        	//setChageView("kanban");
         	setKanbanDetail(issueIdx);
+        	setChageView("kanban");
 		},error :function() {
 			
 			console.log("ReopenIssue error");
