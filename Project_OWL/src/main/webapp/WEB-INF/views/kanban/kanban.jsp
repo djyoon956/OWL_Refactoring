@@ -278,6 +278,8 @@
             url: "GetAddIssueForm.do",
             data: { projectIdx: ${project.projectIdx}},
             success: function (data) {
+                console.log('GetAddIssueForm in');
+                console.log(data);
             	$('#assigned').empty();
             	$('#labelIdx').empty();
 
@@ -427,8 +429,6 @@
 
                 <button class="btn btn-primary btn-link hidden ml-3" id="searchReturnBtn"><i class="fas fa-arrow-circle-left fa-2x"></i></button>
 
-              
-              
             </div>
             <div class="col-8">
                 <a href="#" data-toggle="modal" data-target="#addIssueModal">
