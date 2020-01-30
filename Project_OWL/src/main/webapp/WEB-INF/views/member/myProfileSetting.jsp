@@ -43,7 +43,13 @@
                 });
             }
         });
+		
 
+        $("#editButton").click(function () {
+	            $("#firstpage").addClass("hidden");
+	            $("#twopage").removeClass("hidden");
+        });   
+        
         $("#deleteChk").change(function () {
             if ($("input:checkbox[id='deleteChk']").is(":checked") == true) {
                 $("#deleteChk").siblings(".text-danger").css("display", "none");
@@ -74,6 +80,7 @@
         });
 
         $("#multipartFile").change(function () {
+            
             var reader = new FileReader();
             reader.onload = function (e) {
                 // get loaded data and render thumbnail.
@@ -104,8 +111,36 @@
 			chageSetting("font", $("#setFont").val());
       	});
     });
+    
+	function updateMyProfile(){
+		
+		let formData = new FormData();
+		
+	    formData.append("password", $("#myPassword").val());
+	    formData.append("name", $("#myName").val());
+	    formData.append('profilePic', $("#multipartFile")[0].files[0]);
 
-
+	    $.ajax({
+	        type: "POST",
+	        enctype: 'multipart/form-data',
+	        url: "UpdateMember.do",
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        cache: false,
+	        success: function (data) {
+	        	$('#myPicture').attr("src","upload/member/"+data.profilePic+"");
+	      		$("#name").val(data.name);
+	      		$('#userImgTop').attr("src","upload/member/"+data.profilePic+"");
+	      		$('#userImgToggle').attr("src","upload/member/"+data.profilePic+"");
+	      		$("#userNameToggle").text(data.name);
+	      		$("#userEmailToggle").text(data.email);
+    	        $("#twopage").addClass("hidden");
+    	        $("#firstpage").removeClass("hidden");
+	        }
+	    });
+	}
+    
 	function chageSetting(cmd, value){
 		$.ajax({
 			url: "SettingChange.do",
@@ -121,10 +156,7 @@
 		});
 	}
 	
-    function changeView() {
-        $("#firstpage").addClass("hidden");
-        $("#twopage").removeClass("hidden");
-    }
+
 </script>
 <div id="myProfileSetModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md">
@@ -152,7 +184,7 @@
                                     <div class="card-body" style="padding-top: 20px;">
                                         <div class="basic-form">
                                             <div class="text-center mb-3">
-                                                <img src="upload/member/${member.profilePic}"
+                                                <img id="myPicture" src="upload/member/${member.profilePic}"
                                                     onerror="this.src='resources/images/login/profile.png'"
                                                     class="rounded-circle" style="width: 180px; height: 180px; ">
                                             </div>
@@ -164,9 +196,8 @@
                                                 <input type="email" name="email" id="email" placeholder="Email"
                                                     class="form-control email" readonly value="${member.email}">
                                             </div>
-                                            <input type="button" id="editButton" onclick="changeView()"
-                                                class="btn btn-dark w-100" value="정보 수정">
-                                        </div>
+                                            <input type="button" id="editButton" class="btn btn-dark w-100" value="정보 수정">
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +209,6 @@
                             <div class="card">
                                 <div class="card-body" style="padding-top: 20px;">
                                     <div class="basic-form">
-                                        <form action="UpdateMember.do" method="post" enctype="multipart/form-data">
                                             <div class="text-center mb-3" id="changeImg">
                                                 <img id="profileImage" src="upload/member/${member.profilePic}"
                                                     onerror="this.src='resources/images/login/profile.png'"
@@ -190,16 +220,16 @@
                                                     style="visibility: hidden;">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" name="name" id="name" class="form-control name"
+                                                <input type="text" name="name" id="myName" class="form-control name"
                                                     placeholder="Name" value="${member.name}">
                                             </div>
                                             <div class="form-group">
-                                                <input type="email" name="email" id="email" placeholder="Email"
+                                                <input type="email" name="email" id="myEmail" placeholder="Email"
                                                     class="form-control email" readonly value="${member.email}">
                                             </div>
                                             <c:if test="${member.signFrom == '홈페이지'}">
                                                 <div class="form-group">
-                                                    <input type="password" id="password" name="password"
+                                                    <input type="password" id="myPassword" name="password"
                                                         class="form-control pwd" placeholder="비밀번호를 재입력해주세요.">
                                                 </div>
                                             </c:if>
@@ -209,11 +239,10 @@
                                                         value="취소">
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="submit" class="btn btn-dark w-100"
-                                                        onclick="window.location.reload()" value="수정 완료">
+                                                    <input type="button" class="btn btn-dark w-100"
+                                                        onclick="updateMyProfile()" value="수정 완료">
                                                 </div>
                                             </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>

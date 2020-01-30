@@ -16,9 +16,12 @@ import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.owl.helper.UploadHelper;
 import com.owl.member.dto.Member;
 import com.owl.member.dto.Setting;
 import com.owl.member.service.MemberService;
@@ -163,5 +166,35 @@ public class MemberRestController {
 		model.addAttribute("member", member);
 		return member;
 	}
+	
+	@RequestMapping(value="UpdateMember.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	public Member UpdateMember(@RequestParam(value = "password") String password,
+												@RequestParam(value = "name") String name,
+												@RequestParam(value = "profilePic" , required = false) MultipartFile profilePic,
+												Principal principal, HttpServletRequest request, Model model) {
+		Member member = new Member();
+
+		try {
+			String imagefilename = profilePic.getOriginalFilename();
+			System.out.println(imagefilename);
+			if (!imagefilename.equals("")) { // 실 파일 업로드
+				String uploadpath = request.getServletContext().getRealPath("upload");
+				String filePath = UploadHelper.uploadFile(uploadpath,"member", imagefilename, profilePic.getBytes());
+				System.out.println(filePath);
+				member.setProfilePic(imagefilename);
+			}				
+			member.setName(name);
+			member.setPassword(bCryptPasswordEncoder.encode(password));
+			member.setEmail(principal.getName());
+			service.updateMember(member);
+			request.getSession().setAttribute("member", member);
+			System.out.println(model);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return member;
+	}
+	
 	
 }
