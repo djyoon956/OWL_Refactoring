@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+	<!-- Summernote -->
 <!-- 여기는 칸반 jsp -->
 <style>
 
@@ -270,8 +270,10 @@
 	$('#addIssueModal').on('show.bs.modal', function() {  
 	
 		console.log("addIssueModal open!");
+		getIssueInfoForm("addIssue");
 
-	 	$.ajax({
+		//칸반으로 옮김 
+		/* $.ajax({
 	 		type: "POST",
             url: "GetAddIssueForm.do",
             data: { projectIdx: ${project.projectIdx}},
@@ -303,7 +305,8 @@
             error: function () {
                 console.log("GetProjectMember error");
             }
-		}) 
+		})  */
+
 	});
 
 	
@@ -368,8 +371,6 @@
         	url : 'UpdateColumn.do',
         	data : { 'colname' : $("#editcolName").val(),'projectIdx' : ${project.projectIdx},'colIdx' :  $("#editcolIdx").val()}, 
         	success : function(data) {
-            	console.log("업데이트 칼럼 성공 ");
-            	console.log($("#" + data + "Column span").text());
             $("#" + data + "Column span").text($("#editcolName").val());
         		$("#editcolName").val("");
             	$('#editColumnModal').modal('hide');

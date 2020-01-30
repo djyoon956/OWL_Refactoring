@@ -55,10 +55,21 @@ function initKanban(projectIdx){
 
 	});
 	
-	$("#editIssueDetailBtn").click(function() {
-		console.log("edit 클릭 됨");
-		changeKanbanView("edit");
-	});
+	 $('#isContentEdit').summernote({
+	        height: 300,
+	        toolbar: [
+	            ['style', ['bold', 'italic', 'underline', 'clear']],
+	            ['font', ['strikethrough', 'superscript']],
+	            ['fontsize'],
+	            ['color'],
+	            ['para', ['ul', 'ol', 'paragraph']],
+	        ]
+	      });
+	 $('#datepicker-editIssue').datepicker({
+		 dateFormat: 'yy-mm-dd' ,
+   		  autoclose: true,
+    	  todayHighlight: true
+	 }); 
 }
 
 function addLabel(lbidx, lbcolor, lbnm) {
@@ -225,8 +236,11 @@ function setKanbanDetail(issueIdx){
 					
 					$("#issueDetailFiles").empty();
 					$("#issueDetailFileCount").text("첨부파일 ("+data.files.length+") ");
-					$.each(data.files, function(file){
+					console.log("data.files");
+					console.log(data.files);
+					$.each(data.files, function(index,file){
 						let path = "/upload/"+ projectIdx +"/file/"+file.fileName;
+						console.log("파일  이름 체크 중 ");
 						console.log(path);
 						let control = "<li class='mb-2' style='font-size: 16px'>"
 										+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+file.fileName+" ("+file.fileSize+" KB)</span></a>"
@@ -449,7 +463,96 @@ function editLabel(idx, color, name) {
 			});
 
 	}
+	function getIssueInfoForm(opt) {
+		
+	 	$.ajax({
+	 		type: "POST",
+            url: "GetAddIssueForm.do",
+            data: { projectIdx : projectIdx },
+            success: function (data) {
+            	console.log("opt는 ?????????????");
+            	console.log(opt);
+            	if(opt == "addIssue"){
+            	$('#assigned').empty();
+            	$('#labelIdx').empty();
+
+				let member = data.member;
+				let label = data.label;
+				
+				let optlabel;
+				let optmember;
+
+				$('#assigned').append(selectoption);
+                $('#labelIdx').append(selectoption);
+				
+               $.each(member, function(index, element) {
+					optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
+                 });
+               
+               $('#assigned').append(optmember);
+
+                $.each(label, function(index, element) {
+                 	 optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
+                 });
+                
+                $('#labelIdx').append(optlabel);
+            	} else if (opt == 'editIssue'){
+            		
+            		console.log("edit ISSSUE");
+            	}
+            },
+            error: function () {
+                console.log("GetProjectMember error");
+            }
+		}) 
+		
+	}
 	
+	let selectoption = '<option value="">Select</option>';
+
+	//addIssueModal 모달이 오픈되면 !
+	$('#addIssueModal').on('show.bs.modal', function() {
+		console.log("projectIdx");
+		console.log(projectIdx);
+		console.log("addIssueModal open!");
+		getIssueInfoForm("addIssue");
+	 });
+	
+	function editIssueDetailView(){
+		changeKanbanView("edit");
+		/*
+		$("#issueDetailAssignees").val;
+		$("#issueDetailLabel").val;
+		$("#issueDetailPriority").val();
+		$("#issueDetailDueDate").val;*/
+		console.log("edit  Issue Detail  View ");
+		console.log($("#issueDetailAssignees").text());
+		console.log($("#issueDetailLabel").text());
+		
+		getIssueInfoForm("editIssue");
+		
+		if($("#issueDetailPriority").hasClass("low"))
+			$("#issueDetailPriority").val("low");
+		else if($("#issueDetailPriority").hasClass("medium"))
+			$("#issueDetailPriority").val("medium");
+		else if($("#issueDetailPriority").hasClass("high"))
+			$("#issueDetailPriority").val("high");
+		else if($("#issueDetailPriority").hasClass("urgent"))
+			$("#issueDetailPriority").val("urgent");
+		
+		$("#issueDetailEditTitle").val($("#issueDetailTitle").text());
+		$("#issueDetailEditContent").summernote('code', $("#issueDetailContent").html());
+		$("#assignedEdit").val($("#issueDetailAssignees").text());
+		$("#labelIdxEdit").val($("#issueDetailLabel").text());
+		$("#priorityCodeEdit").val($("#issueDetailPriority").val().toUpperCase());
+		
+		$("#datepicker-editIssue").val($("#issueDetailDueDate").text());
+	}
+	
+	function editIssueDetailOk() {
+		
+		
+	}
 	
 
 	
