@@ -183,23 +183,8 @@ function initKanban(projectIdx){
 				    $(this).parent().siblings().find("select").addClass("hidden");
 			    }
 			});
-		
-		$("#issueDetailTitleEdit").focusout(function() {
-			$.ajax({
-				url : "UpdateIssueTitle.do",
-			    method : "POST",
-			    data : {issueIdx : $("#issueIdxNum").val(), issueTitle : $("#issueDetailTitleEdit").val()},
-			    success : function(data){
-			    	console.log(data);
-			    	setKanbanDetail($("#issueIdxNum").val());
-			    	$("#issueDetailTitleEdit").addClass("hidden");
-					$("#issueDetailTitle").removeClass("hidden");
-			    }, error : function() {
-			    	console.log('editReply in');
-			    }
-			});
-		});
-		
+
+	
 } //initKanban 끝
 
 
@@ -698,15 +683,32 @@ function editLabel(idx, color, name) {
 	
 	function editTitleViewBtn(){
 		$("#issueDetailTitleEdit").val($("#issueDetailTitle").text());
-		if($("#issueDetailTitleEdit").hasClass("hidden")){
+		if($("#editTitleBox").hasClass("hidden")){
 			$("#issueDetailTitle").addClass("hidden");
-			$("#issueDetailTitleEdit").removeClass("hidden");
+			$("#editTitleBox").removeClass("hidden");
 		} else {
-			$("#issueDetailTitleEdit").addClass("hidden");
+			$("#editTitleBox").addClass("hidden");
 			$("#issueDetailTitle").removeClass("hidden");
 		}
 
 	}
+
+	function editIssueTitleOk() {
+		$.ajax({
+			url : "UpdateIssueTitle.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), issueTitle : $("#issueDetailTitleEdit").val()},
+		    success : function(data){
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editTitleBox").addClass("hidden");
+				$("#issueDetailTitle").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('editReply in');
+		    }
+		});
+	}
+
 
 
 	function editLabel(){
