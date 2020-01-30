@@ -141,22 +141,31 @@
         <!-- Option -->
         <div class="col-4">
             <div class="form-group bold">
-                <div class="row">
-                    <div class="col-4">Assignees </div>
-                    <div class="col-8"> <!-- <span  id="issueDetailAssignees" class="hidden"> Chloe</span> -->
-						<div class="row">
+           	 <div class="row">
+                 <div class="col-4">Assignees</div>
+                    <div class="col-8">
+                           <div class="row">
 							<div class="col-10">
-							<select class="select2 custom-select hidden" name="assigned" id="assignedEdit">
-								</select> 
-							<span id="issueDetailAssignees"> Chloe</span>
+							  <div class="row hidden" id="editAssignedBox" >
+								<div class="col-8">
+									<select class="select2 custom-select" name="assigned" id="assignedEdit">
+										<option value="" id="">Select</option>
+										<option value="aaa">aaa@gmail.com</option>
+									</select> 
+								</div>
+								<div class="col-1"> 
+							   		<button class="btn btn-primary" onclick="editIssueAssignedOk()">save</button>
+							    </div>
+							</div>
+							<span id="issueDetailAssignees">Chloe</span>
 							</div>
 							<div class="col-2">
 								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
 							</div>
 						</div>
-					</div>
-                </div>
-            </div>
+                    </div>    
+            	</div>
+          	</div> 
             <hr>
             <div class="form-group bold" >
                 <div class="row">
@@ -172,7 +181,6 @@
 								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
 							</div>
 						</div>
-                        
                     </div>
                 </div>
             </div>

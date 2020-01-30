@@ -22,29 +22,6 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
-	@RequestMapping(value = "UpdateMember.do")
-	public String UpdateMember(Member member, HttpServletRequest request, Model model) {
-		try {
-			String imagefilename = member.getMultipartFile().getOriginalFilename();
-
-			if (!imagefilename.equals("")) { // 실 파일 업로드
-				String uploadpath = request.getServletContext().getRealPath("upload");
-				String filePath = UploadHelper.uploadFile(uploadpath,"member", imagefilename, member.getMultipartFile().getBytes());
-				member.setProfilePic(filePath);
-			}
-
-			member.setName(member.getName());
-			member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
-
-			service.updateMember(member);
-			model.addAttribute("member", member);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "member/main";
-	}
-
 	@RequestMapping(value = "DeleteAccount.do")
 	public String deleteMember(HttpServletRequest request,String email, Model model) {
 		// 테스트 데이터
