@@ -354,10 +354,10 @@ function setIconView(data){
 	control ="";
 	$.each(data.files, function(index, element) {
 		let extension = element.fileName.substr(element.fileName.lastIndexOf(".")+1).toLowerCase();
-		let fileName = element.fileName.length > 10 ? element.fileName.substr(0, 10)+ "..." : element.fileName;				
+		let fileName = element.fileName.length > 12 ? element.fileName.substr(0, 12)+ "..." : element.fileName;				
 
 		control += '<div class="col-sm-3">'
-					+ 	'<div class="card driveCard dropdown">'
+					+ 	'<div class="card driveCard dropdown" id="'+element.driveFileIdx+'">'
 					+ 		'<div class="more" style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
 					+			'<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
 					+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
@@ -371,7 +371,7 @@ function setIconView(data){
 						+  '<li class="pl-2"><a href="#" onclick="deleteFilefromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
 		}else {downloadFile
 			control += '<li class="pl-2"><a href="#" onclick="downloadFile(\''+element.fileName+'\')" ><i class="fas fa-download"></i>&nbsp; 다운로드</a></li>'
-						+ '<li class="pl-2"><a href="#"  onclick="renameFile('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+						+ '<li class="pl-2"><a href="#"  onclick="setRenameIconView(this,'+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
 						+	'<li class="pl-2"><a href="#"  onclick="deleteDriveFile('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>';
 		}
 
@@ -380,7 +380,7 @@ function setIconView(data){
 					+		'</div>'
 					+		'<div class="card-body text-center">'
 					+			'<img class="fileDefaultImage mb-4" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
-					+			'<h4>'+fileName+'</h4>'
+					+			'<div class="driveCardContent"><h4>' + fileName + '</h4><input type="hidden" value="'+element.fileName+'"></div>'    
 					+		'</div>'
 					+	 '</div>'
 					+  '</div>';
@@ -551,13 +551,6 @@ function deleteFolderfromTrash(driveFileIdx) {
 	});
 }
 
-
-
-
-
-
-
-
 //휴지통에서 복원 함수 
 function restoreFileTrash(driveFileIdx) {
 	
@@ -600,18 +593,19 @@ function restoreFolderfromTrash(driveFileIdx) {
 	}) 
 }
 
-
 function setRenameIconView(obj, idx){
 	let element = $(".driveCard").filter("#"+idx).first();
 	let renameElement = element.find(".driveCardContent").first();
-	let oldText = renameElement.find("h4").text();
+	let oldText ="";
 	let isFolder = element.hasClass("folder");
-	console.log("is folder : "+isFolder);
+	if(isFolder)
+		oldText = renameElement.find("h4:first").text();
+	else
+		oldText = renameElement.find("input:first").val();
 	
 	renameElement.html(getRenameElementContent(isFolder, idx, oldText));
 	$("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
 }	
-
 
 function getRenameElementContent(isFolder, idx, oldText){
 	let fun = isFolder ? "renameFolder("+idx+")" : "renameFile("+idx+")";
@@ -631,15 +625,14 @@ function renameCancel(obj, oldText, isFolder){
 }
 
 function renameFile(driveFileIdx){
-	console.log("in renameFile");
 	$.ajax({
 		 url : "RenameDriveFile.do",
 		 data : {driveFileIdx : driveFileIdx
 			 		, fileName :  $("#driveFileRename").val()},
 		 success : function(data){
 			 if(data){ 
-				 $("#driveTable #"+driveFileIdx).find("td").first().html("<i class='fas fa-file-alt mr-3'></i><span>"+$("#driveFileRename").val()+"</span>");
 				 successAlert("파일 이름 변경 완료");
+				 callDirectoryData();
 			 }else{
 				 errorAlert("파일 이름 변경 실패");
 			 }
