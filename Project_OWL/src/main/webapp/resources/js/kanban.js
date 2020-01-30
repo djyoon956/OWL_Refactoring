@@ -1,3 +1,4 @@
+
 let projectIdx;
 
 
@@ -187,7 +188,16 @@ function initKanban(projectIdx){
 			});
 
 	
+		
+		
+
+		
+		
 } //initKanban 끝
+
+
+
+
 
 
 function searchAppend(data) {
@@ -715,7 +725,6 @@ function editLabel(idx, color, name) {
 	function editIssueContentOk() {
 		$.ajax({
 			url : "UpdateIssueContent.do",
-		    method : "POST",
 		    data : {issueIdx : $("#issueIdxNum").val(), content :$('#isContentEdit').summernote('code')},
 		    success : function(data){
 		    	console.log("UpdateIssueContent.do");
@@ -778,17 +787,36 @@ function editLabel(idx, color, name) {
 		$.ajax({
 			url : "UpdateIssueDuedate.do",
 		    method : "POST",
-		    data : {issueIdx : $("#issueIdxNum").val(), priorityCode : $('#priorityCodeEdit').val()},
+		    data : {issueIdx : $("#issueIdxNum").val(), 'dueDate' :$('#datepicker-editIssue').val()},
 		    success : function(data){
-		    	console.log("UpdateIssueLabel.do");
+		    	console.log("UpdateIssueDuedate.do");
 		    	console.log(data);
 		    	setKanbanDetail($("#issueIdxNum").val());
-		    	$("#editPriorityBox").addClass("hidden");
-				$("#issueDetailPriority").removeClass("hidden");
+		    	$("#editDuedateBox").addClass("hidden");
+				$("#issueDetailDueDate").removeClass("hidden");
 		    }, error : function() {
-		    	console.log('edit issue contnet in');
+		    	console.log('edit issue duedate in');
+		    	console.error();
 		    }
 		});
+	}
+	function editIssueAssignedOk() {
+		$.ajax({
+			url : "UpdateIssueAssgined.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), 'assigned' : $('#assignedEdit').val()},
+		    success : function(data){
+		    	console.log("UpdateIssueAssgined.do");
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editAssignedBox").addClass("hidden");
+				$("#issueDetailAssignees").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue duedate in');
+		    	console.error();
+		    }
+		});
+		
 	}
 	function getissueinfo(flagelement, projectidx) {
 

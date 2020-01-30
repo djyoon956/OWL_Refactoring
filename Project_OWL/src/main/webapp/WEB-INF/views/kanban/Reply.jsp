@@ -10,6 +10,7 @@
 <%-- <c:set var="bIdx" value="${param.bIdx}"/>
 <c:set var="replies" value="${requestScope.replies}"/> --%>
 <script type="text/javascript">
+
 	/* $(function(){
 		changReplyHeader();
 		$("#reply").click(function(){
