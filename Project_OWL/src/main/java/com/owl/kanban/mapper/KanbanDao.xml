@@ -191,7 +191,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update issue set duedate=#{dueDate, jdbcType=DATE} where issueidx= #{issueIdx}
 	</update>
 	
-	<update id="updateIssueAssigned">
+	<update id="updateIssueAssigned" parameterType="com.owl.kanban.dto.Issue">
 		update issue set assigned=#{assigned} where issueidx= #{issueIdx}
 	</update>
 	

@@ -790,6 +790,24 @@ function editLabel(idx, color, name) {
 		    }
 		});
 	}
+	function editIssueAssignedOk() {
+		$.ajax({
+			url : "UpdateIssueAssgined.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), 'assigned' : $('#assignedEdit').val()},
+		    success : function(data){
+		    	console.log("UpdateIssueAssgined.do");
+		    	console.log(data);
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editAssignedBox").addClass("hidden");
+				$("#issueDetailAssignees").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue duedate in');
+		    	console.error();
+		    }
+		});
+		
+	}
 	function getissueinfo(flagelement, projectidx) {
 
 		if(flagelement == "issueModalOpen") {

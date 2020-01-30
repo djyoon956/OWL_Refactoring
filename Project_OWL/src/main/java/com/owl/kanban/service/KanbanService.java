@@ -514,6 +514,19 @@ public class KanbanService {
 		
 		return result;
 	}
+	public boolean updateIssueAssgined(Issue issue, String email) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			result = dao.updateIssueAssigned(issue) > 0 ? true : false;
+			insertLog(issue.getIssueIdx(), "update issue assigned", email, dao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	public List<Issue> searchAssignee(int projectIdx,String email){
 		KanbanDao dao = getKanbanDao();
 		List<Issue> issue = null;

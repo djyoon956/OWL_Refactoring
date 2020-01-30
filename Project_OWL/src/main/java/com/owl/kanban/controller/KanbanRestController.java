@@ -364,7 +364,15 @@ public class KanbanRestController {
 		}
 		boolean result = service.updateIssueDuedate(issue, principal.getName());
 		return result;
-	}	
+	}
+	@RequestMapping(value="UpdateIssueAssgined.do", method = RequestMethod.POST)
+	public boolean updateIssueAssgined(Issue issue,Principal principal) {
+		System.out.println("updateIssueTitle in");
+		System.out.println(issue);
+		boolean result = service.updateIssueAssgined(issue, principal.getName());
+		
+		return result;
+	}
 	/**
 	 * 칸반 assignee로 검색
 	 * @author 배인영
