@@ -7,6 +7,16 @@ import java.nio.file.Paths;
 import org.apache.commons.io.FileUtils;
 
 public class UploadHelper {
+	/**
+	 * upload 경로에 파일 업로드
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param uploadPath
+	 * @param uploadType
+	 * @param fileName
+	 * @param content
+	 * @return String
+	 */
 	public static String uploadFile(String uploadPath, String uploadType, String fileName, byte[] content) {
 		uploadPath = Paths.get(uploadPath, uploadType).toString();
 		makeDirectory(uploadPath);
@@ -20,6 +30,17 @@ public class UploadHelper {
 		return fileName;
 	}
 
+	/**
+	 * 프로젝트에 해당하는 파일 업로드
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param uploadPath
+	 * @param uploadType
+	 * @param projectIdx
+	 * @param fileName
+	 * @param content
+	 * @return String
+	 */
 	public static String uploadFileByProject(String uploadPath, String uploadType, int projectIdx, String fileName, byte[] content) {
 		uploadPath = Paths.get(uploadPath, "project", Integer.toString(projectIdx), uploadType).toString();
 		makeDirectory(uploadPath);
@@ -34,6 +55,19 @@ public class UploadHelper {
 		return path;
 	}
 	
+	/**
+	 * 프로젝트 드라이브 해당 디렉토리에 파일 업로드
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param uploadPath
+	 * @param uploadType
+	 * @param projectIdx
+	 * @param refs
+	 * @param folderIdx
+	 * @param fileName
+	 * @param content
+	 * @return String
+	 */
 	public static String uploadFileByProjectDrive(String uploadPath, String uploadType, int projectIdx,String[] refs,int folderIdx, String fileName, byte[] content) {
 		uploadPath = Paths.get(uploadPath
 											, "project"
@@ -54,6 +88,15 @@ public class UploadHelper {
 		return path;
 	}
 
+	/**
+	 * 프로젝트 드라이브에서 폴더 생성
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param uploadPath
+	 * @param projectIdx
+	 * @param refs
+	 * @param driveIdx
+	 */
 	public static void makeDriveDirectory(String uploadPath, int projectIdx, String[] refs, int driveIdx) {
 		String path = Paths.get(uploadPath
 											, "project"
@@ -64,6 +107,14 @@ public class UploadHelper {
 		makeDirectory(path);
 	}
 
+	/**
+	 * 프로젝트 드라이브 프로젝트 명으로 디폴트 디렉토리 생성
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param uploadPath
+	 * @param projectIdx
+	 * @param driveIdx
+	 */
 	public static void makeDefaultDirectory(String uploadPath, int projectIdx, int driveIdx) {
 		String path = Paths.get(uploadPath
 											, "project"
@@ -95,6 +146,12 @@ public class UploadHelper {
 	
 	}
 
+	 /**
+	  * 파일 존재 확인 후 삭제
+	  * @author 윤다정
+	  * @since 2020/01/29
+	  * @param path
+	  */
 	public static void deleteFile(String path) {
 		File file = new File(path);
 		if (file.exists())
@@ -122,6 +179,18 @@ public class UploadHelper {
 		System.out.println("파일 이동 성공 : " + isMove);
 	}
 
+	/**
+	 * 드라이브 실 파일 이름 변경
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param uploadPath
+	 * @param projectIdx
+	 * @param refs
+	 * @param driveIdx
+	 * @param oldFileName
+	 * @param newFileName
+	 * @return boolean
+	 */
 	public static boolean renameDriveFile(String uploadPath, int projectIdx, String[] refs, int driveIdx, String oldFileName, String newFileName) {
 		boolean result = false;
 		String path = Paths.get(uploadPath
@@ -137,6 +206,16 @@ public class UploadHelper {
 		return result;
 	}
 	
+	/**
+	 * 드라이브 실 경로 구하기
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param projectIdx
+	 * @param folderIdx
+	 * @param fileName
+	 * @param refs
+	 * @return String
+	 */
 	public static String getDriveDownloadPath(int projectIdx, int folderIdx, String fileName, String[] refs) {
 		return Paths.get("upload"
 								, "project"
@@ -147,6 +226,12 @@ public class UploadHelper {
 								, fileName).toString();
 	}
 	
+	/**
+	 * 디렉토리 존재검사 후 없으면 생성
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param path
+	 */
 	private static void makeDirectory(String path) {
 		File file = new File(path);
 		if (!file.exists())
