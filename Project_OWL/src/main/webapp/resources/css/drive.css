@@ -145,10 +145,11 @@ margin-right:5px;
 
 .dragBorder{
 	border:2px double #326295;
-	z-index:10;
-	background:#f0f3f7;
-	opacity:0.4;
+	background-color: rgba(255, 255, 255, 0.3) !important;
 	text-align:center;
+}
+.dragBorder .driveCard{
+	opacity: 0.3;
 }
 
 .fileDefaultImage{
@@ -166,4 +167,13 @@ margin-right:5px;
 
 .dt-body-left:not(th){
 	text-align: left !important;
+}
+
+.driveUploadBox{
+	position : absolute;
+	left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+	z-index: 3;
+	opacity: 1 !important;
 }
