@@ -833,7 +833,46 @@ display: block;
           
         //Get a reference to the database service
           const database = firebase.database();
-             
+		//푸시 알람을 위한 변수 설정..
+		const messaging = firebase.messaging();
+		
+
+		 
+        //웹의 경우 firebase messaging 을 이용한 푸시 알람을 이용할 경우.. 먼저 유저의 권한을 얻어야 한다. 권한을 얻기 위한 함수..
+		var setCloudMessaging = function () { 
+			//메세징 			
+			messaging.requestPermission() 
+			.then(function(){ 
+				console.log('메세징 권한 획득'); 
+				return messaging.getToken(); 
+				}) 
+				.then(function(token){ 
+					console.log('fcm token : ', token); 
+					}) 
+					.catch(function(e){ 
+						console.log('메세징 권한 획득 중 에러', e); 
+						}); 
+			}
+
+
+		
+			
+		var saveFCMToken = function(){ 
+			//로그인 후에 fcm 정보를 검색하여 저장 
+			var cbGetToekn = function(token){ 
+				console.log('setLogin fcmId get : ', token); 
+				var userUid = curUserKey; 
+				var fcmIdRef= database.ref('FcmId/' +userUid); 
+				fcmIdRef.set(token); 
+				} 
+			firebase.messaging().getToken() 
+			.then(cbGetToekn.bind(this)) 
+			.catch(function(e){ 
+				console.log('fcmId 확인 중 에러 : ', e); 
+				}) 
+			}
+
+		   
    
 
 
@@ -846,18 +885,18 @@ display: block;
 		       return new Promise(function(resolve){
 
 		        	  var myRootRef = database.ref();
-		        	  myRootRef.child("emails").orderByChild('email').equalTo(email).once('value', function(data){
+		        	  myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
 		          	    //console.log('현재 접속한 유저는 채팅 경험이 있나요??	 :' +email+ " / "+ data.key + " / " + data.val() + " / " +data.numChildren());		          	    
 						var myResult = data.val();
 						var userKey;
 						if(myResult == null){
 							//console.log("신규회원 이메일 등록을 통한 유아디 생성과.. 유저 데이터 등록 필요");
 							
-							var newUser = database.ref('emails/').push({email :email});
+							var newUser = database.ref('Emails/').push({email :email});
 							 userKey = newUser.key;
 							//console.log("새로 들어온 유저의 키 값은 ??"  + userKey);
-							database.ref('users/' + newUser.key).set({
-				        	    username: name,
+							database.ref('Users/' + newUser.key).set({
+				        	    userName: name,
 				        	    email: email,
 				        	    profile_picture : imageUrl
 				        	  });
@@ -872,7 +911,7 @@ display: block;
 						//console.log("라이트유저 데이타 펑션에서 유저 키 함 찍어 볼까??>>>"+userKey);
 						resolve(userKey);
 		          	});
-			          
+			         
 			     });
         	}
        
@@ -951,7 +990,70 @@ display: block;
 					//프로젝트 룸 리스트 업 하는 것이 이 함수의 목적이고 아래와 같은 파라미터가 필요하다. 룸리스트 업 함수는 태그를 리턴하다.. 그래서 포쿤을 돌려서 붙이던가 해야 함...
 					var roomListTag = roomListUp(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserList, lastMessage, datetime);
 					
-		        	}	
+		        	}
+
+
+				/* function loadUserList() { 
+					this.userTemplate = document.getElementById('templateUserList').innerHTML; 
+					var userRef = this.database.ref('Users'); 
+					userRef.off(); 
+					userRef.orderByChild("userName").once('value', this.getUserList.bind(this));
+
+					 
+
+					var cbCompleteUserList = function(){
+						this.loadOnlineStatus(); 
+						} 
+					userRef.orderByChild("userName") 
+					.once('value', this.getUserList.bind(this)) 
+					.then(cbCompleteUserList.bind(this));
+
+					
+					
+					}  */
+
+
+				var loadOnlineStatus = function(){
+					console.log("로드 온라인 스테이터스 함수 타기는 하니??? 작동하는 거야 머야??"); 
+					var usersConnectionRef = database.ref('UsersConnection'); 
+					usersConnectionRef.off(); 
+					var cbUserConnection = function(data){ 
+						var connKey =data.key;
+						console.log("이방식 되는 건가??" + connKey); 
+						var connValue = data.val(); 
+						console.log("이방식 되는 건가??" + connValue); 
+						var onlineIcon = document.querySelector('#li' + connKey+' .userOnline');
+						console.log("이방식 되는 건가??" + onlineIcon); 
+						if(onlineIcon != null){ 
+							if(connValue.connection === true){ 
+								onlineIcon.classList.add('user-online'); 
+								}else{ 
+									onlineIcon.classList.remove('user-online'); 
+									} 
+							} 
+						} 
+					usersConnectionRef.on('child_added', cbUserConnection.bind(this)); 
+					usersConnectionRef.on('child_changed', cbUserConnection.bind(this)); 
+
+					}
+
+				
+
+				
+				/** * loadUserList 에서 데이터를 받아 왔을 때 */ 
+				/* function getUserList(snapshot) { 
+					var userListHtml = ''; 
+					var cbDisplayUserList = function(data){ 
+						var val = data.val(); 
+						if(data.key !== this.auth.currentUser.uid){ 
+							userListHtml += _.template(this.userTemplate)({targetUserUid : data.key, profileImg : val.profileImg, userName : val.userName}); 
+							} 
+						} 
+					snapshot.forEach(cbDisplayUserList.bind(this)); 
+					this.ulUserList.innerHTML = userListHtml; 
+					}
+ */
+				
 			
 
 
@@ -1029,6 +1131,11 @@ display: block;
 
 			//챗방 초대를 위한 모달 창 세팅을 위한 함수
           function setAddUserList() {
+        	  //푸시 알람을 위한 FCM(Firebase Cloud Messaging) Token firebase realtime database 에 저장...
+              saveFCMToken();
+              //온라인 상태인지 아닌지 확인하고.. 유저리스에 아이콘 색 변경을 위한 함수..
+        	  loadOnlineStatus();	
+              
         	  curUserKey= window.curUserKey;
 			  roomUserList = [window.curUserKey]; // 챗방 유저리스트  	
 			  console.log("챗방 추가 버튼 눌렀을 때.... 룸 유저 리스트 값은??" + roomUserList);		
@@ -1319,6 +1426,7 @@ display: block;
         	  let errorSource = "this.src='resources/images/login/profile.png'";
         	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name + '" class="collection-item avatar list">' 
         	  				  + '<div class="input-group "><div class="form-control pt-2 pb-2"><img src="' + userProPic + '"  alt="" class="circle mr-3" height="35" width="35" onerror="'+errorSource+'" >'+ name + '('+email+')'+
+        	  				  '<i class="fas fa-globe font-20 mt-1 mr-1 userOnline"></i>'+
         	  				  '<i id ="userChecked" class="fas fa-check float-right font-20 mt-1 mr-1 hidden" style="color:red"></i>'+
 
         	  				  '</div>'                      
@@ -1442,14 +1550,14 @@ display: block;
       	    	 //같은방이 있는 경우 얼럿 창 띄우고.. 오케이 하면 해당 방으로 이동....
       	    	 isRoom(item);
           	    }else{
-          	      database.ref().update(updates); //초대 메세지 
-                  saveMessages(arrInviteUserName.join() + '이 초대되었습니다.');
+          	      
               	       
               	 } 
       		
       	  });
 
-             
+      	    database.ref().update(updates); //초대 메세지 
+            saveMessages(arrInviteUserName.join() + '이 초대되었습니다.');
         	  
 
            }
@@ -1497,16 +1605,17 @@ display: block;
 			// 초기화 를 위한 온로드 함수... 같은 프로제트에 있는 유저목록과 프로젝트 채팅방을 만들기 위한 정보를 디비에서 뽑아낸다.	
           $(function(){            
 			var curUserKey;
-            //writeUserData(curName, curEmail, curProfilePic);
+			
             writeUserData(curName, curEmail, curProfilePic).then(function(resolvedData){
 				console.log("현재 사용자의 챗방 키는용???>>" + resolvedData + "<<<<<");
                 $('#curUserKey').val(resolvedData);
                 curUserKey = $('#curUserKey').val();
                 window.curUserKey = resolvedData;
                 loadRoomList(resolvedData);
-                
-                
-                
+
+                //유저 접속 상태 저장 체크...
+                checkOnline();	
+               
             }); 
 
             //같은 프로젝트에 있는 유저 정보를 뽑아오는 아젝스...요걸로 채팅 가능한 유저들 리스트 화면 뿌려 준다.
@@ -1624,7 +1733,8 @@ display: block;
 		//초대 모달창에서 초대 버튼 클릭시  체크된 인원을 현재 챗방에 추가하는 클릭 리스너
 			$('#onCreateClick').click(onCreateClick);
 
-
+			console.log("라이트 유저의 실행 시점.. fcm...권한 받아야 하는데...");
+	        setCloudMessaging();
       	});	
           
       </script>
