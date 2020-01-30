@@ -225,7 +225,12 @@ public class DriveService {
 		return result;
 	}
 	
-
+	/**
+	 * DriveDao 구하기
+	 * @author 윤다정
+	 * @since 2020/01/29 
+	 * @return DriveDao
+	 */
 	private DriveDao getDriveDao() {
 		return sqlSession.getMapper(DriveDao.class);
 	}

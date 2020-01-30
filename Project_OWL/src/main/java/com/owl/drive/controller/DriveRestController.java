@@ -234,6 +234,13 @@ public class DriveRestController {
 		});
 	}
 
+	/**
+	 * 드라이브에 해당하는 폴더의 파일들과 하위 폴더를 가져온다.
+	 * @author 윤다정
+	 * @since 2020/01/30
+	 * @param folderIdx
+	 * @return Map<String, Object>
+	 */
 	@RequestMapping(value = "GetFolderData.do")
 	public Map<String, Object> getFolderData(int folderIdx) {
 		return service.getFolderData(folderIdx);
@@ -328,7 +335,7 @@ public class DriveRestController {
 	/**
 	 *  드라이브 파일 다운로드 경로 구하기
 	 * @author 윤다정
-	 * @since 2019/01/29
+	 * @since 2020/01/29
 	 * @param projectIdx
 	 * @param folderIdx
 	 * @param refs
