@@ -68,6 +68,7 @@ function initKanban(projectIdx){
 	})
 	
 	
+	
 	$('#searchSelectBox').change(function () {
 		
 		var selectMenu = $('#searchSelectBox option:selected').val();
@@ -75,94 +76,85 @@ function initKanban(projectIdx){
 		if(selectMenu == "Label") {
 			$('#searchContent').attr('list', 'LabelMenu');
 			getLabelList("SearchLabelList", projectIdx);
+		}else if(selectMenu == "Assignee") {
+			$('#searchContent').attr('list', 'MemberMenu');
+			getProjectMemberList(projectIdx);
+		}else if(selectMenu == "Priority") {
+			$('#searchContent').attr('list', 'PriorityMenu');
+
+			var prioritylist = '<datalist id="PriorityMenu">'
+						     + '<option value="LOW" data-id="LOW"></option>'
+						     + '<option value="MEDIUM" data-id="MEDIUM"></option>'
+						     + '<option value="HIGH" data-id="HIGH"></option>'
+						     + '<option value="URGENT" data-id="URGENT"></option>'
+						     + '</datalist>'; 
+			
+			$('#searchContent').append(prioritylist);
 		}
+			
 	})
 
 	
-	
 	//검색 
 	$('#kanbanSearchBtn').click(function(){
-		console.log('값이뭘까?');
-		console.log($('#searchSelectBox option:selected').val());
+		
+		$('#searchBox').find('tbody').empty();
+		//console.log($('#searchSelectBox option:selected').val());
 		
 		if($('#searchContent').val() == "" || $('#searchContent').val() == null) {
 			return;
 		}
 		
 		let selectMN = $('#searchSelectBox option:selected').val();
+		let contentVal = $('#searchContent').val();
 		
 		if(selectMN == "Assignee") {
 			
+			var memberemail = $('#MemberMenu option[value='+contentVal+']').attr('data-id');
+
 			$.ajax ({
 				url : "SearchAssignee.do",
-				data : {"projectIdx": projectIdx, "searchContent" : $('#searchContent').val()},
+				data : {"email" : memberemail},
 				method : "POST",
 				success : function(data) {
-					$('#searchContent').val("");
-					changeKanbanView("search");
+					searchAppend(data)
 
-					$.each(data, function(index, element) {
-	    	  
-						let labelnm = element.labelName == null ? "" : element.labelName;
-						let priorityCd = element.priorityCode == null ? "-" : element.priorityCode;
-						let dueDt = element.dueDate == null ? "-" : element.dueDate;
-				
-						var control = "";
-							control = '<tr><td class="text-center"><label><span class="badgeIcon" style="background-color:'+ element.labelColor+'">' + labelnm + '</span></td>'
-									+ '<td class="text-center"><a href="#" onclick="setKanbanDetail('+element.issueIdx+');">'+element.issueTitle+'</a></td>'
-									+ '<td class="text-center">'+element.assigned+'</td>'
-									+ '<td class="text-center">'+priorityCd+'</td>'
-									+ '<td class="text-center">'+dueDt+'</td></tr>';
-	    	 
-	    	  	  $('#searchBox').find('tbody').append(control);
-	      });
-
-			}
-		})
+				},error : function() {
+					console.log('SearchAssignee error');
+				} 
+			})
 			
 		}else if(selectMN == "Label") {
-			//console.log('label값 뭐니?????????');
-
-			var contentVal = $('#searchContent').val();
 			
 			var labelidx = $('#LabelMenu option[value='+contentVal+']').attr('data-id');
-			
+		
 			$.ajax ({
 				url : "SearchLabel.do",
 				data : {"labelIdx" : labelidx},
 				method : "POST",
 				success : function(data) {
-					console.log('SearchLabel in');
-					console.log(data);
-					
-					$('#searchContent').val("");
-					changeKanbanView("search");
-					
-				      $.each(data, function(index, element) {
-				    	  
-							let labelnm = element.labelName == null ? "" : element.labelName;
-							let priorityCd = element.priorityCode == null ? "-" : element.priorityCode;
-							let dueDt = element.dueDate == null ? "-" : element.dueDate;
-							
-				    	  var control = "";
-				    	  	  control = '<tr><td class="text-center"><label><span class="badgeIcon" style="background-color:'+ element.labelColor+'">' + labelnm + '</span></td>'
-							 	      + '<td class="text-center"><a href="#" onclick="setKanbanDetail('+element.issueIdx+');">'+element.issueTitle+'</a></td>'
-							          + '<td class="text-center">'+element.assigned+'</td>'
-							          + '<td class="text-center">'+priorityCd+'</td>'
-							          + '<td class="text-center">'+dueDt+'</td></tr>';
-				    	 
-				    	  	  $('#searchBox').find('tbody').append(control);
-				      });
+					searchAppend(data)
+				},error : function() {
+					console.log('SearchLabel error');
+				} 
+			})
+		}else if(selectMN == "Priority") {
+			
+			var priorityidx = $('#PriorityMenu option[value='+contentVal+']').attr('data-id');
+
+			$.ajax ({
+				url : "SearchPriority.do",
+				data : {"priorityidx" : priorityidx},
+				method : "POST",
+				success : function(data) {
+					searchAppend(data)
 
 				},error : function() {
 					console.log('SearchLabel error');
 				} 
 			})
-		}else if(selectMN == "Assignee") {
-			
 			
 		}
-		
 	});
 
 
@@ -194,8 +186,30 @@ function initKanban(projectIdx){
 			    }
 			});
 
-	
 } //initKanban 끝
+
+
+function searchAppend(data) {
+	
+	$('#searchContent').val("");
+	changeKanbanView("search");
+	
+      $.each(data, function(index, element) {
+    	  
+			let labelnm = element.labelName == null ? "" : element.labelName;
+			let priorityCd = element.priorityCode == null ? "-" : element.priorityCode;
+			let dueDt = element.dueDate == null ? "-" : element.dueDate;
+			
+    	  var control = "";
+    	  	  control = '<tr><td class="text-center"><label><span class="badgeIcon" style="background-color:'+ element.labelColor+'">' + labelnm + '</span></td>'
+			 	      + '<td class="text-center"><a href="#" onclick="setKanbanDetail('+element.issueIdx+');">'+element.issueTitle+'</a></td>'
+			          + '<td class="text-center">'+element.assigned+'</td>'
+			          + '<td class="text-center">'+priorityCd+'</td>'
+			          + '<td class="text-center">'+dueDt+'</td></tr>';
+    	  	  $('#searchBox').find('tbody').append(control);
+      });
+}
+
 
 
 function addLabel(lbidx, lbcolor, lbnm) {
@@ -266,9 +280,6 @@ function deleteColumn(obj){
 
 function addKanbanIssue(colIdx,obj){
 	
-	//console.log("addKanbanIssue in");
-	//console.log("label" + obj.labelIdx);
-	//console.log(obj);
 	if(obj.labelName == null) 
 		obj.labelName = "";
 	if(obj.assigned == null) 
@@ -336,7 +347,7 @@ function deleteLabel(labelidx) {
 
 function setKanbanDetail(issueIdx){
 	
-	console.log("in setKanbanDetail     sfdsf");
+	console.log("in setKanbanDetail sfdsf");
 	
 	$.ajax({
 			type: "POST",
@@ -636,14 +647,10 @@ function editLabel(idx, color, name) {
 						var labellist = '<datalist id="LabelMenu">';
 				
 						$.each(data,function(index, obj) {
-							
 							labellist += '<option value="'+obj.labelName+'" data-id="'+obj.labelIdx+'"></option>';	
-						});
-				 	
+						});		 	
 						labellist += '</datalist>';
-
 						$('#searchContent').append(labellist);
-						
 					}
 			},error : function() {
 					console.log("Showlabel error");
@@ -714,6 +721,33 @@ function editLabel(idx, color, name) {
 	}
 
 
+	function getProjectMemberList(projectidx) {
+		
+		console.log(projectidx);
+		$.ajax({
+			url : "GetProjectMemberList.do",
+			data : {'projectIdx' : projectidx},
+			success : function(data) {
+				
+				console.log('GetProjectMemberList in');
+				console.log(data);
+				
+				var memberlist = '<datalist id="MemberMenu">';
+
+				$.each(data, function(index, obj) {
+					memberlist += '<option value="'+obj.name+'" data-id="'+obj.email+'">('+obj.email+')</option>';	
+				});		 	
+					memberlist += '</datalist>';
+				$('#searchContent').append(memberlist);
+				
+				
+			}, error : function() {
+				
+				
+			}
+			
+		})
+	}
 	
 	function getissueinfo(flagelement, projectidx) {
 
@@ -757,7 +791,7 @@ function editLabel(idx, color, name) {
 	            }
 			})
 		
-	}
+		}
 	}
 	
 
