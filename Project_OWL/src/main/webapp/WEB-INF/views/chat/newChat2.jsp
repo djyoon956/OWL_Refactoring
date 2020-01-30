@@ -583,10 +583,7 @@
 
              if(roomId){ 
                  document.getElementById('ulMessageList').innerHTML = ''; //메세지 화면 리셋 
-                 console.log("이프 룸아이디 밑에다.. 여기 타나요??");
-					//언더스코어 제이에서 어쩌구... 자꾸 에러 나서 .. 그리고 어케 사용하는 지 몰라서 포기........
-                 //var messageTemplate = document.getElementById('templateMessageList').innerHTML;
-
+                 console.log("이프 룸아이디 밑에다.. 여기 타나요??");					
               
                  
                  messageRef.off();
@@ -606,20 +603,16 @@
                  	  	this.ulMessageList.scrollTop = this.ulMessageList.scrollHeight; 
                  	  	this.roomTitle = val.roomTitle; 
                  }  */
-                 messageRef.limitToLast(50).on('child_added', function(data){
-                     	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~데이타 값은~~~~~~~~~~~~~~~~~~" + data + " / " + data.val());
-                     	var msgKey = data.val();
-                     	console.log("데이타 값은~~~~~~~~~~~~~~~~~~" + data + " / " + data.key + "/"+msgKey.userName);
+                 messageRef.limitToLast(50).on('child_added', function(data){                     	
+                     	var msgKey = data.val();                    	
            			 	messageListUp(data.key, msgKey.profileImg, msgKey.timestamp, msgKey.userName, msgKey.message);              				
       		 		
 							
                      }); 
              }else{
-           	  messageRef.limitToLast(50).on('child_added', function(data){
-                   	console.log("여기까지 오긴 하는 거니??~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+           	  messageRef.limitToLast(50).on('child_added', function(data){                  	
              	  data.forEach(function(childSnapshot) {
-							var msgKey = childSnapshot.key;
-         				console.log("메세지 로드 함수를 타긴 하는거야 머야??? " + msgKey);
+							var msgKey = childSnapshot.key;         				
                  }); 
            	  });
            } 
