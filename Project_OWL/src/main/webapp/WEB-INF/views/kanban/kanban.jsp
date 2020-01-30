@@ -264,16 +264,13 @@
 				});
 	});
 
-	/* let selectoption = '<option value="">Select</option>';
+ 	let selectoption = '<option value="">Select</option>';
 
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
-	
 		console.log("addIssueModal open!");
-		getIssueInfoForm("addIssue"); */
-
 		//칸반으로 옮김 
-		/* $.ajax({
+		 $.ajax({
 	 		type: "POST",
             url: "GetAddIssueForm.do",
             data: { projectIdx: ${project.projectIdx}},
@@ -305,9 +302,9 @@
             error: function () {
                 console.log("GetProjectMember error");
             }
-		})  */
+		})  
 
-	/* });   */
+ });  
 	
 	$('#addIssueModal').on('hidden.bs.modal', function(){
 		console.log('hidden 작동하니?');

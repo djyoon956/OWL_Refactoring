@@ -71,6 +71,16 @@ function initKanban(projectIdx){
     	  todayHighlight: true
 	 });
 
+		$('.editViewBtn').on('click', function(e){
+			    console.log($(this).parent().siblings().find("span"));
+			    if( $(this).parent().siblings().find("select").hasClass("hidden")){
+				    $(this).parent().siblings().find("select").removeClass("hidden");
+				    $(this).parent().siblings().find("span").addClass("hidden");
+			    } else {
+			    	$(this).parent().siblings().find("span").removeClass("hidden");
+				    $(this).parent().siblings().find("select").addClass("hidden");
+			    }
+			});
 } //initKanban 끝
 
 function addLabel(lbidx, lbcolor, lbnm) {
@@ -462,57 +472,7 @@ function editLabel(idx, color, name) {
 			});
 
 	}
-	 let selectoption = '<option value="">Select</option>';
-		//addIssueModal 모달이 오픈되면 !
-		$('#addIssueModal').on('show.bs.modal', function() {
-			console.log("addIssueModal open!");
-			getIssueInfoForm("addIssue");
-		 });
-		
-	 function getIssueInfoForm(opt) {
-			
-		 	$.ajax({
-		 		type: "POST",
-	            url: "GetAddIssueForm.do",
-	            data: { projectIdx : projectIdx },
-	            success: function (data) {
-	            	console.log("opt는 ?????????????");
-	            	console.log(opt);
-	            	if(opt == "addIssue"){
-	            	$('#assigned').empty();
-	            	$('#labelIdx').empty();
 
-					let member = data.member;
-					let label = data.label;
-					
-					let optlabel;
-					let optmember;
-
-					$('#assigned').append(selectoption);
-	                $('#labelIdx').append(selectoption);
-					
-	               $.each(member, function(index, element) {
-						optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
-	                 });
-	               
-	               $('#assigned').append(optmember);
-
-	                $.each(label, function(index, element) {
-	                 	 optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
-	                 });
-	                
-	                $('#labelIdx').append(optlabel);
-	            	} else if (opt == 'editIssue'){
-	            		
-	            		console.log("edit ISSSUE");
-	            	}
-	            },
-	            error: function () {
-	                console.log("GetProjectMember error");
-	            }
-			}) 
-			
-		}
 	
 	function editIssueDetailView(){
 		changeKanbanView("edit");
@@ -544,10 +504,20 @@ function editLabel(idx, color, name) {
 		
 		$("#datepicker-editIssue").val($("#issueDetailDueDate").text());
 	}	
-	function editIssueDetailOk() {
+	function editTitleViewBtn(){
+		console.log("edit title 클릭함");
+		if($("#issueDetailTitleEdit").hasClass("hidden")){
+			$("#issueDetailTitle").addClass("hidden");
+			$("#issueDetailTitleEdit").removeClass("hidden");
+		} else {
+			$("#issueDetailTitleEdit").addClass("hidden");
+			$("#issueDetailTitle").removeClass("hidden");
+		}
+
+	}
+	
+	
+	function editLabel(){
 		
 		
 	}
-	
- 
-	
