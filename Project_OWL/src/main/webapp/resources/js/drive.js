@@ -45,9 +45,6 @@ function initDrive(projectIdx){
 	 $.contextMenu({
          selector: '#driveTable tbody tr',
          build : function(trigger, e){
-        	 console.log(trigger);
-        	 console.log($(trigger[0]));
-        	 console.log(trigger[0].id);
         	 let isFolder = $(trigger[0]).hasClass("folder");
         	 return {
                  callback: function(key, options) {
@@ -58,14 +55,8 @@ function initDrive(projectIdx){
                        	 let renameElement = $(trigger[0]).find("td").first();
                     	 let oldText = $(trigger[0]).find("td span").first().text();
                     	 
-                    	 let fun = isFolder ? "renameFolder("+driveFileIdx+")" : "renameFile("+driveFileIdx+")";
-                    	 renameElement.html("<input id='driveFileRename' type='text' style='width : 70%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {"+fun+"}'>"
-                    			 							+"<button class='btn btn-default btn-sm ml-2' style='height : 32px;' onclick='"+fun+"'><i class='fas fa-check'></i></button>");
+                    	 renameElement.html(getRenameElementContent(isFolder, driveFileIdx, oldText));
                     	 $("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
-                    	 if(isFolder)
-                    		 deleteDriveFolder(driveFileIdx);
-                    	 else
-                    		 deleteDriveFile(driveFileIdx);
                      }else if(key == "restore"){
                     	 if(isFolder)
                     		 restoreFolderfromTrash(driveFileIdx);
@@ -76,7 +67,6 @@ function initDrive(projectIdx){
                         	 deleteFolderfromTrash(driveFileIdx);
                     	 else
                         	 deleteFilefromTrash(driveFileIdx);
-
                      }
                  },
                  items:{
@@ -334,22 +324,22 @@ function setIconView(data){
 	$.each(data.folders, function(index, element) {
 		console.log("in folder");
 		control += '<div class="col-sm-3">'
-					+ 	'<div class="card driveCard dropdown folder" style="cursor:pointer;" ondblclick="changeSelectedFolder('+element.driveIdx+',\''+element.folderName+'\')">'
+					+ 	'<div class="card driveCard dropdown folder" id="'+element.driveIdx+'" style="cursor:pointer;" ondblclick="changeSelectedFolder('+element.driveIdx+',\''+element.folderName+'\')">'
 					+ 		'<div class="more"  style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-					+			'<input type="checkbox" id="'+element.driveIdx+'" onclick="checkBox(this)" style="width:18px; height:18px;">'
+					+			'<input type="checkbox"  onclick="checkBox(this)" style="width:18px; height:18px;">'
 					+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
 					+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
 					+				'</a>'
 					+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 					+				'<ul class="list-style-none">'
-					+					'<li class="pl-2"><a href="#"  onclick="setRenameIconView('+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+					+					'<li class="pl-2"><a href="#"  onclick="setRenameIconView(this,'+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
 					+					'<li class="pl-2"><a href="#" onclick="deleteDriveFolder('+element.driveIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>'
 					+				'</ul>'                                                                                                                                                         
 					+			'</div>'                                                                                                                                                        
 					+		'</div>'                                                                                                                                                            
 					+		'<div class="card-body text-center">'                                                                                                                               
 					+			'<span style="color:#326295;"><i class="fas fa-folder fa-5x mb-4"></i></span>'
-					+			'<h4>' +element.folderName+ '</h4>'                                                                                                                                         
+					+			'<div class="driveCardContent"><h4>' +element.folderName+ '</h4></div>'                                                                                                                                         
 					+		'</div>'                                                                                                                                                            
 					+	 '</div>'                                                                                                                                                               
 					+  '</div>';     
@@ -454,7 +444,6 @@ function deleteDriveFile(driveFileIdx){
 	   		 success : function(data){
 	   			 if(data){
 	   				 callDirectoryData();
-	   				 successAlert("파일 삭제 완료");
 	   			 }else{
 	   				 errorAlert("파일 삭제 실패");
 	   			 }
@@ -612,9 +601,34 @@ function restoreFolderfromTrash(driveFileIdx) {
 }
 
 
-function setRenameIconView(){
+function setRenameIconView(obj, idx){
+	let element = $(".driveCard").filter("#"+idx).first();
+	let renameElement = element.find(".driveCardContent").first();
+	let oldText = renameElement.find("h4").text();
+	let isFolder = element.hasClass("folder");
+	console.log("is folder : "+isFolder);
 	
+	renameElement.html(getRenameElementContent(isFolder, idx, oldText));
+	$("#driveFileRename").selectRange(0, oldText.lastIndexOf('.'));
 }	
+
+
+function getRenameElementContent(isFolder, idx, oldText){
+	let fun = isFolder ? "renameFolder("+idx+")" : "renameFile("+idx+")";
+	return "<input id='driveFileRename' type='text' style='width : 60%; height : 32px;' value='"+oldText+"' onKeypress='javascript:if(event.keyCode==13) {"+fun+"}'>"
+				+ "<button class='btn btn-default btn-sm ml-2 mr-1' style='height : 32px; width : 30px;' onclick='"+fun+"'><i class='fas fa-check'></i></button>"
+				+ "<button class='btn  btn-danger btn-sm' style='height : 32px; width : 30px;' onclick='renameCancel(this,\""+oldText+"\","+isFolder+")'><i class='fas fa-times'></i></button>";
+}
+
+function renameCancel(obj, oldText, isFolder){
+	if(driveViewType == "tableView"){
+		if(isFolder)
+			$(obj).parent().html("<i class='fas fa-folder mr-3'></i><span>"+oldText+"</span>");
+		else
+			$(obj).parent().html("<i class='fas fa-file-alt mr-3'></i><span>"+oldText+"</span>");
+	}else
+		$(obj).parent().html("<h4>"+oldText+"</h4>");
+}
 
 function renameFile(driveFileIdx){
 	console.log("in renameFile");
