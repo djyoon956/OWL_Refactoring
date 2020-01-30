@@ -55,23 +55,48 @@ function addFolder(folder) {
 $(function(){
 	initDrive("${project.projectIdx}");
 
-	$.jstree.defaults.core.themes.variant = "large";
-	$('#jstree').jstree({
-			"core" : {
-				"animation" : 0,
-				"check_callback" : true,
-				'force_text' : true,
-				"themes" : { "stripes" : true }
-			  },
-			"state" : {"opened" : true, "selected": true},
-			"types" : {
-				"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
-				"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
-				"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
-			},
-			"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
+	$.ajax({
+		url:"DriveList.do",
+		dataType:"json",
+		data:{projectIdx:${project.projectIdx}},
+		success:function(data){
+			let folder;		
+			$.each(data, function(index, element){
+				folder = new folderInfo();
+				if(element.ref == 0){
+					element.ref = "#";
+					folder.state= {"opened" : true, "selected" : true};
+				}								
+				folder.id = element.driveIdx;
+			    folder.parent = element.ref;
+			    folder.text = element.folderName;
+			    addFolder(folder);
+			});
 
-		}).on('rename_node.jstree', function (e, data) {
+			console.log(folderList);
+			$.jstree.defaults.core.themes.variant = "large";
+			$('#jstree').jstree({
+					"core" : {
+						"animation" : 0,
+						"check_callback" : true,
+						'force_text' : true,
+						"themes" : { "stripes" : true },
+					    'data' : folderList
+					  },
+					  "types" : {
+							"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
+							"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
+							"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
+						},
+						"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
+				});
+
+			// default folder
+			setDirectoryData(folderList[0].id,folderList[0].text);
+		}
+	});
+
+	$('#jstree').bind('rename_node.jstree', function (e, data) {
 			if(data.node.id.startsWith("j1_")){	
 			jQuery.ajaxSettings.traditional = true;				
 			  $.ajax({
@@ -84,18 +109,6 @@ $(function(){
 	        			 },
 	        		success:function(idx){
 		        		data.node.id = idx; 
-/* 		        	let element = $("#jstree").find("#j1_1").first();
-		        		element.attr("id",idx);
-		        		element.attr("aria-labelledby", idx+"_anchor")
-		        		element.find("a").first().attr("id", idx+"_anchor");
-
-						let folder = new folderInfo();
-						folder.id = idx;
-					    folder.parent = data.node.parent;
-					    folder.text = data.text;
-					    $('#jstree').jstree(true).settings.core.data.push(folder);
-					    $('#jstree').jstree(true).refresh();
-					    $("#jstree").jstree("select_node", "#"+idx); */
 		        		driveRefresh();
 	        		}
 	    		});
@@ -115,7 +128,7 @@ $(function(){
 	    		});
 		       
 			}
-		}).on('move_node.jstree', function (e, data) {
+		}).bind('move_node.jstree', function (e, data) {
 			//잘라내기 후 paste 할 때
 			jQuery.ajaxSettings.traditional = true				
 			  $.ajax({
@@ -133,7 +146,7 @@ $(function(){
 		        		driveRefresh();
 	        		}
 	    		});
-			}).on('paste.jstree', function (e, data) {
+			}).bind('paste.jstree', function (e, data) {
  	 			//복사 후 paste 할 때
  	 			if(data.mode =="copy_node"){ 	 	 			
 				jQuery.ajaxSettings.traditional = true				
@@ -152,12 +165,10 @@ $(function(){
 		        		}
 		    		});
  	 			}
- 			}).on('delete_node.jstree', function (e, data) {
+ 			}).bind('delete_node.jstree', function (e, data) {
 				deleteDriveFolder(data.node.id, data.node.parent);
  			});
 
-	driveRefresh();
-	
 	$("#createFolder").click(function(){
 		var ref = $('#jstree').jstree(true),
 		sel = ref.get_selected();
@@ -168,61 +179,7 @@ $(function(){
 			ref.edit(sel);					
 		} 
 	});
-
-
-	$("#deleteFolder").click(function(){
-		console.log("delete");
-		var ref = $('#jstree').jstree(true),
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		ref.delete_node(sel);
-	});		
-		
-
 	
-	
-
-	//file drag and drop 기능
-	var obj = $("#dragandrophandler");
-	obj.on('dragenter', function (e){
-	    e.stopPropagation();
-	    e.preventDefault();
-	    $(this).addClass('dragBorder');
-		 obj.text("이 곳에 파일을 Drag & Drop 해주세요.");
-	});
-	obj.on('dragover', function (e) 
-	{
-	     e.stopPropagation();
-	     e.preventDefault();
-	});
-	obj.on('drop', function (e) 
-	{	 
-	     $(this).removeClass('dragBorder');
-	     obj.text('');
-	     e.preventDefault();
-	     var files = e.originalEvent.dataTransfer.files;	 
-	     //We need to send dropped files to Server
-	     handleFileUpload(files,obj);
-	});
-	$(document).on('dragenter', function (e) 
-	{
-	    e.stopPropagation();
-	    e.preventDefault();
-	});
-	$(document).on('dragover', function (e) 
-	{
-	  e.stopPropagation();
-	  e.preventDefault();
-	  obj.removeClass('dragBorder');
-	  obj.text('');
-	});
-	$(document).on('drop', function (e) 
-	{
-	    e.stopPropagation();
-	    e.preventDefault();
-	});	
-
-
 	//대소문자 구분 없이
 	$.extend($.expr[":"], {
 		"containsIN": function(elem, i, match, array) {
@@ -284,7 +241,6 @@ function sendFileToServer(formData,status){
 
 
 <div class="container-fluid mt-3">
-    <input type="hidden" value="${project.projectIdx}" id="theProject">
     <div class="row">
         <div class="col-md-3">
             <h2 style="padding-left: 25px;">
@@ -298,15 +254,9 @@ function sendFileToServer(formData,status){
                     <div id="jstree" class="demo" style="margin-top:1em; min-height:200px;">
 
                     </div>
-
                     <div>
-                        <button id="trashBtn" class="btn-link" style="color:#326295;"><i
-                                class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
+                        <button id="trashBtn" class="btn-link" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
                     </div>
-
-                    <!-- 			<a href="Trash.do" style="color:#4f5052; cursor: pointer;"><span style="color:#326295;">
-							<i class="fas fa-trash-alt"></i></span>&nbsp;&nbsp;<b>휴지통</b>
-						</a> -->
                 </div>
             </div>
         </div>

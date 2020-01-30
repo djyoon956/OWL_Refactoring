@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.owl.drive.dao.DriveDao;
 import com.owl.drive.dto.DriveFile;
 import com.owl.drive.dto.DriveFolder;
+import com.owl.helper.UploadHelper;
 
 @Service
 public class DriveService {
@@ -172,12 +173,15 @@ public class DriveService {
 	}
 	
 	
-	public boolean renameFile(int driveFileIdx, String fileName) {
+	public boolean renameFile(String uploadPath, int projectIdx, String[] refs, int driveIdx, int driveFileIdx, String newFileName) {
 		boolean result =false;
 		DriveDao dao = getDriveDao();
 
 		try {
-			result = dao.renameFile(driveFileIdx, fileName) > 0 ? true : false;
+			result = UploadHelper.renameDriveFile(uploadPath, projectIdx, refs, driveIdx, dao.getFileName(driveFileIdx), newFileName);
+			
+			if(result)
+				result = dao.renameFile(driveFileIdx, newFileName) > 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
