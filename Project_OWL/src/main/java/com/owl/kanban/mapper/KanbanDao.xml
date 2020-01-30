@@ -177,9 +177,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateIssueContent" parameterType="com.owl.kanban.dto.Issue">
 		update issue set content=#{content} where issueidx= #{issueIdx}
 	</update>
-	
+	<!-- #{priorityCode, jdbcType=VARCHAR} -->
 	<update id="updateIssuePriority">
-		update issue set prioritycode=#{prioritycode} where issueidx= #{issueIdx}
+		update issue set prioritycode=#{priorityCode} where issueidx= #{issueIdx}
 	</update>
 	
 	<update id="updateIssueDueDate">

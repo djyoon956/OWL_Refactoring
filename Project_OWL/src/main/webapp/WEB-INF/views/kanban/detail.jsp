@@ -180,7 +180,7 @@
                     <div class="col-8">
                            <div class="row">
 							<div class="col-10">
-							  <div class="row hidden" id="editLabelBox" >
+							  <div class="row hidden" id="editPriorityBox" >
 								<div class="col-8">
 									<select class="select2 custom-select" name=priorityCode id="priorityCodeEdit">
 										<option value="" id="">Select</option>
@@ -191,7 +191,7 @@
 									</select> 
 								</div>
 								<div class="col-1"> 
-							   		<button class="btn btn-primary" onclick="editIssueLabelOk()">save</button>
+							   		<button class="btn btn-primary" onclick="editIssuePriorityOk()">save</button>
 							    </div>
 							</div>
 							<span id="issueDetailPriority">high</span>

@@ -488,6 +488,19 @@ public class KanbanService {
 		return result;
 	}
 
+	public boolean updateIssuePriority(Issue issue, String email) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			result = dao.updateIssuePriority(issue) > 0 ? true : false;
+			insertLog(issue.getIssueIdx(), "update issue priority", email, dao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	public List<Issue> searchAssignee(int projectIdx, String content){
 		KanbanDao dao = getKanbanDao();
 		List<Issue> issue = null;

@@ -722,17 +722,17 @@ function editLabel(idx, color, name) {
 		});
 	}
 
-	function editIssueLabelOk() {
+	function editIssuePriorityOk() {
 		$.ajax({
-			url : "UpdateIssueLabel.do",
+			url : "UpdateIssuePriority.do",
 		    method : "POST",
-		    data : {issueIdx : $("#issueIdxNum").val(), content :$('#isContentEdit').summernote('code')},
+		    data : {issueIdx : $("#issueIdxNum").val(), priorityCode : $('#priorityCodeEdit').val()},
 		    success : function(data){
-		    	console.log("UpdateIssueContent.do");
+		    	console.log("UpdateIssueLabel.do");
 		    	console.log(data);
 		    	setKanbanDetail($("#issueIdxNum").val());
-		    	$("#editContentBox").addClass("hidden");
-				$("#issueDetailContent").removeClass("hidden");
+		    	$("#editPriorityBox").addClass("hidden");
+				$("#issueDetailPriority").removeClass("hidden");
 		    }, error : function() {
 		    	console.log('edit issue contnet in');
 		    }
