@@ -55,23 +55,47 @@ function addFolder(folder) {
 $(function(){
 	initDrive("${project.projectIdx}");
 
-	$.jstree.defaults.core.themes.variant = "large";
-	$('#jstree').jstree({
-			"core" : {
-				"animation" : 0,
-				"check_callback" : true,
-				'force_text' : true,
-				"themes" : { "stripes" : true }
-			  },
-			"state" : {"opened" : true, "selected": true},
-			"types" : {
-				"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
-				"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
-				"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
-			},
-			"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
+	$.ajax({
+		url:"DriveList.do",
+		dataType:"json",
+		data:{projectIdx:${project.projectIdx}},
+		success:function(data){
+			let folder;		
+			$.each(data, function(index, element){
+				folder = new folderInfo();
+				if(element.ref == 0){
+					element.ref = "#";
+					folder.state= {"opened" : true, "selected" : true};
+				}								
+				folder.id = element.driveIdx;
+			    folder.parent = element.ref;
+			    folder.text = element.folderName;
+			    addFolder(folder);
+			});
 
-		}).on('rename_node.jstree', function (e, data) {
+			$.jstree.defaults.core.themes.variant = "large";
+			$('#jstree').jstree({
+					"core" : {
+						"animation" : 0,
+						"check_callback" : true,
+						'force_text' : true,
+						"themes" : { "stripes" : true },
+					    'data' : folderList
+					  },
+					  "types" : {
+							"#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
+							"root" : { "icon" : "fas fa-folder", "valid_children" : ["default"] },
+							"default" : { "icon" : "fas fa-folder", "valid_children" : ["default","root"] }
+						},
+						"plugins" : [ "contextmenu", "dnd", "search", "state", "types", "wholerow"]
+				});
+
+			// default folder
+			setDirectoryData(folderList[0].id,folderList[0].text);
+		}
+	});
+
+	$('#jstree').bind('rename_node.jstree', function (e, data) {
 			if(data.node.id.startsWith("j1_")){	
 			jQuery.ajaxSettings.traditional = true;				
 			  $.ajax({
@@ -84,18 +108,6 @@ $(function(){
 	        			 },
 	        		success:function(idx){
 		        		data.node.id = idx; 
-/* 		        	let element = $("#jstree").find("#j1_1").first();
-		        		element.attr("id",idx);
-		        		element.attr("aria-labelledby", idx+"_anchor")
-		        		element.find("a").first().attr("id", idx+"_anchor");
-
-						let folder = new folderInfo();
-						folder.id = idx;
-					    folder.parent = data.node.parent;
-					    folder.text = data.text;
-					    $('#jstree').jstree(true).settings.core.data.push(folder);
-					    $('#jstree').jstree(true).refresh();
-					    $("#jstree").jstree("select_node", "#"+idx); */
 		        		driveRefresh();
 	        		}
 	    		});
@@ -109,13 +121,12 @@ $(function(){
 	        			 },
 	        		success:function(idx){
 		        		data.node.id = idx;
-		        		console.log(data.node);	
 		        		driveRefresh();
 	        		}
 	    		});
 		       
 			}
-		}).on('move_node.jstree', function (e, data) {
+		}).bind('move_node.jstree', function (e, data) {
 			//잘라내기 후 paste 할 때
 			jQuery.ajaxSettings.traditional = true				
 			  $.ajax({
@@ -133,7 +144,7 @@ $(function(){
 		        		driveRefresh();
 	        		}
 	    		});
-			}).on('paste.jstree', function (e, data) {
+			}).bind('paste.jstree', function (e, data) {
  	 			//복사 후 paste 할 때
  	 			if(data.mode =="copy_node"){ 	 	 			
 				jQuery.ajaxSettings.traditional = true				
@@ -152,12 +163,10 @@ $(function(){
 		        		}
 		    		});
  	 			}
- 			}).on('delete_node.jstree', function (e, data) {
+ 			}).bind('delete_node.jstree', function (e, data) {
 				deleteDriveFolder(data.node.id, data.node.parent);
  			});
 
-	driveRefresh();
-	
 	$("#createFolder").click(function(){
 		var ref = $('#jstree').jstree(true),
 		sel = ref.get_selected();
@@ -168,33 +177,37 @@ $(function(){
 			ref.edit(sel);					
 		} 
 	});
-
-
-	$("#deleteFolder").click(function(){
-		console.log("delete");
-		var ref = $('#jstree').jstree(true),
-			sel = ref.get_selected();
-		if(!sel.length) { return false; }
-		ref.delete_node(sel);
-	});		
-		
+	
 	//대소문자 구분 없이
 	$.extend($.expr[":"], {
 		"containsIN": function(elem, i, match, array) {
+			return (elem.value || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+		},
+		"containsININ": function(elem, i, match, array) {
 			return (elem.textContent || elem.innerText || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
 		}
-		});
-	
+	});
+		
 	//검색 기능
 	let to = false;
 	$('#searchText').keyup(function () {
 		if(to) { clearTimeout(to); }
 		to = setTimeout(function () {
-			var searchText = $('#searchText').val();
-		     $(".driveCard").hide();
-		     var temp = $(".driveCard >.card-body > h4:containsIN('" + v + "')");
-		     $(temp).parent().parent().show();
-			$('#jstree').jstree(true).search(searchText);
+			var v = $('#searchText').val();
+
+			if(driveViewType == "tableView"){
+	                $("#driveTable > tbody > tr").hide();
+	                let temp = $("#driveTable > tbody > tr > td:containsININ('" + v + "')");				
+	                $(temp).parent().show();				
+					$('#driveTable').DataTable().column().search(v).draw();
+					
+			}else{
+				$(".driveCard").parent().hide();     
+			     let temp = $(".driveCardContent>input:containsIN('" + v + "')");
+				 let cloneTemp = $(temp).parent().parent().parent().parent();
+				 setSearchView(cloneTemp);
+			}	 
+			$('#jstree').jstree(true).search(v);
 		}, 100);
 	});
 
@@ -202,7 +215,6 @@ $(function(){
 });
 
 function sendFileToServer(formData,status){
-	console.log(formData);
     var uploadURL ="http://hayageek.com/examples/jquery/drag-drop-file-upload/upload.php"; //Upload URL
     var extraData ={}; //Extra Data.
     var jqXHR=$.ajax({
@@ -268,6 +280,10 @@ function sendFileToServer(formData,status){
 		                <span style="font-size : large; font-weight:bold" class="hidden" id="trashName">
 		                	<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통
 		               	</span>
+		               	<div id="searchFile" class="hidden">
+			                <input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>
+			                <a href='#' onclick='ReturnCheck()'><i class='fas fa-times'></i></a>
+		               	</div>		               	
 		               	<div id="allCheck" class="hidden">
 		               		<button type='button' class='driveBtn btn-primary'>삭제</button>&nbsp;&nbsp;
 		               		<button type='button' class='driveBtn btn-primary'>이동</button>&nbsp;&nbsp;		               		
@@ -303,20 +319,6 @@ function sendFileToServer(formData,status){
 	            </div>
             </div>
 
-            <div class="searchDriveMenu" style="display:none;">
-                <input type='text' id='searchText' style='width: 40%; height: 30px; border-left-width: 0px;'>
-                <a href='#' onclick='Return()'><i class='fas fa-times'></i></a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-		                <div class="drivegroup" style="position: absolute; right: 0px; top: 0px;">
-		                    <button class="btn driveViewBtn" id="tableView">
-		                        <i class="fas fa-list fa-2x"></i>
-		                    </button>
-		                    <button class="btn driveViewBtn active" id="iconView" disabled>
-		                        <i class="fas fa-th-large fa-2x"></i>
-		                    </button>
-		                </div>
-            </div>
-
             <div class="row" style="margin : 10px 10px; margin-top: 0px;">
                 <div class="col-lg-12">
                     <div id="dragandrophandler" style="height: 630px; overflow-y: auto; overflow-x:hidden;">
@@ -331,7 +333,9 @@ function sendFileToServer(formData,status){
                         </div>
                         
                         <div id="driveIconViewBox"></div>
-
+						
+						<div id="driveSearchViewBox" class="hidden"></div>
+							
                         <div id="driveTableViewBox" class="hidden">
                             <table id="driveTable" class="table table-hover table-bordered text-center">
                                 <thead>
