@@ -39,6 +39,8 @@ max-width: 270px;
 	}	
 	 
  $("#editBtn").click(function(){
+	 console.log($("#myProjectTitle").text());
+	 return;
 	 let myFavorite =$(".favoriteCheckbox:checked").val() == "on" ? 1 : 0;
 		$.ajax({
 	        url:"EditMyProject.do",
@@ -49,7 +51,7 @@ max-width: 270px;
 	        success:function(data){
 	         console.log("update-------");
 	         console.log(data);
-		         if(data.favorite ==1){
+/* 		         if(data.favorite ==1){
 			         let newFavorite = '<li class="sidebar-item" id="'+data.projectIdx+'" style="position:relative;">"
 				         					+ '<input id="projectFavorite" type="hidden" value="'+data.favorite+'">'
 		        	 						+ '<a href="Project.do?projectIdx="'+data.projectIdx+'" class="sidebar-link">'
@@ -65,7 +67,7 @@ max-width: 270px;
 	
 	
 	
-				  }
+				  } */
 	       }
 	   });
 	 });
