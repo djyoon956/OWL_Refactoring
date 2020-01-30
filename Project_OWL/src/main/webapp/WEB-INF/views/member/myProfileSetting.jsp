@@ -136,7 +136,7 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
                 </button>
-            </div>
+            </div> 
             <div class="modal-body">
                 <div class="default-tab">
                     <ul class="nav nav-tabs mb-3" role="tablist">
@@ -180,7 +180,7 @@
                                     <div class="basic-form">
                                         <form action="UpdateMember.do" method="post" enctype="multipart/form-data">
                                             <div class="text-center mb-3" id="changeImg">
-                                                <img id="profileImage" src="upload/${member.profilePic}"
+                                                <img id="profileImage" src="upload/member/${member.profilePic}"
                                                     onerror="this.src='resources/images/login/profile.png'"
                                                     class="rounded-circle"
                                                     style="width: 180px; height: 180px; cursor: pointer;"

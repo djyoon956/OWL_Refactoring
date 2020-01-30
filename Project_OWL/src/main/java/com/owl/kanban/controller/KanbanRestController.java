@@ -331,7 +331,22 @@ public class KanbanRestController {
 		
 		return result;
 	}
-	
+	@RequestMapping(value="UpdateIssueContent.do", method = RequestMethod.POST)
+	public boolean updateIssueContent(Issue issue,Principal principal) {
+		System.out.println("updateIssueTitle in");
+		System.out.println(issue);
+		boolean result = service.updateIssueContent(issue, principal.getName());
+		
+		return result;
+	}
+	@RequestMapping(value="UpdateIssuePriority.do", method = RequestMethod.POST)
+	public boolean updateIssuePriority(Issue issue,Principal principal) {
+		System.out.println("updateIssueTitle in");
+		System.out.println(issue);
+		boolean result = service.updateIssuePriority(issue, principal.getName());
+		
+		return result;
+	}	
 	/**
 	 * 칸반 assignee로 검색
 	 * @author 배인영
@@ -341,10 +356,10 @@ public class KanbanRestController {
 	 * @return
 	 */
 	@RequestMapping("SearchAssignee.do")	
-	public List<Issue> searchAssignee(String email){
+	public List<Issue> searchAssignee(int projectIdx, String email){
 		System.out.println("searchAssignee in controller");
 		System.out.println(email);
-		List<Issue> issue = service.searchAssignee(email);
+		List<Issue> issue = service.searchAssignee(projectIdx, email);
 		//System.out.println(issue);
 		return issue;
 	}

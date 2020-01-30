@@ -466,7 +466,7 @@ public class KanbanService {
 		
 		try {
 			result = dao.updateIssueTitle(issue) > 0 ? true : false;
-			insertLog(issue.getIssueIdx(), "update issue title this", email, dao);
+			insertLog(issue.getIssueIdx(), "update issue title", email, dao);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -474,14 +474,39 @@ public class KanbanService {
 		return result;
 	}
 	
-	
+	public boolean updateIssueContent(Issue issue, String email) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			result = dao.updateIssueContent(issue) > 0 ? true : false;
+			insertLog(issue.getIssueIdx(), "update issue content", email, dao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
-	public List<Issue> searchAssignee(String email){
+	public boolean updateIssuePriority(Issue issue, String email) {
+		KanbanDao dao = getKanbanDao();
+		boolean result = false;
+		
+		try {
+			result = dao.updateIssuePriority(issue) > 0 ? true : false;
+			insertLog(issue.getIssueIdx(), "update issue priority", email, dao);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	public List<Issue> searchAssignee(int projectIdx,String email){
 		KanbanDao dao = getKanbanDao();
 		List<Issue> issue = null;
 		
 		try {
-			issue = dao.searchAssignee(email);
+			issue = dao.searchAssignee(projectIdx, email);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
