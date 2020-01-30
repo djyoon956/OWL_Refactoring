@@ -1,3 +1,4 @@
+
 let projectIdx;
 
 
@@ -187,7 +188,16 @@ function initKanban(projectIdx){
 			});
 
 	
+		
+		
+
+		
+		
 } //initKanban 끝
+
+
+
+
 
 
 function searchAppend(data) {

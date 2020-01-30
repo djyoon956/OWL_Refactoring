@@ -135,8 +135,33 @@
 	height:60%;
 }
 </style>
+ <!-- test textcomplete -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>  -->
 <script>
   $(function(){
+/* 		var mentions = ['yuku_t'];
+		
+		$('#replycontent').textcomplete({
+		    html: {
+		        match: /\B@(\w*)$/,
+		        search: function (term, callback) {
+		            callback($.map(mentions, function (mention) {
+		                return mention.indexOf(term) === 0 ? mention : null;
+		            }));
+		        },
+		        index: 1,
+		        replace: function (mention) {
+		            return '@' + mention + ' ';
+		        }
+		    }
+		}).overlay([
+		    {
+		        match: /\B@\w+/g,
+		        css: {
+		            'background-color': '#d8dfea'
+		        }
+		    }
+		]); */
 
 	  function check() {
 	
@@ -337,6 +362,12 @@
 					})   
 			}
 		}) 
+
+
+
+
+
+		
 });
 </script>
 
@@ -383,6 +414,20 @@
                 </a>
               <!-- ------------------------------------------------------------- -->
              </c:if>
+             
+             <!-- ------------Test------------------ -->
+<!--              <div class="float-right">
+                   <div class="input-group">
+                        <input type="text" id="searchTestContent" class="form-control" placeholder="테스트중" >
+                            <div class="input-group-append">
+                                 <span class="input-group-text" id="basic-addon2" style="background-color: #326295"><button class="btn btn-primary btn-link" id="kanbanSearchTestBtn"><i class="fas fa-search" style="color:#f8f9fa"></i></button></span>
+                        </div>
+                   </div>
+              	</div> -->
+              	
+             <!-- ----------------------------------- -->
+              	
+              	
              <div class="float-right">
                    <div class="input-group">
                         <input type="text" id="searchContent" class="form-control" placeholder="검색어를 입력하세요" aria-describedby="basic-addon2" >
@@ -432,8 +477,6 @@
                      </div>
                    </div>
         
-        
-        
             <!--  open issue -->
             <!--  openIssueColumn -->
 
@@ -444,8 +487,7 @@
                     </h4>
                 </div>
                 <ul class="connectedSortable columnBody sortableCol" style="background-color:#bdbbbb">
-                    <!-- <li class="issuePiece d-none">Item 1</li> -->
-                    <!-- 	<li class="issuePiece"></li> -->
+
                 </ul>
             </div>
             <!--  close issue -->
@@ -461,9 +503,6 @@
                 </ul>
             </div>
             <div id="kanbanIn"> </div>
-       
-           
-
         </div>
     </div>
     

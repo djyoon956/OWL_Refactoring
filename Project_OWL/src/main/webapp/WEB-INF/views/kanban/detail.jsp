@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script>
 
+
+</script>
 <div class="container-fluid mt-2 hidden" style="padding: 25px;" id="kanbanDetailBox" >	
 	<input type="hidden" id="issueIdxNum">
 	
@@ -129,7 +132,7 @@
                 </div>
                   <div class="row container-fluid">
 						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
-						<input type="text" id="replycontent" name="replycontent" style="resize: none; width:75%">
+						<textarea id="replycontent" name="replycontent" style="resize: none; width:75%"></textarea>
 						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px">Comment</button>
             </div>
             
