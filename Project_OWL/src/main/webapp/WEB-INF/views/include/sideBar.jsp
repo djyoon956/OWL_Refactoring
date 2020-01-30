@@ -25,6 +25,19 @@ max-width: 270px;
 	        mode: 'complex'
     });
 
+	 if($("#wholeFavorite > li").length >0){
+			$(".sidebar-link.has-arrow.waves-effect.favoriteArrow").addClass("active");
+			$("#wholeFavorite").addClass("in");			
+			$(".sidebar-link.has-arrow.waves-effect.projectArrow").removeClass("active");
+			$("#projectlist").removeClass("in");
+					
+	}else{
+			$(".sidebar-link.has-arrow.waves-effect.favoriteArrow").removeClass("active");
+			$("#wholeFavorite").removeClass("in");
+			$(".sidebar-link.has-arrow.waves-effect.projectArrow").addClass("active");
+			$("#projectlist").addClass("in");
+	}	
+	 
  $("#editBtn").click(function(){
 	 let myFavorite =$(".favoriteCheckbox:checked").val() == "on" ? 1 : 0;
 		$.ajax({
@@ -34,7 +47,25 @@ max-width: 270px;
 		        	  projectColor: $("#nowColor").val(),
 		        	  favorite: myFavorite},
 	        success:function(data){
-	         location.reload();   
+	         console.log("update-------");
+	         console.log(data);
+		         if(data.favorite ==1){
+			         let newFavorite = '<li class="sidebar-item" id="'+data.projectIdx+'" style="position:relative;">"
+				         					+ '<input id="projectFavorite" type="hidden" value="'+data.favorite+'">'
+		        	 						+ '<a href="Project.do?projectIdx="'+data.projectIdx+'" class="sidebar-link">'
+             								+ '<i class="mdi mdi-checkbox-blank-circle" style="color: "'+data.projectColor+'";"></i>'
+             								+ '<span class="hide-menu" id="projectName">${list.projectName}</span>'
+             								
+             			
+             		</a>
+             	</li> 
+	
+			      }else{
+	
+	
+	
+	
+				  }
 	       }
 	   });
 	 });
@@ -49,7 +80,7 @@ max-width: 270px;
 	         location.reload();   
 	       }
 	   }); 
-	 });    
+	 });    	
  });
 
  function thisProject(obj){
@@ -71,6 +102,7 @@ max-width: 270px;
 	           }       
 	     }); 
 	} 
+	
 </script>
 <aside class="left-sidebar mySetting" data-sidebarbg="skin5">
     <div class="scroll-sidebar mySetting">
@@ -84,8 +116,8 @@ max-width: 270px;
                         <li class="sidebar-item"><a href="Calendar.do" class="sidebar-link"><i class="mdi mdi-calendar"></i><span class="hide-menu">CALENDAR</span></a></li>
                     </ul>
                 </li>
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-star-outline"></i> <span class="hide-menu">FAVORITES</span></a>
-                    <ul aria-expanded="true" class="mySetting collapse first-level">
+                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect favoriteArrow" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-star-outline"></i> <span class="hide-menu">FAVORITES</span></a>
+                    <ul aria-expanded="true" class="mySetting collapse first-level favorite" id="wholeFavorite">
                        <c:forEach var="list" items="${projectList}">
                        	<c:if test="${list.favorite == 1}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
@@ -101,8 +133,8 @@ max-width: 270px;
                 </li>
                 <li id="sidebarLable" class="hide-menu">PROJECT</li>    
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark" type= "button" data-toggle="modal" data-target="#newProject"><i class="mdi mdi-plus"></i><span class="hide-menu">NEW PROJECT</span></a></li>           
-                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">PROJECT LIST</span></a>
-                    <ul aria-expanded="false" class="mySetting collapse  first-level" id="projectlist">
+                <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect projectArrow" href="javascript:void(0)" aria-expanded="true"><i class="mdi mdi-laptop-windows"></i><span class="hide-menu">PROJECT LIST</span></a>
+                    <ul aria-expanded="true" class="mySetting collapse first-level" id="projectlist">
 	  					<c:forEach var="list" items="${projectList}">
 	                    	<li class="sidebar-item" id="${list.projectIdx}" style="position:relative;">
 	                    		<input id="projectFavorite" type="hidden" value="${list.favorite}">

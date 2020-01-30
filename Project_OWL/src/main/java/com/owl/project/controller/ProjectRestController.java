@@ -38,19 +38,20 @@ public class ProjectRestController {
 	
 	//Sidebar의 프로젝트 목록 수정
 	@RequestMapping("EditMyProject.do")
-	public  boolean updateProjectList(String projectIdx, String favorite, String projectColor, ProjectList projectlist, Principal principal) {
-		boolean result = false;
+	public  ProjectList updateProjectList(int projectIdx, int favorite, String projectColor,  Principal principal) {
+		ProjectList projectlist = new ProjectList();
 		try {
 			projectlist.setEmail(principal.getName());
-			projectlist.setProjectIdx(projectlist.getProjectIdx());
-			projectlist.setFavorite(projectlist.getFavorite());
-			projectlist.setProjectColor(projectlist.getProjectColor());
-			result = service.updateProjectList(projectlist);						
+			projectlist.setProjectIdx(projectIdx);
+			projectlist.setFavorite(favorite);
+			projectlist.setProjectColor(projectColor);
+			
+			service.updateProjectList(projectlist);						
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return result;
+		return projectlist;
 	}
 	
 	//새 프로젝트 추가

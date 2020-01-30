@@ -43,18 +43,16 @@ public class ProjectService {
 	}
 
 	// Sidebar의 프로젝트 목록 수정
-	public boolean updateProjectList(ProjectList projectlist) {
+	public void updateProjectList(ProjectList projectlist) {
 		ProjectDao projectDao = getProjectDao();
-		boolean result = false;
 
 		try {
-			result = projectDao.updateProjectList(projectlist) > 0 ? true : false;
+			projectDao.updateProjectList(projectlist);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return result;
 	}
 
 	
