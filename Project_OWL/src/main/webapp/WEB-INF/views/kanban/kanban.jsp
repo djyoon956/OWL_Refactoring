@@ -135,15 +135,9 @@
 	height:60%;
 }
 </style>
- <!-- test textcomplete -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.7.1/jquery.textcomplete.min.js"></script>
+
 <script>
   $(function(){
-
-	
- 
-
-
 
  
 	  function check() {
@@ -346,15 +340,13 @@
 			}
 		}) 
 
+$('#projectIdxNum').val( ${project.projectIdx});
 
-
-
-
-		
 });
 </script>
 
 <div id="totalbody" class="container-fluid mt-3">
+<input type="hidden" id="projectIdxNum">
     <div id="kanbanMainBox">
 
         <div class="row">
