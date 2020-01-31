@@ -190,7 +190,7 @@ function initKanban(projectIdx){
 	
 
 		 /*datwpicker*/
-		 	 //$('.mydatepicker').datepicker();
+
 		 		 $('#datepicker-autoclose, #datepicker-editIssue').datepicker({
 		 			 dateFormat: 'yy-mm-dd' ,
 		 	   		  autoclose: true,
@@ -232,7 +232,8 @@ function initKanban(projectIdx){
 		 				//console.log('InsertIssueBtn 클릭되니1');
 		  				//console.log('InsertIssueBtn 클릭되니1');
 		 				//console.log('labelIdx :' + $('#labelIdx').val());
-		 				
+		 				console.log("날짜 val ");
+		 				console.log($('#datepicker-autoclose').val());
 		 			    let formData = new FormData();
 		 			    formData.append("projectIdx",projectIdx);
 
