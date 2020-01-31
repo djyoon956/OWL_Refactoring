@@ -43,9 +43,22 @@ public class DashBoardRestController {
 		return service.getMyIssueTasks(principal.getName());
 	}
 	
+	/**
+	 * 본인에게 할당된 이슈 진행률(프로젝트 별 in project)
+	 * @author 이정은
+	 * @since 2020/01/31 
+	 * @param projectIdx
+	 * @param principal
+	 * @return List<ProjectProgress>
+	 */
 	@RequestMapping("MyProgress.do")
 	public List<ProjectProgress> getProgressChart(int projectIdx, Principal principal) {
 		return service.getProgressChart(principal.getName(), projectIdx);
+	}
+	
+	@RequestMapping("Progress.do")
+	public List<ProjectProgress> getProjectChart(int projectIdx) {
+		return service.getProjectChart(projectIdx);
 	}
 
 	/**

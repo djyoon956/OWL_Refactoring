@@ -63,7 +63,7 @@ public class DashBoardService {
 	}
 
 	/**
-	 * 본인에게 할달된 이슈 진행률(프로젝트 별)
+	 * 본인에게 할당된 이슈 진행률(프로젝트 별)
 	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @param email
@@ -104,6 +104,14 @@ public class DashBoardService {
 		return results;
 	}
 	
+	/**
+	 * 본인에게 할당된 이슈 진행률(프로젝트 별 in Project)
+	 * @author 이정은
+	 * @since 2020/01/31
+	 * @param assigned
+	 * @param projectIdx
+	 * @return List<ProjectProgress>
+	 */
 	public List<ProjectProgress> getProgressChart(String assigned, int projectIdx) {
 		DashBoardDao dao = getDashBoardDao();
 		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
@@ -119,10 +127,28 @@ public class DashBoardService {
 	}
 	
 	
+	/**
+	 * 프로젝트 내의 할당된 이슈 진행률(프로젝트 별 in Project)
+	 * @author 이정은
+	 * @since 2020/01/31
+	 * @param projectIdx
+	 * @return List<ProjectProgress>
+	 */
+	public List<ProjectProgress> getProjectChart(int projectIdx) {
+		DashBoardDao dao = getDashBoardDao();
+		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
+		try {
+			progress =dao.getProjectChart(projectIdx);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return progress;
+	}
 	
 	/**
 	 * DashBoardDao 구하기
-	 * 
 	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @return DashBoardDao

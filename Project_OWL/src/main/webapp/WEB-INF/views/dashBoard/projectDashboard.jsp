@@ -84,42 +84,6 @@ function refreshScheduleVisibility() {
     });
 }
 
-var config1 = {
-		type: 'doughnut',
-		data: {
-			datasets: [{
-				data: [
-					10,
-					90,
-				],
-				backgroundColor: [
-					window.chartColors.red,
-					window.chartColors.blue,
-				],
-				label: 'Dataset 1'
-			}],
-			labels: [
-				'Complete',
-				'Total'
-			]
-		},
-		options: {
-			responsive: true,
-			legend: {
-				position: 'top',
-			},
-			title: {
-				display: true,
-				text: '프로젝트 진행률'
-			},
-			animation: {
-				animateScale: true,
-				animateRotate: true
-			}
-		}
-	};
-
-
 	var barChartData = {
 			labels: ['Emergency', 'Doing', 'Done', 'Stop', 'Closed', 'Open'],
 			datasets: [{
@@ -158,8 +122,9 @@ var config1 = {
 			}]
 
 		};
-	function MyChart(idx, totalSum, closeSum, color){  
-	    window.myDoughnut = new Chart(document.getElementById('myProgress'+idx).getContext('2d'), {
+	
+function MyChart(idx, totalSum, closeSum, color){  
+	window.myDoughnut = new Chart(document.getElementById('myProgress'+idx).getContext('2d'), {
 	        type: 'doughnut',
 	        data: {
 	            datasets: [{
@@ -171,7 +136,7 @@ var config1 = {
 	                	"#d9d9d9",
 	                	color                	
 	                ],
-	                label: projectName
+	                label: 'Data'
 	            }],
 	            labels: [
 	            	'Total',
@@ -186,6 +151,43 @@ var config1 = {
 	            title: {
 	                display: true,
 	                text: '나의 진행률'
+	            },
+	            animation: {
+	                animateScale: true,
+	                animateRotate: true
+	            }
+	        }
+	    });	
+	}	
+
+function OurChart(idx, totalSum, closeSum){  
+	window.myDoughnut = new Chart(document.getElementById('projectProgress'+idx).getContext('2d'), {
+	        type: 'doughnut',
+	        data: {
+	            datasets: [{
+	                data: [
+	                	Math.round((totalSum - closeSum)/totalSum*100),
+	                	Math.round((closeSum)/totalSum*100)               	
+	                ],
+	                backgroundColor: [
+	                	"#d9d9d9",
+	                	"#326295"                	
+	                ],
+	                label: 'Data'
+	            }],
+	            labels: [
+	            	'Total',
+					'Complete'    
+	            ]
+	        },
+	        options: {
+	            responsive: true,
+	            legend: {
+	                position: 'top',
+	            },
+	            title: {
+	                display: true,
+	                text: '프로젝트 진행률'
 	            },
 	            animation: {
 	                animateScale: true,
@@ -267,11 +269,7 @@ display: none;
                               <h4 class="card-title" style="margin-bottom: 0px;">Progress Chart</h4>
                                 <div class="align-items-center">
 									<div class="row">
-										<div class="col-md-6">
-											<div id="canvas-holder">
-												<canvas id="chartProjectProgress"></canvas>
-											</div>
-										</div>
+										<div class="col-md-6" id="chartProjectProgress"> </div>
 										<div class="col-md-6" id="chartMyProgress"> </div>
 									</div>
                               </div>
