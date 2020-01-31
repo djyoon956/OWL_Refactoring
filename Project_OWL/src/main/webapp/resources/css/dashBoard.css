@@ -42,3 +42,15 @@ ul.timeline > li:before {
 	line-height:1.8em;
 	margin-bottom: 0;
 }
+
+ .emptyBox {
+	height: 90%;
+	width: 100%;
+	display: table;
+	text-align: center;
+}
+
+.emptyBox>*{
+	display: table-cell;
+	vertical-align: middle;
+}

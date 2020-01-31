@@ -3,6 +3,15 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.owl.dashBoard.dao.DashBoardDao">
-	
+	<select id="getMyIssueTasks" resultType="com.owl.dashBoard.dto.IssueTask">
+		SELECT I.ISSUEIDX, I.ISSUETITLE AS 'SUBJECT', I.DUEDATE, I.PRIORITYCODE, I.ASSIGNED, M.NAME AS 'ASSIGNEDNAME', I.PROJECTIDX, P.PROJECTNAME
+			FROM owl.ISSUE I JOIN PROJECT P ON I.PROJECTIDX = P.PROJECTIDX LEFT JOIN owl.MEMBER M ON I.ASSIGNED = M.EMAIL
+		WHERE I.ASSIGNED = #{assigned} AND I.ISSUEPROGRESS = "OPEN"  
+			ORDER BY I.DUEDATE, (CASE WHEN I.PRIORITYCODE="URGENT" THEN 1
+														  WHEN I.PRIORITYCODE="HIGH" THEN 2
+														  WHEN I.PRIORITYCODE="MEDIUM" THEN 3
+														  WHEN I.PRIORITYCODE="LOW" THEN 4
+														  ELSE 5 END)
+	</select>
 	
 </mapper>

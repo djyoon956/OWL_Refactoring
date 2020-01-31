@@ -23,18 +23,18 @@
 	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
 	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
 	
-		<!-- Chart.js -->
- <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>    
- <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+	<!-- Chart.js -->
+	 <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>    
+	 <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
  
-<!--  dashboard css -->
-<link href="resources/css/dashBoard.css" rel="stylesheet">
-<script src="resources/js/dashBoard.js"></script>
+	<!--  dashboard css -->
+	<link href="resources/css/dashBoard.css" rel="stylesheet">
+	<script src="resources/js/dashBoard.js"></script>
 
-<style>
-#dashCalendar > .tui-full-calendar-layout.tui-view-8.tui-view-13{
-display: none !important;
-}
+	<style>
+	#dashCalendar > .tui-full-calendar-layout.tui-view-8.tui-view-13{
+	display: none !important;
+	}
 </style>	 	
 <script type="text/javascript">
 	$(function(){
@@ -62,9 +62,11 @@ display: none !important;
 
 		<!-- CONTENT BOX -->
         <div class="page-wrapper">
-		<!-- 대시보드  -->
+        
+		<!-- DASHBOARD  -->
 		<jsp:include page="../dashBoard/mainDashboard.jsp"/>
-			<!-- BOTTOM -->
+		
+		<!-- BOTTOM -->
         <jsp:include page="../include/bottom.jsp"/>
     </div>
  </div>
