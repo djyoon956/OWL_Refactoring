@@ -768,7 +768,7 @@ function editLabel(idx, color, name) {
 			url : "GetProjectMemberList.do",
 			data : {'projectIdx' : projectidx},
 			success : function(data) {
-				
+				$('#assignedEdit').empty();
 				console.log('GetProjectMemberList in');
 				console.log(data);
 				
@@ -784,10 +784,13 @@ function editLabel(idx, color, name) {
 						
 				$('#searchContent').append(memberlist);
 				
-				} else if(flagelement == 'editDetail') {
+				} else if(flagelement == 'editDetail') { 
+					console.log("프로젝트 멤버 리스트 editDetail ----");
+					console.log(data);
 					let selectoption = '<option value="">Select</option>';
+					let optmember;
 					$('#assignedEdit').append(selectoption);
-		             $.each(member, function(index, element) {
+		             $.each(data, function(index, element) {
 					  optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
 		               });
 		               
@@ -865,7 +868,7 @@ function editLabel(idx, color, name) {
 		
 	}
 	function assignListEditview(){
-		//getProjectMemberList("detailEdit",$('#projectIdxNum').val());
+		getProjectMemberList("editDetail",$('#projectIdxNum').val());
 		
 	}
 	function getissueinfo(flagelement, projectidx) {
