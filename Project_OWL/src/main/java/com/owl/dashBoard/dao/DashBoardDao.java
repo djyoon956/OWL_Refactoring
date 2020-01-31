@@ -3,6 +3,13 @@ package com.owl.dashBoard.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.owl.dashBoard.dto.IssueTask;
+
 public interface DashBoardDao {
-	public List<Integer> getMyIssueDatas() throws ClassNotFoundException, SQLException;
+	public int checkJoinProject(String email) throws ClassNotFoundException, SQLException;
+	
+	public List<IssueTask> getMyIssueTasks(String assigned) throws ClassNotFoundException, SQLException;
+
+	public List<IssueTask> getProjectIssueTasks() throws ClassNotFoundException, SQLException;
+	
 }
