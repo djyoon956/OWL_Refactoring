@@ -389,16 +389,15 @@ public class KanbanRestController {
 	@RequestMapping(value = "IssueFileEdit.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public boolean addIssueFile(@RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							  ,@RequestParam(value = "issueIdx") int issueIdx
+							  ,@RequestParam(value = "projectIdx") int projectIdx
 							 ,Principal principal,HttpServletRequest request) {
-		System.out.println("DeleteIssueFile rest controller");
-		//System.out.println(fileIdx);
-		
+		System.out.println("addIssueFile rest controller");
+
 		boolean result = false;
-	//	issue.setProjectIdx(projectIdx);
-		//issue.setCreator(principal.getName());
-		Issue issue = null;
+		Issue issue = new Issue();
 		issue.setCreator(principal.getName());
 		issue.setIssueIdx(issueIdx);
+		issue.setProjectIdx(projectIdx);
 		result = service.addIssueFile(issue,multipartFiles, request.getServletContext().getRealPath("upload"));
 
 		return result;

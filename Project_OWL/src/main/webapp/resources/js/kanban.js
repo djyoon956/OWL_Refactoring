@@ -457,7 +457,8 @@ function initKanban(projectIdx){
 		 								}
 		 							})   
 		 					}
-		 				}) 			
+		 				}) 	
+
 } //initKanban 끝
 
 
@@ -628,6 +629,7 @@ function setKanbanDetail(issueIdx){
 			success : function (data) {
 				console.log("이슈 디테일 ");
 				console.log(data);
+				 $("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
 				//issueProgress,labelIdx
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
@@ -1130,6 +1132,7 @@ function editLabel(idx, color, name) {
 			success : function(data){
 				if(data){
 					setKanbanDetail($("#issueIdxNum").val());
+					$(".editIssueFileBtn").removeClass("hidden");
 				} else
 					warningAlert("삭제 실패!");
 			},
@@ -1146,40 +1149,40 @@ function editLabel(idx, color, name) {
 		else 
 		 $(".editIssueFileBtn").addClass("hidden");
 	}
-	function issueDetailFileEdit() {
-			let formData;
-		 	formData.append("issueIdx",$("#issueIdxNum").val());
-		   $("#multipartFilesIssueEdit").empty();
-		    
-		    $.each($("#multipartFilesIssueEdit")[0].files, function(i, file) {
-		    	formData.append('multipartFiles', file);
-		    });
-		    $.ajax({
-				url : 'IssueFileEdit.do',
-		        type: "POST",
-				enctype :'multipart/form-data',
-				data : formData,
-		        processData: false,
-		        contentType: false,
-		        cache: false,
-		        success: function (data) {
-		        	console.log("ajax in");
-		        	console.log(data);
-		        	
- 		        	if(data != null){
-		        		successAlert("사진 추가 완료");
-		        	//	addKanbanIssue('-1', data);
-		        	//	$('#addIssueModal').modal("hide");
-		        		
-		        	}else{
-		        		errorAlert("사진 추가 실패");
-		        	}
-		        },
-		        error: function (e) {
-		        	errorAlert("Issue 추가 실패");
-		        }
-		    });
-	}
+	function issueDetailFileEdit(projectIdx) {
+		let formData = new FormData();
+		formData.append("projectIdx",projectIdx);
+	 	formData.append("issueIdx",$("#issueIdxNum").val());
+	   $("#multipartFilesIssueEdit").empty();
+	    
+	    $.each($("#multipartFilesIssueEdit")[0].files, function(i, file) {
+	    	formData.append('multipartFiles', file);
+	    });
+	    $.ajax({
+			url : 'IssueFileEdit.do',
+	        type: "POST",
+			enctype :'multipart/form-data',
+			data : formData,
+	        processData: false,
+	        contentType: false,
+	        cache: false,
+	        success: function (data) {
+	        	console.log("ajax in");
+	        	console.log(data);
+	        	
+		        	if(data){
+		        		setKanbanDetail($("#issueIdxNum").val());
+		        		// $("#multipartFilesIssueEdit").empty();
+		        		 $(".editIssueFileBtn").removeClass("hidden");
+	        	}else{
+	        		errorAlert("사진 추가 실패");
+	        	}
+	        },
+	        error: function (e) {
+	        	errorAlert("Issue 추가 실패");
+	        }
+	    });
+}
 	function getissueinfo(flagelement, projectidx) {
 
 		if(flagelement == "issueModalOpen") {

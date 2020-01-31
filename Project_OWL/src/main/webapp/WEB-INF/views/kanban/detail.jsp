@@ -68,8 +68,8 @@
                            		 <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
                                </li>
                             </ul>
-                            <input type="file" name="multipartFiles" id="multipartFilesIssueEdit" multiple="multiple">
-                          	<button class="btn btn-primary" onclick="issueDetailFileEdit()">save</button>
+                            <input type="file" name="multipartFiles" id="multipartFilesIssueEdit" multiple="multiple" class="editIssueFileBtn hidden">
+                          	<button class="btn btn-primary editIssueFileBtn hidden" onclick="issueDetailFileEdit('${project.projectIdx}')" >save</button>
                            </div>
                          <div  class="col-1" >
 						 	<span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editIssueFileView()"style="cursor: pointer"></i>
