@@ -69,15 +69,15 @@
 }
 .priorityBadge.medium{
 	color: #fff;
-   	background-color: #ffb848;
+   	background-color: #28b779;
    	font-weight: bold;
 }
 .medium:after{
 	content: "Medium"
 }
 .priorityBadge.low{
-	color: black;
-   	background-color: lightgray;
+	color: #fff;
+   	background-color: #ffb848;
    	font-weight: bold;
 }
 .low:after{

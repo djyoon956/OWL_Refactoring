@@ -3,6 +3,7 @@ $(function() {
 		"pageLength": 5,
          fixedColumns: true,
          autoWidth: false,
+         "ordering" : false,
          "searching": false,
          "lengthChange": false,
          "sScrollY": "270px",
@@ -45,12 +46,11 @@ function setMyIssueTask(){
 				$("#dashBoardTableBox").removeClass("hidden");
 				
 				$.each(data, function(index, element){
-					let priorityCode = element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
 					$('#dashboardTable').DataTable().row.add([
 						element.projectName,
 						element.subject,
-						element.dueDate,
-						priorityCode
+						element.dueDate!=null? getDueDateElement(element.dueDate):"-",
+						element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
 					]).draw();
 					//.node().id = element.driveFileIdx;
 					//$('#dashboardTable').DataTable().draw();
@@ -64,4 +64,26 @@ function setMyIssueTask(){
 			console.log("in setMyIssueTask error");
 		}
 	})
+}
+
+function getDueDateElement(date){
+	console.log("in date Test10");
+	console.log(date);
+	let result = "";
+	let now = new Date();
+	let dates = date.split("-"); 
+	let target = new Date(dates[0], Number(dates[1])-1, dates[2]);  
+	
+	let betweenDay = Math.round((target-now)/(1000*60*60*24))+1;
+	
+	if(betweenDay < 0)
+		result = "<span style='color:red; font-weight: bold;'>Past by "+Math.abs(betweenDay)+" days</span>";
+	else if(betweenDay === 0)
+		result = "<span style='background-color:yellow;font-weight: bold; padding-left: 20px;padding-right: 20px;'>Today</span>";
+	else if(betweenDay === 1)
+		result = "<span style='color:green; font-weight: bold;'>Tomorrow</span>";
+	else
+		result = date;
+	
+	return result;
 }

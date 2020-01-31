@@ -267,7 +267,7 @@
 	        <div class="col-lg-6">
 	            <div class="card dash_shadow dash_radius" style="height: 450px">
 	                <div class="card-body">
-	                    <h4 class="card-title">Task</h4>
+	                    <h4 class="card-title">Issue Task</h4>
 	                    <div id="dashBoardTableEmptyBox" class="emptyBox">
 		                    <div>
 		                    	<h3 class="mb-4">나에게 할당된 이슈가 없습니다.</h3>
@@ -279,10 +279,10 @@
 		                    <table class="table table-hover table-bordered text-center w-100" id="dashboardTable">
 		                        <thead>
 		                            <tr>
-		                                <th>Project</th>
-		                                <th>Subject</th>
-		                                <th>Due Date</th>
-		                                <th>Priority</th>
+		                                <th width="30%">Project</th>
+		                                <th width="40%">Subject</th>
+		                                <th width="20%">Due Date</th>
+		                                <th width="10%">Priority</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody>
