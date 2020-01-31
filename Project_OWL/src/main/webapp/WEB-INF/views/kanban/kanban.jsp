@@ -136,33 +136,16 @@
 }
 </style>
  <!-- test textcomplete -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>  -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.7.1/jquery.textcomplete.min.js"></script>
 <script>
   $(function(){
-/* 		var mentions = ['yuku_t'];
-		
-		$('#replycontent').textcomplete({
-		    html: {
-		        match: /\B@(\w*)$/,
-		        search: function (term, callback) {
-		            callback($.map(mentions, function (mention) {
-		                return mention.indexOf(term) === 0 ? mention : null;
-		            }));
-		        },
-		        index: 1,
-		        replace: function (mention) {
-		            return '@' + mention + ' ';
-		        }
-		    }
-		}).overlay([
-		    {
-		        match: /\B@\w+/g,
-		        css: {
-		            'background-color': '#d8dfea'
-		        }
-		    }
-		]); */
 
+	
+ 
+
+
+
+ 
 	  function check() {
 	
 		if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {

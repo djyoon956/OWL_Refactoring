@@ -9,6 +9,29 @@ function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
 	
+
+	  
+    var words = ['google', 'facebook', 'github', 'microsoft', 'yahoo'];
+
+    	//멘션
+	  $('.editable').textcomplete([{
+		  
+		    match:  /\B@(\w*)$/,
+		    search: function (term, callback) {
+		      callback($.map(words, function (word) {
+		        return word.indexOf(term) === 0 ? word : null;
+		      }));
+		    },
+		    index: 1,
+		    replace: function (word) {
+		      return	'@' + word + ' ';
+		    }
+		  }]);
+	
+	  
+	  
+	  
+	
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
 		console.log("addIssueModal open!");
@@ -757,6 +780,8 @@ function editLabel(idx, color, name) {
 				});		 	
 					memberlist += '</datalist>';
 				$('#searchContent').append(memberlist);
+				
+			
 				
 				
 			}, error : function() {
