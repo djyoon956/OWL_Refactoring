@@ -286,30 +286,6 @@
 		                            </tr>
 		                        </thead>
 		                        <tbody>
-		                            <tr>
-		                                <td>판매계획</td>
-		                                <td>로그인 view 구현</td>
-		                                <td class="text-danger">today</td>
-		                                <td><span class="badge badge-pill badge-danger font-14">high</span></td>
-		                            </tr>
-		                            <tr>
-		                                <td>판매계획</td>
-		                                <td>공지사항 게시판 기능 구현</td>
-		                                <td class="text-success">tomorrow</td>
-		                                <td><span class="badge badge-pill badge-warning font-14">low</span></td>
-		                            </tr>
-		                            <tr>
-		                                <td>후기관리</td>
-		                                <td>단체 채팅 기능 구현</td>
-		                                <td>1/18</td>
-		                                <td><span class="badge badge-pill badge-success font-14">medium</span></td>
-		                            </tr>
-		                            <tr>
-		                                <td>후기관리</td>
-		                                <td>캘린더 뷰 구현</td>
-		                                <td>1/30</td>
-		                                <td><span class="badge badge-pill badge-warning font-14">low</span></td>
-		                            </tr>
 		                        </tbody>
 		                    </table>
 	                    </div>

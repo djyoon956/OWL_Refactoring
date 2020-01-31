@@ -1,9 +1,11 @@
 $(function() {
 	$("#dashboardTable").DataTable({
-		stateSave: true, // 페이지 상태 저장
-	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"pageLength": 5,
          fixedColumns: true,
-         autoWidth: false
+         autoWidth: false,
+         "searching": false,
+         "lengthChange": false,
+         "sScrollY": "270px",
 	});
 	
 	 $("#dashCalendar").tuiCalendar({
@@ -41,6 +43,18 @@ function setMyIssueTask(){
 			if(data.length > 0){
 				$("#dashBoardTableEmptyBox").addClass("hidden");
 				$("#dashBoardTableBox").removeClass("hidden");
+				
+				$.each(data, function(index, element){
+					let priorityCode = element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
+					$('#dashboardTable').DataTable().row.add([
+						element.projectName,
+						element.subject,
+						element.dueDate,
+						priorityCode
+					]).draw();
+					//.node().id = element.driveFileIdx;
+					//$('#dashboardTable').DataTable().draw();
+				})
 			}else{ // 할당된 이슈 없음
 				$("#dashBoardTableEmptyBox").removeClass("hidden");
 				$("#dashBoardTableBox").addClass("hidden");
