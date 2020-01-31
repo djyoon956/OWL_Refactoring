@@ -13,13 +13,15 @@ function initKanban(projectIdx){
 
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
-		console.log("addIssueModal open!");
 		//칸반으로 옮김 
 		getissueinfo("issueModalOpen",projectIdx);
 
- });  
+	}).on('hidden.bs.modal', function(e){
+		$(this).find('.addContent')[0].reset();
+ 	});
 	
-
+	  
+	
 	$('#editLabelBtn').click(function() {
 		if(editIdx == 0)
 			return;
@@ -288,11 +290,7 @@ function initKanban(projectIdx){
 		 				//let projectidx = ${project.projectIdx};
 		 				getLabelList("ShowLabelList", projectIdx);
 
-		 			});	
-		 			
-		 			
-		 			
-		 			$('#addLabelModal').on('hidden.bs.modal', function() {  
+		 			}).on('hidden.bs.modal', function() {  
 		 				$('#labelcolor').val("");
 		 				$('#labelname').val("");
 		 				
@@ -372,24 +370,6 @@ function initKanban(projectIdx){
 		 	   	});
 		 	    	
 		 	    	
-		 	    	
-		 	    	
-		 	   	$('#addIssueModal').on('hidden.bs.modal', function(){
-		 			console.log('hidden 작동하니?');
-		 			
-		 			$('#issueTitle').val("");
-		 			$('#isContent').summernote("reset");
-		 			
-		 			console.log($('#priorityCode').val());
-		 			//$('#priorityCode option:eq(0)').attr('selected', 'selected');
-		 			console.log($('#priorityCode option:eq(0)').val());
-		 			console.log("after  :" +$('#priorityCode').val());
-		 			//$('#priorityCode').find('option:first').attr('selected', 'selected')
-		 			//$('#datepicker-autoclose').remove();
-		 			//$('#priorityCode').find('option:first').attr('selected', 'selected');
-		 			
-		 		});
-		 	   	
 		 	   	
 		 	   	
 		 		$('#addColumnModal').on('hidden.bs.modal', function() {  
@@ -993,6 +973,7 @@ function editLabel(idx, color, name) {
 			$("#issueDetailTitle").removeClass("hidden");
 		}
 	}
+	
 	function editContentViewBtn(){
 		$("#isContentEdit").summernote('code', $("#issueDetailContent").html());
 		if($("#editContentBox").hasClass("hidden")){
@@ -1078,12 +1059,9 @@ function editLabel(idx, color, name) {
 					
 				}else if(flagelement == 'mentionSearch'){
 					$.each(data, function(index, obj){
-						console.log('mentionSearch in');
-						console.log(obj);
-						console.log(words);
-						console.log('----------------------');
+
 						words.push(obj.name);
-						console.log(words);
+				
 					});
 					
 				}
@@ -1154,7 +1132,6 @@ function editLabel(idx, color, name) {
 
 		if(flagelement == "issueModalOpen") {
 			
-		 	let selectoption = '<option value="">Select</option>';
 
 		 $.ajax({
 		 		type: "POST",
@@ -1200,7 +1177,6 @@ function editLabel(idx, color, name) {
 	function mentionSearch(projectIdx) {
 
 		 getProjectMemberList("mentionSearch",projectIdx);
-		 
 
     	//멘션
 	  $('.editable').textcomplete([{

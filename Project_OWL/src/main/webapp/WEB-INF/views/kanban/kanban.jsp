@@ -365,25 +365,17 @@
                 </a>
               <!-- ------------------------------------------------------------- -->
              </c:if>
-             
-             <!-- ------------Test------------------ -->
-<!--              <div class="float-right">
-                   <div class="input-group">
-                        <input type="text" id="searchTestContent" class="form-control" placeholder="테스트중" >
-                            <div class="input-group-append">
-                                 <span class="input-group-text" id="basic-addon2" style="background-color: #326295"><button class="btn btn-primary btn-link" id="kanbanSearchTestBtn"><i class="fas fa-search" style="color:#f8f9fa"></i></button></span>
-                        </div>
-                   </div>
-              	</div> -->
-              	
-             <!-- ----------------------------------- -->
-              	
-              	
+            
+
              <div class="float-right">
                    <div class="input-group">
-                        <input type="text" id="searchContent" class="form-control" placeholder="검색어를 입력하세요" aria-describedby="basic-addon2" >
+                        <input type="text" id="searchContent" class="form-control" placeholder="" aria-describedby="basic-addon2" >
                             <div class="input-group-append">
-                                 <span class="input-group-text" id="basic-addon2" style="background-color: #326295"><button class="btn btn-primary btn-link" id="kanbanSearchBtn"><i class="fas fa-search" style="color:#f8f9fa"></i></button></span>
+                                 <span class="input-group-text" id="basic-addon2" style="background-color: #326295">
+                                 	<button class="btn btn-primary btn-link" id="kanbanSearchBtn">
+                                 		<i class="fas fa-search" style="color:#f8f9fa"></i>
+                                	 </button>
+                                 </span>
                         </div>
                    </div>
               	</div>
@@ -416,13 +408,6 @@
 	                	  	</tr>
                             </thead>
                            <tbody>
-<!--                                  <tr>
-                                     <td class="text-center">4</td>
-                                     <td>Down Coat</td>
-                                     <td class="text-right"> 60 </td>
-                                     <td class="text-right">$5 </td>
-                                     <td class="text-right"> $300 </td>
-                                </tr> -->
                             </tbody>
                         </table>
                      </div>
