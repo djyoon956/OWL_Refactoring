@@ -373,6 +373,14 @@ public class KanbanRestController {
 		
 		return result;
 	}
+	@RequestMapping(value="UpdateIssueLabel.do", method = RequestMethod.POST)
+	public boolean updateIssueLabel(Issue issue,Principal principal) {
+		System.out.println("updateIssueLabel in");
+		System.out.println(issue);
+		boolean result = service.updateIssueLabel(issue, principal.getName());
+		
+		return result;
+	}
 	/**
 	 * 칸반 assignee로 검색
 	 * @author 배인영

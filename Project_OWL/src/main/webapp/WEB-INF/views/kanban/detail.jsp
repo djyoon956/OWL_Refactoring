@@ -149,7 +149,7 @@
 							  <div class="row hidden" id="editAssignedBox" >
 								<div class="col-8">
 									<select class="select2 custom-select" name="assigned" id="assignedEdit">
-										<option value="" id="">Select</option>
+										<!-- <option value="" id="">Select</option> -->
 										<!-- <option value="aaa">aaa@gmail.com</option> -->
 									</select> 
 								</div>
