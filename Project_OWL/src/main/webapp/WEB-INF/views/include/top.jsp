@@ -2,7 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-    
+ <link rel="manifest" href="manifest.json"/>
+
+
 <script>
     const userEmail = "${member.email}";
     const userName = "${member.name}";
@@ -874,8 +876,45 @@ display: block;
 				}) 
 			}
 
+
+		messaging.onMessage((payload) => {
+			  console.log('Message received. ', payload);
+		});
 		   
-   
+		// This registration token comes from the client FCM SDKs.
+		var registrationToken = 'cFNEXcwYabMl48AAxV0ES_:APA91bFbrquzfvQpyI0bplrs7Pl7KeuNLPxiOIYBldokpJA8PfJ0RJLeTx5imgIBNYaNCfwRwPJO--ibXkL8BcDuVqisRtXhQpmznYtyis58LFFpk-P-X5jy3EbXf-V44elGUJ2bDl0r';
+
+		var messageTest = {
+		  data: {
+		    score: '850',
+		    time: '2:45'
+		  },
+		  token: registrationToken
+		};
+
+		// Send a message to the device corresponding to the provided
+		// registration token.
+		var admin = require("firebase-admin");
+
+		var serviceAccount = require("path/to/serviceAccountKey.json");
+
+		admin.initializeApp({
+  		credential: admin.credential.cert(serviceAccount),
+  		databaseURL: "https://owl-chat-c27f1.firebaseio.com"
+		});
+		
+		/* function firstPushMsg() {
+			     
+			admin.messaging().send(messageTest)
+			  .then((response) => {
+			    // Response is a message ID string.
+			    console.log('Successfully sent message:', response);
+			  })
+			  .catch((error) => {
+			    console.log('Error sending message:', error);
+			  });
+
+			} */
 
 
 			
@@ -1133,6 +1172,9 @@ display: block;
 
 			//챗방 초대를 위한 모달 창 세팅을 위한 함수
           function setAddUserList() {
+			  //푸시 알람 테스트....
+        	  firstPushMsg();
+              
         	  //푸시 알람을 위한 FCM(Firebase Cloud Messaging) Token firebase realtime database 에 저장...
               //saveFCMToken();
               //온라인 상태인지 아닌지 확인하고.. 유저리스에 아이콘 색 변경을 위한 함수..
