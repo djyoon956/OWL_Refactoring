@@ -1,11 +1,7 @@
-
 let projectIdx;
-
 
 let editIdx = 0;
 
-
-//let words = ['google', 'facebook', 'github', 'microsoft', 'yahoo'];
 
 let words = new Array();
 let selectoption = '<option value="">Select</option>';
@@ -14,8 +10,7 @@ let ordernum = 1;
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
-	
-	
+
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
 		console.log("addIssueModal open!");
@@ -54,6 +49,7 @@ function initKanban(projectIdx){
 			}
 		});
 	});
+	
 	
 	$('#backBtn').click(function() {
 		editIdx = 0;
@@ -107,7 +103,6 @@ function initKanban(projectIdx){
 	$('#kanbanSearchBtn').click(function(){
 		
 		$('#searchBox').find('tbody').empty();
-		//console.log($('#searchSelectBox option:selected').val());
 		
 		if($('#searchContent').val() == "" || $('#searchContent').val() == null) {
 			return;
@@ -177,11 +172,7 @@ function initKanban(projectIdx){
 	        ]
 	      });
 	 
-/*	 $('#datepicker-editIssue').datepicker({
-		 dateFormat: 'yy-mm-dd' ,
-   		  autoclose: true,
-    	  todayHighlight: true
-	 });*/
+
 
 		$('.editViewBtn').on('click', function(e){
 			    console.log($(this).parent().siblings().find(".row"));
@@ -195,15 +186,21 @@ function initKanban(projectIdx){
 			});
 
 	
-		
-	
+
 		 /*datwpicker*/
-		 	 $('.mydatepicker').datepicker();
-		 		 $('#datepicker-autoclose').datepicker({
+		 	 //$('.mydatepicker').datepicker();
+		 		 $('#datepicker-autoclose, #datepicker-editIssue').datepicker({
 		 			 dateFormat: 'yy-mm-dd' ,
 		 	   		  autoclose: true,
 		 	    	  todayHighlight: true
 		 		 }); 
+		 		 
+		 		 
+/*		 		 $('#datepicker-editIssue').datepicker({
+		 			 dateFormat: 'yy-mm-dd' ,
+		 	   		  autoclose: true,
+		 	    	  todayHighlight: true
+		 		 });*/ 
 		 		
 		 		/*Summer Note*/
 		 		 $('#isContent').summernote({
@@ -1113,6 +1110,7 @@ function editLabel(idx, color, name) {
 		    }
 		});
 	}
+	
 	function editIssueDueDateOk() {
 		$.ajax({
 			url : "UpdateIssueDuedate.do",
@@ -1215,7 +1213,7 @@ function editLabel(idx, color, name) {
 		    },
 		    index: 1,
 		    replace: function (word) {
-		      return	'@' + word + ' ';
+		      return '@' + word + ' ';
 		    }
 		  }]);
 	
