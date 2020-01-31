@@ -268,7 +268,7 @@
 	            <div class="card dash_shadow dash_radius" style="height: 450px">
 	                <div class="card-body">
 	                    <h4 class="card-title">Task</h4>
-	                    <div id="dashBoardTableEmptyBox " class="emptyBox">
+	                    <div id="dashBoardTableEmptyBox" class="emptyBox">
 		                    <div>
 		                    	<h3 class="mb-4">나에게 할당된 이슈가 없습니다.</h3>
 		                    	<p class="mt-1"> 어쩌구 저쩌구 어쩌구 저쩌구</p>
