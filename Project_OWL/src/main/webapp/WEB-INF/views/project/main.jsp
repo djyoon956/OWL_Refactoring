@@ -100,26 +100,28 @@
     	        dataType: "json",
     	        data: {projectIdx: 	${project.projectIdx}},
     	        success:function(data){
-        	        console.log("label");
-    		        console.log(data);
-    		        return;
+    		        let idx = ${project.projectIdx};
+    		        let label;
+    		        let totalCount = [];
+  		    	    let closeCount = [];
+		    	    let name = [];
+		    	    let color = [];
+		    	    $("#labelProgress").empty(); 
     		     $.each(data, function(key, value){
-    		    	  let idx = key;
-    			      let name = value[0].projectName;
-    			      let color = value[0].projectColor;
-    		    	  let totalCount=value.length;
-    		    	  let closeCount=0;
+    		    	  label = key;
+    		    	  totalCount.push(value.length);
+    		    	  name.push(value[0].labelName);
+    		    	  color.push(value[0].labelColor);
+    		    	  let closed = 0;
     		    	  $.each(value, function(index, element){
     		    			if(element.issueProgress == "CLOSED") 
-    							closeCount++;
-    		    	  })
-    			
-    		    	 let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
-    					  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
-    				$("#myProgressChar").append(makeChart);
-    				ProjectMyChart(idx, totalCount, closeCount, name, color);		    	
+    							closed++;
+    		    	  });
+    		    	  closeCount.push(closed);	    	
     		     });
-    		     
+		    	 let makeChart = '<canvas id="label'+idx+'"></canvas>';
+	 				$("#labelProgress").append(makeChart);
+	 				ProjectLabelChart(idx, totalCount, closeCount, name, color);	
     	       }
     	   });
     		
@@ -227,44 +229,7 @@
                         console.log("addMemberOk error");
                     }
                 });
-            })
-			
-			var ctx = document.getElementById('canvas').getContext('2d');
-			window.myBar = new Chart(ctx, {
-				type: 'bar',
-				data: barChartData,
-				options: {
-					responsive: true,
-					title: {
-						display: true,
-						text: '라벨 별 업무 진행도'
-					},
-					tooltips: {
-						mode: 'index',
-						intersect: true
-					},
-					scales: {
-						yAxes: [{
-							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-							display: true,
-							position: 'left',
-							id: 'y-axis-1',
-						}, {
-							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-							display: true,
-							position: 'right',
-							id: 'y-axis-2',
-							gridLines: {
-								drawOnChartArea: false
-							}
-						}],
-					}
-				}
-			});
-
-
-
-            
+            })           
         }); 
         
         function setChageView(target) {

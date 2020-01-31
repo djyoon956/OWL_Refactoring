@@ -83,45 +83,6 @@ function refreshScheduleVisibility() {
         span.style.backgroundColor = input.checked ? span.style.borderColor : 'transparent';
     });
 }
-
-	var barChartData = {
-			labels: ['Emergency', 'Doing', 'Done', 'Stop', 'Closed', 'Open'],
-			datasets: [{
-				label: 'Complete',
-				backgroundColor: [
-					window.chartColors.red,
-					window.chartColors.orange,
-					window.chartColors.yellow,
-					window.chartColors.green,
-					window.chartColors.blue,
-					window.chartColors.purple
-				],
-				minBarLength: 2,
-				yAxisID: 'y-axis-1',
-				data: [
-					8,
-					6,
-					5,
-					7,
-					5,
-					7
-				]
-			}, {
-				label: 'Total',
-				backgroundColor: window.chartColors.grey,
-				minBarLength: 2,
-				yAxisID: 'y-axis-2',
-				data: [
-					10,
-					8,
-					8,
-					10,
-					8,
-					7
-				]
-			}]
-
-		};
 	
 function MyChart(idx, totalSum, closeSum, color){  
 	window.myDoughnut = new Chart(document.getElementById('myProgress'+idx).getContext('2d'), {
@@ -195,7 +156,69 @@ function OurChart(idx, totalSum, closeSum){
 	            }
 	        }
 	    });	
-	}	
+	}
+
+function ProjectLabelChart(idx, totalCount, closeCount, name, color){
+	console.log("labelChart함수");
+	console.log(idx);
+	console.log(totalCount);
+	console.log(closeCount);
+	console.log(name);
+	console.log(color);
+	window.myBar = new Chart(document.getElementById('label'+idx).getContext('2d'), {
+		type: 'bar',
+		data: {
+			labels: name,
+			datasets: [{
+				label: 'Complete',
+				backgroundColor: color,
+				minBarLength: 2,
+				yAxisID: 'y-axis-2',
+				data: closeCount
+			}, {
+				label: 'Total',
+				backgroundColor: window.chartColors.grey,
+				minBarLength: 2,
+				yAxisID: 'y-axis-2',
+				data: totalCount
+			}]
+
+		},
+		options: {
+			responsive: true,
+			scaleBeginAtZero : true,
+			title: {
+				display: true,
+				text: '라벨 별 업무 진행도'
+			},
+			tooltips: {
+				mode: 'index',
+				intersect: true
+			},
+			scales: {
+				yAxes: [{
+					type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+					display: true,
+					position: 'right',
+					id: 'y-axis-2',
+					gridLines: {
+						drawOnChartArea: false
+					},
+				ticks: {
+                    beginAtZero:true,  //Y축의 값이 0부터 시작,
+                    callback: function (value) {
+                        if (0 === value % 1) {
+                            return value;
+                        }
+                    }
+                }
+				}],
+			}
+		}
+	});
+
+	
+}	
 </script>  
 <style>
 .tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container{
@@ -279,9 +302,7 @@ display: none;
                        <div class="card dash_shadow dash_radius">
                             <div class="card-body">
                               <h4 class="card-title">Label Chart</h4>
-                                <div class="align-items-center">
-                                   		<canvas id="canvas"></canvas>                                  
-                              </div>
+                                <div class="align-items-center" id="labelProgress"> </div>
                             </div>
                         </div>
                     <!-- </div> -->
