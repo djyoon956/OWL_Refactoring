@@ -141,7 +141,7 @@
   $(function(){
 		var mentions = ['yuku_t'];
 		
-		$('#replycontent').textcomplete({
+		/* $('#replycontent').textcomplete({
 		    html: {
 		        match: /\B@(\w*)$/,
 		        search: function (term, callback) {
@@ -161,8 +161,26 @@
 		            'background-color': '#d8dfea'
 		        }
 		    } 
-		]) ; 
+		]);  */
+		var users = [
+			  {username: 'lodev09', fullname: 'Jovanni Lo'},
+			  {username: 'foo', fullname: 'Foo User'},
+			  {username: 'bar', fullname: 'Bar User'},
+			  {username: 'twbs', fullname: 'Twitter Bootstrap'},
+			  {username: 'john', fullname: 'John Doe'},
+			  {username: 'jane', fullname: 'Jane Doe'},
+			];
+		$('#replycontent').suggest('@', {
+			  data: users,
+			  map: function(user) {
+			    return {
+			      value: user.username,
+			      text: '<strong>'+user.username+'</strong> <small>'+user.fullname+'</small>'
+			    }
+			  }
+			})
 
+		
 	  function check() {
 	
 		if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
