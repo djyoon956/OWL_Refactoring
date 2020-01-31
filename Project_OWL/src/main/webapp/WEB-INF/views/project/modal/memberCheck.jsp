@@ -45,9 +45,19 @@
 			</div>
 			<div class="modal-body modal-scroll mx-3 mb-3"> 
 				<div>
-					<ul class="list-style-none assignedto text-center" id="projectMemebersBox">
+					<button class="btn btn-primary float-right offset-10">권한 양도</button>
+					<ul class="list-style-none assignedto text-center" id="projectMemebersBox  d">
 						
 						<li class="mt-3">	<img class="rounded-circle" width="40" onerror="this.src=&quot;resources/images/login/profile.png&quot;" src="resources/images/login/profile.png" alt="user"> 	
+		<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
+              <i class="fas fa-ellipsis-v fa-sm"></i></a>
+           <div class="dropdown-menu" aria-labelledby="dropdownColBtn">
+                        <ul class="list-style-none">
+               <li class="pl-3"><a href="#editColumnModal" data-toggle="modal" 
+               data-updatecol-id=" " data-upcolname-id ="" >Edit Column</a></li>
+                         <li class="pl-3"><a href="#" onclick="deleteColumn()">Remove Column</a></li>
+                      </ul>
+            		</div>
 						</li>
 					</ul>
 				</div>			

@@ -52,7 +52,7 @@ public class DashBoardRestController {
 	 * @return List<ProjectProgress>
 	 */
 	@RequestMapping("MyProjectProgress.do")
-	public List<ProjectProgress> getMyProjectChart(Principal principal) {	
+	public Map<Integer ,List<ProjectProgress>> getMyProjectChart(Principal principal) {	
 		return service.getMyProjectChart(principal.getName());
 	}
 	

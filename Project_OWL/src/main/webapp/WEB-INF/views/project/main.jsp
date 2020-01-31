@@ -465,6 +465,7 @@
                                     <li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트 멤버 추가</a></li>
                                     <li class="pl-3"><a href="#memberCheckModal" data-toggle="modal">프로젝트 멤버 확인</a></li>
                                     <li class="pl-3"><a href="#" onclick="outProject()">프로젝트 탈퇴</a></li>
+                                    <li class="pl-3"><a href="#" data-toggle="modal">프로젝트 매니저 양도</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -499,5 +500,6 @@
     <!-- MODAL -->
     <jsp:include page="modal/memberAdd.jsp" />
     <jsp:include page="modal/joinProjectMember.jsp" />
-     <jsp:include page="modal/memberCheck.jsp" /> 
+    <jsp:include page="modal/memberCheck.jsp" /> 
+    <jsp:include page="modal/transferAuthority.jsp" /> 
 </body>
