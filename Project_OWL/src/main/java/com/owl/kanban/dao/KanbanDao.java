@@ -92,4 +92,6 @@ public interface KanbanDao {
 	public int updateIssueAssigned(Issue issue) throws ClassNotFoundException, SQLException;
 
 	public int updateIssueLabel(Issue issue) throws ClassNotFoundException, SQLException;
+	
+	public int deleteIssueFile(int fileIdx) throws ClassNotFoundException, SQLException;
 }

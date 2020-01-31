@@ -5,16 +5,34 @@
 <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
-    $(function () {
-        var ctx1 = document.getElementById('chartProjectOne').getContext('2d');
-        window.myDoughnut = new Chart(ctx1, configOne);
+    $(function () {     
+    	$.ajax({
+	        url:"MyProjectProgress.do",
+	        dataType: "json",
+	        success:function(data){
+		        console.log(data);
+		     $.each(data, function(key, value){
+		    	  let idx = key;
+			      let name = value[0].projectName;
+			      let color = value[0].projectColor;
+		    	  let totalCount=value.length;
+		    	  let closeCount=0;
+		    	  $.each(value, function(index, element){
+		    			if(element.issueProgress == "CLOSED") 
+							closeCount++;
+		    	  })
+			
+		    	 let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
+					  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
+				$("#myProgressChar").append(makeChart);
+				ProjectMyChart(idx, totalCount, closeCount, name, color);		    	
+		     });
+		     
+	       }
+	   }); 
 
-        var ctx2 = document.getElementById('chartProjectTwo').getContext('2d');
-        window.myDoughnut = new Chart(ctx2, configTwo);
 
-        var ctx3 = document.getElementById('chartProjectThree').getContext('2d');
-        window.myDoughnut = new Chart(ctx3, configThree);
-
+/*
         var ctx4 = document.getElementById('canvas').getContext('2d');
         window.myLine = Chart.Line(ctx4, {
             data: lineChartData,
@@ -87,117 +105,13 @@
                 }
             }
         });
+*/
+
+
+        
     });
 
-    var randomScalingFactor = function () {
-        return Math.round(Math.random() * 100);
-    };
-
-    var configOne = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                ],
-                backgroundColor: [
-                    window.chartColors.yellow,
-                    window.chartColors.blue,
-                ],
-                label: 'Dataset 1'
-            }],
-            labels: [
-                'Yellow',
-                'Blue'
-            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Project 1'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    };
-
-    var configTwo = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                ],
-                backgroundColor: [
-                    window.chartColors.orange,
-                    window.chartColors.green,
-                ],
-                label: 'Dataset 1'
-            }],
-            labels: [
-                'Orange',
-                'Green'
-            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Project 2'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    };
-
-    var configThree = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                ],
-                backgroundColor: [
-                    window.chartColors.red,
-                    window.chartColors.purple,
-                ],
-                label: 'Dataset 1'
-            }],
-            labels: [
-                'Red',
-                'Purple'
-            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Project 3'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    };
-
+/*
     var lineChartData = {
         labels: ['Monday', 'Thusday', 'Wednesday', 'Thursday', 'Friday'],
         datasets: [{
@@ -241,6 +155,53 @@
             yAxisID: 'y-axis-1'
         }]
     };
+*/
+
+var randomScalingFactor = function () {
+    console.log("랜덤값-----------");
+    console.log(Math.random());
+    console.log(Math.random() * 100);
+    console.log(Math.round(Math.random() * 100));
+    return Math.round(Math.random() * 100);
+};
+
+
+function ProjectMyChart(idx, totalSum, closeSum, projectName, color){  
+    window.myDoughnut = new Chart(document.getElementById('chartProject'+idx).getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [
+                	Math.round((totalSum - closeSum)/totalSum*100),
+                	Math.round((closeSum)/totalSum*100)               	
+                ],
+                backgroundColor: [
+                	"#d9d9d9",
+                	color                	
+                ],
+                label: projectName
+            }],
+            labels: [
+            	'Open : ' + (totalSum-closeSum),
+                'CLose : ' + closeSum                
+            ]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: projectName
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    });	
+}
 </script>
 <style>
     .tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container {
@@ -293,36 +254,13 @@
 	            </div>
 	        </div>
 	        <div class="col-lg-6">
-	            <div class="card dash_shadow dash_radius">
+	            <div class="card dash_shadow dash_radius" style="height: 450px">
 	                <div class="card-body">
 	                    <h4 class="card-title">Timeline</h4>
-	                    <div class="d-md-flex align-items-center">
-	                        <ul class="timeline w-100">
-	                            <li>
-	                                <p class="float-right">Mon, 20 Jan, 2020</p>
-	                                <span class="badge badge-pill font-14 font-medium mb-1"
-	                                    style="background-color: #ffb1b9;">판매계획</span>
-	                                <p>로그인 view 구현</p>
-	                                <p>로그인 기능 구현</p>
-	                            </li>
-	                            <li>
-	                                <p class="float-right">Wed, 22 Jan, 2020</p>
-	                                <span class="badge badge-pill font-14 mb-1 font-medium mt-1"
-	                                    style="background-color: #ccccff">구매전략</span>
-	                                <p>qna 게시판 기능 구현</p>
-	                            </li>
-	                            <li>
-	                                <p class="float-right">Thu, 23 Jan, 2020</p>
-	                                <span class="badge badge-pill font-14 mb-1 font-medium mt-1"
-	                                    style="background-color: lightgray">후기관리</span>
-	                                <p>대시보드 view 구현</p>
-	                            </li>
-	                            <li>
-	                                <p class="float-right">Fri, 24 Jan, 2020</p>
-	                                <span class="badge badge-pill font-14 mb-1 font-medium mt-1"
-	                                    style="background-color: #ccccff">구매전략</span>
-	                                <p>탈퇴 view 구현</p>
-	                            </li>
+	                    <h6 id="timeLineDate"></h6>
+	                    <div class="d-md-flex align-items-center" id="dashboardTimeLine">
+	                        <ul class="timeline w-100" style="height: 350px; overflow: auto;">
+	 
 	                        </ul>
 	                        <!-- 끝 -->
 	                    </div>
@@ -332,25 +270,9 @@
 	        <div class="col-lg-12">
 	            <div class="card dash_shadow dash_radius">
 	                <div class="card-body" style="margin-bottom: 10px;">
-	                    <h4 class="card-title" style="margin-bottom: 0px;">Project Chart</h4>
+	                    <h4 class="card-title" style="margin-bottom: 0px;">My Issue Chart by Project</h4>
 	                    <div class="align-items-center">
-	                        <div class="row">
-	                            <div class="col-md-4">
-	                                <div id="canvas-holder">
-	                                    <canvas id="chartProjectOne"></canvas>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-4">
-	                                <div id="canvas-holder">
-	                                    <canvas id="chartProjectTwo"></canvas>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-4">
-	                                <div id="canvas-holder">
-	                                    <canvas id="chartProjectThree"></canvas>
-	                                </div>
-	                            </div>
-	                        </div>
+	                        <div class="row" id="myProgressChar" style="overflow:auto; overflow-y:hidden;"> </div>
 	                    </div>
 	                </div>
 	            </div>

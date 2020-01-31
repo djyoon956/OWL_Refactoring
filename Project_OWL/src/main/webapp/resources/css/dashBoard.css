@@ -58,3 +58,15 @@ ul.timeline > li:before {
 #dashboardTable tbody tr td{
 	height: 10px;
 }
+
+#dashboardTimeLine span {
+	padding: 0.20em 0.6em;
+	font-size: 14px;
+	font-weight: 600;
+	margin-bottom: 0.25rem !important;
+	border-radius: 10rem;
+	display: inline-block;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+}

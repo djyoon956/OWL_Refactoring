@@ -12,22 +12,20 @@
         <div class="col-8">
             <div class="card">
                 <div class="card-title mb-0">
-                    <div class="">
-                    	<div class="row">
-                    	<div class="col-11">
+                   <div class="row">
+                     <div class="col-11">
                       <h2 id="issueDetailTitle">Drive Development</h2> 
                       <div class="row hidden" id="editTitleBox">
                       <div class="col-11">
                         <input type="text" class="form-control" id="issueDetailTitleEdit"></div>
                         <div class="col-1"><button class="btn btn-primary" onclick="editIssueTitleOk()">save</button></div>
                        </div>
-                        </div>
-                        <div  class="col-1" >
-							<span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editTitleViewBtn()"style="cursor: pointer"></i>
-							</span>
-							</div>
-						</div>
-                    </div>
+                       </div>
+                       <div  class="col-1" >
+						 <span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editTitleViewBtn()"style="cursor: pointer"></i>
+						 </span>
+					   </div>
+				   </div>
                 </div>
                 <hr class="mt-1">
                 <div class="card-body mt-0 mb-0"  style="border: 1px solid; border-color:#e9e9e9;">
@@ -53,22 +51,33 @@
                                     <span id="issueDetailFileCount">첨부파일 (3)</span>
                                 </h5>
                             </a>
+                           <!--  <i class="fas fa-cog font-16 flot-right editViewBtn text-muted" style="cursor: pointer; margin-left:96%;"></i> -->
                         </div>
                         <div id="kanbanFileBox" class="collapse multi-collapse">
-                            <ul class=" m-4 list-style-none" id="issueDetailFiles">
-                                <li class="mb-2" style="font-size: 16px">
-                                    <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                                </li>
-                                <li class="mb-2" style="font-size: 16px">
-                                    <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                                </li>
-                                <li class="mb-2" style="font-size: 16px">
-                                    <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                                </li>
+                         <div class="row">
+                           <div class="col-11">
+                            <ul class="m-4 list-style-none" id="issueDetailFiles">
+                              <li class="mb-2" style="font-size: 16px">
+                                <!--   <i class="far fa-save"></i><a href="#" class="d-inline-block">&nbsp;&nbsp;<span> 어쩌구.txt</span></a> -->
+                                <!--  <i class='far fa-times-circle font-weight-bold ml-1' style='cursor: pointer;' onclick= 'deleteIssueFile()'></i> -->
+                               </li>
+                               <li class="mb-2" style="font-size: 16px">
+                                  <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
+                               </li>
+                               <li class="mb-2" style="font-size: 16px">
+                           		 <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
+                               </li>
                             </ul>
+                            <input type="file" name="multipartFiles" id="multipartFilesIssueEdit" multiple="multiple" class="editIssueFileBtn hidden">
+                          	<button class="btn btn-primary editIssueFileBtn hidden" onclick="issueDetailFileEdit('${project.projectIdx}')" >save</button>
+                           </div>
+                         <div  class="col-1" >
+						 	<span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editIssueFileView()"style="cursor: pointer"></i>
+						 	</span>
+					  	 </div>
                         </div>
+                      </div>
                     </div>
-                    
                     <!-- Activity -->
                     <div class="card mb-0">
                         <div class="card-header" id="kanbanActivityBoxHeader">
@@ -110,20 +119,6 @@
                         <div id="kanbanCommentBox" class=" collapse show multi-collapse">
                             <div class="card-body mt-0" style="border: 1px solid; border-color:#e9e9e9; border-radius: 0.25rem;background-color:#e9e9e9;">
                                 <div class="comment-widgets scrollable" id="issueDetailComment">
-<!--                                     <div class="d-flex flex-row comment-row m-0 mb-1">
-                                        <div class="p-2">
-                                            <div class="comment_img">C</div>
-                                        </div>
-                                        <div class="comment-text w-100">
-                                            <h6 class="font-medium mb-2">Cindy 
-                                            <span class="text-muted float-right">Jan 18, 2020</span></h6>
-                                            <div class="mb-1 d-block"><span>화이팅</span></div>
-                                            <div class="comment-footer float-right">
-                                                <button type="button" class="btn btn-info btn-sm">Edit</button>
-                                                <button type="button" class="btn btn-secondary btn-sm">Delete</button>
-                                            </div>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -189,21 +184,6 @@
 						</div>
                     </div>    
             	</div>
-                <!-- <div class="row">
-                    <div class="col-4">Label</div>
-                    <div class="col-8">
-                        <div class="row">
-							<div class="col-10">
-							<select class="select2 custom-select hidden" name="labelIdx" id="labelIdxEdit">
-								</select> 
-							<span id="issueDetailLabel"  style="padding-right:7px; padding-left:7px; " class="badgeIcon">Dev</span>
-							</div>
-							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
-							</div>
-						</div>
-                    </div>
-                </div> -->
             </div>
             <hr>
             <div class="form-group bold">
@@ -260,14 +240,6 @@
 						</div>
                     </div>
                 </div>
-               <!--  <div class="row">
-                    <div class="col-4">Due Date</div>
-                    <div class="col-8" ><i class="fas fa-calendar mr-1"></i> <span id="issueDetailDueDate"></span>
-                     
-                     <input type="text" class="form-control" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" >
-                     <i class="fas fa-cog flot-right ml-1 text-muted" onclick="editDueDate()" style="cursor:pointer"></i>
-                    </div>
-                </div> -->
             </div>
             <hr>
             <div class="form-group bold">
@@ -279,6 +251,5 @@
     </div>
     <div class="text-center mt-5">
     	<button class="btn btn-primary mr-1" onclick="changeKanbanView('list')"><i class="fas fa-chevron-left"></i>뒤로가기</button>
-        <button class="btn btn-primary ml-1" onclick="editIssueDetailView()">수정</button>
     </div>
 </div>

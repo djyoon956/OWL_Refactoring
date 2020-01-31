@@ -59,7 +59,31 @@
         		    setSchedules();
         		}
             });
-            
+
+    		$.ajax({
+    	        url:"MyProgress.do",
+    	        data: {projectIdx: 	${project.projectIdx}},
+    	        success:function(data){
+        	      console.log("my");
+    	         console.log(data);
+  		    	  let idx = data[0].projectIdx;
+   			      let color = data[0].projectColor;
+   		    	  let totalCount=data.length;
+   		    	  let closeCount=0;
+   		    	  $.each(data, function(index, element){
+   	   		    	  console.log(element);
+   	   		    	  return;
+   		    			if(element.issueProgress == "CLOSED") 
+   							closeCount++;
+   		    	  })
+   		    	 let makeChart = '<div id="canvas-holder"><canvas id="myProgress'+idx+'"></canvas></div>';
+   				$("#chartMyProgress").append(makeChart);
+   					MyChart(idx, totalCount, closeCount, color);		    	
+    	       }
+    	   }); 
+
+
+
 			$.ajax({
 				url : "GetIssue.do",
 				data : {'projectIdx' :  ${project.projectIdx} },
@@ -75,9 +99,6 @@
 					});
 						var ctx = document.getElementById('chartProjectProgress').getContext('2d');
 						window.myDoughnut = new Chart(ctx, config1);
-
-						var ctx = document.getElementById('chartMyProgress').getContext('2d');
-						window.myDoughnut = new Chart(ctx, config2);
 				}
 			});
             
@@ -97,7 +118,7 @@
 
                 setChageView(currentTab.attr("id"));
             });
-
+	
             $('#memberCheckModal').on('show.bs.modal', function(){
 				$("#projectMemebers").empty();
 			 	$.ajax({
@@ -465,6 +486,7 @@
                                     <li class="pl-3"><a href="#memberEditModal" data-toggle="modal">프로젝트 멤버 추가</a></li>
                                     <li class="pl-3"><a href="#memberCheckModal" data-toggle="modal">프로젝트 멤버 확인</a></li>
                                     <li class="pl-3"><a href="#" onclick="outProject()">프로젝트 탈퇴</a></li>
+                                    <li class="pl-3"><a href="#" data-toggle="modal">프로젝트 매니저 양도</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -499,5 +521,6 @@
     <!-- MODAL -->
     <jsp:include page="modal/memberAdd.jsp" />
     <jsp:include page="modal/joinProjectMember.jsp" />
-     <jsp:include page="modal/memberCheck.jsp" /> 
+    <jsp:include page="modal/memberCheck.jsp" /> 
+    <jsp:include page="modal/transferAuthority.jsp" /> 
 </body>
