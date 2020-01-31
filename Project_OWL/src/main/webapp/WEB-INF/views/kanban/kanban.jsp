@@ -138,8 +138,6 @@
 
 <script>
   $(function(){
-
- 
 	  function check() {
 	
 		if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
