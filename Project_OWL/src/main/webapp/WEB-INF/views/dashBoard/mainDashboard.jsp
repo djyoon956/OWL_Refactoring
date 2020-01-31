@@ -5,16 +5,16 @@
 <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
-    $(function () {
-        var idList =  [];
-        var uniqueIdx = "";        
+    $(function () {     
     	$.ajax({
 	        url:"MyProjectProgress.do",
 	        dataType: "json",
 	        success:function(data){
+		        console.log(data);
 		     $.each(data, function(key, value){
 		    	  let idx = key;
 			      let name = value[0].projectName;
+			      let color = value[0].projectColor;
 		    	  let totalCount=value.length;
 		    	  let closeCount=0;
 		    	  $.each(value, function(index, element){
@@ -25,31 +25,7 @@
 		    	 let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
 					  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
 				$("#myProgressChar").append(makeChart);
-				ProjectMyChart(idx, totalCount, closeCount, name);
-		    	/*  if(idx == element.projectIdx){
-							totalCount++;
-						if(element.issueProgress == "CLOSED") 
-							closeCount++;
-					}else if(idx != element.projectIdx || index != totalLength - 1){ 
-							// 차트 영역 만들기
-							let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
-												  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
-							$("#myProgressChar").append(makeChart);	
-							console.log("makeChart",makeChart);
-							console.log("-----------------------");
-							console.log(totalCount);
-							console.log(closeCount);
-							ProjectMyChart(idx, totalCount, closeCount, name);
-							// 셋팅 초기화
-							idx = element.projectIdx;
-							name = element.projectName;	
-							totalCount = 1;
-							closeCount = 0;
-
-							if(element.issueProgress == "CLOSED") 
-								closeCount++;
-						} */
-
+				ProjectMyChart(idx, totalCount, closeCount, name, color);		    	
 		     });
 		     
 	       }
@@ -57,12 +33,6 @@
 
 
 /*
-        var ctx2 = document.getElementById('chartProjectTwo').getContext('2d');
-        window.myDoughnut = new Chart(ctx2, configTwo);
-
-        var ctx3 = document.getElementById('chartProjectThree').getContext('2d');
-        window.myDoughnut = new Chart(ctx3, configThree);
-
         var ctx4 = document.getElementById('canvas').getContext('2d');
         window.myLine = Chart.Line(ctx4, {
             data: lineChartData,
@@ -142,76 +112,6 @@
     });
 
 /*
-    var configTwo = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                ],
-                backgroundColor: [
-                    window.chartColors.orange,
-                    window.chartColors.green,
-                ],
-                label: 'Dataset 1'
-            }],
-            labels: [
-                'Orange',
-                'Green'
-            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Project 2'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    };
-
-    var configThree = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                ],
-                backgroundColor: [
-                    window.chartColors.red,
-                    window.chartColors.purple,
-                ],
-                label: 'Dataset 1'
-            }],
-            labels: [
-                'Red',
-                'Purple'
-            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Project 3'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    };
-
     var lineChartData = {
         labels: ['Monday', 'Thusday', 'Wednesday', 'Thursday', 'Friday'],
         datasets: [{
@@ -265,51 +165,25 @@ var randomScalingFactor = function () {
     return Math.round(Math.random() * 100);
 };
 
-    function removeDuplicatesArray(arr) {
-        var tempArr = [];
-        for (var i = 0; i < arr.length; i++) {
-            if (tempArr.length == 0) {
-                tempArr.push(arr[i]);
-            } else {
-                var duplicatesFlag = true;
-                for (var j = 0; j < tempArr.length; j++) {
-                    if (tempArr[j] == arr[i]) {
-                        duplicatesFlag = false;
-                        break;
-                    }
-                }
-                if (duplicatesFlag) {
-                    tempArr.push(arr[i]);
-                }
-            }
-        }
-        return tempArr;
-    }
-function ProjectMyChart(idx, totalSum, closeSum, projectName){
-	console.log("in char66");
-	console.log("idx",idx);
-	console.log("total", totalSum);
-	console.log("closeSum", closeSum);
-	
-	console.log(document.getElementById('chartProject'+idx));
-    
+
+function ProjectMyChart(idx, totalSum, closeSum, projectName, color){  
     window.myDoughnut = new Chart(document.getElementById('chartProject'+idx).getContext('2d'), {
         type: 'doughnut',
         data: {
             datasets: [{
                 data: [
-                	Math.round((closeSum)/totalSum*100),
-                	Math.round((totalSum - closeSum)/totalSum*100)
+                	Math.round((totalSum - closeSum)/totalSum*100),
+                	Math.round((closeSum)/totalSum*100)               	
                 ],
                 backgroundColor: [
-                    window.chartColors.yellow,
-                    window.chartColors.blue,
+                	"#d9d9d9",
+                	color                	
                 ],
                 label: projectName
             }],
             labels: [
-                'CLose Issue',
-                'Open Issue'
+            	'Open : ' + (totalSum-closeSum),
+                'CLose : ' + closeSum                
             ]
         },
         options: {
@@ -326,14 +200,7 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName){
                 animateRotate: true
             }
         }
-    });
-
-
-
-
-
-
-	
+    });	
 }
 </script>
 <style>
@@ -426,25 +293,9 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName){
 	        <div class="col-lg-12">
 	            <div class="card dash_shadow dash_radius">
 	                <div class="card-body" style="margin-bottom: 10px;">
-	                    <h4 class="card-title" style="margin-bottom: 0px;">Project Chart</h4>
+	                    <h4 class="card-title" style="margin-bottom: 0px;">My Issue Chart by Project</h4>
 	                    <div class="align-items-center">
-	                        <div class="row" id="myProgressChar">
-<!-- 	                            <div class="col-md-4">
-	                                <div id="canvas-holder">
-	                                    <canvas id="chartProjectOne"></canvas>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-4">
-	                                <div id="canvas-holder">
-	                                    <canvas id="chartProjectTwo"></canvas>
-	                                </div>
-	                            </div>
-	                            <div class="col-md-4">
-	                                <div id="canvas-holder">
-	                                    <canvas id="chartProjectThree"></canvas>
-	                                </div>
-	                            </div> -->
-	                        </div>
+	                        <div class="row" id="myProgressChar"> </div>
 	                    </div>
 	                </div>
 	            </div>
