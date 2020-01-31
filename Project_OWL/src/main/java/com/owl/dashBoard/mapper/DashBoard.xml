@@ -25,6 +25,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    where i.ASSIGNED = #{email} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')		
 	</select>
 	
+	<select id="getProgressChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
+		SELECT i.ASSIGNED, i.ISSUEPROGRESS , t.PROJECTCOLOR, t.PROJECTIDX
+		FROM PROJECTLIST t JOIN ISSUE i ON t.PROJECTIDX=i.PROJECTIDX 
+	    where i.ASSIGNED = #{param1} AND t.PROJECTIDX = #{param2} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')	
+	</select>
+	
 	<select id="getMyTimeLines" resultType="com.owl.dashBoard.dto.TimeLine">
 		SELECT P.PROJECTNAME, I.ISSUETITLE AS 'SUBJECT', I.DUEDATE, L.PROJECTCOLOR
 			FROM OWL.ISSUE I JOIN owl.PROJECT P ON I.PROJECTIDX = P.PROJECTIDX 

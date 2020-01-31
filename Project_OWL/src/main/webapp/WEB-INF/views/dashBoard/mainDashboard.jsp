@@ -296,7 +296,7 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 	                <div class="card-body" style="margin-bottom: 10px;">
 	                    <h4 class="card-title" style="margin-bottom: 0px;">My Issue Chart by Project</h4>
 	                    <div class="align-items-center">
-	                        <div class="row" id="myProgressChar"> </div>
+	                        <div class="row" id="myProgressChar" style="overflow:auto; overflow-y:hidden;"> </div>
 	                    </div>
 	                </div>
 	            </div>
