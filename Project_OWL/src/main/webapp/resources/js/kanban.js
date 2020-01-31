@@ -670,7 +670,7 @@ function editLabel(idx, color, name) {
 							lablist +=  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
 							lablist +=  '</div></div><hr>';
 					});
-							$('#assignedEdit').append(lablist);
+							/*$('#assignedEdit').append(lablist);*/
 						
 					}
 			},error : function() {
@@ -775,9 +775,14 @@ function editLabel(idx, color, name) {
 					memberlist += '</datalist>';
 				$('#searchContent').append(memberlist);
 				
-				} else if(flagelement == '') {
-					
-					
+				} else if(flagelement == 'editDetail') {
+					let selectoption = '<option value="">Select</option>';
+					$('#assignedEdit').append(selectoption);
+		             $.each(member, function(index, element) {
+					  optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
+		               });
+		               
+		          $('#assignedEdit').append(optmember);
 				}
 			}, error : function() {
 				
