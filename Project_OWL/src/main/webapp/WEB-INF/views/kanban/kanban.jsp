@@ -135,10 +135,10 @@
 	height:60%;
 }
 </style>
- <!-- test textcomplete -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>  
+
 <script>
   $(function(){
+<<<<<<< HEAD
 		var mentions = ['yuku_t'];
 		
 		/* $('#replycontent').textcomplete({
@@ -181,6 +181,10 @@
 			})
 
 		
+=======
+
+ 
+>>>>>>> 1c4b925b14965f0636213f09e87ed7997ad69e04
 	  function check() {
 	
 		if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
