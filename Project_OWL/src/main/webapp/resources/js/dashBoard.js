@@ -19,7 +19,8 @@ $(function() {
 				 $("#myDashBoardBox").addClass("hidden");
 				 return;
 			 }
-			 
+			 $("#myDashBoardBox").removeClass("hidden");
+			 $("#myDashBoardEmptyBox").addClass("hidden");
 			 setMyIssueTask();
 		 },
 		 error : function(){

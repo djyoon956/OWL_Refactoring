@@ -250,18 +250,19 @@
 </style>
 <!-- CONTENT MAIN -->
 <div class="container-fluid" style="padding:20px">
-    <div class="row" >
-    	<div id="myDashBoardEmptyBox" class="emptyBox">
+    <div class="row" class="h-100 w-100">
+    	<div id="myDashBoardEmptyBox" class="emptyBox" class="row">
     		<div class="col-lg-12">
 	            <div class="card dash_shadow dash_radius">
 	                <div class="card-body" style="margin-bottom: 10px;">
-                        	<h3>참여중인 프로젝트가 없습니다.</h3>
+	                    <div class="align-items-center">
+	                        	<h3>참여중인 프로젝트 없음</h3>
+	                    </div>
 	                </div>
 	            </div>
 	        </div>
     	</div>
-    	
-	    <div id="myDashBoardBox">
+	    <div id="myDashBoardBox" class="row">
 	        <!--  my task -->
 	        <div class="col-lg-6">
 	            <div class="card dash_shadow dash_radius" style="height: 450px">
