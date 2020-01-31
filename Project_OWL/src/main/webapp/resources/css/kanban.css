@@ -18,7 +18,7 @@
 	   	height : 25px;
 	   	border-radius: 10rem;
 	   	padding: 0.20em 0.6em;
-	   	line-height: normal;
+	   	line-height: inherit;
 	   	display: inline-block;
 	   	text-align: center;
 	    white-space: nowrap;

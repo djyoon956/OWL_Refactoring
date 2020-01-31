@@ -36,6 +36,11 @@
 display: none !important;
 }
 </style>	 	
+<script type="text/javascript">
+	$(function(){
+		 setTheme("${setting.themeColor}", "${setting.font}");
+	})
+</script>
 </head>
 
 <body class="mainBody">
