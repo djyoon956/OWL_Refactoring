@@ -480,8 +480,7 @@ function initKanban(projectIdx){
 		 							})   
 		 					}
 		 				}) 
-		 			
-		 			
+
 } //initKanban 끝
 
 
