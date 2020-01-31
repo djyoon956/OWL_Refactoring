@@ -11,8 +11,12 @@ import lombok.ToString;
 @ToString
 public class ProjectProgress {
 	private int projectIdx;
+	private int issueIdx;
+	private int labelIdx;
 	private String projectName;
 	private String projectColor;
 	private String assigned;
+	private String labelName;
+	private String labelColr;
 	private IssueProgressType issueProgress;
 }

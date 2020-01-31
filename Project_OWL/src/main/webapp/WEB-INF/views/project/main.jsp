@@ -95,8 +95,34 @@
     	       }
     	   });
 
-
-
+        	$.ajax({
+    	        url:"LabelChart.do",
+    	        dataType: "json",
+    	        data: {projectIdx: 	${project.projectIdx}},
+    	        success:function(data){
+        	        console.log("label");
+    		        console.log(data);
+    		        return;
+    		     $.each(data, function(key, value){
+    		    	  let idx = key;
+    			      let name = value[0].projectName;
+    			      let color = value[0].projectColor;
+    		    	  let totalCount=value.length;
+    		    	  let closeCount=0;
+    		    	  $.each(value, function(index, element){
+    		    			if(element.issueProgress == "CLOSED") 
+    							closeCount++;
+    		    	  })
+    			
+    		    	 let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
+    					  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
+    				$("#myProgressChar").append(makeChart);
+    				ProjectMyChart(idx, totalCount, closeCount, name, color);		    	
+    		     });
+    		     
+    	       }
+    	   });
+    		
 			$.ajax({
 				url : "GetIssue.do",
 				data : {'projectIdx' :  ${project.projectIdx} },

@@ -66,11 +66,23 @@ public class DashBoardRestController {
 	 * @author 이정은
 	 * @since 2020/01/31
 	 * @param principal
-	 * @return List<ProjectProgress>
+	 * @return Map<Integer ,List<ProjectProgress>>
 	 */
 	@RequestMapping("MyProjectProgress.do")
 	public Map<Integer ,List<ProjectProgress>> getMyProjectChart(Principal principal) {	
 		return service.getMyProjectChart(principal.getName());
+	}
+	
+	/**
+	 * 프로젝트 내의 라벨별 진행률
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param projectIdx
+	 * @return Map<String ,List<ProjectProgress>>
+	 */
+	@RequestMapping("LabelChart.do")
+	public Map<String ,List<ProjectProgress>> getLabelChart(int projectIdx) {	
+		return service.getLabelChart(projectIdx);
 	}
 	
 	/**

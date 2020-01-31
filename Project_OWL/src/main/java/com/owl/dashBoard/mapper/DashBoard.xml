@@ -35,6 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT PROJECTIDX, ISSUEPROGRESS, ASSIGNED FROM ISSUE WHERE PROJECTIDX =#{projectIdx} AND ISSUEPROGRESS in('OPEN', 'CLOSED')
 	</select>
 	
+	<select id="getLabelChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
+		SELECT i.ISSUEIDX, i.ISSUEPROGRESS, i.PROJECTIDX, l.LABELNAME, l.LABELCOLOR
+		FROM LABEL l JOIN ISSUE i ON l.LABELIDX=i.LABELIDX 
+	    where i.PROJECTIDX = #{projectIdx} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')		
+	</select>
+	
 	<select id="getMyTimeLines" resultType="com.owl.dashBoard.dto.TimeLine">
 		SELECT P.PROJECTNAME, I.ISSUETITLE AS 'SUBJECT', I.DUEDATE, L.PROJECTCOLOR
 			FROM OWL.ISSUE I JOIN owl.PROJECT P ON I.PROJECTIDX = P.PROJECTIDX 

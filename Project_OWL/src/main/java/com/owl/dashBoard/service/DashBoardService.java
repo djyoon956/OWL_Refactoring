@@ -147,6 +147,20 @@ public class DashBoardService {
 		return progress;
 	}
 	
+	public Map<String ,List<ProjectProgress>> getLabelChart(int projectIdx){
+		DashBoardDao dao = getDashBoardDao();
+		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
+		Map<String, List<ProjectProgress>> results = new HashMap<String, List<ProjectProgress>>();
+		try {
+			progress = dao.getLabelChart(projectIdx);
+			results=progress.stream().collect(Collectors.groupingBy(ProjectProgress::getLabelName));
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		return results;		
+	}
+	
 	/**
 	 * DashBoardDao 구하기
 	 * @author 윤다정

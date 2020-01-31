@@ -19,4 +19,6 @@ public interface DashBoardDao {
 	public List<ProjectProgress> getProjectChart(int projectIdx) throws ClassNotFoundException, SQLException;
 	
 	public List<TimeLine> getMyTimeLines(String email) throws ClassNotFoundException, SQLException;
+	
+	public List<ProjectProgress> getLabelChart(int projectIdx) throws ClassNotFoundException, SQLException;
 }
