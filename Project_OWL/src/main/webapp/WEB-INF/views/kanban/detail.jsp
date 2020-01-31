@@ -150,7 +150,7 @@
 								<div class="col-8">
 									<select class="select2 custom-select" name="assigned" id="assignedEdit">
 										<option value="" id="">Select</option>
-										<option value="aaa">aaa@gmail.com</option>
+										<!-- <option value="aaa">aaa@gmail.com</option> -->
 									</select> 
 								</div>
 								<div class="col-1"> 
@@ -160,7 +160,7 @@
 							<span id="issueDetailAssignees">Chloe</span>
 							</div>
 							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="assignListEditview()"></i>
 							</div>
 						</div>
                     </div>    
