@@ -138,53 +138,6 @@
 
 <script>
   $(function(){
-<<<<<<< HEAD
-		var mentions = ['yuku_t'];
-		
-		/* $('#replycontent').textcomplete({
-		    html: {
-		        match: /\B@(\w*)$/,
-		        search: function (term, callback) {
-		            callback($.map(mentions, function (mention) {
-		                return mention.indexOf(term) === 0 ? mention : null;
-		            }));
-		        },
-		        index: 1 ,
-		        replace: function (mention) {
-		            return '@' + mention + ' '; 
-		        } 
-		    }
-		}).overlay([
-		     {
-		        match: /\B@\w+/g,
-		        css: {
-		            'background-color': '#d8dfea'
-		        }
-		    } 
-		]);  */
-		var users = [
-			  {username: 'lodev09', fullname: 'Jovanni Lo'},
-			  {username: 'foo', fullname: 'Foo User'},
-			  {username: 'bar', fullname: 'Bar User'},
-			  {username: 'twbs', fullname: 'Twitter Bootstrap'},
-			  {username: 'john', fullname: 'John Doe'},
-			  {username: 'jane', fullname: 'Jane Doe'},
-			];
-		$('#replycontent').suggest('@', {
-			  data: users,
-			  map: function(user) {
-			    return {
-			      value: user.username,
-			      text: '<strong>'+user.username+'</strong> <small>'+user.fullname+'</small>'
-			    }
-			  }
-			})
-
-		
-=======
-
- 
->>>>>>> 1c4b925b14965f0636213f09e87ed7997ad69e04
 	  function check() {
 	
 		if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
