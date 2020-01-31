@@ -134,6 +134,7 @@ public class KanbanRestController {
 		System.out.println("칼럼");
 		System.out.println(colIdx);
 		*/
+		System.out.println(dueDate + "듀 데이트 ");
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
@@ -150,7 +151,7 @@ public class KanbanRestController {
 			issue.setLabelIdx(Integer.parseInt(labelIdx));
 		if(!dueDate.isEmpty()) {
 			try {
-				issue.setDueDate(new SimpleDateFormat("yyyy-mm-dd").parse(dueDate));
+				issue.setDueDate(new SimpleDateFormat("yyyy-MM-dd").parse(dueDate));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -357,7 +358,7 @@ public class KanbanRestController {
 		issue.setIssueIdx(issueIdx);
 		if(!dueDate.isEmpty()) {
 			try {
-				issue.setDueDate(new SimpleDateFormat("yyyy-mm-dd").parse(dueDate));
+				issue.setDueDate(new SimpleDateFormat("yyyy-MM-dd").parse(dueDate));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
