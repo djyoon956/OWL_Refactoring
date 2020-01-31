@@ -119,40 +119,6 @@ var config1 = {
 		}
 	};
 
-	var config2 = {
-			type: 'doughnut',
-			data: {
-				datasets: [{
-					data: [
-						40,
-						60,
-					],
-					backgroundColor: [
-						window.chartColors.yellow,
-						window.chartColors.green,
-					],
-					label: 'Dataset 1'
-				}],
-				labels: [
-					'Complete',
-					'Total'
-				]
-			},
-			options: {
-				responsive: true,
-				legend: {
-					position: 'top',
-				},
-				title: {
-					display: true,
-					text: '나의 진행률'
-				},
-				animation: {
-					animateScale: true,
-					animateRotate: true
-				}
-			}
-		};
 
 	var barChartData = {
 			labels: ['Emergency', 'Doing', 'Done', 'Stop', 'Closed', 'Open'],
@@ -192,6 +158,42 @@ var config1 = {
 			}]
 
 		};
+	function MyChart(idx, totalSum, closeSum, color){  
+	    window.myDoughnut = new Chart(document.getElementById('myProgress'+idx).getContext('2d'), {
+	        type: 'doughnut',
+	        data: {
+	            datasets: [{
+	                data: [
+	                	Math.round((totalSum - closeSum)/totalSum*100),
+	                	Math.round((closeSum)/totalSum*100)               	
+	                ],
+	                backgroundColor: [
+	                	"#d9d9d9",
+	                	color                	
+	                ],
+	                label: projectName
+	            }],
+	            labels: [
+	            	'Total',
+					'Complete'    
+	            ]
+	        },
+	        options: {
+	            responsive: true,
+	            legend: {
+	                position: 'top',
+	            },
+	            title: {
+	                display: true,
+	                text: '나의 진행률'
+	            },
+	            animation: {
+	                animateScale: true,
+	                animateRotate: true
+	            }
+	        }
+	    });	
+	}	
 </script>  
 <style>
 .tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container{
@@ -270,11 +272,7 @@ display: none;
 												<canvas id="chartProjectProgress"></canvas>
 											</div>
 										</div>
-										<div class="col-md-6">
-											<div id="canvas-holder">
-												<canvas id="chartMyProgress"></canvas>
-											</div>
-										</div>
+										<div class="col-md-6" id="chartMyProgress"> </div>
 									</div>
                               </div>
                             </div>

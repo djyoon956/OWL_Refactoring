@@ -104,6 +104,22 @@ public class DashBoardService {
 		return results;
 	}
 	
+	public List<ProjectProgress> getProgressChart(String assigned, int projectIdx) {
+		DashBoardDao dao = getDashBoardDao();
+		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
+
+		try {
+			progress =dao.getProgressChart(assigned, projectIdx);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return progress;
+	}
+	
+	
+	
 	/**
 	 * DashBoardDao 구하기
 	 * 
