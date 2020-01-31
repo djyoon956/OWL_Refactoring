@@ -800,8 +800,7 @@ function editLabel(idx, color, name) {
 					
 				}
 			}, error : function() {
-				
-				
+
 			}
 			
 		})
@@ -840,6 +839,7 @@ function editLabel(idx, color, name) {
 		    }
 		});
 	}
+	
 	function editIssueAssignedOk() {
 		$.ajax({
 			url : "UpdateIssueAssgined.do",
@@ -904,13 +904,10 @@ function editLabel(idx, color, name) {
 		}
 	}
 	
-	
-
 
 	
 	function mentionSearch(projectIdx) {
-		console.log('여기오니?')
-		console.log(projectIdx);
+
 		 getProjectMemberList("mentionSearch",projectIdx);
 		 
 
