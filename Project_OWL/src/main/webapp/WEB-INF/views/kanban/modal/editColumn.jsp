@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- Summernote -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
-
+ -->
 <style>
-.btn-link {
+/* .btn-link {
 	display: inline-block;
 	padding: 0;
 	font-size: inherit;
@@ -23,7 +23,7 @@
 	-moz-appearance: none;
 	appearance: none;
 }
-
+ */
 
 </style>
 <script>

@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<!-- Summernote -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
+   <!--  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
-
-<script>
+ -->
+<!-- <script>
 
  var ordernum = 1; 
 	
  $(function() {
 
-	 let selectoption = '<option value="">Select</option>';
+ 	 let selectoption = '<option value="">Select</option>';
 	
 /*datwpicker*/
 	 $('.mydatepicker').datepicker();
@@ -46,16 +46,6 @@
 			}		
 			console.log('InsertIssueBtn 클릭되니1');
  				console.log('InsertIssueBtn 클릭되니1');
- 				/* 
- 				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
-				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
-				console.log('$("#content").summernote("code")' + $('#content').summernote('code'));
-				console.log(' $("#assigned").val()' +  $('#assigned').val());
-				console.log('$("#labelIdx").val()' + $('#labelIdx').val());
-				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
-				console.log($('#multipartFile').val()); 
-				*/
-//console.log('프로젝트아이디엑스 값 나오니???????' + '${project.projectIdx}');
 				console.log('labelIdx :' + $('#labelIdx').val());
 				
 			    let formData = new FormData();
@@ -111,12 +101,12 @@
 			        	errorAlert("Issue 추가 실패");
 			        }
 			    });
-		 	});
+		 	}); */
 	 });
 
 </script>
-
-<style>
+ -->
+<!-- <style>
 .btn-link {
 	display: inline-block;
     padding: 0;
@@ -136,7 +126,7 @@
     appearance: none;
 }
 
-</style>
+</style> -->
 <div id="addIssueModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">

@@ -132,7 +132,7 @@
                 </div>
                   <div class="row container-fluid">
 						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
-						<textarea id="replycontent" name="replycontent" style="resize: none; width:75%"></textarea>
+						<textarea id="replycontent" class="editable" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('${project.projectIdx}')}"></textarea>
 						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px">Comment</button>
             </div>
             
@@ -149,8 +149,8 @@
 							  <div class="row hidden" id="editAssignedBox" >
 								<div class="col-8">
 									<select class="select2 custom-select" name="assigned" id="assignedEdit">
-										<option value="" id="">Select</option>
-										<option value="aaa">aaa@gmail.com</option>
+										<!-- <option value="" id="">Select</option> -->
+										<!-- <option value="aaa">aaa@gmail.com</option> -->
 									</select> 
 								</div>
 								<div class="col-1"> 
@@ -160,7 +160,7 @@
 							<span id="issueDetailAssignees">Chloe</span>
 							</div>
 							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="assignListEditview()"></i>
 							</div>
 						</div>
                     </div>    
@@ -223,8 +223,8 @@
                            <div class="row">
 							<div class="col-10">
 							  <div class="row hidden" id="editDuedateBox" >
-								<div class="col-8">
-									  <input type="text" class="form-control" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" > 
+								<div class="col-8 pr-0">
+									  <input type="text" class="form-control mydatepicker" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" > 
 								</div>
 								<div class="col-1"> 
 							   		<button class="btn btn-primary" onclick="editIssueDueDateOk()">save</button>
