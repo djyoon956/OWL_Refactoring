@@ -67,15 +67,12 @@ function setMyIssueTask(){
 }
 
 function getDueDateElement(date){
-	console.log("in date Test10");
-	console.log(date);
 	let result = "";
 	let now = new Date();
 	let dates = date.split("-"); 
 	let target = new Date(dates[0], Number(dates[1])-1, dates[2]);  
 	
 	let betweenDay = Math.round((target-now)/(1000*60*60*24))+1;
-	
 	if(betweenDay < 0)
 		result = "<span style='color:red; font-weight: bold;'>Past by "+Math.abs(betweenDay)+" days</span>";
 	else if(betweenDay === 0)
