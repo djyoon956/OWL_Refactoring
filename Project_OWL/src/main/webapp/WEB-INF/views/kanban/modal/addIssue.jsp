@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 	<!-- Summernote -->
    <!--  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
@@ -200,7 +202,13 @@
 				</div>
 			</div> 
 					<div class="modal-footer text-right">
-					<input type="button" class="btn btn-primary" id="InsertIssueBtn" value="Save changes">
+					<c:if test="${project.authority eq 'ROLE_PM'}">
+					<input type="button" class="btn btn-primary InsertIssueBtn" value="Save changes">
+					</c:if>
+					
+					<c:if test="${project.authority eq 'role_projectmember'}">
+					<input type="button" class="btn btn-primary InsertIssueBtn" value="Send PM">
+					</c:if>
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 				</div>
 			</form>

@@ -17,6 +17,7 @@ function initKanban(projectIdx){
 		getissueinfo("issueModalOpen",projectIdx);
 
 	}).on('hidden.bs.modal', function(e){
+		 $('#isContent').summernote("reset");
 		$(this).find('.addContent')[0].reset();
  	});
 	
@@ -218,7 +219,7 @@ function initKanban(projectIdx){
 		 		      });
 
 
-		 			$("#InsertIssueBtn").on("click", function () {
+		 			$(".InsertIssueBtn").on("click", function () {
 
 		 				console.log('InsertIssueBtn click');
 		 				if($('#issueTitle').val() == ""){
@@ -265,7 +266,6 @@ function initKanban(projectIdx){
 		 			        timeout: 600000,
 		 			        success: function (data) {
 
-		 			        	
 		 	 		        	if(data != null){
 		 			        		successAlert("Issue 추가 완료");
 		 			        		addKanbanIssue('-1', data);
@@ -888,7 +888,7 @@ function editLabel(idx, color, name) {
 					console.log(data);
 					$('#labelList').empty();
 					$('#labelIdx').empty();
-
+					$('#labelIdxEdit').empty();
 					if(flagelement == "ShowLabelList") {
 						let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
 				
@@ -917,23 +917,12 @@ function editLabel(idx, color, name) {
 						});		 	
 						labellist += '</datalist>';
 						$('#searchContent').append(labellist);
-					}else if(flagelement == "detailEdit"){
-						
-						$.each(data,function(index, obj) {
-							
-							lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
-							lablist +=  '<div class="col-lg-8">';
-							lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
-							lablist +=  '</div>';
-							lablist +=  '<div class="col-lg-2">';
-							lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
-							lablist +=  '</div>';
-							lablist +=  '<div class="col-lg-2">';
-							lablist +=  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
-							lablist +=  '</div></div><hr>';
-					});
-							/*$('#assignedEdit').append(lablist);*/
-						
+					}else if(flagelement == "editDetail"){
+						let llist = ""; 
+		                $.each(data, function(index, element) {
+		                 	 llist += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
+		                 });
+							$('#labelIdxEdit').append(llist);
 					}
 			},error : function() {
 					console.log("Showlabel error");
@@ -941,28 +930,6 @@ function editLabel(idx, color, name) {
 			}
 		  });
 		}
-	
-
-	function editIssueDetailView(){
-		changeKanbanView("edit");
-		/*
-		$("#issueDetailAssignees").val;
-		$("#issueDetailLabel").val;
-		$("#issueDetailPriority").val();
-		$("#issueDetailDueDate").val;*/
-		console.log("edit  Issue Detail  View ");
-		console.log($("#issueDetailAssignees").text());
-		console.log($("#issueDetailLabel").text());
-		
-		$("#issueDetailEditTitle").val($("#issueDetailTitle").text());
-		$("#issueDetailEditContent").summernote('code', $("#issueDetailContent").html());
-		$("#assignedEdit").val($("#issueDetailAssignees").text());
-		$("#labelIdxEdit").val($("#issueDetailLabel").text());
-		$("#priorityCodeEdit").val($("#issueDetailPriority").val().toUpperCase());
-		
-		$("#datepicker-editIssue").val($("#issueDetailDueDate").text());
-	}	
-	
 	
 	function editTitleViewBtn(){
 		$("#issueDetailTitleEdit").val($("#issueDetailTitle").text());
@@ -1124,9 +1091,32 @@ function editLabel(idx, color, name) {
 		
 	}
 	
-	function assignListEditview(){
-		getProjectMemberList("editDetail",$('#projectIdxNum').val());
+	function editIssueLabelOk() {
+		$.ajax({
+			url : "UpdateIssueLabel.do",
+		    method : "POST",
+		    data : {issueIdx : $("#issueIdxNum").val(), 'labelIdx' : $('#labelIdxEdit').val()},
+		    success : function(data){
+		    	setKanbanDetail($("#issueIdxNum").val());
+		    	$("#editLabelBox").addClass("hidden");
+				$("#issueDetailLabel").removeClass("hidden");
+		    }, error : function() {
+		    	console.log('edit issue label in');
+		    }
+		});
 		
+	}
+	function assignListEditview(projectidx){
+		console.log("assignListEditview----");
+		console.log(projectidx);
+		getProjectMemberList("editDetail",projectidx);
+		
+	}
+	function labelListview(projectidx){
+		console.log("labelListview---- 라벨 리스트 보여져야한다 ");
+		console.log(projectidx);
+		//flagelement,projectIdx
+		getLabelList("editDetail",projectidx);
 	}
 	
 	function getissueinfo(flagelement, projectidx) {
