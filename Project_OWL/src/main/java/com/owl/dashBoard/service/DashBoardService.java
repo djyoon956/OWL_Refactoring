@@ -2,7 +2,10 @@ package com.owl.dashBoard.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,23 +59,26 @@ public class DashBoardService {
 
 		return issueTasks;
 	}
-	
+
 	/**
 	 * 본인에게 할달된 이슈 진행률(프로젝트 별)
-	 * @author 이정은
+	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @param email
-	 * @return progress
+	 * @return Map<Integer ,List<ProjectProgress>>
 	 */
-	public List<ProjectProgress> getMyProjectChart(String email){
+	public Map<Integer ,List<ProjectProgress>> getMyProjectChart(String email){
 		DashBoardDao dao = getDashBoardDao();
 		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
+		Map<Integer, List<ProjectProgress>> results = new HashMap<Integer, List<ProjectProgress>>();
 		try {
 			progress = dao.getMyProjectChart(email);
+			results=progress.stream().collect(Collectors.groupingBy(ProjectProgress::getProjectIdx));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}		
-		return progress;		
+		
+		return results;		
 	}
 	
 	/**
