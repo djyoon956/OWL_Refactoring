@@ -17,6 +17,7 @@ function initKanban(projectIdx){
 		getissueinfo("issueModalOpen",projectIdx);
 
 	}).on('hidden.bs.modal', function(e){
+		 $('#isContent').summernote("reset");
 		$(this).find('.addContent')[0].reset();
  	});
 	
@@ -218,7 +219,7 @@ function initKanban(projectIdx){
 		 		      });
 
 
-		 			$("#InsertIssueBtn").on("click", function () {
+		 			$(".InsertIssueBtn").on("click", function () {
 
 		 				console.log('InsertIssueBtn click');
 		 				if($('#issueTitle').val() == ""){
@@ -265,7 +266,6 @@ function initKanban(projectIdx){
 		 			        timeout: 600000,
 		 			        success: function (data) {
 
-		 			        	
 		 	 		        	if(data != null){
 		 			        		successAlert("Issue 추가 완료");
 		 			        		addKanbanIssue('-1', data);
