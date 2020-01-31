@@ -6,9 +6,57 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
     $(function () {
-        var ctx1 = document.getElementById('chartProjectOne').getContext('2d');
-        window.myDoughnut = new Chart(ctx1, configOne);
+        var idList =  [];
+        var uniqueIdx = "";        
+    	$.ajax({
+	        url:"MyProjectProgress.do",
+	        dataType: "json",
+	        success:function(data){
+		     $.each(data, function(key, value){
+		    	  let idx = key;
+			      let name = value[0].projectName;
+		    	  let totalCount=value.length;
+		    	  let closeCount=0;
+		    	  $.each(value, function(index, element){
+		    			if(element.issueProgress == "CLOSED") 
+							closeCount++;
+		    	  })
+			
+		    	 let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
+					  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
+				$("#myProgressChar").append(makeChart);
+				ProjectMyChart(idx, totalCount, closeCount, name);
+		    	/*  if(idx == element.projectIdx){
+							totalCount++;
+						if(element.issueProgress == "CLOSED") 
+							closeCount++;
+					}else if(idx != element.projectIdx || index != totalLength - 1){ 
+							// 차트 영역 만들기
+							let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
+												  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
+							$("#myProgressChar").append(makeChart);	
+							console.log("makeChart",makeChart);
+							console.log("-----------------------");
+							console.log(totalCount);
+							console.log(closeCount);
+							ProjectMyChart(idx, totalCount, closeCount, name);
+							// 셋팅 초기화
+							idx = element.projectIdx;
+							name = element.projectName;	
+							totalCount = 1;
+							closeCount = 0;
 
+							if(element.issueProgress == "CLOSED") 
+								closeCount++;
+						} */
+
+		     });
+		     
+	       }
+	   }); 
+
+
+/*
         var ctx2 = document.getElementById('chartProjectTwo').getContext('2d');
         window.myDoughnut = new Chart(ctx2, configTwo);
 
@@ -87,47 +135,13 @@
                 }
             }
         });
+*/
+
+
+        
     });
 
-    var randomScalingFactor = function () {
-        return Math.round(Math.random() * 100);
-    };
-
-    var configOne = {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [
-                    randomScalingFactor(),
-                    randomScalingFactor(),
-                ],
-                backgroundColor: [
-                    window.chartColors.yellow,
-                    window.chartColors.blue,
-                ],
-                label: 'Dataset 1'
-            }],
-            labels: [
-                'Yellow',
-                'Blue'
-            ]
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top',
-            },
-            title: {
-                display: true,
-                text: 'Project 1'
-            },
-            animation: {
-                animateScale: true,
-                animateRotate: true
-            }
-        }
-    };
-
+/*
     var configTwo = {
         type: 'doughnut',
         data: {
@@ -241,6 +255,86 @@
             yAxisID: 'y-axis-1'
         }]
     };
+*/
+
+var randomScalingFactor = function () {
+    console.log("랜덤값-----------");
+    console.log(Math.random());
+    console.log(Math.random() * 100);
+    console.log(Math.round(Math.random() * 100));
+    return Math.round(Math.random() * 100);
+};
+
+    function removeDuplicatesArray(arr) {
+        var tempArr = [];
+        for (var i = 0; i < arr.length; i++) {
+            if (tempArr.length == 0) {
+                tempArr.push(arr[i]);
+            } else {
+                var duplicatesFlag = true;
+                for (var j = 0; j < tempArr.length; j++) {
+                    if (tempArr[j] == arr[i]) {
+                        duplicatesFlag = false;
+                        break;
+                    }
+                }
+                if (duplicatesFlag) {
+                    tempArr.push(arr[i]);
+                }
+            }
+        }
+        return tempArr;
+    }
+function ProjectMyChart(idx, totalSum, closeSum, projectName){
+	console.log("in char66");
+	console.log("idx",idx);
+	console.log("total", totalSum);
+	console.log("closeSum", closeSum);
+	
+	console.log(document.getElementById('chartProject'+idx));
+    
+    window.myDoughnut = new Chart(document.getElementById('chartProject'+idx).getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [
+                	Math.round((closeSum)/totalSum*100),
+                	Math.round((totalSum - closeSum)/totalSum*100)
+                ],
+                backgroundColor: [
+                    window.chartColors.yellow,
+                    window.chartColors.blue,
+                ],
+                label: projectName
+            }],
+            labels: [
+                'CLose Issue',
+                'Open Issue'
+            ]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: projectName
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    });
+
+
+
+
+
+
+	
+}
 </script>
 <style>
     .tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container {
@@ -358,8 +452,8 @@
 	                <div class="card-body" style="margin-bottom: 10px;">
 	                    <h4 class="card-title" style="margin-bottom: 0px;">Project Chart</h4>
 	                    <div class="align-items-center">
-	                        <div class="row">
-	                            <div class="col-md-4">
+	                        <div class="row" id="myProgressChar">
+<!-- 	                            <div class="col-md-4">
 	                                <div id="canvas-holder">
 	                                    <canvas id="chartProjectOne"></canvas>
 	                                </div>
@@ -373,7 +467,7 @@
 	                                <div id="canvas-holder">
 	                                    <canvas id="chartProjectThree"></canvas>
 	                                </div>
-	                            </div>
+	                            </div> -->
 	                        </div>
 	                    </div>
 	                </div>

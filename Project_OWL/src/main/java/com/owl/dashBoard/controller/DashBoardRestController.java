@@ -2,6 +2,7 @@ package com.owl.dashBoard.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +51,7 @@ public class DashBoardRestController {
 	 * @return List<ProjectProgress>
 	 */
 	@RequestMapping("MyProjectProgress.do")
-	public List<ProjectProgress> getMyProjectChart(Principal principal) {	
+	public Map<Integer ,List<ProjectProgress>> getMyProjectChart(Principal principal) {	
 		return service.getMyProjectChart(principal.getName());
 	}
 	

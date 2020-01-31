@@ -19,9 +19,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMyProjectChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
-		SELECT p.PROJECTIDX, p.PROJECTNAME, i.ASSIGNED, i.ISSUEPROGRESS 
+		SELECT p.PROJECTIDX, p.PROJECTNAME, i.ASSIGNED,	i.ISSUEPROGRESS 
 		FROM PROJECT p JOIN ISSUE i 
-		ON p.PROJECTIDX=i.PROJECTIDX where i.ASSIGNED = #{email}
+		ON p.PROJECTIDX=i.PROJECTIDX where i.ASSIGNED = #{email} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')		
 	</select>
 	
 </mapper>
