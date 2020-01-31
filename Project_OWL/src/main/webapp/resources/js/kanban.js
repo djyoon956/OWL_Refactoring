@@ -79,7 +79,7 @@ function initKanban(projectIdx){
 			getLabelList("SearchLabelList", projectIdx);
 		}else if(selectMenu == "Assignee") {
 			$('#searchContent').attr('list', 'MemberMenu');
-			getProjectMemberList(projectIdx);
+			getProjectMemberList("searchMember",projectIdx);
 		}else if(selectMenu == "Priority") {
 			$('#searchContent').attr('list', 'PriorityMenu');
 
@@ -655,6 +655,23 @@ function editLabel(idx, color, name) {
 						});		 	
 						labellist += '</datalist>';
 						$('#searchContent').append(labellist);
+					}else if(flagelement == "detailEdit"){
+						
+						$.each(data,function(index, obj) {
+							
+							lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
+							lablist +=  '<div class="col-lg-8">';
+							lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
+							lablist +=  '</div>';
+							lablist +=  '<div class="col-lg-2">';
+							lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
+							lablist +=  '</div>';
+							lablist +=  '<div class="col-lg-2">';
+							lablist +=  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
+							lablist +=  '</div></div><hr>';
+					});
+							$('#assignedEdit').append(lablist);
+						
 					}
 			},error : function() {
 					console.log("Showlabel error");
@@ -739,7 +756,7 @@ function editLabel(idx, color, name) {
 	}
 
 
-	function getProjectMemberList(projectidx) {
+	function getProjectMemberList(flagelement,projectidx) {
 		
 		console.log(projectidx);
 		$.ajax({
@@ -749,7 +766,7 @@ function editLabel(idx, color, name) {
 				
 				console.log('GetProjectMemberList in');
 				console.log(data);
-				
+				if(flagelement == 'searchMember'){
 				var memberlist = '<datalist id="MemberMenu">';
 
 				$.each(data, function(index, obj) {
@@ -758,7 +775,10 @@ function editLabel(idx, color, name) {
 					memberlist += '</datalist>';
 				$('#searchContent').append(memberlist);
 				
-				
+				} else if(flagelement == '') {
+					
+					
+				}
 			}, error : function() {
 				
 				
@@ -806,16 +826,17 @@ function editLabel(idx, color, name) {
 		    method : "POST",
 		    data : {issueIdx : $("#issueIdxNum").val(), 'assigned' : $('#assignedEdit').val()},
 		    success : function(data){
-		    	console.log("UpdateIssueAssgined.do");
-		    	console.log(data);
 		    	setKanbanDetail($("#issueIdxNum").val());
 		    	$("#editAssignedBox").addClass("hidden");
 				$("#issueDetailAssignees").removeClass("hidden");
 		    }, error : function() {
 		    	console.log('edit issue duedate in');
-		    	console.error();
 		    }
 		});
+		
+	}
+	function assignListEditview(){
+		//getProjectMemberList("detailEdit",$('#projectIdxNum').val());
 		
 	}
 	function getissueinfo(flagelement, projectidx) {
@@ -864,7 +885,3 @@ function editLabel(idx, color, name) {
 	}
 	
 
-	function editLabel(){
-		
-		
-	}

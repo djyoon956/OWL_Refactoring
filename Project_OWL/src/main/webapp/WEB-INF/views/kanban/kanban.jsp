@@ -136,10 +136,10 @@
 }
 </style>
  <!-- test textcomplete -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>  
 <script>
   $(function(){
-/* 		var mentions = ['yuku_t'];
+		var mentions = ['yuku_t'];
 		
 		$('#replycontent').textcomplete({
 		    html: {
@@ -149,19 +149,19 @@
 		                return mention.indexOf(term) === 0 ? mention : null;
 		            }));
 		        },
-		        index: 1,
+		        index: 1 ,
 		        replace: function (mention) {
-		            return '@' + mention + ' ';
-		        }
+		            return '@' + mention + ' '; 
+		        } 
 		    }
 		}).overlay([
-		    {
+		     {
 		        match: /\B@\w+/g,
 		        css: {
 		            'background-color': '#d8dfea'
 		        }
-		    }
-		]); */
+		    } 
+		]) ; 
 
 	  function check() {
 	
@@ -363,15 +363,13 @@
 			}
 		}) 
 
+$('#projectIdxNum').val( ${project.projectIdx});
 
-
-
-
-		
 });
 </script>
 
 <div id="totalbody" class="container-fluid mt-3">
+<input type="hidden" id="projectIdxNum">
     <div id="kanbanMainBox">
 
         <div class="row">
