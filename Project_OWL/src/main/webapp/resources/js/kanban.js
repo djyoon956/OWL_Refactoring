@@ -5,32 +5,14 @@ let projectIdx;
 let editIdx = 0;
 
 
+//let words = ['google', 'facebook', 'github', 'microsoft', 'yahoo'];
+
+let words = new Array();
+
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
 	
-
-	  
-    var words = ['google', 'facebook', 'github', 'microsoft', 'yahoo'];
-
-    	//멘션
-	  $('.editable').textcomplete([{
-		  
-		    match:  /\B@(\w*)$/,
-		    search: function (term, callback) {
-		      callback($.map(words, function (word) {
-		        return word.indexOf(term) === 0 ? word : null;
-		      }));
-		    },
-		    index: 1,
-		    replace: function (word) {
-		      return	'@' + word + ' ';
-		    }
-		  }]);
-	
-	  
-	  
-	  
 	
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
@@ -789,17 +771,32 @@ function editLabel(idx, color, name) {
 				
 				console.log('GetProjectMemberList in');
 				console.log(data);
+				
 				if(flagelement == 'searchMember'){
-				var memberlist = '<datalist id="MemberMenu">';
+					
+					var memberlist = '<datalist id="MemberMenu">';
 
-				$.each(data, function(index, obj) {
-					memberlist += '<option value="'+obj.name+'" data-id="'+obj.email+'">('+obj.email+')</option>';	
-				});		 	
+					$.each(data, function(index, obj) {
+						memberlist += '<option value="'+obj.name+'" data-id="'+obj.email+'">('+obj.email+')</option>';	
+					});		 	
+					
 					memberlist += '</datalist>';
+						
 				$('#searchContent').append(memberlist);
 
+				
 				} else if(flagelement == '') {
 					
+					
+				}else if(flagelement == 'mentionSearch'){
+					$.each(data, function(index, obj){
+						console.log('mentionSearch in');
+						console.log(obj);
+						console.log(words);
+						console.log('----------------------');
+						words.push(obj.name);
+						console.log(words);
+					});
 					
 				}
 			}, error : function() {
@@ -907,4 +904,30 @@ function editLabel(idx, color, name) {
 		}
 	}
 	
+	
+
+
+	
+	function mentionSearch(projectIdx) {
+		console.log('여기오니?')
+		console.log(projectIdx);
+		 getProjectMemberList("mentionSearch",projectIdx);
+		 
+
+    	//멘션
+	  $('.editable').textcomplete([{
+		  
+		    match:  /\B@(\w*)$/,
+		    search: function (term, callback) {
+		      callback($.map(words, function (word) {
+		        return word.indexOf(term) === 0 ? word : null;
+		      }));
+		    },
+		    index: 1,
+		    replace: function (word) {
+		      return	'@' + word + ' ';
+		    }
+		  }]);
+	
+	}
 
