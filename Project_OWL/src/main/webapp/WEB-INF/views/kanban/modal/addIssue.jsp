@@ -137,7 +137,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			<form action="InsertIssue.do" method="post" enctype="multipart/form-data" id="addIssueForm">
+			<form  id="addIssueForm" class="addContent">
 			    <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
  				<div class="row">
 					<div class="col-8">
@@ -178,7 +178,7 @@
 						<div class="col-4">Priority</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="priorityCode" id="priorityCode">
-								<option value="" id="">Select</option>
+								<option value="">Select</option>
 								<option value="LOW">low</option>
 								<option value="MEDIUM">medium</option>
 								<option value="HIGH">high</option>
