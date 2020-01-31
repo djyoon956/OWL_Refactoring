@@ -1,14 +1,16 @@
-
 let projectIdx;
-
 
 let editIdx = 0;
 
 
+let words = new Array();
+let selectoption = '<option value="">Select</option>';
+let ordernum = 1; 
+
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
-	
+
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
 		console.log("addIssueModal open!");
@@ -47,6 +49,7 @@ function initKanban(projectIdx){
 			}
 		});
 	});
+	
 	
 	$('#backBtn').click(function() {
 		editIdx = 0;
@@ -100,7 +103,6 @@ function initKanban(projectIdx){
 	$('#kanbanSearchBtn').click(function(){
 		
 		$('#searchBox').find('tbody').empty();
-		//console.log($('#searchSelectBox option:selected').val());
 		
 		if($('#searchContent').val() == "" || $('#searchContent').val() == null) {
 			return;
@@ -170,11 +172,7 @@ function initKanban(projectIdx){
 	        ]
 	      });
 	 
-	 $('#datepicker-editIssue').datepicker({
-		 dateFormat: 'yy-mm-dd' ,
-   		  autoclose: true,
-    	  todayHighlight: true
-	 });
+
 
 		$('.editViewBtn').on('click', function(e){
 			    console.log($(this).parent().siblings().find(".row"));
@@ -188,16 +186,300 @@ function initKanban(projectIdx){
 			});
 
 	
-		
-		
 
-		
-		
+		 /*datwpicker*/
+
+		 		 $('#datepicker-autoclose, #datepicker-editIssue').datepicker({
+		 			 dateFormat: 'yy-mm-dd' ,
+		 	   		  autoclose: true,
+		 	    	  todayHighlight: true
+		 		 }); 
+		 		 
+		 		 
+/*		 		 $('#datepicker-editIssue').datepicker({
+		 			 dateFormat: 'yy-mm-dd' ,
+		 	   		  autoclose: true,
+		 	    	  todayHighlight: true
+		 		 });*/ 
+		 		
+		 		/*Summer Note*/
+		 		 $('#isContent').summernote({
+		 		        placeholder: 'Write Issue content',
+		 		        height: 120,
+		 		        toolbar: [
+		 		            ['style', ['bold', 'italic', 'underline', 'clear']],
+		 		            ['font', ['strikethrough', 'superscript']],
+		 		            ['fontsize'],
+		 		            ['color'],
+		 		            ['para', ['ul', 'ol', 'paragraph']],
+		 		        ]
+		 		      });
+
+
+		 			$("#InsertIssueBtn").on("click", function () {
+
+		 				console.log('InsertIssueBtn click');
+		 				if($('#issueTitle').val() == ""){
+		 					warningAlert("제목을 작성해주십시오");
+		 					return; 
+		 				}
+		 				if($('#isContent').val() == ""){
+		 					warningAlert("내용을 작성해주십시오");
+		 					return; 
+		 				}		
+		 				//console.log('InsertIssueBtn 클릭되니1');
+		  				//console.log('InsertIssueBtn 클릭되니1');
+		 				//console.log('labelIdx :' + $('#labelIdx').val());
+		 				console.log("날짜 val ");
+		 				console.log($('#datepicker-autoclose').val());
+		 			    let formData = new FormData();
+		 			    formData.append("projectIdx",projectIdx);
+
+		 			    formData.append('issueTitle',$('#issueTitle').val());
+		 			    formData.append('content', $('#isContent').summernote('code'));
+		 			    formData.append('orderNum', ordernum++);
+		 			    formData.append('priorityCode', $('#priorityCode').val());			    
+		 			    formData.append('assigned', $('#assigned').val());
+		 			    formData.append('labelIdx', $('#labelIdx').val());
+		 			    formData.append('dueDate', $('#datepicker-autoclose').val());
+		 			    formData.append('colIdx', '-1');
+		 			    
+		 			    $.each($("#multipartFiles")[0].files, function(i, file) {
+		 			    	formData.append('multipartFiles', file);
+		 			    }); 
+
+
+		 				let istitle = $('#issueTitle').val();
+		 				let isassignee = $('#assigned').val();
+		 				
+		 				$.ajax({
+		 					url : 'InsertIssue.do',
+		 			        type: "POST",
+		 					enctype :'multipart/form-data',
+		 					data : formData,
+		 			        processData: false,
+		 			        contentType: false,
+		 			        cache: false,
+		 			        timeout: 600000,
+		 			        success: function (data) {
+
+		 			        	
+		 	 		        	if(data != null){
+		 			        		successAlert("Issue 추가 완료");
+		 			        		addKanbanIssue('-1', data);
+		 			        		$('#addIssueModal').modal("hide");
+		 			        		
+		 			        	}else{
+		 			        		errorAlert("Issue 추가 실패");
+		 			        	}
+
+		 	 		       	$( ".sortableCol").sortable({
+		 				        connectWith: ".connectedSortable",
+		 				        dropOnEmpty: true       
+		 				     }).disableSelection(); 
+		 			        },
+		 			        error: function (e) {
+		 			        	errorAlert("Issue 추가 실패");
+		 			        }
+		 			    });
+		 		 	});
+		 			
+		 			
+		 			$('#addLabelModal').on('show.bs.modal', function() { 	//프로젝트 내 라벨 리스트 출력 
+		 				//let projectidx = ${project.projectIdx};
+		 				getLabelList("ShowLabelList", projectIdx);
+
+		 			});	
+		 			
+		 			
+		 			
+		 			$('#addLabelModal').on('hidden.bs.modal', function() {  
+		 				$('#labelcolor').val("");
+		 				$('#labelname').val("");
+		 				
+		 				$('#addLabelBtn').removeClass("hidden");
+		 				$('#editLabelBtn').addClass("hidden");
+		 				$('#backBtn').addClass("hidden");
+		 			});
+
+		 		
+		 	         $("#openIssueBtn").click(function() {
+		 	            $("#-1Column").removeClass("d-none");
+		 	     		$("#-99Column").hide();
+		 	     		$("#-1Column").show();
+		 	          });
+
+		 	         
+		 	         $("#closeIssueBtn").click(function() {
+		 	         	$("#-99Column").removeClass("d-none");
+		 	     		$("#-1Column").hide();
+		 	     		$("#-99Column").show();
+		 	          });
+
+		 			
+		 			
+		 	    	$("#InsertColumnBtn").on("click", function () {	
+		 	   		console.log("InsertColumnBtn in");
+		 	   			$.ajax({
+		 	   				url : 'InsertColumn.do',
+		 	   				data : {'projectIdx' : projectIdx, 'colname' : $('#colname').val()},
+		 	   				success : function(data) {
+		 	   			
+		 	   					if(data != null) {
+		 	   		        		 console.log('data : ' + data);
+		 	   		        		addColumn(data);
+
+		 	       					$( ".sortableCol").sortable({
+		 	       				        connectWith: ".connectedSortable",
+		 	       				        dropOnEmpty: true,
+		 	       				        update: function(event, ui) {
+		 	   								let target = $(ui.item).attr("id").replace("Issue","");
+		 	   								let columnIdx = $(this).parent().attr("id").replace("Column","");
+		 	   								let issues = [];
+		 	   								$.each($(this)[0].children, function(){
+		 	   									issues.push($(this).attr("id").replace("Issue","").trim())
+		 	   								})
+		 	   								
+		 	   								if(issues.length == 0)
+		 	   									return;
+		 	   								
+		 	   								$.ajaxSettings.traditional = true; 
+		 	   								$.ajax({
+		 	   									type : "POST",
+		 	   									url : "MoveIssue.do",
+		 	   									data : { 	projectIdx :  projectIdx
+		 	   												, targetIssueIdx : target
+		 	   												, columnIdx : columnIdx
+		 	   												, issues : issues },
+		 	   									success : function(data) {
+		 	   										console.log("success move issue");
+		 	   									},
+		 	   									error: function() {
+		 	   										console.log("error move issue");
+		 	   									}
+		 	   								})
+		 	          				        }       
+		 	       				     }).disableSelection();
+
+		 	   		        		$('#addColumnModal').modal("hide");
+		 	   					}else {
+		 	   						errorAlert("Column 추가 실패");
+		 	   					}
+		 	   				},
+		 	   				error : function(e) {
+		 	   		        	errorAlert("Column 추가 error");
+		 	   					}
+		 	   				});
+		 	   	});
+		 	    	
+		 	    	
+		 	    	
+		 	    	
+		 	   	$('#addIssueModal').on('hidden.bs.modal', function(){
+		 			console.log('hidden 작동하니?');
+		 			
+		 			$('#issueTitle').val("");
+		 			$('#isContent').summernote("reset");
+		 			
+		 			console.log($('#priorityCode').val());
+		 			//$('#priorityCode option:eq(0)').attr('selected', 'selected');
+		 			console.log($('#priorityCode option:eq(0)').val());
+		 			console.log("after  :" +$('#priorityCode').val());
+		 			//$('#priorityCode').find('option:first').attr('selected', 'selected')
+		 			//$('#datepicker-autoclose').remove();
+		 			//$('#priorityCode').find('option:first').attr('selected', 'selected');
+		 			
+		 		});
+		 	   	
+		 	   	
+		 	   	
+		 		$('#addColumnModal').on('hidden.bs.modal', function() {  
+		 			$('#colname').val("");
+		 		});
+		 		
+		 		
+		 		
+		 		
+		 		$("#addLabelBtn").on("click", function () {	
+
+		 			let lcolor = false;
+		 			let lname = false;
+
+		 			let lbcolor = $('#labelcolor').val();
+		 			let lbname = $('#labelname').val();
+
+		 			if($('#labelcolor').val().trim() != "" && $('#labelcolor').val().trim() != null) lcolor = true;
+		 			if($('#labelname').val().trim() != "" && $('#labelname').val().trim() != null) lname = true;
+
+		 			if(lcolor == true && lname == true) {
+		 				$.ajax({
+		 					url : 'InsertLabel.do',
+		 					data : {'projectIdx' : projectIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
+		 					success : function(labelIdx) {
+		 						
+		 					addLabel(labelIdx, lbcolor, lbname);
+
+		 					$('#labelcolor').val("");
+		 				    $('#labelname').val("");
+		 					},
+		 					error : function(e) {
+		 			        	errorAlert("label 추가 error");
+		 					}
+		 				});
+		 				
+		 			}else {return false;}
+
+		 			});
+		 			
+		 		
+		 		
+		 		
+		 		
+		 	    $("#editColumnBtn").click(function() {
+		 	        $.ajax({
+		 	        	url : 'UpdateColumn.do',
+		 	        	data : { 'colname' : $("#editcolName").val(),'projectIdx' : projectIdx,'colIdx' :  $("#editcolIdx").val()}, 
+		 	        	success : function(data) {
+		 	            $("#" + data + "Column span").text($("#editcolName").val());
+		 	        		$("#editcolName").val("");
+		 	            	$('#editColumnModal').modal('hide');
+		 		
+		 	            },
+		 	            error : function() {
+		 	            	errorAlert("칼럼 수정 error");
+		 	            }
+		 	        });
+		 	    });
+		 	    
+		 	    
+		 	    
+		 	    
+		 		  $('#replyBtn').click (function() {
+		 			  
+		 				let replyct = $('#replycontent').val();
+		 				  console.log(replyct);
+		 				if(replyct == "" || replyct == null) {
+		 					return false;
+		 				}else {
+		 					  $.ajax ({
+		 					 		type :"POST",
+		 							url : "InsertReply.do",
+		 							data : { 'issueIdx' : $('#issueIdxNum').val()
+		 										, 'content': $('#replycontent').val()
+		 										, 'creator' : '${member.name}'},
+		 							success : function(data) {
+		 								
+		 								  $('#replycontent').val("");
+		 						    		setKanbanDetail(data.issueIdx);
+
+		 							},error : function() {
+		 					        	errorAlert("InsertReply error");
+		 								}
+		 							})   
+		 					}
+		 				}) 
+
 } //initKanban 끝
-
-
-
-
 
 
 function searchAppend(data) {
@@ -670,7 +952,7 @@ function editLabel(idx, color, name) {
 							lablist +=  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
 							lablist +=  '</div></div><hr>';
 					});
-							$('#assignedEdit').append(lablist);
+							/*$('#assignedEdit').append(lablist);*/
 						
 					}
 			},error : function() {
@@ -763,25 +1045,51 @@ function editLabel(idx, color, name) {
 			url : "GetProjectMemberList.do",
 			data : {'projectIdx' : projectidx},
 			success : function(data) {
-				
+				$('#assignedEdit').empty();
 				console.log('GetProjectMemberList in');
 				console.log(data);
+				
 				if(flagelement == 'searchMember'){
-				var memberlist = '<datalist id="MemberMenu">';
+					
+					var memberlist = '<datalist id="MemberMenu">';
 
-				$.each(data, function(index, obj) {
-					memberlist += '<option value="'+obj.name+'" data-id="'+obj.email+'">('+obj.email+')</option>';	
-				});		 	
+					$.each(data, function(index, obj) {
+						memberlist += '<option value="'+obj.name+'" data-id="'+obj.email+'">('+obj.email+')</option>';	
+					});		 	
+					
 					memberlist += '</datalist>';
+						
 				$('#searchContent').append(memberlist);
+				
+				} else if(flagelement == 'editDetail') { 
+					console.log("프로젝트 멤버 리스트 editDetail ----");
+					console.log(data);
+					let selectoption = '<option value="">Select</option>';
+					let optmember;
+					$('#assignedEdit').append(selectoption);
+		             $.each(data, function(index, element) {
+					  optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
+		               });
+		               
+		          $('#assignedEdit').append(optmember);
+
 				
 				} else if(flagelement == '') {
 					
 					
+				}else if(flagelement == 'mentionSearch'){
+					$.each(data, function(index, obj){
+						console.log('mentionSearch in');
+						console.log(obj);
+						console.log(words);
+						console.log('----------------------');
+						words.push(obj.name);
+						console.log(words);
+					});
+					
 				}
 			}, error : function() {
-				
-				
+
 			}
 			
 		})
@@ -803,6 +1111,7 @@ function editLabel(idx, color, name) {
 		    }
 		});
 	}
+	
 	function editIssueDueDateOk() {
 		$.ajax({
 			url : "UpdateIssueDuedate.do",
@@ -820,6 +1129,7 @@ function editLabel(idx, color, name) {
 		    }
 		});
 	}
+	
 	function editIssueAssignedOk() {
 		$.ajax({
 			url : "UpdateIssueAssgined.do",
@@ -835,10 +1145,12 @@ function editLabel(idx, color, name) {
 		});
 		
 	}
+	
 	function assignListEditview(){
-		//getProjectMemberList("detailEdit",$('#projectIdxNum').val());
+		getProjectMemberList("editDetail",$('#projectIdxNum').val());
 		
 	}
+	
 	function getissueinfo(flagelement, projectidx) {
 
 		if(flagelement == "issueModalOpen") {
@@ -884,4 +1196,27 @@ function editLabel(idx, color, name) {
 		}
 	}
 	
+
+	
+	function mentionSearch(projectIdx) {
+
+		 getProjectMemberList("mentionSearch",projectIdx);
+		 
+
+    	//멘션
+	  $('.editable').textcomplete([{
+		  
+		    match:  /\B@(\w*)$/,
+		    search: function (term, callback) {
+		      callback($.map(words, function (word) {
+		        return word.indexOf(term) === 0 ? word : null;
+		      }));
+		    },
+		    index: 1,
+		    replace: function (word) {
+		      return '@' + word + ' ';
+		    }
+		  }]);
+	
+	}
 

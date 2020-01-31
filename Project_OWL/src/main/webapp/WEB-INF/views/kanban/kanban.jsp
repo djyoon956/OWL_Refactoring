@@ -3,7 +3,7 @@
 	<!-- Summernote -->
 <!-- 여기는 칸반 jsp -->
 <style>
-
+/* 
 .columnSection {
 	margin-left : 10px;
 }
@@ -30,16 +30,7 @@
 	border-radius: 2px;
 }
 
-/* .badgeIcon2 {
-	display: inline-block;
-	background-color: #EC6550;
-	font-size: small;
-	font-weight: bold;
-	padding: 3px;
-	color: black;
-	margin-right: 7px;
-	border-radius: 2px;
-} */
+
 
 .floatRight {
 	float: right;
@@ -104,7 +95,7 @@
 }
 
  #kanbanIn {
-/*  #kanbanArea, */
+  #kanbanArea, 
 	height: 700px;
 	overflow-y: auto;
  	display: flex;
@@ -133,57 +124,21 @@
 .inputBox {
 	width:75%; 
 	height:60%;
-}
+} */
 </style>
- <!-- test textcomplete -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.textcomplete/1.8.5/jquery.textcomplete.min.js"></script>  
+
 <script>
   $(function(){
-		var mentions = ['yuku_t'];
-		
-		$('#replycontent').textcomplete({
-		    html: {
-		        match: /\B@(\w*)$/,
-		        search: function (term, callback) {
-		            callback($.map(mentions, function (mention) {
-		                return mention.indexOf(term) === 0 ? mention : null;
-		            }));
-		        },
-		        index: 1 ,
-		        replace: function (mention) {
-		            return '@' + mention + ' '; 
-		        } 
-		    }
-		}).overlay([
-		     {
-		        match: /\B@\w+/g,
-		        css: {
-		            'background-color': '#d8dfea'
-		        }
-		    } 
-		]) ; 
 
-	  function check() {
-	
-		if($('#labelcolor').val().trim() == "" || $('#labelcolor').val().trim() == null) {
-			return false;
-			}
 
-		if($('#labelname').val().trim() == "" || $('#labelname').val().trim() == null) {
-			return false;
-			} 
-	  };
-	  
-	
-
-	$('#addLabelModal').on('show.bs.modal', function() { 	//프로젝트 내 라벨 리스트 출력 
+/* 	$('#addLabelModal').on('show.bs.modal', function() { 	//프로젝트 내 라벨 리스트 출력 
 		let projectidx = ${project.projectIdx};
 		getLabelList("ShowLabelList", projectidx);
 
-	});
+	}); */
 
 
-	$('#addLabelModal').on('hidden.bs.modal', function() {  
+/* 	$('#addLabelModal').on('hidden.bs.modal', function() {  
 			$('#labelcolor').val("");
 			$('#labelname').val("");
 			
@@ -204,10 +159,10 @@
          	$("#-99Column").removeClass("d-none");
      		$("#-1Column").hide();
      		$("#-99Column").show();
-          });
+          }); */
 
      	
-	$("#InsertColumnBtn").on("click", function () {	
+/* 	$("#InsertColumnBtn").on("click", function () {	
 		console.log("InsertColumnBtn in");
 			$.ajax({
 				url : 'InsertColumn.do',
@@ -259,12 +214,12 @@
 		        	errorAlert("Column 추가 error");
 					}
 				});
-	});
+	}); */
 
 
 
 	
-	$('#addIssueModal').on('hidden.bs.modal', function(){
+/* 	$('#addIssueModal').on('hidden.bs.modal', function(){
 		console.log('hidden 작동하니?');
 		
 		$('#issueTitle').val("");
@@ -274,21 +229,19 @@
 		//$('#priorityCode option:eq(0)').attr('selected', 'selected');
 		console.log($('#priorityCode option:eq(0)').val());
 		console.log("after  :" +$('#priorityCode').val());
-		
 		//$('#priorityCode').find('option:first').attr('selected', 'selected')
 		//$('#datepicker-autoclose').remove();
 		//$('#priorityCode').find('option:first').attr('selected', 'selected');
 		
-	});
+	}); */
 
 
-
-	$('#addColumnModal').on('hidden.bs.modal', function() {  
+/* 	$('#addColumnModal').on('hidden.bs.modal', function() {  
 		$('#colname').val("");
-	});
+	}); */
 	
 
-	$("#addLabelBtn").on("click", function () {	
+/* 	$("#addLabelBtn").on("click", function () {	
 
 		let lcolor = false;
 		let lname = false;
@@ -317,10 +270,10 @@
 			
 		}else {return false;}
 
-		});
+		}); */
 
 	
-    $("#editColumnBtn").click(function() {
+/*     $("#editColumnBtn").click(function() {
         $.ajax({
         	url : 'UpdateColumn.do',
         	data : { 'colname' : $("#editcolName").val(),'projectIdx' : ${project.projectIdx},'colIdx' :  $("#editcolIdx").val()}, 
@@ -334,11 +287,11 @@
             	errorAlert("칼럼 수정 error");
             }
         });
-    });
+    }); */
 
 
 
-	  $('#replyBtn').click (function() {
+/* 	  $('#replyBtn').click (function() {
 		  
 		let replyct = $('#replycontent').val();
 		  console.log(replyct);
@@ -361,9 +314,9 @@
 						}
 					})   
 			}
-		}) 
+		})  */
 
-$('#projectIdxNum').val( ${project.projectIdx});
+/* $('#projectIdxNum').val( ${project.projectIdx}); */
 
 });
 </script>

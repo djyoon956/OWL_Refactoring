@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <style>
-.btn-link {
+/* .btn-link {
 	display: inline-block;
     padding: 0;
     font-size: inherit;
@@ -18,15 +18,15 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-}
+} */
 
-.contentbox {
+/* .contentbox {
 min-height: 250px;
 overflow-y:auto;
 color : #838383;
 border : 1px solid #D5D4D4;
  
-}
+} */
 
 </style>
 <div id="confirmIssueModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
