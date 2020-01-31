@@ -293,9 +293,10 @@
 	            </div>
 	        </div>
 	        <div class="col-lg-6">
-	            <div class="card dash_shadow dash_radius">
+	            <div class="card dash_shadow dash_radius" style="height: 450px">
 	                <div class="card-body">
 	                    <h4 class="card-title">Timeline</h4>
+	                    <h6 id="timeLineDate">Today : 2020-01-31 (금)</h6>
 	                    <div class="d-md-flex align-items-center">
 	                        <ul class="timeline w-100">
 	                            <li>

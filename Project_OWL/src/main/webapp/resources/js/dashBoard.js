@@ -27,6 +27,7 @@ $(function() {
 			 $("#myDashBoardBox").removeClass("hidden");
 			 $("#myDashBoardEmptyBox").addClass("hidden");
 			 setMyIssueTask();
+			 setTimeLine();
 		 },
 		 error : function(){
 			 console.log("in CheckJoinProject error");
@@ -39,8 +40,6 @@ function setMyIssueTask(){
 	$.ajax({
 		url : "GetMyIssueTask.do",
 		success : function(data){
-			console.log("in setMyIssueTask success");
-			console.log(data);
 			if(data.length > 0){
 				$("#dashBoardTableEmptyBox").addClass("hidden");
 				$("#dashBoardTableBox").removeClass("hidden");
@@ -87,7 +86,7 @@ function getDueDateElement(date){
 
 function setTimeLine(){
 	$.ajax({
-		url : "GetMyIssueTask.do",
+		url : "GetMyTimeLine.do",
 		success : function(data){
 			console.log("in setTimeLine success");
 			console.log(data);

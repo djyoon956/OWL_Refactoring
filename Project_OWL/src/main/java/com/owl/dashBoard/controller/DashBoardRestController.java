@@ -2,6 +2,7 @@ package com.owl.dashBoard.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.dashBoard.dto.IssueTask;
 import com.owl.dashBoard.dto.ProjectProgress;
+import com.owl.dashBoard.dto.TimeLine;
 import com.owl.dashBoard.service.DashBoardService;
 
 @RestController
@@ -30,7 +32,7 @@ public class DashBoardRestController {
 	}
 	
 	/**
-	 * MyDashBoard - Issue Task 테이블 데이터 요청
+	 * Issue Task 테이블 데이터 요청
 	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @param principal
@@ -54,8 +56,15 @@ public class DashBoardRestController {
 		return service.getMyProjectChart(principal.getName());
 	}
 	
+	/**
+	 * TimeLine 데이터 요청
+	 * @author 윤다정
+	 * @since 2020/01/31
+	 * @param principal
+	 * @return Map<String, List<TimeLine>>
+	 */
 	@RequestMapping("GetMyTimeLine.do")
-	public void getMyTimeLines() {
-
+	public Map<String, List<TimeLine>> getMyTimeLines(Principal principal) {
+		return service.getMyTimeLines(principal.getName());
 	}
 }

@@ -2,7 +2,13 @@ package com.owl.dashBoard.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.owl.dashBoard.dao.DashBoardDao;
 import com.owl.dashBoard.dto.IssueTask;
 import com.owl.dashBoard.dto.ProjectProgress;
+import com.owl.dashBoard.dto.TimeLine;
 
 @Service
 public class DashBoardService {
@@ -37,7 +44,7 @@ public class DashBoardService {
 	}
 	
 	/**
-	 * MyDashBoard - Issue 테이블 데이터 구하기
+	 * dueData, priority 순으로 Issue Task 테이블 데이터 get
 	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @param projectidx
@@ -73,6 +80,27 @@ public class DashBoardService {
 			e.printStackTrace();
 		}		
 		return progress;		
+	}
+	
+	/**
+	 * 일주일 단위로 개인에게 할당된 이슈 TimeLine 데이터 get
+	 * @author 윤다정
+	 * @since 2020/01/31
+	 * @param email
+	 * @return Map<String, List<TimeLine>>
+	 */
+	public Map<String, List<TimeLine>> getMyTimeLines(String email) {
+		DashBoardDao dao = getDashBoardDao();
+		List<TimeLine> timeLines = new ArrayList<TimeLine>();
+		Map<String, List<TimeLine>> results = new TreeMap<>();
+		try {
+			timeLines = dao.getMyTimeLines(email);
+			results = timeLines.stream().collect(Collectors.groupingBy(TimeLine::getDueDate, TreeMap::new, Collectors.toList()));
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return results;
 	}
 	
 	/**
