@@ -22,8 +22,9 @@
                         <div class="col-1"><button class="btn btn-primary" onclick="editIssueTitleOk()">save</button></div>
                        </div>
                         </div>
-                        <div class="col-1 mr-0">
-								<i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted" onclick="editTitleViewBtn()"style="cursor: pointer"></i>
+                        <div  class="col-1" >
+							<span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editTitleViewBtn()"style="cursor: pointer"></i>
+							</span>
 							</div>
 						</div>
                     </div>
@@ -149,8 +150,6 @@
 							  <div class="row hidden" id="editAssignedBox" >
 								<div class="col-8">
 									<select class="select2 custom-select" name="assigned" id="assignedEdit">
-										<!-- <option value="" id="">Select</option> -->
-										<!-- <option value="aaa">aaa@gmail.com</option> -->
 									</select> 
 								</div>
 								<div class="col-1"> 
@@ -160,7 +159,7 @@
 							<span id="issueDetailAssignees">Chloe</span>
 							</div>
 							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="assignListEditview()"></i>
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="assignListEditview('${project.projectIdx}')"></i>
 							</div>
 						</div>
                     </div>    
@@ -168,7 +167,29 @@
           	</div> 
             <hr>
             <div class="form-group bold" >
-                <div class="row">
+             <div class="row">
+                 <div class="col-4">Label</div>
+                    <div class="col-8">
+                           <div class="row">
+							<div class="col-10">
+							  <div class="row hidden" id="editLabelBox" >
+								<div class="col-8">
+									<select class="select2 custom-select" name="labelIdx" id="labelIdxEdit">
+									</select> 
+								</div>
+								<div class="col-1"> 
+							   		<button class="btn btn-primary" onclick="editIssueLabelOk()">save</button>
+							    </div>
+							</div>
+							<span id="issueDetailLabel"  style="padding-right:7px; padding-left:7px; " class="badgeIcon">Dev</span>
+							</div>
+							<div class="col-2">
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="labelListview('${project.projectIdx}')"></i>
+							</div>
+						</div>
+                    </div>    
+            	</div>
+                <!-- <div class="row">
                     <div class="col-4">Label</div>
                     <div class="col-8">
                         <div class="row">
@@ -182,7 +203,7 @@
 							</div>
 						</div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <hr>
             <div class="form-group bold">
