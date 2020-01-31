@@ -54,3 +54,7 @@ ul.timeline > li:before {
 	display: table-cell;
 	vertical-align: middle;
 }
+
+#dashboardTable tbody tr td{
+	height: 10px;
+}

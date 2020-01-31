@@ -835,7 +835,8 @@ display: block;
           const database = firebase.database();
 		//푸시 알람을 위한 변수 설정..
 		const messaging = firebase.messaging();
-		
+
+		messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-SY8pdtyT6NREqxgdSRR44x_SWjZYTZNEWY8n0");
 
 		 
         //웹의 경우 firebase messaging 을 이용한 푸시 알람을 이용할 경우.. 먼저 유저의 권한을 얻어야 한다. 권한을 얻기 위한 함수..
@@ -848,14 +849,15 @@ display: block;
 				}) 
 				.then(function(token){ 
 					console.log('fcm token : ', token); 
-					}) 
+					})				
 					.catch(function(e){ 
 						console.log('메세징 권한 획득 중 에러', e); 
 						}); 
 			}
 
 
-		
+		//푸시 알람 을 위한 권한 설정 처리...
+		$(document).ready(setCloudMessaging());
 			
 		var saveFCMToken = function(){ 
 			//로그인 후에 fcm 정보를 검색하여 저장 
@@ -1132,7 +1134,7 @@ display: block;
 			//챗방 초대를 위한 모달 창 세팅을 위한 함수
           function setAddUserList() {
         	  //푸시 알람을 위한 FCM(Firebase Cloud Messaging) Token firebase realtime database 에 저장...
-              saveFCMToken();
+              //saveFCMToken();
               //온라인 상태인지 아닌지 확인하고.. 유저리스에 아이콘 색 변경을 위한 함수..
         	  loadOnlineStatus();	
               
@@ -1597,8 +1599,7 @@ display: block;
 			
 
 
-
-
+            
 
           
 
@@ -1606,8 +1607,10 @@ display: block;
           $(function(){            
 			var curUserKey;
 			
+			//setCloudMessaging();
+			
             writeUserData(curName, curEmail, curProfilePic).then(function(resolvedData){
-				console.log("현재 사용자의 챗방 키는용???>>" + resolvedData + "<<<<<");
+				console.log("현재 사용자의 user 키는용???>>" + resolvedData + "<<<<<");
                 $('#curUserKey').val(resolvedData);
                 curUserKey = $('#curUserKey').val();
                 window.curUserKey = resolvedData;
@@ -1615,6 +1618,9 @@ display: block;
 
                 //유저 접속 상태 저장 체크...
                 checkOnline();	
+
+              //fcm 토큰은 미리 받아 올수 있는데... 현재 유저의 uid 를 fb db 에서 가져 와야 해서.. 위치가..여기..이 함수는 fb db 에 fcm token wjwkd gksms gkatn
+    			saveFCMToken();
                
             }); 
 
@@ -1734,7 +1740,8 @@ display: block;
 			$('#onCreateClick').click(onCreateClick);
 
 			console.log("라이트 유저의 실행 시점.. fcm...권한 받아야 하는데...");
-	        setCloudMessaging();
+			
+			
       	});	
           
       </script>

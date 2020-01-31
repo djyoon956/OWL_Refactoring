@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.owl.dashBoard.dao.DashBoardDao;
 import com.owl.dashBoard.dto.IssueTask;
+import com.owl.dashBoard.dto.ProjectProgress;
 
 @Service
 public class DashBoardService {
@@ -55,7 +56,25 @@ public class DashBoardService {
 
 		return issueTasks;
 	}
-
+	
+	/**
+	 * 본인에게 할달된 이슈 진행률(프로젝트 별)
+	 * @author 이정은
+	 * @since 2020/01/31
+	 * @param email
+	 * @return progress
+	 */
+	public List<ProjectProgress> getMyProjectChart(String email){
+		DashBoardDao dao = getDashBoardDao();
+		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
+		try {
+			progress = dao.getMyProjectChart(email);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}		
+		return progress;		
+	}
+	
 	/**
 	 * DashBoardDao 구하기
 	 * 

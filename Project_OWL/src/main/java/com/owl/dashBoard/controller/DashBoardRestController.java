@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.dashBoard.dto.IssueTask;
+import com.owl.dashBoard.dto.ProjectProgress;
 import com.owl.dashBoard.service.DashBoardService;
 
 @RestController
@@ -39,4 +40,19 @@ public class DashBoardRestController {
 	public List<IssueTask> getMyIssueTasks(Principal principal) {
 		return service.getMyIssueTasks(principal.getName());
 	}
+	
+
+	/**
+	 * 본인에게 할달된 이슈 진행률(프로젝트 별)
+	 * @author 이정은
+	 * @since 2020/01/31
+	 * @param principal
+	 * @return List<ProjectProgress>
+	 */
+	@RequestMapping("MyProjectProgress.do")
+	public List<ProjectProgress> getMyProjectChart(Principal principal) {	
+		return service.getMyProjectChart(principal.getName());
+	}
+	
+	
 }

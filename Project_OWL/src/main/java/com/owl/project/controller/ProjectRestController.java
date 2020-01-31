@@ -36,7 +36,17 @@ public class ProjectRestController {
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
 	
-	//Sidebar의 프로젝트 목록 수정
+
+	/**
+	 * Sidebar의 프로젝트 목록 수정
+	 * @author 이정은
+	 * @since 2020/01/31
+	 * @param projectIdx
+	 * @param favorite
+	 * @param projectColor
+	 * @param principal
+	 * @return projectlist
+	 */
 	@RequestMapping("EditMyProject.do")
 	public  ProjectList updateProjectList(int projectIdx, int favorite, String projectColor,  Principal principal) {
 		ProjectList projectlist = new ProjectList();
@@ -54,7 +64,20 @@ public class ProjectRestController {
 		return projectlist;
 	}
 	
-	//새 프로젝트 추가
+	/**
+	 * 새 프로젝트 추가
+	 * @author 이정은
+	 * @since 2020/01/31
+	 * @param projectName
+	 * @param projectColor
+	 * @param project
+	 * @param projectlist
+	 * @param principal
+	 * @param drivefolder
+	 * @param request
+	 * @return boolean result
+	 * @throws Exception
+	 */
 	@RequestMapping("InsertNewProject.do")
 	public boolean insertNewProject(String projectName, String projectColor, Project project, ProjectList projectlist, Principal principal, DriveFolder drivefolder, HttpServletRequest request) throws Exception {
 		boolean result = false;
@@ -71,7 +94,15 @@ public class ProjectRestController {
 		}		
 		return result;
 	}
-	
+	/**
+	 * projectIdx가 일치하는 프로젝트 정보 출력
+	 * @author 이정은
+	 * @since 2020/01/31
+	 * @param projectIdx
+	 * @param principal
+	 * @param model
+	 * @return projectList
+	 */
 	@RequestMapping("GetProjectList.do")
 	public ProjectList getProjectList(int projectIdx, Principal principal, Model model) {
 		ProjectList projectList = null;
@@ -79,7 +110,14 @@ public class ProjectRestController {
 		model.addAttribute("projectList", projectList);
 		return projectList;
 	}
-	
+	/**
+	 * 전체 프로젝트 리스트 출력
+	 * @author 이정은
+	 * @since 2020/01/31 
+	 * @param principal
+	 * @param model
+	 * @return projectList
+	 */
 	@RequestMapping("ProjectList.do")
 	public List<ProjectList> getDriveList(Principal principal, Model model){
 		List<ProjectList> projectList  = null;
