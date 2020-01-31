@@ -9,8 +9,8 @@
     	$.ajax({
 	        url:"MyProjectProgress.do",
 	        dataType: "json",
-	        success:function(data){
-		        console.log(data);
+	        success:function(data){		     
+	        $("#myProgressChart").empty();   
 		     $.each(data, function(key, value){
 		    	  let idx = key;
 			      let name = value[0].projectName;
@@ -24,7 +24,7 @@
 			
 		    	 let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
 					  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
-				$("#myProgressChar").append(makeChart);
+				$("#myProgressChart").append(makeChart);
 				ProjectMyChart(idx, totalCount, closeCount, name, color);		    	
 		     });
 		     
@@ -272,7 +272,7 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 	                <div class="card-body" style="margin-bottom: 10px;">
 	                    <h4 class="card-title" style="margin-bottom: 0px;">My Issue Chart by Project</h4>
 	                    <div class="align-items-center">
-	                        <div class="row" id="myProgressChar" style="overflow:auto; overflow-y:hidden;"> </div>
+	                        <div class="row" id="myProgressChart" style="overflow:auto; overflow-y:hidden;"> </div>
 	                    </div>
 	                </div>
 	            </div>
