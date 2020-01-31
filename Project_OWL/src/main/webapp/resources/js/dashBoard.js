@@ -11,7 +11,24 @@ $(function() {
 		  taskView: true
 	}); 
  
-	 //setMyIssueTask();
+	 $.ajax({
+		 url : "CheckJoinProject.do",
+		 success : function(data){
+			 console.log("in CheckJoinProject success");
+			 if(data < 1){ // 참여중인 프로젝트가 없음
+				 $("#myDashBoardBox").addClass("hidden");
+				 $("#myDashBoardEmptyBox").removeClass("hidden");
+				 return;
+			 }
+			 
+			 $("#myDashBoardBox").removeClass("hidden");
+			 $("#myDashBoardEmptyBox").addClass("hidden");
+			 setMyIssueTask();
+		 },
+		 error : function(){
+			 console.log("in CheckJoinProject error");
+		 }
+	 })
 });
 
 

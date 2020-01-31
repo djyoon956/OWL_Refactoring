@@ -15,7 +15,26 @@ import com.owl.dashBoard.dto.IssueTask;
 public class DashBoardService {
 	@Autowired
 	private SqlSession sqlSession;
-
+	
+	/**
+	 * 멤버가 참여중인 프로젝트가 존재하는지 체크
+	 * @author 윤다정
+	 * @since 2020/01/31
+	 * @param email
+	 * @return int
+	 */
+	public int checkJoinProject(String email) {
+		int result =0;
+		DashBoardDao dao = getDashBoardDao();
+		try {
+			result = dao.checkJoinProject(email);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * MyDashBoard - Issue 테이블 데이터 구하기
 	 * @author 윤다정
