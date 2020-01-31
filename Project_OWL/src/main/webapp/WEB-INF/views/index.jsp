@@ -17,6 +17,7 @@
     <!-- 스크롤 애니메이션  -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
  	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+ 	<script src="resources/js/firebase-messaging-sw.js"></script>
  	
 <style type="text/css">
 
@@ -532,5 +533,4 @@ font-family: 'Montserrat', sans-serif;
    <jsp:include page="member/modal/forgotPassword.jsp" />
    <jsp:include page="member/modal/joinConfirm.jsp" />
    <jsp:include page="member/modal/joinOk.jsp" />
-
 </body>

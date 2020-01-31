@@ -457,7 +457,7 @@ function initKanban(projectIdx){
 		 								}
 		 							})   
 		 					}
-		 				}) 
+		 				}) 	
 
 } //initKanban 끝
 
@@ -629,6 +629,7 @@ function setKanbanDetail(issueIdx){
 			success : function (data) {
 				console.log("이슈 디테일 ");
 				console.log(data);
+				 $("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
 				//issueProgress,labelIdx
 				//issueContent, issueTitle, issueFileCount, issueFiles, issueActivityCount, issueActivity, issueCommentCount, issueComment
@@ -643,10 +644,13 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailFiles").empty();
 					$("#issueDetailFileCount").text("첨부파일 ("+data.files.length+") ");
 					//let projectIdx = data.projectIdx;
+					
 					$.each(data.files, function(index,file){
+						console.log(file);
 						let path = "/upload/"+ projectIdx +"/file/"+file.fileName;
 						let control = "<li class='mb-2' style='font-size: 16px'>"
-										+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+file.fileName+" ("+file.fileSize+" KB)</span></a>"
+										+ "<i class='far fa-save'></i><a href='"+path+"' download class='d-inline-block'>&nbsp;&nbsp;<span> "+file.fileName+" ("+file.fileSize+" KB)</span></a>"
+										+ "<i class='far fa-times-circle font-weight-bold ml-3 hidden editIssueFileBtn' style='cursor: pointer;' onclick= 'deleteIssueFile("+file.fileIdx +")'></i>"
 										+" </li>";
 						$("#issueDetailFiles").append(control);
 					});
@@ -737,7 +741,6 @@ function closeIssue(issueIdx) {
            method:"POST",
            data:{issueIdx : issueIdx},
            success:function(data){
-        	$("#issueClosedChk").text('Reopen issue');
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
            }
@@ -751,8 +754,6 @@ function reOpenIssue(issueIdx) {
 		method:"POST",
 		data : {issueIdx : issueIdx},
 		success:function(data) {
-        	$("#issueClosedChk").text('closed issue');
-        	//setKanbanDetail(issueIdx);
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
 		},error :function() {
@@ -970,8 +971,13 @@ function editLabel(idx, color, name) {
 	}
 	
 	function editIssueContentOk() {
+		console.log("에딧 콘텐트 ");
+		console.log($("#issueIdxNum").val());
+		console.log($('#isContentEdit').summernote('code'));
+		
 		$.ajax({
 			url : "UpdateIssueContent.do",
+			method : "POST",
 		    data : {issueIdx : $("#issueIdxNum").val(), content :$('#isContentEdit').summernote('code')},
 		    success : function(data){
 		    	console.log("UpdateIssueContent.do");
@@ -1118,7 +1124,65 @@ function editLabel(idx, color, name) {
 		//flagelement,projectIdx
 		getLabelList("editDetail",projectidx);
 	}
-	
+	function deleteIssueFile(fileIdx){
+		$.ajax({
+			url : "DeleteIssueFile.do",
+			type : "POST",
+			data : {fileIdx : fileIdx},
+			success : function(data){
+				if(data){
+					setKanbanDetail($("#issueIdxNum").val());
+					$(".editIssueFileBtn").removeClass("hidden");
+				} else
+					warningAlert("삭제 실패!");
+			},
+			error : function(){
+				warningAlert("삭제 실패!");
+			}
+		})
+		
+	}
+
+	function editIssueFileView() {
+		if($(".editIssueFileBtn").hasClass("hidden"))
+			$(".editIssueFileBtn").removeClass("hidden");
+		else 
+		 $(".editIssueFileBtn").addClass("hidden");
+	}
+	function issueDetailFileEdit(projectIdx) {
+		let formData = new FormData();
+		formData.append("projectIdx",projectIdx);
+	 	formData.append("issueIdx",$("#issueIdxNum").val());
+	   $("#multipartFilesIssueEdit").empty();
+	    
+	    $.each($("#multipartFilesIssueEdit")[0].files, function(i, file) {
+	    	formData.append('multipartFiles', file);
+	    });
+	    $.ajax({
+			url : 'IssueFileEdit.do',
+	        type: "POST",
+			enctype :'multipart/form-data',
+			data : formData,
+	        processData: false,
+	        contentType: false,
+	        cache: false,
+	        success: function (data) {
+	        	console.log("ajax in");
+	        	console.log(data);
+	        	
+		        	if(data){
+		        		setKanbanDetail($("#issueIdxNum").val());
+		        		// $("#multipartFilesIssueEdit").empty();
+		        		 $(".editIssueFileBtn").removeClass("hidden");
+	        	}else{
+	        		errorAlert("사진 추가 실패");
+	        	}
+	        },
+	        error: function (e) {
+	        	errorAlert("Issue 추가 실패");
+	        }
+	    });
+}
 	function getissueinfo(flagelement, projectidx) {
 
 		if(flagelement == "issueModalOpen") {

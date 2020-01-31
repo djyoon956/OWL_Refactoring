@@ -55,5 +55,8 @@ public class DashBoardRestController {
 		return service.getMyProjectChart(principal.getName());
 	}
 	
-	
+	@RequestMapping("GetMyTimeLine.do")
+	public void getMyTimeLines() {
+
+	}
 }

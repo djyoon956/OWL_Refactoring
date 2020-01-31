@@ -11,51 +11,7 @@
         font-size: 16px;
         color: #f8f9fa;
     }
-    .priorityBadge{
-	 	font-weight: bold; 
-	   	width: 63px; 
-	   	font-size :13px;
-	   	height : 25px;
-	   	border-radius: 10rem;
-	   	padding: 0.20em 0.6em;
-	   	line-height: inherit;
-	   	display: inline-block;
-	   	text-align: center;
-	    white-space: nowrap;
-	    vertical-align: baseline;
-	}
-	.priorityBadge.urgent{
-		color: #fff;
-    	background-color: red;
-    	font-weight: bold;
-	}
-	.urgent:after{
-		content: "Urgent"
-	}
-	.priorityBadge.high{
-		color: #fff;
-    	background-color: #da542e;
-    	font-weight: bold;
-	}
-	.high:after{
-		content: "High"
-	}
-	.priorityBadge.medium{
-		color: #fff;
-    	background-color: #ffb848;
-    	font-weight: bold;
-	}
-	.medium:after{
-		content: "Medium"
-	}
-	.priorityBadge.low{
-		color: #fff;
-    	background-color: lightgray;
-    	font-weight: bold;
-	}
-	.low:after{
-		content: "Low"
-	}
+    
 	.btn-link {
 	display: inline-block;
 	padding: 0;
@@ -82,18 +38,6 @@ color : #838383;
 border : 1px solid #D5D4D4;
  
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 .columnSection {
 	margin-left : 10px;
