@@ -224,7 +224,7 @@
 							<div class="col-10">
 							  <div class="row hidden" id="editDuedateBox" >
 								<div class="col-8 pr-0">
-									  <input type="text" class="form-control" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" > 
+									  <input type="text" class="form-control mydatepicker" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" > 
 								</div>
 								<div class="col-1"> 
 							   		<button class="btn btn-primary" onclick="editIssueDueDateOk()">save</button>
