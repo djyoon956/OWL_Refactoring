@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <style>
-.btn-link {
+/* .btn-link {
 	display: inline-block;
 	padding: 0;
 	font-size: inherit;
@@ -20,7 +20,7 @@
 	-moz-appearance: none;
 	appearance: none;
 }
-
+ */
 .link-gray {
     color: #586069!important;
 }

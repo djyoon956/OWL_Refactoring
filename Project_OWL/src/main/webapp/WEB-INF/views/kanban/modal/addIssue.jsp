@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-	<!-- Summernote -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<script>
+	<!-- Summernote -->
+   <!--  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
+ -->
+<!-- <script>
 
  var ordernum = 1; 
 	
  $(function() {
 
-	 let selectoption = '<option value="">Select</option>';
+ 	 let selectoption = '<option value="">Select</option>';
 	
 /*datwpicker*/
 	 $('.mydatepicker').datepicker();
@@ -46,16 +48,6 @@
 			}		
 			console.log('InsertIssueBtn 클릭되니1');
  				console.log('InsertIssueBtn 클릭되니1');
- 				/* 
- 				console.log('$("#projectIdx").val()' + '${project.projectIdx}');
-				console.log('$("#issueTitle").val()' + $('#issueTitle').val());
-				console.log('$("#content").summernote("code")' + $('#content').summernote('code'));
-				console.log(' $("#assigned").val()' +  $('#assigned').val());
-				console.log('$("#labelIdx").val()' + $('#labelIdx').val());
-				console.log(' $("#dueDate").val()' + $('#datepicker-autoclose').val()); 
-				console.log($('#multipartFile').val()); 
-				*/
-//console.log('프로젝트아이디엑스 값 나오니???????' + '${project.projectIdx}');
 				console.log('labelIdx :' + $('#labelIdx').val());
 				
 			    let formData = new FormData();
@@ -111,12 +103,12 @@
 			        	errorAlert("Issue 추가 실패");
 			        }
 			    });
-		 	});
+		 	}); */
 	 });
 
 </script>
-
-<style>
+ -->
+<!-- <style>
 .btn-link {
 	display: inline-block;
     padding: 0;
@@ -136,7 +128,7 @@
     appearance: none;
 }
 
-</style>
+</style> -->
 <div id="addIssueModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -147,7 +139,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			<form action="InsertIssue.do" method="post" enctype="multipart/form-data" id="addIssueForm">
+			<form  id="addIssueForm" class="addContent">
 			    <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
  				<div class="row">
 					<div class="col-8">
@@ -188,7 +180,7 @@
 						<div class="col-4">Priority</div>	
 						<div class="col-8">
 							<select class="select2 form-control custom-select" name="priorityCode" id="priorityCode">
-								<option value="" id="">Select</option>
+								<option value="">Select</option>
 								<option value="LOW">low</option>
 								<option value="MEDIUM">medium</option>
 								<option value="HIGH">high</option>
@@ -210,7 +202,13 @@
 				</div>
 			</div> 
 					<div class="modal-footer text-right">
-					<input type="button" class="btn btn-primary" id="InsertIssueBtn" value="Save changes">
+					<c:if test="${project.authority eq 'ROLE_PM'}">
+					<input type="button" class="btn btn-primary InsertIssueBtn" value="Save changes">
+					</c:if>
+					
+					<c:if test="${project.authority eq 'role_projectmember'}">
+					<input type="button" class="btn btn-primary InsertIssueBtn" value="Send PM">
+					</c:if>
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 				</div>
 			</form>

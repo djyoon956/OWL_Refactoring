@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
    <div class="modal fade" id="editProject">
          <div class="modal-dialog modal-dialog-centered" role="document">
-	             <div class="modal-content">
+	             <form class="modal-content editContent">
 				<div class="modal-header text-center">
 					<h4 class="modal-title" id="myProjectTitle"></h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -11,7 +11,7 @@
 				<div class="modal-body">
  		             <h5>Color</h5>
  		             <input type="hidden" name="projectIdx"  id="projectIdx"> 
-		             <input type="text" id="nowColor" class="complex-colorpicker form-control" value="">
+		             <input type="text" id="nowColor" class="complex-colorpicker form-control" >
                      <br>                        
                      <br>                
                      <h5>Favorite</h5>
@@ -25,10 +25,11 @@
 					</div>
 		             <br>
                  </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-primary" data-dismiss="modal" id="editBtn">적용하기</button>
+                 <div class="modal-footer edit">
+                 		<input type="hidden" id="realProName" value="">
+                     <button type="button" class="btn btn-primary" data-editidx="" data-dismiss="modal" id="editBtn">적용하기</button>
                  </div>
              </div>
-         </div>
+         </form>
      </div>
      </div>

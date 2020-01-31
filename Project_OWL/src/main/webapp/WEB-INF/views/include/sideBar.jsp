@@ -20,6 +20,8 @@ max-width: 270px;
 
 </style>
 <script>
+var theName;
+
  $(function(){
 	 $(".complex-colorpicker").asColorPicker({
 	        mode: 'complex'
@@ -38,37 +40,6 @@ max-width: 270px;
 			$("#projectlist").addClass("in");
 	}	
 	 
- $("#editBtn").click(function(){
-	 let myFavorite =$(".favoriteCheckbox:checked").val() == "on" ? 1 : 0;
-		$.ajax({
-	        url:"EditMyProject.do",
-	        type: "POST",
-	        data: {projectIdx: 	$("#projectIdx").val(),
-		        	  projectColor: $("#nowColor").val(),
-		        	  favorite: myFavorite},
-	        success:function(data){
-	         console.log("update-------");
-	         console.log(data);
-		         if(data.favorite ==1){
-			         let newFavorite = '<li class="sidebar-item" id="'+data.projectIdx+'" style="position:relative;">"
-				         					+ '<input id="projectFavorite" type="hidden" value="'+data.favorite+'">'
-		        	 						+ '<a href="Project.do?projectIdx="'+data.projectIdx+'" class="sidebar-link">'
-             								+ '<i class="mdi mdi-checkbox-blank-circle" style="color: "'+data.projectColor+'";"></i>'
-             								+ '<span class="hide-menu" id="projectName">${list.projectName}</span>'
-             								
-             			
-             		</a>
-             	</li> 
-	
-			      }else{
-	
-	
-	
-	
-				  }
-	       }
-	   });
-	 });
 
  $("#insertBtn").click(function(){
 		$.ajax({
@@ -80,29 +51,62 @@ max-width: 270px;
 	         location.reload();   
 	       }
 	   }); 
-	 });    	
- });
+	 });    
 
- function thisProject(obj){
-	 $("#editProject").on('show.bs.modal', function () {
-		 $("#projectIdx").val($(obj).parent().attr('id'));	
-		 
-		 var theColor = $(obj).siblings().children().eq(0).css("color")
-	        $("#nowColor").attr("value",theColor);
-	        $(".asColorPicker-trigger").children('span').css("background", theColor);  
-	      var theName =  $(obj).siblings().eq(1).text().trim();
-	      $("#myProjectTitle").empty();
-	      $("#myProjectTitle").append('<i class="far fa-sun"></i> ');
-	      $("#myProjectTitle").append(theName + " 환경설정");
-	        var checking = $(".favoriteCheckbox").is(":checked");
-	          if($(obj).siblings("#projectFavorite").val()=="1"){		     
-	                $(".favoriteCheckbox").attr("checked",true);
-	           }else if($(obj).siblings("#projectFavorite").val()=="0"){
-	        	   $(".favoriteCheckbox").attr("checked",false);
-	           }       
-	     }); 
-	} 
-	
+ $("#editProject").on('show.bs.modal', function (event) {
+		let proIdx = $(event.relatedTarget).data('projectidx');
+		$("#editBtn").attr("data-editidx", proIdx);
+		$.ajax({
+	        url:"GetProjectList.do",
+	        dataType: 'json',
+	        data: {projectIdx: proIdx},
+	        success:function(data){
+	         $("#myProjectTitle").empty();
+	         $("#myProjectTitle").append('<i class="far fa-sun"></i> '+data.projectName+' 환경설정');
+	         $("#nowColor").val(data.projectColor);
+	         $(".modal-footer.edit > input").attr("value",data.projectName);
+	         $(".asColorPicker-trigger").children('span').css("background", data.projectColor); 	         
+	         	if(data.favorite == 0){
+	         		$(".favoriteCheckbox").attr("checked",false);
+		       }else if(data.favorite == 1){
+		    	   $(".favoriteCheckbox").attr("checked",true);
+			   } 
+	       }
+	   }); 			        
+	}).on('hidden.bs.modal', function (e) {
+	  $(this).find('.modal-content.editContent')[0].reset();
+	}); 
+ 
+ $("#editBtn").click(function(evt){
+	 let thisLi ="";
+	 let thisProIdx = $(this).attr('data-editidx');
+	 let theName = $(this).siblings().eq(0).val();
+	 let myFavorite =$(".favoriteCheckbox:checked").val() == "on" ? 1 : 0;
+		$.ajax({
+	        url:"EditMyProject.do",
+	        type: "POST",
+	        data: {projectIdx: thisProIdx,
+		        	  projectColor: $("#nowColor").val(),
+		        	  favorite: myFavorite},
+	        success:function(newSet){
+	         $('#projectlist > #'+thisProIdx+'> #projectFavorite').val(newSet.favorite);
+	         $('#projectlist > #'+thisProIdx+'>.sidebar-link > i').attr('style', "color:"+newSet.projectColor+";");
+	         $('#wholeFavorite > #'+thisProIdx+'>.sidebar-link > i').attr('style', "color:"+newSet.projectColor+";");
+	         if(newSet.favorite == 1){
+		 	 thisLi = "<li class='sidebar-item' id='"+newSet.projectIdx+"' style='position:relative;'>"
+		 			+ "<input id='projectFavorite' type='hidden' value='"+newSet.favorite+"'>"
+		 			+ "<a href='Project.do?projectIdx="+newSet.projectIdx+"' class='sidebar-link'>"
+        		 	+ "<i class='mdi mdi-checkbox-blank-circle' style='color:"+newSet.projectColor+";'></i>" 
+        		 	+ "<span class='hide-menu' id='projectName'>"+theName+"</span></a></li>";
+	       	 	$("#wholeFavorite").append(thisLi);
+		     }else if(newSet.favorite == 0){
+		    	 $('#wholeFavorite > #'+thisProIdx+'').remove();
+		    	 
+			 }
+	       }
+	   });
+	 });	
+ });	
 </script>
 <aside class="left-sidebar mySetting" data-sidebarbg="skin5">
     <div class="scroll-sidebar mySetting">
@@ -142,7 +146,7 @@ max-width: 270px;
 	                    			<i class="mdi mdi-checkbox-blank-circle" style="color: ${list.projectColor};"></i>
 	                    			<span class="hide-menu">${list.projectName}</span>
 	                    		</a>
-	                    		<a type="button" id="sidebarTools" data-toggle="modal" data-target="#editProject" onclick="thisProject(this)">
+	                    		<a type="button" id="sidebarTools" data-projectidx="${list.projectIdx}" data-toggle="modal" data-target="#editProject">
 	                    			<i class="far fa-sun"></i>
 	                    		</a>	
 	                    	</li>                     

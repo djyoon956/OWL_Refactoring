@@ -22,8 +22,9 @@
                         <div class="col-1"><button class="btn btn-primary" onclick="editIssueTitleOk()">save</button></div>
                        </div>
                         </div>
-                        <div class="col-1 mr-0">
-								<i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted" onclick="editTitleViewBtn()"style="cursor: pointer"></i>
+                        <div  class="col-1" >
+							<span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editTitleViewBtn()"style="cursor: pointer"></i>
+							</span>
 							</div>
 						</div>
                     </div>
@@ -132,7 +133,7 @@
                 </div>
                   <div class="row container-fluid">
 						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
-						<textarea id="replycontent" name="replycontent" style="resize: none; width:75%"></textarea>
+						<textarea id="replycontent" class="editable" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('${project.projectIdx}')}"></textarea>
 						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px">Comment</button>
             </div>
             
@@ -149,8 +150,6 @@
 							  <div class="row hidden" id="editAssignedBox" >
 								<div class="col-8">
 									<select class="select2 custom-select" name="assigned" id="assignedEdit">
-										<option value="" id="">Select</option>
-										<option value="aaa">aaa@gmail.com</option>
 									</select> 
 								</div>
 								<div class="col-1"> 
@@ -160,7 +159,7 @@
 							<span id="issueDetailAssignees">Chloe</span>
 							</div>
 							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer"></i>
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="assignListEditview('${project.projectIdx}')"></i>
 							</div>
 						</div>
                     </div>    
@@ -168,7 +167,29 @@
           	</div> 
             <hr>
             <div class="form-group bold" >
-                <div class="row">
+             <div class="row">
+                 <div class="col-4">Label</div>
+                    <div class="col-8">
+                           <div class="row">
+							<div class="col-10">
+							  <div class="row hidden" id="editLabelBox" >
+								<div class="col-8">
+									<select class="select2 custom-select" name="labelIdx" id="labelIdxEdit">
+									</select> 
+								</div>
+								<div class="col-1"> 
+							   		<button class="btn btn-primary" onclick="editIssueLabelOk()">save</button>
+							    </div>
+							</div>
+							<span id="issueDetailLabel"  style="padding-right:7px; padding-left:7px; " class="badgeIcon">Dev</span>
+							</div>
+							<div class="col-2">
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="labelListview('${project.projectIdx}')"></i>
+							</div>
+						</div>
+                    </div>    
+            	</div>
+                <!-- <div class="row">
                     <div class="col-4">Label</div>
                     <div class="col-8">
                         <div class="row">
@@ -182,7 +203,7 @@
 							</div>
 						</div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <hr>
             <div class="form-group bold">
@@ -223,7 +244,7 @@
                            <div class="row">
 							<div class="col-10">
 							  <div class="row hidden" id="editDuedateBox" >
-								<div class="col-8">
+								<div class="col-8 pr-0">
 									  <input type="text" class="form-control" id="datepicker-editIssue" placeholder="yyyy-mm-dd" name="dueDate" > 
 								</div>
 								<div class="col-1"> 
