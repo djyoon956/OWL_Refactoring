@@ -23,6 +23,7 @@ import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
 import com.owl.kanban.dto.Reply;
 import com.owl.member.dto.Member;
+import com.owl.notice.dao.NoticeDao;
 import com.owl.notice.dto.File;
 import com.owl.project.dao.ProjectDao;
 import com.owl.project.dto.Label;
@@ -477,7 +478,7 @@ public class KanbanService {
 	public boolean updateIssueContent(Issue issue, String email) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-		
+		System.out.println("업데이트 이슈 콘텐트 service ");
 		try {
 			result = dao.updateIssueContent(issue) > 0 ? true : false;
 			insertLog(issue.getIssueIdx(), "update issue content", email, dao);
@@ -537,6 +538,32 @@ public class KanbanService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return result;
+	}
+	public boolean deleteIssueFile(int fileIdx) {
+		KanbanDao dao = getKanbanDao();
+		System.out.println("DeleteIssueFile service in ");
+		boolean result = false;
+		try {
+			result = dao.deleteIssueFile(fileIdx)> 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public boolean addIssueFile(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
+		KanbanDao dao = getKanbanDao();
+		System.out.println("addIssueFile service in ");
+		boolean result = false;
+		List<File> files = new ArrayList<File>();
+		//	result = dao.deleteIssueFile(fileIdx)> 0 ? true : false;
+		if (multipartFiles.size() > 0) 
+			files = insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath);
+			result = files.size() > 0 ? true : false;
+			issue.setFiles(files);
 		
 		return result;
 	}

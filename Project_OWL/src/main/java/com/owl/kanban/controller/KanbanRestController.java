@@ -117,7 +117,6 @@ public class KanbanRestController {
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							, @RequestParam(value = "colIdx") int colIdx
 							, Principal principal, HttpServletRequest request) {	
-
 		/*
 		System.out.println("in InsertIssue.do");
 		System.out.println("insertIssue controller in");
@@ -334,7 +333,7 @@ public class KanbanRestController {
 	}
 	@RequestMapping(value="UpdateIssueContent.do", method = RequestMethod.POST)
 	public boolean updateIssueContent(Issue issue,Principal principal) {
-		System.out.println("updateIssueTitle in");
+		System.out.println("updateIssueContent in");
 		System.out.println(issue);
 		boolean result = service.updateIssueContent(issue, principal.getName());
 		
@@ -380,6 +379,28 @@ public class KanbanRestController {
 		System.out.println(issue);
 		boolean result = service.updateIssueLabel(issue, principal.getName());
 		
+		return result;
+	}
+	@RequestMapping(value = "DeleteIssueFile.do", method = RequestMethod.POST)
+	public boolean deleteFile(int fileIdx) {
+		System.out.println(fileIdx);
+		return service.deleteIssueFile(fileIdx);
+	}
+	@RequestMapping(value = "IssueFileEdit.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	public boolean addIssueFile(@RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
+							  ,@RequestParam(value = "issueIdx") int issueIdx
+							 ,Principal principal,HttpServletRequest request) {
+		System.out.println("DeleteIssueFile rest controller");
+		//System.out.println(fileIdx);
+		
+		boolean result = false;
+	//	issue.setProjectIdx(projectIdx);
+		//issue.setCreator(principal.getName());
+		Issue issue = null;
+		issue.setCreator(principal.getName());
+		issue.setIssueIdx(issueIdx);
+		result = service.addIssueFile(issue,multipartFiles, request.getServletContext().getRealPath("upload"));
+
 		return result;
 	}
 	/**
