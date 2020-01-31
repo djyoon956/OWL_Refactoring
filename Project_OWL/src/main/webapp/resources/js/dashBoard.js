@@ -85,31 +85,39 @@ function getDueDateElement(date){
 }
 
 function setTimeLine(){
+	let week = new Array('일', '월', '화', '수', '목', '금', '토'); 
+	let today = new Date();
+	let year = today.getFullYear(); 
+	let month = (today.getMonth() + 1) < 10? "0"+(today.getMonth() + 1):(today.getMonth() + 1); 
+	let day = today.getDate(); 
+	let dayName = week[today.getDay()];
+	
+	let todayFormat = year+"-"+month+"-"+day+" ("+dayName+")";
 	$.ajax({
 		url : "GetMyTimeLine.do",
 		success : function(data){
-			console.log("in setTimeLine success");
-			console.log(data);
-			
-			return;
-			if(data.length > 0){
-				$("#dashBoardTableEmptyBox").addClass("hidden");
-				$("#dashBoardTableBox").removeClass("hidden");
-				
-				$.each(data, function(index, element){
-					$('#dashboardTable').DataTable().row.add([
-						element.projectName,
-						element.subject,
-						element.dueDate!=null? getDueDateElement(element.dueDate):"-",
-						element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
-					]).draw();
-					//.node().id = element.driveFileIdx;
-					//$('#dashboardTable').DataTable().draw();
-				})
-			}else{ // 할당된 이슈 없음
-				$("#dashBoardTableEmptyBox").removeClass("hidden");
-				$("#dashBoardTableBox").addClass("hidden");
-			}
+			$("#timeLineDate").text("Today : "+todayFormat);
+			$("#dashboardTimeLine ul:first").empty();
+			$.each(data, function(key, value){
+					console.log(key);
+					console.log(todayFormat==key);
+					let control = "<li><p class='float-right'>"+((key==todayFormat)?"Today":key)+"</p>";
+
+					let group = value.reduce((r, a) => {
+																 r[a.projectName] = [...r[a.projectName] || [], a];
+																 return r;
+															}, {});
+
+					$.each(group, function(key2, value2){
+						control += "<span style='background-color: "+value2[0].projectColor+"'>"+key2+"</span>";
+
+						$.each(value2, function(index, element){
+							control += "<p>"+element.subject+"</p>";
+						})
+					})
+
+					$("#dashboardTimeLine ul:first").append(control+"</li>");
+			})
 		},
 		error : function(){
 			console.log("in setTimeLine error");

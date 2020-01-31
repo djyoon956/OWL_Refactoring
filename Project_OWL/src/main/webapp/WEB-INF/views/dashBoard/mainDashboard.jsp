@@ -257,34 +257,10 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 	            <div class="card dash_shadow dash_radius" style="height: 450px">
 	                <div class="card-body">
 	                    <h4 class="card-title">Timeline</h4>
-	                    <h6 id="timeLineDate">Today : 2020-01-31 (금)</h6>
-	                    <div class="d-md-flex align-items-center">
-	                        <ul class="timeline w-100">
-	                            <li>
-	                                <p class="float-right">Mon, 20 Jan, 2020</p>
-	                                <span class="badge badge-pill font-14 font-medium mb-1"
-	                                    style="background-color: #ffb1b9;">판매계획</span>
-	                                <p>로그인 view 구현</p>
-	                                <p>로그인 기능 구현</p>
-	                            </li>
-	                            <li>
-	                                <p class="float-right">Wed, 22 Jan, 2020</p>
-	                                <span class="badge badge-pill font-14 mb-1 font-medium mt-1"
-	                                    style="background-color: #ccccff">구매전략</span>
-	                                <p>qna 게시판 기능 구현</p>
-	                            </li>
-	                            <li>
-	                                <p class="float-right">Thu, 23 Jan, 2020</p>
-	                                <span class="badge badge-pill font-14 mb-1 font-medium mt-1"
-	                                    style="background-color: lightgray">후기관리</span>
-	                                <p>대시보드 view 구현</p>
-	                            </li>
-	                            <li>
-	                                <p class="float-right">Fri, 24 Jan, 2020</p>
-	                                <span class="badge badge-pill font-14 mb-1 font-medium mt-1"
-	                                    style="background-color: #ccccff">구매전략</span>
-	                                <p>탈퇴 view 구현</p>
-	                            </li>
+	                    <h6 id="timeLineDate"></h6>
+	                    <div class="d-md-flex align-items-center" id="dashboardTimeLine">
+	                        <ul class="timeline w-100" style="height: 350px; overflow: auto;">
+	 
 	                        </ul>
 	                        <!-- 끝 -->
 	                    </div>
