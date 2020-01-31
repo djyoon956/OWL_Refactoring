@@ -84,3 +84,36 @@ function getDueDateElement(date){
 	
 	return result;
 }
+
+function setTimeLine(){
+	$.ajax({
+		url : "GetMyIssueTask.do",
+		success : function(data){
+			console.log("in setTimeLine success");
+			console.log(data);
+			
+			return;
+			if(data.length > 0){
+				$("#dashBoardTableEmptyBox").addClass("hidden");
+				$("#dashBoardTableBox").removeClass("hidden");
+				
+				$.each(data, function(index, element){
+					$('#dashboardTable').DataTable().row.add([
+						element.projectName,
+						element.subject,
+						element.dueDate!=null? getDueDateElement(element.dueDate):"-",
+						element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
+					]).draw();
+					//.node().id = element.driveFileIdx;
+					//$('#dashboardTable').DataTable().draw();
+				})
+			}else{ // 할당된 이슈 없음
+				$("#dashBoardTableEmptyBox").removeClass("hidden");
+				$("#dashBoardTableBox").addClass("hidden");
+			}
+		},
+		error : function(){
+			console.log("in setTimeLine error");
+		}
+	})
+}
