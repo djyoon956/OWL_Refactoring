@@ -863,6 +863,7 @@ display: block;
 			
 		var saveFCMToken = function(){ 
 			//로그인 후에 fcm 정보를 검색하여 저장 
+			console.log("token 파베 디비 저장 함수.....");
 			var cbGetToekn = function(token){ 
 				console.log('setLogin fcmId get : ', token); 
 				var userUid = curUserKey; 
@@ -872,7 +873,7 @@ display: block;
 			firebase.messaging().getToken() 
 			.then(cbGetToekn.bind(this)) 
 			.catch(function(e){ 
-				console.log('fcmId 확인 중 에러 : ', e); 
+				console.log('fcmId 확인 중 에러 저장실패... : ', e); 
 				}) 
 			}
 
