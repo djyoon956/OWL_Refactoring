@@ -201,6 +201,7 @@ function wholeProjectChart(projectIdx){
         url:"MyProgress.do",
         data: {projectIdx: projectIdx},
         success:function(data){
+        	if(data.length > 0){
 	    	  let idx = data[0].projectIdx;
 		      let color = data[0].projectColor;
 	    	  let totalCount=data.length;
@@ -212,7 +213,11 @@ function wholeProjectChart(projectIdx){
 	    	  })
 	    	 let makeChart = '<div id="canvas-holder"><canvas id="myProgress'+idx+'"></canvas></div>';
 			$("#chartMyProgress").append(makeChart);
-				MyChart(idx, totalCount, closeCount, color);		    	
+				MyChart(idx, totalCount, closeCount, color);	
+        	}else{
+				$("#MyProgressNone").removeClass("hidden");
+				$("#chartMyProgress").addClass("hidden");
+        	}	
        }
    }); 
 
@@ -220,6 +225,7 @@ function wholeProjectChart(projectIdx){
         url:"Progress.do",
         data: {projectIdx: projectIdx},
         success:function(data){
+        	if(data.length > 0){
 	    	  let idx = data[0].projectIdx;
 	    	  let totalCount=data.length;
 	    	  let closeCount=0;
@@ -230,7 +236,11 @@ function wholeProjectChart(projectIdx){
 	    	  })
 	    	 let makeChart = '<div id="canvas-holder"><canvas id="projectProgress'+idx+'"></canvas></div>';
 			$("#chartProjectProgress").append(makeChart);
-				OurChart(idx, totalCount, closeCount);		    	
+				OurChart(idx, totalCount, closeCount);		
+        	}else{
+				$("#OurProgressNone").removeClass("hidden");
+				$("#chartProjectProgress").addClass("hidden");	
+        	}	
        }
    });
 
@@ -239,28 +249,28 @@ function wholeProjectChart(projectIdx){
         dataType: "json",
         data: {projectIdx: projectIdx},
         success:function(data){
-	        let idx = projectIdx;
-	        let label;
-	        let totalCount = [];
-	    	let closeCount = [];
-    	    let name = [];
-    	    let color = [];
-    	    $("#labelProgress").empty(); 
-	     $.each(data, function(key, value){
-	    	  label = key;
-	    	  totalCount.push(value.length);
-	    	  name.push(value[0].labelName);
-	    	  color.push(value[0].labelColor);
-	    	  let closed = 0;
-	    	  $.each(value, function(index, element){
-	    			if(element.issueProgress == "CLOSED") 
-						closed++;
-	    	  });
-	    	  closeCount.push(closed);	    	
-	     });
-    	 let makeChart = '<canvas id="label'+idx+'"></canvas>';
-				$("#labelProgress").append(makeChart);
-				ProjectLabelChart(idx, totalCount, closeCount, name, color);	
+		        let idx = projectIdx;
+		        let label;
+		        let totalCount = [];
+		    	let closeCount = [];
+	    	    let name = [];
+	    	    let color = [];
+	    	    $("#labelProgress").empty(); 
+		     $.each(data, function(key, value){
+		    	  label = key;
+		    	  totalCount.push(value.length);
+		    	  name.push(value[0].labelName);
+		    	  color.push(value[0].labelColor);
+		    	  let closed = 0;
+		    	  $.each(value, function(index, element){
+		    			if(element.issueProgress == "CLOSED") 
+							closed++;
+		    	  });
+		    	  closeCount.push(closed);	    	
+		     });
+	    	 let makeChart = '<canvas id="label'+idx+'"></canvas>';
+					$("#labelProgress").append(makeChart);
+					ProjectLabelChart(idx, totalCount, closeCount, name, color);		
        }
    });	
 }	

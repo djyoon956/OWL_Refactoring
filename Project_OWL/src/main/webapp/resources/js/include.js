@@ -27,7 +27,9 @@ function setTheme(theme, font){
 	$(".projectBody #tab-menu").css("border-bottom", "1px double " + subColor);
 	/*$(".projectBody .nav-item.active a").css("border-bottom", "3px solid " + subColor);*/
 	$(".projectBody #tab-menu .nav-item > .nav-link").css("color", subColor);
+	$(".themeChangeLetter").css("color", subColor);
 	$(".copyright").css("background-color", theme);
+	$(".themeChange").css("background-color", theme);
 	$("#sidebarnav").css("color", subColor);
 	$("#dropdownMenuButton > .iconSizeBig").css("color", subColor);
 }

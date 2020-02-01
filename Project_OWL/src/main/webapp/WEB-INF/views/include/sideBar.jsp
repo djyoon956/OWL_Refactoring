@@ -42,13 +42,21 @@ var theName;
 	 
 
  $("#insertBtn").click(function(){
+	 let thisLi ="";
 		$.ajax({
 	        url:"InsertNewProject.do",
 	        type: "POST",
 	        data: {projectName: 	$("#projectTitle").val(),
 		        	  projectColor: $("#myColor").val()},
-	        success:function(data){
-	         location.reload();   
+	        success:function(idx){
+	         	thisLi = "<li class='sidebar-item' id='"+idx+"' style='position:relative;'>"
+            			+ "<input id='projectFavorite' type='hidden' value='0'>"
+        				+ "<a href='Project.do?projectIdx="+idx+"' class='sidebar-link'>"
+        				+ "<i class='mdi mdi-checkbox-blank-circle' style='color: "+$("#myColor").val()+";'></i>"
+        				+ "<span class='hide-menu'>"+$("#projectTitle").val()+"</span></a>"
+        				+ "<a type='button' id='sidebarTools' data-projectidx='"+idx+"' data-toggle='modal' data-target='#editProject'>"
+        				+ "<i class='far fa-sun'></i></a></li>"; 	         	      
+	         	$("#projectlist").append(thisLi);	 
 	       }
 	   }); 
 	 });    

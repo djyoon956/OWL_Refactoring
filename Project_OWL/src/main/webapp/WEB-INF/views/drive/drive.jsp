@@ -250,7 +250,7 @@ function sendFileToServer(formData,status){
 </script>
 
 
-<div class="container-fluid mt-3">
+<div class="container-fluid mt-3 themeChangeLetter">
     <div class="row">
         <div class="col-md-3">
             <h2 style="padding-left: 25px;">
@@ -265,13 +265,13 @@ function sendFileToServer(formData,status){
 
                     </div>
                     <div>
-                        <button id="trashBtn" class="btn-link" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
+                        <button id="trashBtn" class="btn-link themeChangeLetter" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-9" style="padding-left: 0;">
-            <div class="defaultDriveMenu pt-0">
+            <div class="defaultDriveMenu themeChange pt-0">
 	            <div class="h-100">
 	            	<div style="height: 15%" class="mt-1 mb-3">
 	            		<span style="font-size: medium;font-weight: 700;"  id="driveName"></span>
@@ -308,10 +308,10 @@ function sendFileToServer(formData,status){
 		                </div>   
 		                &nbsp;&nbsp;&nbsp;&nbsp;
 		                <div class="drivegroup" style="position: absolute; right: 0px; top: 0px;">
-		                    <button class="btn driveViewBtn" id="tableView">
+		                    <button class="btn driveViewBtn " id="tableView">
 		                        <i class="fas fa-list fa-2x"></i>
 		                    </button>
-		                    <button class="btn driveViewBtn active" id="iconView" disabled>
+		                    <button class="btn driveViewBtn active " id="iconView" disabled>
 		                        <i class="fas fa-th-large fa-2x"></i>
 		                    </button>
 		                </div>

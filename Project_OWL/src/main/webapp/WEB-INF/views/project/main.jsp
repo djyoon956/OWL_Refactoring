@@ -484,7 +484,7 @@
         <!-- CONTENT BOX -->
         <div class="page-wrapper">
             <!-- CONTENT MAIN -->
-            <div class="container-fluid" style="background-color: white;padding:0">
+            <div class="container-fluid themeChange" style="background-color: white;padding:0" >
 
                 <!-- <div class="row">
 					<div class="col-md-12">dfgdfgdsfds
