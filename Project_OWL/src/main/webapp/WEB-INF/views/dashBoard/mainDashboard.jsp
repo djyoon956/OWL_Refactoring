@@ -53,6 +53,65 @@
 	       }
 	   });
 
+    	let week = new Array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'); 
+    	let dayName = week[new Date().getDay()];
+    	$.ajax({
+    		url : "LineChart.do",
+    		success : function(data){   			
+				console.log(data);
+				console.log(dayName);
+				let group;
+    			$.each(data, function(key, value){
+        				//let theday = key (dayName)
+    					group = value.reduce((r, a) => {
+    																 r[a.projectIdx] = [...r[a.projectIdx] || [], a];
+    																 return r;
+    															}, {});
+    					console.log(group);
+    					return;
+    					/* $.each(group, function(key2, value2){
+    						control += "<span style='background-color: "+value2[0].projectColor+"'>"+key2+"</span>";
+
+    						$.each(value2, function(index, element){
+    							control += "<p>"+element.subject+"</p>";
+    						})
+    					})
+    					$("#dashboardTimeLine ul:first").append(control+"</li>"); */
+    			});
+
+    			/* if($("#dashboardTimeLine ul:first li").length == 0){ // 데이터 없음
+    				let lastWeek = new Date(); 
+    				lastWeek.setDate(lastWeek.getDate() + 7);
+    				getTimeLineDateFormat(lastWeek);
+    				$("#dashboardTimeLineEmptyBox h4:first").text("( "+today+" ~ "+getTimeLineDateFormat(lastWeek)+" )");
+    				$("#dashboardTimeLineEmptyBox").removeClass("hidden");
+    				$("#dashboardTimeLine").addClass("hidden");
+    			}else{
+    			
+    				$("#dashboardTimeLineEmptyBox").addClass("hidden");
+    				$("#dashboardTimeLine").removeClass("hidden");
+    			} */
+    		},
+    		error : function(){
+    			console.log("in setTimeLine error");
+    		}
+    	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    	
 
         var ctx4 = document.getElementById('canvas').getContext('2d');
         window.myLine = Chart.Line(ctx4, {
@@ -89,7 +148,7 @@
 
 
     var lineChartData = {
-        labels: ['Monday', 'Thusday', 'Wednesday', 'Thursday', 'Friday'],
+        labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
         datasets: [{
             label: 'Project 1',
             borderColor: window.chartColors.red,

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.owl.dashBoard.dao.DashBoardDao;
 import com.owl.dashBoard.dto.IssueTask;
+import com.owl.dashBoard.dto.LineChart;
 import com.owl.dashBoard.dto.ProjectProgress;
 import com.owl.dashBoard.dto.TimeLine;
 
@@ -164,19 +165,19 @@ public class DashBoardService {
 	}
 	
 	/**
-	 * 일주일 단위로 프로젝트 할당된 이슈 TimeLine 데이터 get
-	 * @author 윤다정
+	 * LineChart in MainDashBoard
+	 * @author 이정은
 	 * @since 2020/02/01
-	 * @param projectIdx
-	 * Map<String, List<TimeLine>>
+	 * @param assigned
+	 * @return Map<String, List<LineChart>>
 	 */
-	public Map<String, List<TimeLine>> getMyTimeLinesByProject(int projectIdx) {
+	public Map<String, List<LineChart>> getLineChart(String assigned) {
 		DashBoardDao dao = getDashBoardDao();
-		List<TimeLine> timeLines = new ArrayList<TimeLine>();
-		Map<String, List<TimeLine>> results = new TreeMap<>();
+		List<LineChart> line = new ArrayList<LineChart>();
+		Map<String, List<LineChart>> results = new TreeMap<>();
 		try {
-			timeLines = dao.getMyTimeLinesByProject(projectIdx);
-			results = timeLines.stream().collect(Collectors.groupingBy(TimeLine::getDueDate, TreeMap::new, Collectors.toList()));
+			line = dao.getLineChart(assigned);
+			results = line.stream().collect(Collectors.groupingBy(LineChart::getLogTime, TreeMap::new, Collectors.toList()));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -247,6 +248,29 @@ public class DashBoardService {
 		
 		return results;		
 	}
+	
+	   /**
+	    * 일주일 단위로 프로젝트 할당된 이슈 TimeLine 데이터 get
+	    * @author 윤다정
+	    * @since 2020/02/01
+	    * @param projectIdx
+	    * Map<String, List<TimeLine>>
+	    */
+	   public Map<String, List<TimeLine>> getMyTimeLinesByProject(int projectIdx) {
+	      DashBoardDao dao = getDashBoardDao();
+	      List<TimeLine> timeLines = new ArrayList<TimeLine>();
+	      Map<String, List<TimeLine>> results = new TreeMap<>();
+	      try {
+	         timeLines = dao.getMyTimeLinesByProject(projectIdx);
+	         results = timeLines.stream().collect(Collectors.groupingBy(TimeLine::getDueDate, TreeMap::new, Collectors.toList()));
+	      } catch (ClassNotFoundException | SQLException e) {
+	         e.printStackTrace();
+	      }
+	      
+	      return results;
+	   }
+	
+	
 	
 	/**
 	 * DashBoardDao 구하기

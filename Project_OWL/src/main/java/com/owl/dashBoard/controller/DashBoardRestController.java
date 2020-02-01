@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.dashBoard.dto.IssueTask;
+import com.owl.dashBoard.dto.LineChart;
 import com.owl.dashBoard.dto.ProjectProgress;
 import com.owl.dashBoard.dto.TimeLine;
 import com.owl.dashBoard.service.DashBoardService;
@@ -125,7 +126,19 @@ public class DashBoardRestController {
 	}
 	
 	/**
-	 * TimeLine 데이터 요청 (속한 프로젝트)
+	 * LineChart
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param principal
+	 * @return
+	 */
+	@RequestMapping("LineChart.do")
+	public Map<String, List<LineChart>> getLineChart(Principal principal) {
+		return service.getLineChart(principal.getName());
+	}
+	
+	/**
+	 * TimeLine 데이터 요청
 	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @param principal
