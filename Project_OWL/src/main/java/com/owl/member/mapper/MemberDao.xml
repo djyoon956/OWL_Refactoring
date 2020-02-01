@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteMember">
 		DELETE FROM owl.MEMBER WHERE EMAIL=#{email}
 	</delete>
-	
+
 
 	<insert id="insertMember" parameterType="com.owl.member.dto.Member">
 		INSERT INTO owl.MEMBER(email, password, name, profilepic, signfrom) VALUES (#{email}, #{password}, #{name}, #{profilePic}, '홈페이지')
