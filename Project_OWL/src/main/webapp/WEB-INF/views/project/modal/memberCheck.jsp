@@ -50,7 +50,7 @@
 						
 	<li class="mt-3">	
 	<img class="rounded-circle" width="40" onerror="this.src=&quot;resources/images/login/profile.png&quot;" src="resources/images/login/profile.png" alt="user"> 	
-		<label class='ml-3 text-left' style='width: 150px'> 김씨(kim@gmail.com) </label>
+		<label class='ml-3 text-left' style='width: 200px'> 김씨(kim@gmail.com) </label>
 		<span class='ml-5 roleBadge pm' style='padding-top : 5px;'></span>
 		<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right"> 
               <i class="fas fa-ellipsis-v fa-sm"></i></a>
