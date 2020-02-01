@@ -16,4 +16,5 @@ public class ProjectList {
 
 	// UI용
 	private String projectName;
+	private String memberName;
 }

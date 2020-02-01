@@ -100,10 +100,9 @@ display: none;
 				    <div class="card dash_shadow dash_radius" style="height: 450px">
 				        <div class="card-body">
 				            <h4 class="card-title">Member Progress</h4>
-				            <div>
-				
-				                여기차트
-				            </div>
+				            <div class="align-items-center" >
+				            	<canvas id="dashBoardMemberProgress"></canvas>
+				             </div>
 				        </div>
 				    </div>
 				</div>
@@ -182,7 +181,7 @@ display: none;
 			                    <div id="dashboardPTimeLineEmptyBox" class="emptyBox hidden">
 				                    <div>
 				                    	<h3 class="mb-4">이번주 일정이 존재하지않습니다.</h3>
-				                    	<h4 class="mt-1"> (2020-01-29 ~ 2020-02-07)</h4>
+				                    	<h4 class="mt-1"></h4>
 				                    </div>
 			                    </div>
 			                    <div style="height: 350px; overflow: auto">

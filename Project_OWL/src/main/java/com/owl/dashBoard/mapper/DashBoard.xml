@@ -105,9 +105,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getProjectMembers" resultType="com.owl.project.dto.ProjectList" parameterType="int">
-		SELECT PROJECTIDX, EMAIL, FAVORITE, PROJECTCOLOR, AUTHORITY 
-			FROM PROJECTLIST 
-		WHERE PROJECTIDX  = #{projectIdx}
-			ORDER BY (CASE WHEN AUTHORITY="ROLE_PM" THEN 1 ELSE 2 END);
+		SELECT P.PROJECTIDX, P.EMAIL, P.FAVORITE, P.PROJECTCOLOR, P.AUTHORITY, M.NAME AS 'MEMBERNAME' 
+			FROM PROJECTLIST P JOIN owl.MEMBER M ON P.EMAIL = M.EMAIL
+		WHERE P.PROJECTIDX  = #{projectIdx}
+			ORDER BY (CASE WHEN p.authority="ROLE_PM" THEN 1 ELSE 2 END);
 	</select>
 </mapper>

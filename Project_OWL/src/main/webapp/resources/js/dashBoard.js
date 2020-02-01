@@ -445,6 +445,76 @@ function setProjectMemberProgress(projectIdx){
 		success : function(data){
 			console.log("in setProjectMemberProgress success");
 			console.log(data);
+			//dashBoardMemberProgress
+			let labels = [];
+			let completes = [];
+			let totals = [];
+			$.each(data.member, function(index, element){
+				labels.push(element.memberName);
+			})
+			$.each(data.progress, function(index, element){
+				
+			})
+			
+			console.log(labels);
+			let barChartData = {
+					labels: labels,
+					datasets: [{
+						label: 'Complete',
+						backgroundColor: " #326295",
+						data: [
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor()
+						]
+					}, {
+						label: 'Total',
+						backgroundColor: "#d9d9d9",
+						data: [
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor(),
+							randomScalingFactor()
+						]
+					}]
+				};
+			
+			window.myBar = new Chart(document.getElementById('dashBoardMemberProgress').getContext('2d'), {
+				type: 'bar',
+				data: barChartData,
+				options: {
+					title: {
+						display: true,
+						text: '멤버별 업무 진행도'
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: false
+					},
+					responsive: true,
+					scales: {
+						xAxes: [{
+							stacked: true,
+							 ticks: {
+						          beginAtZero: true
+						        }
+						}],
+						yAxes: [{
+							stacked: true,
+							 ticks: {
+						          beginAtZero: true
+						        }
+						}]
+					}
+				}
+			});
 		},
 		error : function(){
 			console.log("in setProjectMemberProgress error");
