@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.dashBoard.dto.IssueTask;
@@ -43,9 +44,48 @@ public class DashBoardRestController {
 		return service.getMyIssueTasks(principal.getName());
 	}
 	
+	/**
+	 * Issue Task 테이블 데이터 요청 (프로젝트  본인)
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @param principal
+	 * @return List<IssueTask>
+	 */
+	@RequestMapping("getMyIssueTaskByProject.do")
+	public List<IssueTask> getMyIssueTasksByProject(int projectIdx, Principal principal) {
+		return service.getMyIssueTasksByProject(projectIdx, principal.getName());
+	}
+	
+	/**
+	 * Issue Task 테이블 데이터 요청 (프로젝트 전체)
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @param principal
+	 * @return List<IssueTask>
+	 */
+	@RequestMapping("getProjectIssueTask.do")
+	public List<IssueTask> getProjectIssueTasks(int projectIdx ) {
+		return service.getProjectIssueTasks(projectIdx);
+	}
+	
+	/**
+	 * 본인에게 할당된 이슈 진행률(프로젝트 별 in project)
+	 * @author 이정은
+	 * @since 2020/01/31 
+	 * @param projectIdx
+	 * @param principal
+	 * @return List<ProjectProgress>
+	 */
 	@RequestMapping("MyProgress.do")
 	public List<ProjectProgress> getProgressChart(int projectIdx, Principal principal) {
 		return service.getProgressChart(principal.getName(), projectIdx);
+	}
+	
+	@RequestMapping("Progress.do")
+	public List<ProjectProgress> getProjectChart(int projectIdx) {
+		return service.getProjectChart(projectIdx);
 	}
 
 	/**
@@ -53,11 +93,35 @@ public class DashBoardRestController {
 	 * @author 이정은
 	 * @since 2020/01/31
 	 * @param principal
-	 * @return List<ProjectProgress>
+	 * @return Map<Integer ,List<ProjectProgress>>
 	 */
 	@RequestMapping("MyProjectProgress.do")
 	public Map<Integer ,List<ProjectProgress>> getMyProjectChart(Principal principal) {	
 		return service.getMyProjectChart(principal.getName());
+	}
+	
+	/**
+	 * Horizon Chart
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param principal
+	 * @return Map<Integer ,List<ProjectProgress>>
+	 */
+	@RequestMapping("HorizonChart.do")
+	public Map<Integer ,List<ProjectProgress>> getHorizonChart(Principal principal) {	
+		return service.getHorizonChart(principal.getName());
+	}
+	
+	/**
+	 * 프로젝트 내의 라벨별 진행률
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param projectIdx
+	 * @return Map<String ,List<ProjectProgress>>
+	 */
+	@RequestMapping("LabelChart.do")
+	public Map<String ,List<ProjectProgress>> getLabelChart(int projectIdx) {	
+		return service.getLabelChart(projectIdx);
 	}
 	
 	/**

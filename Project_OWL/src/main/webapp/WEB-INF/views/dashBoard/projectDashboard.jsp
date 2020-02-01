@@ -84,116 +84,6 @@ function refreshScheduleVisibility() {
     });
 }
 
-var config1 = {
-		type: 'doughnut',
-		data: {
-			datasets: [{
-				data: [
-					10,
-					90,
-				],
-				backgroundColor: [
-					window.chartColors.red,
-					window.chartColors.blue,
-				],
-				label: 'Dataset 1'
-			}],
-			labels: [
-				'Complete',
-				'Total'
-			]
-		},
-		options: {
-			responsive: true,
-			legend: {
-				position: 'top',
-			},
-			title: {
-				display: true,
-				text: '프로젝트 진행률'
-			},
-			animation: {
-				animateScale: true,
-				animateRotate: true
-			}
-		}
-	};
-
-
-	var barChartData = {
-			labels: ['Emergency', 'Doing', 'Done', 'Stop', 'Closed', 'Open'],
-			datasets: [{
-				label: 'Complete',
-				backgroundColor: [
-					window.chartColors.red,
-					window.chartColors.orange,
-					window.chartColors.yellow,
-					window.chartColors.green,
-					window.chartColors.blue,
-					window.chartColors.purple
-				],
-				minBarLength: 2,
-				yAxisID: 'y-axis-1',
-				data: [
-					8,
-					6,
-					5,
-					7,
-					5,
-					7
-				]
-			}, {
-				label: 'Total',
-				backgroundColor: window.chartColors.grey,
-				minBarLength: 2,
-				yAxisID: 'y-axis-2',
-				data: [
-					10,
-					8,
-					8,
-					10,
-					8,
-					7
-				]
-			}]
-
-		};
-	function MyChart(idx, totalSum, closeSum, color){  
-	    window.myDoughnut = new Chart(document.getElementById('myProgress'+idx).getContext('2d'), {
-	        type: 'doughnut',
-	        data: {
-	            datasets: [{
-	                data: [
-	                	Math.round((totalSum - closeSum)/totalSum*100),
-	                	Math.round((closeSum)/totalSum*100)               	
-	                ],
-	                backgroundColor: [
-	                	"#d9d9d9",
-	                	color                	
-	                ],
-	                label: projectName
-	            }],
-	            labels: [
-	            	'Total',
-					'Complete'    
-	            ]
-	        },
-	        options: {
-	            responsive: true,
-	            legend: {
-	                position: 'top',
-	            },
-	            title: {
-	                display: true,
-	                text: '나의 진행률'
-	            },
-	            animation: {
-	                animateScale: true,
-	                animateRotate: true
-	            }
-	        }
-	    });	
-	}	
 </script>  
 <style>
 .tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container{
@@ -205,43 +95,30 @@ display: none;
                 <div class="row">
                 <!--  my task -->
                     <div class="col-lg-6">
-                        <div class="card dash_shadow dash_radius">
-                         
+                        <div class="card dash_shadow dash_radius" style="height: 450px">
                             <div class="card-body">
-                            <h4 class="card-title">Task</h4>
-                                <div class="d-md-flex align-items-center table-responsive">
-                                  
-		                             <table class="table table-striped table-bordered text-center" id="dashboardTable">
-		                                <thead>
-		                                    <tr>
-		                                        <th scope="col">Project</th>
-		                                        <th scope="col">Subject</th>
-		                                        <th scope="col">Due Date</th>
-		                                        <th scope="col">Priority</th>
-		                                    </tr>
-		                                </thead>
-		                                <tbody>
-		                                    <tr>
-		                                        <td>판매계획</td>
-		                                        <td>로그인 view 구현</td>
-		                                        <td class="text-danger">today</td>
-		                                        <td><span class="badge badge-pill badge-danger font-14">high</span></td>
-		                                    </tr>
-		                                    <tr>
-		                                        <td>후기관리</td>
-		                                        <td>단체 채팅 기능 구현</td>
-		                                        <td>1/18</td>
-		                                        <td><span class="badge badge-pill badge-success font-14">medium</span></td>  
-		                                    </tr>
-		                                    <tr>
-		                                        <td>후기관리</td>
-		                                        <td>캘린더 뷰 구현</td>
-		                                        <td>1/30</td>
-		                                        <td><span class="badge badge-pill badge-warning font-14">low</span></td>
-		                                    </tr>
-		                                </tbody>
-		                            </table>
-                                </div>
+                            <h4 class="card-title">Issue Task</h4>
+                            <div id="dashBoardPTableEmptyBox" class="emptyBox">
+		                    <div>
+		                    	<h3 class="mb-4">프로젝트 내에서 할당된 이슈가 없습니다.</h3>
+		                    	<p class="mt-1"> 어쩌구 저쩌구 어쩌구 저쩌구</p>
+		                    	<p class="mt-1"> 어쩌구 저쩌구 어쩌구 저쩌구</p>
+		                    </div>
+	                    </div>
+	                    <div id="dashBoardPTableBox" class="hidden">
+	                               <table class="table table-hover table-bordered text-center w-100" id="dashboardPTable">
+	                                <thead>
+	                                    <tr>
+	                                     	<th width="5%">No</th>
+	                                        <th width="60%">Subject</th>
+	                                        <th width="25%">Due Date</th>
+	                                        <th width="10%">Priority</th>
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+	                                </tbody>
+	                            </table>
+      						</div>
                             </div>
                         </div>
                     <!-- </div>  -->
@@ -267,11 +144,7 @@ display: none;
                               <h4 class="card-title" style="margin-bottom: 0px;">Progress Chart</h4>
                                 <div class="align-items-center">
 									<div class="row">
-										<div class="col-md-6">
-											<div id="canvas-holder">
-												<canvas id="chartProjectProgress"></canvas>
-											</div>
-										</div>
+										<div class="col-md-6" id="chartProjectProgress"> </div>
 										<div class="col-md-6" id="chartMyProgress"> </div>
 									</div>
                               </div>
@@ -281,9 +154,7 @@ display: none;
                        <div class="card dash_shadow dash_radius">
                             <div class="card-body">
                               <h4 class="card-title">Label Chart</h4>
-                                <div class="align-items-center">
-                                   		<canvas id="canvas"></canvas>                                  
-                              </div>
+                                <div class="align-items-center" id="labelProgress"> </div>
                             </div>
                         </div>
                     <!-- </div> -->

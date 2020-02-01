@@ -51,7 +51,6 @@ public class DashBoardService {
 	 */
 	public List<IssueTask> getMyIssueTasks(String assigned) {
 		DashBoardDao dao = getDashBoardDao();
-		System.out.println("in getMyIssueTasks service");
 		List<IssueTask> issueTasks = new ArrayList<IssueTask>();
 		try {
 			issueTasks = dao.getMyIssueTasks(assigned);
@@ -63,7 +62,7 @@ public class DashBoardService {
 	}
 
 	/**
-	 * 본인에게 할달된 이슈 진행률(프로젝트 별)
+	 * 본인에게 할당된 모든 이슈 진행률(프로젝트 별)
 	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @param email
@@ -81,6 +80,66 @@ public class DashBoardService {
 		}		
 		
 		return results;		
+	}
+	
+	/**
+	 * Horizon 차트 (in main dash board)
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param email
+	 * @return Map<Integer ,List<ProjectProgress>>
+	 */
+	public Map<Integer ,List<ProjectProgress>> getHorizonChart(String email){
+		DashBoardDao dao = getDashBoardDao();
+		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
+		Map<Integer, List<ProjectProgress>> results = new HashMap<Integer, List<ProjectProgress>>();
+		try {
+			progress = dao.getHorizonChart(email);
+			results=progress.stream().collect(Collectors.groupingBy(ProjectProgress::getProjectIdx));
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		return results;		
+	}
+	
+	/**
+	 * dueData, priority 순으로 Issue Task 테이블 데이터 get (프로젝트 안에서 본인 이슈)
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @param assigned
+	 * @return List<IssueTask>
+	 */
+	public List<IssueTask> getMyIssueTasksByProject(int projectIdx, String assigned) {
+		DashBoardDao dao = getDashBoardDao();
+		List<IssueTask> issueTasks = new ArrayList<IssueTask>();
+		try {
+			issueTasks = dao.getMyIssueTasksByProject(projectIdx, assigned);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+
+		return issueTasks;
+	}
+	
+	/**
+	 * dueData, priority 순으로 Issue Task 테이블 데이터 get (프로젝트 별)
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @return List<IssueTask>
+	 */
+	public List<IssueTask> getProjectIssueTasks(int projectIdx) {
+		DashBoardDao dao = getDashBoardDao();
+		List<IssueTask> issueTasks = new ArrayList<IssueTask>();
+		try {
+			issueTasks = dao.getProjectIssueTasks(projectIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+
+		return issueTasks;
 	}
 	
 	/**
@@ -104,6 +163,14 @@ public class DashBoardService {
 		return results;
 	}
 	
+	/**
+	 * 본인에게 할당된 이슈 진행률(프로젝트 별 in Project)
+	 * @author 이정은
+	 * @since 2020/01/31
+	 * @param assigned
+	 * @param projectIdx
+	 * @return List<ProjectProgress>
+	 */
 	public List<ProjectProgress> getProgressChart(String assigned, int projectIdx) {
 		DashBoardDao dao = getDashBoardDao();
 		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
@@ -119,10 +186,49 @@ public class DashBoardService {
 	}
 	
 	
+	/**
+	 * 프로젝트 내의 할당된 이슈 진행률(프로젝트 별 in Project)
+	 * @author 이정은
+	 * @since 2020/01/31
+	 * @param projectIdx
+	 * @return List<ProjectProgress>
+	 */
+	public List<ProjectProgress> getProjectChart(int projectIdx) {
+		DashBoardDao dao = getDashBoardDao();
+		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
+		try {
+			progress =dao.getProjectChart(projectIdx);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return progress;
+	}
+	
+	/**
+	 * Label 차트 (in project)
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param projectIdx
+	 * @return Map<String ,List<ProjectProgress>>
+	 */
+	public Map<String ,List<ProjectProgress>> getLabelChart(int projectIdx){
+		DashBoardDao dao = getDashBoardDao();
+		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
+		Map<String, List<ProjectProgress>> results = new HashMap<String, List<ProjectProgress>>();
+		try {
+			progress = dao.getLabelChart(projectIdx);
+			results=progress.stream().collect(Collectors.groupingBy(ProjectProgress::getLabelName));
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		return results;		
+	}
 	
 	/**
 	 * DashBoardDao 구하기
-	 * 
 	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @return DashBoardDao

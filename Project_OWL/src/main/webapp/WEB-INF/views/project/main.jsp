@@ -43,6 +43,7 @@
             setTheme("${setting.themeColor}", "${setting.font}");
             initNotice("${project.projectIdx}");
             initKanban("${project.projectIdx}");
+            initDashBoard("${project.projectIdx}")
 
             $.ajax({
         		url:"GetProjectList.do",
@@ -59,31 +60,7 @@
         		    setSchedules();
         		}
             });
-
-    		$.ajax({
-    	        url:"MyProgress.do",
-    	        data: {projectIdx: 	${project.projectIdx}},
-    	        success:function(data){
-        	      console.log("my");
-    	         console.log(data);
-  		    	  let idx = data[0].projectIdx;
-   			      let color = data[0].projectColor;
-   		    	  let totalCount=data.length;
-   		    	  let closeCount=0;
-   		    	  $.each(data, function(index, element){
-   	   		    	  console.log(element);
-   	   		    	  return;
-   		    			if(element.issueProgress == "CLOSED") 
-   							closeCount++;
-   		    	  })
-   		    	 let makeChart = '<div id="canvas-holder"><canvas id="myProgress'+idx+'"></canvas></div>';
-   				$("#chartMyProgress").append(makeChart);
-   					MyChart(idx, totalCount, closeCount, color);		    	
-    	       }
-    	   }); 
-
-
-
+    		
 			$.ajax({
 				url : "GetIssue.do",
 				data : {'projectIdx' :  ${project.projectIdx} },
@@ -97,8 +74,6 @@
 								closeCount ++;
 							}				
 					});
-						var ctx = document.getElementById('chartProjectProgress').getContext('2d');
-						window.myDoughnut = new Chart(ctx, config1);
 				}
 			});
             
@@ -190,44 +165,7 @@
                         console.log("addMemberOk error");
                     }
                 });
-            })
-			
-			var ctx = document.getElementById('canvas').getContext('2d');
-			window.myBar = new Chart(ctx, {
-				type: 'bar',
-				data: barChartData,
-				options: {
-					responsive: true,
-					title: {
-						display: true,
-						text: '라벨 별 업무 진행도'
-					},
-					tooltips: {
-						mode: 'index',
-						intersect: true
-					},
-					scales: {
-						yAxes: [{
-							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-							display: true,
-							position: 'left',
-							id: 'y-axis-1',
-						}, {
-							type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-							display: true,
-							position: 'right',
-							id: 'y-axis-2',
-							gridLines: {
-								drawOnChartArea: false
-							}
-						}],
-					}
-				}
-			});
-
-
-
-            
+            })           
         }); 
         
         function setChageView(target) {
@@ -358,6 +296,7 @@
 						 $.each(data,function(index,obj) {
 							
 							 addKanbanIssue(obj.colIdx, obj); 
+							 wholeProjectChart(${project.projectIdx});
 					
 						});
 					},
@@ -522,5 +461,5 @@
     <jsp:include page="modal/memberAdd.jsp" />
     <jsp:include page="modal/joinProjectMember.jsp" />
     <jsp:include page="modal/memberCheck.jsp" /> 
-    <jsp:include page="modal/transferAuthority.jsp" /> 
+    <jsp:include page="modal/transferAuthority.jsp" />
 </body>

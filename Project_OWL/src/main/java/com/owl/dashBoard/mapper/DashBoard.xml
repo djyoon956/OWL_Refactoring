@@ -18,17 +18,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 														  ELSE 5 END)
 	</select>
 	
+	<select id="getMyIssueTasksByProject" resultType="com.owl.dashBoard.dto.IssueTask">
+		SELECT I.ISSUEIDX, I.ISSUETITLE AS 'SUBJECT', I.DUEDATE, I.PRIORITYCODE, I.ASSIGNED, M.NAME AS 'ASSIGNEDNAME', I.PROJECTIDX, P.PROJECTNAME
+			FROM owl.ISSUE I JOIN PROJECT P ON I.PROJECTIDX = P.PROJECTIDX LEFT JOIN owl.MEMBER M ON I.ASSIGNED = M.EMAIL
+		WHERE I.ASSIGNED = #{param2} AND I.PROJECTIDX = #{param1} AND I.ISSUEPROGRESS = "OPEN"  
+			ORDER BY I.DUEDATE, (CASE WHEN I.PRIORITYCODE="URGENT" THEN 1
+														  WHEN I.PRIORITYCODE="HIGH" THEN 2
+														  WHEN I.PRIORITYCODE="MEDIUM" THEN 3
+														  WHEN I.PRIORITYCODE="LOW" THEN 4
+														  ELSE 5 END)
+	</select>
+	
+	<select id="getProjectIssueTasks" resultType="com.owl.dashBoard.dto.IssueTask">
+		SELECT I.ISSUEIDX, I.ISSUETITLE AS 'SUBJECT', I.DUEDATE, I.PRIORITYCODE, I.ASSIGNED, M.NAME AS 'ASSIGNEDNAME', I.PROJECTIDX, P.PROJECTNAME
+			FROM owl.ISSUE I JOIN PROJECT P ON I.PROJECTIDX = P.PROJECTIDX LEFT JOIN owl.MEMBER M ON I.ASSIGNED = M.EMAIL
+		WHERE I.PROJECTIDX = #{projectIdx} AND I.ISSUEPROGRESS = "OPEN"  
+			ORDER BY I.DUEDATE, (CASE WHEN I.PRIORITYCODE="URGENT" THEN 1
+														  WHEN I.PRIORITYCODE="HIGH" THEN 2
+														  WHEN I.PRIORITYCODE="MEDIUM" THEN 3
+														  WHEN I.PRIORITYCODE="LOW" THEN 4
+														  ELSE 5 END)
+	</select>
+	
 	<select id="getMyProjectChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
 		SELECT p.PROJECTIDX, p.PROJECTNAME, i.ASSIGNED, i.ISSUEPROGRESS , t.PROJECTCOLOR
-		FROM PROJECT p JOIN ISSUE i ON p.PROJECTIDX=i.PROJECTIDX 
-	    LEFT JOIN PROJECTLIST t ON p.PROJECTIDX=t.PROJECTIDX 
+			FROM PROJECT p JOIN ISSUE i ON p.PROJECTIDX=i.PROJECTIDX 
+	    							  LEFT JOIN PROJECTLIST t ON p.PROJECTIDX=t.PROJECTIDX 
 	    where i.ASSIGNED = #{email} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')		
 	</select>
 	
 	<select id="getProgressChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
 		SELECT i.ASSIGNED, i.ISSUEPROGRESS , t.PROJECTCOLOR, t.PROJECTIDX
-		FROM PROJECTLIST t JOIN ISSUE i ON t.PROJECTIDX=i.PROJECTIDX 
+			FROM PROJECTLIST t JOIN ISSUE i ON t.PROJECTIDX=i.PROJECTIDX 
 	    where i.ASSIGNED = #{param1} AND t.PROJECTIDX = #{param2} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')	
+	</select>
+	
+	<select id="getProjectChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
+		SELECT PROJECTIDX, ISSUEPROGRESS, ASSIGNED FROM ISSUE WHERE PROJECTIDX =#{projectIdx} AND ISSUEPROGRESS in('OPEN', 'CLOSED')
+	</select>
+	
+	<select id="getLabelChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
+		SELECT i.ISSUEIDX, i.ISSUEPROGRESS, i.PROJECTIDX, l.LABELNAME, l.LABELCOLOR
+			FROM LABEL l JOIN ISSUE i ON l.LABELIDX=i.LABELIDX 
+	    where i.PROJECTIDX = #{projectIdx} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')		
 	</select>
 	
 	<select id="getMyTimeLines" resultType="com.owl.dashBoard.dto.TimeLine">
@@ -38,4 +70,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE I.DUEDATE BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL + 7 DAY)
 			ORDER BY I.DUEDATE, P.PROJECTNAME
 	</select>
+	
+	
+	
+	<select id="getHorizonChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
+		SELECT p.PROJECTIDX, p.PROJECTNAME, i.ISSUEPROGRESS , t.PROJECTCOLOR
+			FROM PROJECT p JOIN ISSUE i ON p.PROJECTIDX=i.PROJECTIDX 
+	    						  LEFT JOIN PROJECTLIST t ON p.PROJECTIDX=t.PROJECTIDX 
+	    where t.EMAIL = #{email} AND i.ISSUEPROGRESS in ('OPEN', 'CLOSED')	
+	</select>
+	
+	<select  id="getLineChart" resultType="com.owl.dashBoard.dto.LineChart">
+		SELECT i.ISSUEIDX, l.logtime, p.PROJECTCOLOR, j.PROJECTNAME, i.PROJECTIDX
+			FROM ISSUE i JOIN ISSUELOG l ON i.ISSUEIDX = l.ISSUEIDX 
+										  JOIN PROJECTLIST p ON i.PROJECTIDX = p.PROJECTIDX
+                                          JOIN PROJECT j ON i.PROJECTIDX = j.PROJECTIDX
+		WHERE l.LOGTIME BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL + 7 DAY) 
+		AND i.ASSIGNED =#{assigned}
+	</select>
+	
+	
+
 </mapper>

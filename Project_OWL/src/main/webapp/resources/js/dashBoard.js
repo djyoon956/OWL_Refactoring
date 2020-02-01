@@ -1,4 +1,16 @@
-$(function() {
+function initDashBoard(projectIdx){
+	 $("#dashCalendar").tuiCalendar({
+		  defaultView: 'month',
+		  taskView: true
+	}); 
+	 
+	if(projectIdx > 0)
+		setProjectDashBoard(projectIdx);
+	else
+		setMainDashBoard();
+}
+
+function setMainDashBoard(){
 	$("#dashboardTable").DataTable({
 		"pageLength": 5,
          fixedColumns: true,
@@ -9,12 +21,7 @@ $(function() {
          "sScrollY": "270px",
 	});
 	
-	 $("#dashCalendar").tuiCalendar({
-		  defaultView: 'month',
-		  taskView: true
-	}); 
- 
-	 $.ajax({
+	$.ajax({
 		 url : "CheckJoinProject.do",
 		 success : function(data){
 			 console.log("in CheckJoinProject success");
@@ -26,6 +33,8 @@ $(function() {
 			 
 			 $("#myDashBoardBox").removeClass("hidden");
 			 $("#myDashBoardEmptyBox").addClass("hidden");
+			 
+			 // 데이터 셋팅
 			 setMyIssueTask();
 			 setTimeLine();
 		 },
@@ -33,8 +42,28 @@ $(function() {
 			 console.log("in CheckJoinProject error");
 		 }
 	 })
-});
+}
 
+function setProjectDashBoard(projectIdx){
+	$("#dashboardPTable").DataTable({
+		"pageLength": 5,
+         fixedColumns: true,
+         autoWidth: false,
+         "ordering" : false,
+         "searching": false,
+         "lengthChange": false,
+         "sScrollY": "270px",
+         "columnDefs": [ {
+             "searchable": false,
+             "orderable": false,
+             "targets": 0
+         } ],
+	});
+	
+	
+	wholeProjectChart(projectIdx);
+	setMyIssueTaskByProject(projectIdx);
+}
 
 function setMyIssueTask(){
 	$.ajax({
@@ -51,8 +80,8 @@ function setMyIssueTask(){
 						element.dueDate!=null? getDueDateElement(element.dueDate):"-",
 						element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
 					]).draw();
-					//.node().id = element.driveFileIdx;
-					//$('#dashboardTable').DataTable().draw();
+					// .node().id = element.driveFileIdx;
+					// $('#dashboardTable').DataTable().draw();
 				})
 			}else{ // 할당된 이슈 없음
 				$("#dashBoardTableEmptyBox").removeClass("hidden");
@@ -85,24 +114,15 @@ function getDueDateElement(date){
 }
 
 function setTimeLine(){
-	let week = new Array('일', '월', '화', '수', '목', '금', '토'); 
-	let today = new Date();
-	let year = today.getFullYear(); 
-	let month = (today.getMonth() + 1) < 10? "0"+(today.getMonth() + 1):(today.getMonth() + 1); 
-	let day = today.getDate(); 
-	let dayName = week[today.getDay()];
-	
-	let todayFormat = year+"-"+month+"-"+day+" ("+dayName+")";
+	let today = getTimeLineDateFormat(new Date());
 	$.ajax({
 		url : "GetMyTimeLine.do",
 		success : function(data){
-			$("#timeLineDate").text("Today : "+todayFormat);
+			$("#timeLineDate").text("Today : "+today);
 			$("#dashboardTimeLine ul:first").empty();
-			$.each(data, function(key, value){
-					console.log(key);
-					console.log(todayFormat==key);
-					let control = "<li><p class='float-right'>"+((key==todayFormat)?"Today":key)+"</p>";
 
+			$.each(data, function(key, value){
+					let control = "<li><p class='float-right'>"+((key==today)?"Today":key)+"</p>";
 					let group = value.reduce((r, a) => {
 																 r[a.projectName] = [...r[a.projectName] || [], a];
 																 return r;
@@ -115,12 +135,266 @@ function setTimeLine(){
 							control += "<p>"+element.subject+"</p>";
 						})
 					})
-
 					$("#dashboardTimeLine ul:first").append(control+"</li>");
-			})
+			});
+			
+			if($("#dashboardTimeLine ul:first li").length == 0){ // 데이터 없음
+				let lastWeek = new Date(); 
+				lastWeek.setDate(lastWeek.getDate() + 7);
+				getTimeLineDateFormat(lastWeek);
+				$("#dashboardTimeLineEmptyBox h4:first").text("( "+today+" ~ "+getTimeLineDateFormat(lastWeek)+" )");
+				$("#dashboardTimeLineEmptyBox").removeClass("hidden");
+				$("#dashboardTimeLine").addClass("hidden");
+			}else{
+			
+				$("#dashboardTimeLineEmptyBox").addClass("hidden");
+				$("#dashboardTimeLine").removeClass("hidden");
+			}
 		},
 		error : function(){
 			console.log("in setTimeLine error");
+		}
+	})
+}
+
+function wholeProjectChart(projectIdx){
+	$.ajax({
+        url:"MyProgress.do",
+        data: {projectIdx: projectIdx},
+        success:function(data){
+	    	  let idx = data[0].projectIdx;
+		      let color = data[0].projectColor;
+	    	  let totalCount=data.length;
+	    	  let closeCount=0;
+	    	  $("#chartMyProgress").empty();
+	    	  $.each(data, function(index, element){
+	    			if(element.issueProgress == "CLOSED") 
+						closeCount++;
+	    	  })
+	    	 let makeChart = '<div id="canvas-holder"><canvas id="myProgress'+idx+'"></canvas></div>';
+			$("#chartMyProgress").append(makeChart);
+				MyChart(idx, totalCount, closeCount, color);		    	
+       }
+   }); 
+
+	$.ajax({
+        url:"Progress.do",
+        data: {projectIdx: projectIdx},
+        success:function(data){
+	    	  let idx = data[0].projectIdx;
+	    	  let totalCount=data.length;
+	    	  let closeCount=0;
+	    	  $("#chartProjectProgress").empty();
+	    	  $.each(data, function(index, element){
+	    			if(element.issueProgress == "CLOSED") 
+						closeCount++;
+	    	  })
+	    	 let makeChart = '<div id="canvas-holder"><canvas id="projectProgress'+idx+'"></canvas></div>';
+			$("#chartProjectProgress").append(makeChart);
+				OurChart(idx, totalCount, closeCount);		    	
+       }
+   });
+
+	$.ajax({
+        url:"LabelChart.do",
+        dataType: "json",
+        data: {projectIdx: projectIdx},
+        success:function(data){
+	        let idx = projectIdx;
+	        let label;
+	        let totalCount = [];
+	    	let closeCount = [];
+    	    let name = [];
+    	    let color = [];
+    	    $("#labelProgress").empty(); 
+	     $.each(data, function(key, value){
+	    	  label = key;
+	    	  totalCount.push(value.length);
+	    	  name.push(value[0].labelName);
+	    	  color.push(value[0].labelColor);
+	    	  let closed = 0;
+	    	  $.each(value, function(index, element){
+	    			if(element.issueProgress == "CLOSED") 
+						closed++;
+	    	  });
+	    	  closeCount.push(closed);	    	
+	     });
+    	 let makeChart = '<canvas id="label'+idx+'"></canvas>';
+				$("#labelProgress").append(makeChart);
+				ProjectLabelChart(idx, totalCount, closeCount, name, color);	
+       }
+   });	
+}	
+
+function MyChart(idx, totalSum, closeSum, color){  
+	window.myDoughnut = new Chart(document.getElementById('myProgress'+idx).getContext('2d'), {
+	        type: 'doughnut',
+	        data: {
+	            datasets: [{
+	                data: [
+	                	Math.round((totalSum - closeSum)/totalSum*100),
+	                	Math.round((closeSum)/totalSum*100)               	
+	                ],
+	                backgroundColor: [
+	                	"#d9d9d9",
+	                	color                	
+	                ],
+	                label: 'Data'
+	            }],
+	            labels: [
+	            	'Total',
+					'Complete'    
+	            ]
+	        },
+	        options: {
+	            responsive: true,
+	            legend: {
+	                position: 'top',
+	            },
+	            title: {
+	                display: true,
+	                text: '나의 진행률'
+	            },
+	            animation: {
+	                animateScale: true,
+	                animateRotate: true
+	            }
+	        }
+	    });	
+	}	
+
+function OurChart(idx, totalSum, closeSum){  
+	window.myDoughnut = new Chart(document.getElementById('projectProgress'+idx).getContext('2d'), {
+	        type: 'doughnut',
+	        data: {
+	            datasets: [{
+	                data: [
+	                	Math.round((totalSum - closeSum)/totalSum*100),
+	                	Math.round((closeSum)/totalSum*100)               	
+	                ],
+	                backgroundColor: [
+	                	"#d9d9d9",
+	                	"#326295"                	
+	                ],
+	                label: 'Data'
+	            }],
+	            labels: [
+	            	'Total',
+					'Complete'    
+	            ]
+	        },
+	        options: {
+	            responsive: true,
+	            legend: {
+	                position: 'top',
+	            },
+	            title: {
+	                display: true,
+	                text: '프로젝트 진행률'
+	            },
+	            animation: {
+	                animateScale: true,
+	                animateRotate: true
+	            }
+	        }
+	    });	
+	}
+
+function ProjectLabelChart(idx, totalCount, closeCount, name, color){
+	window.myBar = new Chart(document.getElementById('label'+idx).getContext('2d'), {
+		type: 'bar',
+		data: {
+			labels: name,
+			datasets: [{
+				label: 'Complete',
+				backgroundColor: color,
+				minBarLength: 2,
+				yAxisID: 'y-axis-2',
+				data: closeCount
+			}, {
+				label: 'Total',
+				backgroundColor: window.chartColors.grey,
+				minBarLength: 2,
+				yAxisID: 'y-axis-2',
+				data: totalCount
+			}]
+
+		},
+		options: {
+			responsive: true,
+			scaleBeginAtZero : true,
+			title: {
+				display: true,
+				text: '라벨 별 업무 진행도'
+			},
+			tooltips: {
+				mode: 'index',
+				intersect: true
+			},
+			scales: {
+				yAxes: [{
+					type: 'linear', // only linear but allow scale type
+									// registration. This allows extensions to
+									// exist solely for log scale for instance
+					display: true,
+					position: 'right',
+					id: 'y-axis-2',
+					gridLines: {
+						drawOnChartArea: false
+					},
+				ticks: {
+                    beginAtZero:true,  // Y축의 값이 0부터 시작,
+                    callback: function (value) {
+                        if (0 === value % 1) {
+                            return value;
+                        }
+                    }
+                }
+				}],
+			}
+		}
+	});	
+}	
+
+function getTimeLineDateFormat(date){
+	let week = new Array('일', '월', '화', '수', '목', '금', '토'); 
+	let year = date.getFullYear(); 
+	let month = (date.getMonth() + 1) < 10? "0"+(date.getMonth() + 1):(date.getMonth() + 1); 
+	let day = date.getDate(); 
+	let dayName = week[date.getDay()];
+	
+	return year+"-"+month+"-"+day+" ("+dayName+")";
+}
+
+function setMyIssueTaskByProject(projectIdx){
+	console.log("setMyIssueTaskByProject",projectIdx);
+	$.ajax({
+		url : "getMyIssueTaskByProject.do",
+		data : {projectIdx : projectIdx},
+		success : function(data){
+			console.log("in GetMyIssueTaskByProject success");
+			console.log(data);
+			if(data.length > 0){
+				$("#dashBoardPTableEmptyBox").addClass("hidden");
+				$("#dashBoardPTableBox").removeClass("hidden");
+				
+				$.each(data, function(index, element){
+					$('#dashboardPTable').DataTable().row.add([
+						++index,
+						element.subject,
+						element.dueDate!=null? getDueDateElement(element.dueDate):"-",
+						element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
+					]).draw();
+					// .node().id = element.driveFileIdx;
+					// $('#dashboardTable').DataTable().draw();
+				})
+			}else{ // 할당된 이슈 없음
+				$("#dashBoardPTableEmptyBox").removeClass("hidden");
+				$("#dashBoardPTableBox").addClass("hidden");
+			}
+		},
+		error : function(){
+			console.log("in setMyIssueTaskByProject error");
 		}
 	})
 }
