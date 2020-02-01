@@ -141,10 +141,10 @@ public class DashBoardRestController {
 	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @param principal
-	 * @return List<TimeLine>
+	 * @return Map<String, List<TimeLine>>
 	 */
 	@RequestMapping("GetMyTimeLineByProject.do")
-	public List<TimeLine> getMyTimeLineByProject(int projectIdx) {
+	public Map<String, List<TimeLine>> getMyTimeLineByProject(int projectIdx) {
 		return service.getMyTimeLinesByProject(projectIdx);
 	}
 }

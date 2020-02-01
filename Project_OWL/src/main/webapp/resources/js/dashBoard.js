@@ -164,26 +164,16 @@ function setTimeLineByProject(projectIdx){
 		url : "GetMyTimeLineByProject.do",
 		data : {projectIdx : projectIdx },
 		success : function(data){
-			console.log("in setTimeLineByProject success");
-			console.log(data);
-			return;
 			$("#timeLinePDate").text("Today : "+today);
 			$("#dashboardPTimeLine ul:first").empty();
-
 			$.each(data, function(key, value){
-					let control = "<li><p class='float-right'>"+((key==today)?"Today":key)+"</p>";
-					let group = value.reduce((r, a) => {
-																 r[a.projectName] = [...r[a.projectName] || [], a];
-																 return r;
-															}, {});
+					let control = "<li><p class='float-right'>"+((key==today)?"Today":key)+"</p>"
+									+ "<span style='background-color: "+value[0].projectColor+"'>"+value[0].projectName+"</span>";
 
-					$.each(group, function(key2, value2){
-						control += "<span style='background-color: "+value2[0].projectColor+"'>"+key2+"</span>";
-
-						$.each(value2, function(index, element){
-							control += "<p>"+element.subject+"</p>";
-						})
+					$.each(value, function(index, element){
+						control += "<p>"+element.subject+"</p>";
 					})
+				
 					$("#dashboardPTimeLine ul:first").append(control+"</li>");
 			});
 			

@@ -168,18 +168,20 @@ public class DashBoardService {
 	 * @author 윤다정
 	 * @since 2020/02/01
 	 * @param projectIdx
-	 * @return List<TimeLine>
+	 * Map<String, List<TimeLine>>
 	 */
-	public List<TimeLine> getMyTimeLinesByProject(int projectIdx) {
+	public Map<String, List<TimeLine>> getMyTimeLinesByProject(int projectIdx) {
 		DashBoardDao dao = getDashBoardDao();
 		List<TimeLine> timeLines = new ArrayList<TimeLine>();
+		Map<String, List<TimeLine>> results = new TreeMap<>();
 		try {
 			timeLines = dao.getMyTimeLinesByProject(projectIdx);
+			results = timeLines.stream().collect(Collectors.groupingBy(TimeLine::getDueDate, TreeMap::new, Collectors.toList()));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return timeLines;
+		return results;
 	}
 	
 	/**
