@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.owl.dashBoard.dto.IssueTask;
 import com.owl.dashBoard.dto.LineChart;
+import com.owl.dashBoard.dto.ProjectMemberProgress;
 import com.owl.dashBoard.dto.ProjectProgress;
 import com.owl.dashBoard.dto.TimeLine;
+import com.owl.project.dto.ProjectList;
 
 public interface DashBoardDao {
 	public int checkJoinProject(String email) throws ClassNotFoundException, SQLException;
@@ -32,4 +34,8 @@ public interface DashBoardDao {
 	public List<ProjectProgress> getHorizonChart(String email) throws ClassNotFoundException, SQLException;
 	
 	public List<LineChart> getLineChart(String assigned) throws ClassNotFoundException, SQLException;
+	
+	public List<ProjectMemberProgress> getProjectMemberProgress(int projectIdx) throws ClassNotFoundException, SQLException;
+	
+	public List<ProjectList> getProjectMembers(int projectIdx) throws ClassNotFoundException, SQLException;
 }

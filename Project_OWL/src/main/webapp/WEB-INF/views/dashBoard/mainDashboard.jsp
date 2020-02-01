@@ -5,6 +5,16 @@
 <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script type="text/javascript">
+var LineData = [];
+
+function MakeDataSet() {
+    this.label = null;
+    this.borderColor = null;
+    this.backgroundColor = null;
+    this.fill = false;
+    this.data = [];
+    this.yAxisID = 'y-axis-1';
+}
     $(function () {     
     	$.ajax({
 	        url:"MyProjectProgress.do",
@@ -54,151 +64,40 @@
 	   });
 
     	let week = new Array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'); 
+    	let dayCount = [0, 0, 0, 0, 0, 0, 0];
     	let dayName = week[new Date().getDay()];
     	$.ajax({
     		url : "LineChart.do",
     		success : function(data){   			
-				console.log(data);
-				console.log(dayName);
 				let group;
     			$.each(data, function(key, value){
         				//let theday = key (dayName)
     					group = value.reduce((r, a) => {
-    																 r[a.projectIdx] = [...r[a.projectIdx] || [], a];
+    																 r[a.logTime] = [...r[a.logTime] || [], a];
     																 return r;
     															}, {});
-    					console.log(group);
-    					return;
-    					/* $.each(group, function(key2, value2){
-    						control += "<span style='background-color: "+value2[0].projectColor+"'>"+key2+"</span>";
-
-    						$.each(value2, function(index, element){
-    							control += "<p>"+element.subject+"</p>";
-    						})
-    					})
-    					$("#dashboardTimeLine ul:first").append(control+"</li>"); */
+						let theData;			
+					    theData = new MakeDataSet();
+						theData.label = value[0].projectName;
+						theData.borderColor = value[0].projectColor;
+						theData.backgroundColor = value[0].projectColor;
+						theData.fill = false;   							
+						theData.yAxisID = 'y-axis-1';
+						
+						dayCount = [0, 0, 0, 0, 0, 0, 0];		
+    					$.each(group, function(key2, value2){   
+        					dayCount[new Date(key2).getDay()] = value2.length;					   					
+    					}) 
+    					theData.data=dayCount;	
+						LineData.push(theData);
     			});
-
-    			/* if($("#dashboardTimeLine ul:first li").length == 0){ // 데이터 없음
-    				let lastWeek = new Date(); 
-    				lastWeek.setDate(lastWeek.getDate() + 7);
-    				getTimeLineDateFormat(lastWeek);
-    				$("#dashboardTimeLineEmptyBox h4:first").text("( "+today+" ~ "+getTimeLineDateFormat(lastWeek)+" )");
-    				$("#dashboardTimeLineEmptyBox").removeClass("hidden");
-    				$("#dashboardTimeLine").addClass("hidden");
-    			}else{
-    			
-    				$("#dashboardTimeLineEmptyBox").addClass("hidden");
-    				$("#dashboardTimeLine").removeClass("hidden");
-    			} */
+				MyLineChart();
     		},
     		error : function(){
     			console.log("in setTimeLine error");
     		}
-    	})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    	
-
-        var ctx4 = document.getElementById('canvas').getContext('2d');
-        window.myLine = Chart.Line(ctx4, {
-            data: lineChartData,
-            options: {
-                responsive: true,
-                hoverMode: 'index',
-                stacked: false,
-                title: {
-                    display: true,
-                    text: '나의 프로젝트 별 커밋 수(일주일 단위)'
-                },
-                scales: {
-                    yAxes: [{
-                        type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                        display: true,
-                        position: 'left',
-                        id: 'y-axis-1',
-                    }, {
-                        type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                        display: true,
-                        position: 'right',
-                        id: 'y-axis-2',
-
-                        // grid line settings
-                        gridLines: {
-                            drawOnChartArea: false, // only want the grid lines for one axis to show up
-                        },
-                    }],
-                }
-            }
-        });        
+    	});
     });
-
-
-    var lineChartData = {
-        labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
-        datasets: [{
-            label: 'Project 1',
-            borderColor: window.chartColors.red,
-            backgroundColor: window.chartColors.red,
-            fill: false,
-            data: [
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor()
-            ],
-            yAxisID: 'y-axis-1',
-        }, {
-            label: 'Project 2',
-            borderColor: window.chartColors.blue,
-            backgroundColor: window.chartColors.blue,
-            fill: false,
-            data: [
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor()
-            ],
-            yAxisID: 'y-axis-1'
-        }, {
-            label: 'Project 3',
-            borderColor: window.chartColors.yellow,
-            backgroundColor: window.chartColors.yellow,
-            fill: false,
-            data: [
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor()
-            ],
-            yAxisID: 'y-axis-1'
-        }]
-    };
-
-
-var randomScalingFactor = function () {
-    console.log("랜덤값-----------");
-    console.log(Math.random());
-    console.log(Math.random() * 100);
-    console.log(Math.round(Math.random() * 100));
-    return Math.round(Math.random() * 100);
-};
 
 function MyHorizonChart(theData, name, color){  
 	var chart = new Chart(document.getElementById('myHorizon').getContext('2d'), {
@@ -264,6 +163,39 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
             }
         }
     });	
+}
+
+function MyLineChart(){
+    window.myLine = Chart.Line(document.getElementById('myLine').getContext('2d'), {
+        data: {
+            labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+            datasets: LineData,
+        },
+        options: {
+            responsive: true,
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: true,
+                text: '나의 프로젝트 별 커밋 수(일주일 단위)'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                    // grid line settings
+                    gridLines: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },	
+                    ticks: {
+	                    beginAtZero: true,
+	                },
+                }],
+            }
+        }
+    });        
 }
 </script>
 <style>
@@ -356,7 +288,7 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 	                <div class="card-body">
 	                    <h4 class="card-title">Project Commit Chart</h4>
 	                    <div class="align-items-center">
-	                        <canvas id="canvas"></canvas>
+	                        <canvas id="myLine"></canvas>
 	                    </div>
 	                </div>
 	            </div>
