@@ -164,6 +164,25 @@ public class DashBoardService {
 	}
 	
 	/**
+	 * 일주일 단위로 프로젝트 할당된 이슈 TimeLine 데이터 get
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @return List<TimeLine>
+	 */
+	public List<TimeLine> getMyTimeLinesByProject(int projectIdx) {
+		DashBoardDao dao = getDashBoardDao();
+		List<TimeLine> timeLines = new ArrayList<TimeLine>();
+		try {
+			timeLines = dao.getMyTimeLinesByProject(projectIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return timeLines;
+	}
+	
+	/**
 	 * 본인에게 할당된 이슈 진행률(프로젝트 별 in Project)
 	 * @author 이정은
 	 * @since 2020/01/31

@@ -151,7 +151,7 @@ display: none;
                             </div>
                         </div>
                         
-                       <div class="card dash_shadow dash_radius">
+                       <div class="card dash_shadow dash_radius" style="height: 450px">
                             <div class="card-body">
                               <h4 class="card-title">Label Chart</h4>
                                 <div class="align-items-center" id="labelProgress"> </div>
@@ -162,34 +162,24 @@ display: none;
                   <!-- <div class="col-lg-6"> -->
                         <div class="card dash_shadow dash_radius">
                             <div class="card-body">
-                           	  <h4 class="card-title">Timeline</h4>
-                                <div class="d-md-flex align-items-center">
+                           	  <h4 class="card-title">Timeline</h4> 
+                           	  <h6 id="timeLinePDate"></h6>
+			                    <div id="dashboardPTimeLineEmptyBox" class="emptyBox hidden">
+				                    <div>
+				                    	<h3 class="mb-4">이번주 일정이 존재하지않습니다.</h3>
+				                    	<h4 class="mt-1"> (2020-01-29 ~ 2020-02-07)</h4>
+				                    </div>
+			                    </div>
+			                    <div style="height: 350px; overflow: auto">
+                                <div class="d-md-flex align-items-center" id="dashboardPTimeLine">
 								<ul class="timeline w-100">
-								<li>
-									<p class="float-right" >Mon, 20 Jan, 2020</p>
-									<span class="badge badge-pill font-14 font-medium mb-1" style="background-color: #ffb1b9;">판매계획</span>
-									<p>로그인 view 구현</p>
-									<p>로그인 기능 구현</p>
-								</li>
-								<li>
-									<p class="float-right">Wed, 22 Jan, 2020</p>
-									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ccccff">구매전략</span>
-										<p>qna 게시판 기능 구현</p>
-								</li>
-								<li>
-									<p class="float-right">Thu, 23 Jan, 2020</p>
-									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: lightgray">후기관리</span>
-										<p>대시보드 view 구현</p>
-								</li>
-								<li>
-									<p class="float-right">Fri, 24 Jan, 2020</p>
-									<span class="badge badge-pill font-14 mb-1 font-medium mt-1" style="background-color: #ccccff">구매전략</span>
-										<p>탈퇴 view 구현</p>
-								</li>
+								
 							</ul>
                                     <!-- 끝 -->
                                 </div>
                             </div>
+                            </div>
+              
                         </div>
                        </div>
                    </div>
