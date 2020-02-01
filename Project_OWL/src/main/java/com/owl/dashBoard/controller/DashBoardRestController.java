@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.dashBoard.dto.IssueTask;
@@ -52,7 +53,9 @@ public class DashBoardRestController {
 	 * @return List<IssueTask>
 	 */
 	@RequestMapping("getMyIssueTaskByProject.do")
-	public List<IssueTask> getMyIssueTasksByProject(int projectIdx,Principal principal) {
+	public List<IssueTask> getMyIssueTasksByProject(int projectIdx, Principal principal) {
+		System.out.println("in getMyIssueTasksByProject c");
+		System.out.println("projectIdx : "+projectIdx);
 		return service.getMyIssueTasksByProject(projectIdx, principal.getName());
 	}
 	
@@ -97,6 +100,18 @@ public class DashBoardRestController {
 	@RequestMapping("MyProjectProgress.do")
 	public Map<Integer ,List<ProjectProgress>> getMyProjectChart(Principal principal) {	
 		return service.getMyProjectChart(principal.getName());
+	}
+	
+	/**
+	 * Horizon Chart
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param principal
+	 * @return Map<Integer ,List<ProjectProgress>>
+	 */
+	@RequestMapping("HorizonChart.do")
+	public Map<Integer ,List<ProjectProgress>> getHorizonChart(Principal principal) {	
+		return service.getHorizonChart(principal.getName());
 	}
 	
 	/**

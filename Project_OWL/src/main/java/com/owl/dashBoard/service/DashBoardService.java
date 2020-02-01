@@ -83,6 +83,27 @@ public class DashBoardService {
 	}
 	
 	/**
+	 * Horizon 차트 (in main dash board)
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param email
+	 * @return Map<Integer ,List<ProjectProgress>>
+	 */
+	public Map<Integer ,List<ProjectProgress>> getHorizonChart(String email){
+		DashBoardDao dao = getDashBoardDao();
+		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();
+		Map<Integer, List<ProjectProgress>> results = new HashMap<Integer, List<ProjectProgress>>();
+		try {
+			progress = dao.getHorizonChart(email);
+			results=progress.stream().collect(Collectors.groupingBy(ProjectProgress::getProjectIdx));
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}		
+		
+		return results;		
+	}
+	
+	/**
 	 * dueData, priority 순으로 Issue Task 테이블 데이터 get (프로젝트 안에서 본인 이슈)
 	 * @author 윤다정
 	 * @since 2020/02/01
@@ -185,6 +206,13 @@ public class DashBoardService {
 		return progress;
 	}
 	
+	/**
+	 * Label 차트 (in project)
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param projectIdx
+	 * @return Map<String ,List<ProjectProgress>>
+	 */
 	public Map<String ,List<ProjectProgress>> getLabelChart(int projectIdx){
 		DashBoardDao dao = getDashBoardDao();
 		List<ProjectProgress> progress = new ArrayList<ProjectProgress>();

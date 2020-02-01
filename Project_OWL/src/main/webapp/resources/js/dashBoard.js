@@ -33,6 +33,8 @@ function setMainDashBoard(){
 			 
 			 $("#myDashBoardBox").removeClass("hidden");
 			 $("#myDashBoardEmptyBox").addClass("hidden");
+			 
+			 // 데이터 셋팅
 			 setMyIssueTask();
 			 setTimeLine();
 		 },
@@ -44,6 +46,7 @@ function setMainDashBoard(){
 
 function setProjectDashBoard(projectIdx){
 	wholeProjectChart(projectIdx);
+	setMyIssueTaskByProject(projectIdx);
 }
 
 function setMyIssueTask(){
@@ -61,8 +64,8 @@ function setMyIssueTask(){
 						element.dueDate!=null? getDueDateElement(element.dueDate):"-",
 						element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
 					]).draw();
-					//.node().id = element.driveFileIdx;
-					//$('#dashboardTable').DataTable().draw();
+					// .node().id = element.driveFileIdx;
+					// $('#dashboardTable').DataTable().draw();
 				})
 			}else{ // 할당된 이슈 없음
 				$("#dashBoardTableEmptyBox").removeClass("hidden");
@@ -184,7 +187,7 @@ function wholeProjectChart(projectIdx){
 	        let idx = projectIdx;
 	        let label;
 	        let totalCount = [];
-	    	    let closeCount = [];
+	    	let closeCount = [];
     	    let name = [];
     	    let color = [];
     	    $("#labelProgress").empty(); 
@@ -314,7 +317,9 @@ function ProjectLabelChart(idx, totalCount, closeCount, name, color){
 			},
 			scales: {
 				yAxes: [{
-					type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+					type: 'linear', // only linear but allow scale type
+									// registration. This allows extensions to
+									// exist solely for log scale for instance
 					display: true,
 					position: 'right',
 					id: 'y-axis-2',
@@ -322,7 +327,7 @@ function ProjectLabelChart(idx, totalCount, closeCount, name, color){
 						drawOnChartArea: false
 					},
 				ticks: {
-                    beginAtZero:true,  //Y축의 값이 0부터 시작,
+                    beginAtZero:true,  // Y축의 값이 0부터 시작,
                     callback: function (value) {
                         if (0 === value % 1) {
                             return value;
@@ -343,4 +348,37 @@ function getTimeLineDateFormat(date){
 	let dayName = week[date.getDay()];
 	
 	return year+"-"+month+"-"+day+" ("+dayName+")";
+}
+
+function setMyIssueTaskByProject(projectIdx){
+	console.log("setMyIssueTaskByProject",projectIdx);
+	$.ajax({
+		url : "getMyIssueTaskByProject.do",
+		data : {projectIdx : projectIdx},
+		success : function(data){
+			console.log("in GetMyIssueTaskByProject success");
+			console.log(data);
+			/*if(data.length > 0){
+				$("#dashBoardTableEmptyBox").addClass("hidden");
+				$("#dashBoardTableBox").removeClass("hidden");
+				
+				$.each(data, function(index, element){
+					$('#dashboardTable').DataTable().row.add([
+						element.projectName,
+						element.subject,
+						element.dueDate!=null? getDueDateElement(element.dueDate):"-",
+						element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
+					]).draw();
+					// .node().id = element.driveFileIdx;
+					// $('#dashboardTable').DataTable().draw();
+				})
+			}else{ // 할당된 이슈 없음
+				$("#dashBoardTableEmptyBox").removeClass("hidden");
+				$("#dashBoardTableBox").addClass("hidden");
+			}*/
+		},
+		error : function(){
+			console.log("in setMyIssueTaskByProject error");
+		}
+	})
 }
