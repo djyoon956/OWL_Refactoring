@@ -271,7 +271,7 @@ function sendFileToServer(formData,status){
             </div>
         </div>
         <div class="col-md-9" style="padding-left: 0;">
-            <div class="defaultDriveMenu pt-0">
+            <div class="defaultDriveMenu themeChange pt-0">
 	            <div class="h-100">
 	            	<div style="height: 15%" class="mt-1 mb-3">
 	            		<span style="font-size: medium;font-weight: 700;"  id="driveName"></span>

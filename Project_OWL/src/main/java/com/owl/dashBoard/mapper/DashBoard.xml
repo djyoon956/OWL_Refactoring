@@ -96,6 +96,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND i.ASSIGNED =#{assigned} ORDER BY l.LOGTIME, i.PROJECTIDX
 	</select>
 	
+	<select id="getProjectMemberProgress" resultType="com.owl.dashBoard.dto.ProjectMemberProgress" parameterType="int">
+		SELECT COUNT(CASE WHEN  I.ISSUEPROGRESS = "OPEN" THEN 1 END) AS 'OPENCOUNT'
+				, COUNT(CASE WHEN  I.ISSUEPROGRESS = "CLOSED" THEN 1 END) AS 'CLOSEDCOUNT', I.ASSIGNED, M.NAME AS 'ASSIGNEDNAME'
+			FROM ISSUE I join owl.member m on I.ASSIGNED = m.email
+		WHERE I.PROJECTIDX = #{projectIdx} AND I.ISSUEPROGRESS in('OPEN', 'CLOSED')
+			GROUP BY I.ASSIGNED;
+	</select>
 	
-
+	<select id="getProjectMembers" resultType="com.owl.project.dto.ProjectList" parameterType="int">
+		SELECT PROJECTIDX, EMAIL, FAVORITE, PROJECTCOLOR, AUTHORITY 
+			FROM PROJECTLIST 
+		WHERE PROJECTIDX  = #{projectIdx}
+			ORDER BY (CASE WHEN AUTHORITY="ROLE_PM" THEN 1 ELSE 2 END);
+	</select>
 </mapper>

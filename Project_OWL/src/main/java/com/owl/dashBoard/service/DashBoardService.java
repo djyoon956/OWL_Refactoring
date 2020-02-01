@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.owl.dashBoard.dao.DashBoardDao;
 import com.owl.dashBoard.dto.IssueTask;
 import com.owl.dashBoard.dto.LineChart;
+import com.owl.dashBoard.dto.ProjectMemberProgress;
 import com.owl.dashBoard.dto.ProjectProgress;
 import com.owl.dashBoard.dto.TimeLine;
 
@@ -248,28 +249,48 @@ public class DashBoardService {
 		return results;		
 	}
 	
-	   /**
-	    * 일주일 단위로 프로젝트 할당된 이슈 TimeLine 데이터 get
-	    * @author 윤다정
-	    * @since 2020/02/01
-	    * @param projectIdx
-	    * Map<String, List<TimeLine>>
-	    */
-	   public Map<String, List<TimeLine>> getMyTimeLinesByProject(int projectIdx) {
-	      DashBoardDao dao = getDashBoardDao();
-	      List<TimeLine> timeLines = new ArrayList<TimeLine>();
-	      Map<String, List<TimeLine>> results = new TreeMap<>();
-	      try {
-	         timeLines = dao.getMyTimeLinesByProject(projectIdx);
-	         results = timeLines.stream().collect(Collectors.groupingBy(TimeLine::getDueDate, TreeMap::new, Collectors.toList()));
-	      } catch (ClassNotFoundException | SQLException e) {
-	         e.printStackTrace();
-	      }
-	      
-	      return results;
-	   }
+	/**
+	 * 일주일 단위로 프로젝트 할당된 이슈 TimeLine 데이터 get
+	 * 
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx Map<String, List<TimeLine>>
+	 */
+	public Map<String, List<TimeLine>> getMyTimeLinesByProject(int projectIdx) {
+		DashBoardDao dao = getDashBoardDao();
+		List<TimeLine> timeLines = new ArrayList<TimeLine>();
+		Map<String, List<TimeLine>> results = new TreeMap<>();
+		try {
+			timeLines = dao.getMyTimeLinesByProject(projectIdx);
+			results = timeLines.stream()
+					.collect(Collectors.groupingBy(TimeLine::getDueDate, TreeMap::new, Collectors.toList()));
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+
+		return results;
+	}
 	
-	
+	/**
+	 * 프로젝트 멤버별 진행률
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @return Map<String, Object>
+	 */
+	public Map<String, Object> getProjectMemberProgress(int projectIdx) {
+		DashBoardDao dao = getDashBoardDao();
+		Map<String, Object> results = new HashMap<>();
+		
+		try {
+			results.put("member", dao.getProjectMembers(projectIdx));
+			results.put("progress", dao.getProjectMemberProgress(projectIdx));
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+
+		return results;
+	}
 	
 	/**
 	 * DashBoardDao 구하기

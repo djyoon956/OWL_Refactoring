@@ -165,8 +165,6 @@ public class ProjectRestController {
 	}
 	@RequestMapping(value = "TransferAuthority.do", method = RequestMethod.POST)
 	public boolean transferAuthority(int projectIdx, String email,Principal principal) {
-		System.out.println(" 내 이메일 " + principal.getName()); 
-		System.out.println("상대방 이메일 " + email); 
 		return service.transferAuthority(projectIdx, principal.getName(), email);
 	}
 }

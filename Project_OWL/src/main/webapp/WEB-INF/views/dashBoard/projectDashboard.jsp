@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
  	<!-- Chart.js -->
  <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>    
  <script src="https://www.chartjs.org/samples/latest/utils.js"></script>   
@@ -93,6 +95,19 @@ display: none;
             <!-- CONTENT MAIN -->
             <div class="container-fluid" style="padding:20px">
                 <div class="row">
+                <c:if test="${project.authority eq 'ROLE_PM'}">
+                <div class="col-lg-12">
+				    <div class="card dash_shadow dash_radius" style="height: 450px">
+				        <div class="card-body">
+				            <h4 class="card-title">Member Progress</h4>
+				            <div>
+				
+				                여기차트
+				            </div>
+				        </div>
+				    </div>
+				</div>
+                </c:if>
                 <!--  my task -->
                     <div class="col-lg-6">
                         <div class="card dash_shadow dash_radius" style="height: 450px">

@@ -64,6 +64,7 @@ function setProjectDashBoard(projectIdx){
 	wholeProjectChart(projectIdx);
 	setMyIssueTaskByProject(projectIdx);
 	setTimeLineByProject(projectIdx);
+	setProjectMemberProgress(projectIdx);
 }
 
 function setMyIssueTask(){
@@ -123,7 +124,7 @@ function setTimeLine(){
 			$("#dashboardTimeLine ul:first").empty();
 
 			$.each(data, function(key, value){
-					let control = "<li><p class='float-right'>"+((key==today)?"Today":key)+"</p>";
+					let control = "<li><p class='float-right' style='margin-right: 15px;'>"+((key==today)?"Today":key)+"</p>";
 					let group = value.reduce((r, a) => {
 																 r[a.projectName] = [...r[a.projectName] || [], a];
 																 return r;
@@ -167,7 +168,7 @@ function setTimeLineByProject(projectIdx){
 			$("#timeLinePDate").text("Today : "+today);
 			$("#dashboardPTimeLine ul:first").empty();
 			$.each(data, function(key, value){
-					let control = "<li><p class='float-right'>"+((key==today)?"Today":key)+"</p>"
+					let control = "<li><p class='float-right' style='margin-right: 15px;'>"+((key==today)?"Today":key)+"</p>"
 									+ "<span style='background-color: "+value[0].projectColor+"'>"+value[0].projectName+"</span>";
 
 					$.each(value, function(index, element){
@@ -415,7 +416,6 @@ function getTimeLineDateFormat(date){
 }
 
 function setMyIssueTaskByProject(projectIdx){
-	console.log("setMyIssueTaskByProject",projectIdx);
 	$.ajax({
 		url : "getMyIssueTaskByProject.do",
 		data : {projectIdx : projectIdx},
@@ -443,6 +443,21 @@ function setMyIssueTaskByProject(projectIdx){
 		},
 		error : function(){
 			console.log("in setMyIssueTaskByProject error");
+		}
+	})
+}
+
+function setProjectMemberProgress(projectIdx){
+	//GetProjectMemberProgress.do
+	$.ajax({
+		url : "GetProjectMemberProgress.do",
+		data : {projectIdx : projectIdx },
+		success : function(data){
+			console.log("in setProjectMemberProgress success");
+			console.log(data);
+		},
+		error : function(){
+			console.log("in setProjectMemberProgress error");
 		}
 	})
 }
