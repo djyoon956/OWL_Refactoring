@@ -64,6 +64,7 @@ function setProjectDashBoard(projectIdx){
 	wholeProjectChart(projectIdx);
 	setMyIssueTaskByProject(projectIdx);
 	setTimeLineByProject(projectIdx);
+	setProjectMemberProgress(projectIdx);
 }
 
 function setMyIssueTask(){
@@ -405,7 +406,6 @@ function getTimeLineDateFormat(date){
 }
 
 function setMyIssueTaskByProject(projectIdx){
-	console.log("setMyIssueTaskByProject",projectIdx);
 	$.ajax({
 		url : "getMyIssueTaskByProject.do",
 		data : {projectIdx : projectIdx},
@@ -433,6 +433,21 @@ function setMyIssueTaskByProject(projectIdx){
 		},
 		error : function(){
 			console.log("in setMyIssueTaskByProject error");
+		}
+	})
+}
+
+function setProjectMemberProgress(projectIdx){
+	//GetProjectMemberProgress.do
+	$.ajax({
+		url : "GetProjectMemberProgress.do",
+		data : {projectIdx : projectIdx },
+		success : function(data){
+			console.log("in setProjectMemberProgress success");
+			console.log(data);
+		},
+		error : function(){
+			console.log("in setProjectMemberProgress error");
 		}
 	})
 }

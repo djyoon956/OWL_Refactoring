@@ -103,4 +103,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE I.PROJECTIDX = #{projectIdx} AND I.ISSUEPROGRESS in('OPEN', 'CLOSED')
 			GROUP BY I.ASSIGNED;
 	</select>
+	
+	<select id="getProjectMembers" resultType="com.owl.project.dto.ProjectList" parameterType="int">
+		SELECT PROJECTIDX, EMAIL, FAVORITE, PROJECTCOLOR, AUTHORITY 
+			FROM PROJECTLIST 
+		WHERE PROJECTIDX  = #{projectIdx}
+			ORDER BY (CASE WHEN AUTHORITY="ROLE_PM" THEN 1 ELSE 2 END);
+	</select>
 </mapper>
