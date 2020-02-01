@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.dashBoard.dto.IssueTask;
+import com.owl.dashBoard.dto.LineChart;
 import com.owl.dashBoard.dto.ProjectProgress;
 import com.owl.dashBoard.dto.TimeLine;
 import com.owl.dashBoard.service.DashBoardService;
@@ -122,6 +123,18 @@ public class DashBoardRestController {
 	@RequestMapping("LabelChart.do")
 	public Map<String ,List<ProjectProgress>> getLabelChart(int projectIdx) {	
 		return service.getLabelChart(projectIdx);
+	}
+	
+	/**
+	 * LineChart
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param principal
+	 * @return
+	 */
+	@RequestMapping("LineChart.do")
+	public Map<String, List<LineChart>> getLineChart(Principal principal) {
+		return service.getLineChart(principal.getName());
 	}
 	
 	/**
