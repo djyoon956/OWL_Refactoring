@@ -54,8 +54,6 @@ public class DashBoardRestController {
 	 */
 	@RequestMapping("getMyIssueTaskByProject.do")
 	public List<IssueTask> getMyIssueTasksByProject(int projectIdx, Principal principal) {
-		System.out.println("in getMyIssueTasksByProject c");
-		System.out.println("projectIdx : "+projectIdx);
 		return service.getMyIssueTasksByProject(projectIdx, principal.getName());
 	}
 	

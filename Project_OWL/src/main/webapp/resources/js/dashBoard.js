@@ -1,14 +1,4 @@
 function initDashBoard(projectIdx){
-	$("#dashboardTable").DataTable({
-		"pageLength": 5,
-         fixedColumns: true,
-         autoWidth: false,
-         "ordering" : false,
-         "searching": false,
-         "lengthChange": false,
-         "sScrollY": "270px",
-	});
-	
 	 $("#dashCalendar").tuiCalendar({
 		  defaultView: 'month',
 		  taskView: true
@@ -21,6 +11,16 @@ function initDashBoard(projectIdx){
 }
 
 function setMainDashBoard(){
+	$("#dashboardTable").DataTable({
+		"pageLength": 5,
+         fixedColumns: true,
+         autoWidth: false,
+         "ordering" : false,
+         "searching": false,
+         "lengthChange": false,
+         "sScrollY": "270px",
+	});
+	
 	$.ajax({
 		 url : "CheckJoinProject.do",
 		 success : function(data){
@@ -45,6 +45,22 @@ function setMainDashBoard(){
 }
 
 function setProjectDashBoard(projectIdx){
+	$("#dashboardPTable").DataTable({
+		"pageLength": 5,
+         fixedColumns: true,
+         autoWidth: false,
+         "ordering" : false,
+         "searching": false,
+         "lengthChange": false,
+         "sScrollY": "270px",
+         "columnDefs": [ {
+             "searchable": false,
+             "orderable": false,
+             "targets": 0
+         } ],
+	});
+	
+	
 	wholeProjectChart(projectIdx);
 	setMyIssueTaskByProject(projectIdx);
 }
@@ -358,13 +374,13 @@ function setMyIssueTaskByProject(projectIdx){
 		success : function(data){
 			console.log("in GetMyIssueTaskByProject success");
 			console.log(data);
-			/*if(data.length > 0){
-				$("#dashBoardTableEmptyBox").addClass("hidden");
-				$("#dashBoardTableBox").removeClass("hidden");
+			if(data.length > 0){
+				$("#dashBoardPTableEmptyBox").addClass("hidden");
+				$("#dashBoardPTableBox").removeClass("hidden");
 				
 				$.each(data, function(index, element){
-					$('#dashboardTable').DataTable().row.add([
-						element.projectName,
+					$('#dashboardPTable').DataTable().row.add([
+						++index,
 						element.subject,
 						element.dueDate!=null? getDueDateElement(element.dueDate):"-",
 						element.priorityCode!=null? "<span class='priorityBadge "+element.priorityCode.toLowerCase()+"'></span>":"-"
@@ -373,9 +389,9 @@ function setMyIssueTaskByProject(projectIdx){
 					// $('#dashboardTable').DataTable().draw();
 				})
 			}else{ // 할당된 이슈 없음
-				$("#dashBoardTableEmptyBox").removeClass("hidden");
-				$("#dashBoardTableBox").addClass("hidden");
-			}*/
+				$("#dashBoardPTableEmptyBox").removeClass("hidden");
+				$("#dashBoardPTableBox").addClass("hidden");
+			}
 		},
 		error : function(){
 			console.log("in setMyIssueTaskByProject error");
