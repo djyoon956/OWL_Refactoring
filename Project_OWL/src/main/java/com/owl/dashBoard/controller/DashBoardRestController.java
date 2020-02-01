@@ -103,6 +103,18 @@ public class DashBoardRestController {
 	}
 	
 	/**
+	 * Horizon Chart
+	 * @author 이정은
+	 * @since 2020/02/01 
+	 * @param principal
+	 * @return Map<Integer ,List<ProjectProgress>>
+	 */
+	@RequestMapping("HorizonChart.do")
+	public Map<Integer ,List<ProjectProgress>> getHorizonChart(Principal principal) {	
+		return service.getHorizonChart(principal.getName());
+	}
+	
+	/**
 	 * 프로젝트 내의 라벨별 진행률
 	 * @author 이정은
 	 * @since 2020/02/01 
