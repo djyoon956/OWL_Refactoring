@@ -251,16 +251,16 @@ function refreshScheduleVisibility() {
 
         <!-- CONTENT BOX -->
         <div class="page-wrapper">
-            <div class="page-breadcrumb">
+            <div class="page-breadcrumb themeChange">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center" style="border-bottom: 1px solid #326295; padding-bottom: 15px;">
-                        <h4 class="page-title" style="color:#326295;">&nbsp;My Calendar</h4>
+                        <h4 class="page-title themeChangeLetter" style="color:#326295;">&nbsp;My Calendar</h4>
                     </div>
                 </div>
             </div>
 
             <!-- CONTENT MAIN -->
-            <div class="container-fluid">
+            <div class="container-fluid themeChange themeChangeLetter">
             <div class="row">
             <div class="col-md-2">
 			    <div id="lnb">

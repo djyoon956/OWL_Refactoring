@@ -6,10 +6,10 @@
      <div id="noticeBox">
        <!--  <div class="card"> -->
             <div class="card-body"> 
-                <h3 class="text-center">Notice</h3>
+                <h3 class="text-center themeChangeLetter">Notice</h3>
                 <div id="noticeTableBox">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered text-center" id="noticeTable">
+                        <table class="table table-hover table-bordered text-center themeChangeLetter" id="noticeTable">
                             <thead>
                                 <tr>
                                     <th width="10%">NO</th>

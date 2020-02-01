@@ -178,7 +178,7 @@
                     </ul>
                     <div class="tab-content">
                         <!-- 회원 정보 보기-->
-                        <div class="col-lg-12 tab-pane fade show active" id="profile" role="tabpanel">
+                        <div class="col-lg-12 tab-pane fade show active pr-0 pl-0" id="profile" role="tabpanel">
                             <div id="firstpage">
                                 <div class="card">
                                     <div class="card-body" style="padding-top: 20px;">
@@ -251,7 +251,7 @@
 
 
                         <!-- Delete Account Start -->
-                        <div class="col-lg-12 tab-pane fade" id="deleteAccount">
+                        <div class="col-lg-12 tab-pane fade pr-0 pl-0" id="deleteAccount">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="basic-form">
@@ -311,7 +311,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-12 tab-pane fade" id="themeSetting">
+                        <div class="col-lg-12 tab-pane fade  pr-0 pl-0" id="themeSetting">
                             <div class="card">
                                 <div class="card-body">
 
