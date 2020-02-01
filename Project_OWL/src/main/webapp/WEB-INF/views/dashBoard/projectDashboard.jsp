@@ -93,6 +93,18 @@ display: none;
             <!-- CONTENT MAIN -->
             <div class="container-fluid" style="padding:20px">
                 <div class="row">
+                <div class="col-lg-12">
+				    <div class="card dash_shadow dash_radius" style="height: 450px">
+				        <div class="card-body">
+				            <h4 class="card-title">Member Progress</h4>
+				            <div>
+				
+				                여기차트
+				            </div>
+				        </div>
+				    </div>
+				</div>
+                
                 <!--  my task -->
                     <div class="col-lg-6">
                         <div class="card dash_shadow dash_radius" style="height: 450px">
