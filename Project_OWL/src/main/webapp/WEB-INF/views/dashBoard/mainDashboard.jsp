@@ -258,8 +258,8 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 	                <div class="card-body">
 	                    <h4 class="card-title">Timeline</h4>
 	                    <h6 id="timeLineDate"></h6>
-	                    <div class="d-md-flex align-items-center" id="dashboardTimeLine">
-	                        <ul class="timeline w-100" style="height: 350px; overflow: auto;">
+	                    <div class="d-md-flex align-items-center" id="dashboardTimeLine" style="height: 350px; overflow: auto;">
+	                        <ul class="timeline w-100"  style="max-height:2000px;">
 	 
 	                        </ul>
 	                        <!-- 끝 -->
