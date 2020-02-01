@@ -486,10 +486,9 @@ function searchAppend(data) {
 
 
 function addLabel(lbidx, lbcolor, lbnm) {
-
    let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
             +  '<div class="col-lg-8">'
-            +  '<span class="badgeIconinList" style="background-color: '+lbcolor+'">'+lbnm+'</span>'
+            +  '<span class="badgeIconinList" style="background-color: '+lbcolor+';color:'+getTextColorFromBg(lbcolor)+'">'+lbnm+'</span>'
             +  '</div>'
             +  '<div class="col-lg-2">'
             + '<button class="btn-link link-gray edit" onclick="editLabel(' + lbidx +','+"'"+lbcolor+"'"+','+"'"+lbnm+"'"+')";>Edit</button>'

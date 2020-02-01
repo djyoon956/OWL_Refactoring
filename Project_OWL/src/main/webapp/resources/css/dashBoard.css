@@ -59,7 +59,7 @@ ul.timeline > li:before {
 	height: 10px;
 }
 
-#dashboardTimeLine span {
+#dashboardTimeLine span,#dashboardPTimeLine span {
 	padding: 0.20em 0.6em;
 	font-size: 14px;
 	font-weight: 600;
