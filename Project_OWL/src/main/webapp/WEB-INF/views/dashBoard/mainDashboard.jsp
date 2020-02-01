@@ -224,7 +224,7 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 	        </div>
     	</div>
 	    <div id="myDashBoardBox" class="row">
-	        <!--  my task -->
+	         <!-- IssueTask -->
 	        <div class="col-lg-6">
 	            <div class="card dash_shadow dash_radius" style="height: 450px">
 	                <div class="card-body">
@@ -253,20 +253,29 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 	                </div>
 	            </div>
 	        </div>
+	        <!--//  IssueTask -->
+	        
+	        <!-- TimeLine -->
 	        <div class="col-lg-6">
 	            <div class="card dash_shadow dash_radius" style="height: 450px">
-	                <div class="card-body">
+	                <div class="card-body h-100">
 	                    <h4 class="card-title">Timeline</h4>
 	                    <h6 id="timeLineDate"></h6>
+	                    <div id="dashboardTimeLineEmptyBox" class="emptyBox hidden">
+		                    <div>
+		                    	<h3 class="mb-4">이번주 일정이 존재하지않습니다.</h3>
+		                    	<h4 class="mt-1"> (2020-01-29 ~ 2020-02-07)</h4>
+		                    </div>
+	                    </div>
 	                    <div class="d-md-flex align-items-center" id="dashboardTimeLine">
 	                        <ul class="timeline w-100" style="height: 350px; overflow: auto;">
-	 
 	                        </ul>
-	                        <!-- 끝 -->
 	                    </div>
 	                </div>
 	            </div>
 	        </div>
+	        <!-- // TimeLine -->
+	        
 	        <div class="col-lg-12">
 	            <div class="card dash_shadow dash_radius">
 	                <div class="card-body w-100">
