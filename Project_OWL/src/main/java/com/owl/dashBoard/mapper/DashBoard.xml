@@ -20,14 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getMyProjectChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
 		SELECT p.PROJECTIDX, p.PROJECTNAME, i.ASSIGNED, i.ISSUEPROGRESS , t.PROJECTCOLOR
-		FROM PROJECT p JOIN ISSUE i ON p.PROJECTIDX=i.PROJECTIDX 
-	    LEFT JOIN PROJECTLIST t ON p.PROJECTIDX=t.PROJECTIDX 
+			FROM PROJECT p JOIN ISSUE i ON p.PROJECTIDX=i.PROJECTIDX 
+	    							  LEFT JOIN PROJECTLIST t ON p.PROJECTIDX=t.PROJECTIDX 
 	    where i.ASSIGNED = #{email} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')		
 	</select>
 	
 	<select id="getProgressChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
 		SELECT i.ASSIGNED, i.ISSUEPROGRESS , t.PROJECTCOLOR, t.PROJECTIDX
-		FROM PROJECTLIST t JOIN ISSUE i ON t.PROJECTIDX=i.PROJECTIDX 
+			FROM PROJECTLIST t JOIN ISSUE i ON t.PROJECTIDX=i.PROJECTIDX 
 	    where i.ASSIGNED = #{param1} AND t.PROJECTIDX = #{param2} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')	
 	</select>
 	
@@ -37,7 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getLabelChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
 		SELECT i.ISSUEIDX, i.ISSUEPROGRESS, i.PROJECTIDX, l.LABELNAME, l.LABELCOLOR
-		FROM LABEL l JOIN ISSUE i ON l.LABELIDX=i.LABELIDX 
+			FROM LABEL l JOIN ISSUE i ON l.LABELIDX=i.LABELIDX 
 	    where i.PROJECTIDX = #{projectIdx} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')		
 	</select>
 	
@@ -47,5 +47,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 										  JOIN owl.PROJECTLIST L ON P.PROJECTIDX = L.PROJECTIDX AND L.EMAIL = #{email}
 		WHERE I.DUEDATE BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL + 7 DAY)
 			ORDER BY I.DUEDATE, P.PROJECTNAME
+	</select>
+	
+	<select id="getHorizonChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
+		SELECT p.PROJECTIDX, p.PROJECTNAME, i.ISSUEPROGRESS , t.PROJECTCOLOR
+			FROM PROJECT p JOIN ISSUE i ON p.PROJECTIDX=i.PROJECTIDX 
+	    						  LEFT JOIN PROJECTLIST t ON p.PROJECTIDX=t.PROJECTIDX 
+	    where t.EMAIL = #{email} AND i.ISSUEPROGRESS in ('OPEN', 'CLOSED')	
 	</select>
 </mapper>

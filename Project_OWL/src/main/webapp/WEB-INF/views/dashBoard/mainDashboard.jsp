@@ -182,7 +182,7 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
                 label: projectName
             }],
             labels: [
-            	'Open : ' + (totalSum-closeSum),
+            	'Open : ' + totalSum,
                 'CLose : ' + closeSum                
             ]
         },
@@ -269,10 +269,10 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 	        </div>
 	        <div class="col-lg-12">
 	            <div class="card dash_shadow dash_radius">
-	                <div class="card-body" style="margin-bottom: 10px;">
+	                <div class="card-body w-100">
 	                    <h4 class="card-title" style="margin-bottom: 0px;">My Issue Chart by Project</h4>
 	                    <div class="align-items-center">
-	                        <div class="row w-100" id="myProgressChart" style="overflow:auto; overflow-y:hidden;"> </div>
+	                        <div class="row" id="myProgressChart"> </div>
 	                    </div>
 	                </div>
 	            </div>
