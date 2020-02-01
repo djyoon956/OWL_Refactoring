@@ -12,6 +12,10 @@ public interface DashBoardDao {
 
 	public List<IssueTask> getMyIssueTasks(String assigned) throws ClassNotFoundException, SQLException;
 
+	public List<IssueTask> getProjectIssueTasks(int projectIdx) throws ClassNotFoundException, SQLException;
+
+	public List<IssueTask> getMyIssueTasksByProject(int projectIdx, String assigned) throws ClassNotFoundException, SQLException;
+
 	public List<ProjectProgress> getMyProjectChart(String email) throws ClassNotFoundException, SQLException;
 
 	public List<ProjectProgress> getProgressChart(String assigned, int projectIdx) throws ClassNotFoundException, SQLException;
