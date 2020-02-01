@@ -121,7 +121,7 @@
                				
                				
                				if("${project.authority}" == 'ROLE_PM'){
-                   				
+               					if(index != 0){
                				control += "<a href='javascript:void(0)' data-toggle='dropdown' id = 'dropdownBtn' aria-haspopup='true' aria-expanded='false' style='float: right'>"; 
                				control +=  "<i class='fas fa-ellipsis-v'></i></a>";
                				control +=  "<div class='dropdown-menu' aria-labelledby='dropdownBtn'>";
@@ -130,6 +130,7 @@
                				control +=  "<li class='pl-3'><a href='#' onclick='transferAuthority(" +'"'+ element.email +'"'+")'>PM 양도</a></li>";
                				control +=  "</ul>";
                				control += "</div>";
+               					}
                				}	 
                				control+= "</li>";
            					$("#projectMemebersBox").append(control);
