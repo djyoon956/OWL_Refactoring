@@ -45,7 +45,7 @@
 			</div>
 			<div class="modal-body modal-scroll mx-3 mb-3"> 
 				<div>
-					<button class="btn btn-primary float-right offset-10">권한 양도</button>
+					<!-- <button class="btn btn-primary float-right offset-10">권한 양도</button> -->
 					<ul class="list-style-none assignedto text-center" id="projectMemebersBox  d">
 						
 	<li class="mt-3">	
@@ -57,8 +57,8 @@
            <div class="dropdown-menu" aria-labelledby="dropdownColBtn">
                         <ul class="list-style-none">
                <li class="pl-3"><a href="#editColumnModal" data-toggle="modal" 
-               data-updatecol-id=" " data-upcolname-id ="" >Edit Column</a></li>
-                         <li class="pl-3"><a href="#" onclick="deleteColumn()">Remove Column</a></li>
+               data-updatecol-id=" " data-upcolname-id ="" >멤버 퇴출</a></li>
+                         <li class="pl-3"><a href="#" onclick="deleteColumn()">PM 양도</a></li>
                       </ul>
             		</div>
 						</li>
