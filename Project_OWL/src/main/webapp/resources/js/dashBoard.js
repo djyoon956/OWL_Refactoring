@@ -63,6 +63,7 @@ function setProjectDashBoard(projectIdx){
 	
 	wholeProjectChart(projectIdx);
 	setMyIssueTaskByProject(projectIdx);
+	setTimeLineByProject(projectIdx);
 }
 
 function setMyIssueTask(){
@@ -129,7 +130,7 @@ function setTimeLine(){
 															}, {});
 
 					$.each(group, function(key2, value2){
-						control += "<span style='background-color: "+value2[0].projectColor+"'>"+key2+"</span>";
+						control += "<span style='background-color: "+value2[0].projectColor+"; color : "+getTextColorFromBg(value2[0].projectColor)+"'>"+key2+"</span>";
 
 						$.each(value2, function(index, element){
 							control += "<p>"+element.subject+"</p>";
@@ -153,6 +154,43 @@ function setTimeLine(){
 		},
 		error : function(){
 			console.log("in setTimeLine error");
+		}
+	})
+}
+
+function setTimeLineByProject(projectIdx){
+	let today = getTimeLineDateFormat(new Date());
+	$.ajax({
+		url : "GetMyTimeLineByProject.do",
+		data : {projectIdx : projectIdx },
+		success : function(data){
+			$("#timeLinePDate").text("Today : "+today);
+			$("#dashboardPTimeLine ul:first").empty();
+			$.each(data, function(key, value){
+					let control = "<li><p class='float-right'>"+((key==today)?"Today":key)+"</p>"
+									+ "<span style='background-color: "+value[0].projectColor+"'>"+value[0].projectName+"</span>";
+
+					$.each(value, function(index, element){
+						control += "<p>"+element.subject+"</p>";
+					})
+				
+					$("#dashboardPTimeLine ul:first").append(control+"</li>");
+			});
+			
+			if($("#dashboardPTimeLine ul:first li").length == 0){ // 데이터 없음
+				let lastWeek = new Date(); 
+				lastWeek.setDate(lastWeek.getDate() + 7);
+				getTimeLineDateFormat(lastWeek);
+				$("#dashboardPTimeLineEmptyBox h4:first").text("( "+today+" ~ "+getTimeLineDateFormat(lastWeek)+" )");
+				$("#dashboardPTimeLineEmptyBox").removeClass("hidden");
+				$("#dashboardPTimeLine").addClass("hidden");
+			}else{
+				$("#dashboardPTimeLineEmptyBox").addClass("hidden");
+				$("#dashboardPTimeLine").removeClass("hidden");
+			}
+		},
+		error : function(){
+			console.log("in setTimeLineByProject error");
 		}
 	})
 }

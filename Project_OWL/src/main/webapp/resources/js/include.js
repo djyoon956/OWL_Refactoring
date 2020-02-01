@@ -31,3 +31,38 @@ function setTheme(theme, font){
 	$("#sidebarnav").css("color", subColor);
 	$("#dropdownMenuButton > .iconSizeBig").css("color", subColor);
 }
+
+function getTextColorFromBg(hexColor){
+	console.log("in ");
+	console.log(hexColor);
+	let r;
+	let g;
+	let b;
+	if(hexColor.startsWith("rgb")){
+		let array = hexColor.split(",");
+		r = parseInt(array[0].trim().replace("rgb(",""));
+		g = parseInt(array[1].trim());
+		b = parseInt(array[2].trim().replace(")",""));
+	}else{
+		r = hexColorToR(hexColor);
+		g = hexColorToG(hexColor);
+		b = hexColorToB(hexColor);
+	}
+		
+    let o = Math.round(((r * 299) + (g * 587) + (b * 114)) /1000);
+    let textColor = "white";
+    if(o > 125) 
+    	textColor="black";     
+
+    return textColor;
+}
+
+function hexColorToR(hexColor){
+	 return parseInt(hexColor.substring( 1, 3 ), 16 );
+}
+function hexColorToG(hexColor){
+	return parseInt(hexColor.substring( 3, 5 ), 16 );
+}
+function hexColorToB(hexColor){
+	return parseInt(hexColor.substring( 5, 7 ), 16 ) ;
+}
