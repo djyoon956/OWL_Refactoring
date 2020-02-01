@@ -895,7 +895,7 @@ display: block;
 
 		// Send a message to the device corresponding to the provided
 		// registration token.
-		//var admin = require("firebase-admin");
+		var admin = require("firebase-admin");
 
 		//var serviceAccount = require("path/to/serviceAccountKey.json");
 
