@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.dashBoard.dto.IssueTask;
@@ -52,7 +53,9 @@ public class DashBoardRestController {
 	 * @return List<IssueTask>
 	 */
 	@RequestMapping("getMyIssueTaskByProject.do")
-	public List<IssueTask> getMyIssueTasksByProject(int projectIdx,Principal principal) {
+	public List<IssueTask> getMyIssueTasksByProject(int projectIdx, Principal principal) {
+		System.out.println("in getMyIssueTasksByProject c");
+		System.out.println("projectIdx : "+projectIdx);
 		return service.getMyIssueTasksByProject(projectIdx, principal.getName());
 	}
 	
