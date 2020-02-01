@@ -11,7 +11,18 @@ ul.timeline {
     list-style-type: none;
     position: relative;
 }
-ul.timeline:before {
+/*  ul.timeline:before {
+    content: ' ';
+    background: #d4d9df;
+    display: inline-block;
+    position: absolute;
+    left: 29px;
+    width: 2px;
+    height: 100%;
+    z-index: 400;
+}  */
+/*  수정 중 */
+ul.timeline:before{
     content: ' ';
     background: #d4d9df;
     display: inline-block;

@@ -1,4 +1,4 @@
-$(function() {
+function initDashBoard(projectIdx){
 	$("#dashboardTable").DataTable({
 		"pageLength": 5,
          fixedColumns: true,
@@ -13,8 +13,15 @@ $(function() {
 		  defaultView: 'month',
 		  taskView: true
 	}); 
- 
-	 $.ajax({
+	 
+	if(projectIdx > 0)
+		setProjectDashBoard(projectIdx);
+	else
+		setMainDashBoard();
+}
+
+function setMainDashBoard(){
+	$.ajax({
 		 url : "CheckJoinProject.do",
 		 success : function(data){
 			 console.log("in CheckJoinProject success");
@@ -33,8 +40,11 @@ $(function() {
 			 console.log("in CheckJoinProject error");
 		 }
 	 })
-});
+}
 
+function setProjectDashBoard(projectIdx){
+	wholeProjectChart(projectIdx);
+}
 
 function setMyIssueTask(){
 	$.ajax({

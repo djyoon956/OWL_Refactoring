@@ -44,6 +44,32 @@ public class DashBoardRestController {
 	}
 	
 	/**
+	 * Issue Task 테이블 데이터 요청 (프로젝트  본인)
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @param principal
+	 * @return List<IssueTask>
+	 */
+	@RequestMapping("getMyIssueTaskByProject.do")
+	public List<IssueTask> getMyIssueTasksByProject(int projectIdx,Principal principal) {
+		return service.getMyIssueTasksByProject(projectIdx, principal.getName());
+	}
+	
+	/**
+	 * Issue Task 테이블 데이터 요청 (프로젝트 전체)
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @param principal
+	 * @return List<IssueTask>
+	 */
+	@RequestMapping("getProjectIssueTask.do")
+	public List<IssueTask> getProjectIssueTasks(int projectIdx ) {
+		return service.getProjectIssueTasks(projectIdx);
+	}
+	
+	/**
 	 * 본인에게 할당된 이슈 진행률(프로젝트 별 in project)
 	 * @author 이정은
 	 * @since 2020/01/31 

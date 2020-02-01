@@ -39,6 +39,7 @@
 <script type="text/javascript">
 	$(function(){
 		 setTheme("${setting.themeColor}", "${setting.font}");
+		 initDashBoard(0);
 	})
 </script>
 </head>

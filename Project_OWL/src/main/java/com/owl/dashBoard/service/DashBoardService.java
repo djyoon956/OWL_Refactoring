@@ -51,7 +51,6 @@ public class DashBoardService {
 	 */
 	public List<IssueTask> getMyIssueTasks(String assigned) {
 		DashBoardDao dao = getDashBoardDao();
-		System.out.println("in getMyIssueTasks service");
 		List<IssueTask> issueTasks = new ArrayList<IssueTask>();
 		try {
 			issueTasks = dao.getMyIssueTasks(assigned);
@@ -63,7 +62,7 @@ public class DashBoardService {
 	}
 
 	/**
-	 * 본인에게 할당된 이슈 진행률(프로젝트 별)
+	 * 본인에게 할당된 모든 이슈 진행률(프로젝트 별)
 	 * @author 윤다정
 	 * @since 2020/01/31
 	 * @param email
@@ -102,6 +101,45 @@ public class DashBoardService {
 		}		
 		
 		return results;		
+	}
+	
+	/**
+	 * dueData, priority 순으로 Issue Task 테이블 데이터 get (프로젝트 안에서 본인 이슈)
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @param assigned
+	 * @return List<IssueTask>
+	 */
+	public List<IssueTask> getMyIssueTasksByProject(int projectIdx, String assigned) {
+		DashBoardDao dao = getDashBoardDao();
+		List<IssueTask> issueTasks = new ArrayList<IssueTask>();
+		try {
+			issueTasks = dao.getMyIssueTasksByProject(projectIdx, assigned);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+
+		return issueTasks;
+	}
+	
+	/**
+	 * dueData, priority 순으로 Issue Task 테이블 데이터 get (프로젝트 별)
+	 * @author 윤다정
+	 * @since 2020/02/01
+	 * @param projectIdx
+	 * @return List<IssueTask>
+	 */
+	public List<IssueTask> getProjectIssueTasks(int projectIdx) {
+		DashBoardDao dao = getDashBoardDao();
+		List<IssueTask> issueTasks = new ArrayList<IssueTask>();
+		try {
+			issueTasks = dao.getProjectIssueTasks(projectIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+
+		return issueTasks;
 	}
 	
 	/**
