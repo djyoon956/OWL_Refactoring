@@ -159,7 +159,15 @@ display: none;
                               <h4 class="card-title" style="margin-bottom: 0px;">Progress Chart</h4>
                                 <div class="align-items-center">
 									<div class="row">
+									   <div class="col-md-6 hidden" id="OurProgressNone" style="text-align: center; height: 150px;"> 
+												<h4 style="margin-top: 40px;">프로젝트 내에 이슈가</h4>
+												<h4>존재하지 않습니다.</h4>
+										</div>
 										<div class="col-md-6" id="chartProjectProgress"> </div>
+										<div class="col-md-6 hidden" id="MyProgressNone" style="text-align: center; height: 150px;"> 
+												<h4 style="margin-top: 40px;">본인에게 할당된 이슈가</h4>
+												<h4>존재하지 않습니다.</h4>
+										</div>
 										<div class="col-md-6" id="chartMyProgress"> </div>
 									</div>
                               </div>
@@ -170,6 +178,10 @@ display: none;
                             <div class="card-body">
                               <h4 class="card-title">Label Chart</h4>
                                 <div class="align-items-center" id="labelProgress"> </div>
+<!--                                 <div class="align-items-center hidden" id="labelNone" style="text-align: center;"> 
+										<h4 style="margin-top: 150px;">생성된 라벨이</h4>
+										<h4>존재하지 않습니다.</h4>
+								</div> -->
                             </div>
                         </div>
                     <!-- </div> -->

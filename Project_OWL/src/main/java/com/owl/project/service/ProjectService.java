@@ -57,11 +57,9 @@ public class ProjectService {
 	//Sidebar의 프로젝트 목록 추가
 	
 	@Transactional
-	public boolean insertNewProject(Project project, ProjectList projectlist, DriveFolder drivefolder, HttpServletRequest request) throws Exception{
+	public void insertNewProject(Project project, ProjectList projectlist, DriveFolder drivefolder, HttpServletRequest request) throws Exception{
 		ProjectDao projectDao = getProjectDao();
 		DriveDao driveDao = getDriveDao();
-		boolean result = false;
-
 		try {
 			projectDao.insertProject(project);
 			
@@ -76,14 +74,10 @@ public class ProjectService {
 			
 			String uploadPath = request.getServletContext().getRealPath("upload");
 			UploadHelper.makeDefaultDirectory(uploadPath, projectIdx, drivefolder.getDriveIdx());
-			
-
-			result = true;
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 			throw e; //이 시점에 매니저가 예외 인지 한 후 rollback 처리
 		}
-		return result;
 	}
 	
 	public ProjectList getProjectList(int projectIdx, String email) {
