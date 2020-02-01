@@ -102,6 +102,9 @@
                     data: { projectIdx: ${project.projectIdx}},
                     success: function (data) {
                          console.log("GetProjectMember success");
+                        // console.log({memeber});
+                         console.log("${project.authority}");
+	
                         $("#projectMemebersBox").empty();
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
                         $.each(data, function(index, element){
@@ -115,6 +118,10 @@
                				}else{
             					control += "<span class='ml-1 roleBadge member' style='padding-top : 5px;'></span>";		
                				}	
+               				
+               				
+               				if("${project.authority}" == 'ROLE_PM'){
+                   				
                				control += "<a href='javascript:void(0)' data-toggle='dropdown' id = 'dropdownBtn' aria-haspopup='true' aria-expanded='false' style='float: right'>"; 
                				control +=  "<i class='fas fa-ellipsis-v'></i></a>";
                				control +=  "<div class='dropdown-menu' aria-labelledby='dropdownBtn'>";
@@ -123,8 +130,8 @@
                				control +=  "<li class='pl-3'><a href='#' onclick='transferAuthority(" +'"'+ element.email +'"'+")'>PM 양도</a></li>";
                				control +=  "</ul>";
                				control += "</div>";
-           					control+= "</li>";	
-           					
+               				}	 
+               				control+= "</li>";
            					$("#projectMemebersBox").append(control);
                          }) 
                     },
@@ -405,6 +412,16 @@
  	    })
  	  }
  	       function transferAuthority(memberEmail) {
+ 	    	  Swal.fire({
+ 	    		  title: '권한변경',
+ 	    		  text: "정말로 프로젝트에서 프로젝트 매니저 권한을 양도하겠습니까? 프로젝트 멤버로 권한이 변경됩니다.",
+ 	    		  showCancelButton: true,
+ 	    		  confirmButtonColor: '#3085d6',
+ 	    		  cancelButtonColor: '#d33',
+ 	    		  confirmButtonText: '확인',
+ 	    		  cancelButtonText: '취소'
+ 	    		}).then((result) => {
+ 	    	if (result.value) {
   	    	  $.ajax({
 	    		  	type : "POST",
 					url : "TransferAuthority.do",
@@ -416,11 +433,10 @@
 						      'success'
 						    ).then((result)=>{
 						    	setChageView("dash");
-						    	
 						    })
 						}else{
 							Swal.fire(
-						      '삭제 실패',
+						      '권한 변경 실패',
 						      '권한 변경을 실패하였습니다.',
 						      'error'
 						    )
@@ -428,13 +444,15 @@
 					},
 					error: function() {
 						Swal.fire(
-					      '삭제 실패',
+					      '권한 변경 실패',
 					      'Your file has been deleted.',
 					      'error'
 					    )
 					}
 				})		
-	 	    }	   
+	 	    }
+ 	   })
+ 	}	   
     </script>
     <style type="text/css">
         .iconSizeBig {
