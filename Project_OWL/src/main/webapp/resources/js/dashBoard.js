@@ -130,7 +130,7 @@ function setTimeLine(){
 															}, {});
 
 					$.each(group, function(key2, value2){
-						control += "<span style='background-color: "+value2[0].projectColor+"'>"+key2+"</span>";
+						control += "<span style='background-color: "+value2[0].projectColor+"; color : "+getTextColorFromBg(value2[0].projectColor)+"'>"+key2+"</span>";
 
 						$.each(value2, function(index, element){
 							control += "<p>"+element.subject+"</p>";
