@@ -31,8 +31,29 @@
 	       }
 	   }); 
 
+    	$.ajax({
+	        url:"HorizonChart.do",
+	        dataType: "json",
+	        success:function(data){		     
+				let name = [];
+				let theData = [];
+				let color = [];	        
+		     $.each(data, function(key, value){
+			      name.push(value[0].projectName);
+			      color.push(value[0].projectColor);
+		    	  let totalCount=value.length;
+		    	  let closeCount=0;
+		    	  $.each(value, function(index, element){
+		    			if(element.issueProgress == "CLOSED") 
+							closeCount++;
+		    	  });
+		    	  theData.push(Math.round((closeCount/totalCount)*100));				    	
+		     });
+		    	 MyHorizonChart(theData, name, color);	
+	       }
+	   });
 
-/*
+
         var ctx4 = document.getElementById('canvas').getContext('2d');
         window.myLine = Chart.Line(ctx4, {
             data: lineChartData,
@@ -63,55 +84,10 @@
                     }],
                 }
             }
-        });
-
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'horizontalBar',
-
-            // The data for our dataset
-            data: {
-                labels: ['Project1', 'Project2', 'Project3', 'Project4', 'Project5'],
-                datasets: [{
-                    label: 'My First dataset',
-                    data: [60, 50, 70, 85, 20],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-
-            // Configuration options go here
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-*/
-
-
-        
+        });        
     });
 
-/*
+
     var lineChartData = {
         labels: ['Monday', 'Thusday', 'Wednesday', 'Thursday', 'Friday'],
         datasets: [{
@@ -155,7 +131,7 @@
             yAxisID: 'y-axis-1'
         }]
     };
-*/
+
 
 var randomScalingFactor = function () {
     console.log("랜덤값-----------");
@@ -165,7 +141,35 @@ var randomScalingFactor = function () {
     return Math.round(Math.random() * 100);
 };
 
-
+function MyHorizonChart(theData, name, color){  
+	var chart = new Chart(document.getElementById('myHorizon').getContext('2d'), {
+	    // The type of chart we want to create
+	    type: 'horizontalBar',
+	    // The data for our dataset
+	    data: {
+	        labels: name,
+	        datasets: [{
+	            label: '내가 속한 프로젝트 전체 진행률(%)',
+	            data: theData,
+	            backgroundColor: color,
+	            borderColor: color,
+	            borderWidth: 1
+	        }]
+	    },	
+	    // Configuration options go here
+	    options: {
+	        scales: {
+	            xAxes: [{
+	                ticks: {
+	                    beginAtZero: true,
+	                    max: 100,
+	                }
+	            }]
+	        }
+	    }
+	});
+	
+}
 function ProjectMyChart(idx, totalSum, closeSum, projectName, color){  
     window.myDoughnut = new Chart(document.getElementById('chartProject'+idx).getContext('2d'), {
         type: 'doughnut',
@@ -301,8 +305,8 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 	            <div class="card dash_shadow dash_radius">
 	                <div class="card-body">
 	                    <h4 class="card-title">Chart</h4>
-	                    <div class="align-items-center">
-	                        <canvas id="myChart"></canvas>
+	                    <div class="align-items-center" id="horizon">
+	                    	<canvas id="myHorizon"></canvas>
 	                    </div>
 	                </div>
 	            </div>

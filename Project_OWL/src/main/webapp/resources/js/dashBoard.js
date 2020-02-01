@@ -174,7 +174,7 @@ function wholeProjectChart(projectIdx){
 	        let idx = projectIdx;
 	        let label;
 	        let totalCount = [];
-	    	    let closeCount = [];
+	    	let closeCount = [];
     	    let name = [];
     	    let color = [];
     	    $("#labelProgress").empty(); 
