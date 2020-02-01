@@ -79,20 +79,19 @@ public class ProjectRestController {
 	 * @throws Exception
 	 */
 	@RequestMapping("InsertNewProject.do")
-	public boolean insertNewProject(String projectName, String projectColor, Project project, ProjectList projectlist, Principal principal, DriveFolder drivefolder, HttpServletRequest request) throws Exception {
-		boolean result = false;
+	public int insertNewProject(String projectName, String projectColor, Project project, ProjectList projectlist, Principal principal, DriveFolder drivefolder, HttpServletRequest request) throws Exception {
 		try {
 		projectlist.setEmail(principal.getName());
 		project.setProjectName(project.getProjectName());		
 		projectlist.setProjectColor(projectlist.getProjectColor());
 		drivefolder.setDepth(0);
 		drivefolder.setRef(0);
-		result = service.insertNewProject(project, projectlist, drivefolder, request);
+		service.insertNewProject(project, projectlist, drivefolder, request);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
-		return result;
+		return project.getProjectIdx();
 	}
 	/**
 	 * projectIdx가 일치하는 프로젝트 정보 출력

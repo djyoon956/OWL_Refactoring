@@ -177,7 +177,7 @@ function MyLineChart(){
             stacked: false,
             title: {
                 display: true,
-                text: '나의 프로젝트 별 커밋 수(일주일 단위)'
+                text: '나의 프로젝트 활동 빈도(일주일 단위)'
             },
             scales: {
                 yAxes: [{
@@ -276,7 +276,7 @@ function MyLineChart(){
 	        <div class="col-lg-12">
 	            <div class="card dash_shadow dash_radius">
 	                <div class="card-body w-100">
-	                    <h4 class="card-title" style="margin-bottom: 0px;">My Issue Chart by Project</h4>
+	                    <h4 class="card-title" style="margin-bottom: 0px;">My Issue Progress Chart</h4>
 	                    <div class="align-items-center">
 	                        <div class="row" id="myProgressChart"> </div>
 	                    </div>
@@ -286,7 +286,7 @@ function MyLineChart(){
 	        <div class="col-lg-6">
 	            <div class="card dash_shadow dash_radius">
 	                <div class="card-body">
-	                    <h4 class="card-title">Project Commit Chart</h4>
+	                    <h4 class="card-title">Project Contribution Chart</h4>
 	                    <div class="align-items-center">
 	                        <canvas id="myLine"></canvas>
 	                    </div>
@@ -297,7 +297,7 @@ function MyLineChart(){
 	        <div class="col-lg-6">
 	            <div class="card dash_shadow dash_radius">
 	                <div class="card-body">
-	                    <h4 class="card-title">Chart</h4>
+	                    <h4 class="card-title">Project Progress Chart</h4>
 	                    <div class="align-items-center" id="horizon">
 	                    	<canvas id="myHorizon"></canvas>
 	                    </div>
