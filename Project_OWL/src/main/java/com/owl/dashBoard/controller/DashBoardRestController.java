@@ -148,4 +148,16 @@ public class DashBoardRestController {
 	public Map<String, List<TimeLine>> getMyTimeLines(Principal principal) {
 		return service.getMyTimeLines(principal.getName());
 	}
+	
+	/**
+	 * TimeLine 데이터 요청 (프로젝트 개별)
+	 * @author 윤다정
+	 * @since 2020/01/31
+	 * @param principal
+	 * @return Map<String, List<TimeLine>>
+	 */
+	@RequestMapping("GetMyTimeLineByProject.do")
+	public Map<String, List<TimeLine>> getMyTimeLineByProject(int projectIdx) {
+		return service.getMyTimeLinesByProject(projectIdx);
+	}
 }
