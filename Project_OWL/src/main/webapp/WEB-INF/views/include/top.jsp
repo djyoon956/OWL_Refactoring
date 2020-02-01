@@ -863,6 +863,7 @@ display: block;
 			
 		var saveFCMToken = function(){ 
 			//로그인 후에 fcm 정보를 검색하여 저장 
+			console.log("token 파베 디비 저장 함수.....");
 			var cbGetToekn = function(token){ 
 				console.log('setLogin fcmId get : ', token); 
 				var userUid = curUserKey; 
@@ -872,7 +873,7 @@ display: block;
 			firebase.messaging().getToken() 
 			.then(cbGetToekn.bind(this)) 
 			.catch(function(e){ 
-				console.log('fcmId 확인 중 에러 : ', e); 
+				console.log('fcmId 확인 중 에러 저장실패... : ', e); 
 				}) 
 			}
 
@@ -894,14 +895,14 @@ display: block;
 
 		// Send a message to the device corresponding to the provided
 		// registration token.
-		var admin = require("firebase-admin");
+		//var admin = require("firebase-admin");
 
-		var serviceAccount = require("path/to/serviceAccountKey.json");
+		//var serviceAccount = require("path/to/serviceAccountKey.json");
 
-		admin.initializeApp({
+		/* admin.initializeApp({
   		credential: admin.credential.cert(serviceAccount),
   		databaseURL: "https://owl-chat-c27f1.firebaseio.com"
-		});
+		}); */
 		
 		/* function firstPushMsg() {
 			     
@@ -1173,7 +1174,7 @@ display: block;
 			//챗방 초대를 위한 모달 창 세팅을 위한 함수
           function setAddUserList() {
 			  //푸시 알람 테스트....
-        	  firstPushMsg();
+        	  //firstPushMsg();
               
         	  //푸시 알람을 위한 FCM(Firebase Cloud Messaging) Token firebase realtime database 에 저장...
               //saveFCMToken();

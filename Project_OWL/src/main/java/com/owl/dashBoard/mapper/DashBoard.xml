@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE I.DUEDATE BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL + 7 DAY)
 			ORDER BY I.DUEDATE, P.PROJECTNAME
 	</select>
-	
+
 	<select id="getMyTimeLinesByProject" resultType="com.owl.dashBoard.dto.TimeLine" parameterType="int">
 		SELECT P.PROJECTNAME, I.ISSUETITLE AS 'SUBJECT', I.DUEDATE, L.PROJECTCOLOR
 			FROM OWL.ISSUE I JOIN owl.PROJECT P ON I.PROJECTIDX = P.PROJECTIDX 
@@ -78,6 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE I.PROJECTIDX = #{projectIdx} AND I.DUEDATE BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL + 7 DAY)
 			ORDER BY I.DUEDATE, P.PROJECTNAME
 	</select>
+
 	
 	<select id="getHorizonChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
 		SELECT p.PROJECTIDX, p.PROJECTNAME, i.ISSUEPROGRESS , t.PROJECTCOLOR
@@ -85,6 +86,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    						  LEFT JOIN PROJECTLIST t ON p.PROJECTIDX=t.PROJECTIDX 
 	    where t.EMAIL = #{email} AND i.ISSUEPROGRESS in ('OPEN', 'CLOSED')	
 	</select>
+	
+	<select  id="getLineChart" resultType="com.owl.dashBoard.dto.LineChart">
+		SELECT i.ISSUEIDX, l.logtime, p.PROJECTCOLOR, j.PROJECTNAME, i.PROJECTIDX
+			FROM ISSUE i JOIN ISSUELOG l ON i.ISSUEIDX = l.ISSUEIDX 
+										  JOIN PROJECTLIST p ON i.PROJECTIDX = p.PROJECTIDX
+                                          JOIN PROJECT j ON i.PROJECTIDX = j.PROJECTIDX
+		WHERE l.LOGTIME BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL + 7 DAY) 
+		AND i.ASSIGNED =#{assigned}
+	</select>
+	
 	
 
 </mapper>
