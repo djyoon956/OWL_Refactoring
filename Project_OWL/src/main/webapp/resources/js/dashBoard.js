@@ -123,7 +123,7 @@ function setTimeLine(){
 			$("#dashboardTimeLine ul:first").empty();
 
 			$.each(data, function(key, value){
-					let control = "<li><p class='float-right'>"+((key==today)?"Today":key)+"</p>";
+					let control = "<li><p class='float-right' style='margin-right: 15px;'>"+((key==today)?"Today":key)+"</p>";
 					let group = value.reduce((r, a) => {
 																 r[a.projectName] = [...r[a.projectName] || [], a];
 																 return r;
@@ -167,7 +167,7 @@ function setTimeLineByProject(projectIdx){
 			$("#timeLinePDate").text("Today : "+today);
 			$("#dashboardPTimeLine ul:first").empty();
 			$.each(data, function(key, value){
-					let control = "<li><p class='float-right'>"+((key==today)?"Today":key)+"</p>"
+					let control = "<li><p class='float-right' style='margin-right: 15px;'>"+((key==today)?"Today":key)+"</p>"
 									+ "<span style='background-color: "+value[0].projectColor+"'>"+value[0].projectName+"</span>";
 
 					$.each(value, function(index, element){
