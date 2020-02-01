@@ -267,10 +267,12 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 		                    	<h4 class="mt-1"> (2020-01-29 ~ 2020-02-07)</h4>
 		                    </div>
 	                    </div>
-	                    <div class="d-md-flex align-items-center" id="dashboardTimeLine">
-	                        <ul class="timeline w-100" style="height: 350px; overflow: auto;">
+	                    <div style="height: 350px; overflow: auto">
+	                    <div class="d-md-flex align-items-center" id="dashboardTimeLine"  >
+	                        <ul class="timeline w-100" >
 	                        </ul>
 	                    </div>
+	                   </div>
 	                </div>
 	            </div>
 	        </div>
