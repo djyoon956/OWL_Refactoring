@@ -150,7 +150,21 @@ public class ProjectService {
 		System.out.println("result : "+result);
 		return result;
 	}
-	
+	public boolean transferAuthority(int projectIdx, String PMemail,String memberEmail) {
+		ProjectDao dao = getProjectDao();
+		System.out.println("in transferAuthority service");
+		boolean result =false;
+		try {
+			result = dao.grantPM(projectIdx, memberEmail) > 0 && dao.grantProjectMember(projectIdx, PMemail) > 0 ? true : false;
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("result : "+result);
+		return result;
+	}
 	private ProjectDao getProjectDao() {
 		return sqlSession.getMapper(ProjectDao.class);
 	}

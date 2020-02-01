@@ -48,4 +48,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="outProject" >
 		DELETE FROM owl.PROJECTLIST WHERE PROJECTIDX = #{param1} AND EMAIL = #{param2}
 	</delete>
+	<update id="grantPM">
+		update owl.projectlist set authority='ROLE_PM' where  PROJECTIDX = #{param1} AND EMAIL = #{param2} 
+	</update>
+	<update id="grantProjectMember">
+		update owl.projectlist set authority='role_projectmember' where  PROJECTIDX = #{param1} AND EMAIL = #{param2} 
+	</update>
 </mapper>
