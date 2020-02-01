@@ -85,24 +85,15 @@ function getDueDateElement(date){
 }
 
 function setTimeLine(){
-	let week = new Array('일', '월', '화', '수', '목', '금', '토'); 
-	let today = new Date();
-	let year = today.getFullYear(); 
-	let month = (today.getMonth() + 1) < 10? "0"+(today.getMonth() + 1):(today.getMonth() + 1); 
-	let day = today.getDate(); 
-	let dayName = week[today.getDay()];
-	
-	let todayFormat = year+"-"+month+"-"+day+" ("+dayName+")";
+	let today = getTimeLineDateFormat(new Date());
 	$.ajax({
 		url : "GetMyTimeLine.do",
 		success : function(data){
-			$("#timeLineDate").text("Today : "+todayFormat);
+			$("#timeLineDate").text("Today : "+today);
 			$("#dashboardTimeLine ul:first").empty();
-			$.each(data, function(key, value){
-					console.log(key);
-					console.log(todayFormat==key);
-					let control = "<li><p class='float-right'>"+((key==todayFormat)?"Today":key)+"</p>";
 
+			$.each(data, function(key, value){
+					let control = "<li><p class='float-right'>"+((key==today)?"Today":key)+"</p>";
 					let group = value.reduce((r, a) => {
 																 r[a.projectName] = [...r[a.projectName] || [], a];
 																 return r;
@@ -115,9 +106,21 @@ function setTimeLine(){
 							control += "<p>"+element.subject+"</p>";
 						})
 					})
-
 					$("#dashboardTimeLine ul:first").append(control+"</li>");
-			})
+			});
+			
+			if($("#dashboardTimeLine ul:first li").length == 0){ // 데이터 없음
+				let lastWeek = new Date(); 
+				lastWeek.setDate(lastWeek.getDate() + 7);
+				getTimeLineDateFormat(lastWeek);
+				$("#dashboardTimeLineEmptyBox h4:first").text("( "+today+" ~ "+getTimeLineDateFormat(lastWeek)+" )");
+				$("#dashboardTimeLineEmptyBox").removeClass("hidden");
+				$("#dashboardTimeLine").addClass("hidden");
+			}else{
+			
+				$("#dashboardTimeLineEmptyBox").addClass("hidden");
+				$("#dashboardTimeLine").removeClass("hidden");
+			}
 		},
 		error : function(){
 			console.log("in setTimeLine error");
@@ -321,3 +324,13 @@ function ProjectLabelChart(idx, totalCount, closeCount, name, color){
 		}
 	});	
 }	
+
+function getTimeLineDateFormat(date){
+	let week = new Array('일', '월', '화', '수', '목', '금', '토'); 
+	let year = date.getFullYear(); 
+	let month = (date.getMonth() + 1) < 10? "0"+(date.getMonth() + 1):(date.getMonth() + 1); 
+	let day = date.getDate(); 
+	let dayName = week[date.getDay()];
+	
+	return year+"-"+month+"-"+day+" ("+dayName+")";
+}

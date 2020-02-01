@@ -16,6 +16,7 @@ public class ProjectProgress {
 	private String projectName;
 	private String projectColor;
 	private String assigned;
+	private String email;
 	private String labelName;
 	private String labelColor;
 	private IssueProgressType issueProgress;
