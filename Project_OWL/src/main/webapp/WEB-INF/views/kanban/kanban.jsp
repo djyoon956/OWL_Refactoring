@@ -321,7 +321,7 @@
 });
 </script>
 
-<div id="totalbody" class="container-fluid mt-3">
+<div id="totalbody" class="container-fluid pt-3">
 <input type="hidden" id="projectIdxNum">
     <div id="kanbanMainBox">
 

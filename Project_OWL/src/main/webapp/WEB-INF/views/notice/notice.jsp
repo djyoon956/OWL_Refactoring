@@ -2,10 +2,10 @@
    pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="container-fluid mt-3 h-100 w-100">
+<div class="container-fluid pt-3 h-100 w-100 themeChange">
      <div id="noticeBox">
-        <div class="card">
-            <div class="card-body">
+       <!--  <div class="card"> -->
+            <div class="card-body"> 
                 <h3 class="text-center">Notice</h3>
                 <div id="noticeTableBox">
                     <div class="table-responsive">
@@ -38,7 +38,7 @@
                </c:if>
             </div>
         </div>
-    </div>
+<!--     </div> -->
 
     <!-- Wirte -->
     <jsp:include page="write.jsp"/>
