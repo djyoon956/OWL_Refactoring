@@ -171,17 +171,16 @@ public class DashBoardService {
 	 * @param assigned
 	 * @return Map<String, List<LineChart>>
 	 */
-	public Map<String, List<LineChart>> getLineChart(String assigned) {
+	public Map<Integer, List<LineChart>> getLineChart(String assigned) {
 		DashBoardDao dao = getDashBoardDao();
 		List<LineChart> line = new ArrayList<LineChart>();
-		Map<String, List<LineChart>> results = new TreeMap<>();
+		Map<Integer, List<LineChart>> results = new TreeMap<>();
 		try {
 			line = dao.getLineChart(assigned);
-			results = line.stream().collect(Collectors.groupingBy(LineChart::getLogTime, TreeMap::new, Collectors.toList()));
+			results = line.stream().collect(Collectors.groupingBy(LineChart::getProjectIdx, TreeMap::new, Collectors.toList()));
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		return results;
 	}
 	

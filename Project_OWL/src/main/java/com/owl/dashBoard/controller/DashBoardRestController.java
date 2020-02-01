@@ -133,7 +133,7 @@ public class DashBoardRestController {
 	 * @return
 	 */
 	@RequestMapping("LineChart.do")
-	public Map<String, List<LineChart>> getLineChart(Principal principal) {
+	public Map<Integer, List<LineChart>> getLineChart(Principal principal) {
 		return service.getLineChart(principal.getName());
 	}
 	
