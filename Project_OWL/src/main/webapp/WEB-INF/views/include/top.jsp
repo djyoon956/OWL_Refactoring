@@ -881,10 +881,35 @@ display: block;
 		messaging.onMessage((payload) => {
 			  console.log('Message received. ', payload);
 		});
+
+		
 		   
 		// This registration token comes from the client FCM SDKs.
 		var registrationToken = 'cFNEXcwYabMl48AAxV0ES_:APA91bFbrquzfvQpyI0bplrs7Pl7KeuNLPxiOIYBldokpJA8PfJ0RJLeTx5imgIBNYaNCfwRwPJO--ibXkL8BcDuVqisRtXhQpmznYtyis58LFFpk-P-X5jy3EbXf-V44elGUJ2bDl0r';
 
+
+
+
+        
+		
+		function sendNotification(title, msg, msgTo){
+			
+
+		        $.ajax({
+		                 type : 'POST',
+		                 url : "https://fcm.googleapis.com/fcm/send",
+		                 headers : {
+		                     Authorization : 'key=' + 'AAAAkc2VPJA:APA91bHuIlRWU1_zwByAErvgVTu4fSJmxlOOYFwXv6hoRbiQcV1iQDTcbL278aQstA_wXFpO5JbGh_-3OvD8HHmv1-4VBiWSqVwNd-xGWpHdUCLqMiXgfKY5zt5Dbfh-IHws4JB4KNXT'
+		                 },
+		                 contentType : 'application/json',
+		                 dataType: 'json',
+		                 data: JSON.stringify({"to": msgTo,  "priority" : "high", "notification": {"title":title,"body":msg}}),
+		                 success : alert("Success")            ,
+		                 error : alert("Fail")
+		             }) ;
+			}
+
+			
 		var messageTest = {
 		  data: {
 		    score: '850',
@@ -895,7 +920,7 @@ display: block;
 
 		// Send a message to the device corresponding to the provided
 		// registration token.
-		var admin = require("firebase-admin");
+		//var admin = require("firebase-admin");
 
 		//var serviceAccount = require("path/to/serviceAccountKey.json");
 
@@ -1174,6 +1199,7 @@ display: block;
 			//챗방 초대를 위한 모달 창 세팅을 위한 함수
           function setAddUserList() {
 			  //푸시 알람 테스트....
+			  sendNotification();
         	  //firstPushMsg();
               
         	  //푸시 알람을 위한 FCM(Firebase Cloud Messaging) Token firebase realtime database 에 저장...
