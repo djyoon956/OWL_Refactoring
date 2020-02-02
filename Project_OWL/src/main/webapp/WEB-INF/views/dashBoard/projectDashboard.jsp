@@ -100,7 +100,7 @@ display: none;
 				    <div class="card dash_shadow dash_radius" style="height: 450px">
 				        <div class="card-body">
 				            <h4 class="card-title">Member Progress</h4>
-				            <div class="align-items-center" >
+				            <div class="align-items-center " style="height: 370px">
 				            	<canvas id="dashBoardMemberProgress"></canvas>
 				             </div>
 				        </div>

@@ -448,51 +448,35 @@ function setMyIssueTaskByProject(projectIdx){
 }
 
 function setProjectMemberProgress(projectIdx){
-	//GetProjectMemberProgress.do
 	$.ajax({
 		url : "GetProjectMemberProgress.do",
 		data : {projectIdx : projectIdx },
 		success : function(data){
-			console.log("in setProjectMemberProgress success");
-			console.log(data);
-			//dashBoardMemberProgress
 			let labels = [];
-			let completes = [];
 			let totals = [];
+			let completes = [];
 			$.each(data.member, function(index, element){
 				labels.push(element.memberName);
+				totals.push(0);
+				completes.push(0);
 			})
+
 			$.each(data.progress, function(index, element){
-				
+				let labelIndex = labels.indexOf(element.assignedName);
+				totals[labelIndex] = element.openCount;
+				completes[labelIndex] = element.closeCount;
 			})
-			
-			console.log(labels);
+
 			let barChartData = {
 					labels: labels,
 					datasets: [{
 						label: 'Complete',
 						backgroundColor: " #326295",
-						data: [
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor()
-						]
+						data: completes
 					}, {
 						label: 'Total',
 						backgroundColor: "#d9d9d9",
-						data: [
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor()
-						]
+						data: totals
 					}]
 				};
 			
@@ -509,6 +493,7 @@ function setProjectMemberProgress(projectIdx){
 						intersect: false
 					},
 					responsive: true,
+					maintainAspectRatio: false,
 					scales: {
 						xAxes: [{
 							stacked: true,
