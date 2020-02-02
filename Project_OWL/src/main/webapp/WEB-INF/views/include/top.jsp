@@ -858,14 +858,15 @@ display: block;
 			}
 
 
-		//푸시 알람 을 위한 권한 설정 처리...
+		//푸시 알람 을 위한 권한 설정 처리... 온로드 함수 들 보다 먼저 실행 되게 하기 위해 다큐먼트 점 레디로 걸어 났다.
 		$(document).ready(setCloudMessaging());
 			
 		var saveFCMToken = function(){ 
 			//로그인 후에 fcm 정보를 검색하여 저장 
 			console.log("token 파베 디비 저장 함수.....");
 			var cbGetToekn = function(token){ 
-				console.log('setLogin fcmId get : ', token); 
+				console.log('setLogin fcmId get : ', token);
+				sendNotification(token,"Team--1", "오늘도 열심히~~") 
 				var userUid = curUserKey; 
 				var fcmIdRef= database.ref('FcmId/' +userUid); 
 				fcmIdRef.set(token); 
@@ -892,7 +893,7 @@ display: block;
 
         
 		
-		function sendNotification(title, msg, msgTo){
+		function sendNotification(msgTo, title, msg){
 			
 
 		        $.ajax({
@@ -903,7 +904,7 @@ display: block;
 		                 },
 		                 contentType : 'application/json',
 		                 dataType: 'json',
-		                 data: JSON.stringify({"to": msgTo,  "priority" : "high", "notification": {"title":title,"body":msg}}),
+		                 data: JSON.stringify({"to": msgTo,  "priority" : "high", "notification": {"title": title,"body":msg}}),
 		                 success : alert("Success")            ,
 		                 error : alert("Fail")
 		             }) ;
@@ -1060,37 +1061,16 @@ display: block;
 		        	}
 
 
-				/* function loadUserList() { 
-					this.userTemplate = document.getElementById('templateUserList').innerHTML; 
-					var userRef = this.database.ref('Users'); 
-					userRef.off(); 
-					userRef.orderByChild("userName").once('value', this.getUserList.bind(this));
-
-					 
-
-					var cbCompleteUserList = function(){
-						this.loadOnlineStatus(); 
-						} 
-					userRef.orderByChild("userName") 
-					.once('value', this.getUserList.bind(this)) 
-					.then(cbCompleteUserList.bind(this));
-
-					
-					
-					}  */
-
+				
 
 				var loadOnlineStatus = function(){
 					console.log("로드 온라인 스테이터스 함수 타기는 하니??? 작동하는 거야 머야??"); 
 					var usersConnectionRef = database.ref('UsersConnection'); 
 					usersConnectionRef.off(); 
 					var cbUserConnection = function(data){ 
-						var connKey =data.key;
-						console.log("이방식 되는 건가??" + connKey); 
-						var connValue = data.val(); 
-						console.log("이방식 되는 건가??" + connValue); 
-						var onlineIcon = document.querySelector('#li' + connKey+' .userOnline');
-						console.log("이방식 되는 건가??" + onlineIcon); 
+						var connKey =data.key;						
+						var connValue = data.val(); 						
+						var onlineIcon = document.querySelector('#li' + connKey+' .userOnline');						
 						if(onlineIcon != null){ 
 							if(connValue.connection === true){ 
 								onlineIcon.classList.add('user-online'); 
@@ -1198,12 +1178,7 @@ display: block;
 
 			//챗방 초대를 위한 모달 창 세팅을 위한 함수
           function setAddUserList() {
-			  //푸시 알람 테스트....
-			  sendNotification();
-        	  //firstPushMsg();
-              
-        	  //푸시 알람을 위한 FCM(Firebase Cloud Messaging) Token firebase realtime database 에 저장...
-              //saveFCMToken();
+			 
               //온라인 상태인지 아닌지 확인하고.. 유저리스에 아이콘 색 변경을 위한 함수..
         	  loadOnlineStatus();	
               
