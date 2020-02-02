@@ -15,10 +15,7 @@ import com.owl.member.service.MemberService;
 
 @Controller
 public class MemberController {
-	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Autowired
 	private MemberService service;
 

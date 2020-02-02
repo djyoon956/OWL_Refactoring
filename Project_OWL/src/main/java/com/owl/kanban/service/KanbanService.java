@@ -627,11 +627,22 @@ public class KanbanService {
 	}
 	
 	
-	
+	/**
+	 * KanbanDao 구하기
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @return KanbanDao
+	 */
 	private KanbanDao getKanbanDao() {
 		return sqlSession.getMapper(KanbanDao.class);
 	}
 	
+	/**
+	 * ProjectDao 구하기
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @return ProjectDao
+	 */
 	private ProjectDao getProjectDao() {
 		return sqlSession.getMapper(ProjectDao.class);
 	}

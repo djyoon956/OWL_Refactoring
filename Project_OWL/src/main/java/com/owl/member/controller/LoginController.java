@@ -42,9 +42,10 @@ public class LoginController {
 	
 	@Autowired
 	private ProjectService projectSerivce;
+	
 	@Autowired
 	private JavaMailSender mailSender;
-
+	
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
 	
@@ -66,6 +67,14 @@ public class LoginController {
     @Autowired
     private OAuth2Parameters googleOAuth2Parameters;
 
+    /**
+     * 로그인 페이지 이동
+     * @author 윤다정
+     * @since 2020/01/29
+     * @param session
+     * @param model
+     * @return String
+     */
 	@RequestMapping(value = "Login.do", method = RequestMethod.GET)
 	public String showView(HttpSession session,Model model) {
 		String naverUrl = naverService.getAuthorizationUrl(session);
@@ -79,12 +88,18 @@ public class LoginController {
 		return "member/login";
 	}
 	
+	/**
+	 * 로그인 완료후 메인화면 이동
+     * @author 윤다정
+     * @since 2020/01/29
+	 * @param request
+	 * @param principal
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping(value = "Main.do")
 	public String showMainView(HttpServletRequest request, Principal principal, Model model) {
 		Member member = service.getMember(principal.getName());
-		System.out.println("member 정보");
-		System.out.println(member);
-		System.out.println(request.getServletContext().getRealPath("upload"));
 		request.getSession().setAttribute("member", member);
 		request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
 
@@ -94,15 +109,28 @@ public class LoginController {
 		projectList = projectSerivce.getProjectLists(member.getEmail());
 		model.addAttribute("projectList", projectList);
 
-
 		return "member/main";
 	}
 	
+	/** 
+	 * 로그인 화면 이동
+     * @author 윤다정
+     * @since 2020/01/29
+	 * @return String
+	 */
 	@RequestMapping(value = "ReturnLogin.do")
 	public String returnLogin() {
 		return "member/login";
 	}
 
+	/**
+	 * kakao로 로그인 시 회원가입 여부 확인 후 메인 이동
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param code
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "KakaoLogin.do", produces = "application/json")
 	public String kakaoLogin(@RequestParam("code") String code, HttpSession session) throws Exception {
 		Member member = kaKaoService.getMemberInfo(code);
@@ -113,7 +141,17 @@ public class LoginController {
 		return "member/main";
 	}
 
-
+	/**
+	 * naver로 로그인 시 회원가입 여부 확인 후 메인 이동
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param code
+	 * @param state
+	 * @param session
+	 * @param model
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping("NaverLogin.do")
 	public String naverLogin(@RequestParam String code, @RequestParam String state, HttpSession session, Model model)
 			throws IOException {
@@ -124,13 +162,17 @@ public class LoginController {
 
 		return "member/main";
 	}
-	
-	private void snsJoinCheck(Member member) {
-		if (service.getMember(member.getEmail()) == null)
-			service.insertMember(member);
-	}
 
-	//구글 로그인 Controller
+	/**
+	 * google로 로그인 시 회원가입 여부 확인 후 메인 이동
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param code
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "GoogleLogin.do")
     public String doSessionAssignActionPage(String code, HttpServletRequest request, Model model) throws Exception {
 		Member member= googleService.getMemberInfo(code);
@@ -141,11 +183,15 @@ public class LoginController {
         return "member/main"; 
     }
 
-	@RequestMapping("Lock.do")
-	public String showLockView() {
-		return "member/lock";
-	}
-
+	/**
+	 * 로그인 화면 요청
+	 * @param projectIdx
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param session
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
 	public String login(int projectIdx, HttpSession session, Model model) {
 		String naverUrl = naverService.getAuthorizationUrl(session);
@@ -159,6 +205,13 @@ public class LoginController {
 		return "member/login";
 	}
 
+	/**
+	 * 회원가입 화면 요청
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping(value = "Register.do", method = RequestMethod.POST)
 	public String showRegister( Model model) {
 		model.addAttribute("show", "join");
@@ -166,6 +219,15 @@ public class LoginController {
 		return "member/login";
 	}
 	
+	/**
+	 * 회원가입 완료 멤버에게 이메일 발송
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param member
+	 * @param model
+	 * @param request
+	 * @return String
+	 */
 	@RequestMapping(value = "EmailConfirm.do", method = RequestMethod.POST)
 	public String emailConfirm(Member member, Model model, HttpServletRequest request) {
 		String imagefilename = member.getMultipartFile().getOriginalFilename();
@@ -181,7 +243,6 @@ public class LoginController {
 			result = service.insertMember(member);
 
 			if (result) {
-				System.out.println("여기는 true");
 				MimeMessage message = mailSender.createMimeMessage();
 				MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 				Map<String, Object> models = new HashMap<String, Object>();
@@ -198,28 +259,29 @@ public class LoginController {
 
 				model.addAttribute("mail", member.getEmail());
 				model.addAttribute("show", "joinEmail");
-
-				// viewpage="redirect:Login.do";
-
 			} else {
-				System.out.println("여기는 else");
 				model.addAttribute("show", "join");
-
-				// viewpage="redirect:Login.do";
 			}
 		} catch (Exception e) {
 			System.out.println("이거 에러..>" + e.getMessage());
 			model.addAttribute("show", "join");
-
 		}
 
 		return "member/login";
 	}
 	
+	/**
+	 * 초대 회원으로 이메일 인증 없이 바로 로그인 화면 요청
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param member
+	 * @param model
+	 * @param request
+	 * @return String
+	 */
 	@RequestMapping(value = "EmailConfirmPass.do")
 	public String emailConfirmPass(Member member, Model model, HttpServletRequest request) {
 		String imagefilename = member.getMultipartFile().getOriginalFilename();
-		boolean result = false;
 		try {
 			if (!imagefilename.equals("")) { // 실 파일 업로드
 				String uploadpath = request.getServletContext().getRealPath("upload");
@@ -239,10 +301,16 @@ public class LoginController {
 		return "member/login";
 	}
 
+	/**
+	 * 회원가입 이메일인증 완료 
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param memberId
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping(value = "EmailConfirmOk.do")
 	public String emailConfirmOK(String memberId, Model model) {
-		System.out.println("EmailConfirmOk.do");
-		System.out.println(memberId);
 		service.joinMemberOk(memberId);
 
 		model.addAttribute("show", "joinOk");
@@ -250,6 +318,13 @@ public class LoginController {
 		return "index";
 	}
 	
+	/**
+	 * 프로젝트에 초대된 멤버인지 확인
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param request
+	 * @param email
+	 */
 	private void checkJoinProjectMember(HttpServletRequest request, String email) {
 		if (request.getSession().getAttribute("joinProjectIdx") != null) {
 			int projectIdx = Integer.parseInt(request.getSession().getAttribute("joinProjectIdx").toString());
@@ -257,5 +332,16 @@ public class LoginController {
 			request.getSession().removeAttribute("joinProjectIdx");
 			request.getSession().removeAttribute("joinProjectPm");
 		}
+	}
+	
+	/**
+	 * sns 로그인시 회원가입 이력없으면 가입
+	 * @author 윤다정
+     * @since 2020/01/29
+	 * @param member
+	 */
+	private void snsJoinCheck(Member member) {
+		if (service.getMember(member.getEmail()) == null)
+			service.insertMember(member);
 	}
 }

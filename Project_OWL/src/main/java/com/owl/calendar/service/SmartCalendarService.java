@@ -89,6 +89,12 @@ public class SmartCalendarService {
 		return calendars;
 	}
 
+	/**
+	 * SmartCalendarDao 구하기
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @return SmartCalendarDao
+	 */
 	private SmartCalendarDao getSmartCalendarDao() {
 		return sqlSession.getMapper(SmartCalendarDao.class);
 	}

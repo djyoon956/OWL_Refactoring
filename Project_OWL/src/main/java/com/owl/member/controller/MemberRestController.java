@@ -39,15 +39,17 @@ public class MemberRestController {
 	private MemberService service;
 
 	@Autowired
-	private ProjectService projectService;
-
-	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	/**
+	 * 비밀번호 찾기 요청
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param email
+	 * @return Map<String, Object>
+	 */
 	@RequestMapping(value = "ForgotPassword.do")
-	public Map<String, Object> findPassword(String email) throws Exception {
-		System.out.println("ForgotPassword");
-		System.out.println(email);
+	public Map<String, Object> findPassword(String email) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean isMember = false;
 		String message = "";
@@ -125,25 +127,16 @@ public class MemberRestController {
 		return result;
 	}
 
-	@RequestMapping("PageChage.do")
-	public ModelAndView test(String page, String projectIdx, Principal principal) {
-		String view = "";
-		ModelAndView mv = new ModelAndView();
-
-		if (page.startsWith("dash"))
-			view = "dashBoard/dashBoard";
-		else if (page.startsWith("calendar"))
-			view = "calendar/calendar2";
-		else if (page.startsWith("project")) {
-			view = "project/main";
-			mv.addObject("project", projectService.getProjectList(Integer.parseInt(projectIdx), principal.getName()));
-		}
-
-		mv.setViewName(view);
-
-		return mv;
-	}
-
+	/**
+	 * 테마 변경
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param cmd
+	 * @param value
+	 * @param request
+	 * @param principal
+	 * @return
+	 */
 	@RequestMapping("SettingChange.do")
 	public Setting settingChange(String cmd, String value, HttpServletRequest request, Principal principal) {
 		System.out.println(value);
@@ -195,6 +188,4 @@ public class MemberRestController {
 		}
 		return member;
 	}
-	
-	
 }

@@ -16,17 +16,20 @@ import com.owl.project.service.ProjectService;
 public class SmartCalendarController {
 
 	@Autowired
-	private SmartCalendarService service;
-
-	@Autowired
 	private ProjectService projectService;
 
+	/**
+	 * my calendar 화면 이동
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param principal
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("Calendar.do")
 	public String showView(Principal principal, Model model) {
 		List<ProjectList> projects = projectService.getProjectLists(principal.getName());
 		model.addAttribute("projectList", projects);
 		return "calendar/calendar";
 	}
-	
-	
 }

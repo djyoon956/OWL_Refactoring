@@ -37,26 +37,32 @@ public class MemberService {
 		return result;
 	}
 
+	/**
+	 * 이메일 인증 거치기 전 회원 가입
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param member
+	 * @return
+	 */
 	public boolean insertMember(Member member) {
-		System.out.println("insertMember service in");
-		System.out.println(member.toString());
 		MemberDao userDao = getMemberDao();
 
 		boolean result = false;
-
 		try {
 			result = userDao.insertMember(member) > 0 ? true : false;
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println("result는? " + result);
+		} 
 		return result;
 	}
 
-	// 미완성
+	/**
+	 * 이메일 인증 
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param email
+	 * @return
+	 */
 	public boolean joinMemberOk(String email) {
 		MemberDao userDao = getMemberDao();
 		boolean result = false;
@@ -75,36 +81,53 @@ public class MemberService {
 		return result;
 	}
 
+	/**
+	 * 멤버 수정
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param member
+	 * @return
+	 */
 	public boolean updateMember(Member member) {
 		MemberDao userDao = getMemberDao();
 		boolean result = false;
 
 		try {
 			result = userDao.updateMember(member) > 0 ? true : false;
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} 
 
 		return result;
 	}
 
+	/** 
+	 * 멤버 삭제
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param email
+	 * @return boolean
+	 */
 	public boolean deleteMember(String email) {
 		MemberDao userDao = getMemberDao();
 		boolean result = false;
 
 		try {
 			result = userDao.deleteMember(email) > 0 ? true : false;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 
 		return result;
 	}
 
+	/**
+	 * 멤버 정보 가져오기
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param email
+	 * @return Member
+	 */
 	public Member getMember(String email) {
 		MemberDao userDao = getMemberDao();
 		Member member = null;
@@ -120,6 +143,12 @@ public class MemberService {
 		return member;
 	}
 
+	/** 
+	 * 전체 멤버 가져오기
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @return List<Member>
+	 */
 	public List<Member> getMembers() {
 		MemberDao userDao = getMemberDao();
 		List<Member> members = new ArrayList<Member>();
@@ -135,15 +164,19 @@ public class MemberService {
 		return members;
 	}
 
+	/**
+	 * 회원 가입된 이메일인지 확인
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param email
+	 * @return boolean
+	 */
 	public boolean emailCheck(String email) {
-		System.out.println("emailcheck service in");
-		System.out.println("email" + email);
 		MemberDao dao = getMemberDao();
 
 		boolean result = false;
 		try {
 			result = dao.emailCheck(email) != null ? true : false;
-			System.out.println("email result : " + result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -167,6 +200,13 @@ public class MemberService {
 		return result;
 	}
 
+	/**
+	 * 회원 테마 설정 가져오기
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param email
+	 * @return Setting
+	 */
 	public Setting getSetting(String email) {
 		MemberDao dao = getMemberDao();
 		Setting setting = new Setting();
@@ -187,6 +227,15 @@ public class MemberService {
 		return setting;
 	}
 
+	/**
+	 * 회원 테마 변경
+ 	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param email
+	 * @param column
+	 * @param value
+	 * @return boolean
+	 */
 	public boolean updateSetting(String email, String column, String value) {
 		System.out.println(email);
 		System.out.println(column);
@@ -204,6 +253,12 @@ public class MemberService {
 		return result;
 	}
 
+	/**
+	 * MemberDao 구하기
+	 * @author 윤다정
+	 * @since 2020/01/29 
+	 * @return MemberDao
+	 */
 	private MemberDao getMemberDao() {
 		return sqlSession.getMapper(MemberDao.class);
 	}
