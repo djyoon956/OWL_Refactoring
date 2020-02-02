@@ -67,7 +67,6 @@ function setDetailData(boardIdx){
 }
 
 function setNoticeData() {
-	console.log("in setNoticeData");
 	 $.ajax({
 		type: "POST",
 		url: "GetNotices.do",
@@ -224,6 +223,7 @@ function noticeEditOk() {
 	        }
 	    });
 }
+
 function deleteFIle(fileIdx){
 	$.ajax({
 		url : "DeleteFile.do",
@@ -240,6 +240,7 @@ function deleteFIle(fileIdx){
 		}
 	})
 }
+
 function changeNoticeView(view){
 	if(view == "noticeBox"){
 		detailNoticeIdx = 0;

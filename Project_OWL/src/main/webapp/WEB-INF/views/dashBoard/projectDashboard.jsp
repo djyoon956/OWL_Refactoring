@@ -88,9 +88,9 @@ function refreshScheduleVisibility() {
 
 </script>  
 <style>
-.tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container{
-display: none;
-}
+	.tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container{
+	display: none;
+	}
 </style>	 
             <!-- CONTENT MAIN -->
             <div class="container-fluid" style="padding:20px">
