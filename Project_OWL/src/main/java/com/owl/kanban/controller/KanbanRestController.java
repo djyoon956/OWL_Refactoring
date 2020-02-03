@@ -117,23 +117,7 @@ public class KanbanRestController {
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							, @RequestParam(value = "colIdx") int colIdx
 							, Principal principal, HttpServletRequest request) {	
-		/*
-		System.out.println("in InsertIssue.do");
-		System.out.println("insertIssue controller in");
-		System.out.println(projectIdx);
-		System.out.println(issueTitle);
-		System.out.println(content);
-		System.out.println(assigned);
-		System.out.println("labelIdx 나오니" + labelIdx);
-		System.out.println(dueDate);
-		System.out.println(orderNum);
-		System.out.println(priorityCode);
-		System.out.println(multipartFiles);
-		System.out.println(multipartFiles.size());
-		System.out.println("칼럼");
-		System.out.println(colIdx);
-		*/
-		System.out.println(dueDate + "듀 데이트 ");
+
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
@@ -156,8 +140,6 @@ public class KanbanRestController {
 			}
 		}
 
-		//System.out.println("issue");
-		//System.out.println(issue);
 		boolean result = false;
 		
 		Issue collist = null;
