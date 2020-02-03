@@ -241,7 +241,8 @@ function initKanban(projectIdx){
 		 				//푸시 알람 함수...
 		 				var sender = curName;
 		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
-		 				sendNoticePushToOne(email, sender, $('#issueTitle').val());
+		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + $('#pmemail').val());
+		 				sendNewIssuePush($('#pmemail').val(), sender, $('#issueTitle').val());
 		 				
 		 				
 		 			    let formData = new FormData();
