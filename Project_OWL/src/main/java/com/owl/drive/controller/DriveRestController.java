@@ -182,6 +182,16 @@ public class DriveRestController {
 		return service.deleteFolderFromDrive(driveIdx);
 	}
 	
+	@RequestMapping(value="DeleteFolderAndFile.do", method = RequestMethod.POST)
+	public boolean deleteFolderAndFileFromDrive(String driveIdxList, String driveFileIdxList) {
+		boolean result = false;
+		System.out.println(driveIdxList);
+		System.out.println(driveFileIdxList);
+			service.deleteFolderAndFileFromDrive(driveIdxList, driveFileIdxList);		
+		return result;
+	}
+	
+	
 	/**
 	 * 드라이브 폴더 전체 List 출력
 	 * @author 이정은

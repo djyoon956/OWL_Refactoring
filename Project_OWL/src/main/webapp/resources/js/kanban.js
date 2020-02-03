@@ -232,12 +232,15 @@ function initKanban(projectIdx){
 		 				if($('#isContent').val() == ""){
 		 					warningAlert("내용을 작성해주십시오");
 		 					return; 
-		 				}		
-		 				//console.log('InsertIssueBtn 클릭되니1');
-		  				//console.log('InsertIssueBtn 클릭되니1');
-		 				//console.log('labelIdx :' + $('#labelIdx').val());
-		 				console.log("날짜 val ");
-		 				console.log($('#datepicker-autoclose').val());
+		 				}	
+		 				
+		 				//푸시 알람 함수...
+		 				var sender = curName;
+		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
+		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + $('#pmemail').val());
+		 				sendNewIssuePush($('#pmemail').val(), sender, $('#issueTitle').val());
+		 				
+		 				
 		 			    let formData = new FormData();
 		 			    formData.append("projectIdx",projectIdx);
 
@@ -988,7 +991,7 @@ function editLabel(idx, color, name) {
 						labellist += '</datalist>';
 						$('#searchContent').append(labellist);
 					}else if(flagelement == "editDetail"){
-						let llist = ""; 
+						let llist = '<option value="">select</option>'; 
 		                $.each(data, function(index, element) {
 		                 	 llist += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
 		                 });
@@ -1092,7 +1095,9 @@ function editLabel(idx, color, name) {
 				} else if(flagelement == 'editDetail') { 
 					console.log("프로젝트 멤버 리스트 editDetail ----");
 					console.log(data);
+
 					let selectoption = '<option value="">Select</option>';
+
 					let optmember;
 					$('#assignedEdit').append(selectoption);
 		             $.each(data, function(index, element) {
@@ -1171,6 +1176,8 @@ function editLabel(idx, color, name) {
 	}
 	
 	function editIssueLabelOk() {
+		console.log("라벨 idx ");
+		console.log( $('#labelIdxEdit').val());
 		$.ajax({
 			url : "UpdateIssueLabel.do",
 		    method : "POST",
@@ -1342,3 +1349,41 @@ function editLabel(idx, color, name) {
 	
 	}
 
+	function kanbanDetailBackBtn() {
+	      if($("#issueDetailTitle").hasClass("hidden")){
+	      $("#editTitleBox").addClass("hidden");
+	      $("#issueDetailTitle").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailContent").hasClass("hidden")){
+	      $("#editContentBox").addClass("hidden");
+	      $("#issueDetailContent").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailAssignees").hasClass("hidden")){
+	      $("#editAssignedBox").addClass("hidden");
+	      $("#issueDetailAssignees").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailLabel").hasClass("hidden")){
+	      $("#editLabelBox").addClass("hidden");
+	      $("#issueDetailLabel").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailDueDate").hasClass("hidden")){
+	      $("#editDuedateBox").addClass("hidden");
+	      $("#issueDetailDueDate").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailPriority").hasClass("hidden")) {
+	      $("#editPriorityBox").addClass("hidden");
+	      $("#issueDetailPriority").removeClass("hidden");
+	      }
+	      
+	      if($("#kanbanFileBox").hasClass("hidden")) {
+	      $("#kanbanFileBox").addClass("hidden");
+	      //$("#issueDetailPriority").removeClass("hidden");
+	      }
+	      //setChageView("kanban");
+	      changeKanbanView('list');
+	   }
