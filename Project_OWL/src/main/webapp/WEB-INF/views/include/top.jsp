@@ -800,6 +800,7 @@ display: block;
 	<!-- firebase cloud messaging... for sending notification -->
 	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-messaging.js"></script>
  <script>
+ 		
       console.log("value : " + '${member.name}');
       const curName = "${member.name}";
       const curEmail = "${member.email}"; 
@@ -866,7 +867,7 @@ display: block;
 			console.log("token 파베 디비 저장 함수.....");
 			var cbGetToekn = function(token){ 
 				console.log('setLogin fcmId get : ', token);
-				sendNotification(token,"Team--1", "오늘도 열심히~~") 
+				sendNotification(token,"Team--1", "오늘도 열심히~~"); 
 				var userUid = curUserKey; 
 				var fcmIdRef= database.ref('FcmId/' +userUid); 
 				fcmIdRef.set(token); 
@@ -905,8 +906,8 @@ display: block;
 		                 contentType : 'application/json',
 		                 dataType: 'json',
 		                 data: JSON.stringify({"to": msgTo,  "priority" : "high", "notification": {"title": title,"body":msg}}),
-		                 success : alert("Success")            ,
-		                 error : alert("Fail")
+		                 success : console.log("sendNotification Success")            ,
+		                 error : console.log("sendNotification Fail") 
 		             }) ;
 			}
 
