@@ -285,7 +285,7 @@ function sendFileToServer(formData,status){
 			                <a href='#' onclick='ReturnCheck()'><i class='fas fa-times'></i></a>
 		               	</div>		               	
 		               	<div id="allCheck" class="hidden">
-		               		<button type='button' class='driveBtn btn-primary'>삭제</button>&nbsp;&nbsp;
+		               		<button type='button' class='driveBtn btn-primary' onclick='allRemove()'>삭제</button>&nbsp;&nbsp;
 		               		<button type='button' class='driveBtn btn-primary'>이동</button>&nbsp;&nbsp;		               		
 							<button type='button' class='driveBtn btn-primary' onclick='ReturnCheck()'>선택해제</button>&nbsp;&nbsp;
 		               	</div>
