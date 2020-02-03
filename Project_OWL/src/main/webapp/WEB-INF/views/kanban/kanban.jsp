@@ -128,17 +128,18 @@
 </style>
 
 <script>
+/*
   $(function(){
 
 
-/* 	$('#addLabelModal').on('show.bs.modal', function() { 	//프로젝트 내 라벨 리스트 출력 
+ 	$('#addLabelModal').on('show.bs.modal', function() { 	//프로젝트 내 라벨 리스트 출력 
 		let projectidx = ${project.projectIdx};
 		getLabelList("ShowLabelList", projectidx);
 
-	}); */
+	}); 
 
 
-/* 	$('#addLabelModal').on('hidden.bs.modal', function() {  
+ 	$('#addLabelModal').on('hidden.bs.modal', function() {  
 			$('#labelcolor').val("");
 			$('#labelname').val("");
 			
@@ -159,10 +160,10 @@
          	$("#-99Column").removeClass("d-none");
      		$("#-1Column").hide();
      		$("#-99Column").show();
-          }); */
+          }); 
 
      	
-/* 	$("#InsertColumnBtn").on("click", function () {	
+ 	$("#InsertColumnBtn").on("click", function () {	
 		console.log("InsertColumnBtn in");
 			$.ajax({
 				url : 'InsertColumn.do',
@@ -214,12 +215,11 @@
 		        	errorAlert("Column 추가 error");
 					}
 				});
-	}); */
-
+	}); 
 
 
 	
-/* 	$('#addIssueModal').on('hidden.bs.modal', function(){
+ 	$('#addIssueModal').on('hidden.bs.modal', function(){
 		console.log('hidden 작동하니?');
 		
 		$('#issueTitle').val("");
@@ -233,15 +233,15 @@
 		//$('#datepicker-autoclose').remove();
 		//$('#priorityCode').find('option:first').attr('selected', 'selected');
 		
-	}); */
+	}); 
 
 
-/* 	$('#addColumnModal').on('hidden.bs.modal', function() {  
+ 	$('#addColumnModal').on('hidden.bs.modal', function() {  
 		$('#colname').val("");
-	}); */
+	}); 
 	
 
-/* 	$("#addLabelBtn").on("click", function () {	
+ 	$("#addLabelBtn").on("click", function () {	
 
 		let lcolor = false;
 		let lname = false;
@@ -270,10 +270,10 @@
 			
 		}else {return false;}
 
-		}); */
+		}); 
 
 	
-/*     $("#editColumnBtn").click(function() {
+   $("#editColumnBtn").click(function() {
         $.ajax({
         	url : 'UpdateColumn.do',
         	data : { 'colname' : $("#editcolName").val(),'projectIdx' : ${project.projectIdx},'colIdx' :  $("#editcolIdx").val()}, 
@@ -287,11 +287,11 @@
             	errorAlert("칼럼 수정 error");
             }
         });
-    }); */
+    }); 
 
 
 
-/* 	  $('#replyBtn').click (function() {
+	  $('#replyBtn').click (function() {
 		  
 		let replyct = $('#replycontent').val();
 		  console.log(replyct);
@@ -314,12 +314,12 @@
 						}
 					})   
 			}
-		})  */
+		}) 
 
-/* $('#projectIdxNum').val( ${project.projectIdx}); */
+ $('#projectIdxNum').val( ${project.projectIdx}); 
 
-});
-</script>
+});*/
+</script> 
 
 <div id="totalbody" class="container-fluid pt-3">
 <input type="hidden" id="projectIdxNum">
