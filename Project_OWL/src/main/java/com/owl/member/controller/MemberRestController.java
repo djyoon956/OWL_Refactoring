@@ -19,13 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.owl.helper.UploadHelper;
 import com.owl.member.dto.Member;
 import com.owl.member.dto.Setting;
 import com.owl.member.service.MemberService;
-import com.owl.project.service.ProjectService;
 
 @RestController
 public class MemberRestController {
@@ -35,6 +33,7 @@ public class MemberRestController {
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
 
+	@Autowired
 	private MemberService service;
 
 	@Autowired
@@ -138,7 +137,6 @@ public class MemberRestController {
 	 */
 	@RequestMapping("SettingChange.do")
 	public Setting settingChange(String cmd, String value, HttpServletRequest request, Principal principal) {
-		System.out.println(value);
 		if(value.equals("rgb(128, 128, 128)"))
 			value = "black";
 		boolean result = service.updateSetting(principal.getName(), cmd.toUpperCase(), value);
