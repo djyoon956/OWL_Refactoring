@@ -2,14 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<script>
-
-  $(function(){
-
-	console.log('${member.name}');
-	console.log('디테일에서는?ㅠㅠㅠㅠㅠ');
-});
-</script> 
 
 <div class="container-fluid mt-2 hidden" style="padding: 25px;" id="kanbanDetailBox" >	
 	<input type="hidden" id="issueIdxNum">
@@ -134,7 +126,7 @@
                 </div>
                   <div class="row container-fluid">
 						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
-						<textarea id="replycontent" class="editable" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('${project.projectIdx}')}"></textarea>
+						<input type="text" id="replycontent" class="editable" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('${project.projectIdx}')}">
 						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px" onClick="addReply('${member.name}')">Comment</button>
             </div>
         </div>

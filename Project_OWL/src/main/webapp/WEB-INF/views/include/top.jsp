@@ -959,7 +959,7 @@ display: block;
 
 
 
-		function sendNoticePushToOne(email, title, msg) {
+		function sendNewIssuePush(email, title, msg) {
 				var myRootRef = database.ref();
 				myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
 				data.forEach(function(childSnapshot) {
@@ -970,7 +970,7 @@ display: block;
 							const mytoken = fcmSnapshot.val();
 							console.log("title: " + title);
 							console.log("msg: " + msg);
-							sendNotification(mytoken, title, msg);
+							sendNotification(mytoken, "새로운 이슈 생성 by " +title, msg);
 						});
 			       });
 				})		      

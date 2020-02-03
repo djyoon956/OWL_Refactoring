@@ -4,14 +4,10 @@ let editIdx = 0;
 
 
 let words = new Array();
-let words1 = new Array();
+let wordsemail = new Array();
 
 let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
-
-
-	
-
 
 
 function initKanban(projectIdx){
@@ -241,7 +237,8 @@ function initKanban(projectIdx){
 		 				//푸시 알람 함수...
 		 				var sender = curName;
 		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
-		 				sendNoticePushToOne(email, sender, $('#issueTitle').val());
+		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + $('#pmemail').val());
+		 				sendNewIssuePush($('#pmemail').val(), sender, $('#issueTitle').val());
 		 				
 		 				
 		 			    let formData = new FormData();
@@ -1117,11 +1114,8 @@ function editLabel(idx, color, name) {
 					$.each(data, function(index, obj){
 						
 						words.push(obj.name);
-						words1.push(obj.email);
-						
-				
+						wordsemail.push(obj.email);
 					});
-					
 				}
 			}, error : function() {
 
@@ -1320,11 +1314,14 @@ function editLabel(idx, color, name) {
 	}
 	
 
-	
 	function mentionSearch(projectIdx) {
 
 		 getProjectMemberList("mentionSearch",projectIdx);
-
+ 
+		 console.log('mentionSearch in');
+		 console.log(words);
+		 console.log(wordsemail);
+		 
     	//멘션
 	  $('.editable').textcomplete([{
 		  
@@ -1338,11 +1335,55 @@ function editLabel(idx, color, name) {
 		    replace: function (word) {
 		      return '@' + word + ' ';
 		    }
-		  }]);
+		  }]).on({
+			  'textComplete:select': function (e, value) {				
+				  
+				  let num = e.isTrigger;
+				  
+				  
+			  }
+			  
+		  });
 	  
-	  
-	  
-	  
+
 	
 	}
 
+	function kanbanDetailBackBtn() {
+	      if($("#issueDetailTitle").hasClass("hidden")){
+	      $("#editTitleBox").addClass("hidden");
+	      $("#issueDetailTitle").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailContent").hasClass("hidden")){
+	      $("#editContentBox").addClass("hidden");
+	      $("#issueDetailContent").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailAssignees").hasClass("hidden")){
+	      $("#editAssignedBox").addClass("hidden");
+	      $("#issueDetailAssignees").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailLabel").hasClass("hidden")){
+	      $("#editLabelBox").addClass("hidden");
+	      $("#issueDetailLabel").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailDueDate").hasClass("hidden")){
+	      $("#editDuedateBox").addClass("hidden");
+	      $("#issueDetailDueDate").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailPriority").hasClass("hidden")) {
+	      $("#editPriorityBox").addClass("hidden");
+	      $("#issueDetailPriority").removeClass("hidden");
+	      }
+	      
+	      if($("#kanbanFileBox").hasClass("hidden")) {
+	      $("#kanbanFileBox").addClass("hidden");
+	      //$("#issueDetailPriority").removeClass("hidden");
+	      }
+	      //setChageView("kanban");
+	      changeKanbanView('list');
+	   }

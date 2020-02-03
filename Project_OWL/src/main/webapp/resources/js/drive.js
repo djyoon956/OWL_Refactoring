@@ -265,7 +265,7 @@ function setIconView(data){
 		control += '<div class="col-sm-3">'
 					+ 	'<div class="card driveCard dropdown folder" id="'+element.driveIdx+'" style="cursor:pointer;" ondblclick="changeSelectedFolder('+element.driveIdx+',\''+element.folderName+'\')">'
 					+ 		'<div class="more"  style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-					+			'<input type="checkbox"  onclick="checkBox(this)" style="width:18px; height:18px;">'
+					+			'<input type="checkbox" id="checkfolder"  onclick="checkBox(this)" style="width:18px; height:18px;">'
 					+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
 					+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
 					+				'</a>'
@@ -303,7 +303,7 @@ function setIconView(data){
 		control += '<div class="col-sm-3">'
 					+ 	'<div class="card driveCard dropdown" id="'+element.driveFileIdx+'">'
 					+ 		'<div class="more" style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
-					+			'<input type="checkbox" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
+					+			'<input type="checkbox" id="checkfile" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
 					+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
 					+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
 					+				'</a>'
@@ -376,6 +376,39 @@ function setTableView(data){
 			$('#driveTable').DataTable().draw();
 		})
 	//}
+}
+function allRemove(){
+	Swal.fire({
+	    title: '선택하신 을 삭제하시겠습니까?',
+	    text: '해당 파일은 휴지통으로 이동합니다.',
+	    imageUrl: 'https://i.imgur.com/vxFBTRJ.png',
+	    imageWidth: 150,
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    confirmButtonText: '삭제',
+	    cancelButtonText: '취소'
+	  }).then((result) => {
+	    if (result.value) {
+	    	if($('input:checkbox[id="checkfolder"]').is(":checked") == true)
+	    		console.log($("#checkfolder").parent().parent().attr("id"));
+	    	return;
+	    	$.ajax({
+	   		 url : "DeleteFolderAndFile.do",
+	   		 data : {driveFileIdx : driveFileIdx},
+	   		 success : function(data){
+	   			 if(data){
+	   				 callDirectoryData();
+	   			 }else{
+	   				 errorAlert("파일 삭제 실패");
+	   			 }
+	   		 },
+	   		 error : function(){
+	   			 errorAlert("파일 삭제 실패");
+	   		 }
+	   	 })  
+	   }         
+	});
 }
 
 function deleteDriveFile(driveFileIdx){
