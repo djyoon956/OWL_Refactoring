@@ -4,6 +4,8 @@ let editIdx = 0;
 
 
 let words = new Array();
+let words1 = new Array();
+
 let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
 
@@ -622,8 +624,7 @@ function deleteColumn(obj){
 
 
 function addKanbanIssue(colIdx,obj){
-	console.log('뭐니??????????????????????????');
-	console.log(obj);
+
 	let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;				
 
 	
@@ -1073,11 +1074,16 @@ function editLabel(idx, color, name) {
 			url : "GetProjectMemberList.do",
 			data : {'projectIdx' : projectidx},
 			success : function(data) {
+				console.log('뭘까!!!!!!!!!!!!!!!!!!!!!!');
+				console.log(data);
+				
 				$('#assignedEdit').empty();
 				console.log('GetProjectMemberList in');
 				console.log(data);
 				
 				if(flagelement == 'searchMember'){
+					console.log('뭘까!!!!!!!!!!!!!!!!!!!!!!');
+					console.log(data);
 					
 					var memberlist = '<datalist id="MemberMenu">';
 
@@ -1109,6 +1115,8 @@ function editLabel(idx, color, name) {
 					$.each(data, function(index, obj){
 						
 						words.push(obj.name);
+						words1.push(obj.email);
+						
 				
 					});
 					
@@ -1280,10 +1288,16 @@ function editLabel(idx, color, name) {
 
 					$('#assigned').append(selectoption);
 	                $('#labelIdx').append(selectoption);
-					
+
 	               $.each(member, function(index, element) {
+	            	   
+	            	   if(element.authority == 'ROLE_PM') {
+	            		   let appendCtn = '<input type="hidden" id="pmemail" value="'+element.email+'">';
+	            		   $('#addIssueModal').append(appendCtn);
+	            	   }
+	            	  
 						optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
-	                 });
+	               });
 	               
 	               $('#assigned').append(optmember);
 
@@ -1321,6 +1335,10 @@ function editLabel(idx, color, name) {
 		      return '@' + word + ' ';
 		    }
 		  }]);
+	  
+	  
+	  
+	  
 	
 	}
 
