@@ -16,8 +16,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getNoticesByProjectIdx" resultType="com.owl.notice.dto.Notice">
-		SELECT BOARDIDX, EMAIL, TITLE, CONTENT, WRITEDATE, READNUM
-			FROM owl.BOARD
+		SELECT B.BOARDIDX, B.EMAIL, B.TITLE, B.CONTENT, B.WRITEDATE, B.READNUM, M.NAME
+			FROM owl.BOARD B JOIN owl.MEMBER M ON B.EMAIL = M.EMAIL
 		WHERE PROJECTIDX = #{projectIdx}
 	</select>
 	

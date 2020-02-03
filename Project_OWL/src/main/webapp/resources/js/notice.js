@@ -76,7 +76,7 @@ function setNoticeData() {
 				$('#noticeTable').DataTable().row.add( [
 					  	++index,
 						element.title,
-						element.email,
+						element.name,
 						element.writeDate,
 						element.readNum
 			        ]).node().id = element.boardIdx;
