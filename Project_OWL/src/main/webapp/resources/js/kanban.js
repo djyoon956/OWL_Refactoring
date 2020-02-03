@@ -306,7 +306,6 @@ function initKanban(projectIdx){
 		 	     		$("#-99Column").hide();
 		 	     		$("#-1Column").show();
 		 	          });
-
 		 	         
 		 	         $("#closeIssueBtn").click(function() {
 		 	         	$("#-99Column").removeClass("d-none");
@@ -315,8 +314,9 @@ function initKanban(projectIdx){
 		 	          });
 
 		 			
-		 			
+
 		 	    	$("#InsertColumnBtn").on("click", function () {	
+
 		 	   		console.log("InsertColumnBtn in");
 		 	   			$.ajax({
 		 	   				url : 'InsertColumn.do',
@@ -460,6 +460,64 @@ function initKanban(projectIdx){
 		 				}) 	
 
 } //initKanban 끝
+
+
+	/* function insertColumn() {	
+	   		//console.log("InsertColumnBtn in");
+	   			$.ajax({
+	   				url : 'InsertColumn.do',
+	   				data : {'projectIdx' : projectIdx, 'colname' : $('#colname').val()},
+	   				success : function(data) {
+	   			
+	   					if(data != null) {
+	   		        		 console.log('data : ' + data);
+	   		        		addColumn(data);
+
+	       					$( ".sortableCol").sortable({
+	       				        connectWith: ".connectedSortable",
+	       				        dropOnEmpty: true,
+	       				        update: function(event, ui) {
+	   								let target = $(ui.item).attr("id").replace("Issue","");
+	   								let columnIdx = $(this).parent().attr("id").replace("Column","");
+	   								let issues = [];
+	   								$.each($(this)[0].children, function(){
+	   									issues.push($(this).attr("id").replace("Issue","").trim())
+	   								})
+	   								
+	   								if(issues.length == 0)
+	   									return;
+	   								
+	   								$.ajaxSettings.traditional = true; 
+	   								$.ajax({
+	   									type : "POST",
+	   									url : "MoveIssue.do",
+	   									data : { 	projectIdx :  projectIdx
+	   												, targetIssueIdx : target
+	   												, columnIdx : columnIdx
+	   												, issues : issues },
+	   									success : function(data) {
+	   										console.log("success move issue");
+	   									},
+	   									error: function() {
+	   										console.log("error move issue");
+	   									}
+	   								})
+	          				        }       
+	       				     }).disableSelection();
+
+	   		        		$('#addColumnModal').modal("hide");
+	   					}else {
+	   						errorAlert("Column 추가 실패");
+	   					}
+	   				},
+	   				error : function(e) {
+	   		        	errorAlert("Column 추가 error");
+	   					}
+	   				});
+	   	};
+
+*/
+
 
 
 function searchAppend(data) {

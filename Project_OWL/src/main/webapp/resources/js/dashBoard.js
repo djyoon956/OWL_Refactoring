@@ -18,7 +18,6 @@ function setMainDashBoard(){
          "ordering" : false,
          "searching": false,
          "lengthChange": false,
-         "sScrollY": "270px",
 	});
 	
 	$.ajax({
@@ -52,7 +51,6 @@ function setProjectDashBoard(projectIdx){
          "ordering" : false,
          "searching": false,
          "lengthChange": false,
-         "sScrollY": "270px",
          "columnDefs": [ {
              "searchable": false,
              "orderable": false,
@@ -169,7 +167,7 @@ function setTimeLineByProject(projectIdx){
 			$("#dashboardPTimeLine ul:first").empty();
 			$.each(data, function(key, value){
 					let control = "<li><p class='float-right' style='margin-right: 15px;'>"+((key==today)?"Today":key)+"</p>"
-									+ "<span style='background-color: "+value[0].projectColor+"'>"+value[0].projectName+"</span>";
+									+ "<span style='background-color: "+value[0].projectColor+"; color : "+getTextColorFromBg(value[0].projectColor)+"'>"+value[0].projectName+"</span>";
 
 					$.each(value, function(index, element){
 						control += "<p>"+element.subject+"</p>";
@@ -409,7 +407,7 @@ function getTimeLineDateFormat(date){
 	let week = new Array('일', '월', '화', '수', '목', '금', '토'); 
 	let year = date.getFullYear(); 
 	let month = (date.getMonth() + 1) < 10? "0"+(date.getMonth() + 1):(date.getMonth() + 1); 
-	let day = date.getDate(); 
+	let day = (date.getDate()) < 10? "0"+(date.getDate() ):(date.getDate()); 
 	let dayName = week[date.getDay()];
 	
 	return year+"-"+month+"-"+day+" ("+dayName+")";
@@ -448,51 +446,35 @@ function setMyIssueTaskByProject(projectIdx){
 }
 
 function setProjectMemberProgress(projectIdx){
-	//GetProjectMemberProgress.do
 	$.ajax({
 		url : "GetProjectMemberProgress.do",
 		data : {projectIdx : projectIdx },
 		success : function(data){
-			console.log("in setProjectMemberProgress success");
-			console.log(data);
-			//dashBoardMemberProgress
 			let labels = [];
-			let completes = [];
 			let totals = [];
+			let completes = [];
 			$.each(data.member, function(index, element){
 				labels.push(element.memberName);
+				totals.push(0);
+				completes.push(0);
 			})
+
 			$.each(data.progress, function(index, element){
-				
+				let labelIndex = labels.indexOf(element.assignedName);
+				totals[labelIndex] = element.openCount;
+				completes[labelIndex] = element.closeCount;
 			})
-			
-			console.log(labels);
+
 			let barChartData = {
 					labels: labels,
 					datasets: [{
 						label: 'Complete',
 						backgroundColor: " #326295",
-						data: [
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor()
-						]
+						data: completes
 					}, {
 						label: 'Total',
 						backgroundColor: "#d9d9d9",
-						data: [
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor(),
-							randomScalingFactor()
-						]
+						data: totals
 					}]
 				};
 			
@@ -509,6 +491,7 @@ function setProjectMemberProgress(projectIdx){
 						intersect: false
 					},
 					responsive: true,
+					maintainAspectRatio: false,
 					scales: {
 						xAxes: [{
 							stacked: true,

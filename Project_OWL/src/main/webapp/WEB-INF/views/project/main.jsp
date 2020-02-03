@@ -327,6 +327,10 @@
     	    	$("#-1Column").hide();
     	       }    
  	       function outProject(){
+ 	 	     if("${project.authority}" == 'ROLE_PM'){
+ 	 	    		warningAlert("프로젝트 매니저 양도를 먼저해주십시오.");
+					return; 
+ 	 	     } else {
  	    	  Swal.fire({
  	    		  title: '[${project.projectName}] 탈퇴',
  	    		  text: "정말로 프로젝트에서 나가시겠습니까?",
@@ -368,6 +372,7 @@
 						})
  	    		  }
  	    		})
+ 	 	     }	
  	       }
  	       function deleteMember(memberEmail) {
  	    	  Swal.fire({
