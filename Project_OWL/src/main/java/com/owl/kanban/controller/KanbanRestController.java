@@ -117,23 +117,7 @@ public class KanbanRestController {
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							, @RequestParam(value = "colIdx") int colIdx
 							, Principal principal, HttpServletRequest request) {	
-		/*
-		System.out.println("in InsertIssue.do");
-		System.out.println("insertIssue controller in");
-		System.out.println(projectIdx);
-		System.out.println(issueTitle);
-		System.out.println(content);
-		System.out.println(assigned);
-		System.out.println("labelIdx 나오니" + labelIdx);
-		System.out.println(dueDate);
-		System.out.println(orderNum);
-		System.out.println(priorityCode);
-		System.out.println(multipartFiles);
-		System.out.println(multipartFiles.size());
-		System.out.println("칼럼");
-		System.out.println(colIdx);
-		*/
-		System.out.println(dueDate + "듀 데이트 ");
+
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
@@ -156,24 +140,18 @@ public class KanbanRestController {
 			}
 		}
 
-		//System.out.println("issue");
-		//System.out.println(issue);
 		boolean result = false;
 		
 		Issue collist = null;
 		
 		collist = service.insertIssue(issue, multipartFiles, request.getServletContext().getRealPath("upload"));
 
-		System.out.println("collist : " + collist);
 		return collist;
 	}
 	
 	
 	@RequestMapping("InsertLabel.do")
 	public int insertLabel(Label label) {
-		System.out.println("insertLabel function in");
-		System.out.println("label : " + label);
-		System.out.println(label.getProjectIdx() + "/" + label.getLabelColor() + "/" + label.getLabelIdx() + "/" + label.getLabelName());
 
 		Label lb = new Label();
 		lb.setLabelColor(label.getLabelColor());
@@ -210,7 +188,6 @@ public class KanbanRestController {
 	
 	@RequestMapping(value="GetAddIssueForm.do", method = RequestMethod.POST)
 	public Map<String, Object> getIssueform(int projectIdx) {
-		System.out.println("getIssueform controller in");
 		Map<String, Object> object = new HashMap<>();
 		
 		object = service.getIssueform(projectIdx);
@@ -235,13 +212,7 @@ public class KanbanRestController {
 	
 	@RequestMapping("UpdateLabel.do")
 	public int UpdateLabel(Label label) {
-		System.out.println("UpdateLabel in");
-		
-		System.out.println(label.getProjectIdx());
-		System.out.println(label.getLabelIdx());
-		System.out.println(label.getLabelColor());
-		System.out.println(label.getLabelName());
-		
+
 		Label lb = new Label();
 		lb.setLabelIdx(label.getLabelIdx());
 		lb.setLabelColor(label.getLabelColor());
@@ -262,26 +233,20 @@ public class KanbanRestController {
 	
 	@RequestMapping(value="DeleteLabel.do", method = RequestMethod.POST)
 	public boolean deleteLabel(@RequestParam(value = "labelIdx") int labelIdx) {
-		System.out.println("label controller in+++++++++++++++");
 		boolean result = false;
 		result = service.deleteLabel(labelIdx);
-		System.out.println("delete label " + result);
 		return result;
 	}
 	
 	@RequestMapping(value = "CloseIssue.do", method = RequestMethod.POST)
 	public boolean closeIssue(@RequestParam(value = "issueIdx") int issueIdx, Principal principal) {
 		boolean result = service.closeIssue(issueIdx, principal.getName());
-		//result.getIssueProgress(issueIdx);
 		return result;
 	}
 	
 	
 	@RequestMapping(value = "ReopenIssue.do", method = RequestMethod.POST)
 	public boolean reopenIssue(@RequestParam(value = "issueIdx") int issueIdx, Principal principal) {
-		System.out.println("reopenIssue in!!!!!!!!!");
-		System.out.println("issueIdx : " + issueIdx);
-		System.out.println(principal.getName());
 		boolean result = service.reopenIssue(issueIdx, principal.getName());
 		//result.getIssueProgress(issueIdx);
 		return result;
@@ -290,8 +255,6 @@ public class KanbanRestController {
 	
 	@RequestMapping(value="InsertReply.do",method = RequestMethod.POST)
 	public Reply insertReply(Reply reply) {
-		System.out.println("insertReply function in");
-		System.out.println("reply : " + reply);
 		
 		Reply re = null;
 		re = service.insertReply(reply);
@@ -302,10 +265,8 @@ public class KanbanRestController {
 	
 	@RequestMapping(value="DeleteReply.do", method = RequestMethod.POST)
 	public boolean deleteReply(@RequestParam(value = "issuerlyidx") int issuerlyidx) {
-		System.out.println("label controller in+++++++++++++++");
 		boolean result = false;
 		result = service.deleteReply(issuerlyidx);
-		System.out.println("delete Reply " + result);
 		return result;
 	}
 	
@@ -318,27 +279,25 @@ public class KanbanRestController {
 	 */
 	@RequestMapping(value="EditReply.do", method = RequestMethod.POST)
 	public boolean editReply(Reply reply) {
-		System.out.println(reply);
 		boolean result = false;
 		
 		return service.editReply(reply);
 	}
+	
 	@RequestMapping(value="UpdateIssueTitle.do", method = RequestMethod.POST)
 	public boolean updateIssueTitle(Issue issue,Principal principal) {
-		System.out.println("updateIssueTitle in");
-		System.out.println(issue);
 		boolean result = service.updateIssueTitile(issue, principal.getName());
 		
 		return result;
 	}
+	
 	@RequestMapping(value="UpdateIssueContent.do", method = RequestMethod.POST)
 	public boolean updateIssueContent(Issue issue,Principal principal) {
-		System.out.println("updateIssueContent in");
-		System.out.println(issue);
 		boolean result = service.updateIssueContent(issue, principal.getName());
 		
 		return result;
 	}
+	
 	@RequestMapping(value="UpdateIssuePriority.do", method = RequestMethod.POST)
 	public boolean updateIssuePriority(Issue issue,Principal principal) {
 		System.out.println("updateIssueTitle in");
@@ -347,13 +306,14 @@ public class KanbanRestController {
 		
 		return result;
 	}
+	
 	@RequestMapping(value="UpdateIssueDuedate.do", method = RequestMethod.POST)
 	public boolean updateIssueDuedate(@RequestParam(value = "dueDate", required = false) String dueDate,
 			int issueIdx, Principal principal) {
 		System.out.println("updateIssueDuedate in  듀데이트 ");
 		System.out.println(dueDate);
 		Issue issue = new Issue();
-	//	
+
 		issue.setIssueIdx(issueIdx);
 		if(!dueDate.isEmpty()) {
 			try {
@@ -365,27 +325,27 @@ public class KanbanRestController {
 		boolean result = service.updateIssueDuedate(issue, principal.getName());
 		return result;
 	}
+	
 	@RequestMapping(value="UpdateIssueAssgined.do", method = RequestMethod.POST)
 	public boolean updateIssueAssgined(Issue issue,Principal principal) {
-		System.out.println("updateIssueTitle in");
-		System.out.println(issue);
 		boolean result = service.updateIssueAssgined(issue, principal.getName());
 		
 		return result;
 	}
+	
 	@RequestMapping(value="UpdateIssueLabel.do", method = RequestMethod.POST)
 	public boolean updateIssueLabel(Issue issue,Principal principal) {
-		System.out.println("updateIssueLabel in");
-		System.out.println(issue);
 		boolean result = service.updateIssueLabel(issue, principal.getName());
 		
 		return result;
 	}
+	
 	@RequestMapping(value = "DeleteIssueFile.do", method = RequestMethod.POST)
 	public boolean deleteFile(int fileIdx) {
 		System.out.println(fileIdx);
 		return service.deleteIssueFile(fileIdx);
 	}
+	
 	@RequestMapping(value = "IssueFileEdit.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public boolean addIssueFile(@RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							  ,@RequestParam(value = "issueIdx") int issueIdx
@@ -402,6 +362,7 @@ public class KanbanRestController {
 
 		return result;
 	}
+	
 	/**
 	 * 칸반 assignee로 검색
 	 * @author 배인영
@@ -412,10 +373,7 @@ public class KanbanRestController {
 	 */
 	@RequestMapping("SearchAssignee.do")	
 	public List<Issue> searchAssignee(int projectIdx, String email){
-		System.out.println("searchAssignee in controller");
-		System.out.println(email);
 		List<Issue> issue = service.searchAssignee(projectIdx, email);
-		//System.out.println(issue);
 		return issue;
 	}
 	
@@ -431,8 +389,6 @@ public class KanbanRestController {
 		
 		System.out.println("searchLabel in controller");
 		List<Issue> issue = service.searchLabel(labelIdx);
-		System.out.println("이슈는??????");
-		System.out.println(issue);
 		return issue;
 	}
 	
@@ -449,8 +405,7 @@ public class KanbanRestController {
 		
 		System.out.println("searchPriority in controller");
 		List<Issue> issue = service.searchPriority(priorityidx);
-		System.out.println("이슈는??????");
-		System.out.println(issue);
+
 		return issue;
 	}
 	
@@ -466,7 +421,6 @@ public class KanbanRestController {
 		
 		System.out.println("getProjectMemberList in controller");
 		List<Member> member = service.getProjectMemberList(projectIdx);
-		System.out.println(member);
 		return member;
 	}
 	

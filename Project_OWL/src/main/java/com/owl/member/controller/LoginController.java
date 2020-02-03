@@ -102,13 +102,13 @@ public class LoginController {
 		Member member = service.getMember(principal.getName());
 		request.getSession().setAttribute("member", member);
 		request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
-
+		System.out.println("main.1");
 		checkJoinProjectMember(request, member.getEmail());
 		
 		List<ProjectList> projectList = null;
 		projectList = projectSerivce.getProjectLists(member.getEmail());
 		model.addAttribute("projectList", projectList);
-
+System.out.println("main.2");
 		return "member/main";
 	}
 	
@@ -182,28 +182,6 @@ public class LoginController {
 
         return "member/main"; 
     }
-
-	/**
-	 * 로그인 화면 요청
-	 * @param projectIdx
-	 * @author 윤다정
-     * @since 2020/01/29
-	 * @param session
-	 * @param model
-	 * @return String
-	 */
-	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
-	public String login(int projectIdx, HttpSession session, Model model) {
-		String naverUrl = naverService.getAuthorizationUrl(session);
-		String kakaoUrl = kaKaoService.getAuthorizationUrl();
-		String googleUrl = googleOAuth2Template.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-
-		model.addAttribute("naverUrl", naverUrl);
-		model.addAttribute("kakaoUrl", kakaoUrl);
-		model.addAttribute("googleUrl", googleUrl);
-		
-		return "member/login";
-	}
 
 	/**
 	 * 회원가입 화면 요청

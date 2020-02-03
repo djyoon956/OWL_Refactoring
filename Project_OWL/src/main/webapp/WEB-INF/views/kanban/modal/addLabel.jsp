@@ -2,25 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <style>
-/* .btn-link {
-	display: inline-block;
-	padding: 0;
-	font-size: inherit;
-	color: #0366d6;
-	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	background-color: initial;
-	border: 0;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-}
- */
+
 .link-gray {
     color: #586069!important;
 }

@@ -166,7 +166,6 @@ function generateSchedule(viewName) {
 		async: false,
 		success:function(data){
 	    	ScheduleList = [];
-	    	
 			$.each(data, function(index, element){
 		    	let calendar;
 		    	let schedule = new ScheduleInfo();
@@ -260,7 +259,7 @@ function refreshScheduleVisibility() {
             </div>
 
             <!-- CONTENT MAIN -->
-            <div class="container-fluid themeChange themeChangeLetter">
+            <div class="container-fluid themeChange themeChangeLetter" style="height: 800px;">
             <div class="row">
             <div class="col-md-2">
 			    <div id="lnb">

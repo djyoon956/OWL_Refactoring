@@ -3,18 +3,17 @@
 let noticeProjectIdx;
 function initNotice(projectIdx){
 	noticeProjectIdx = projectIdx;
-	console.log("notice init : "+noticeProjectIdx);
 	$('#noticeTable').DataTable({
 	 	stateSave: true, // 페이지 상태 저장
 	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         fixedColumns: true,
-        autoWidth: false
+        autoWidth: false,
+        "order": [[ 3, "desc" ]]
 	});
 	
 	$('#noticeTable_length select').attr("class","select2 form-control custom-select");
 	$('#noticeTable tbody').on('click', 'tr', function () {
-        let data = $('#noticeTable').DataTable().row( this ).data();
-        setDetailData(data[0]);
+        setDetailData($(this).attr("id"));
     });
 	
 	$("#noticeNote").summernote({
@@ -44,9 +43,8 @@ function setDetailData(boardIdx){
 		url: "GetNotice.do",
 		data: {boardIdx: boardIdx},
 		success: function (notice) {
-			console.log("노티스 ajax");
-			console.log(notice);
 			detailNoticeIdx = boardIdx;
+			setReadNum(boardIdx);
 			$("#noticeTitle").text(notice.title);
 			$("#noticeContent").html(notice.content);
 			
@@ -76,12 +74,13 @@ function setNoticeData() {
 				$('#noticeTable').DataTable().clear();
 				$.each(data, function (index, element) {
 				$('#noticeTable').DataTable().row.add( [
-						element.boardIdx,
+					  	++index,
 						element.title,
-						element.email,
+						element.name,
 						element.writeDate,
 						element.readNum
-			        ]).draw();
+			        ]).node().id = element.boardIdx;
+					$('#noticeTable').DataTable().draw();
 				})
 
 				$("#emptyNoticeBox").addClass("hidden");
@@ -179,9 +178,6 @@ function deleteNotice(){
 }
 
 function editNoticeSetView(){
-	
-	console.log($("#noticeFiles").text());
-	
 	$("#editTitle").val($("#noticeTitle").text());
 	$('#noticeEditNote').summernote('code',$("#noticeContent").html());
 	
@@ -189,16 +185,14 @@ function editNoticeSetView(){
 	$("#noticeEditMultipartFiles").val("");
 	  $.each($("#noticeFiles li"), function(i, item) {
 		  console.log(item);
-		  	var fileIndex = $(this).attr("id");
-		  	 console.log($(this).text());
-		  	console.log(fileIndex);
+		  	let fileIndex = $(this).attr("id");
 		  	let deleteIcon = "<div id= '" + fileIndex +"file'>" + $(this).text() + "<i class='far fa-times-circle font-weight-bold font-18 ml-1' style=' cursor: pointer;' onclick= 'deleteFIle("+ fileIndex +")'></i><div>";
 		    $("#noticeEditFiles").append( deleteIcon );
 	   });
 	changeNoticeView("editBox");
 }
+
 function noticeEditOk() {
-	//$('input:file').MultiFile('reset');
     let formData = new FormData();
     formData.append("boardIdx", $("#noticeBoardIdx").text());
     formData.append("content",$('#noticeEditNote').summernote('code'));
@@ -275,4 +269,13 @@ function changeNoticeView(view){
 	}
 }
 
-
+function setReadNum(boardIdx){
+	$.ajax({
+		url : "SetReadNum.do",
+		type : "POST",
+		data : {noticeIdx : boardIdx},
+		error : function(){
+			console.log("setReadNum error");
+		}
+	})
+}

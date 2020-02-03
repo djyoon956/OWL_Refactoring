@@ -16,7 +16,7 @@ public class LineChart {
 	private Date logTime;
 	private String projectName;
 	private String projectColor;
-	private String assigned;
+	private String creator;
 	
 	public String getLogTime() {
 		if (logTime == null)

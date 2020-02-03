@@ -1,10 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <script>
 
+  $(function(){
 
-</script>
+	console.log('${member.name}');
+	console.log('디테일에서는?ㅠㅠㅠㅠㅠ');
+});
+</script> 
+
 <div class="container-fluid mt-2 hidden" style="padding: 25px;" id="kanbanDetailBox" >	
 	<input type="hidden" id="issueIdxNum">
 	
@@ -37,7 +43,7 @@
                     </div> 
                     <div id="editContentBox" class="hidden">
                     <textarea class="form-control bg-light p-0" id="isContentEdit" name="content"></textarea>
-                    <button class="btn btn-primary" onclick="editIssueContentOk()">save</button>
+                    <button class="btn btn-primary  float-right" onclick="editIssueContentOk()">save</button>
                     </div>
                 </div>
 
@@ -69,7 +75,7 @@
                                </li>
                             </ul>
                             <input type="file" name="multipartFiles" id="multipartFilesIssueEdit" multiple="multiple" class="editIssueFileBtn hidden">
-                          	<button class="btn btn-primary editIssueFileBtn hidden" onclick="issueDetailFileEdit('${project.projectIdx}')" >save</button>
+                          	<button class="btn btn-primary editIssueFileBtn hiddenb" onclick="issueDetailFileEdit('${project.projectIdx}')" >save</button>
                            </div>
                          <div  class="col-1" >
 						 	<span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editIssueFileView()"style="cursor: pointer"></i>
@@ -129,9 +135,8 @@
                   <div class="row container-fluid">
 						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
 						<textarea id="replycontent" class="editable" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('${project.projectIdx}')}"></textarea>
-						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px">Comment</button>
+						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px" onClick="addReply('${member.name}')">Comment</button>
             </div>
-            
         </div>
         
         <!-- Option -->
@@ -250,6 +255,6 @@
         </div>
     </div>
     <div class="text-center mt-5">
-    	<button class="btn btn-primary mr-1" onclick="changeKanbanView('list')"><i class="fas fa-chevron-left"></i>뒤로가기</button>
+    	<button class="btn btn-primary mr-1" onclick="kanbanDetailBackBtn()"><i class="fas fa-chevron-left"></i>뒤로가기</button>
     </div>
 </div>
