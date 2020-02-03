@@ -1017,6 +1017,7 @@ function editLabel(idx, color, name) {
 		    data : {issueIdx : $("#issueIdxNum").val(), issueTitle : $("#issueDetailTitleEdit").val()},
 		    success : function(data){
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editTitleBox").addClass("hidden");
 				$("#issueDetailTitle").removeClass("hidden");
 		    }, error : function() {
@@ -1036,6 +1037,7 @@ function editLabel(idx, color, name) {
 		    data : {issueIdx : $("#issueIdxNum").val(), content :$('#isContentEdit').summernote('code')},
 		    success : function(data){
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");sss
 		    	$("#editContentBox").addClass("hidden");
 				$("#issueDetailContent").removeClass("hidden");
 		    }, error : function() {
@@ -1102,6 +1104,7 @@ function editLabel(idx, color, name) {
 		    data : {issueIdx : $("#issueIdxNum").val(), priorityCode : $('#priorityCodeEdit').val()},
 		    success : function(data){
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editPriorityBox").addClass("hidden");
 				$("#issueDetailPriority").removeClass("hidden");
 		    }, error : function() {
@@ -1120,6 +1123,7 @@ function editLabel(idx, color, name) {
 		    	console.log("UpdateIssueDuedate.do");
 		    	console.log(data);
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editDuedateBox").addClass("hidden");
 				$("#issueDetailDueDate").removeClass("hidden");
 		    }, error : function() {
@@ -1136,6 +1140,7 @@ function editLabel(idx, color, name) {
 		    data : {issueIdx : $("#issueIdxNum").val(), 'assigned' : $('#assignedEdit').val()},
 		    success : function(data){
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editAssignedBox").addClass("hidden");
 				$("#issueDetailAssignees").removeClass("hidden");
 		    }, error : function() {
@@ -1152,6 +1157,7 @@ function editLabel(idx, color, name) {
 		    data : {issueIdx : $("#issueIdxNum").val(), 'labelIdx' : $('#labelIdxEdit').val()},
 		    success : function(data){
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editLabelBox").addClass("hidden");
 				$("#issueDetailLabel").removeClass("hidden");
 		    }, error : function() {
@@ -1178,6 +1184,7 @@ function editLabel(idx, color, name) {
 			success : function(data){
 				if(data){
 					setKanbanDetail($("#issueIdxNum").val());
+					setChageView("kanban");
 					$(".editIssueFileBtn").removeClass("hidden");
 				} else
 					warningAlert("삭제 실패!");
@@ -1219,6 +1226,7 @@ function editLabel(idx, color, name) {
 	        	
 		        	if(data){
 		        		setKanbanDetail($("#issueIdxNum").val());
+		        		setChageView("kanban");
 		        		// $("#multipartFilesIssueEdit").empty();
 		        		 $(".editIssueFileBtn").removeClass("hidden");
 	        	}else{
