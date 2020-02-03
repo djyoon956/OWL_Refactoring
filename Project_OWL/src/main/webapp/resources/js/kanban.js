@@ -16,18 +16,6 @@ function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
 
-
-
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!');
-	console.log(curEmail);
-	console.log("-----------------------");
-	console.log(curName);
-	console.log(userEmail);
-	console.log(userName);
-	
-	
-	
-
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
 		//칸반으로 옮김 
@@ -246,12 +234,14 @@ function initKanban(projectIdx){
 		 				if($('#isContent').val() == ""){
 		 					warningAlert("내용을 작성해주십시오");
 		 					return; 
-		 				}		
-		 				//console.log('InsertIssueBtn 클릭되니1');
-		  				//console.log('InsertIssueBtn 클릭되니1');
-		 				//console.log('labelIdx :' + $('#labelIdx').val());
-		 				console.log("날짜 val ");
-		 				console.log($('#datepicker-autoclose').val());
+		 				}	
+		 				
+		 				//푸시 알람 함수...
+		 				var sender = curName;
+		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
+		 				sendNoticePushToOne(email, sender, $('#issueTitle').val());
+		 				
+		 				
 		 			    let formData = new FormData();
 		 			    formData.append("projectIdx",projectIdx);
 
