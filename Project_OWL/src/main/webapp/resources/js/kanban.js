@@ -306,7 +306,6 @@ function initKanban(projectIdx){
 		 	     		$("#-99Column").hide();
 		 	     		$("#-1Column").show();
 		 	          });
-
 		 	         
 		 	         $("#closeIssueBtn").click(function() {
 		 	         	$("#-99Column").removeClass("d-none");
