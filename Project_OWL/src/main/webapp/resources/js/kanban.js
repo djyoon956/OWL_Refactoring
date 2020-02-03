@@ -837,6 +837,7 @@ function reOpenIssue(issueIdx) {
 
 function changeKanbanView(view){
    if(view == "list"){
+   setChageView("kanban");
    $("#kanbanDetailBox").addClass("hidden");
    $("#kanbanMainBox").removeClass("hidden");
 }else if(view == "detail"){
@@ -1297,5 +1298,24 @@ function editLabel(idx, color, name) {
 		    }
 		  }]);
 	
+	}
+	
+	function kanbanDetailBackBtn() {
+		$("#editTitleBox").addClass("hidden");
+		$("#issueDetailTitle").removeClass("hidden");
+		$("#editContentBox").addClass("hidden");
+		$("#issueDetailContent").removeClass("hidden");
+		$("#editAssignedBox").addClass("hidden");
+		$("#assignedEdit").removeClass("hidden");
+		$("#editLabelBox").addClass("hidden");
+		$("#labelIdxEdit").removeClass("hidden");
+		$("#editDuedateBox").addClass("hidden");
+		$("#issueDetailDueDate").removeClass("hidden");
+		$("#editPriorityBox").addClass("hidden");
+		$("#issueDetailPriority").removeClass("hidden");
+		$("#kanbanFileBox").addClass("hidden");
+		$("#issueDetailPriority").removeClass("hidden");
+		//setChageView("kanban");
+		changeKanbanView('list');
 	}
 

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -43,7 +43,7 @@
                     </div> 
                     <div id="editContentBox" class="hidden">
                     <textarea class="form-control bg-light p-0" id="isContentEdit" name="content"></textarea>
-                    <button class="btn btn-primary" onclick="editIssueContentOk()">save</button>
+                    <button class="btn btn-primary  float-right" onclick="editIssueContentOk()">save</button>
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@
                                </li>
                             </ul>
                             <input type="file" name="multipartFiles" id="multipartFilesIssueEdit" multiple="multiple" class="editIssueFileBtn hidden">
-                          	<button class="btn btn-primary editIssueFileBtn hidden" onclick="issueDetailFileEdit('${project.projectIdx}')" >save</button>
+                          	<button class="btn btn-primary editIssueFileBtn hiddenb" onclick="issueDetailFileEdit('${project.projectIdx}')" >save</button>
                            </div>
                          <div  class="col-1" >
 						 	<span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editIssueFileView()"style="cursor: pointer"></i>
@@ -255,6 +255,6 @@
         </div>
     </div>
     <div class="text-center mt-5">
-    	<button class="btn btn-primary mr-1" onclick="changeKanbanView('list')"><i class="fas fa-chevron-left"></i>뒤로가기</button>
+    	<button class="btn btn-primary mr-1" onclick="kanbanDetailBackBtn()"><i class="fas fa-chevron-left"></i>뒤로가기</button>
     </div>
 </div>
