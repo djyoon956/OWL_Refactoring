@@ -563,14 +563,21 @@ function searchAppend(data) {
       $.each(data, function(index, element) {
     	  
 			let labelnm = element.labelName == null ? "" : element.labelName;
-			let priorityCd = element.priorityCode == null ? "-" : element.priorityCode;
+			//let priorityCd = element.priorityCode == null ? "-" : element.priorityCode;
 			let dueDt = element.dueDate == null ? "-" : element.dueDate;
 			
+			if(element.priorityCode != null){
+				$(".searchpriority").addClass("priorityBadge "+element.priorityCode.toLowerCase());
+			} else{
+				$(".searchpriority").text("none");
+			}
+			
+			console.log(element.priorityCode);
     	  var control = "";
     	  	  control = '<tr><td class="text-center"><label><span class="badgeIcon" style="background-color:'+ element.labelColor+'">' + labelnm + '</span></td>'
 			 	      + '<td class="text-center"><a href="#" onclick="setKanbanDetail('+element.issueIdx+');">'+element.issueTitle+'</a></td>'
 			          + '<td class="text-center">'+element.assigned+'</td>'
-			          + '<td class="text-center">'+priorityCd+'</td>'
+			          + '<td class="text-center"><span class="searchpriority"></span></td>'
 			          + '<td class="text-center">'+dueDt+'</td></tr>';
     	  	  $('#searchBox').find('tbody').append(control);
       });
@@ -769,35 +776,26 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 						
-						console.log('element 뭐니?');
-						console.log(element);
+						//console.log('element 뭐니?');
+						//console.log(element);
 						
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
 
-        				// "<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
-						
-						let profile;
-						
-						/*if(element.profilePic == null) {
-							profile = element.creator.substring(0,1);
-						} */
-						
-						let creatornm =  element.creator.substring(0,1);
+                        console.log(element.profilePic);
+			
+						//let creatornm =  element.creator.substring(0,1);
 						
 						
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
-										//+ '		<div class="comment_img">'+creatornm+'</div>'
-										//+ '		<div class="comment_img">'
-										+ "<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
-										//+'</div>'
+										+ '<img class="rounded-circle" width="40" '+error+' src="upload/memeber/'+element.profilePic+'" alt="user" >'
 										+ '	</div>'
 										+ '	 <div class="comment-text w-100">'
 										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creator
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
 										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('+projectIdx+')}"></textarea>'
-/*										+ '		<input type="text" class="hidden inputBox" id="'+element.issueRlyIdx+'editContent">'*/										+ '		<div class="comment-footer float-right">'
+										+ '		<div class="comment-footer float-right">'
 										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
 										+ '		<button type="button" class="btn btn-info btn-sm hidden" id="'+element.issueRlyIdx+'editChangeBtn">SaveChange</button>'
@@ -1371,22 +1369,22 @@ function editLabel(idx, color, name) {
 		        return word.indexOf(term) === 0 ? word : null;
 		      }));
 		    },
+
 		    index: 1,
 		    replace: function (word) {
 		      return '@' + word + ' ';
 		    }
 		  }]).on({
-			  'textComplete:select': function (e, value) {				
+			  'textComplete:select': function (e, value) {	
 				  
+				  console.log(e);
+				  console.log(value);
 				  let num = e.isTrigger;
-				  
-				  
+				 
+				  console.log($(this)[0].value);
+				
 			  }
-			  
-		  });
-	  
-
-	
+		  }) ;
 	}
 
 	function kanbanDetailBackBtn() {
