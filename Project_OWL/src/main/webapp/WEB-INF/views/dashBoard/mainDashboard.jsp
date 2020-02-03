@@ -68,10 +68,7 @@ function MakeDataSet() {
     	let dayName = week[new Date().getDay()];
     	$.ajax({
     		url : "LineChart.do",
-    		success : function(data){ 
-        		console.log("LineChart-------");
-        		console.log(data);
-        		console.log(data.length);  			
+    		success : function(data){ 			
 				let group;
     			$.each(data, function(key, value){
         				//let theday = key (dayName)
@@ -89,13 +86,10 @@ function MakeDataSet() {
 						
 						dayCount = [0, 0, 0, 0, 0, 0, 0];		
     					$.each(group, function(key2, value2){   
-        					dayCount[new Date(key2).getDay()] = value2.length;			
-        					console.log(value2.length);		   					
+        					dayCount[new Date(key2).getDay()] = value2.length;			  					
     					}) 
     					theData.data=dayCount;	
 						LineData.push(theData);
-						console.log(theData);
-						console.log(LineData);
     			});
 				MyLineChart();
     		},

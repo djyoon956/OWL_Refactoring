@@ -47,15 +47,12 @@ public class KanbanService {
 			
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
-			
-			//System.out.println("???????" +issue.getIssueIdx()  +"/" +issue.getProjectIdx());
-			
+						
 			dao.updateAllIncrease(issue.getIssueIdx(), issue.getProjectIdx());
-			//System.out.println("issue idx 뭐니?" + issue.getIssueIdx());
 
-			//System.out.println("service : " +issue.getProjectIdx() + " /"  + issue.getIssueIdx());
 			if(result) {
 				colList = dao.getIssuebyIssueIdx(issue.getIssueIdx());
+				
 			}
 
 			insertLog(issue.getIssueIdx(), "Opened this issue", issue.getCreator(), dao);
@@ -181,6 +178,8 @@ public class KanbanService {
 		
 		try {
 			issue = dao.getIssue(projectIdx);
+			//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			//System.out.println(issue);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
