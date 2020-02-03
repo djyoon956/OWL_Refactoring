@@ -4,29 +4,14 @@ let editIdx = 0;
 
 
 let words = new Array();
-let words1 = new Array();
+let wordsemail = new Array();
 
 let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
 
 
-	
-
-
-
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
-	
-
-
-
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!');
-	console.log(curEmail);
-	console.log("-----------------------");
-	console.log(curName);
-	
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!');
-	console.log('${project.authority}');
 	
 
 	//addIssueModal 모달이 오픈되면 !
@@ -1124,11 +1109,8 @@ function editLabel(idx, color, name) {
 					$.each(data, function(index, obj){
 						
 						words.push(obj.name);
-						words1.push(obj.email);
-						
-				
+						wordsemail.push(obj.email);
 					});
-					
 				}
 			}, error : function() {
 
@@ -1325,11 +1307,14 @@ function editLabel(idx, color, name) {
 	}
 	
 
-	
 	function mentionSearch(projectIdx) {
 
 		 getProjectMemberList("mentionSearch",projectIdx);
-
+ 
+		 console.log('mentionSearch in');
+		 console.log(words);
+		 console.log(wordsemail);
+		 
     	//멘션
 	  $('.editable').textcomplete([{
 		  
@@ -1343,11 +1328,17 @@ function editLabel(idx, color, name) {
 		    replace: function (word) {
 		      return '@' + word + ' ';
 		    }
-		  }]);
+		  }]).on({
+			  'textComplete:select': function (e, value) {				
+				  
+				  let num = e.isTrigger;
+				  
+				  
+			  }
+			  
+		  });
 	  
-	  
-	  
-	  
+
 	
 	}
 
