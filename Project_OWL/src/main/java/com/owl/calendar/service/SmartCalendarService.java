@@ -59,12 +59,12 @@ public class SmartCalendarService {
 		return result;
 	};
 	
-	public List<SmartCalendar> getMyAllCalendars(String email) {
+	public List<SmartCalendar> getMyAllCalendars() {
 		SmartCalendarDao dao = getSmartCalendarDao();
 		
 		List<SmartCalendar> calendars = new ArrayList<SmartCalendar>();
 		try {
-			calendars = dao.getMyAllCalendars(email);
+			calendars = dao.getMyAllCalendars();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
