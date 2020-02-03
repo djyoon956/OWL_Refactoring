@@ -6,10 +6,14 @@
 
 
 <script>
-    const userEmail = "${member.email}";
-    const userName = "${member.name}";
-    console.log(userEmail + "/" + userName);
+    //const userEmail = "${member.email}";
+    //const userName = "${member.name}";
+    //console.log(userEmail + "/" + userName);
     $(function () {
+		$('#userImgTop').attr("src","upload/member/${member.profilePic}");
+		$('#userImgToggle').attr("src","upload/member/${member.profilePic}");
+		$("#userNameToggle").text("${member.name}");
+		$("#userEmailToggle").text("${member.email}");
 		
 		$("#userToggle").hide();
 		$("#alarmToggle").hide();
@@ -95,18 +99,6 @@
 		$("#chatNotideAside").addClass("hidden");
 		});
 
-	  //비동기로 정보 뿌리기
-	  $.ajax({
-  		url:"GetMyProfile.do",
-  		dataType:"json",
-  		success:function(data){
-      		$('#userImgTop').attr("src","upload/member/"+data.profilePic+"");
-      		$('#userImgToggle').attr("src","upload/member/"+data.profilePic+"");
-      		$("#userNameToggle").text(data.name);
-      		$("#userEmailToggle").text(data.email);
-  		}
-		});
-	
 	});
 
 	function Search(){
@@ -368,6 +360,7 @@ display: block;
 
 
 <header class="topbar" data-navbarbg="skin5">
+<input id="curUserEmail" type="hidden">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
         <div class="navbar-header">
             <!-- This is for the sidebar toggle which is visible on mobile only -->
@@ -805,7 +798,9 @@ display: block;
       const curName = "${member.name}";
       const curEmail = "${member.email}"; 
       const curProfilePic = "${member.profilePic}";
-     
+	  $('#curUserEmail').val(curEmail);
+	  console.log($('#curUserEmail').val());
+      
       const SPLIT_CHAR = '@spl@';
       var roomFlag;
 		var roomUserList; // 챗방 유저리스트  			
@@ -912,40 +907,75 @@ display: block;
 			}
 
 			
-		var messageTest = {
-		  data: {
-		    score: '850',
-		    time: '2:45'
-		  },
-		  token: registrationToken
-		};
+		function sendNoticePushAll(title, msg) {
+			$.ajax({
+					url: "MyProjectsMatesFull.do",
+					type: "POST",
+					dataType: 'json',
+					data : { email : curEmail
+						      }, 
+					success: function (data) {
+						console.log("뷰단으로 데이터 들어 오나요?? >" + data);
 
-		// Send a message to the device corresponding to the provided
-		// registration token.
-		//var admin = require("firebase-admin");
+					    var projectIdxGrouped = new Set();
+					    
+						$.each(data, function(index, value) {          				
+						  console.log(value);
+						  console.log("풀리스트" +value.name + " / " + value.email + " / " + value.profilePic + " / " + value.projectIdx);
+						  console.log(value.projectIdx);
+						  console.log(noticeProjectIdx);
+						  if(value.projectIdx == noticeProjectIdx){
+							  console.log("noticeProjectIdx : " +noticeProjectIdx);
+							  console.log("noticeProjectIdx : " + value.email);
+							  
+							  var userKey;
+							  
+							  
+							 var myRootRef = database.ref();
+				        	  myRootRef.child("Emails").orderByChild('email').equalTo(value.email).once('value', function(data){
+				        		  data.forEach(function(childSnapshot) {
+										userKey = childSnapshot.key;
+										console.log("targetuserkey..." + userKey);
+										database.ref("FcmId/"+userKey).once('value',fcmSnapshot => { 
+											console.log('FCM Token : ', fcmSnapshot.val()); 
+											const mytoken = fcmSnapshot.val();
+											console.log("title: " + title);
+											console.log("msg: " + msg);
+											sendNotification(mytoken, title, msg);
+										});
+			       		 		});
+				        	  })		      
+						  }	
+						});				
+					},
+					error: function(xhr, status, error){
+		  			console.log("풀리스트 불러오는 아잭스 에러 터짐 ㅠㅠ");
+				         var errorMessage = xhr.status + ': ' + xhr.statusText
+				         alert('Error - ' + errorMessage);
+				     } 
+				});
+		}
 
-		//var serviceAccount = require("path/to/serviceAccountKey.json");
-
-		/* admin.initializeApp({
-  		credential: admin.credential.cert(serviceAccount),
-  		databaseURL: "https://owl-chat-c27f1.firebaseio.com"
-		}); */
-		
-		/* function firstPushMsg() {
-			     
-			admin.messaging().send(messageTest)
-			  .then((response) => {
-			    // Response is a message ID string.
-			    console.log('Successfully sent message:', response);
-			  })
-			  .catch((error) => {
-			    console.log('Error sending message:', error);
-			  });
-
-			} */
 
 
-			
+
+		function sendNoticePushToOne(email, title, msg) {
+				var myRootRef = database.ref();
+				myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
+				data.forEach(function(childSnapshot) {
+					userKey = childSnapshot.key;
+					console.log("targetuserkey..." + userKey);
+					database.ref("FcmId/"+userKey).once('value',fcmSnapshot => { 
+							console.log('FCM Token : ', fcmSnapshot.val()); 
+							const mytoken = fcmSnapshot.val();
+							console.log("title: " + title);
+							console.log("msg: " + msg);
+							sendNotification(mytoken, title, msg);
+						});
+			       });
+				})		      
+					
+		}
 
 			
 	      //유저가 채팅기능 버튼을 눌렀을 때 작동하는 콜백 함수... 목적은.. firebase database 유저 정보저장(메세지 읽기, 쓰기를 위해 특정키 부여 누군인지 구분하기 위해 필요)
@@ -1471,7 +1501,7 @@ display: block;
           var userListUp = function(targetuid, name, userpic, email){
         	  var userProPic = 	(userpic ? 'resources/images/user/'+ userpic : 'resources/images/user/noprofile.png'); 
         	  let errorSource = "this.src='resources/images/login/profile.png'";
-        	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name + '" class="collection-item avatar list">' 
+        	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name+ '" data-useremail="' + email + '" class="collection-item avatar list">' 
         	  				  + '<div class="input-group "><div class="form-control pt-2 pb-2"><img src="' + userProPic + '"  alt="" class="circle mr-3" height="35" width="35" onerror="'+errorSource+'" >'+ name + '('+email+')'+
         	  				  '<i class="fas fa-globe font-20 mt-1 mr-1 userOnline"></i>'+
         	  				  '<i id ="userChecked" class="fas fa-check float-right font-20 mt-1 mr-1 hidden" style="color:red"></i>'+

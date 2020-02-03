@@ -121,24 +121,16 @@ public class MemberService {
 		return result;
 	}
 
-	/**
-	 * 멤버 정보 가져오기
- 	 * @author 윤다정
-	 * @since 2020/01/29
-	 * @param email
-	 * @return Member
-	 */
 	public Member getMember(String email) {
+		System.out.println("get memeber : " + email);
 		MemberDao userDao = getMemberDao();
 		Member member = null;
 
 		try {
 			member = userDao.getMember(email);
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} 
 
 		return member;
 	}

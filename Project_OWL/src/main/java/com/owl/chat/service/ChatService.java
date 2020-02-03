@@ -59,12 +59,12 @@ public class ChatService {
 	}
 	
 	// chat  같은 프로젝트에 있는 유저를 뽑아내는 함수 겹치는 사람도 같이 뽑는다..
-	public List<MyProjectsMates> getMyProjectsMatesFull(String email, String name) {
+	public List<MyProjectsMates> getMyProjectsMatesFull(String email) {
 				ChatDao dao = getChatDao();
 				List<MyProjectsMates> myprojectsmates = new ArrayList<MyProjectsMates>();
 				
 				try {
-					myprojectsmates = dao.getMyProjectsMatesFull(email,name);
+					myprojectsmates = dao.getMyProjectsMatesFull(email);
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				} catch (SQLException e) {

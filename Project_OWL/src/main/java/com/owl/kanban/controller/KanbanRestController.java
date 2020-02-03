@@ -59,7 +59,9 @@ public class KanbanRestController {
 	@RequestMapping("GetIssue.do")	
 	public List<Issue> getIssue(int projectIdx){
 		List<Issue> issue = service.getIssue(projectIdx);
-		//System.out.println(issue);
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*************");
+
+		System.out.println(issue);
 		return issue;
 	}
 	
