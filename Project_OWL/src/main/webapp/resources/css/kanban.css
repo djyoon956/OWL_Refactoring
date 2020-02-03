@@ -129,8 +129,7 @@ border : 1px solid #D5D4D4;
 	border-bottom-color: #F9AFA4;
 }
 
- #kanbanIn {
-/*  #kanbanArea, */
+ #kanbanIn, #kanbanArea{
 	height: 700px;
 	overflow-y: auto;
  	display: flex;
