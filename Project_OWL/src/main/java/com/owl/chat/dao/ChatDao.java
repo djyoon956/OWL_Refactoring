@@ -21,5 +21,5 @@ public interface ChatDao {
 	
 	public List<MyProjectsMates> getMyProjectsMates(String email, String name) throws ClassNotFoundException, SQLException;
 	
-	public List<MyProjectsMates> getMyProjectsMatesFull(String email, String name) throws ClassNotFoundException, SQLException;
+	public List<MyProjectsMates> getMyProjectsMatesFull(String email) throws ClassNotFoundException, SQLException;
 }

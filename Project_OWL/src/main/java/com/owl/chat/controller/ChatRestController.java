@@ -38,13 +38,13 @@ public class ChatRestController {
 	}
 	
 	@RequestMapping("MyProjectsMatesFull.do")
-	public List<MyProjectsMates> getMyProjectsMatesFull(String email, String name) {
+	public List<MyProjectsMates> getMyProjectsMatesFull(String email) {
 		System.out.println("나와 같은 프로젝트에 있는 사람들 뽑아내는 함수 타나요??");
-		System.out.println("뷰단에서 데이타 들어 오나요??" + email+ " / " + name);
+		System.out.println("뷰단에서 데이타 들어 오나요??" + email);
 		List<MyProjectsMates> result = new ArrayList<MyProjectsMates>();
 		
 		try {
-			result = service.getMyProjectsMatesFull(email, name);
+			result = service.getMyProjectsMatesFull(email);
 			System.out.println("디비에서 데이타 뽑히나요??? : " + result);
 			
 		} catch (Exception e) {
