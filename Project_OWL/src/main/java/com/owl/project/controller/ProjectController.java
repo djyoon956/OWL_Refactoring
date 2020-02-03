@@ -23,8 +23,6 @@ public class ProjectController {
 
 	@RequestMapping("Project.do")
 	public String showProject(int projectIdx, Principal	principal, Model model) {
-		System.out.println("showProject : " + projectIdx);
-		
 		List<ProjectList> projectList  = null;
 		projectList = service.getProjectLists(principal.getName());
 		model.addAttribute("projectList", projectList);
@@ -35,6 +33,17 @@ public class ProjectController {
 		return "project/main";
 	}
 
+	/**
+	 * 프로젝트 초대 메일 클릭
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param joinProjectIdx
+	 * @param projectName
+	 * @param joinProjectPm
+	 * @param request
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping(value = "AddProjectMemberOk.do", method = RequestMethod.POST)
 	public String addProjectMemberOk(int joinProjectIdx, String projectName, String joinProjectPm, HttpServletRequest request, Model model) {
 		model.addAttribute("projectName", projectName);
