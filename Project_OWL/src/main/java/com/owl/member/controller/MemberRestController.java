@@ -137,13 +137,9 @@ public class MemberRestController {
 	 */
 	@RequestMapping("SettingChange.do")
 	public Setting settingChange(String cmd, String value, HttpServletRequest request, Principal principal) {
-		String test1 = cmd.toUpperCase();
-		String test2 = value;
-		String test3 = principal.getName();
-
-		if(test2.equals("rgb(128, 128, 128)"))
-			test2 = "black";
-		boolean result = service.updateSetting("dbsekwjdaa@naver.com", "THEMECOLOR", "black");
+		if(value.equals("rgb(128, 128, 128)"))
+			value = "black";
+		boolean result = service.updateSetting(principal.getName(), cmd.toUpperCase(), value);
 		Setting setting = null;
 		if (result) {
 			setting = service.getSetting(principal.getName());
