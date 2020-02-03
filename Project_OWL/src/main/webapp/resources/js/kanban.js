@@ -294,8 +294,7 @@ function initKanban(projectIdx){
 		 			    });
 		 		 	});
 		 			
-		 			
-		 			
+
 		 			
 		 			$('#addLabelModal').on('show.bs.modal', function() { 	//프로젝트 내 라벨 리스트 출력 
 		 				//let projectidx = ${project.projectIdx};
@@ -422,8 +421,7 @@ function initKanban(projectIdx){
 		 			});
 		 			
 		 		
-		 		
-		 		
+
 		 		
 		 	    $("#editColumnBtn").click(function() {
 		 	        $.ajax({
@@ -444,7 +442,7 @@ function initKanban(projectIdx){
 		 	    
 		 	    
 		 	    
-		 		  $('#replyBtn').click (function() {
+/*		 		  $('#replyBtn').click (function() {
 		 			  
 		 				let replyct = $('#replycontent').val();
 		 				  console.log(replyct);
@@ -467,11 +465,36 @@ function initKanban(projectIdx){
 		 								}
 		 							})   
 		 					}
-		 				}) 	
+		 				}) */	
 
 } //initKanban 끝
 
 
+
+
+function addReply(creator) {
+
+	let replyct = $('#replycontent').val();
+	if(replyct == "" || replyct == null) {
+		return false;
+	}else {
+		  $.ajax ({
+		 		type :"POST",
+				url : "InsertReply.do",
+				data : { 'issueIdx' : $('#issueIdxNum').val()
+							, 'content': $('#replycontent').val()
+							, 'creator' : creator},
+				success : function(data) {
+					
+					  $('#replycontent').val("");
+			    		setKanbanDetail(data.issueIdx);
+
+				},error : function() {
+		        	errorAlert("InsertReply error");
+					}
+				})   
+		}
+	};	
 
 
 	/* function insertColumn() {	
@@ -746,18 +769,35 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 						
+						console.log('element 뭐니?');
+						console.log(element);
+						
+                        let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
+
+        				// "<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
+						
+						let profile;
+						
+						/*if(element.profilePic == null) {
+							profile = element.creator.substring(0,1);
+						} */
 						
 						let creatornm =  element.creator.substring(0,1);
+						
+						
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
-										+ '		<div class="comment_img">'+creatornm+'</div>'
+										//+ '		<div class="comment_img">'+creatornm+'</div>'
+										//+ '		<div class="comment_img">'
+										+ "<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
+										//+'</div>'
 										+ '	</div>'
 										+ '	 <div class="comment-text w-100">'
-										+ '		<h6 class="font-medium mb-2">'+element.creator
+										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creator
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
-										+ '		<input type="text" class="hidden inputBox" id="'+element.issueRlyIdx+'editContent">'
-										+ '		<div class="comment-footer float-right">'
+										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('+projectIdx+')}"></textarea>'
+/*										+ '		<input type="text" class="hidden inputBox" id="'+element.issueRlyIdx+'editContent">'*/										+ '		<div class="comment-footer float-right">'
 										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
 										+ '		<button type="button" class="btn btn-info btn-sm hidden" id="'+element.issueRlyIdx+'editChangeBtn">SaveChange</button>'

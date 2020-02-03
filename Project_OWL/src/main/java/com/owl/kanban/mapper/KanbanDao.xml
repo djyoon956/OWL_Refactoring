@@ -99,9 +99,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getIssueReplies" resultType="com.owl.kanban.dto.Reply">
-		SELECT ISSUEIDX, ISSUERLYIDX, CREATEDATE, CREATOR, CONTENT 
-			FROM owl.ISSUERLY
-		WHERE ISSUEIDX = #{issueIdx}
+		SELECT R.ISSUEIDX, R.ISSUERLYIDX, R.CREATEDATE, R.CREATOR, R.CONTENT, M.profilepic
+		FROM owl.ISSUERLY R LEFT JOIN owl.member M on R.creator = M.name
+		WHERE R.ISSUEIDX = #{issueIdx}
 	</select>
 
 	<update id="updateColumn" parameterType="com.owl.kanban.dto.Column">

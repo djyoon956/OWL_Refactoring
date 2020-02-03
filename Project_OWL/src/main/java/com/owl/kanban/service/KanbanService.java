@@ -306,8 +306,8 @@ public class KanbanService {
 			e.printStackTrace();
 		}
 
-		//System.out.println("in getIssueDetail service "+issueIdx);
-		//System.out.println(issue);
+		System.out.println("in getIssueDetail service "+issueIdx);
+		System.out.println(issue);
 		return issue;
 	}
 	

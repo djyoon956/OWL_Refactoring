@@ -17,7 +17,7 @@ public class Reply {
 	private String content;
 	private Date createDate;
 	private String creator;
-	
+	private String profilepic;
 	private String creatorName; //UI용
 	
 	public String getCreateDate() {
