@@ -43,7 +43,7 @@
             setTheme("${setting.themeColor}", "${setting.font}");
             initNotice("${project.projectIdx}");
             initKanban("${project.projectIdx}");
-            initDashBoard("${project.projectIdx}")
+            initDashBoard("${project.projectIdx}", "${project.projectColor}")
 
             $.ajax({
         		url:"GetProjectList.do",
