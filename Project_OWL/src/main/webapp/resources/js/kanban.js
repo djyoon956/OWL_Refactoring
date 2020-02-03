@@ -4,6 +4,8 @@ let editIdx = 0;
 
 
 let words = new Array();
+let words1 = new Array();
+
 let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
 
@@ -14,18 +16,6 @@ let ordernum = 1;
 
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
-	
-
-
-
-	console.log('!!!!!!!!!!!!!!!!!!!!!!!');
-	console.log(curEmail);
-	console.log("-----------------------");
-	console.log(curName);
-	console.log(userEmail);
-	console.log(userName);
-	
-	
 	
 
 	//addIssueModal 모달이 오픈되면 !
@@ -246,12 +236,14 @@ function initKanban(projectIdx){
 		 				if($('#isContent').val() == ""){
 		 					warningAlert("내용을 작성해주십시오");
 		 					return; 
-		 				}		
-		 				//console.log('InsertIssueBtn 클릭되니1');
-		  				//console.log('InsertIssueBtn 클릭되니1');
-		 				//console.log('labelIdx :' + $('#labelIdx').val());
-		 				console.log("날짜 val ");
-		 				console.log($('#datepicker-autoclose').val());
+		 				}	
+		 				
+		 				//푸시 알람 함수...
+		 				var sender = curName;
+		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
+		 				sendNoticePushToOne(email, sender, $('#issueTitle').val());
+		 				
+		 				
 		 			    let formData = new FormData();
 		 			    formData.append("projectIdx",projectIdx);
 
@@ -632,8 +624,7 @@ function deleteColumn(obj){
 
 
 function addKanbanIssue(colIdx,obj){
-	console.log('뭐니??????????????????????????');
-	console.log(obj);
+
 	let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;				
 
 	
@@ -1003,7 +994,7 @@ function editLabel(idx, color, name) {
 						labellist += '</datalist>';
 						$('#searchContent').append(labellist);
 					}else if(flagelement == "editDetail"){
-						let llist = ""; 
+						let llist = '<option value="">select</option>'; 
 		                $.each(data, function(index, element) {
 		                 	 llist += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
 		                 });
@@ -1083,11 +1074,16 @@ function editLabel(idx, color, name) {
 			url : "GetProjectMemberList.do",
 			data : {'projectIdx' : projectidx},
 			success : function(data) {
+				console.log('뭘까!!!!!!!!!!!!!!!!!!!!!!');
+				console.log(data);
+				
 				$('#assignedEdit').empty();
 				console.log('GetProjectMemberList in');
 				console.log(data);
 				
 				if(flagelement == 'searchMember'){
+					console.log('뭘까!!!!!!!!!!!!!!!!!!!!!!');
+					console.log(data);
 					
 					var memberlist = '<datalist id="MemberMenu">';
 
@@ -1102,7 +1098,9 @@ function editLabel(idx, color, name) {
 				} else if(flagelement == 'editDetail') { 
 					console.log("프로젝트 멤버 리스트 editDetail ----");
 					console.log(data);
+
 					let selectoption = '<option value="">Select</option>';
+
 					let optmember;
 					$('#assignedEdit').append(selectoption);
 		             $.each(data, function(index, element) {
@@ -1119,6 +1117,8 @@ function editLabel(idx, color, name) {
 					$.each(data, function(index, obj){
 						
 						words.push(obj.name);
+						words1.push(obj.email);
+						
 				
 					});
 					
@@ -1182,6 +1182,8 @@ function editLabel(idx, color, name) {
 	}
 	
 	function editIssueLabelOk() {
+		console.log("라벨 idx ");
+		console.log( $('#labelIdxEdit').val());
 		$.ajax({
 			url : "UpdateIssueLabel.do",
 		    method : "POST",
@@ -1290,10 +1292,16 @@ function editLabel(idx, color, name) {
 
 					$('#assigned').append(selectoption);
 	                $('#labelIdx').append(selectoption);
-					
+
 	               $.each(member, function(index, element) {
+	            	   
+	            	   if(element.authority == 'ROLE_PM') {
+	            		   let appendCtn = '<input type="hidden" id="pmemail" value="'+element.email+'">';
+	            		   $('#addIssueModal').append(appendCtn);
+	            	   }
+	            	  
 						optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
-	                 });
+	               });
 	               
 	               $('#assigned').append(optmember);
 
@@ -1331,6 +1339,10 @@ function editLabel(idx, color, name) {
 		      return '@' + word + ' ';
 		    }
 		  }]);
+	  
+	  
+	  
+	  
 	
 	}
 
