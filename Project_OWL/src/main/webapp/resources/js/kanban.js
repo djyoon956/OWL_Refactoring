@@ -1346,3 +1346,41 @@ function editLabel(idx, color, name) {
 	
 	}
 
+	function kanbanDetailBackBtn() {
+	      if($("#issueDetailTitle").hasClass("hidden")){
+	      $("#editTitleBox").addClass("hidden");
+	      $("#issueDetailTitle").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailContent").hasClass("hidden")){
+	      $("#editContentBox").addClass("hidden");
+	      $("#issueDetailContent").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailAssignees").hasClass("hidden")){
+	      $("#editAssignedBox").addClass("hidden");
+	      $("#issueDetailAssignees").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailLabel").hasClass("hidden")){
+	      $("#editLabelBox").addClass("hidden");
+	      $("#issueDetailLabel").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailDueDate").hasClass("hidden")){
+	      $("#editDuedateBox").addClass("hidden");
+	      $("#issueDetailDueDate").removeClass("hidden");
+	      }
+	      
+	      if($("#issueDetailPriority").hasClass("hidden")) {
+	      $("#editPriorityBox").addClass("hidden");
+	      $("#issueDetailPriority").removeClass("hidden");
+	      }
+	      
+	      if($("#kanbanFileBox").hasClass("hidden")) {
+	      $("#kanbanFileBox").addClass("hidden");
+	      //$("#issueDetailPriority").removeClass("hidden");
+	      }
+	      //setChageView("kanban");
+	      changeKanbanView('list');
+	   }
