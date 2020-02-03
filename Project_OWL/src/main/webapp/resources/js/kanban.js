@@ -315,7 +315,6 @@ function initKanban(projectIdx){
 		 	          });
 
 		 			
-		 			
 		 	    	$("#InsertColumnBtn").on("click", function () {	
 		 	   		console.log("InsertColumnBtn in");
 		 	   			$.ajax({
