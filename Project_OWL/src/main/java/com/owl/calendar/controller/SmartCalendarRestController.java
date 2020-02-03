@@ -78,9 +78,9 @@ public class SmartCalendarRestController {
 	}
 	
 	@RequestMapping(value="GetMyAllCalendars.do")
-	public List<SmartCalendar> getMyAllCalendars(){
+	public List<SmartCalendar> getMyAllCalendars(Principal principal){
 		List<SmartCalendar> calendar = null;
-		calendar = service.getMyAllCalendars();		
+		calendar = service.getMyAllCalendars(principal.getName());		
 		return calendar;
 	}
 	
