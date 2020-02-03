@@ -117,7 +117,14 @@ function writeNoticeOk(){
     $.each($("#noticeMultipartFiles")[0].files, function(i, file) {
     	formData.append('multipartFiles', file);
     });
-
+    
+    //푸쉬 알람 보내기. 이 함수의 위치는 top.jsp  아래쪽 스크립트에 있음...
+    sendNoticePushAll($("#title").val(), $('#noticeNote').summernote('code'));
+    
+    $(function(){
+    	console.log("sdlkfjsdlkfjsdlkfjdslkjf~~~~~~~~~~~~~~" + curName);
+    })
+    
     let notice;
     $.ajax({
         type: "POST",
@@ -142,6 +149,9 @@ function writeNoticeOk(){
         }
     });
 }
+
+
+
 
 function writeNoticeError(){
 	errorAlert("공지사항 작성 실패 ");

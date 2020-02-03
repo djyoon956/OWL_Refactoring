@@ -194,7 +194,7 @@
                 $("#-99Column > .columnBody").empty();
                 $("#kanbanIn").empty();
                 setKanbanData();
-            	setIssueData(); 
+            //	setIssueData(); 
             }
             else if (target === "notice")
                 setNoticeData();
@@ -295,7 +295,7 @@
 								})
        				        }       
     				     }).disableSelection();
-    				
+    					setIssueData();
     				},
     				 error : function() {
     					console.log("getColum.do error");

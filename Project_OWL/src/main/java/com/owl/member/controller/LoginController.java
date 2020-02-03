@@ -184,28 +184,6 @@ System.out.println("main.2");
     }
 
 	/**
-	 * 로그인 화면 요청
-	 * @param projectIdx
-	 * @author 윤다정
-     * @since 2020/01/29
-	 * @param session
-	 * @param model
-	 * @return String
-	 */
-	@RequestMapping(value = "Login.do", method = RequestMethod.POST)
-	public String login(int projectIdx, HttpSession session, Model model) {
-		String naverUrl = naverService.getAuthorizationUrl(session);
-		String kakaoUrl = kaKaoService.getAuthorizationUrl();
-		String googleUrl = googleOAuth2Template.buildAuthenticateUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-
-		model.addAttribute("naverUrl", naverUrl);
-		model.addAttribute("kakaoUrl", kakaoUrl);
-		model.addAttribute("googleUrl", googleUrl);
-		
-		return "member/login";
-	}
-
-	/**
 	 * 회원가입 화면 요청
 	 * @author 윤다정
      * @since 2020/01/29

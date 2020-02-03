@@ -1088,7 +1088,8 @@ function editLabel(idx, color, name) {
 				} else if(flagelement == 'editDetail') { 
 					console.log("프로젝트 멤버 리스트 editDetail ----");
 					console.log(data);
-					let selectoption = '<option value="">Select</option>';
+				//	let selectoption = '<option value="">Select</option>';
+					let selectoption;
 					let optmember;
 					$('#assignedEdit').append(selectoption);
 		             $.each(data, function(index, element) {
@@ -1317,20 +1318,40 @@ function editLabel(idx, color, name) {
 	}
 	
 	function kanbanDetailBackBtn() {
+		if($("#issueDetailTitle").hasClass("hidden")){
 		$("#editTitleBox").addClass("hidden");
 		$("#issueDetailTitle").removeClass("hidden");
+		}
+		
+		if($("#issueDetailContent").hasClass("hidden")){
 		$("#editContentBox").addClass("hidden");
 		$("#issueDetailContent").removeClass("hidden");
+		}
+		
+		if($("#issueDetailAssignees").hasClass("hidden")){
 		$("#editAssignedBox").addClass("hidden");
-		$("#assignedEdit").removeClass("hidden");
+		$("#issueDetailAssignees").removeClass("hidden");
+		}
+		
+		if($("#issueDetailLabel").hasClass("hidden")){
 		$("#editLabelBox").addClass("hidden");
-		$("#labelIdxEdit").removeClass("hidden");
+		$("#issueDetailLabel").removeClass("hidden");
+		}
+		
+		if($("#issueDetailDueDate").hasClass("hidden")){
 		$("#editDuedateBox").addClass("hidden");
 		$("#issueDetailDueDate").removeClass("hidden");
+		}
+		
+		if($("#issueDetailPriority").hasClass("hidden")) {
 		$("#editPriorityBox").addClass("hidden");
 		$("#issueDetailPriority").removeClass("hidden");
+		}
+		
+		if($("#kanbanFileBox").hasClass("hidden")) {
 		$("#kanbanFileBox").addClass("hidden");
-		$("#issueDetailPriority").removeClass("hidden");
+		//$("#issueDetailPriority").removeClass("hidden");
+		}
 		//setChageView("kanban");
 		changeKanbanView('list');
 	}
