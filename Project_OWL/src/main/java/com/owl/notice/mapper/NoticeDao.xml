@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getNoticesByProjectIdx" resultType="com.owl.notice.dto.Notice">
-		SELECT BOARDIDX, EMAIL, TITLE, CONTENT, WRITEDATE 
+		SELECT BOARDIDX, EMAIL, TITLE, CONTENT, WRITEDATE, READNUM
 			FROM owl.BOARD
 		WHERE PROJECTIDX = #{projectIdx}
 	</select>
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getNoticeFiles" resultType="com.owl.notice.dto.File">
-		SELECT FILEIDX, BOARDIDX, WRITER, FILENAME, FILESIZE 
+		SELECT FILEIDX, BOARDIDX, WRITER, FILENAME, FILESIZE
 			FROM owl.FILE
 		WHERE BOARDIDX  = #{boardIdx}
 	</select>
@@ -36,10 +36,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteNotice" parameterType="Integer">
 		DELETE FROM owl.BOARD WHERE BOARDIDX= #{noticeIdx}
 	</delete>
+	
 	<update id="updateNotice" parameterType="com.owl.notice.dto.Notice">
 		update owl.board set title = #{title}, content=#{content} where boardidx = #{boardIdx}
 	</update>
+	
 	<delete id="deleteFile" parameterType="Integer">
 		delete from owl.file where fileidx= #{fileIdx}
 	</delete>
+	
+	<update id="setReadNum" parameterType="Integer">
+		UPDATE owl.BOARD SET READNUM = (READNUM+1)
+		WHERE BOARDIDX = #{noticeIdx};
+	</update>
 </mapper>

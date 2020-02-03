@@ -148,6 +148,16 @@ public class NoticeService {
 		return result;
 	}
 	
+	public void setReadNum(int noticeIdx) {
+		System.out.println("in setReadNum" + noticeIdx);
+		NoticeDao dao = getNoticeDao();
+		try {
+			dao.setReadNum(noticeIdx);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private NoticeDao getNoticeDao() {
 		return sqlSession.getMapper(NoticeDao.class);
 	}
