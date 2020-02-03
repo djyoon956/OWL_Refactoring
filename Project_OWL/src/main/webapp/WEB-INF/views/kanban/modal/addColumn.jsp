@@ -1,30 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- <!-- Summernote -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script> 
- -->
-<style>
-/* .btn-link {
-	display: inline-block;
-	padding: 0;
-	font-size: inherit;
-	color: #0366d6;
-	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	background-color: initial;
-	border: 0;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-} */
 
-</style>
 
 <div id="addColumnModal" class="modal fade" tabindex="-1" role="dialog"
 	aria-hidden="true">
