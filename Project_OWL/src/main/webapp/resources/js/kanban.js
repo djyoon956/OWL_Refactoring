@@ -463,6 +463,8 @@ function initKanban(projectIdx){
 } //initKanban 끝
 
 
+
+
 	/* function insertColumn() {	
 	   		//console.log("InsertColumnBtn in");
 	   			$.ajax({
