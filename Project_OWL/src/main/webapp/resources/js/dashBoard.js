@@ -453,30 +453,33 @@ function setProjectMemberProgress(projectIdx){
 			console.log("setProjectMemberProgress");
 			console.log(data);
 			let labels = [];
-			let totals = [];
-			let completes = [];
+			let opens = [];
+			let closes = [];
 			$.each(data.member, function(index, element){
 				labels.push(element.memberName);
-				totals.push(0);
-				completes.push(0);
+				opens.push(0);
+				closes.push(0);
 			})
 
 			$.each(data.progress, function(index, element){
 				let labelIndex = labels.indexOf(element.assignedName);
-				totals[labelIndex] = element.openCount;
-				completes[labelIndex] = element.closedCount;
+				opens[labelIndex] = element.openCount;
+				closes[labelIndex] = element.closedCount;
 			})
 
 			let barChartData = {
 					labels: labels,
-					datasets: [{
-						label: 'Complete',
-						backgroundColor: " #326295",
-						data: completes
-					}, {
-						label: 'Total',
-						backgroundColor: "#d9d9d9",
-						data: totals
+					datasets: [
+						{
+							label: 'Closed',
+							backgroundColor: " #326295",
+						
+							data: closes
+						}
+						,{
+							label: 'Open',
+							backgroundColor: "#d9d9d9",
+							data: opens
 					}]
 				};
 			
@@ -492,12 +495,13 @@ function setProjectMemberProgress(projectIdx){
 						mode: 'index',
 						intersect: false,
 						callbacks: {
-	                           label: function (tooltipItems, data) {
-	                                console.log("label");
-	                                console.log(tooltipItems);
-	                                console.log(data);
+	                           footer : function(tooltipItems, data) {
+	                               let total = 0;
+	                               for (let i = 0; i < tooltipItems.length; i++) 
+	                                   total += parseInt(tooltipItems[i].yLabel, 10);
+	                               return ' > Total : ' + total;
 	                           }
-	 
+						}
 					},
 					responsive: true,
 					maintainAspectRatio: false,

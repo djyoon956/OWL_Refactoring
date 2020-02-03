@@ -84,6 +84,7 @@
 	content: "Low"
 }
 
+/* Sweet Alert */
 .swal2-icon.swal2-warning,.swal2-icon.swal2-success,.swal2-icon.swal2-error,.swal2-icon.swal2-success.swal2-success-line-tip,.swal2-icon.swal2-success.swal2-success-line-long {
     border-color: #326295 !important;
     color: #326295 !important;
@@ -93,4 +94,7 @@
 }
 .swal2-icon.swal2-success [class^=swal2-success-line] {
     background-color: #326295 !important;
+}
+.swal2-styled.swal2-confirm{
+	background-color: #326295 !important;
 }

@@ -227,8 +227,6 @@ function MyLineChart(){
 	                    <div id="dashBoardTableEmptyBox" class="emptyBox">
 		                    <div>
 		                    	<h3 class="mb-4">나에게 할당된 이슈가 없습니다.</h3>
-		                    	<p class="mt-1"> 어쩌구 저쩌구 어쩌구 저쩌구</p>
-		                    	<p class="mt-1"> 어쩌구 저쩌구 어쩌구 저쩌구</p>
 		                    </div>
 	                    </div>
 	                    <div id="dashBoardTableBox" class="hidden">
