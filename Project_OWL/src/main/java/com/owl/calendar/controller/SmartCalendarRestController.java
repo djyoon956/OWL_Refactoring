@@ -25,6 +25,19 @@ public class SmartCalendarRestController {
 	@Autowired
 	SmartCalendarService service;
 	
+	/**
+	 * 캘린더 스케줄 Insert
+	 * @author 이정은
+	 * @since 2020/02/03
+	 * @param calendarId
+	 * @param title
+	 * @param content
+	 * @param startDate
+	 * @param endDate
+	 * @param allDay
+	 * @param principal
+	 * @return boolean result
+	 */
 	@RequestMapping(value="InsertCalendar.do", method = RequestMethod.POST)
 	public boolean insertCalendar(@RequestParam(value = "calendarId") int calendarId, 
 												@RequestParam(value = "title") String title,
@@ -70,6 +83,13 @@ public class SmartCalendarRestController {
 		return result;
 	}
 
+	/**
+	 * 캘린더 스케줄 Delete
+	 * @author 이정은
+	 * @since 2020/02/03
+	 * @param calIdx
+	 * @return boolean result
+	 */
 	@RequestMapping(value="DeleteCalendar.do", method = RequestMethod.POST)
 	public boolean deleteMyCalendar(@RequestParam(value = "scheduleId") int calIdx) {
 		boolean result = false;
@@ -77,6 +97,13 @@ public class SmartCalendarRestController {
 		return result;
 	}
 	
+	/**
+	 * 내 캘린더 조회(나의 일정과 내가 속한 프로젝트의 일정 전부 조회)
+	 * @author 이정은
+	 * @since 2020/02/03
+	 * @param principal
+	 * @return List<SmartCalendar>
+	 */
 	@RequestMapping(value="GetMyAllCalendars.do")
 	public List<SmartCalendar> getMyAllCalendars(Principal principal){
 		List<SmartCalendar> calendar = null;
@@ -84,6 +111,13 @@ public class SmartCalendarRestController {
 		return calendar;
 	}
 	
+	/**
+	 * 프로젝트 내의 캘린더 조회(해당 프로젝트의 일정만 조회)
+	 * @author 이정은
+	 * @since 2020/02/03
+	 * @param projectIdx
+	 * @return List<SmartCalendar>
+	 */
 	@RequestMapping(value="GetProjectCalendar.do")
 	public List<SmartCalendar> getProjectCalendar(int projectIdx){
 		List<SmartCalendar> calendar = null;
@@ -91,6 +125,20 @@ public class SmartCalendarRestController {
 		return calendar;
 	}
 	
+	/**
+	 * 캘린더 수정 (모든 조건)
+	 * @author 이정은
+	 * @since 2020/02/03 
+	 * @param calIdx
+	 * @param projectIdx
+	 * @param title
+	 * @param content
+	 * @param startDate
+	 * @param endDate
+	 * @param allDay
+	 * @param principal
+	 * @return boolean result
+	 */
 	@RequestMapping(value="UpdateCalendar.do", method = RequestMethod.POST)
 	public boolean updateCalendar(@RequestParam(value = "scheduleId") int calIdx, 
 												  @RequestParam(value = "calendarId" ,required = false) String projectIdx, 												  
@@ -117,10 +165,6 @@ public class SmartCalendarRestController {
 		calendar.setTitle(title);
 		calendar.setContent(content);	
 		calendar.setCalIdx(calIdx);
-		System.out.println("----------------");
-		System.out.println(startDate);
-		System.out.println(endDate);
-	    System.out.println(allDay);
 			if(allDay) {
 				if(!startDate.isEmpty()) {
 					calendar.setStartDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(startDate));
@@ -138,8 +182,6 @@ public class SmartCalendarRestController {
 				}
 				calendar.setAllDay(0);
 			}
-		System.out.println(calendar.getStartDate());
-		System.out.println(calendar.getEndDate());
 		calendar.setEmail(principal.getName());
 		result = service.updateCalendar(calendar);
 		} catch (Exception e) {

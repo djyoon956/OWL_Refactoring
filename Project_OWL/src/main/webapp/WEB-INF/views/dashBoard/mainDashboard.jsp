@@ -19,7 +19,7 @@ function MakeDataSet() {
     	$.ajax({
 	        url:"MyProjectProgress.do",
 	        dataType: "json",
-	        success:function(data){		     
+	        success:function(data){	   
 	        $("#myProgressChart").empty();   
 		     $.each(data, function(key, value){
 		    	  let idx = key;
@@ -68,7 +68,10 @@ function MakeDataSet() {
     	let dayName = week[new Date().getDay()];
     	$.ajax({
     		url : "LineChart.do",
-    		success : function(data){   			
+    		success : function(data){ 
+        		console.log("LineChart-------");
+        		console.log(data);
+        		console.log(data.length);  			
 				let group;
     			$.each(data, function(key, value){
         				//let theday = key (dayName)
@@ -86,10 +89,13 @@ function MakeDataSet() {
 						
 						dayCount = [0, 0, 0, 0, 0, 0, 0];		
     					$.each(group, function(key2, value2){   
-        					dayCount[new Date(key2).getDay()] = value2.length;					   					
+        					dayCount[new Date(key2).getDay()] = value2.length;			
+        					console.log(value2.length);		   					
     					}) 
     					theData.data=dayCount;	
 						LineData.push(theData);
+						console.log(theData);
+						console.log(LineData);
     			});
 				MyLineChart();
     		},
@@ -160,7 +166,16 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
             animation: {
                 animateScale: true,
                 animateRotate: true
-            }
+            },
+            tooltips: {
+				mode: 'index',
+				intersect: false,
+				callbacks: {
+					label: function(tooltipItem, data) {
+				          return data['datasets'][0]['data'][tooltipItem['index']] + '%';
+				        },
+				}
+			}
         }
     });	
 }
