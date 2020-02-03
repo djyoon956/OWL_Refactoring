@@ -10,9 +10,6 @@ let ordernum = 1;
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
-	console.log('여기서는 찍히니?');
-	console.log('${member.name}');
-
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
 		//칸반으로 옮김 
@@ -33,7 +30,6 @@ function initKanban(projectIdx){
 	  $("#editcolName").val(editColname);
 	  $("#editcolIdx").val(editColIdx);
 	});
-	
 	
 	
 	
@@ -205,19 +201,12 @@ function initKanban(projectIdx){
 	
 
 		 /*datwpicker*/
-
 		 		 $('#datepicker-autoclose, #datepicker-editIssue').datepicker({
 		 			 dateFormat: 'yy-mm-dd' ,
 		 	   		  autoclose: true,
 		 	    	  todayHighlight: true
 		 		 }); 
 		 		 
-		 		 
-/*		 		 $('#datepicker-editIssue').datepicker({
-		 			 dateFormat: 'yy-mm-dd' ,
-		 	   		  autoclose: true,
-		 	    	  todayHighlight: true
-		 		 });*/ 
 		 		
 		 		/*Summer Note*/
 		 		 $('#isContent').summernote({
@@ -244,11 +233,7 @@ function initKanban(projectIdx){
 		 					warningAlert("내용을 작성해주십시오");
 		 					return; 
 		 				}		
-		 				//console.log('InsertIssueBtn 클릭되니1');
-		  				//console.log('InsertIssueBtn 클릭되니1');
-		 				//console.log('labelIdx :' + $('#labelIdx').val());
-		 				console.log("날짜 val ");
-		 				console.log($('#datepicker-autoclose').val());
+
 		 			    let formData = new FormData();
 		 			    formData.append("projectIdx",projectIdx);
 
@@ -338,7 +323,6 @@ function initKanban(projectIdx){
 		 	   				success : function(data) {
 		 	   			
 		 	   					if(data != null) {
-		 	   		        		 console.log('data : ' + data);
 		 	   		        		addColumn(data);
 
 		 	       					$( ".sortableCol").sortable({
@@ -392,8 +376,7 @@ function initKanban(projectIdx){
 		 		});
 		 		
 		 		
-		 		
-		 		
+
 		 		$("#addLabelBtn").on("click", function () {	
 
 		 			let lcolor = false;
@@ -512,14 +495,9 @@ function initKanban(projectIdx){
 */
 
 
-
  function addReply(creator) {
-	  console.log('이거안찍히니?');
-	  console.log('${member.name}');
-	  console.log(creator);
-	  
+
 		let replyct = $('#replycontent').val();
-		  console.log(replyct);
 		if(replyct == "" || replyct == null) {
 			return false;
 		}else {
@@ -631,8 +609,8 @@ function deleteColumn(obj){
 }
 
 
+
 function addKanbanIssue(colIdx,obj){
-	
 	
 	let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;				
 
@@ -693,6 +671,7 @@ function deleteIssue(obj){
 }
 
 
+
 function deleteLabel(labelidx) {
    $.ajax ({
       url : "DeleteLabel.do",
@@ -714,16 +693,12 @@ function deleteLabel(labelidx) {
    
 
 function setKanbanDetail(issueIdx){
-	
-	console.log("in setKanbanDetail sfdsf");
-	
+		
 	$.ajax({
 			type: "POST",
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
-				console.log("이슈 디테일 ");
-				console.log(data);
 				 $("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
 				//issueProgress,labelIdx
@@ -1265,8 +1240,6 @@ function editLabel(idx, color, name) {
 	            url: "GetAddIssueForm.do",
 	            data: { projectIdx: projectidx},
 	            success: function (data) {
-	            	console.log('데이터가 뭐가오니?');
-	            	console.log(data);
 	            	$('#assigned').empty();
 	            	$('#labelIdx').empty();
 
