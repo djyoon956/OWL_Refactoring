@@ -800,7 +800,7 @@ display: block;
 	<!-- firebase cloud messaging... for sending notification -->
 	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-messaging.js"></script>
  <script>
- 		console.log("projectidx:   " + ${project.projectIdx});
+ 		
       console.log("value : " + '${member.name}');
       const curName = "${member.name}";
       const curEmail = "${member.email}"; 
