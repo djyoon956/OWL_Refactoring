@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.owl.drive.dao.DriveDao;
 import com.owl.drive.dto.DriveFile;
@@ -128,6 +129,21 @@ public class DriveService {
 		
 		return reseult;
 	}
+	
+	@Transactional
+	public void deleteFolderAndFileFromDrive(String driveIdxList, String driveFileIdxList) {
+		DriveDao dao = getDriveDao();
+		try {
+			dao.deleteFoldersFromDrive(driveIdxList);
+			dao.deleteFilesFromDrive(driveFileIdxList);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	
 	public boolean deleteFileFromDrive(int driveFileIdx) {
 		boolean reseult = false;

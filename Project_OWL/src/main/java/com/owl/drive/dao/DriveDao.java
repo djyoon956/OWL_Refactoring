@@ -35,6 +35,10 @@ public interface DriveDao {
 
 	public int deleteFileFromTrash(int driveFileIdx) throws ClassNotFoundException, SQLException;
 
+	public int deleteFoldersFromDrive(String driveIdxList) throws ClassNotFoundException, SQLException;
+	
+	public int deleteFilesFromDrive(String driveFileIdxList) throws ClassNotFoundException, SQLException;
+	
 	public int deleteFolderFromTrash(int driveFileIdx) throws ClassNotFoundException, SQLException;
 
 	public int renameFile(int driveFileIdx, String fileName) throws ClassNotFoundException, SQLException;

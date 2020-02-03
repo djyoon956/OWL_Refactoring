@@ -73,7 +73,8 @@
 	      		  showCancelButton: true,
 	      		  confirmButtonColor: '#3085d6',
 	      		  cancelButtonColor: '#d33',
-	      		  confirmButtonText: 'Yes'
+	      		  confirmButtonText: '수정',
+	      		  cancelButtonText: '취소'
 	      		}).then((result) => {
 	      		  if (result.value) {
 		                $.ajax({ 
@@ -123,7 +124,8 @@
 	  	      		  showCancelButton: true,
 	  	      		  confirmButtonColor: '#3085d6',
 	  	      		  cancelButtonColor: '#d33',
-	  	      		  confirmButtonText: 'Yes'
+	  	      		  confirmButtonText: '삭제',
+	  	      		  cancelButtonText: '취소'
 	  	      		}).then((result) => {
 	  	      		  if (result.value) {
 	  	      			 cal.deleteSchedule(e.schedule.id, e.schedule.calendarId);	  

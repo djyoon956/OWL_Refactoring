@@ -202,7 +202,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update issue set assigned=#{assigned} where issueidx= #{issueIdx}
 	</update>
 	<update id="updateIssueLabel" parameterType="com.owl.kanban.dto.Issue">
-		update issue set labelidx=#{labelIdx} where issueidx= #{issueIdx}
+		update issue set labelidx=
+					<choose>
+					    <when test="labelIdx != 0"> #{labelIdx} </when>
+					    <otherwise> null </otherwise>
+					</choose> where issueidx= #{issueIdx}
 	</update>
 	<delete id="deleteIssueFile">
 		delete from owl.file where fileidx= #{param1}

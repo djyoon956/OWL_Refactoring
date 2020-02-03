@@ -79,6 +79,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE  DRIVEIDX = #{driveIdx}
 	</update>
 	
+	<update id="deleteFoldersFromDrive" parameterType="String">
+		UPDATE DRIVEFOLDER SET ISDELETE = 1, DELETEDATE = CURRENT_TIMESTAMP
+		WHERE  DRIVEIDX IN (#{driveIdxList})
+	</update>
+	
+	<update id="deleteFilesFromDrive" parameterType="String">
+		UPDATE DRIVEFILE SET ISDELETE = 1, DELETEDATE = CURRENT_TIMESTAMP
+		WHERE  DRIVEFILEIDX IN (#{driveFileIdxList})
+	</update>
+	
 	<update id="deleteFileFromDrive" parameterType="int">
 		UPDATE owl.DRIVEFILE SET ISDELETE = 1, DELETEDATE = CURRENT_TIMESTAMP
 		WHERE  DRIVEFILEIDX = #{driveFileIdx}
