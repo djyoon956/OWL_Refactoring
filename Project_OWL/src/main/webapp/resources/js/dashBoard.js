@@ -1,11 +1,11 @@
-function initDashBoard(projectIdx){
+function initDashBoard(projectIdx, projectColor){
 	 $("#dashCalendar").tuiCalendar({
 		  defaultView: 'month',
 		  taskView: true
 	}); 
 	 
 	if(projectIdx > 0)
-		setProjectDashBoard(projectIdx);
+		setProjectDashBoard(projectIdx, projectColor);
 	else
 		setMainDashBoard();
 }
@@ -43,7 +43,7 @@ function setMainDashBoard(){
 	 })
 }
 
-function setProjectDashBoard(projectIdx){
+function setProjectDashBoard(projectIdx, projectColor){
 	$("#dashboardPTable").DataTable({
 		"pageLength": 5,
          fixedColumns: true,
@@ -61,7 +61,7 @@ function setProjectDashBoard(projectIdx){
 	
 	wholeProjectChart(projectIdx);
 	setMyIssueTaskByProject(projectIdx);
-	setTimeLineByProject(projectIdx);
+	setTimeLineByProject(projectIdx, projectColor);
 	setProjectMemberProgress(projectIdx);
 }
 
@@ -157,7 +157,7 @@ function setTimeLine(){
 	})
 }
 
-function setTimeLineByProject(projectIdx){
+function setTimeLineByProject(projectIdx, projectColor){
 	let today = getTimeLineDateFormat(new Date());
 	$.ajax({
 		url : "GetMyTimeLineByProject.do",
@@ -167,7 +167,7 @@ function setTimeLineByProject(projectIdx){
 			$("#dashboardPTimeLine ul:first").empty();
 			$.each(data, function(key, value){
 					let control = "<li><p class='float-right' style='margin-right: 15px;'>"+((key==today)?"Today":key)+"</p>"
-									+ "<span style='background-color: "+value[0].projectColor+"; color : "+getTextColorFromBg(value[0].projectColor)+"'>"+value[0].projectName+"</span>";
+									+ "<span style='background-color: "+projectColor+"; color : "+getTextColorFromBg(projectColor)+"'>"+value[0].projectName+"</span>";
 
 					$.each(value, function(index, element){
 						control += "<p>"+element.subject+"</p>";
@@ -450,6 +450,8 @@ function setProjectMemberProgress(projectIdx){
 		url : "GetProjectMemberProgress.do",
 		data : {projectIdx : projectIdx },
 		success : function(data){
+			console.log("setProjectMemberProgress");
+			console.log(data);
 			let labels = [];
 			let totals = [];
 			let completes = [];
@@ -462,7 +464,7 @@ function setProjectMemberProgress(projectIdx){
 			$.each(data.progress, function(index, element){
 				let labelIndex = labels.indexOf(element.assignedName);
 				totals[labelIndex] = element.openCount;
-				completes[labelIndex] = element.closeCount;
+				completes[labelIndex] = element.closedCount;
 			})
 
 			let barChartData = {
@@ -488,7 +490,14 @@ function setProjectMemberProgress(projectIdx){
 					},
 					tooltips: {
 						mode: 'index',
-						intersect: false
+						intersect: false,
+						callbacks: {
+	                           label: function (tooltipItems, data) {
+	                                console.log("label");
+	                                console.log(tooltipItems);
+	                                console.log(data);
+	                           }
+	 
 					},
 					responsive: true,
 					maintainAspectRatio: false,

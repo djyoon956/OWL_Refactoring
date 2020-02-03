@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class ProjectMemberProgress {
 	private int openCount;
-	private int closeCount;
+	private int closedCount;
 	private String assigned;
 	private String assignedName;
 }

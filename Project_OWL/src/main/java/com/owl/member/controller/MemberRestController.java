@@ -35,7 +35,6 @@ public class MemberRestController {
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
 
-	@Autowired
 	private MemberService service;
 
 	@Autowired
