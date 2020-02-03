@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT p.PROJECTIDX, p.PROJECTNAME, i.ASSIGNED, i.ISSUEPROGRESS , t.PROJECTCOLOR
 			FROM PROJECT p JOIN ISSUE i ON p.PROJECTIDX=i.PROJECTIDX 
 	    							  LEFT JOIN PROJECTLIST t ON p.PROJECTIDX=t.PROJECTIDX 
-	    where i.ASSIGNED = #{email} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')		
+	    where i.ASSIGNED = #{email} AND i.ISSUEPROGRESS in('OPEN', 'CLOSED')	 AND t.EMAIL=#{email}
 	</select>
 	
 	<select id="getProgressChart" resultType="com.owl.dashBoard.dto.ProjectProgress">
@@ -92,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 										  JOIN PROJECTLIST p ON i.PROJECTIDX = p.PROJECTIDX
                                           JOIN PROJECT j ON i.PROJECTIDX = j.PROJECTIDX
 		WHERE l.LOGTIME BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL + 7 DAY) 
-		AND i.ASSIGNED =#{assigned} ORDER BY l.LOGTIME, i.PROJECTIDX
+		AND l.CREATOR =#{creator} ORDER BY l.LOGTIME, i.PROJECTIDX
 	</select>
 	
 	<select id="getProjectMemberProgress" resultType="com.owl.dashBoard.dto.ProjectMemberProgress" parameterType="int">
