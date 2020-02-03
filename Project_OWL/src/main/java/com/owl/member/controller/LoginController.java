@@ -102,13 +102,12 @@ public class LoginController {
 		Member member = service.getMember(principal.getName());
 		request.getSession().setAttribute("member", member);
 		request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
-		System.out.println("main.1");
+
 		checkJoinProjectMember(request, member.getEmail());
-		
 		List<ProjectList> projectList = null;
 		projectList = projectSerivce.getProjectLists(member.getEmail());
 		model.addAttribute("projectList", projectList);
-System.out.println("main.2");
+
 		return "member/main";
 	}
 	

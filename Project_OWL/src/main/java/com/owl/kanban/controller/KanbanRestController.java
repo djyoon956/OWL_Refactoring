@@ -336,9 +336,14 @@ public class KanbanRestController {
 	}
 	
 	@RequestMapping(value="UpdateIssueLabel.do", method = RequestMethod.POST)
-	public boolean updateIssueLabel(Issue issue,Principal principal) {
+	public boolean updateIssueLabel(@RequestParam(value = "labelIdx", required = false) String labelIdx,int issueIdx,Principal principal) {
+		Issue issue = new Issue();
+		issue.setIssueIdx(issueIdx);
+		System.out.println("update issue label Idx : " +  labelIdx);
+		if (!labelIdx.isEmpty())
+			issue.setLabelIdx(Integer.parseInt(labelIdx));
 		boolean result = service.updateIssueLabel(issue, principal.getName());
-		
+
 		return result;
 	}
 	
