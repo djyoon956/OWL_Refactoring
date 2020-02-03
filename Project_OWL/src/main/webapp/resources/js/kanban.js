@@ -976,7 +976,7 @@ function editLabel(idx, color, name) {
 						labellist += '</datalist>';
 						$('#searchContent').append(labellist);
 					}else if(flagelement == "editDetail"){
-						let llist = ""; 
+						let llist = '<option value="">select</option>'; 
 		                $.each(data, function(index, element) {
 		                 	 llist += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
 		                 });
@@ -1072,8 +1072,8 @@ function editLabel(idx, color, name) {
 				} else if(flagelement == 'editDetail') { 
 					console.log("프로젝트 멤버 리스트 editDetail ----");
 					console.log(data);
-				//	let selectoption = '<option value="">Select</option>';
-					let selectoption;
+					let selectoption = '<option value="none">Select</option>';
+					//let selectoption;
 					let optmember;
 					$('#assignedEdit').append(selectoption);
 		             $.each(data, function(index, element) {
@@ -1150,6 +1150,8 @@ function editLabel(idx, color, name) {
 	}
 	
 	function editIssueLabelOk() {
+		console.log("라벨 idx ");
+		console.log( $('#labelIdxEdit').val());
 		$.ajax({
 			url : "UpdateIssueLabel.do",
 		    method : "POST",
