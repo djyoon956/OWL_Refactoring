@@ -146,7 +146,7 @@ $(function(){
     		        );
     		    });
     		    calendarList.innerHTML = html.join('\n\n');
-
+    		    setSchedules();
     		}
     	});
 });

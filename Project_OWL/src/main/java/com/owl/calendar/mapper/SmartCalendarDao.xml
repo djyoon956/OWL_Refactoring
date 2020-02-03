@@ -47,8 +47,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 
 	<select id="getMyAllCalendars" resultType="com.owl.calendar.dto.SmartCalendar" parameterType="String" >
-	SELECT s.CALIDX, s.TYPE, s.TITLE, s.CONTENT, s.STARTDATE, s.ENDDATE, s.ALLDAY, p.EMAIL
-			FROM PROJECTLIST p JOIN SMARTCALENDAR S ON p.EMAIL=S.EMAIL
+		SELECT CALIDX, TYPE, TITLE, CONTENT, STARTDATE, ENDDATE, ALLDAY, EMAIL, PROJECTIDX FROM SMARTCALENDAR 
+		WHERE EMAIL = #{email}  OR PROJECTIDX IN(SELECT PROJECTIDX FROM PROJECTLIST WHERE EMAIL = #{email})
 	</select>
 	
 	<select id="getProjectCalendar" resultType="com.owl.calendar.dto.SmartCalendar" parameterType="int">
