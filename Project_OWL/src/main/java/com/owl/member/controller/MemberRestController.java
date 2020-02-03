@@ -153,8 +153,8 @@ public class MemberRestController {
 	
 	@RequestMapping("GetMyProfile.do")
 	public Member getMember(Principal principal, Model model) {
-		Member member = null;
-		member = service.getMember(principal.getName());
+		System.out.println("in GetMyProfile2222 : "+principal.getName());
+		Member member = service.getMember(principal.getName());
 		model.addAttribute("member", member);
 		return member;
 	}
