@@ -7,8 +7,22 @@ let words = new Array();
 let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
 
+
+	
+
+
+
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
+	
+	console.log('!!!!!!!!!!!!!!!!!!!!!!!');
+	console.log(curEmail);
+	console.log("-----------------------");
+	console.log(curName);
+	console.log(userEmail);
+	console.log(userName);
+	
+	
 	
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
@@ -45,7 +59,6 @@ function initKanban(projectIdx){
 			data : {'labelIdx' : editIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
 			success : function(data) {
 				
-				//console.log('data in' + data);
 				$('#'+editIdx+'Label').next().remove();
 				$('#'+editIdx+'Label').remove();
 				
@@ -264,7 +277,9 @@ function initKanban(projectIdx){
 		 			        cache: false,
 		 			        timeout: 600000,
 		 			        success: function (data) {
-
+		 			        	console.log('데이터야 뭐니?');
+		 			        	console.log(data);
+		 			        	console.log('----------------');
 		 	 		        	if(data != null){
 		 			        		successAlert("Issue 추가 완료");
 		 			        		addKanbanIssue('-1', data);
@@ -314,7 +329,7 @@ function initKanban(projectIdx){
 
 		 			
 
-		 	    	$("#InsertColumnBtn").on("click", function () {	
+		 	    $("#InsertColumnBtn").on("click", function () {	
 
 		 	   		console.log("InsertColumnBtn in");
 		 	   			$.ajax({
@@ -611,14 +626,15 @@ function deleteColumn(obj){
 
 
 function addKanbanIssue(colIdx,obj){
-	
+	console.log('뭐니??????????????????????????');
+	console.log(obj);
 	let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;				
 
 	
 	if(obj.labelName == null) 
 		obj.labelName = "";
-	if(obj.assigned == null) 
-		obj.assigned  = "none";
+	if(obj.name == null) 
+		obj.name  = "none";
 	 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
 			+		'<div class="dropdown">'
 			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
@@ -636,7 +652,7 @@ function addKanbanIssue(colIdx,obj){
 			+		'<div>'
 			+			'<label>'
 			+			'<span class="assigneetitle">'
-			+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.assigned + '</span>'
+			+			'<i class="fas fa-user-check"></i>&nbsp; Assignee</span> <span class="assignee">' + obj.name + '</span>'
 			+			'</label>'
 			+		'</div>'
 			+	'</li>';
