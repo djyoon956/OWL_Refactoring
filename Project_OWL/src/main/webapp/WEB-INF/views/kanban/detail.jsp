@@ -137,7 +137,6 @@
 						<textarea id="replycontent" class="editable" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('${project.projectIdx}')}"></textarea>
 						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px" onClick="addReply('${member.name}')">Comment</button>
             </div>
-            
         </div>
         
         <!-- Option -->

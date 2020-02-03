@@ -67,7 +67,6 @@
                         <option value="Assignee">Assignee</option>
                         <option value="Priority">Priority</option>
                      </select>
-                
 				</div>
 
              
