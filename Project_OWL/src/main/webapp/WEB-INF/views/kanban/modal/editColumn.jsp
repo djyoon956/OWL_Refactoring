@@ -1,47 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- Summernote -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.min.js"></script>
- -->
-<style>
-/* .btn-link {
-	display: inline-block;
-	padding: 0;
-	font-size: inherit;
-	color: #0366d6;
-	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	background-color: initial;
-	border: 0;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-}
- */
 
-</style>
-<script>
-let editColIdx="";
-let editColname="";
+<!-- <script>
+
 $(function() {
-$('#editColumnModal').on('show.bs.modal', function(event) {          
+$('#editColumnModal').on('show.bs.modal', function(event) {     
+	let editColIdx="";
+	let editColname="";
 	editColIdx = $(event.relatedTarget).data('updatecol-id');
 	editColname = $(event.relatedTarget).data('upcolname-id');
-	//console.log("에딧 모달");
-	//console.log(editColIdx);
-	//console.log(editColname);
   	
   $("#editcolName").val(editColname);
   $("#editcolIdx").val(editColIdx);
 });
 });
-</script>
+</script> -->
+
 <div id="editColumnModal" class="modal fade" tabindex="-1" role="dialog"
 	aria-hidden="true">
 	<div class="modal-dialog modal-md">

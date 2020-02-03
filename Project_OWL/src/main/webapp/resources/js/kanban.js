@@ -10,6 +10,8 @@ let ordernum = 1;
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
+	console.log('여기서는 찍히니?');
+	console.log('${member.name}');
 
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
@@ -22,6 +24,18 @@ function initKanban(projectIdx){
  	});
 	
 	  
+	$('#editColumnModal').on('show.bs.modal', function(event) {     
+		let editColIdx="";
+		let editColname="";
+		editColIdx = $(event.relatedTarget).data('updatecol-id');
+		editColname = $(event.relatedTarget).data('upcolname-id');
+	  	
+	  $("#editcolName").val(editColname);
+	  $("#editcolIdx").val(editColIdx);
+	});
+	
+	
+	
 	
 	$('#editLabelBtn').click(function() {
 		if(editIdx == 0)
@@ -434,30 +448,7 @@ function initKanban(projectIdx){
 		 	    
 		 	    
 		 	    
-		 		  $('#replyBtn').click (function() {
-		 			  
-		 				let replyct = $('#replycontent').val();
-		 				  console.log(replyct);
-		 				if(replyct == "" || replyct == null) {
-		 					return false;
-		 				}else {
-		 					  $.ajax ({
-		 					 		type :"POST",
-		 							url : "InsertReply.do",
-		 							data : { 'issueIdx' : $('#issueIdxNum').val()
-		 										, 'content': $('#replycontent').val()
-		 										, 'creator' : '${member.name}'},
-		 							success : function(data) {
-		 								
-		 								  $('#replycontent').val("");
-		 						    		setKanbanDetail(data.issueIdx);
 
-		 							},error : function() {
-		 					        	errorAlert("InsertReply error");
-		 								}
-		 							})   
-		 					}
-		 				}) 	
 
 } //initKanban 끝
 
@@ -519,6 +510,36 @@ function initKanban(projectIdx){
 	   	};
 
 */
+
+
+
+ function addReply(creator) {
+	  console.log('이거안찍히니?');
+	  console.log('${member.name}');
+	  console.log(creator);
+	  
+		let replyct = $('#replycontent').val();
+		  console.log(replyct);
+		if(replyct == "" || replyct == null) {
+			return false;
+		}else {
+			  $.ajax ({
+			 		type :"POST",
+					url : "InsertReply.do",
+					data : { 'issueIdx' : $('#issueIdxNum').val()
+								, 'content': $('#replycontent').val()
+								, 'creator' : creator},
+					success : function(data) {
+						
+						  $('#replycontent').val("");
+				    		setKanbanDetail(data.issueIdx);
+
+					},error : function() {
+			        	errorAlert("InsertReply error");
+						}
+					})   
+			}
+		};	
 
 
 
@@ -612,6 +633,10 @@ function deleteColumn(obj){
 
 function addKanbanIssue(colIdx,obj){
 	
+	
+	let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;				
+
+	
 	if(obj.labelName == null) 
 		obj.labelName = "";
 	if(obj.assigned == null) 
@@ -619,7 +644,7 @@ function addKanbanIssue(colIdx,obj){
 	 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
 			+		'<div class="dropdown">'
 			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
-			+			'<span class="issueTitle">' + obj.issueTitle + '</span>'
+			+			'<span class="issueTitle">' + issueTitle + '</span>'
 			+			'</label>'
 			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
 			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
@@ -732,8 +757,9 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailComment").empty();
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
-						
-						
+						console.log('here!!!!!!!!!!!!');
+						console.log(element);
+						console.log(element.creator);
 						let creatornm =  element.creator.substring(0,1);
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'

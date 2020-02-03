@@ -146,7 +146,7 @@ $(function(){
     		        );
     		    });
     		    calendarList.innerHTML = html.join('\n\n');
-    		    setSchedules();
+
     		}
     	});
 });
@@ -166,7 +166,6 @@ function generateSchedule(viewName) {
 		async: false,
 		success:function(data){
 	    	ScheduleList = [];
-	    	
 			$.each(data, function(index, element){
 		    	let calendar;
 		    	let schedule = new ScheduleInfo();

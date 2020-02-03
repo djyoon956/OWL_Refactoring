@@ -1,34 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<style>
-/* .btn-link {
-	display: inline-block;
-    padding: 0;
-    font-size: inherit;
-    color: #0366d6;
-    text-decoration: none;
-    white-space: nowrap;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: initial;
-    border: 0;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-} */
 
-/* .contentbox {
-min-height: 250px;
-overflow-y:auto;
-color : #838383;
-border : 1px solid #D5D4D4;
- 
-} */
-
-</style>
 <div id="confirmIssueModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
