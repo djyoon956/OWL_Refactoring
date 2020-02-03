@@ -937,7 +937,6 @@ function editLabel(idx, color, name) {
 	}
 
 
-
 	function getLabelList(flagelement,projectIdx) {
 			
 		  $.ajax({
