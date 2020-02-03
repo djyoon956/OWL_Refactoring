@@ -23,7 +23,10 @@ public class Notice {
 	private int readNum;
 	private List<File> files;
 
+	// UI 용
+	private String name;
+	
 	public String getWriteDate() {
-		return new SimpleDateFormat("yyyy-MM-dd").format(writeDate);
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(writeDate);
 	}
 }

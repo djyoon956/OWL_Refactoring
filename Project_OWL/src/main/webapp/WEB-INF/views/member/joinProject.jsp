@@ -82,15 +82,13 @@
 									
 									<div class="row mt-5">
 										<div class="col-6 text-center">
-										<form action="Login.do" method="post">
-											<input type="hidden" name="projectIdx" value="">
+										<form action="Login.do" method="get">
 											<p class="mb-3" style="font-weight: bold;">이미 계정이 있으신가요?</p>	
 											<input type="submit" class="btn btn-primary btn-lg" value="로그인">
 										</form>
 										</div>
 										<div class="col-6 text-center">
 										<form action="Register.do" method="post">
-											<input type="hidden" name="projectIdx" value="">
 											<p class="mb-3" style="font-weight: bold;">OWL이 처음이신가요?</p>	
 											<input type="submit" class="btn btn-primary btn-lg" value="가입하기">
 										</form>

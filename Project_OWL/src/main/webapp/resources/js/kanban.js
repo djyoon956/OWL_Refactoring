@@ -576,7 +576,7 @@ function addColumn(obj){
             +         '</div>'
             +      '</h4>'
             +   '</div>'
-            +   '<ul class="connectedSortable sortableCol columnBody cursor">'
+            +   '<ul class="connectedSortable sortableCol columnBody cursor" style="margin-top:35px">'
             +   '</ul>'
             + '</div>';
    
@@ -749,10 +749,10 @@ function setKanbanDetail(issueIdx){
 										+ '		<div class="comment_img">'+creatornm+'</div>'
 										+ '	</div>'
 										+ '	 <div class="comment-text w-100">'
-										+ '		<h6 class="font-medium mb-2">'+element.creator
+										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creator
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
-										+ '		<input type="text" class="hidden inputBox" id="'+element.issueRlyIdx+'editContent">'
+										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('+projectIdx+')}"></textarea>'
 										+ '		<div class="comment-footer float-right">'
 										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
@@ -837,6 +837,7 @@ function reOpenIssue(issueIdx) {
 
 function changeKanbanView(view){
    if(view == "list"){
+   setChageView("kanban");
    $("#kanbanDetailBox").addClass("hidden");
    $("#kanbanMainBox").removeClass("hidden");
 }else if(view == "detail"){
@@ -953,7 +954,7 @@ function editLabel(idx, color, name) {
 					
 							lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
 							lablist +=  '<div class="col-lg-8">';
-							lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
+							lablist +=  '<span class="badgeIcon" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
 							lablist +=  '</div>';
 							lablist +=  '<div class="col-lg-2">';
 							lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
@@ -1081,9 +1082,6 @@ function editLabel(idx, color, name) {
 		          $('#assignedEdit').append(optmember);
 
 				
-				} else if(flagelement == '') {
-					
-					
 				}else if(flagelement == 'mentionSearch'){
 					$.each(data, function(index, obj){
 						words.push(obj.name);
@@ -1300,5 +1298,24 @@ function editLabel(idx, color, name) {
 		    }
 		  }]);
 	
+	}
+	
+	function kanbanDetailBackBtn() {
+		$("#editTitleBox").addClass("hidden");
+		$("#issueDetailTitle").removeClass("hidden");
+		$("#editContentBox").addClass("hidden");
+		$("#issueDetailContent").removeClass("hidden");
+		$("#editAssignedBox").addClass("hidden");
+		$("#assignedEdit").removeClass("hidden");
+		$("#editLabelBox").addClass("hidden");
+		$("#labelIdxEdit").removeClass("hidden");
+		$("#editDuedateBox").addClass("hidden");
+		$("#issueDetailDueDate").removeClass("hidden");
+		$("#editPriorityBox").addClass("hidden");
+		$("#issueDetailPriority").removeClass("hidden");
+		$("#kanbanFileBox").addClass("hidden");
+		$("#issueDetailPriority").removeClass("hidden");
+		//setChageView("kanban");
+		changeKanbanView('list');
 	}
 

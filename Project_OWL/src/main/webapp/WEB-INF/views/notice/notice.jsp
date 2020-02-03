@@ -16,7 +16,7 @@
                                     <th width="50%">제목</th>
                                     <th width="15%">작성자</th>
                                     <th width="15%">작성일</th>
-                                    <th width="10%">조회</th>
+                                    <th width="10%">조회수</th>
                                 </tr>
                             </thead>
                             <tbody>

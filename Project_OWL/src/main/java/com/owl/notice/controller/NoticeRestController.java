@@ -92,4 +92,9 @@ public class NoticeRestController {
 
 		return result ? notice.getBoardIdx() : -1;
 	}
+	
+	@RequestMapping("SetReadNum.do")
+	public void setReadNum(int noticeIdx) {
+		service.setReadNum(noticeIdx);
+	}
 }
