@@ -206,9 +206,10 @@
 					<input type="button" class="btn btn-primary InsertIssueBtn" value="Save changes">
 					</c:if>
 					
-					<c:if test="${project.authority eq 'role_projectmember'}">
+					<c:if test="${project.authority eq 'ROLE_PROJECTMEMBER'}">
 					<input type="button" class="btn btn-primary InsertIssueBtn" value="Send PM">
 					</c:if>
+					
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 				</div>
 			</form>
