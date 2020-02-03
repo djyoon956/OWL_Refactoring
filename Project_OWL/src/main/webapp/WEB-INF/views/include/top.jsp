@@ -6,9 +6,9 @@
 
 
 <script>
-    const userEmail = "${member.email}";
-    const userName = "${member.name}";
-    console.log(userEmail + "/" + userName);
+    //const userEmail = "${member.email}";
+    //const userName = "${member.name}";
+    //console.log(userEmail + "/" + userName);
     $(function () {
 		
 		$("#userToggle").hide();
@@ -963,7 +963,27 @@ display: block;
 				     } 
 				});
 		}
-				
+
+
+
+
+		function sendNoticePushToOne(email, title, msg) {
+				var myRootRef = database.ref();
+				myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
+				data.forEach(function(childSnapshot) {
+					userKey = childSnapshot.key;
+					console.log("targetuserkey..." + userKey);
+					database.ref("FcmId/"+userKey).once('value',fcmSnapshot => { 
+							console.log('FCM Token : ', fcmSnapshot.val()); 
+							const mytoken = fcmSnapshot.val();
+							console.log("title: " + title);
+							console.log("msg: " + msg);
+							sendNotification(mytoken, title, msg);
+						});
+			       });
+				})		      
+					
+		}
 
 			
 	      //유저가 채팅기능 버튼을 눌렀을 때 작동하는 콜백 함수... 목적은.. firebase database 유저 정보저장(메세지 읽기, 쓰기를 위해 특정키 부여 누군인지 구분하기 위해 필요)
