@@ -314,9 +314,10 @@ function initKanban(projectIdx){
 		 	     		$("#-99Column").show();
 		 	          });
 
-		 			
-		 			
-/*		 	    	$("#InsertColumnBtn").on("click", function () {	
+		 			/*
+
+		 	    	$("#InsertColumnBtn").on("click", function () {	
+
 		 	   		console.log("InsertColumnBtn in");
 		 	   			$.ajax({
 		 	   				url : 'InsertColumn.do',
