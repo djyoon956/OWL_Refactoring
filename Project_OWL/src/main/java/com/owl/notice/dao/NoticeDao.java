@@ -22,4 +22,6 @@ public interface NoticeDao {
 	public int updateNotice(Notice notice) throws ClassNotFoundException, SQLException;
 		
 	public int deleteFile(int fileIdx) throws ClassNotFoundException, SQLException;
+	
+	public int setReadNum(int noticeIdx) throws ClassNotFoundException, SQLException;
 }
