@@ -26,17 +26,18 @@
 											   remember-me-parameter="remember-me"
 											   remember-me-cookie="remember-cookie" />	
 											   
-<!-- 	   <security:session-management invalid-session-url="/Login.do">
+ 	  <!--  <security:session-management invalid-session-url="/Login.do">
 	      <security:concurrency-control max-sessions="1"
-        												  expired-url="/Login.do" />
-	    </security:session-management>	 -->					
+        												  	  expired-url="/Login.do" />
+	    	</security:session-management>					
+	 -->
 	</security:http>
-
+	
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:jdbc-user-service users-by-username-query="SELECT EMAIL AS username, password,AUTHOK AS enabled FROM owl.MEMBER WHERE EMAIL = ?"
-														authorities-by-username-query="SELECT M.EMAIL, R.AUTHORITY FROM owl.MEMBER M JOIN owl.AUTHORITIES R ON M.EMAIL=R.EMAIL WHERE M.EMAIL=?"
-														data-source-ref="driverManagerDataSource" />
+															authorities-by-username-query="SELECT M.EMAIL, R.AUTHORITY FROM owl.MEMBER M JOIN owl.AUTHORITIES R ON M.EMAIL=R.EMAIL WHERE M.EMAIL= ?"
+															data-source-ref="driverManagerDataSource" />
 			<security:password-encoder ref="bCryptPasswordEncoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>

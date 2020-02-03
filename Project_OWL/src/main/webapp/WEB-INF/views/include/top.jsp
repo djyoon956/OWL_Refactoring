@@ -10,6 +10,10 @@
     const userName = "${member.name}";
     console.log(userEmail + "/" + userName);
     $(function () {
+		$('#userImgTop').attr("src","upload/member/${member.profilePic}");
+		$('#userImgToggle').attr("src","upload/member/${member.profilePic}");
+		$("#userNameToggle").text("${member.name}");
+		$("#userEmailToggle").text("${member.email}");
 		
 		$("#userToggle").hide();
 		$("#alarmToggle").hide();
@@ -95,18 +99,6 @@
 		$("#chatNotideAside").addClass("hidden");
 		});
 
-	  //비동기로 정보 뿌리기
-	  $.ajax({
-  		url:"GetMyProfile.do",
-  		dataType:"json",
-  		success:function(data){
-      		$('#userImgTop').attr("src","upload/member/"+data.profilePic+"");
-      		$('#userImgToggle').attr("src","upload/member/"+data.profilePic+"");
-      		$("#userNameToggle").text(data.name);
-      		$("#userEmailToggle").text(data.email);
-  		}
-		});
-	
 	});
 
 	function Search(){
