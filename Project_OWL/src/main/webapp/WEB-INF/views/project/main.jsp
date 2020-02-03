@@ -395,8 +395,8 @@
 						      '멤버 퇴출 완료',
 						      'success'
 						    ).then((result)=>{
-						    	setChageView("dash");
-						    	
+						    	//setChageView("dash");
+						    	location.href="Project.do?projectIdx="+ ${project.projectIdx};
 						    })
 						}else{
 							Swal.fire(
@@ -438,7 +438,8 @@
 						      '권한 변경 완료',
 						      'success'
 						    ).then((result)=>{
-						    	setChageView("dash");
+						    //	setChageView("dash");
+						    	location.href="Project.do?projectIdx="+ ${project.projectIdx};
 						    })
 						}else{
 							Swal.fire(
