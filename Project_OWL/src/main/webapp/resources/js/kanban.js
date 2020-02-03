@@ -314,7 +314,7 @@ function initKanban(projectIdx){
 		 	     		$("#-99Column").show();
 		 	          });
 
-		 			/*
+		 			
 
 		 	    	$("#InsertColumnBtn").on("click", function () {	
 
@@ -369,7 +369,7 @@ function initKanban(projectIdx){
 		 	   		        	errorAlert("Column 추가 error");
 		 	   					}
 		 	   				});
-		 	   	});*/
+		 	   	});
 		 	    	
 		 	    	
 		 	   	
@@ -463,7 +463,7 @@ function initKanban(projectIdx){
 } //initKanban 끝
 
 
-	function insertColumn() {	
+	/* function insertColumn() {	
 	   		//console.log("InsertColumnBtn in");
 	   			$.ajax({
 	   				url : 'InsertColumn.do',
@@ -517,7 +517,7 @@ function initKanban(projectIdx){
 	   				});
 	   	};
 
-
+*/
 
 
 
