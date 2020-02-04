@@ -948,7 +948,6 @@ function editLabel(idx, color, name) {
 	$('#labelcolor').val(color);
 	$('#labelname').val(name);
 	$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', color);
-
 	$('#'+idx+'Label').find('.edit').addClass("hidden");
 	
 	};
@@ -1026,7 +1025,7 @@ function editLabel(idx, color, name) {
 					
 							lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
 							lablist +=  '<div class="col-lg-8">';
-							lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
+							lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+';color:'+ getTextColorFromBg(obj.labelColor) +'">'+obj.labelName+'</span>';
 							lablist +=  '</div>';
 							lablist +=  '<div class="col-lg-2">';
 							lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
@@ -1050,7 +1049,7 @@ function editLabel(idx, color, name) {
 					}else if(flagelement == "editDetail"){
 						let llist = '<option value="">select</option>'; 
 		                $.each(data, function(index, element) {
-		                 	 llist += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
+		                 	 llist += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+';color:'+ getTextColorFromBg(element.labelColor) +'">'+element.labelName+'</option>'
 		                 });
 							$('#labelIdxEdit').append(llist);
 					}
