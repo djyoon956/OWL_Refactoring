@@ -206,12 +206,22 @@ function MyLineChart(){
         }
     });        
 }
+
 </script>
 <style>
     .tui-full-calendar-month.tui-view-27.tui-view-28.tui-full-calendar-vlayout-container {
         display: none;
     }
-  
+
+#emptyProject{
+  height: 100%;
+  overflow-y:hidden;
+  text-align:center;
+  font-weight: bold;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  height: 400px; 
+}
 </style>
 <!-- CONTENT MAIN -->
 <div class="container-fluid" style="padding:20px">
@@ -220,8 +230,13 @@ function MyLineChart(){
     		<div class="col-lg-12">
 	            <div class="card dash_shadow dash_radius">
 	                <div class="card-body" style="margin-bottom: 10px;">
-	                    <div class="align-items-center">
-	                        	<h3>참여중인 프로젝트 없음</h3>
+	                    <div class="align-items-center" id="emptyProject">
+									<img src="resources/images/monitor.png" style="width: 300px;">
+									<br>
+									<br>
+									<h4>참여중인 프로젝트가 없습니다.</h4>
+									<br>
+									<h4>새로운 프로젝트를 시작해보세요.</h4>
 	                    </div>
 	                </div>
 	            </div>

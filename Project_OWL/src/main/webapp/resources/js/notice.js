@@ -130,7 +130,7 @@ function writeNoticeOk(){
         success: function (data) {
         	if(data >  0){
         		successAlert("공지사항 작성 완료");
-        		pushNotice(currentProjectName ,$("#title").val());
+        		pushNotice(currentProjectName, $("#title").val());
         		cancelNotice();
         		setDetailData(data);
         	} else
