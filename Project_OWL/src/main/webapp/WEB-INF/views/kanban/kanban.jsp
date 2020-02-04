@@ -1,8 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<script>
 
+$(function() {
+
+	console.log('뭐니?');
+	console.log('${project.authority}');
+
+	console.log($('#getAuthority').val());
+})
+
+</script>
 <div id="totalbody" class="container-fluid pt-3">
+<input type="hidden" id="getAuthority" value="${project.authority}">
+
 <input type="hidden" id="projectIdxNum">
     <div id="kanbanMainBox">
 

@@ -523,27 +523,34 @@ function addLabel(lbidx, lbcolor, lbnm) {
 
    
 function addColumn(obj){
+	
+	let authority = $('#getAuthority').val();
+
    let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-            + '<div class="columnTitle text-center mt-2 dropdown">'
-            + '<h4><span>' + obj.colname + '</span>'
-            + '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-            + '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-            + '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-            +            '<ul class="list-style-none">'
-            +   '<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
-            +    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
-            +   '>Edit Column</a></li>'
-            +               '<li class="pl-3"><a href="#" onclick="deleteColumn(' + obj.colIdx +');">Remove Column</a></li>'
-            +            '</ul>'
-            +         '</div>'
-            +      '</h4>'
-            +   '</div>'
-            +   '<ul class="connectedSortable sortableCol columnBody cursor ui-sortable" style="margin-top: 35px">'
-            +   '</ul>'
-            + '</div>';
+              + '<div class="columnTitle text-center mt-2 dropdown">'
+              + '<h4><span>' + obj.colname + '</span>';
+            
+	if(authority == 'ROLE_PM') {
+		
+	    column  += '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
+                + '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+                + '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
+                +            '<ul class="list-style-none">'
+                +   '<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '">'  
+                +   'Edit Column</a></li>'
+                +               '<li class="pl-3"><a href="#" onclick="deleteColumn(' + obj.colIdx +');">Remove Column</a></li>'
+                +            '</ul>'
+                +         '</div>';
+		
+	}
+ 
+	 column  +=  '</h4>'
+             +   '</div>'
+             +   '<ul class="connectedSortable sortableCol columnBody cursor ui-sortable" style="margin-top: 35px">'
+             +   '</ul>'
+             + '</div>';
    
    $('#kanbanIn').append(column);
-   
 }
 
 function deleteColumn(obj){
@@ -580,6 +587,7 @@ function addKanbanIssue(colIdx,obj){
 		obj.labelName = "";
 		obj.labelColor = "";
 	}
+	
 	if(obj.name == null) 
 		obj.name  = "none";
 	 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
