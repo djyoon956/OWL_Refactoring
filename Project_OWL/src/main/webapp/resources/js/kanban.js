@@ -2,7 +2,6 @@ let projectIdx;
 
 let editIdx = 0;
 
-let pmemail; 
 
 let words = new Array(); // project memberlist (name)
 let wordsemail = new Array(); // project memberlist (email)
@@ -14,22 +13,6 @@ let kanbanViewType = "";
 
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
-	
-	
-	$.ajax({
-		url : "GetPMemail.do",
-		data : {projectIdx : projectIdx},
-		success : function(data) {
-			console.log('GetPMemail in');
-			console.log(data);
-			
-			pmemail = data;
-			
-		}, error : function() {
-			console.log('error');
-		}
-		
-	})
 	
 	
 	//addIssueModal 모달이 오픈되면 !
@@ -280,10 +263,14 @@ function initKanban(projectIdx){
 		 			        cache: false,
 		 			        timeout: 600000,
 		 			        success: function (data) {
+		 			        	//
+	 			        		console.log("pm email ????????????????????????" + pmemail);
 		 	 		        	if(data != null){
 		 			        		successAlert("Issue 추가 완료");
 		 			        		addKanbanIssue('-1', data);
 		 			        		$('#addIssueModal').modal("hide");
+		 			        		
+		 			        		
 		 			        		
 		 			        	}else{
 		 			        		errorAlert("Issue 추가 실패");
@@ -579,8 +566,7 @@ function deleteColumn(obj){
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: '삭제',
-      	  cancelButtonText: '취소'
+          confirmButtonText: 'Yes'
         }).then((result) => {
           if (result.value) {
            $.ajax({
@@ -644,8 +630,7 @@ function deleteIssue(obj){
        showCancelButton: true,
        confirmButtonColor: '#3085d6',
        cancelButtonColor: '#d33',
-       confirmButtonText: '삭제',
-   	  	cancelButtonText: '취소'
+       confirmButtonText: 'Yes'
      }).then((result) => {
        if (result.value) {
     	   $.ajax({
@@ -675,8 +660,6 @@ function deleteLabel(labelidx) {
            $("#"+labelidx+"Label").remove();
 
       }, error : function() {
-			warningAlert("현재 사용중인 라벨입니다.");
-
          console.log("deleteLabel error");
             
          }
@@ -982,7 +965,6 @@ function editLabel(idx, color, name) {
 						let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
 				
 						$.each(data,function(index, obj) {
-						
 					
 							lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
 							lablist +=  '<div class="col-lg-8">';
