@@ -476,228 +476,7 @@ function initKanban(projectIdx){
 		 							})   
 		 					}
 		 				}) */	
-		 	   function getLabelList(flagelement) {
-					
-		 		  $.ajax({
-		 				url : 'GetLabelList.do',
-		 				data : {'projectIdx' : projectIdx},
-		 				success : function(data) {
-		 					$('#labelList').empty();
-		 					$('#labelIdx').empty();
-		 					$('#labelIdxEdit').empty();
-		 					if(flagelement == "ShowLabelList") {
-		 						let lablist = ""; //Make 라벨 부분에서 라벨 목록 보여줄 것 
-		 				
-		 						$.each(data,function(index, obj) {
-		 					
-		 							lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
-		 							lablist +=  '<div class="col-lg-8">';
-		 							lablist +=  '<span class="badgeIcon" style="background-color: '+obj.labelColor+';color:'+ getTextColorFromBg(obj.labelColor) +'">'+obj.labelName+'</span>';
-		 							lablist +=  '</div>';
-		 							lablist +=  '<div class="col-lg-2">';
-		 							lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
-		 							lablist +=  '</div>';
-		 							lablist +=  '<div class="col-lg-2">';
-		 							lablist +=  '<button class="btn-link link-gray delete" onclick="deleteLabel(' + obj.labelIdx +')";>Delete</button>';
-		 							lablist +=  '</div></div><hr>';
-		 					});
 
-		 							$('#labelList').append(lablist);
-		 						
-		 					}else if(flagelement == "SearchLabelList") {  //Search부분에서 Label List 보여주는 부분 
-		 				
-		 						var labellist = '<datalist id="LabelMenu">';
-		 				
-		 						$.each(data,function(index, obj) {
-		 							labellist += '<option value="'+obj.labelName+'" data-id="'+obj.labelIdx+'"></option>';	
-		 						});		 	
-		 						labellist += '</datalist>';
-		 						$('#searchContent').append(labellist);
-		 					}else if(flagelement == "editDetail"){
-		 						let llist = '<option value="">select</option>'; 
-		 		                $.each(data, function(index, element) {
-		 		                 	 llist += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+';color:'+ getTextColorFromBg(element.labelColor) +'">'+element.labelName+'</option>'
-		 		                 });
-		 							$('#labelIdxEdit').append(llist);
-		 					}
-		 			},error : function() {
-		 					console.log("Showlabel error");
-		 					
-		 			}
-		 		  });
-		 		}
-	function getissueinfo(flagelement, projectidx) {
-
-		 			if(flagelement == "issueModalOpen") {
-		 				
-		 			 $.ajax({
-		 			 		type: "POST",
-		 		            url: "GetAddIssueForm.do",
-		 		            data: { projectIdx: projectidx},
-		 		            success: function (data) {
-		 		            	$('#assigned').empty();
-		 		            	$('#labelIdx').empty();
-
-		 						let member = data.member;
-		 						let label = data.label;
-		 						
-		 						let optlabel;
-		 						let optmember;
-
-		 						$('#assigned').append(selectoption);
-		 		                $('#labelIdx').append(selectoption);
-
-		 		               $.each(member, function(index, element) {
-		 		            	   
-		 		            	   if(element.authority == 'ROLE_PM') {
-		 		            		   let appendCtn = '<input type="hidden" id="pmemail" value="'+element.email+'">';
-		 		            		   $('#addIssueModal').append(appendCtn);
-		 		            	   }
-		 		            	  
-		 							optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
-		 		               });
-		 		               
-		 		               $('#assigned').append(optmember);
-
-		 		                $.each(label, function(index, element) {
-		 		                 	 optlabel += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
-		 		                 });
-		 		                
-		 		                $('#labelIdx').append(optlabel);	
-		 		            },
-		 		            error: function () {
-		 		                console.log("GetProjectMember error");
-		 		            }
-		 				})
-		 			
-		 			}
-		 		}
-	function issueDetailFileEdit(projectIdx) {
-		let formData = new FormData();
-		formData.append("projectIdx",projectIdx);
-	 	formData.append("issueIdx",$("#issueIdxNum").val());
-	   $("#multipartFilesIssueEdit").empty();
-	    
-	    $.each($("#multipartFilesIssueEdit")[0].files, function(i, file) {
-	    	formData.append('multipartFiles', file);
-	    });
-	    $.ajax({
-			url : 'IssueFileEdit.do',
-	        type: "POST",
-			enctype :'multipart/form-data',
-			data : formData,
-	        processData: false,
-	        contentType: false,
-	        cache: false,
-	        success: function (data) {
-	        	console.log("ajax in");
-	        	console.log(data);
-	        	
-		        	if(data){
-		        		setKanbanDetail($("#issueIdxNum").val());
-		        		// $("#multipartFilesIssueEdit").empty();
-		        		 $(".editIssueFileBtn").removeClass("hidden");
-	        	}else{
-	        		errorAlert("사진 추가 실패");
-	        	}
-	        },
-	        error: function (e) {
-	        	errorAlert("Issue 추가 실패");
-	        }
-	    });
-	}
-	
-	function labelListview(projectidx){
-		console.log("labelListview---- 라벨 리스트 보여져야한다 ");
-		console.log(projectidx);
-		//flagelement,projectIdx
-		getLabelList("editDetail");
-	}
-	
-function getProjectMemberList(flagelement) {
-		
-		console.log(projectidx);
-		$.ajax({
-			url : "GetProjectMemberList.do",
-			data : {'projectIdx' : projectidx},
-			success : function(data) {
-				
-				$('#assignedEdit').empty();
-				
-				if(flagelement == 'searchMember'){
-					
-					var memberlist = '<datalist id="MemberMenu">';
-
-					$.each(data, function(index, obj) {
-						memberlist += '<option value="'+obj.name+'" data-id="'+obj.email+'">('+obj.email+')</option>';	
-					});		 	
-					
-					memberlist += '</datalist>';
-						
-				$('#searchContent').append(memberlist);
-				
-				} else if(flagelement == 'editDetail') { 
-					console.log("프로젝트 멤버 리스트 editDetail ----");
-					console.log(data);
-
-					let selectoption = '<option value="">Select</option>';
-
-					let optmember;
-					$('#assignedEdit').append(selectoption);
-		             $.each(data, function(index, element) {
-					  optmember += '<option value="'+element.email+'">'+element.name+'('+element.email+')</option>';
-		               });
-		               
-		          $('#assignedEdit').append(optmember);
-
-				
-				} else if(flagelement == '') {
-					
-					
-				}else if(flagelement == 'mentionSearch'){
-					$.each(data, function(index, obj){
-						
-						words.push(obj.name);
-						wordsemail.push(obj.email);
-					});
-				}
-			}, error : function() {
-
-			}
-			
-		})
-	}
-
-function mentionSearch() {
-
-	 getProjectMemberList("mentionSearch");
-	 
-	//멘션
- $('.editable').textcomplete([{
-	  
-	    match:  /\B@(\w*)$/,
-	    search: function (term, callback) {
-	      callback($.map(words, function (word) {
-	        return word.indexOf(term) === 0 ? word : null;
-	      }));
-	    },
-	    index: 1,
-	    replace: function (word) {
-	      return '@' + word + ' ';
-	    }
-	  }]).on({
-		  'textComplete:select': function (e, value) {	
-			  console.log(words.indexOf(value));  // 2
-			  console.log(wordsemail[words.indexOf(value)]); // skisk1124@naver.com
-		  }
-	  }) ;
-	}
-function assignListEditview(projectidx){
-	console.log("assignListEditview----");
-	console.log(projectidx);
-	getProjectMemberList("editDetail");
-	
-}
 } //initKanban 끝
 
 
@@ -1046,7 +825,7 @@ function setKanbanDetail(issueIdx){
 										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creator
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
-										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}"></textarea>'
+										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('+ data.projectIdx +')}"></textarea>'
 										+ '		<div class="comment-footer float-right">'
 										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
@@ -1241,7 +1020,7 @@ function editLabel(idx, color, name) {
 
 
 
-/*	function getLabelList(flagelement,projectIdx) {
+	function getLabelList(flagelement,projectIdx) {
 			
 		  $.ajax({
 				url : 'GetLabelList.do',
@@ -1290,7 +1069,7 @@ function editLabel(idx, color, name) {
 					
 			}
 		  });
-		}*/
+		}
 	
 	function editTitleViewBtn(){
 		$("#issueDetailTitleEdit").val($("#issueDetailTitle").text());
@@ -1354,7 +1133,7 @@ function editLabel(idx, color, name) {
 	}
 
 
-/*	function getProjectMemberList(flagelement,projectidx) {
+	function getProjectMemberList(flagelement,projectidx) {
 		
 		console.log(projectidx);
 		$.ajax({
@@ -1406,7 +1185,7 @@ function editLabel(idx, color, name) {
 			}
 			
 		})
-	}*/
+	}
 	
 	function editIssuePriorityOk() {
 		$.ajax({
@@ -1481,19 +1260,19 @@ function editLabel(idx, color, name) {
 		
 	}
 	
-/*	function assignListEditview(projectidx){
+function assignListEditview(projectidx){
 		console.log("assignListEditview----");
 		console.log(projectidx);
 		getProjectMemberList("editDetail",projectidx);
 		
-	}*/
+	}
 	
-/*	function labelListview(projectidx){
+	function labelListview(projectidx){
 		console.log("labelListview---- 라벨 리스트 보여져야한다 ");
 		console.log(projectidx);
 		//flagelement,projectIdx
 		getLabelList("editDetail",projectidx);
-	}*/
+	}
 	
 	function deleteIssueFile(fileIdx){
 		$.ajax({
@@ -1521,7 +1300,7 @@ function editLabel(idx, color, name) {
 		 $(".editIssueFileBtn").addClass("hidden");
 	}
 	
-/*	function issueDetailFileEdit(projectIdx) {
+	function issueDetailFileEdit(projectIdx) {
 		let formData = new FormData();
 		formData.append("projectIdx",projectIdx);
 	 	formData.append("issueIdx",$("#issueIdxNum").val());
@@ -1554,8 +1333,8 @@ function editLabel(idx, color, name) {
 	        	errorAlert("Issue 추가 실패");
 	        }
 	    });
-}*/
-/*	function getissueinfo(flagelement, projectidx) {
+}
+	function getissueinfo(flagelement, projectidx) {
 
 		if(flagelement == "issueModalOpen") {
 			
@@ -1600,10 +1379,10 @@ function editLabel(idx, color, name) {
 			})
 		
 		}
-	}*/
+	}
 	
 
-/*	function mentionSearch(projectIdx) {
+function mentionSearch(projectIdx) {
 
 		 getProjectMemberList("mentionSearch",projectIdx);
 		 
@@ -1626,7 +1405,7 @@ function editLabel(idx, color, name) {
 				  console.log(wordsemail[words.indexOf(value)]); // skisk1124@naver.com
 			  }
 		  }) ;
-	}*/
+	}
 
 	function kanbanDetailBackBtn() {
 	      if($("#issueDetailTitle").hasClass("hidden")){
