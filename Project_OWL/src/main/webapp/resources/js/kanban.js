@@ -9,11 +9,11 @@ let wordsemail = new Array(); // project memberlist (email)
 let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
 
-
+let kanbanViewType = "";
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
-
+	
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
 		//칸반으로 옮김 
@@ -414,6 +414,22 @@ $('#editColumnModal').on('show.bs.modal', function(event) {
   $("#editcolIdx").val(editColIdx);
 });
 
+		 		$(".kanbanViewBtn").click(function(){
+		 			$(this).attr("disabled", true);
+		 			$(this).addClass("active");
+		 			console.log(this);
+
+		 			kanbanViewType= $(this).attr("id");
+		 			if(kanbanViewType == "kanbanTableView"){
+		 				$("#kanbanIconView").removeClass("active");
+		 				$("#kanbanIconView").attr("disabled", false);
+		 			}
+		 			// icon View
+		 			else{
+		 				$("#kanbanTableView").removeClass("active");
+		 				$("#kanbanTableView").attr("disabled", false);
+		 			}
+		 		})
 } //initKanban 끝
 
 
