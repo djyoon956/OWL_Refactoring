@@ -94,4 +94,7 @@ public interface KanbanDao {
 	public int updateIssueLabel(Issue issue) throws ClassNotFoundException, SQLException;
 	
 	public int deleteIssueFile(int fileIdx) throws ClassNotFoundException, SQLException;
+	
+	public String getPMemail(int projectIdx)throws ClassNotFoundException, SQLException;
+
 }
