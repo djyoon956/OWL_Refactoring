@@ -48,7 +48,6 @@ function initKanban(projectIdx){
 				editIdx = 0;
 				
 				$('#'+editIdx+'Label').attr('style', "background-color:#fff");
-
 			}, error : function () {
 				console.log('EditLabel error');
 			}
@@ -670,7 +669,7 @@ function addKanbanIssue(colIdx,obj){
 		obj.name  = "none";
 	 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
 			+		'<div class="dropdown">'
-			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
+			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'; color: ' + getTextColorFromBg(obj.labelColor) + '">' + obj.labelName + '</span>'
 			+			'<span class="issueTitle">' + issueTitle + '</span>'
 			+			'</label>'
 			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
@@ -836,7 +835,8 @@ function setKanbanDetail(issueIdx){
 					if(data.labelIdx > 0){
 
 						$("#issueDetailLabel").text(data.labelName);
-						$("#issueDetailLabel").css("background-color", data.labelColor);					
+						$("#issueDetailLabel").css("background-color", data.labelColor);
+						$("#issueDetailLabel").css("color", getTextColorFromBg(data.labelColor));
 					}
 					else
 						$("#issueDetailLabel").text("none");
