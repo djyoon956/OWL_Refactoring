@@ -15,6 +15,7 @@ function initDrive(projectIdx){
 		$("#driveSearchViewBox").addClass("hidden");
 		$("#driveSearchViewBox").empty();
 		$("#default").removeClass("hidden");
+		$("#allCheck").addClass("hidden");
 		
 		let path = data.instance.get_path(data.node, '<i class="fas fa-angle-right ml-2 mr-2"></i><i class="far fa-folder mr-2"></i>');
 	    $("#driveName").html('<i class="far fa-folder mr-2"></i>'+path);
