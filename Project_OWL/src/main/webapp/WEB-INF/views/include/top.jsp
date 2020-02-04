@@ -660,8 +660,8 @@ display: block;
                                             </h5>
                                         </div>
                                         <div id="collapseOne4" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
-                                            <div class="card-body pt-3 accordionBody">
-                                            <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <div class="card-body pt-3 accordionBody" id="noticeBoard">
+                                            <!-- <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
                                             	프로젝트 기간이 연장되었습니다. <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
                                             </div>
@@ -676,7 +676,7 @@ display: block;
                                             <span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #326295; font-size:13px;">후기관리</span>설날 잘 보내시길 바랍니다.
                                             <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
-                                            </div>
+                                            </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -977,6 +977,22 @@ display: block;
 					
 		}
 
+
+
+		//탑 부분 종 누르면...   공지 사항 보이기~~
+		function pushNotice(projectName, title) {
+			//$('#noticeBoard').empty();
+			var noticeTags;
+			noticeTags = '<div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
+                         '<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
+                          + projectName + '</span>'+ title +
+        	              '<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
+                          '</div>';
+
+             $(#noticeBoard).append(noticeTags);
+            
+			}
+		
 			
 	      //유저가 채팅기능 버튼을 눌렀을 때 작동하는 콜백 함수... 목적은.. firebase database 유저 정보저장(메세지 읽기, 쓰기를 위해 특정키 부여 누군인지 구분하기 위해 필요)
 		  //그리고 이미 디비에 있으면...키 값을 불러서 해당 유저와 관련된 정보를 보여 주는 데 활용 할 수 있다...    
