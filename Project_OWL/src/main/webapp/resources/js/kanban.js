@@ -665,7 +665,7 @@ function setKanbanDetail(issueIdx){
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
-				 $("#multipartFilesIssueEdit").empty();
+				$("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
 
 				if(data.issueProgress == 'OPEN')
@@ -730,7 +730,11 @@ function setKanbanDetail(issueIdx){
 										+ '</div>';
 						$("#issueDetailComment").prepend(control);
 					});
-					
+					console.log("디테일");
+					console.log(data);
+					if(data.assigned == ""){
+						data.assigned = "none";
+					}
 					$("#issueDetailAssignees").text(data.assigned);
 					
 
