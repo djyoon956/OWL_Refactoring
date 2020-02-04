@@ -163,12 +163,13 @@ public class MemberService {
 	 * @param email
 	 * @return boolean
 	 */
-	public boolean emailCheck(String email) {
-		MemberDao dao = getMemberDao();
-
+	public boolean emailCheck(String email) {		
+		MemberDao dao = getMemberDao();       
 		boolean result = false;
 		try {
 			result = dao.emailCheck(email) != null ? true : false;
+			
+			System.out.println(result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

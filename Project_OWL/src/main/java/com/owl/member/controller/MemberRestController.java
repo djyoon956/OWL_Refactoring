@@ -34,7 +34,8 @@ public class MemberRestController {
 
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
-
+	
+	@Autowired
 	private MemberService service;
 
 	@Autowired
@@ -100,9 +101,9 @@ public class MemberRestController {
 
 	@RequestMapping("Emailcheck.do")
 	public String emailCheck(String email, Model model) throws Exception {
-		System.out.println("EmailCheck controller in");
+		System.out.println("EmailCheck controller in");		
 		boolean result = service.emailCheck(email);
-
+		System.out.println(result);
 		String data = "";
 		if (result) {
 			System.out.println("we have already this email");
