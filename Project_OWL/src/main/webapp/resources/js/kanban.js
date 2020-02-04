@@ -24,20 +24,26 @@ function initKanban(projectIdx){
 		$(this).find('.addContent')[0].reset();
  	});
 	
-	  
+
 	
 	$('#editLabelBtn').click(function() {
+		console.log($(this));
+		console.log('editlabelBtn in');
+		console.log(editIdx);
 		if(editIdx == 0)
 			return;
 		
 		$('#labelColor').val("");
 		$('#labelName').val("");
 			
+			console.log($('#labelcolor').val());
+			console.log($('#labelname').val());
+			
 		$.ajax({
 			url : "UpdateLabel.do",
 			data : {'labelIdx' : editIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
 			success : function(data) {
-				
+				console.log(data);
 				$('#'+editIdx+'Label').next().remove();
 				$('#'+editIdx+'Label').remove();
 				
@@ -98,8 +104,7 @@ function initKanban(projectIdx){
 						     + '</datalist>'; 
 			
 			$('#searchContent').append(prioritylist);
-		}
-			
+		}	
 	})
 
 	
@@ -599,7 +604,7 @@ function searchAppend(data) {
 function addLabel(lbidx, lbcolor, lbnm) {
    let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
             +  '<div class="col-lg-8">'
-            +  '<span class="badgeIconinList" style="background-color: '+lbcolor+';color:'+getTextColorFromBg(lbcolor)+'">'+lbnm+'</span>'
+            +  '<span class="badgeIcon" style="background-color: '+lbcolor+';color:'+getTextColorFromBg(lbcolor)+'">'+lbnm+'</span>'
             +  '</div>'
             +  '<div class="col-lg-2">'
             + '<button class="btn-link link-gray edit" onclick="editLabel(' + lbidx +','+"'"+lbcolor+"'"+','+"'"+lbnm+"'"+')";>Edit</button>'
@@ -802,16 +807,13 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 						
-						//console.log('element 뭐니?');
-						//console.log(element);
-						
+					
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
 
-                        console.log(element.profilePic);
 			
 						//let creatornm =  element.creator.substring(0,1);
 						
-						
+                     
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
 										+ '<img class="rounded-circle" width="40" '+error+' src="upload/memeber/'+element.profilePic+'" alt="user" >'
@@ -820,7 +822,7 @@ function setKanbanDetail(issueIdx){
 										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creator
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
-										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('+projectIdx+')}"></textarea>'
+										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('+data.projectIdx+')}"></textarea>'
 										+ '		<div class="comment-footer float-right">'
 										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
@@ -942,8 +944,10 @@ function changeKanbanView(view){
 
 function editLabel(idx, color, name) {
 	
+	console.log('idx뭐니 : ' + idx);
 	$('.labelList').find('.edit').removeClass("hidden");
 
+	editIdx = idx;
 	$('#addLabelBtn').addClass("hidden");
 	$('#editLabelBtn').removeClass("hidden");
 	$('#backBtn').removeClass("hidden");
@@ -951,8 +955,9 @@ function editLabel(idx, color, name) {
 	$('#labelcolor').val(color);
 	$('#labelname').val(name);
 	$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', color);
-	$('#'+idx+'Label').find('.edit').addClass("hidden");
+
 	
+	$('#'+idx+'Label').find('.edit').addClass("hidden");
 	};
 	
 	
@@ -1028,7 +1033,7 @@ function editLabel(idx, color, name) {
 					
 							lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
 							lablist +=  '<div class="col-lg-8">';
-							lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+';color:'+ getTextColorFromBg(obj.labelColor) +'">'+obj.labelName+'</span>';
+							lablist +=  '<span class="badgeIcon" style="background-color: '+obj.labelColor+';color:'+ getTextColorFromBg(obj.labelColor) +'">'+obj.labelName+'</span>';
 							lablist +=  '</div>';
 							lablist +=  '<div class="col-lg-2">';
 							lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
@@ -1252,7 +1257,7 @@ function editLabel(idx, color, name) {
 		
 	}
 	
-	function assignListEditview(projectidx){
+function assignListEditview(projectidx){
 		console.log("assignListEditview----");
 		console.log(projectidx);
 		getProjectMemberList("editDetail",projectidx);
@@ -1374,7 +1379,7 @@ function editLabel(idx, color, name) {
 	}
 	
 
-	function mentionSearch(projectIdx) {
+function mentionSearch(projectIdx) {
 
 		 getProjectMemberList("mentionSearch",projectIdx);
 		 
@@ -1398,6 +1403,7 @@ function editLabel(idx, color, name) {
 			  }
 		  }) ;
 	}
+	
 
 	function kanbanDetailBackBtn() {
 	      if($("#issueDetailTitle").hasClass("hidden")){
