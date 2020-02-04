@@ -614,7 +614,7 @@ function addKanbanIssue(colIdx,obj){
 			+			'<span class="issueTitle">' + issueTitle + '</span>'
 			+			'</label>'
 			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+			+			'<i class="fas fa-ellipsis-v fa-sm" style="padding:5px;"></i></a>'
 			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 			+				'<ul class="list-style-none">'
 			+					'<li class="pl-3"><a href="#" onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
@@ -870,8 +870,6 @@ function changeKanbanView(view){
 	   $('#addColumnBtn').removeClass('hidden');
 	   $('#confirmIssueBtn').removeClass('hidden'); 
 	 } else if(view == "changeView"){
-		 console.log("changeView");
-		 console.log(kanbanViewType);
 			 if(kanbanViewType == "kanbanTableView"){
 				 $('#kanbanTableViewBox').removeClass('hidden');
 				   $('#kanbanIn').addClass('hidden');
@@ -1410,7 +1408,14 @@ function mentionSearch() {
 	         fixedColumns: true,
 	         autoWidth: false,
 	         "searching": false,
-	         "lengthChange": false
+	         "lengthChange": false,
+	         columnDefs: [ { targets: 4, render: function (data, type, row) {
+	        	if(type === 'export'){
+	        		let priority = $(data).attr("class");
+	        		return priority==null?"":priority.replace("priorityBadge","").trim();
+	        	}else
+	        		return data;
+        	}}]
 		});
 
         new $.fn.dataTable.Buttons( table , {
@@ -1421,6 +1426,7 @@ function mentionSearch() {
 	                className : 'btn hidden kanbanExportButton',
 	                title: 'OWL - '+currentProjectName,
 	                exportOptions : {
+	                	orthogonal : 'export',
 	                    columns : ':visible'
 	                }
                 },  

@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.owl.project.dao.ProjectDao">
 	<!-- sidebar project 목록 출력 -->
 	<select id="getProjectLists"  resultType="com.owl.project.dto.ProjectList" parameterType="String">
-		SELECT p.PROJECTIDX, p.PROJECTNAME, l.FAVORITE, l.PROJECTCOLOR, l.AUTHORITY, l.email FROM PROJECT p JOIN PROJECTLIST l 
+		SELECT p.PROJECTIDX, p.PROJECTNAME, l.FAVORITE, l.PROJECTCOLOR, l.AUTHORITY, l.EMAIL, p.STARTDATE, p.ENDDATE FROM PROJECT p JOIN PROJECTLIST l 
 		ON p.PROJECTIDX=l.PROJECTIDX where l.EMAIL = #{email}
 	</select>
 
@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<select id="getProjectList"  resultType="com.owl.project.dto.ProjectList" >
-		SELECT l.PROJECTIDX, p.PROJECTNAME, l.FAVORITE, l.PROJECTCOLOR, l.AUTHORITY, l.email 
+		SELECT l.PROJECTIDX, p.PROJECTNAME, l.FAVORITE, l.PROJECTCOLOR, l.AUTHORITY, l.EMAIL , p.STARTDATE, p.ENDDATE
 			FROM PROJECT p JOIN PROJECTLIST l 
 		ON p.PROJECTIDX=l.PROJECTIDX where l.EMAIL = #{param2} AND l.PROJECTIDX = #{param1}
 	</select>
