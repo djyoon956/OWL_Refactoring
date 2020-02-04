@@ -1389,41 +1389,56 @@ function mentionSearch() {
 	
 	function setKanbanTable(){
 		$("#kanbanTable").DataTable({
-		 	stateSave: true, // 페이지 상태 저장
-		 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-		 	"searching": false,
+			"pageLength": 10,
 	         fixedColumns: true,
 	         autoWidth: false,
-	         columnDefs: [ { targets: 0, className: 'dt-body-left' }]
+	         "ordering" : false,
+	         "searching": false,
+	         "lengthChange": false
 		})
 	}
 	
 	function setKanbanTableView(){
-		 $.ajax({
+		$.ajax({
 			 url : 'GetColumn.do',
-			 data : {'projectIdx' :  currentProjectIdx },
+			 data : { projectIdx :  currentProjectIdx },
 			 success : function(data) {
-				 console.log("in setKanbanTableView success");
-				 console.log(data);
-				 
+					$.ajax({
+						url : "GetIssue.do",
+						data : {'projectIdx' :  currentProjectIdx },
+						success : function(data) {
+							let colInfos = data;
+							console.log("setKanbanTableView success");
+							 $.each(data,function(index, element) {
+								 console.log(element);
+								 $('#kanbanTable').DataTable().row.add( [
+										++index,
+										'<span class="badgeIcon" style="background-color: '+ element.labelColor+'; color: ' + getTextColorFromBg(element.labelColor) + '">' + element.labelName + '</span>',
+										element.issueTitle,
+										element.name,
+										element.priorityCode,
+										element.dueDate,
+							        ]).node().id = element.issueIdx;
+									
+									$('#kanbanTable').DataTable().draw();
+							});	
+						},
+						error: function() {
+							console.log("setKanbanTableView error");
+						}
+					})
 			 },
 			 error : function(){
-				 console.log("in setKanbanTableView error");
+				 console.log("setKanbanTableView error")
 			 }
-		 });
-		 
-		 return;
-		$('#kanbanTable').DataTable().row.add( [
-			"<i class='fas fa-file-alt mr-3'></i><span>"+element.fileName+"</span>",
-			element.createDate,
-			element.creatorName,
-			element.fileSize+" KB"
-        ]).node().id = element.driveFileIdx;
-		
-		$('#kanbanTable').DataTable().draw();
+		});
 	}
 	
     function setKanbanData() {
+	    $("#-1Column > .columnBody").empty();
+        $("#-99Column > .columnBody").empty();
+    	$("#kanbanIn").empty();
+    	
         $.ajax({
 			 url : 'GetColumn.do',
 			 data : {'projectIdx' :  currentProjectIdx },
@@ -1486,9 +1501,10 @@ function mentionSearch() {
 			url : "GetIssue.do",
 			data : {'projectIdx' :  currentProjectIdx },
 			success : function(data) {
-				 $.each(data,function(index,obj) {
+				 $.each(data,function(index, obj) {
 					 addKanbanIssue(obj.colIdx, obj); 
-					 wholeProjectChart(currentProjectIdx);
+					 // 차트용
+					 wholeProjectChart(currentProjectIdx); 
 				});
 			},
 			error: function() {
