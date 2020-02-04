@@ -182,12 +182,13 @@ public class DriveRestController {
 		return service.deleteFolderFromDrive(driveIdx);
 	}
 	
-	@RequestMapping(value="DeleteFolderAndFile.do", method = RequestMethod.POST)
-	public boolean deleteFolderAndFileFromDrive(String driveIdxList, String driveFileIdxList) {
+	@RequestMapping(value="DeleteAllFile.do", method = RequestMethod.POST)
+	public boolean deleteAllFileFromDrive(String driveFileIdxList) {
 		boolean result = false;
-		System.out.println(driveIdxList);
+		/* System.out.println(driveIdxList); */
 		System.out.println(driveFileIdxList);
-			service.deleteFolderAndFileFromDrive(driveIdxList, driveFileIdxList);		
+		
+		 service.deleteAllFileFromDrive(driveFileIdxList);	
 		return result;
 	}
 	

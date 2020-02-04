@@ -130,11 +130,10 @@ public class DriveService {
 		return reseult;
 	}
 	
-	@Transactional
-	public void deleteFolderAndFileFromDrive(String driveIdxList, String driveFileIdxList) {
+	public void deleteAllFileFromDrive(String driveFileIdxList) {
 		DriveDao dao = getDriveDao();
 		try {
-			dao.deleteFoldersFromDrive(driveIdxList);
+			/* dao.deleteFoldersFromDrive(driveIdxList); */
 			dao.deleteFilesFromDrive(driveFileIdxList);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
