@@ -2,6 +2,7 @@ let projectIdx;
 
 let editIdx = 0;
 
+let pmemail; 
 
 let words = new Array(); // project memberlist (name)
 let wordsemail = new Array(); // project memberlist (email)
@@ -13,6 +14,22 @@ let kanbanViewType = "";
 
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
+	
+	
+	$.ajax({
+		url : "GetPMemail.do",
+		data : {projectIdx : projectIdx},
+		success : function(data) {
+			console.log('GetPMemail in');
+			console.log(data);
+			
+			pmemail = data;
+			
+		}, error : function() {
+			console.log('error');
+		}
+		
+	})
 	
 	
 	//addIssueModal 모달이 오픈되면 !
