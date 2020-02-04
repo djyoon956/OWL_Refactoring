@@ -184,9 +184,6 @@
             else if (target === "calendar")
                 setCalendarData();
             else if (target === "kanban"){
-                $("#-1Column > .columnBody").empty();
-                $("#-99Column > .columnBody").empty();
-                $("#kanbanIn").empty();
                 setKanbanData();
             }
             else if (target === "notice")
