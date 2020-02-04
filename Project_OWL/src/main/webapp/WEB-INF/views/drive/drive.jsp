@@ -247,6 +247,35 @@ function sendFileToServer(formData,status){
  
     status.setAbort(jqXHR);
 }
+
+function allRemovetoTrash(){
+	let goTrashFolder = [];
+	let goTrashFile = [];
+/*  	$.each($('.driveCard.folder'), function(index, element){
+		goTrashFolder.push($(element).attr("id"));		
+		})  */
+	$.each($('.driveCard.file'), function(index, element){
+		goTrashFile.push($(element).attr("id"));		
+		})		
+/* let Stringfolder = goTrashFolder.join(','); */
+let Stringfile = goTrashFile.join(',');
+	$.ajax({
+  		 url : "DeleteAllFile.do",
+  		type: "POST",
+  		data : {driveFileIdxList: Stringfile},
+  		dataType: "json",
+  		 success : function(data){
+  			 if(data){
+  				 callDirectoryData();
+  			 }else{
+  				 errorAlert("파일 삭제 실패");
+  			 }
+  		 },
+  		 error : function(){
+  			 errorAlert("파일 삭제 실패");
+  		 }
+  	 })  
+}
 </script>
 
 
@@ -285,7 +314,7 @@ function sendFileToServer(formData,status){
 			                <a href='#' onclick='ReturnCheck()'><i class='fas fa-times'></i></a>
 		               	</div>		               	
 		               	<div id="allCheck" class="hidden">
-		               		<button type='button' class='driveBtn btn-primary' onclick='allRemove()'>삭제</button>&nbsp;&nbsp;
+		               		<button type='button' class='driveBtn btn-primary' onclick='allRemovetoTrash()'>삭제</button>&nbsp;&nbsp;
 		               		<button type='button' class='driveBtn btn-primary'>이동</button>&nbsp;&nbsp;		               		
 							<button type='button' class='driveBtn btn-primary' onclick='ReturnCheck()'>선택해제</button>&nbsp;&nbsp;
 		               	</div>

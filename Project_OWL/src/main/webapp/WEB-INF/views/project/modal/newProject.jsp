@@ -16,10 +16,13 @@
                      <br>
                      <br>
  		             <h5>Color</h5>
- 		             <!-- <span style="float: right; font-size: 12px; color: grey;">원하는 색으로 프로젝트의 색상을 지정해주세요.&emsp;</span> -->
 		             <input type="text" id="myColor" name="projectColor" class="complex-colorpicker form-control" value="#326295">
                      <br>                        
-                     <br>                                      
+                     <br>
+                     <h5>Date</h5>
+		             <input type="text" id="myColor" name="projectColor" class="complex-colorpicker form-control" value="#326295">
+                     <br>                        
+                     <br>                                       
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary" data-dismiss="modal" id="insertBtn">생성하기</button>
