@@ -13,14 +13,14 @@
 				</button>
 			</div>
 			<div class="modal-body" style="margin-left: 10px">
-				<form >
+				<form method="post">
 					<input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
 					<div class="row">
 						<h5>Column name</h5>
 						<input type="text" class="form-control input-default" placeholder="Issue Title" name="colname" id="colname">
 					</div>
 					<div class="modal-footer text-right">
-						<input type="button" class="btn btn-primary" id="InsertColumnBtn" value="Create Column" >
+						<input type="button" class="btn btn-primary" id="InsertColumnBtn" value="Create Column">
 						<!-- onKeypress="javascript:if(event.keyCode==13) {insertColumn(); }" -->
 						<button type="button" class="btn btn-primary" data-dismiss="modal" >Close</button>
 					</div>
