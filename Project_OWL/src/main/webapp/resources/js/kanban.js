@@ -33,7 +33,6 @@ function initKanban(projectIdx){
 		$('#labelColor').val("");
 		$('#labelName').val("");
 			
-			
 		$.ajax({
 			url : "UpdateLabel.do",
 			data : {'labelIdx' : editIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},

@@ -7,7 +7,17 @@
     <div id="kanbanMainBox">
 
         <div class="row">
-            <div class="col-2" style="margin-left: 30px;">
+        
+        <!-- ========= 다정이 여기서 쓰세요 ========= -->
+          <div class="float-left ml-4 mt-1" >	
+				<button class="btn btn-primary btn-link" >
+             		<i class ="fas fa-list fa-2x"></i>
+           	 	</button>
+            </div>
+		<!-- ========= 다정이 여기서 쓰세요 ========= -->
+            
+            
+            <div class="col-2" style="margin-left: 40px;">
 
                 <button id="openIssueBtn" class="btn btn-primary">
                     <i class="fas fa-columns"></i>&nbsp;Open
@@ -69,7 +79,9 @@
                         <option value="Priority">Priority</option>
                      </select>
 				</div>
+			
 
+             
              
             </div>
         </div>

@@ -302,8 +302,6 @@
 					url : "GetIssue.do",
 					data : {'projectIdx' :  ${project.projectIdx} },
 					success : function(data) {
-						console.log("셋 이슈 데이터");
-						console.log(data);
 						 $.each(data,function(index,obj) {
 							
 							 addKanbanIssue(obj.colIdx, obj); 
