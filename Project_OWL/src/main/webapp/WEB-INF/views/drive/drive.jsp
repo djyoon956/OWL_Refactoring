@@ -290,11 +290,11 @@ let Stringfile = goTrashFile.join(',');
             <br>
             <div class="row">
                 <div class="col-lg-12">
-                    <div id="jstree" class="demo" style="margin-top:1em; min-height:200px;">
+                    <div id="jstree" class="demo" style="margin-top:1em; min-height:300px;">
 
                     </div>
                     <div>
-                        <button id="trashBtn" class="btn-link themeChangeLetter" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;휴지통</button>
+                        <button id="trashBtn" class="btn-link themeChangeLetter pl-2" style="color:#326295;"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;&nbsp;<span style="font-weight:bold; font-size:16px">휴지통</span></button>
                     </div>
                 </div>
             </div>
