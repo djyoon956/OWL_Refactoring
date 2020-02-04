@@ -596,7 +596,7 @@ function searchAppend(data) {
 function addLabel(lbidx, lbcolor, lbnm) {
    let lablist =  '<div class="row labelList" id="'+lbidx+'Label">'
             +  '<div class="col-lg-8">'
-            +  '<span class="badgeIconinList" style="background-color: '+lbcolor+';color:'+getTextColorFromBg(lbcolor)+'">'+lbnm+'</span>'
+            +  '<span class="badgeIcon" style="background-color: '+lbcolor+';color:'+getTextColorFromBg(lbcolor)+'">'+lbnm+'</span>'
             +  '</div>'
             +  '<div class="col-lg-2">'
             + '<button class="btn-link link-gray edit" onclick="editLabel(' + lbidx +','+"'"+lbcolor+"'"+','+"'"+lbnm+"'"+')";>Edit</button>'
@@ -1025,7 +1025,7 @@ function editLabel(idx, color, name) {
 					
 							lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
 							lablist +=  '<div class="col-lg-8">';
-							lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+';color:'+ getTextColorFromBg(obj.labelColor) +'">'+obj.labelName+'</span>';
+							lablist +=  '<span class="badgeIcon" style="background-color: '+obj.labelColor+';color:'+ getTextColorFromBg(obj.labelColor) +'">'+obj.labelName+'</span>';
 							lablist +=  '</div>';
 							lablist +=  '<div class="col-lg-2">';
 							lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
