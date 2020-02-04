@@ -480,9 +480,9 @@ function setProjectMemberProgress(projectIdx){
 					}, {
 						type: 'bar',
 						label: 'Total',
-						backgroundColor: "#d9d9d9",
+						backgroundColor: "rgb(165,197,232,.3)",
 						data: totals,
-						borderColor: 'white',
+						borderColor: '#a5c5e8',
 						borderWidth: 2
 					}]
 				};
@@ -494,10 +494,6 @@ function setProjectMemberProgress(projectIdx){
 				options: {
 					responsive: true,
 					maintainAspectRatio: false,
-					title: {
-						display: true,
-						text: 'Chart.js Combo Bar Line Chart'
-					},
 					tooltips: {
 						mode: 'index',
 						intersect: true
