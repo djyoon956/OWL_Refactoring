@@ -1383,14 +1383,30 @@ function mentionSearch() {
 	}
 	
 	function setKanbanTable(){
-		$("#kanbanTable").DataTable({
+		let table = $("#kanbanTable").DataTable({
 			"pageLength": 10,
 	         fixedColumns: true,
 	         autoWidth: false,
 	         "searching": false,
 	         "lengthChange": false
 		});
-		
+
+        new $.fn.dataTable.Buttons( table , {
+            buttons: [
+                { extend :'excel',
+                	autoFilter : true,
+                    sheetName : '다정이가 최고다',
+	                className : 'btn hidden kanbanExportButton',
+	                title: 'OWL - '+currentProjectName,
+	                exportOptions : {
+	                    columns : ':visible'
+	                }
+                },  
+            ]
+        });
+        
+        table.buttons().container().appendTo('#kanbanTableViewBox');
+
 		 $.contextMenu({
 	         selector: '#kanbanTable tbody tr',
 	         build : function(trigger, e){
@@ -1401,10 +1417,14 @@ function mentionSearch() {
 	                    	 setKanbanDetail(issueIdx);
 	                     else if(key == "remove")
 	                    	 deleteIssue(issueIdx);
+	                     else if(key == "export")
+	                    	 $(".kanbanExportButton:first").click();
 	                 },
 	                 items:{
 	                     "detail": {name: "Detail", icon: "fas fa-info-circle"},
 	                     "remove": {name: "Remove Issue", icon: "delete"},
+	                     "sep1": "---------",
+	                     "export": {name: "Export Excel", icon: "fas fa-file-excel"},
 	            	 	}
 	             };
 	         },
