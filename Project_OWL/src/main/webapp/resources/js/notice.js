@@ -116,7 +116,7 @@ function writeNoticeOk(){
     });
     
     //푸쉬 알람 보내기. 이 함수의 위치는 top.jsp  아래쪽 스크립트에 있음...
-    sendNoticePushAll($("#title").val(), $('#noticeNote').summernote('code')); 
+    sendNoticePushAll($("#title").val(), $('#noticeNote').summernote('code'), currentProjectIdx); 
     
     let notice;
     $.ajax({
@@ -130,7 +130,7 @@ function writeNoticeOk(){
         success: function (data) {
         	if(data >  0){
         		successAlert("공지사항 작성 완료");
-        		pushNotice(currentProjectName, $("#title").val());
+        		pushNotice(currentProjectIdx,currentProjectName, $("#title").val());
         		cancelNotice();
         		setDetailData(data);
         	} else
