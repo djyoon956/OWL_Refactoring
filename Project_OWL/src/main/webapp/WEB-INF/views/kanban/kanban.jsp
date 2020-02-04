@@ -19,8 +19,7 @@ $(function() {
     <div id="kanbanMainBox">
 
         <div class="row">
-        
-        <!-- ========= 다정이 여기서 쓰세요 ========= -->
+
           <div class="float-left ml-4 mt-1" >	
                  <button class="btn kanbanViewBtn " id="kanbanTableView">
                      <i class="fas fa-list fa-2x"></i>
@@ -29,7 +28,6 @@ $(function() {
                      <i class="fas fa-th-large fa-2x"></i>
                  </button>
             </div>
-		<!-- ========= 다정이 여기서 쓰세요 ========= -->
             
             
             <div class="col-2" style="margin-left: 40px;">
@@ -121,16 +119,16 @@ $(function() {
                      </div>
                    </div>
         
-    	    <div class="col-md-10 mt-4 ml-4 mr-4 hidden" id="kanbanTableViewBox" >
+    	    <div class="col-md-12  hidden" id="kanbanTableViewBox" >
                 <table id="kanbanTable" class="table table-hover table-bordered text-center">
                    <thead>
                        <tr>
                            <th width="5%">No</th>
-                           <th >Label</th>
-                           <th >Title</th>
-                           <th >Assignee</th>
-                           <th >Priority</th>
-                           <th >Due Date</th>
+                           <th width="10%">Label</th>
+                           <th width="auto">Title</th>
+                           <th width="15%">Assignee</th>
+                           <th width="10%">Priority</th>
+                           <th width="10%">Due Date</th>
                        </tr>
                    </thead>
 
