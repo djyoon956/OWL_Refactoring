@@ -128,7 +128,7 @@
     	              '<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
                       '</div>';
 
-         $(#noticeBoard).append(noticeTags);
+         $("#noticeBoard").append(noticeTags);
         
 		}
 </script>
