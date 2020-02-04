@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <link href="resources/css/include.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.1.114/styles/kendo.default-v2.min.css"/>
+    <script src="https://kendo.cdn.telerik.com/2020.1.114/js/kendo.all.min.js"></script>
+
 <style>
 .asColorPicker-wrap {
     position: relative !important;
@@ -16,8 +19,37 @@
 .asColorPicker-dropdown{
 max-width: 270px;
 }
-
-
+.k-textbox{
+width: 100% !important;
+height: 41.979166px;
+}
+.k-widget.k-dateinput.k-state-default{
+width: 230px;
+}
+.endDatePicker{
+left: 60px;
+}
+.k-calendar.k-calendar-range.k-range-end.k-link, .k-calendar.k-calendar-range.k-range-start.k-link {
+    background-color: #326295!important;
+}
+.k-calendar .k-state-selected .k-link {
+    border-color: #326295 !important;
+    color: #fff;
+    background-color: #326295 !important;
+}
+.k-nav-today{
+color:#326295 !important;
+}   
+.k-today {
+    color:#326295 !important;
+} 
+.k-calendar.k-calendar-range .k-range-end, .k-calendar.k-calendar-range .k-range-mid, .k-calendar.k-calendar-range .k-range-start {
+    background-image: linear-gradient(transparent 1px,rgba(50, 98, 149,.25) 1px,rgba(50, 98, 149,.25) calc(100% - 1px),transparent calc(100% - 1px))!important;
+}
+.k-input::selection, .k-textarea::selection, .k-textbox::selection {
+    color: black !important;
+    background-color: white !important;
+}
 </style>
 <script>
 var theName;
@@ -26,7 +58,14 @@ var theName;
 	 $(".complex-colorpicker").asColorPicker({
 	        mode: 'complex'
     });
-
+	 $("#daterangepicker").kendoDateRangePicker({
+		 format: "yyyy/MM/dd",
+		 parseFormats: ["yyyy-MM-dd"]
+	});
+		
+	 $(".k-textbox-container").eq(1).addClass("endDatePicker");
+	 $(".k-textbox").eq(0).attr("id", "setStart");
+	 $(".k-textbox").eq(1).attr("id", "setEnd");
 	 if($("#wholeFavorite > li").length >0){
 			$(".sidebar-link.has-arrow.waves-effect.favoriteArrow").addClass("active");
 			$("#wholeFavorite").addClass("in");			
@@ -43,11 +82,13 @@ var theName;
 
  $("#insertBtn").click(function(){
 	 let thisLi ="";
-		$.ajax({
+$.ajax({
 	        url:"InsertNewProject.do",
 	        type: "POST",
 	        data: {projectName: 	$("#projectTitle").val(),
-		        	  projectColor: $("#myColor").val()},
+		        	  projectColor: $("#myColor").val(),
+		        	  startDate: $("#setStart").val(),
+		        	  endDate: $("#setEnd").val()},
 	        success:function(idx){
 	         	thisLi = "<li class='sidebar-item' id='"+idx+"' style='position:relative;'>"
             			+ "<input id='projectFavorite' type='hidden' value='0'>"
@@ -57,7 +98,10 @@ var theName;
         				+ "<a type='button' id='sidebarTools' data-projectidx='"+idx+"' data-toggle='modal' data-target='#editProject'>"
         				+ "<i class='far fa-sun'></i></a></li>"; 	         	      
 	         	$("#projectlist").append(thisLi);	 
+	       },error:function(request,status,error){
+	           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	       }
+
 	   }); 
 	 });    
 

@@ -13,7 +13,7 @@
 			</div>
 			<div class="modal-body">
 			<form  id="addIssueForm" class="addContent">
-			    <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
+			    <%-- <input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}"> --%>
  				<div class="row">
 					<div class="col-8">
 						<div class="form-group">

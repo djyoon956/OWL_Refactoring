@@ -10,6 +10,7 @@ let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
 
 let kanbanViewType = "";
+
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
@@ -27,6 +28,7 @@ function initKanban(projectIdx){
 
 	
 	$('#editLabelBtn').click(function() {
+		
 		if(editIdx == 0)
 			return;
 		
@@ -67,7 +69,7 @@ function initKanban(projectIdx){
 		$('.labelList').find('.edit').removeClass("hidden");
 
 	});
-	
+
 
 	//검색 후 원래 칸반으로 되돌아가는 버튼 
 	$('#searchReturnBtn').click(function() {
@@ -317,8 +319,6 @@ function initKanban(projectIdx){
 			   				type: "POST",
 		 	   				data : {'projectIdx' : projectIdx, 'colname' : $('#colname').val()},
 		 	   				success : function(data) {
-		 	   				console.log("in insesrt column222");
-		 	   				console.log(data);
 		 	   					if(data != null) {
 		 	   						
 		 	   		        		addColumn(data);
@@ -437,7 +437,7 @@ function initKanban(projectIdx){
 function editColname() {
 	 $.ajax({
       	url : 'UpdateColumn.do',
-      	data : { 'colname' : $("#editcolName").val(),'projectIdx' : currentProjectIdx,'colIdx' :  $("#editcolIdx").val()}, 
+      	data : { 'colname' : $("#editcolName").val(),'projectIdx' : currentProjectIdx, 'colIdx' :  $("#editcolIdx").val()}, 
       	success : function(data) {
       		setChageView("kanban");
       		$("#editcolName").val("");
@@ -523,27 +523,34 @@ function addLabel(lbidx, lbcolor, lbnm) {
 
    
 function addColumn(obj){
+	
+	let authority = $('#getAuthority').val();
+
    let column = '<div class="columnSection" id="'+ obj.colIdx +'Column">'
-            + '<div class="columnTitle text-center mt-2 dropdown">'
-            + '<h4><span>' + obj.colname + '</span>'
-            + '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-            + '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
-            + '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
-            +            '<ul class="list-style-none">'
-            +   '<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" '
-            +    'data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '"'   
-            +   '>Edit Column</a></li>'
-            +               '<li class="pl-3"><a href="#" onclick="deleteColumn(' + obj.colIdx +');">Remove Column</a></li>'
-            +            '</ul>'
-            +         '</div>'
-            +      '</h4>'
-            +   '</div>'
-            +   '<ul class="connectedSortable sortableCol columnBody cursor ui-sortable" style="margin-top: 35px">'
-            +   '</ul>'
-            + '</div>';
+              + '<div class="columnTitle text-center mt-2 dropdown">'
+              + '<h4><span>' + obj.colname + '</span>';
+            
+	if(authority == 'ROLE_PM') {
+		
+	    column  += '<a href="javascript:void(0)" data-toggle="dropdown" id = "dropdownColBtn" aria-haspopup="true" aria-expanded="false" style="float: right">' 
+                + '<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+                + '<div class="dropdown-menu" aria-labelledby="dropdownColBtn">'
+                +            '<ul class="list-style-none">'
+                +   '<li class="pl-3"><a href="#editColumnModal" data-toggle="modal" data-updatecol-id="' + obj.colIdx +'" data-upcolname-id ="'+ obj.colname + '">'  
+                +   'Edit Column</a></li>'
+                +               '<li class="pl-3"><a href="#" onclick="deleteColumn(' + obj.colIdx +');">Remove Column</a></li>'
+                +            '</ul>'
+                +         '</div>';
+		
+	}
+ 
+	 column  +=  '</h4>'
+             +   '</div>'
+             +   '<ul class="connectedSortable sortableCol columnBody cursor ui-sortable" style="margin-top: 35px">'
+             +   '</ul>'
+             + '</div>';
    
    $('#kanbanIn').append(column);
-   
 }
 
 function deleteColumn(obj){
@@ -580,6 +587,7 @@ function addKanbanIssue(colIdx,obj){
 		obj.labelName = "";
 		obj.labelColor = "";
 	}
+	
 	if(obj.name == null) 
 		obj.name  = "none";
 	 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
@@ -588,7 +596,7 @@ function addKanbanIssue(colIdx,obj){
 			+			'<span class="issueTitle">' + issueTitle + '</span>'
 			+			'</label>'
 			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+			+			'<i class="fas fa-ellipsis-v fa-sm" style="padding:5px;"></i></a>'
 			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 			+				'<ul class="list-style-none">'
 			+					'<li class="pl-3"><a href="#" onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
@@ -656,21 +664,19 @@ function deleteLabel(labelidx) {
       
 
 function setKanbanDetail(issueIdx){
-	
-	console.log("in setKanbanDetail sfdsf");
-	
 	$.ajax({
 			type: "POST",
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
-				 $("#multipartFilesIssueEdit").empty();
+				$("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
-
+				$("#issueDetailLabel").removeAttr("style");
+				
 				if(data.issueProgress == 'OPEN')
-						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
+						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+",'inDetail')");
 					else if (data.issueProgress == 'CLOSED')
-						$("#closeIssueDetailBtn").attr("onclick","reOpenIssue("+issueIdx+")");
+						$("#closeIssueDetailBtn").attr("onclick","reOpenIssue("+issueIdx+",'inDetail')");
 					
 					$("#issueDetailTitle").text(data.issueTitle);
 					$("#issueDetailContent").html(data.content);
@@ -706,7 +712,6 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 					console.log('뭐 찍히니?');
-					console.log(element);
 					console.log(element.profilepic);
 					
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
@@ -731,12 +736,14 @@ function setKanbanDetail(issueIdx){
 										+ '</div>';
 						$("#issueDetailComment").prepend(control);
 					});
+
+					if(data.assigned == "" || data.assigned == null){
+						data.assigned = "none";
+					}
 					
 					$("#issueDetailAssignees").text(data.assigned);
 					
-
 					if(data.labelIdx > 0){
-
 						$("#issueDetailLabel").text(data.labelName);
 						$("#issueDetailLabel").css("background-color", data.labelColor);
 						$("#issueDetailLabel").css("color", getTextColorFromBg(data.labelColor));
@@ -769,28 +776,34 @@ function setKanbanDetail(issueIdx){
 }
 
 
-function closeIssue(issueIdx) {
-
+function closeIssue(issueIdx,flag) {
 	   $.ajax({
            url:"CloseIssue.do",
            method:"POST",
            data:{issueIdx : issueIdx},
            success:function(data){
+        	if(flag == "inDetail"){
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
+        	} else if(flag == "move"){
+        	setChageView("kanban");
+        	}
            }
         });  		
 }
 
 
-function reOpenIssue(issueIdx) {
+function reOpenIssue(issueIdx,target) {
 	$.ajax({
 		url:"ReopenIssue.do",
 		method:"POST",
 		data : {issueIdx : issueIdx},
 		success:function(data) {
+			if(target == 'inDetail'){
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
+			} else if(target == 'move')
+			setChageView("kanban");
 		},error :function() {
 			
 			console.log("ReopenIssue error");
@@ -836,8 +849,6 @@ function changeKanbanView(view){
 	   $('#addColumnBtn').removeClass('hidden');
 	   $('#confirmIssueBtn').removeClass('hidden'); 
 	 } else if(view == "changeView"){
-		 console.log("changeView");
-		 console.log(kanbanViewType);
 			 if(kanbanViewType == "kanbanTableView"){
 				 $('#kanbanTableViewBox').removeClass('hidden');
 				   $('#kanbanIn').addClass('hidden');
@@ -1370,42 +1381,103 @@ function mentionSearch() {
 	}
 	
 	function setKanbanTable(){
-		$("#kanbanTable").DataTable({
-		 	stateSave: true, // 페이지 상태 저장
-		 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-		 	"searching": false,
+		let table = $("#kanbanTable").DataTable({
+			"pageLength": 10,
 	         fixedColumns: true,
 	         autoWidth: false,
-	         columnDefs: [ { targets: 0, className: 'dt-body-left' }]
-		})
+	         "searching": false,
+	         "lengthChange": false,
+	         columnDefs: [ { targets: 4, render: function (data, type, row) {
+	        	if(type === 'export'){
+	        		let priority = $(data).attr("class");
+	        		return priority==null?"":priority.replace("priorityBadge","").trim();
+	        	}else
+	        		return data;
+        	}}]
+		});
+
+        new $.fn.dataTable.Buttons( table , {
+            buttons: [
+                { extend :'excel',
+                	autoFilter : true,
+                    sheetName : '다정이가 최고다',
+	                className : 'btn hidden kanbanExportButton',
+	                title: 'OWL - '+currentProjectName,
+	                exportOptions : {
+	                	orthogonal : 'export',
+	                    columns : ':visible'
+	                }
+                },  
+            ]
+        });
+        
+        table.buttons().container().appendTo('#kanbanTableViewBox');
+
+		 $.contextMenu({
+	         selector: '#kanbanTable tbody tr',
+	         build : function(trigger, e){
+	        	 return {
+	                 callback: function(key, options) {
+	                     let issueIdx = trigger[0].id;
+	                     if(key == "detail")
+	                    	 setKanbanDetail(issueIdx);
+	                     else if(key == "remove")
+	                    	 deleteIssue(issueIdx);
+	                     else if(key == "export")
+	                    	 $(".kanbanExportButton:first").click();
+	                 },
+	                 items:{
+	                     "detail": {name: "Detail", icon: "fas fa-info-circle"},
+	                     "remove": {name: "Remove Issue", icon: "delete"},
+	                     "sep1": "---------",
+	                     "export": {name: "Export Excel", icon: "fas fa-file-excel"},
+	            	 	}
+	             };
+	         },
+	     });
 	}
 	
 	function setKanbanTableView(){
-		 $.ajax({
+		$('#kanbanTable').DataTable().clear();
+		$.ajax({
 			 url : 'GetColumn.do',
-			 data : {'projectIdx' :  currentProjectIdx },
+			 data : { projectIdx :  currentProjectIdx },
 			 success : function(data) {
-				 console.log("in setKanbanTableView success");
-				 console.log(data);
-				 
+					$.ajax({
+						url : "GetIssue.do",
+						data : {'projectIdx' :  currentProjectIdx },
+						success : function(data) {
+							let colInfos = data;
+							 $.each(data,function(index, element) {
+								 console.log(element);
+								 $('#kanbanTable').DataTable().row.add( [
+										++index,
+										'<span class="badgeIcon" style="background-color: '+ element.labelColor+'; color: ' + getTextColorFromBg(element.labelColor) + '">' + element.labelName + '</span>',
+										element.issueTitle,
+										element.name,
+										element.priorityCode == null? "-":'<span class="priorityBadge '+element.priorityCode.toLowerCase()+'"></span>',
+										element.dueDate== null? "-":element.dueDate,
+							        ]).node().id = element.issueIdx;
+									
+									$('#kanbanTable').DataTable().draw();
+							});	
+						},
+						error: function() {
+							console.log("setKanbanTableView error");
+						}
+					})
 			 },
 			 error : function(){
-				 console.log("in setKanbanTableView error");
+				 console.log("setKanbanTableView error")
 			 }
-		 });
-		 
-		 return;
-		$('#kanbanTable').DataTable().row.add( [
-			"<i class='fas fa-file-alt mr-3'></i><span>"+element.fileName+"</span>",
-			element.createDate,
-			element.creatorName,
-			element.fileSize+" KB"
-        ]).node().id = element.driveFileIdx;
-		
-		$('#kanbanTable').DataTable().draw();
+		});
 	}
 	
     function setKanbanData() {
+	    $("#-1Column > .columnBody").empty();
+        $("#-99Column > .columnBody").empty();
+    	$("#kanbanIn").empty();
+    	
         $.ajax({
 			 url : 'GetColumn.do',
 			 data : {'projectIdx' :  currentProjectIdx },
@@ -1419,9 +1491,13 @@ function mentionSearch() {
 			        connectWith: ".connectedSortable",
 			        dropOnEmpty: true,
 			        update: function(event, ui) {
+			        	console.log("업데이트");
+			        	console.log(event);
+			        	console.log(ui);
 						let target = $(ui.item).attr("id").replace("Issue","");
 						let columnIdx = $(this).parent().attr("id").replace("Column","");
 						let issues = [];
+						console.log(target);
 						$.each($(this)[0].children, function(){
 							issues.push($(this).attr("id").replace("Issue","").trim())
 						})
@@ -1444,7 +1520,12 @@ function mentionSearch() {
 								console.log("error move issue");
 							}
 						})
-				        }       
+						if (columnIdx == '-99'){
+							closeIssue(target,"move");
+						}
+						if (columnIdx == '-1')
+							reOpenIssue(target,"move");
+				       }       
 			     }).disableSelection();
 				setIssueData();
 			},
@@ -1459,9 +1540,10 @@ function mentionSearch() {
 			url : "GetIssue.do",
 			data : {'projectIdx' :  currentProjectIdx },
 			success : function(data) {
-				 $.each(data,function(index,obj) {
+				 $.each(data,function(index, obj) {
 					 addKanbanIssue(obj.colIdx, obj); 
-					 wholeProjectChart(currentProjectIdx);
+					 // 차트용
+					 wholeProjectChart(currentProjectIdx); 
 				});
 			},
 			error: function() {
