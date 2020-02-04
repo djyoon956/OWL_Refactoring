@@ -234,10 +234,10 @@ function initKanban(projectIdx){
 		 				}	
 		 				
 		 				//푸시 알람 함수...
-		 				var sender = curName;
-		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
-		 				console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + $('#pmemail').val());
-		 				sendNewIssuePush($('#pmemail').val(), sender, $('#issueTitle').val());
+		 				//var sender = curName;
+		 				//console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
+		 				//console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + $('#pmemail').val());
+		 				//sendNewIssuePush($('#pmemail').val(), sender, $('#issueTitle').val());
 		 				
 		 				
 		 			    let formData = new FormData();
@@ -324,14 +324,17 @@ function initKanban(projectIdx){
 		 			
 
 		 	    $("#InsertColumnBtn").on("click", function () {	
-
+		 	    	console.log("in insesrt column");
 		 	   		console.log("InsertColumnBtn in");
+		 	   		console.log(projectIdx);
+		 	   	console.log("InsertColumnBtn in222222");
 		 	   			$.ajax({
 		 	   				url : 'InsertColumn.do',
 			   				type: "POST",
 		 	   				data : {'projectIdx' : projectIdx, 'colname' : $('#colname').val()},
 		 	   				success : function(data) {
-		 	   			
+		 	   				console.log("in insesrt column222");
+		 	   				console.log(data);
 		 	   					if(data != null) {
 		 	   						console.log('데이터????????');
 		 	   		        		 console.log(data);
@@ -948,7 +951,6 @@ function editLabel(idx, color, name) {
 	$('#labelcolor').val(color);
 	$('#labelname').val(name);
 	$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', color);
-
 	$('#'+idx+'Label').find('.edit').addClass("hidden");
 	
 	};
@@ -1026,7 +1028,7 @@ function editLabel(idx, color, name) {
 					
 							lablist +=  '<div class="row labelList" id="'+obj.labelIdx+'Label">';
 							lablist +=  '<div class="col-lg-8">';
-							lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+'">'+obj.labelName+'</span>';
+							lablist +=  '<span class="badgeIconinList" style="background-color: '+obj.labelColor+';color:'+ getTextColorFromBg(obj.labelColor) +'">'+obj.labelName+'</span>';
 							lablist +=  '</div>';
 							lablist +=  '<div class="col-lg-2">';
 							lablist +=  '<button class="btn-link link-gray edit" onclick="editLabel(' + obj.labelIdx +','+"'"+obj.labelColor+"'"+','+"'"+obj.labelName+"'"+')";>Edit</button>';
@@ -1050,7 +1052,7 @@ function editLabel(idx, color, name) {
 					}else if(flagelement == "editDetail"){
 						let llist = '<option value="">select</option>'; 
 		                $.each(data, function(index, element) {
-		                 	 llist += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+'">'+element.labelName+'</option>'
+		                 	 llist += '<option value="'+element.labelIdx+'"style="background-color:'+element.labelColor+';color:'+ getTextColorFromBg(element.labelColor) +'">'+element.labelName+'</option>'
 		                 });
 							$('#labelIdxEdit').append(llist);
 					}
