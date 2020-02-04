@@ -90,7 +90,7 @@
         </div>
 
         <div class="row" id="kanbanArea">
-        
+
         	  <div class="col-md-10 mt-4 ml-4 mr-4 hidden" id="searchBox" >
 	  			     <div class="table-responsive m-t-40" style="clear: both;">
                         <table class="table table-hover">
@@ -109,6 +109,21 @@
                      </div>
                    </div>
         
+    	    <div class="col-md-10 mt-4 ml-4 mr-4 hidden" id="kanbanTableViewBox" >
+                <table id="kanbanTable" class="table table-hover table-bordered text-center">
+                   <thead>
+                       <tr>
+                           <th width="45">Label</th>
+                           <th width="30%">Title</th>
+                           <th width="15%">Assignee</th>
+                           <th width="10%">Priority</th>
+                           <th width="10%">Due Date</th>
+                       </tr>
+                   </thead>
+
+                   <tbody> </tbody>
+               </table>
+        	</div>
             <!--  open issue -->
             <!--  openIssueColumn -->
 

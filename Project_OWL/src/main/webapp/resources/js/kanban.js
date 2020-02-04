@@ -422,23 +422,7 @@ function initKanban(projectIdx){
 		 	            }
 		 	        });
 		 	    });
-
-		 		$(".kanbanViewBtn").click(function(){
-		 			$(this).attr("disabled", true);
-		 			$(this).addClass("active");
-		 			console.log(this);
-
-		 			kanbanViewType= $(this).attr("id");
-		 			if(kanbanViewType == "kanbanTableView"){
-		 				$("#kanbanIconView").removeClass("active");
-		 				$("#kanbanIconView").attr("disabled", false);
-		 			}
-		 			// icon View
-		 			else{
-		 				$("#kanbanTableView").removeClass("active");
-		 				$("#kanbanTableView").attr("disabled", false);
-		 			}
-		 		})
+		 	   changeKanbanViewType();
 } //initKanban 끝
 
 
@@ -794,40 +778,64 @@ function reOpenIssue(issueIdx) {
 
 
 function changeKanbanView(view){
-   if(view == "list"){
-   $("#kanbanDetailBox").addClass("hidden");
-   $("#kanbanMainBox").removeClass("hidden");
-}else if(view == "detail"){
-   $("#kanbanMainBox").addClass("hidden");
-   $("#kanbanDetailBox").removeClass("hidden");
-}else if (view == "edit"){
-   $("#kanbanMainBox").addClass("hidden");
-   $("#kanbanDetailBox").addClass("hidden");	
- }else if (view == "search") {
-   $('#searchBox').removeClass('hidden');
-   $('#searchReturnBtn').removeClass('hidden');		
-   $('#kanbanIn').addClass('hidden');
-   $('#openIssueBtn').addClass('hidden');
-   $('#closeIssueBtn').addClass('hidden');
-   $('#-1Column').addClass('hidden');
-   $('#-99Column').addClass('hidden');
-   $('#addIssuebtn').addClass('hidden'); 
-   $('#addLabelBtn').addClass('hidden'); 
-   $('#addColumnBtn').addClass('hidden'); 
-   $('#confirmIssueBtn').addClass('hidden'); 
- }else if (view == "returnlist") {
-   $('#searchBox').addClass('hidden');
-   $('#searchReturnBtn').addClass('hidden');
-   $('#kanbanIn').removeClass('hidden');
-   $('#-1Column').removeClass('hidden');
-   $('#-99Column').removeClass('hidden');
-   $('#openIssueBtn').removeClass('hidden');
-   $('#closeIssueBtn').removeClass('hidden');	
-   $('#addIssuebtn').removeClass('hidden'); 
-   $('#addLabelBtn').removeClass('hidden'); 
-   $('#addColumnBtn').removeClass('hidden');
-   $('#confirmIssueBtn').removeClass('hidden'); 
- } 
+	if(view == "list"){
+	   $("#kanbanDetailBox").addClass("hidden");
+	   $("#kanbanMainBox").removeClass("hidden");
+	}else if(view == "detail"){
+	   $("#kanbanMainBox").addClass("hidden");
+	   $("#kanbanDetailBox").removeClass("hidden");
+	}else if (view == "edit"){
+	   $("#kanbanMainBox").addClass("hidden");
+	   $("#kanbanDetailBox").addClass("hidden");	
+	 }else if (view == "search") {
+	   $('#searchBox').removeClass('hidden');
+	   $('#searchReturnBtn').removeClass('hidden');		
+	   $('#kanbanIn').addClass('hidden');
+	   $('#openIssueBtn').addClass('hidden');
+	   $('#closeIssueBtn').addClass('hidden');
+	   $('#-1Column').addClass('hidden');
+	   $('#-99Column').addClass('hidden');
+	   $('#addIssuebtn').addClass('hidden'); 
+	   $('#addLabelBtn').addClass('hidden'); 
+	   $('#addColumnBtn').addClass('hidden'); 
+	   $('#confirmIssueBtn').addClass('hidden'); 
+	 }else if (view == "returnlist") {
+	   $('#searchBox').addClass('hidden');
+	   $('#searchReturnBtn').addClass('hidden');
+	   $('#kanbanIn').removeClass('hidden');
+	   $('#-1Column').removeClass('hidden');
+	   $('#-99Column').removeClass('hidden');
+	   $('#openIssueBtn').removeClass('hidden');
+	   $('#closeIssueBtn').removeClass('hidden');	
+	   $('#addIssuebtn').removeClass('hidden'); 
+	   $('#addLabelBtn').removeClass('hidden'); 
+	   $('#addColumnBtn').removeClass('hidden');
+	   $('#confirmIssueBtn').removeClass('hidden'); 
+	 } else if(view == "changeView"){
+		 console.log("changeView");
+		 console.log(kanbanViewType);
+			 if(kanbanViewType == "kanbanTableView"){
+				 $('#kanbanTableViewBox').removeClass('hidden');
+				   $('#kanbanIn').addClass('hidden');
+				   $('#-1Column').addClass('hidden');
+				   $('#-99Column').addClass('hidden');
+				   $('#addIssuebtn').addClass('hidden'); 
+				   $('#addLabelBtn').addClass('hidden'); 
+				   $('#addColumnBtn').addClass('hidden');
+				   $('#confirmIssueBtn').addClass('hidden'); 
+			 }else{
+			 	   $('#kanbanTableViewBox').addClass('hidden');
+				   $('#kanbanIn').removeClass('hidden');
+				   $('#-1Column').removeClass('hidden');
+				   $('#-99Column').removeClass('hidden');
+				   $('#openIssueBtn').removeClass('hidden');
+				   $('#closeIssueBtn').removeClass('hidden');	
+				   $('#addIssuebtn').removeClass('hidden'); 
+				   $('#addLabelBtn').removeClass('hidden'); 
+				   $('#addColumnBtn').removeClass('hidden');
+				   $('#confirmIssueBtn').removeClass('hidden'); 
+			 }
+	 }
 }
 
 
@@ -1313,3 +1321,24 @@ function mentionSearch(projectIdx) {
 	      }
 	      changeKanbanView('list');
 	   }
+	
+	function changeKanbanViewType(){
+		$(".kanbanViewBtn").click(function(){
+ 			$(this).attr("disabled", true);
+ 			$(this).addClass("active");
+ 			console.log(this);
+
+ 			kanbanViewType= $(this).attr("id");
+ 			if(kanbanViewType == "kanbanTableView"){
+ 				$("#kanbanIconView").removeClass("active");
+ 				$("#kanbanIconView").attr("disabled", false);
+ 			}
+ 			// icon View
+ 			else{
+ 				$("#kanbanTableView").removeClass("active");
+ 				$("#kanbanTableView").attr("disabled", false);
+ 			}
+ 			
+ 			changeKanbanView("changeView");
+ 		})
+	}
