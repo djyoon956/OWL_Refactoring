@@ -1432,6 +1432,9 @@ function mentionSearch() {
 								console.log("error move issue");
 							}
 						})
+						if (columnIdx == '-99'){
+							
+						}
 				        }       
 			     }).disableSelection();
 				setIssueData();
