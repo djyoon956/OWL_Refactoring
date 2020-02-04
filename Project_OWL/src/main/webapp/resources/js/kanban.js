@@ -596,7 +596,7 @@ function addKanbanIssue(colIdx,obj){
 			+			'<span class="issueTitle">' + issueTitle + '</span>'
 			+			'</label>'
 			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+			+			'<i class="fas fa-ellipsis-v fa-sm" style="padding:5px;"></i></a>'
 			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 			+				'<ul class="list-style-none">'
 			+					'<li class="pl-3"><a href="#" onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
