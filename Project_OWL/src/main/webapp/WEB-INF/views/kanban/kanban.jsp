@@ -113,11 +113,12 @@
                 <table id="kanbanTable" class="table table-hover table-bordered text-center">
                    <thead>
                        <tr>
-                           <th width="45">Label</th>
-                           <th width="30%">Title</th>
-                           <th width="15%">Assignee</th>
-                           <th width="10%">Priority</th>
-                           <th width="10%">Due Date</th>
+                           <th width="5%">No</th>
+                           <th >Label</th>
+                           <th >Title</th>
+                           <th >Assignee</th>
+                           <th >Priority</th>
+                           <th >Due Date</th>
                        </tr>
                    </thead>
 

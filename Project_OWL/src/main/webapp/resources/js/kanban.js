@@ -419,6 +419,7 @@ function initKanban(projectIdx){
 		 	            }
 		 	        });
 		 	    });
+		 	   setKanbanTable();
 		 	   changeKanbanViewType();
 
 			$('#editColumnModal').on('show.bs.modal', function(event) {     
@@ -1366,3 +1367,74 @@ function mentionSearch() {
  			changeKanbanView("changeView");
  		})
 	}
+	
+	function setKanbanTable(){
+		$("#kanbanTable").DataTable({
+		 	stateSave: true, // 페이지 상태 저장
+		 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		 	"searching": false,
+	         fixedColumns: true,
+	         autoWidth: false,
+	         columnDefs: [ { targets: 0, className: 'dt-body-left' }]
+		})
+	}
+	
+	function setKanbanTableView(){
+		$('#kanbanTable').DataTable().row.add( [
+			"<i class='fas fa-file-alt mr-3'></i><span>"+element.fileName+"</span>",
+			element.createDate,
+			element.creatorName,
+			element.fileSize+" KB"
+        ]).node().id = element.driveFileIdx;
+		
+		$('#kanbanTable').DataTable().draw();
+	}
+	
+    function setKanbanData() {
+        $.ajax({
+			 url : 'GetColumn.do',
+			 data : {'projectIdx' :  currentProjectIdx },
+			 success : function(data) {
+				$.each(data,function(index,obj) {
+					if(obj.colIdx != -1 && obj.colIdx != -99){
+						addColumn(obj);
+					}
+				});
+				$( ".sortableCol").sortable({
+			        connectWith: ".connectedSortable",
+			        dropOnEmpty: true,
+			        update: function(event, ui) {
+						let target = $(ui.item).attr("id").replace("Issue","");
+						let columnIdx = $(this).parent().attr("id").replace("Column","");
+						let issues = [];
+						$.each($(this)[0].children, function(){
+							issues.push($(this).attr("id").replace("Issue","").trim())
+						})
+						
+						if(issues.length == 0)
+							return;
+						
+						$.ajaxSettings.traditional = true; 
+						$.ajax({
+							type : "POST",
+							url : "MoveIssue.do",
+							data : { 	projectIdx :  currentProjectIdx
+										, targetIssueIdx : target
+										, columnIdx : columnIdx
+										, issues : issues },
+							success : function(data) {
+								console.log("success move issue");
+							},
+							error: function() {
+								console.log("error move issue");
+							}
+						})
+				        }       
+			     }).disableSelection();
+				setIssueData();
+			},
+			 error : function() {
+				console.log("getColum.do error");
+			}
+		}); 
+    }
