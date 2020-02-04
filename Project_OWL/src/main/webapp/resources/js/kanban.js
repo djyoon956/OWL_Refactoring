@@ -850,8 +850,6 @@ function changeKanbanView(view){
 	   $('#addColumnBtn').removeClass('hidden');
 	   $('#confirmIssueBtn').removeClass('hidden'); 
 	 } else if(view == "changeView"){
-		 console.log("changeView");
-		 console.log(kanbanViewType);
 			 if(kanbanViewType == "kanbanTableView"){
 				 $('#kanbanTableViewBox').removeClass('hidden');
 				   $('#kanbanIn').addClass('hidden');
@@ -1389,7 +1387,14 @@ function mentionSearch() {
 	         fixedColumns: true,
 	         autoWidth: false,
 	         "searching": false,
-	         "lengthChange": false
+	         "lengthChange": false,
+	         columnDefs: [ { targets: 4, render: function (data, type, row) {
+	        	if(type === 'export'){
+	        		let priority = $(data).attr("class");
+	        		return priority==null?"":priority.replace("priorityBadge","").trim();
+	        	}else
+	        		return data;
+        	}}]
 		});
 
         new $.fn.dataTable.Buttons( table , {
@@ -1400,6 +1405,7 @@ function mentionSearch() {
 	                className : 'btn hidden kanbanExportButton',
 	                title: 'OWL - '+currentProjectName,
 	                exportOptions : {
+	                	orthogonal : 'export',
 	                    columns : ':visible'
 	                }
                 },  
@@ -1433,7 +1439,7 @@ function mentionSearch() {
 	}
 	
 	function setKanbanTableView(){
-		$('#driveTable').DataTable().clear();
+		$('#kanbanTable').DataTable().clear();
 		$.ajax({
 			 url : 'GetColumn.do',
 			 data : { projectIdx :  currentProjectIdx },
