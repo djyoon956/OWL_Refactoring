@@ -1,12 +1,20 @@
 'use strict';
-'use strict';
+
 function initCalendar(idx, color, start, end){
-console.log("이야~~~~~~~~");
 	console.log(idx);
 	console.log(color);
 	console.log(start);
 	console.log(end);
-	console.log("이야~~~~!!!");
+	let timei = new Date();
+	let time = new Date(start);
+	
+	
+	let test = end.split(" ");
+	let test2 = test[0]+" "+test[1]+" "+test[2]+" "+test[test.length-1];
+	console.log("---------------------------");
+	console.log(test2);
+	console.log(new Date() > new Date(test2)  ? "크다 얍" : "작다 얍" );
+
 	
 	var Calendar = tui.Calendar;	
 	var cal, resizeThrottled;
