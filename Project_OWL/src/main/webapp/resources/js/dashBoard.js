@@ -2,8 +2,7 @@ function initDashBoard(projectColor){
 	 $("#dashCalendar").tuiCalendar({
 		  defaultView: 'month',
 		  taskView: true
-	}); 
-	 
+	}); 	
 	if(currentProjectIdx > 0)
 		setProjectDashBoard(currentProjectIdx, projectColor);
 	else
