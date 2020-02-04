@@ -92,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INNER JOIN PROJECTLIST p ON p.PROJECTIDX = i.PROJECTIDX and p.email = l.creator
 		INNER JOIN PROJECT j ON j.PROJECTIDX = i.PROJECTIDX
 		WHERE l.CREATOR =#{creator} AND
-		l.LOGTIME BETWEEN DATE(NOW()) AND DATE_ADD(DATE(NOW()), INTERVAL + 7 DAY) ORDER BY l.LOGTIME, i.PROJECTIDX
+		l.LOGTIME BETWEEN DATE(l.logTime) AND DATE_ADD(DATE(l.logTime), INTERVAL + 7 DAY) ORDER BY l.LOGTIME, i.PROJECTIDX
 	</select>
 	
 	<select id="getProjectMemberProgress" resultType="com.owl.dashBoard.dto.ProjectMemberProgress" parameterType="int">
