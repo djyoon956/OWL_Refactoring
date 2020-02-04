@@ -1,5 +1,7 @@
 package com.owl.project.dto;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,4 +19,6 @@ public class ProjectList {
 	// UI용
 	private String projectName;
 	private String memberName;
+	private Date startDate;
+	private Date endDate;
 }

@@ -277,6 +277,5 @@ function refreshScheduleVisibility() {
 	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
-    <script src="resources/plugin/calendar/projectCalendars.js"></script>
+        <script src="resources/plugin/calendar/projectCalendars.js"></script>
     <script src="resources/plugin/calendar/schedules.js"></script>
-    <script src="resources/plugin/calendar/app.js"></script>

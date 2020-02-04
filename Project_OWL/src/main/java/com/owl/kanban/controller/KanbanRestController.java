@@ -37,6 +37,13 @@ public class KanbanRestController {
 	@Autowired
 	private KanbanService service;
 	
+	/**
+	 * 라벨리스트 select 
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param projectIdx
+	 * @return List<Label>
+	 */
 	@RequestMapping("GetLabelList.do")
 	public List<Label> getLabelList(int projectIdx) {
 		System.out.println("getLabelList : " + projectIdx);
@@ -44,17 +51,28 @@ public class KanbanRestController {
 		return service.getLabelList(projectIdx);
 	}
 	
-	//칼럼 리스트 select 
+	/**
+	 * Column리스트 select 
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param projectIdx
+	 * @return List<Column>
+	 */
 	@RequestMapping("GetColumn.do")
 	public List<Column> getColum(int projectIdx) {
 		
 		List<Column> columns= service.getColum(projectIdx);
-		//System.out.println("여기니?");
-		//System.out.println("???"+columns);
 		return columns;		
 	}
 	
-	//이슈리스트 select 
+	/**
+	 * 이슈 리스트 select 
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * 이슈리스트 select
+	 * @param projectIdx
+	 * @return List<Issue>
+	 */
 	@RequestMapping("GetIssue.do")	
 	public List<Issue> getIssue(int projectIdx){
 		List<Issue> issue = service.getIssue(projectIdx);
@@ -63,7 +81,13 @@ public class KanbanRestController {
 	}
 	
 	
-	//라벨리스트  select 
+	/**
+	 * 컬럼명 수정 
+	 * @author 배인영
+	 * @since 2020/01/29
+	 * @param column
+	 * @return nt
+	 */
 	@RequestMapping("UpdateColumn.do")
 	public int updateColumn(Column column) {
 		Column col = new Column();
@@ -425,6 +449,16 @@ public class KanbanRestController {
 		System.out.println("getProjectMemberList in controller");
 		List<Member> member = service.getProjectMemberList(projectIdx);
 		return member;
+	}
+	
+	
+	@RequestMapping("GetPMemail.do")	
+	public String getPMemail(int projectIdx){
+		
+		System.out.println("getPMemail in controller");
+		String email = service.getPMemail(projectIdx);
+		
+		return email;
 	}
 	
 }
