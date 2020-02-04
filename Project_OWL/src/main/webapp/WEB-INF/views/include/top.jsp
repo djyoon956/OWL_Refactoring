@@ -1117,7 +1117,13 @@ display: block;
 	 			
 				}
 
-			function deleteNotice(){
+			function deleteNotice(event){
+				console.log("sdfsdfsdfsdf" + event.parentElement.getAttribute("data-noticeKey"));
+				var noticeKey = event.parentElement.getAttribute("data-noticeKey");
+				
+				database.ref('NoticesByUser/'+ curUserKey +'/' + noticeKey).remove();
+
+				loadPushNotice(curUserKey);
 
 				}
 
@@ -1188,7 +1194,7 @@ display: block;
 	 						 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
 	 	                     '<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
 	 	                      + projectName + '</span>'+ title +
-	 	    	              '<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
+	 	    	              '<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
 	 	                      '</div>';
 
 	 	         $("#noticeBoard").append(noticeTags);
