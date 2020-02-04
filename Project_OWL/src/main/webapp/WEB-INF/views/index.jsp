@@ -447,7 +447,7 @@ font-family: 'Montserrat', sans-serif;
 	<div class="page-wrapper sectionPart w-100 ml-0" style="height:470px;" >
 		<div class="row" style="padding-left: 150px; padding-right: 100px;">
 			<div class="col-7">
-			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="850px"  data-aos="fade-right" data-aos-duration="1500" >
+			<img src="resources/images/indexImage/CalendarEx5.JPG" height="420px" width="750px"  data-aos="fade-right" data-aos-duration="1500" >
 			</div>
 			<div class="col-5" style="margin-top:120px; padding-left :30px">
 			<h2>체계적인 스케줄 관리에 필요한 Calendar</h2> <br><br>
@@ -480,7 +480,7 @@ font-family: 'Montserrat', sans-serif;
 	<div class="page-wrapper sectionPart w-100 ml-0" style="height:470px;" >
 		<div class="row" style="padding-left: 150px; padding-right: 100px;">
 			<div class="col-7">
-			<img src="resources/images/indexImage/drive.png" height="420px" width="850px" class="indexImgBox" style="padding:4px; padding-left:8px;padding-right:10px;"  data-aos="fade-right" data-aos-duration="1500">
+			<img src="resources/images/indexImage/DriveEx.JPG" height="400px" width="700px"  style="padding:4px; padding-left:8px;padding-right:10px;"  data-aos="fade-right" data-aos-duration="1500">
 			</div>
 			<div class="col-5" style="margin-top:120px; padding-left :30px">
 			<h2>Drive를 통한 효율적인 문서 공유 및 관리</h2> <br><br>
