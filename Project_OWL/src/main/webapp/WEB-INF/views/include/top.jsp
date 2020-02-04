@@ -1437,7 +1437,7 @@ display: block;
 						var roomId = data.key,
 						lastMessage = val.lastMessage, 
 						profileImg = val.profileImg, 
-						roomTitle = val.roomTitle +"/"+eachRoomTitle, 
+						roomTitle = val.roomTitle, // +"/"+eachRoomTitle, 
 						roomUserName =val.roomUserName, 
 						roomUserList = val.roomUserList, 
 						roomType = val.roomType, 
@@ -1575,8 +1575,9 @@ display: block;
 					} 
 					database.ref().update(multiUpdates);
 
-					//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드
-					$('#ulRoomList').empty();
+					//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드					
+					var roomRef = database.ref('RoomsByUser/'+ uid);							 
+					roomRef.off();
 					loadRoomList(curUserKey);
 
 					
