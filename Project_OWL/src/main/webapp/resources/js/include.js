@@ -35,8 +35,6 @@ function setTheme(theme, font){
 }
 
 function getTextColorFromBg(hexColor){
-	console.log("in ");
-	console.log(hexColor);
 	let r;
 	let g;
 	let b;
