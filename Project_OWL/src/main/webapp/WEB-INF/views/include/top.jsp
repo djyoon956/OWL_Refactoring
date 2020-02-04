@@ -117,20 +117,7 @@
 		$('.ChatList').append(plus);
 	}
 
-	//탑 부분 종 누르면...   공지 사항 보이기~~
-	function pushNotice(projectName, title) {
-		console.log("inint 22222");
-		//$('#noticeBoard').empty();
-		var noticeTags;
-		noticeTags = '<div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
-                     '<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
-                      + projectName + '</span>'+ title +
-    	              '<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
-                      '</div>';
-
-         $("#noticeBoard").append(noticeTags);
-        
-		}
+	
 </script>
 <style>
 
@@ -676,7 +663,7 @@ display: block;
                                         </div>
                                         <div id="collapseOne4" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
                                             <div class="card-body pt-3 accordionBody" id="noticeBoard">
-                                            <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <!-- <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
                                             	프로젝트 기간이 연장되었습니다. <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
                                             </div>
@@ -691,7 +678,7 @@ display: block;
                                             <span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #326295; font-size:13px;">후기관리</span>설날 잘 보내시길 바랍니다.
                                             <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
-                                            </div> 
+                                            </div>  -->
                                             </div>
                                         </div>
                                     </div>
@@ -922,7 +909,7 @@ display: block;
 			}
 
 			
-		function sendNoticePushAll(title, msg) {
+		function sendNoticePushAll(title, msg, currentProjectIdx) {
 			$.ajax({
 					url: "MyProjectsMatesFull.do",
 					type: "POST",
@@ -938,9 +925,9 @@ display: block;
 						  console.log(value);
 						  console.log("풀리스트" +value.name + " / " + value.email + " / " + value.profilePic + " / " + value.projectIdx);
 						  console.log(value.projectIdx);
-						  console.log(noticeProjectIdx);
-						  if(value.projectIdx == noticeProjectIdx){
-							  console.log("noticeProjectIdx : " +noticeProjectIdx);
+						  console.log(currentProjectIdx);
+						  if(value.projectIdx == currentProjectIdx){
+							  console.log("noticeProjectIdx : " +currentProjectIdx);
 							  console.log("noticeProjectIdx : " + value.email);
 							  
 							  var userKey;
@@ -993,8 +980,131 @@ display: block;
 		}
 
 
-		
+		//탑 부분 종 누르면...   공지 사항 보이기~~
+		function pushNotice(projectIdx, projectName, title) {
+			var noticeRef = database.ref('Notices/'+ projectIdx);
+			var noticeRefKey = noticeRef.push().key	
 
+
+			//노티스 정보 파베 저장	
+			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
+        	    projectName: projectName,
+        	    title: title
+        	  });
+      	  	//노티즈 정보를 유저별 저장
+			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx);
+		}
+	      	  
+			
+
+		function saveNoticeByUser(noticeRefKey, projectName, title,projectIdx) {
+			console.log("세이브 노티스 바이 유저 타나요??~~~~");
+			$.ajax({
+				url: "MyProjectsMatesFull.do",
+				type: "POST",
+				dataType: 'json',
+				data : { email : curEmail
+					      }, 
+				success: function (data) {
+					console.log("뷰단으로 데이터 들어 오나요?? >" + data);
+
+				    var projectIdxGrouped = new Set();
+				    
+					$.each(data, function(index, value) {          				
+					  console.log(value);
+					  console.log("풀리스트" +value.name + " / " + value.email + " / " + value.profilePic + " / " + value.projectIdx);
+					  console.log(value.projectIdx);
+					  console.log(projectIdx);
+					  if(value.projectIdx == projectIdx){
+						  console.log("noticeProjectIdx : " +projectIdx);
+						  console.log("noticeProjectIdx : " + value.email);
+						  
+						  var userKey;
+						  
+						  
+						 var myRootRef = database.ref();
+			        	  myRootRef.child("Emails").orderByChild('email').equalTo(value.email).once('value', function(data){
+			        		  data.forEach(function(childSnapshot) {
+									userKey = childSnapshot.key;
+									console.log("targetuserkey..." + userKey);
+									//유저별 노티스 저장
+									database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
+						        	    projectName: projectName,
+						        	    title: title,
+						        	    readOk : 'false'
+						        	  });;
+									
+
+									
+		       		 		});
+			        	  })		      
+					  }	
+					});				
+				},
+				error: function(xhr, status, error){
+	  			console.log("풀리스트 불러오는 아잭스 에러 터짐 ㅠㅠ");
+			         var errorMessage = xhr.status + ': ' + xhr.statusText
+			         alert('Error - ' + errorMessage);
+			     } 
+			});
+
+			}
+
+			function loadPushNotice(curUserKey){				
+	                                     
+	              var noticesByUserRef = database.ref('NoticesByUser/'+ curUserKey);
+
+	             console.log("curUserKey" + curUserKey);
+
+					noticesByUserRef.once('value', function(data){
+						console.log("data~~~~~~~~~~~~~~~~~~~" + data);
+						console.log("data~~~~~~~~~~~~~~~~~~~" + data.key);
+						console.log("data~~~~~~~~~~~~~~~~~~~" + data.val());
+						
+						
+						});
+	             
+	                 document.getElementById('noticeBoard').innerHTML = ''; //메세지 화면 리셋                 
+	              
+	                 
+	                 noticesByUserRef.off(); 
+	                 
+					var checkRead = function(data){
+						console.log("노티스 밸류는??" + data);
+						var noticeKey =data.key;						
+						var noticeValue = data.val(); 						
+									console.log("노티스 밸류는??" + noticeValue.readOk);
+									console.log(noticeValue.readOk == false);
+									console.log("노티스 밸류는??" + data);
+									console.log("노티스 밸류는??" + noticeKey);		
+						
+						if(noticeValue.readOk == 'false'){ 
+							noticeListUp(noticeKey, noticeValue.projectName, noticeValue.title)
+								 console.log("I am here~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+								}
+							
+						} 
+					noticesByUserRef.on('child_added', checkRead.bind(this)); 
+					noticesByUserRef.on('child_changed', checkRead.bind(this)); 
+
+
+
+	             
+	 	        
+	 			
+				}
+
+			function noticeListUp(noticeKey, projectName, title){
+				var noticeTags;
+	 			noticeTags = '<div id="'+ noticeKey+'" class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
+	 	                     '<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
+	 	                      + projectName + '</span>'+ title +
+	 	    	              '<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
+	 	                      '</div>';
+
+	 	         $("#noticeBoard").append(noticeTags);
+
+				}
 		
 			
 	      //유저가 채팅기능 버튼을 눌렀을 때 작동하는 콜백 함수... 목적은.. firebase database 유저 정보저장(메세지 읽기, 쓰기를 위해 특정키 부여 누군인지 구분하기 위해 필요)
@@ -1466,6 +1576,7 @@ display: block;
 					database.ref().update(multiUpdates);
 
 					//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드
+					$('#ulRoomList').empty();
 					loadRoomList(curUserKey);
 
 					
@@ -1715,6 +1826,9 @@ display: block;
 
               //fcm 토큰은 미리 받아 올수 있는데... 현재 유저의 uid 를 fb db 에서 가져 와야 해서.. 위치가..여기..이 함수는 fb db 에 fcm token wjwkd gksms gkatn
     			saveFCMToken();
+
+    			//노티스 정보 로드 없
+    			loadPushNotice(resolvedData);
                
             }); 
 
