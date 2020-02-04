@@ -378,7 +378,13 @@ function setTableView(data){
 	//}
 }
 function allRemove(){
-	Swal.fire({
+	console.log("allRemove");
+	console.log($("#checkfolder").value());
+	if($('input:checkbox[id="checkfolder"]').is(":checked") == true)
+		console.log($("#checkfolder").parent().parent().attr("id"));
+	return;
+	
+/*	Swal.fire({
 	    title: '선택하신 을 삭제하시겠습니까?',
 	    text: '해당 파일은 휴지통으로 이동합니다.',
 	    imageUrl: 'https://i.imgur.com/vxFBTRJ.png',
@@ -390,8 +396,6 @@ function allRemove(){
 	    cancelButtonText: '취소'
 	  }).then((result) => {
 	    if (result.value) {
-	    	if($('input:checkbox[id="checkfolder"]').is(":checked") == true)
-	    		console.log($("#checkfolder").parent().parent().attr("id"));
 	    	return;
 	    	$.ajax({
 	   		 url : "DeleteFolderAndFile.do",
@@ -408,7 +412,7 @@ function allRemove(){
 	   		 }
 	   	 })  
 	   }         
-	});
+	});*/
 }
 
 function deleteDriveFile(driveFileIdx){

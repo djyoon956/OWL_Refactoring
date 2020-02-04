@@ -70,12 +70,15 @@ function MakeDataSet() {
     		url : "LineChart.do",
     		success : function(data){ 			
 				let group;
+				console.log(data);
     			$.each(data, function(key, value){
         				//let theday = key (dayName)
     					group = value.reduce((r, a) => {
     																 r[a.logTime] = [...r[a.logTime] || [], a];
     																 return r;
     															}, {});
+
+						console.log(group);
 						let theData;			
 					    theData = new MakeDataSet();
 						theData.label = value[0].projectName;
@@ -86,6 +89,7 @@ function MakeDataSet() {
 						
 						dayCount = [0, 0, 0, 0, 0, 0, 0];		
     					$.each(group, function(key2, value2){   
+        					console.log(value2.length);
         					dayCount[new Date(key2).getDay()] = value2.length;			  					
     					}) 
     					theData.data=dayCount;	
@@ -177,7 +181,7 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
 function MyLineChart(){
     window.myLine = Chart.Line(document.getElementById('myLine').getContext('2d'), {
         data: {
-            labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+            labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
             datasets: LineData,
         },
         options: {
