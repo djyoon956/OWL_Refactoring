@@ -61,6 +61,7 @@ function setTrashData() {
 			$('#driveSearchBtn').hide();
 			$('#driveUploadBtn').hide();
 			$('#trashName').removeClass("hidden");
+			
 
 			if (data.folders.length == 0 && data.files.length == 0) {
 				$("#emptyDriveBox").removeClass("hidden");
@@ -347,6 +348,7 @@ function setIconView(data){
 	});
 }
 
+
 function setTableView(data){
 	$("#driveTableViewBox").removeClass("hidden");
 	$("#driveIconViewBox").addClass("hidden");
@@ -415,6 +417,7 @@ function allRemove(){
 	});*/
 }
 
+
 function deleteDriveFile(driveFileIdx){
 	Swal.fire({
 	    title: '파일을 삭제하시겠습니까?',
@@ -445,6 +448,7 @@ function deleteDriveFile(driveFileIdx){
 	   }         
 	});
 }
+
 
 function deleteDriveFolder(driveIdx, parentIdx){
 	Swal.fire({
@@ -513,8 +517,6 @@ function deleteFilefromTrash(driveFileIdx) {
 
 //휴지통에서 폴더 영구 삭제 함수 
 function deleteFolderfromTrash(driveFileIdx) {
-	console.log('여긴 휴지통에서 폴더 삭제 함수');
-	console.log(driveFileIdx);
 	Swal.fire({
 	    title: '완전히 삭제 하시겠습니까?',
 	    text: '삭제시 해당 폴더 및 폴더내 파일을 복구 하실 수 없습니다.',
@@ -541,19 +543,14 @@ function deleteFolderfromTrash(driveFileIdx) {
 	});
 }
 
-//휴지통에서 복원 함수 
+//휴지통에서 파일  복원 함수 
 function restoreFileTrash(driveFileIdx) {
-	
-	console.log(driveFileIdx);
-	
+		
 	$.ajax({
 		url : "RestoreFile.do",
 		data : {'driveFileIdx' : driveFileIdx},
 		success : function(data) {
-			console.log('restorefromTrash in');
-			console.log(data);
 			 successAlert("파일 복원 완료");
-
 			setTrashData(driveProjectIdx);
 		},
 		error : function() {
@@ -562,7 +559,7 @@ function restoreFileTrash(driveFileIdx) {
 	}) 
 }
 
-
+//휴지통에서 폴더 복원 
 function restoreFolderfromTrash(driveFileIdx) {
 	console.log('restoreFolderfromTrash in');
 	console.log(driveFileIdx);

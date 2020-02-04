@@ -62,12 +62,10 @@
                                <li class="mb-2" style="font-size: 16px">
                                   <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
                                </li>
-                               <li class="mb-2" style="font-size: 16px">
-                           		 <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                               </li>
+
                             </ul>
                             <input type="file" name="multipartFiles" id="multipartFilesIssueEdit" multiple="multiple" class="editIssueFileBtn hidden">
-                          	<button class="btn btn-primary editIssueFileBtn hiddenb" onclick="issueDetailFileEdit('${project.projectIdx}')" >save</button>
+                          	<button class="btn btn-primary editIssueFileBtn hiddenb" onclick="issueDetailFileEdit()" >save</button>
                            </div>
                          <div  class="col-1" >
 						 	<span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editIssueFileView()"style="cursor: pointer"></i>
@@ -90,15 +88,6 @@
                             <ul class="timeline w-100" id="issueDetailActivity">
                                 <li>
                                     <p> Crystal opened this issue 1/11</p>
-                                </li>
-                                <li>
-                                    <p>1/12 edited </p>
-                                </li>
-                                <li>
-                                    <p>1/14 edited</p>
-                                </li>
-                                <li>
-                                    <p>1/16 moved this issue from 'to do' to 'done'</p>
                                 </li>
                             </ul>
                         </div>
@@ -126,7 +115,7 @@
                 </div>
                   <div class="row container-fluid">
 						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
-						<input type="text" id="replycontent" class="editable" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('${project.projectIdx}')}">
+						<input type="text" id="replycontent" class="editable" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}">
 						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px" onClick="addReply('${member.name}')">Comment</button>
             </div>
         </div>
@@ -151,7 +140,7 @@
 							<span id="issueDetailAssignees">Chloe</span>
 							</div>
 							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="assignListEditview('${project.projectIdx}')"></i>
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="assignListEditview()"></i>
 							</div>
 						</div>
                     </div>    
@@ -176,7 +165,7 @@
 							<span id="issueDetailLabel"  style="padding-right:7px; padding-left:7px; " class="badgeIcon">Dev</span>
 							</div>
 							<div class="col-2">
-								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="labelListview('${project.projectIdx}')"></i>
+								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="labelListview()"></i>
 							</div>
 						</div>
                     </div>    

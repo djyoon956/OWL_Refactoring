@@ -184,11 +184,7 @@
             else if (target === "calendar")
                 setCalendarData();
             else if (target === "kanban"){
-                $("#-1Column > .columnBody").empty();
-                $("#-99Column > .columnBody").empty();
-                $("#kanbanIn").empty();
                 setKanbanData();
-            //	setIssueData(); 
             }
             else if (target === "notice")
                 setNoticeData();
@@ -247,73 +243,9 @@
             })
         }
         // 칸반 --> 
-    	    function setKanbanData() {
-    	        $.ajax({
-    				 url : 'GetColumn.do',
-    				 data : {'projectIdx' :  ${project.projectIdx} },
-    				 success : function(data) {
-    					console.log("칸반");
-    					$.each(data,function(index,obj) {
-    						if(obj.colIdx != -1 && obj.colIdx != -99){
-    							addColumn(obj);
-    						}
-    					});
-    					$( ".sortableCol").sortable({
-    				        connectWith: ".connectedSortable",
-    				        dropOnEmpty: true,
-    				        update: function(event, ui) {
-								let target = $(ui.item).attr("id").replace("Issue","");
-								let columnIdx = $(this).parent().attr("id").replace("Column","");
-								let issues = [];
-								$.each($(this)[0].children, function(){
-									issues.push($(this).attr("id").replace("Issue","").trim())
-								})
-								
-								if(issues.length == 0)
-									return;
-								
-								$.ajaxSettings.traditional = true; 
-								$.ajax({
-									type : "POST",
-									url : "MoveIssue.do",
-									data : { 	projectIdx :  ${project.projectIdx}
-												, targetIssueIdx : target
-												, columnIdx : columnIdx
-												, issues : issues },
-									success : function(data) {
-										console.log("success move issue");
-									},
-									error: function() {
-										console.log("error move issue");
-									}
-								})
-       				        }       
-    				     }).disableSelection();
-    					setIssueData();
-    				},
-    				 error : function() {
-    					console.log("getColum.do error");
-    				}
-    			}); 
-    	    }
+
     	    
-			function setIssueData(){
-				$.ajax({
-					url : "GetIssue.do",
-					data : {'projectIdx' :  ${project.projectIdx} },
-					success : function(data) {
-						 $.each(data,function(index,obj) {
-							
-							 addKanbanIssue(obj.colIdx, obj); 
-							 wholeProjectChart(${project.projectIdx});
-					
-						});
-					},
-					error: function() {
-						console.log("getIssue.do error");
-					}
-				})
-			}
+			
     	    
     	    function closeFn() {
     	      	$("#-99Column").hide();
