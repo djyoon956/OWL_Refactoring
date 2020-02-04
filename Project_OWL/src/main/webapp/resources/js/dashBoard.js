@@ -450,8 +450,6 @@ function setProjectMemberProgress(projectIdx){
 		url : "GetProjectMemberProgress.do",
 		data : {projectIdx : projectIdx },
 		success : function(data){
-			console.log("setProjectMemberProgress");
-			console.log(data);
 			let labels = [];
 			let totals = [];
 			let closes = [];
@@ -463,12 +461,13 @@ function setProjectMemberProgress(projectIdx){
 
 			$.each(data.progress, function(index, element){
 				let labelIndex = labels.indexOf(element.assignedName);
-				console.log(element);
 				closes[labelIndex] = element.closedCount;
 				totals[labelIndex] = element.openCount + element.closedCount;
 			})
 
-			let chartData = {
+			window.myMixedChart = new Chart(document.getElementById('dashBoardMemberProgress').getContext('2d'), {
+				type: 'bar',
+				data: {
 					labels: labels,
 					datasets: [{
 						type: 'line',
@@ -485,12 +484,7 @@ function setProjectMemberProgress(projectIdx){
 						borderColor: '#a5c5e8',
 						borderWidth: 2
 					}]
-				};
-
-	
-			window.myMixedChart = new Chart(document.getElementById('dashBoardMemberProgress').getContext('2d'), {
-				type: 'bar',
-				data: chartData,
+				},
 				options: {
 					responsive: true,
 					maintainAspectRatio: false,
@@ -500,7 +494,6 @@ function setProjectMemberProgress(projectIdx){
 					}
 				}
 			});
-		
 		},
 		error : function(){
 			console.log("in setProjectMemberProgress error");
