@@ -427,7 +427,6 @@ function initKanban(projectIdx){
 
 
 
-
 function addReply(creator) {
 
 	let replyct = $('#replycontent').val();
@@ -682,14 +681,16 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailComment").empty();
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
-						
+					console.log('뭐 찍히니?');
+					console.log(element);
+					console.log(element.profilepic);
 					
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
-					
+				
                      
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
-										+ '<img class="rounded-circle" width="40" '+error+' src="upload/memeber/'+element.profilePic+'" alt="user" >'
+										+ '<img class="rounded-circle" width="40" src="upload/memeber/'+element.profilepic+'" alt="user" >'
 										+ '	</div>'
 										+ '	 <div class="comment-text w-100">'
 										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creator
@@ -772,8 +773,7 @@ function reOpenIssue(issueIdx) {
 		}
 		
 	})
-	
-	
+
 }
 
 
