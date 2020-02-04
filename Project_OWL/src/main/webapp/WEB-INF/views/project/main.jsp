@@ -101,17 +101,12 @@
                     url: "GetProjectMember.do",
                     data: { projectIdx: ${project.projectIdx}},
                     success: function (data) {
-                         console.log("GetProjectMember success");
-                        // console.log({memeber});
-                         console.log("${project.authority}");
-	
                         $("#projectMemebersBox").empty();
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
                         $.each(data, function(index, element){
-                     
                             let control = "<li class='mt-3'>"
-		                				+ "	<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
-		                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
+			                				+ "	<img class='rounded-circle' width='40' src='upload/member/"+element.profilePic+"' "+error+"   alt='user'>"
+			                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
 
                				if(index == 0){
                					control += "<span class='ml-1 roleBadge pm' style='padding-top : 5px;'></span>";
