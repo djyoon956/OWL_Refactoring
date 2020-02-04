@@ -6,6 +6,6 @@ function initProjcet(projectIdx, projectName, projectColor){
 	currentProjectName = projectName;
 	
 	initNotice();
-	initKanban(currentProjectIdx);
-    initDashBoard(projectColor);
+	initKanban("${project.projectIdx}");
+    initDashBoard(projectIdx, projectColor);
 }

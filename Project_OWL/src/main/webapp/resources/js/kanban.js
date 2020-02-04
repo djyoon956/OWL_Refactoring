@@ -3,8 +3,8 @@ let projectIdx;
 let editIdx = 0;
 
 
-let words = new Array();
-let wordsemail = new Array();
+let words = new Array(); // project memberlist (name)
+let wordsemail = new Array(); // project memberlist (email)
 
 let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
@@ -48,7 +48,6 @@ function initKanban(projectIdx){
 				editIdx = 0;
 				
 				$('#'+editIdx+'Label').attr('style', "background-color:#fff");
-
 			}, error : function () {
 				console.log('EditLabel error');
 			}
@@ -670,7 +669,7 @@ function addKanbanIssue(colIdx,obj){
 		obj.name  = "none";
 	 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
 			+		'<div class="dropdown">'
-			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'">' + obj.labelName + '</span>'
+			+			'<label> <span class="badgeIcon float-left" style="background-color: '+ obj.labelColor+'; color: ' + getTextColorFromBg(obj.labelColor) + '">' + obj.labelName + '</span>'
 			+			'<span class="issueTitle">' + issueTitle + '</span>'
 			+			'</label>'
 			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
@@ -836,7 +835,8 @@ function setKanbanDetail(issueIdx){
 					if(data.labelIdx > 0){
 
 						$("#issueDetailLabel").text(data.labelName);
-						$("#issueDetailLabel").css("background-color", data.labelColor);					
+						$("#issueDetailLabel").css("background-color", data.labelColor);
+						$("#issueDetailLabel").css("color", getTextColorFromBg(data.labelColor));
 					}
 					else
 						$("#issueDetailLabel").text("none");
@@ -917,12 +917,10 @@ function changeKanbanView(view){
    $('#closeIssueBtn').addClass('hidden');
    $('#-1Column').addClass('hidden');
    $('#-99Column').addClass('hidden');
-   
    $('#addIssuebtn').addClass('hidden'); 
    $('#addLabelBtn').addClass('hidden'); 
    $('#addColumnBtn').addClass('hidden'); 
    $('#confirmIssueBtn').addClass('hidden'); 
-   
  }else if (view == "returnlist") {
    $('#searchBox').addClass('hidden');
    $('#searchReturnBtn').addClass('hidden');
@@ -935,10 +933,7 @@ function changeKanbanView(view){
    $('#addLabelBtn').removeClass('hidden'); 
    $('#addColumnBtn').removeClass('hidden');
    $('#confirmIssueBtn').removeClass('hidden'); 
-
- }
-   
-   
+ } 
 }
 
 
@@ -1294,6 +1289,7 @@ function editLabel(idx, color, name) {
 		else 
 		 $(".editIssueFileBtn").addClass("hidden");
 	}
+	
 	function issueDetailFileEdit(projectIdx) {
 		let formData = new FormData();
 		formData.append("projectIdx",projectIdx);
@@ -1332,14 +1328,11 @@ function editLabel(idx, color, name) {
 
 		if(flagelement == "issueModalOpen") {
 			
-
 		 $.ajax({
 		 		type: "POST",
 	            url: "GetAddIssueForm.do",
 	            data: { projectIdx: projectidx},
 	            success: function (data) {
-	            	console.log('데이터가 뭐가오니?');
-	            	console.log(data);
 	            	$('#assigned').empty();
 	            	$('#labelIdx').empty();
 
@@ -1382,10 +1375,6 @@ function editLabel(idx, color, name) {
 	function mentionSearch(projectIdx) {
 
 		 getProjectMemberList("mentionSearch",projectIdx);
- 
-		 console.log('mentionSearch in');
-		 console.log(words);
-		 console.log(wordsemail);
 		 
     	//멘션
 	  $('.editable').textcomplete([{
@@ -1396,20 +1385,14 @@ function editLabel(idx, color, name) {
 		        return word.indexOf(term) === 0 ? word : null;
 		      }));
 		    },
-
 		    index: 1,
 		    replace: function (word) {
 		      return '@' + word + ' ';
 		    }
 		  }]).on({
 			  'textComplete:select': function (e, value) {	
-				  
-				  console.log(e);
-				  console.log(value);
-				  let num = e.isTrigger;
-				 
-				  console.log($(this)[0].value);
-				
+				  console.log(words.indexOf(value));  // 2
+				  console.log(wordsemail[words.indexOf(value)]); // skisk1124@naver.com
 			  }
 		  }) ;
 	}
