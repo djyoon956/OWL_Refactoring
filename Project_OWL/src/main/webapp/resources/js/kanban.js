@@ -10,6 +10,7 @@ let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
 
 let kanbanViewType = "";
+
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
@@ -27,6 +28,7 @@ function initKanban(projectIdx){
 
 	
 	$('#editLabelBtn').click(function() {
+		
 		if(editIdx == 0)
 			return;
 		
@@ -67,7 +69,7 @@ function initKanban(projectIdx){
 		$('.labelList').find('.edit').removeClass("hidden");
 
 	});
-	
+
 
 	//검색 후 원래 칸반으로 되돌아가는 버튼 
 	$('#searchReturnBtn').click(function() {
@@ -317,8 +319,6 @@ function initKanban(projectIdx){
 			   				type: "POST",
 		 	   				data : {'projectIdx' : projectIdx, 'colname' : $('#colname').val()},
 		 	   				success : function(data) {
-		 	   				console.log("in insesrt column222");
-		 	   				console.log(data);
 		 	   					if(data != null) {
 		 	   						
 		 	   		        		addColumn(data);
@@ -437,7 +437,7 @@ function initKanban(projectIdx){
 function editColname() {
 	 $.ajax({
       	url : 'UpdateColumn.do',
-      	data : { 'colname' : $("#editcolName").val(),'projectIdx' : currentProjectIdx,'colIdx' :  $("#editcolIdx").val()}, 
+      	data : { 'colname' : $("#editcolName").val(),'projectIdx' : currentProjectIdx, 'colIdx' :  $("#editcolIdx").val()}, 
       	success : function(data) {
       		setChageView("kanban");
       		$("#editcolName").val("");
@@ -596,7 +596,7 @@ function addKanbanIssue(colIdx,obj){
 			+			'<span class="issueTitle">' + issueTitle + '</span>'
 			+			'</label>'
 			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+			+			'<i class="fas fa-ellipsis-v fa-sm" style="padding:5px;"></i></a>'
 			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 			+				'<ul class="list-style-none">'
 			+					'<li class="pl-3"><a href="#" onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
@@ -712,7 +712,6 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 					console.log('뭐 찍히니?');
-					console.log(element);
 					console.log(element.profilepic);
 					
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";

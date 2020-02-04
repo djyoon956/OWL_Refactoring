@@ -47,7 +47,6 @@ public class KanbanRestController {
 	//칼럼 리스트 select 
 	@RequestMapping("GetColumn.do")
 	public List<Column> getColum(int projectIdx) {
-		System.out.println("-------------------------");
 		
 		List<Column> columns= service.getColum(projectIdx);
 		//System.out.println("여기니?");
