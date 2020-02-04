@@ -34,6 +34,7 @@
 	<!-- If you use the default popups, use this. -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
+    <script src="resources/js/project.js"></script>
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
     <script src="resources/js/kanban.js"></script>
@@ -41,9 +42,7 @@
     <script type="text/javascript">
         $(function () {			
             setTheme("${setting.themeColor}", "${setting.font}");
-            initNotice("${project.projectIdx}");
-            initKanban("${project.projectIdx}");
-            initDashBoard("${project.projectIdx}", "${project.projectColor}")
+            initProjcet("${project.projectIdx}", "${project.projectName}", "${project.projectColor}");
 
             $.ajax({
         		url:"GetProjectList.do",
