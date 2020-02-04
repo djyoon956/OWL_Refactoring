@@ -1257,7 +1257,7 @@ function editLabel(idx, color, name) {
 		
 	}
 	
-	function assignListEditview(projectidx){
+function assignListEditview(projectidx){
 		console.log("assignListEditview----");
 		console.log(projectidx);
 		getProjectMemberList("editDetail",projectidx);
@@ -1379,7 +1379,7 @@ function editLabel(idx, color, name) {
 	}
 	
 
-	function mentionSearch(projectIdx) {
+function mentionSearch(projectIdx) {
 
 		 getProjectMemberList("mentionSearch",projectIdx);
 		 
