@@ -672,13 +672,13 @@ function setKanbanDetail(issueIdx){
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
-				 $("#multipartFilesIssueEdit").empty();
+				$("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
 
 				if(data.issueProgress == 'OPEN')
-						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
+						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+",'inDetail')");
 					else if (data.issueProgress == 'CLOSED')
-						$("#closeIssueDetailBtn").attr("onclick","reOpenIssue("+issueIdx+")");
+						$("#closeIssueDetailBtn").attr("onclick","reOpenIssue("+issueIdx+",'inDetail')");
 					
 					$("#issueDetailTitle").text(data.issueTitle);
 					$("#issueDetailContent").html(data.content);
@@ -739,7 +739,11 @@ function setKanbanDetail(issueIdx){
 										+ '</div>';
 						$("#issueDetailComment").prepend(control);
 					});
-					
+					console.log("디테일");
+					console.log(data);
+					if(data.assigned == ""){
+						data.assigned = "none";
+					}
 					$("#issueDetailAssignees").text(data.assigned);
 					
 
@@ -777,28 +781,34 @@ function setKanbanDetail(issueIdx){
 }
 
 
-function closeIssue(issueIdx) {
-
+function closeIssue(issueIdx,flag) {
 	   $.ajax({
            url:"CloseIssue.do",
            method:"POST",
            data:{issueIdx : issueIdx},
            success:function(data){
+        	if(flag == "inDetail"){
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
+        	} else if(flag == "move"){
+        	setChageView("kanban");
+        	}
            }
         });  		
 }
 
 
-function reOpenIssue(issueIdx) {
+function reOpenIssue(issueIdx,target) {
 	$.ajax({
 		url:"ReopenIssue.do",
 		method:"POST",
 		data : {issueIdx : issueIdx},
 		success:function(data) {
+			if(target == 'inDetail'){
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
+			} else if(target == 'move')
+			setChageView("kanban");
 		},error :function() {
 			
 			console.log("ReopenIssue error");
@@ -1379,41 +1389,56 @@ function mentionSearch() {
 	
 	function setKanbanTable(){
 		$("#kanbanTable").DataTable({
-		 	stateSave: true, // 페이지 상태 저장
-		 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-		 	"searching": false,
+			"pageLength": 10,
 	         fixedColumns: true,
 	         autoWidth: false,
-	         columnDefs: [ { targets: 0, className: 'dt-body-left' }]
+	         "ordering" : false,
+	         "searching": false,
+	         "lengthChange": false
 		})
 	}
 	
 	function setKanbanTableView(){
-		 $.ajax({
+		$.ajax({
 			 url : 'GetColumn.do',
-			 data : {'projectIdx' :  currentProjectIdx },
+			 data : { projectIdx :  currentProjectIdx },
 			 success : function(data) {
-				 console.log("in setKanbanTableView success");
-				 console.log(data);
-				 
+					$.ajax({
+						url : "GetIssue.do",
+						data : {'projectIdx' :  currentProjectIdx },
+						success : function(data) {
+							let colInfos = data;
+							console.log("setKanbanTableView success");
+							 $.each(data,function(index, element) {
+								 console.log(element);
+								 $('#kanbanTable').DataTable().row.add( [
+										++index,
+										'<span class="badgeIcon" style="background-color: '+ element.labelColor+'; color: ' + getTextColorFromBg(element.labelColor) + '">' + element.labelName + '</span>',
+										element.issueTitle,
+										element.name,
+										element.priorityCode,
+										element.dueDate,
+							        ]).node().id = element.issueIdx;
+									
+									$('#kanbanTable').DataTable().draw();
+							});	
+						},
+						error: function() {
+							console.log("setKanbanTableView error");
+						}
+					})
 			 },
 			 error : function(){
-				 console.log("in setKanbanTableView error");
+				 console.log("setKanbanTableView error")
 			 }
-		 });
-		 
-		 return;
-		$('#kanbanTable').DataTable().row.add( [
-			"<i class='fas fa-file-alt mr-3'></i><span>"+element.fileName+"</span>",
-			element.createDate,
-			element.creatorName,
-			element.fileSize+" KB"
-        ]).node().id = element.driveFileIdx;
-		
-		$('#kanbanTable').DataTable().draw();
+		});
 	}
 	
     function setKanbanData() {
+	    $("#-1Column > .columnBody").empty();
+        $("#-99Column > .columnBody").empty();
+    	$("#kanbanIn").empty();
+    	
         $.ajax({
 			 url : 'GetColumn.do',
 			 data : {'projectIdx' :  currentProjectIdx },
@@ -1427,9 +1452,13 @@ function mentionSearch() {
 			        connectWith: ".connectedSortable",
 			        dropOnEmpty: true,
 			        update: function(event, ui) {
+			        	console.log("업데이트");
+			        	console.log(event);
+			        	console.log(ui);
 						let target = $(ui.item).attr("id").replace("Issue","");
 						let columnIdx = $(this).parent().attr("id").replace("Column","");
 						let issues = [];
+						console.log(target);
 						$.each($(this)[0].children, function(){
 							issues.push($(this).attr("id").replace("Issue","").trim())
 						})
@@ -1452,7 +1481,12 @@ function mentionSearch() {
 								console.log("error move issue");
 							}
 						})
-				        }       
+						if (columnIdx == '-99'){
+							closeIssue(target,"move");
+						}
+						if (columnIdx == '-1')
+							reOpenIssue(target,"move");
+				       }       
 			     }).disableSelection();
 				setIssueData();
 			},
@@ -1467,9 +1501,10 @@ function mentionSearch() {
 			url : "GetIssue.do",
 			data : {'projectIdx' :  currentProjectIdx },
 			success : function(data) {
-				 $.each(data,function(index,obj) {
+				 $.each(data,function(index, obj) {
 					 addKanbanIssue(obj.colIdx, obj); 
-					 wholeProjectChart(currentProjectIdx);
+					 // 차트용
+					 wholeProjectChart(currentProjectIdx); 
 				});
 			},
 			error: function() {
