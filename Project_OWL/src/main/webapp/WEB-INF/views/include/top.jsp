@@ -1267,7 +1267,8 @@ display: block;
 
 			
 
-			//채팅방 유적 목록 클릭시 실행 되는 펑션
+			//채팅방 유적 목록 클릭시 실행 되는 펑션// 
+			//현재 프로젝트에서는 사용 되지 않는 함수... 원래는 채팅 가능한 유저 목록을 뿌려주고.. 클릭하면 채팅방이 열리는 함수....
           function onUserListClick(event){
                 roomFlag = 'tabUserList';//유저 리스트를 클릭했다는 플래그				
 				var curUserKey = $('#curUserKey').val();
@@ -1313,13 +1314,13 @@ display: block;
 		  }
 		
 
-          function openChatRoom() {
+          function openChatRoom(roomTitle) {
              
         	  //loadRoomList(roomId); 
         	  window.isOpenRoom = true; // 방이 열린 상태인지 확인하는 플래그 값 
         	  if(roomTitle){ //상단 타이틀 변경 
             	  document.getElementById('roomTitle').innerHTML = roomTitle; 
-            	  } 
+            	  }  
         	  loadMessageList(); //메세지 로드 
               $('#tabMessageList').click();
             
@@ -1419,13 +1420,17 @@ display: block;
 
           /** * 두번째 탭 채팅방 목록리스트 호출 */
   		function loadRoomList(uid) {
-  			document.getElementById('ulRoomList').innerHTML='';
+  	  		console.log
+  			
 			var ulRoomList = document.getElementById('ulRoomList');
 			//var curUserKey = $('#curUserKey').val();			
-			var roomRef = database.ref('RoomsByUser/'+ uid);							 
-			roomRef.off(); 
-			roomRef.orderByChild('timestamp').on('value', function(snapshot){				
-				var arrRoomListHtml = []; 			
+			var roomRef = database.ref('RoomsByUser/'+ uid);	
+									 
+			
+			roomRef.off(); 			
+			roomRef.orderByChild('timestamp').on('value', function(snapshot){
+				document.getElementById('ulRoomList').innerHTML='';				
+				var arrRoomListHtml = [];
 				snapshot.forEach(function(data){
 						var val = data.val();																
 						var arrRoomUserName = val.roomUserName.split('@spl@');					
@@ -1446,16 +1451,15 @@ display: block;
 
 						arrRoomListHtml.push(roomListUp(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserList, lastMessage, datetime));
 					}); 
-				
-							
-				//var reversedRoomList = arrRoomListHtml.reverse().join(''); // 역순 정렬, 끝에 싱글 코테이션 조인 해야 되나??? 오류 나올듯 도 한데.... 
+		
 				var reversedRoomList = arrRoomListHtml.reverse();				
 				reversedRoomList.forEach(function(item, index){
 					//console.log("여기를 타야 그 챗방 리스트를 뿌려 줄수 있다... 과연...." + item);
 					$('#ulRoomList').append(item);
 					}); 
-				
 				});
+			//var reversedRoomList = arrRoomListHtml.reverse().join(''); // 역순 정렬, 끝에 싱글 코테이션 조인 해야 되나??? 오류 나올듯 도 한데.... 
+			
   	  		}
 
   		function onRoomListClick(event){			
@@ -1473,11 +1477,11 @@ display: block;
   			roomTitle = event.getAttribute('data-roomTitle'); 
   			roomUserList = event.getAttribute('data-roomUserList').split('@spl@'); // 챗방 유저리스트  			
   			roomUserName = event.getAttribute('data-roomUserName').split('@spl@'); // 챗방 유저 이름 
-  			openChatRoom();   
+  			openChatRoom(roomTitle);   
 
           
   			// 메세지 화면 이동 
-  			 $('#tabMessageList').click();
+  			// $('#tabMessageList').click();
   	  		}
 
   		/** * RoomList 화면 시간변환 */ 
@@ -1575,9 +1579,7 @@ display: block;
 					} 
 					database.ref().update(multiUpdates);
 
-					//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드					
-					var roomRef = database.ref('RoomsByUser/'+ uid);							 
-					roomRef.off();
+					//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드										
 					loadRoomList(curUserKey);
 
 					
