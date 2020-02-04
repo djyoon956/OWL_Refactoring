@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- sidebar project 목록 삽입 -->
 	<insert id="insertProject" parameterType="com.owl.project.dto.Project">
-		INSERT INTO PROJECT (PROJECTNAME) VALUES (#{projectName})
+		INSERT INTO PROJECT (PROJECTNAME, STARTDATE, ENDDATE) VALUES (#{projectName}, #{startDate}, #{endDate})
 	<selectKey keyProperty="projectIdx" resultType="int" order ="AFTER">
    		select LAST_INSERT_ID()
  	</selectKey>

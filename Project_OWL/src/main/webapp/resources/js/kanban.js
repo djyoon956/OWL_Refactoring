@@ -664,9 +664,6 @@ function deleteLabel(labelidx) {
       
 
 function setKanbanDetail(issueIdx){
-	
-	console.log("in setKanbanDetail sfdsf");
-	
 	$.ajax({
 			type: "POST",
 		    url: "GetIssueDetail.do",
@@ -674,7 +671,8 @@ function setKanbanDetail(issueIdx){
 			success : function (data) {
 				$("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
-
+				$("#issueDetailLabel").removeAttr("style");
+				
 				if(data.issueProgress == 'OPEN')
 						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+",'inDetail')");
 					else if (data.issueProgress == 'CLOSED')
@@ -738,15 +736,14 @@ function setKanbanDetail(issueIdx){
 										+ '</div>';
 						$("#issueDetailComment").prepend(control);
 					});
-				
-					if(data.assigned == ""){
+
+					if(data.assigned == "" || data.assigned == null){
 						data.assigned = "none";
 					}
+					
 					$("#issueDetailAssignees").text(data.assigned);
 					
-
 					if(data.labelIdx > 0){
-
 						$("#issueDetailLabel").text(data.labelName);
 						$("#issueDetailLabel").css("background-color", data.labelColor);
 						$("#issueDetailLabel").css("color", getTextColorFromBg(data.labelColor));
@@ -1386,17 +1383,56 @@ function mentionSearch() {
 	}
 	
 	function setKanbanTable(){
-		$("#kanbanTable").DataTable({
+		let table = $("#kanbanTable").DataTable({
 			"pageLength": 10,
 	         fixedColumns: true,
 	         autoWidth: false,
-	         "ordering" : false,
 	         "searching": false,
 	         "lengthChange": false
-		})
+		});
+
+        new $.fn.dataTable.Buttons( table , {
+            buttons: [
+                { extend :'excel',
+                	autoFilter : true,
+                    sheetName : '다정이가 최고다',
+	                className : 'btn hidden kanbanExportButton',
+	                title: 'OWL - '+currentProjectName,
+	                exportOptions : {
+	                    columns : ':visible'
+	                }
+                },  
+            ]
+        });
+        
+        table.buttons().container().appendTo('#kanbanTableViewBox');
+
+		 $.contextMenu({
+	         selector: '#kanbanTable tbody tr',
+	         build : function(trigger, e){
+	        	 return {
+	                 callback: function(key, options) {
+	                     let issueIdx = trigger[0].id;
+	                     if(key == "detail")
+	                    	 setKanbanDetail(issueIdx);
+	                     else if(key == "remove")
+	                    	 deleteIssue(issueIdx);
+	                     else if(key == "export")
+	                    	 $(".kanbanExportButton:first").click();
+	                 },
+	                 items:{
+	                     "detail": {name: "Detail", icon: "fas fa-info-circle"},
+	                     "remove": {name: "Remove Issue", icon: "delete"},
+	                     "sep1": "---------",
+	                     "export": {name: "Export Excel", icon: "fas fa-file-excel"},
+	            	 	}
+	             };
+	         },
+	     });
 	}
 	
 	function setKanbanTableView(){
+		$('#driveTable').DataTable().clear();
 		$.ajax({
 			 url : 'GetColumn.do',
 			 data : { projectIdx :  currentProjectIdx },
@@ -1406,7 +1442,6 @@ function mentionSearch() {
 						data : {'projectIdx' :  currentProjectIdx },
 						success : function(data) {
 							let colInfos = data;
-							console.log("setKanbanTableView success");
 							 $.each(data,function(index, element) {
 								 console.log(element);
 								 $('#kanbanTable').DataTable().row.add( [
@@ -1414,8 +1449,8 @@ function mentionSearch() {
 										'<span class="badgeIcon" style="background-color: '+ element.labelColor+'; color: ' + getTextColorFromBg(element.labelColor) + '">' + element.labelName + '</span>',
 										element.issueTitle,
 										element.name,
-										element.priorityCode,
-										element.dueDate,
+										element.priorityCode == null? "-":'<span class="priorityBadge '+element.priorityCode.toLowerCase()+'"></span>',
+										element.dueDate== null? "-":element.dueDate,
 							        ]).node().id = element.issueIdx;
 									
 									$('#kanbanTable').DataTable().draw();
