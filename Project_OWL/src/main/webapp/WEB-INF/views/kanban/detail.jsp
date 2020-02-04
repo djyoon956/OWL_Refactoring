@@ -62,9 +62,7 @@
                                <li class="mb-2" style="font-size: 16px">
                                   <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
                                </li>
-                               <li class="mb-2" style="font-size: 16px">
-                           		 <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                               </li>
+
                             </ul>
                             <input type="file" name="multipartFiles" id="multipartFilesIssueEdit" multiple="multiple" class="editIssueFileBtn hidden">
                           	<button class="btn btn-primary editIssueFileBtn hiddenb" onclick="issueDetailFileEdit()" >save</button>
@@ -90,15 +88,6 @@
                             <ul class="timeline w-100" id="issueDetailActivity">
                                 <li>
                                     <p> Crystal opened this issue 1/11</p>
-                                </li>
-                                <li>
-                                    <p>1/12 edited </p>
-                                </li>
-                                <li>
-                                    <p>1/14 edited</p>
-                                </li>
-                                <li>
-                                    <p>1/16 moved this issue from 'to do' to 'done'</p>
                                 </li>
                             </ul>
                         </div>
