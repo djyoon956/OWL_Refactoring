@@ -671,8 +671,10 @@ function addKanbanIssue(colIdx,obj){
 	let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;				
 
 	
-	if(obj.labelName == null) 
+	if(obj.labelName == null) {
 		obj.labelName = "";
+		obj.labelColor = "";
+	}
 	if(obj.name == null) 
 		obj.name  = "none";
 	 let issue = '<li class="issuePiece" id="'+obj.issueIdx+'Issue">'
