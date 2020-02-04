@@ -1,6 +1,8 @@
 package com.owl.project.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import org.springframework.ui.velocity.VelocityEngineFactoryBean;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.drive.dto.DriveFolder;
@@ -29,16 +32,16 @@ public class ProjectRestController {
 
 	@Autowired
 	private ProjectService service;
-	
+
 	@Autowired
 	private JavaMailSender mailSender;
 
 	@Autowired
 	private VelocityEngineFactoryBean velocityEngineFactoryBean;
-	
 
 	/**
 	 * Sidebar의 프로젝트 목록 수정
+	 * 
 	 * @author 이정은
 	 * @since 2020/01/31
 	 * @param projectIdx
@@ -48,24 +51,25 @@ public class ProjectRestController {
 	 * @return projectlist
 	 */
 	@RequestMapping("EditMyProject.do")
-	public  ProjectList updateProjectList(int projectIdx, int favorite, String projectColor,  Principal principal) {
+	public ProjectList updateProjectList(int projectIdx, int favorite, String projectColor, Principal principal) {
 		ProjectList projectlist = new ProjectList();
 		try {
 			projectlist.setEmail(principal.getName());
 			projectlist.setProjectIdx(projectIdx);
 			projectlist.setFavorite(favorite);
 			projectlist.setProjectColor(projectColor);
-			
-			service.updateProjectList(projectlist);						
+
+			service.updateProjectList(projectlist);
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		return projectlist;
 	}
-	
+
 	/**
 	 * 새 프로젝트 추가
+	 * 
 	 * @author 이정은
 	 * @since 2020/01/31
 	 * @param projectName
@@ -79,22 +83,37 @@ public class ProjectRestController {
 	 * @throws Exception
 	 */
 	@RequestMapping("InsertNewProject.do")
-	public int insertNewProject(String projectName, String projectColor, Project project, ProjectList projectlist, Principal principal, DriveFolder drivefolder, HttpServletRequest request) throws Exception {
+	public int insertNewProject(@RequestParam(value = "projectName") String projectName,
+			@RequestParam(value = "projectColor") String projectColor,
+			@RequestParam(value = "startDate") Date startDate, 
+			@RequestParam(value = "endDate") Date endDate,
+			Project project, ProjectList projectlist, Principal principal, DriveFolder drivefolder,
+			HttpServletRequest request) throws Exception {
+
+		System.out.println("들어옴");
+		System.out.println(startDate);
+		System.out.println(endDate);
 		try {
-		projectlist.setEmail(principal.getName());
-		project.setProjectName(project.getProjectName());		
-		projectlist.setProjectColor(projectlist.getProjectColor());
-		drivefolder.setDepth(0);
-		drivefolder.setRef(0);
-		service.insertNewProject(project, projectlist, drivefolder, request);
-			
+			projectlist.setEmail(principal.getName());
+			project.setProjectName(project.getProjectName());
+			projectlist.setProjectColor(projectlist.getProjectColor());
+			project.setStartDate(startDate);
+			project.setEndDate(endDate);
+
+			drivefolder.setDepth(0);
+			drivefolder.setRef(0);
+			service.insertNewProject(project, projectlist, drivefolder, request);
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}		
+		}
+
 		return project.getProjectIdx();
 	}
+
 	/**
 	 * projectIdx가 일치하는 프로젝트 정보 출력
+	 * 
 	 * @author 이정은
 	 * @since 2020/01/31
 	 * @param projectIdx
@@ -109,25 +128,28 @@ public class ProjectRestController {
 		model.addAttribute("projectList", projectList);
 		return projectList;
 	}
+
 	/**
 	 * 전체 프로젝트 리스트 출력
+	 * 
 	 * @author 이정은
-	 * @since 2020/01/31 
+	 * @since 2020/01/31
 	 * @param principal
 	 * @param model
 	 * @return projectList
 	 */
 	@RequestMapping("ProjectList.do")
-	public List<ProjectList> getDriveList(Principal principal, Model model){
-		List<ProjectList> projectList  = null;
+	public List<ProjectList> getDriveList(Principal principal, Model model) {
+		List<ProjectList> projectList = null;
 		projectList = service.getProjectLists(principal.getName());
 		model.addAttribute("projectList", projectList);
-	return projectList;
+		return projectList;
 	}
-	
+
 	@RequestMapping(value = "AddProjectMember.do", method = RequestMethod.POST)
-	public void AddProjectMember(int projectIdx, String projectName, String pm, String[] addProjectMembers, Principal principal) {
-		
+	public void AddProjectMember(int projectIdx, String projectName, String pm, String[] addProjectMembers,
+			Principal principal) {
+
 		try {
 			MimeMessage content = mailSender.createMimeMessage();
 			MimeMessageHelper messageHelper = new MimeMessageHelper(content, true, "UTF-8");
@@ -144,27 +166,29 @@ public class ProjectRestController {
 			messageHelper.setTo(addProjectMembers);
 			messageHelper.setText(mailBody, true);
 			mailSender.send(content);
-			
+
 		} catch (Exception e) {
 			System.out.println("이거 에러..>" + e.getMessage());
 		}
 	}
-	
+
 	@RequestMapping(value = "GetProjectMember.do", method = RequestMethod.POST)
 	public List<Member> getProjectMembers(int projectIdx) {
 		return service.getProjectMembers(projectIdx);
 	}
-	
+
 	@RequestMapping(value = "OutProject.do", method = RequestMethod.POST)
 	public boolean outProject(int projectIdx, Principal principal) {
 		return service.outProject(projectIdx, principal.getName());
 	}
+
 	@RequestMapping(value = "ExitMember.do", method = RequestMethod.POST)
 	public boolean exitMember(int projectIdx, String email) {
 		return service.outProject(projectIdx, email);
 	}
+
 	@RequestMapping(value = "TransferAuthority.do", method = RequestMethod.POST)
-	public boolean transferAuthority(int projectIdx, String email,Principal principal) {
+	public boolean transferAuthority(int projectIdx, String email, Principal principal) {
 		return service.transferAuthority(projectIdx, principal.getName(), email);
 	}
 }
