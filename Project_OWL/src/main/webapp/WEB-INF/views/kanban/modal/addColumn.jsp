@@ -13,7 +13,7 @@
 				</button>
 			</div>
 			<div class="modal-body" style="margin-left: 10px">
-				<form action="InsertColumn.do" method="post">
+				<form >
 					<input type="hidden" id="projectIdx" name="projectIdx" value="${project.projectIdx}">
 					<div class="row">
 						<h5>Column name</h5>

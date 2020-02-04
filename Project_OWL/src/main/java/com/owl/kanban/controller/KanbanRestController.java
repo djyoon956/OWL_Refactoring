@@ -82,12 +82,10 @@ public class KanbanRestController {
 		return columnidx;
 	}
 	
-	@RequestMapping("InsertColumn.do")
+	@RequestMapping(value="InsertColumn.do", method = RequestMethod.POST)
 	public Column insertColumn(Column column) {
-		//System.out.println("insertColumn function in");
-		//System.out.println("column : " + column);
-		//System.out.println(column.getProjectIdx() + "/" + column.getColname());
-
+		System.out.println("insertColumn in");
+		System.out.println(column);
 		Column col = new Column();
 		col.setProjectIdx(column.getProjectIdx());
 		col.setColname(column.getColname());
