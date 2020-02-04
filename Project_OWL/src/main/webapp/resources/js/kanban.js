@@ -916,7 +916,13 @@ function changeKanbanView(view){
    $('#openIssueBtn').addClass('hidden');
    $('#closeIssueBtn').addClass('hidden');
    $('#-1Column').addClass('hidden');
-   $('#-99Column').addClass('hidden'); 
+   $('#-99Column').addClass('hidden');
+   
+   $('#addIssuebtn').addClass('hidden'); 
+   $('#addLabelBtn').addClass('hidden'); 
+   $('#addColumnBtn').addClass('hidden'); 
+   $('#confirmIssueBtn').addClass('hidden'); 
+   
  }else if (view == "returnlist") {
    $('#searchBox').addClass('hidden');
    $('#searchReturnBtn').addClass('hidden');
@@ -924,7 +930,12 @@ function changeKanbanView(view){
    $('#-1Column').removeClass('hidden');
    $('#-99Column').removeClass('hidden');
    $('#openIssueBtn').removeClass('hidden');
-   $('#closeIssueBtn').removeClass('hidden');	 
+   $('#closeIssueBtn').removeClass('hidden');	
+   $('#addIssuebtn').removeClass('hidden'); 
+   $('#addLabelBtn').removeClass('hidden'); 
+   $('#addColumnBtn').removeClass('hidden');
+   $('#confirmIssueBtn').removeClass('hidden'); 
+
  }
    
    
