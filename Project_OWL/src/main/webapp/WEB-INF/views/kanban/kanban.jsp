@@ -13,12 +13,13 @@
                     <i class="fas fa-columns"></i>&nbsp;Open
                 </button>
 
-
                 <button id="closeIssueBtn" class="btn btn-primary">
                     <i class="fas fa-columns"></i>&nbsp;Closed
                 </button>
 
-                <button class="btn btn-primary btn-link hidden ml-3" id="searchReturnBtn"><i class="fas fa-arrow-circle-left fa-3x"></i></button>
+                <button class="btn btn-primary btn-link hidden ml-3" id="searchReturnBtn">
+                	<i class="fas fa-arrow-circle-left fa-3x"></i>
+               </button>
 
             </div>
             <div class="col-8">
@@ -29,18 +30,18 @@
                 </a>
 			<c:if test="${project.authority eq 'ROLE_PM'}">
                 <a href="#" data-toggle="modal" data-target="#addColumnModal">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" id="addColumnBtn">
                         <i class="fas fa-columns"></i>&nbsp;New Column
                     </button>
                 </a>
                 <a href="#" data-toggle="modal" data-target="#addLabelModal">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" id="addLabelBtn">
                         <i class="fas fa-tag"></i>&nbsp;Make Label
                     </button>
                 </a>
                 <!-- --------------------알람 만들면 지울예정 ------------------------ -->
               <a href="#" data-toggle="modal" data-target="#confirmIssueModal">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" id="confirmIssueBtn">
                         <i class="fas fa-tag"></i>&nbsp;Confirm Issue
                     </button>
                 </a>
