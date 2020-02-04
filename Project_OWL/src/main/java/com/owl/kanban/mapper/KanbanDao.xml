@@ -212,4 +212,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from owl.file where fileidx= #{param1}
 	</delete>
 	
+	<select id="getPMemail" resultType="String">
+		select email from projectlist where authority = 'ROLE_PM' AND PROJECTIDX=#{projectIdx};
+	</select>
+	
 </mapper>

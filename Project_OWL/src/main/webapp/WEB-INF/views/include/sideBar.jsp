@@ -81,6 +81,11 @@ var theName;
 	 
 
  $("#insertBtn").click(function(){
+	 if(!$("#projectTitle").val() || !$("#myColor").val() || $("#myColor").val().startsWith("year")|| $("#setEnd").val().startsWith("year") ){
+		warningAlert("모든 내용을 입력해주세요.");
+		 return false;
+	} 
+	
 	 let thisLi ="";
 $.ajax({
 	        url:"InsertNewProject.do",

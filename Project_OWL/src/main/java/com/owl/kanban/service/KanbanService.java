@@ -626,6 +626,25 @@ public class KanbanService {
 	}
 	
 	
+	public String getPMemail(int projectIdx){
+		KanbanDao dao = getKanbanDao();
+
+		System.out.println("getPMemail in service");
+		
+		String email = null;
+		try {
+			email = dao.getPMemail(projectIdx);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return email;
+	}
+	
+	
+	
 	/**
 	 * KanbanDao 구하기
 	 * @author 윤다정
