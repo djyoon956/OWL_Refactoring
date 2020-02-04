@@ -43,7 +43,9 @@
         $(function () {			
             setTheme("${setting.themeColor}", "${setting.font}");
             initProjcet("${project.projectIdx}", "${project.projectName}", "${project.projectColor}");
-
+            initCalendar("${project.projectIdx}", "${project.projectColor}", "${project.startDate}", "${project.endDate}");
+            $(".tui-full-calendar-layout.tui-view-8").addClass("hidden");
+            $(".tui-full-calendar-layout.tui-view-8.tui-view-13").removeClass("hidden");
             $.ajax({
         		url:"GetProjectList.do",
         		data: {projectIdx: ${project.projectIdx}},

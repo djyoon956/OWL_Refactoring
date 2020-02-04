@@ -89,10 +89,6 @@ public class ProjectRestController {
 			@RequestParam(value = "endDate") Date endDate,
 			Project project, ProjectList projectlist, Principal principal, DriveFolder drivefolder,
 			HttpServletRequest request) throws Exception {
-
-		System.out.println("들어옴");
-		System.out.println(startDate);
-		System.out.println(endDate);
 		try {
 			projectlist.setEmail(principal.getName());
 			project.setProjectName(project.getProjectName());
@@ -126,6 +122,7 @@ public class ProjectRestController {
 		ProjectList projectList = null;
 		projectList = service.getProjectList(projectIdx, principal.getName());
 		model.addAttribute("projectList", projectList);
+		System.out.println(projectList);
 		return projectList;
 	}
 
