@@ -798,14 +798,17 @@ function closeIssue(issueIdx,flag) {
 }
 
 
-function reOpenIssue(issueIdx) {
+function reOpenIssue(issueIdx,target) {
 	$.ajax({
 		url:"ReopenIssue.do",
 		method:"POST",
 		data : {issueIdx : issueIdx},
 		success:function(data) {
+			if(target == 'inDetail'){
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
+			} else if(target == 'move')
+			setChageView("kanban");
 		},error :function() {
 			
 			console.log("ReopenIssue error");
@@ -1466,6 +1469,8 @@ function mentionSearch() {
 						if (columnIdx == '-99'){
 							closeIssue(target,"move");
 						}
+						if (columnIdx == '-1')
+							reOpenIssue(target,"move");
 				       }       
 			     }).disableSelection();
 				setIssueData();
