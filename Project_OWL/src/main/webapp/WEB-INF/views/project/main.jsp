@@ -248,23 +248,7 @@
         // 칸반 --> 
 
     	    
-			function setIssueData(){
-				$.ajax({
-					url : "GetIssue.do",
-					data : {'projectIdx' :  ${project.projectIdx} },
-					success : function(data) {
-						 $.each(data,function(index,obj) {
-							
-							 addKanbanIssue(obj.colIdx, obj); 
-							 wholeProjectChart(${project.projectIdx});
-					
-						});
-					},
-					error: function() {
-						console.log("getIssue.do error");
-					}
-				})
-			}
+			
     	    
     	    function closeFn() {
     	      	$("#-99Column").hide();

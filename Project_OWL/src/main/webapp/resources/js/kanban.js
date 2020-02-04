@@ -1360,11 +1360,13 @@ function mentionSearch() {
  			if(kanbanViewType == "kanbanTableView"){
  				$("#kanbanIconView").removeClass("active");
  				$("#kanbanIconView").attr("disabled", false);
+ 				setKanbanTableView();
  			}
  			// icon View
  			else{
  				$("#kanbanTableView").removeClass("active");
  				$("#kanbanTableView").attr("disabled", false);
+ 				setKanbanData();
  			}
  			
  			changeKanbanView("changeView");
@@ -1383,6 +1385,20 @@ function mentionSearch() {
 	}
 	
 	function setKanbanTableView(){
+		 $.ajax({
+			 url : 'GetColumn.do',
+			 data : {'projectIdx' :  currentProjectIdx },
+			 success : function(data) {
+				 console.log("in setKanbanTableView success");
+				 console.log(data);
+				 
+			 },
+			 error : function(){
+				 console.log("in setKanbanTableView error");
+			 }
+		 });
+		 
+		 return;
 		$('#kanbanTable').DataTable().row.add( [
 			"<i class='fas fa-file-alt mr-3'></i><span>"+element.fileName+"</span>",
 			element.createDate,
@@ -1444,3 +1460,19 @@ function mentionSearch() {
 			}
 		}); 
     }
+    
+    function setIssueData(){
+		$.ajax({
+			url : "GetIssue.do",
+			data : {'projectIdx' :  currentProjectIdx },
+			success : function(data) {
+				 $.each(data,function(index,obj) {
+					 addKanbanIssue(obj.colIdx, obj); 
+					 wholeProjectChart(currentProjectIdx);
+				});
+			},
+			error: function() {
+				console.log("getIssue.do error");
+			}
+		})
+	}
