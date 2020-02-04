@@ -24,20 +24,26 @@ function initKanban(projectIdx){
 		$(this).find('.addContent')[0].reset();
  	});
 	
-	  
+
 	
 	$('#editLabelBtn').click(function() {
+		console.log($(this));
+		console.log('editlabelBtn in');
+		console.log(editIdx);
 		if(editIdx == 0)
 			return;
 		
 		$('#labelColor').val("");
 		$('#labelName').val("");
 			
+			console.log($('#labelcolor').val());
+			console.log($('#labelname').val());
+			
 		$.ajax({
 			url : "UpdateLabel.do",
 			data : {'labelIdx' : editIdx, 'labelColor' : $('#labelcolor').val(), 'labelName' : $('#labelname').val()},
 			success : function(data) {
-				
+				console.log(data);
 				$('#'+editIdx+'Label').next().remove();
 				$('#'+editIdx+'Label').remove();
 				
@@ -98,8 +104,7 @@ function initKanban(projectIdx){
 						     + '</datalist>'; 
 			
 			$('#searchContent').append(prioritylist);
-		}
-			
+		}	
 	})
 
 	
@@ -942,8 +947,10 @@ function changeKanbanView(view){
 
 function editLabel(idx, color, name) {
 	
+	console.log('idx뭐니 : ' + idx);
 	$('.labelList').find('.edit').removeClass("hidden");
 
+	editIdx = idx;
 	$('#addLabelBtn').addClass("hidden");
 	$('#editLabelBtn').removeClass("hidden");
 	$('#backBtn').removeClass("hidden");
@@ -951,8 +958,9 @@ function editLabel(idx, color, name) {
 	$('#labelcolor').val(color);
 	$('#labelname').val(name);
 	$('#colorform').find('.asColorPicker-trigger').find('span').css('background-color', color);
-	$('#'+idx+'Label').find('.edit').addClass("hidden");
+
 	
+	$('#'+idx+'Label').find('.edit').addClass("hidden");
 	};
 	
 	

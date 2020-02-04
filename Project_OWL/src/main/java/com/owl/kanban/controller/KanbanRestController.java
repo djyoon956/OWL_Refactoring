@@ -210,7 +210,8 @@ public class KanbanRestController {
 	
 	@RequestMapping("UpdateLabel.do")
 	public int UpdateLabel(Label label) {
-
+		System.out.println("UpdateLabel in");
+		System.out.println(label);
 		Label lb = new Label();
 		lb.setLabelIdx(label.getLabelIdx());
 		lb.setLabelColor(label.getLabelColor());
