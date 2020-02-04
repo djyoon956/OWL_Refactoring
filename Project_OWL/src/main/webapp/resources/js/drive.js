@@ -301,7 +301,7 @@ function setIconView(data){
 		let fileName = element.fileName.length > 12 ? element.fileName.substr(0, 12)+ "..." : element.fileName;				
 
 		control += '<div class="col-sm-3">'
-					+ 	'<div class="card driveCard dropdown" id="'+element.driveFileIdx+'">'
+					+ 	'<div class="card driveCard dropdown file" id="'+element.driveFileIdx+'">'
 					+ 		'<div class="more" style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
 					+			'<input type="checkbox" id="checkfile" value="css" onclick="checkBox(this)" style="width:18px; height:18px;">'
 					+				'<a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right; padding-left :10px; padding-right :10px;">'	
@@ -377,8 +377,13 @@ function setTableView(data){
 		})
 	//}
 }
+
+
 function allRemove(){
-	Swal.fire({
+
+	return;
+	
+/*	Swal.fire({
 	    title: '선택하신 을 삭제하시겠습니까?',
 	    text: '해당 파일은 휴지통으로 이동합니다.',
 	    imageUrl: 'https://i.imgur.com/vxFBTRJ.png',
@@ -390,8 +395,6 @@ function allRemove(){
 	    cancelButtonText: '취소'
 	  }).then((result) => {
 	    if (result.value) {
-	    	if($('input:checkbox[id="checkfolder"]').is(":checked") == true)
-	    		console.log($("#checkfolder").parent().parent().attr("id"));
 	    	return;
 	    	$.ajax({
 	   		 url : "DeleteFolderAndFile.do",
@@ -408,7 +411,7 @@ function allRemove(){
 	   		 }
 	   	 })  
 	   }         
-	});
+	});*/
 }
 
 function deleteDriveFile(driveFileIdx){

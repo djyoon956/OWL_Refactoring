@@ -450,74 +450,47 @@ function setProjectMemberProgress(projectIdx){
 		url : "GetProjectMemberProgress.do",
 		data : {projectIdx : projectIdx },
 		success : function(data){
-			console.log("setProjectMemberProgress");
-			console.log(data);
 			let labels = [];
-			let opens = [];
+			let totals = [];
 			let closes = [];
 			$.each(data.member, function(index, element){
 				labels.push(element.memberName);
-				opens.push(0);
+				totals.push(0);
 				closes.push(0);
 			})
 
 			$.each(data.progress, function(index, element){
 				let labelIndex = labels.indexOf(element.assignedName);
-				opens[labelIndex] = element.openCount;
 				closes[labelIndex] = element.closedCount;
+				totals[labelIndex] = element.openCount + element.closedCount;
 			})
 
-			let barChartData = {
-					labels: labels,
-					datasets: [
-						{
-							label: 'Closed',
-							backgroundColor: " #326295",
-						
-							data: closes
-						}
-						,{
-							label: 'Open',
-							backgroundColor: "#d9d9d9",
-							data: opens
-					}]
-				};
-			
-			window.myBar = new Chart(document.getElementById('dashBoardMemberProgress').getContext('2d'), {
+			window.myMixedChart = new Chart(document.getElementById('dashBoardMemberProgress').getContext('2d'), {
 				type: 'bar',
-				data: barChartData,
+				data: {
+					labels: labels,
+					datasets: [{
+						type: 'line',
+						label: 'Complate',
+						borderColor: "#326295",
+						borderWidth: 2,
+						fill: false,
+						data: closes
+					}, {
+						type: 'bar',
+						label: 'Total',
+						backgroundColor: "rgb(165,197,232,.3)",
+						data: totals,
+						borderColor: '#a5c5e8',
+						borderWidth: 2
+					}]
+				},
 				options: {
-					title: {
-						display: true,
-						text: '멤버별 업무 진행도'
-					},
-					tooltips: {
-						mode: 'index',
-						intersect: false,
-						callbacks: {
-	                           footer : function(tooltipItems, data) {
-	                               let total = 0;
-	                               for (let i = 0; i < tooltipItems.length; i++) 
-	                                   total += parseInt(tooltipItems[i].yLabel, 10);
-	                               return ' > Total : ' + total;
-	                           }
-						}
-					},
 					responsive: true,
 					maintainAspectRatio: false,
-					scales: {
-						xAxes: [{
-							stacked: true,
-							 ticks: {
-						          beginAtZero: true
-						        }
-						}],
-						yAxes: [{
-							stacked: true,
-							 ticks: {
-						          beginAtZero: true
-						        }
-						}]
+					tooltips: {
+						mode: 'index',
+						intersect: true
 					}
 				}
 			});
