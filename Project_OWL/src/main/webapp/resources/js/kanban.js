@@ -192,13 +192,24 @@ function initKanban(projectIdx){
 	
 
 		 /*datwpicker*/
-
 		 		 $('#datepicker-autoclose, #datepicker-editIssue').datepicker({
 		 			 dateFormat: 'yy-mm-dd' ,
 		 	   		  autoclose: true,
-		 	    	  todayHighlight: true
+		 	    	  todayHighlight: true,
+		 	    	  minDate : new Date(currentProjectStartDate),
+		 	    	  maxDate : new Date(currentProjectEndDate)
 		 		 }); 
-		 		 
+		/* 		 
+		$('input[name="dueDate"]').daterangepicker({
+			 dateFormat: 'yy-mm-dd' ,
+	   		  autoclose: true,
+	    	  todayHighlight: true,
+	    	  minDate : new Date(currentProjectStartDate),
+	    	  maxDate : new Date(currentProjectEndDate)
+		 }, function(start, end, label) {
+			    var years = moment().diff(start, end);
+			    alert("프로젝트 기간이 아닙니다");
+		});*/
 		 		
 		 		/*Summer Note*/
 		 		 $('#isContent').summernote({
