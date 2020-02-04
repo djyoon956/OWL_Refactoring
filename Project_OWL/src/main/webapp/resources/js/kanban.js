@@ -671,7 +671,8 @@ function setKanbanDetail(issueIdx){
 			success : function (data) {
 				$("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
-
+				$("#issueDetailLabel").removeAttr("style");
+				
 				if(data.issueProgress == 'OPEN')
 						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+",'inDetail')");
 					else if (data.issueProgress == 'CLOSED')
@@ -737,7 +738,7 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailComment").prepend(control);
 					});
 
-					if(data.assigned == ""){
+					if(data.assigned == "" || data.assigned == null){
 						data.assigned = "none";
 					}
 					
