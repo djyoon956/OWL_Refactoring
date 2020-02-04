@@ -10,9 +10,12 @@
         
         <!-- ========= 다정이 여기서 쓰세요 ========= -->
           <div class="float-left ml-4 mt-1" >	
-				<button class="btn btn-primary btn-link" >
-             		<i class ="fas fa-list fa-2x"></i>
-           	 	</button>
+                 <button class="btn kanbanViewBtn " id="kanbanTableView">
+                     <i class="fas fa-list fa-2x"></i>
+                 </button>
+                 <button class="btn kanbanViewBtn active " id="kanbanIconView" disabled>
+                     <i class="fas fa-th-large fa-2x"></i>
+                 </button>
             </div>
 		<!-- ========= 다정이 여기서 쓰세요 ========= -->
             
