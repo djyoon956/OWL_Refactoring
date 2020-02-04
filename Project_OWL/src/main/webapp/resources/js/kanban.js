@@ -324,14 +324,17 @@ function initKanban(projectIdx){
 		 			
 
 		 	    $("#InsertColumnBtn").on("click", function () {	
-
+		 	    	console.log("in insesrt column");
 		 	   		console.log("InsertColumnBtn in");
+		 	   		console.log(projectIdx);
+		 	   	console.log("InsertColumnBtn in222222");
 		 	   			$.ajax({
 		 	   				url : 'InsertColumn.do',
 			   				type: "POST",
 		 	   				data : {'projectIdx' : projectIdx, 'colname' : $('#colname').val()},
 		 	   				success : function(data) {
-		 	   			
+		 	   				console.log("in insesrt column222");
+		 	   				console.log(data);
 		 	   					if(data != null) {
 		 	   						console.log('데이터????????');
 		 	   		        		 console.log(data);
