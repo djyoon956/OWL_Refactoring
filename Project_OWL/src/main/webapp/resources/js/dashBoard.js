@@ -1,11 +1,11 @@
-function initDashBoard(projectIdx, projectColor){
+function initDashBoard(projectColor){
 	 $("#dashCalendar").tuiCalendar({
 		  defaultView: 'month',
 		  taskView: true
 	}); 
 	 
-	if(projectIdx > 0)
-		setProjectDashBoard(projectIdx, projectColor);
+	if(currentProjectIdx > 0)
+		setProjectDashBoard(currentProjectIdx, projectColor);
 	else
 		setMainDashBoard();
 }
