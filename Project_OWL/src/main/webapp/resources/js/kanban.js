@@ -10,6 +10,7 @@ let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
 
 let kanbanViewType = "";
+
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
@@ -27,6 +28,7 @@ function initKanban(projectIdx){
 
 	
 	$('#editLabelBtn').click(function() {
+		
 		if(editIdx == 0)
 			return;
 		
@@ -67,7 +69,7 @@ function initKanban(projectIdx){
 		$('.labelList').find('.edit').removeClass("hidden");
 
 	});
-	
+
 
 	//검색 후 원래 칸반으로 되돌아가는 버튼 
 	$('#searchReturnBtn').click(function() {
@@ -317,8 +319,6 @@ function initKanban(projectIdx){
 			   				type: "POST",
 		 	   				data : {'projectIdx' : projectIdx, 'colname' : $('#colname').val()},
 		 	   				success : function(data) {
-		 	   				console.log("in insesrt column222");
-		 	   				console.log(data);
 		 	   					if(data != null) {
 		 	   						
 		 	   		        		addColumn(data);
@@ -437,7 +437,7 @@ function initKanban(projectIdx){
 function editColname() {
 	 $.ajax({
       	url : 'UpdateColumn.do',
-      	data : { 'colname' : $("#editcolName").val(),'projectIdx' : currentProjectIdx,'colIdx' :  $("#editcolIdx").val()}, 
+      	data : { 'colname' : $("#editcolName").val(),'projectIdx' : currentProjectIdx, 'colIdx' :  $("#editcolIdx").val()}, 
       	success : function(data) {
       		setChageView("kanban");
       		$("#editcolName").val("");
@@ -596,7 +596,7 @@ function addKanbanIssue(colIdx,obj){
 			+			'<span class="issueTitle">' + issueTitle + '</span>'
 			+			'</label>'
 			+			'<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownIssueButton" aria-haspopup="true" aria-expanded="false" style="float: right">' 
-			+			'<i class="fas fa-ellipsis-v fa-sm"></i></a>'
+			+			'<i class="fas fa-ellipsis-v fa-sm" style="padding:5px;"></i></a>'
 			+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 			+				'<ul class="list-style-none">'
 			+					'<li class="pl-3"><a href="#" onclick="setKanbanDetail('+obj.issueIdx+');" data-toggle="modal">Detail</a></li>'
@@ -671,7 +671,8 @@ function setKanbanDetail(issueIdx){
 			success : function (data) {
 				$("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
-
+				$("#issueDetailLabel").removeAttr("style");
+				
 				if(data.issueProgress == 'OPEN')
 						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+",'inDetail')");
 					else if (data.issueProgress == 'CLOSED')
@@ -711,7 +712,6 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
 					console.log('뭐 찍히니?');
-					console.log(element);
 					console.log(element.profilepic);
 					
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
@@ -737,7 +737,7 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailComment").prepend(control);
 					});
 
-					if(data.assigned == ""){
+					if(data.assigned == "" || data.assigned == null){
 						data.assigned = "none";
 					}
 					
@@ -849,8 +849,6 @@ function changeKanbanView(view){
 	   $('#addColumnBtn').removeClass('hidden');
 	   $('#confirmIssueBtn').removeClass('hidden'); 
 	 } else if(view == "changeView"){
-		 console.log("changeView");
-		 console.log(kanbanViewType);
 			 if(kanbanViewType == "kanbanTableView"){
 				 $('#kanbanTableViewBox').removeClass('hidden');
 				   $('#kanbanIn').addClass('hidden');
@@ -1383,14 +1381,38 @@ function mentionSearch() {
 	}
 	
 	function setKanbanTable(){
-		$("#kanbanTable").DataTable({
+		let table = $("#kanbanTable").DataTable({
 			"pageLength": 10,
 	         fixedColumns: true,
 	         autoWidth: false,
 	         "searching": false,
-	         "lengthChange": false
+	         "lengthChange": false,
+	         columnDefs: [ { targets: 4, render: function (data, type, row) {
+	        	if(type === 'export'){
+	        		let priority = $(data).attr("class");
+	        		return priority==null?"":priority.replace("priorityBadge","").trim();
+	        	}else
+	        		return data;
+        	}}]
 		});
-		
+
+        new $.fn.dataTable.Buttons( table , {
+            buttons: [
+                { extend :'excel',
+                	autoFilter : true,
+                    sheetName : '다정이가 최고다',
+	                className : 'btn hidden kanbanExportButton',
+	                title: 'OWL - '+currentProjectName,
+	                exportOptions : {
+	                	orthogonal : 'export',
+	                    columns : ':visible'
+	                }
+                },  
+            ]
+        });
+        
+        table.buttons().container().appendTo('#kanbanTableViewBox');
+
 		 $.contextMenu({
 	         selector: '#kanbanTable tbody tr',
 	         build : function(trigger, e){
@@ -1401,10 +1423,14 @@ function mentionSearch() {
 	                    	 setKanbanDetail(issueIdx);
 	                     else if(key == "remove")
 	                    	 deleteIssue(issueIdx);
+	                     else if(key == "export")
+	                    	 $(".kanbanExportButton:first").click();
 	                 },
 	                 items:{
 	                     "detail": {name: "Detail", icon: "fas fa-info-circle"},
 	                     "remove": {name: "Remove Issue", icon: "delete"},
+	                     "sep1": "---------",
+	                     "export": {name: "Export Excel", icon: "fas fa-file-excel"},
 	            	 	}
 	             };
 	         },
@@ -1412,7 +1438,7 @@ function mentionSearch() {
 	}
 	
 	function setKanbanTableView(){
-		$('#driveTable').DataTable().clear();
+		$('#kanbanTable').DataTable().clear();
 		$.ajax({
 			 url : 'GetColumn.do',
 			 data : { projectIdx :  currentProjectIdx },
