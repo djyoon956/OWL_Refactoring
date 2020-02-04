@@ -633,7 +633,7 @@ function addColumn(obj){
             +         '</div>'
             +      '</h4>'
             +   '</div>'
-            +   '<ul class="connectedSortable sortableCol columnBody cursor">'
+            +   '<ul class="connectedSortable sortableCol columnBody cursor ui-sortable" style="margin-top: 35px">'
             +   '</ul>'
             + '</div>';
    
@@ -748,8 +748,7 @@ function deleteLabel(labelidx) {
          }
       })
    }
-   
-   
+      
 
 function setKanbanDetail(issueIdx){
 	
