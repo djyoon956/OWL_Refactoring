@@ -559,9 +559,10 @@ function searchAppend(data) {
 	
 	$('#searchContent').val("");
 	changeKanbanView("search");
-	
+		console.log("")
+		console.log(data);
       $.each(data, function(index, element) {
-    	  
+    	  	
 			let labelnm = element.labelName == null ? "" : element.labelName;
 			//let priorityCd = element.priorityCode == null ? "-" : element.priorityCode;
 			let dueDt = element.dueDate == null ? "-" : element.dueDate;
@@ -1072,6 +1073,7 @@ function editLabel(idx, color, name) {
 		    success : function(data){
 		    	console.log(data);
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editTitleBox").addClass("hidden");
 				$("#issueDetailTitle").removeClass("hidden");
 		    }, error : function() {
@@ -1093,6 +1095,7 @@ function editLabel(idx, color, name) {
 		    	console.log("UpdateIssueContent.do");
 		    	console.log(data);
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editContentBox").addClass("hidden");
 				$("#issueDetailContent").removeClass("hidden");
 		    }, error : function() {
@@ -1171,6 +1174,7 @@ function editLabel(idx, color, name) {
 		    	console.log("UpdateIssueLabel.do");
 		    	console.log(data);
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editPriorityBox").addClass("hidden");
 				$("#issueDetailPriority").removeClass("hidden");
 		    }, error : function() {
@@ -1188,6 +1192,7 @@ function editLabel(idx, color, name) {
 		    	console.log("UpdateIssueDuedate.do");
 		    	console.log(data);
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editDuedateBox").addClass("hidden");
 				$("#issueDetailDueDate").removeClass("hidden");
 		    }, error : function() {
@@ -1204,6 +1209,7 @@ function editLabel(idx, color, name) {
 		    data : {issueIdx : $("#issueIdxNum").val(), 'assigned' : $('#assignedEdit').val()},
 		    success : function(data){
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editAssignedBox").addClass("hidden");
 				$("#issueDetailAssignees").removeClass("hidden");
 		    }, error : function() {
@@ -1222,6 +1228,7 @@ function editLabel(idx, color, name) {
 		    data : {issueIdx : $("#issueIdxNum").val(), 'labelIdx' : $('#labelIdxEdit').val()},
 		    success : function(data){
 		    	setKanbanDetail($("#issueIdxNum").val());
+		    	setChageView("kanban");
 		    	$("#editLabelBox").addClass("hidden");
 				$("#issueDetailLabel").removeClass("hidden");
 		    }, error : function() {
