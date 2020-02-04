@@ -122,7 +122,6 @@ public class MemberService {
 	}
 
 	public Member getMember(String email) {
-		System.out.println("get memeber : " + email);
 		MemberDao userDao = getMemberDao();
 		Member member = null;
 

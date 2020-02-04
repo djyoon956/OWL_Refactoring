@@ -42,9 +42,7 @@
 }
 </style>
 
-<script>
 
-</script>
 
 <div id="addLabelModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
