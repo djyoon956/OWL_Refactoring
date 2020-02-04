@@ -7,7 +7,20 @@
     <div id="kanbanMainBox">
 
         <div class="row">
-            <div class="col-2" style="margin-left: 30px;">
+        
+        <!-- ========= 다정이 여기서 쓰세요 ========= -->
+          <div class="float-left ml-4 mt-1" >	
+                 <button class="btn kanbanViewBtn " id="kanbanTableView">
+                     <i class="fas fa-list fa-2x"></i>
+                 </button>
+                 <button class="btn kanbanViewBtn active " id="kanbanIconView" disabled>
+                     <i class="fas fa-th-large fa-2x"></i>
+                 </button>
+            </div>
+		<!-- ========= 다정이 여기서 쓰세요 ========= -->
+            
+            
+            <div class="col-2" style="margin-left: 40px;">
 
                 <button id="openIssueBtn" class="btn btn-primary">
                     <i class="fas fa-columns"></i>&nbsp;Open
@@ -69,13 +82,15 @@
                         <option value="Priority">Priority</option>
                      </select>
 				</div>
+			
 
+             
              
             </div>
         </div>
 
         <div class="row" id="kanbanArea">
-        
+
         	  <div class="col-md-10 mt-4 ml-4 mr-4 hidden" id="searchBox" >
 	  			     <div class="table-responsive m-t-40" style="clear: both;">
                         <table class="table table-hover">
@@ -94,6 +109,22 @@
                      </div>
                    </div>
         
+    	    <div class="col-md-10 mt-4 ml-4 mr-4 hidden" id="kanbanTableViewBox" >
+                <table id="kanbanTable" class="table table-hover table-bordered text-center">
+                   <thead>
+                       <tr>
+                           <th width="5%">No</th>
+                           <th >Label</th>
+                           <th >Title</th>
+                           <th >Assignee</th>
+                           <th >Priority</th>
+                           <th >Due Date</th>
+                       </tr>
+                   </thead>
+
+                   <tbody> </tbody>
+               </table>
+        	</div>
             <!--  open issue -->
             <!--  openIssueColumn -->
 

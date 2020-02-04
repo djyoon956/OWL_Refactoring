@@ -158,4 +158,12 @@ border : 1px solid #D5D4D4;
 	width:75%; 
 	height:60%;
 }
-	
+
+.kanbanViewBtn {
+	background: transparent;
+	color: #326295;
+}
+.kanbanViewBtn.active{
+	background: #326295;
+	color: white;
+}

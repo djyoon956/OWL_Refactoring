@@ -9,15 +9,15 @@ let wordsemail = new Array(); // project memberlist (email)
 let selectoption = '<option value="">Select</option>';
 let ordernum = 1; 
 
-
+let kanbanViewType = "";
 function initKanban(projectIdx){
 	this.projectIdx= projectIdx;
 	
-
+	
 	//addIssueModal 모달이 오픈되면 !
 	$('#addIssueModal').on('show.bs.modal', function() {  
 		//칸반으로 옮김 
-		getissueinfo("issueModalOpen",projectIdx);
+		getissueinfo("issueModalOpen");
 
 	}).on('hidden.bs.modal', function(e){
 		 $('#isContent').summernote("reset");
@@ -32,7 +32,6 @@ function initKanban(projectIdx){
 		
 		$('#labelColor').val("");
 		$('#labelName').val("");
-			
 			
 		$.ajax({
 			url : "UpdateLabel.do",
@@ -83,10 +82,10 @@ function initKanban(projectIdx){
 
 		if(selectMenu == "Label") {
 			$('#searchContent').attr('list', 'LabelMenu');
-			getLabelList("SearchLabelList", projectIdx);
+			getLabelList("SearchLabelList");
 		}else if(selectMenu == "Assignee") {
 			$('#searchContent').attr('list', 'MemberMenu');
-			getProjectMemberList("searchMember",projectIdx);
+			getProjectMemberList("searchMember");
 		}else if(selectMenu == "Priority") {
 			$('#searchContent').attr('list', 'PriorityMenu');
 
@@ -285,7 +284,7 @@ function initKanban(projectIdx){
 
 		 			
 		 			$('#addLabelModal').on('show.bs.modal', function() { 	//프로젝트 내 라벨 리스트 출력 
-		 				getLabelList("ShowLabelList", projectIdx);
+		 				getLabelList("ShowLabelList");
 
 		 			}).on('hidden.bs.modal', function() {  
 		 				$('#labelcolor').val("");
@@ -404,10 +403,7 @@ function initKanban(projectIdx){
 		 			}else {return false;}
 
 		 			});
-		 			
-		 		
 
-		 		
 		 	    $("#editColumnBtn").click(function() {
 		 	        $.ajax({
 		 	        	url : 'UpdateColumn.do',
@@ -423,11 +419,37 @@ function initKanban(projectIdx){
 		 	            }
 		 	        });
 		 	    });
+		 	   setKanbanTable();
+		 	   changeKanbanViewType();
 
+			$('#editColumnModal').on('show.bs.modal', function(event) {     
+				let editColIdx="";
+				let editColname="";
+				editColIdx = $(event.relatedTarget).data('updatecol-id');
+				editColname = $(event.relatedTarget).data('upcolname-id');
+			  	
+			  $("#editcolName").val(editColname);
+			  $("#editcolIdx").val(editColIdx);
+			});
 } //initKanban 끝
 
 
-
+function editColname() {
+	 $.ajax({
+      	url : 'UpdateColumn.do',
+      	data : { 'colname' : $("#editcolName").val(),'projectIdx' : currentProjectIdx,'colIdx' :  $("#editcolIdx").val()}, 
+      	success : function(data) {
+      		setChageView("kanban");
+      		$("#editcolName").val("");
+          	$('#editColumnModal').modal('hide');
+	
+          },
+          error : function() {
+          	errorAlert("칼럼 수정 error");
+          }
+      });	
+	
+}
 
 function addReply(creator) {
 
@@ -683,20 +705,22 @@ function setKanbanDetail(issueIdx){
 					$("#issueDetailComment").empty();
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
 					$.each(data.replies, function(index, element){
-						
+					console.log('뭐 찍히니?');
+					console.log(element);
+					console.log(element.profilepic);
 					
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
-					
+				
                      
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
-										+ '<img class="rounded-circle" width="40" '+error+' src="upload/memeber/'+element.profilePic+'" alt="user" >'
+										+ '<img class="rounded-circle" width="40" src="upload/memeber/'+element.profilepic+'" alt="user" >'
 										+ '	</div>'
 										+ '	 <div class="comment-text w-100">'
 										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creator
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
-										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch('+data.projectIdx+')}"></textarea>'
+										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}"></textarea>'
 										+ '		<div class="comment-footer float-right">'
 										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
@@ -773,46 +797,69 @@ function reOpenIssue(issueIdx) {
 		}
 		
 	})
-	
-	
+
 }
 
 
 function changeKanbanView(view){
-   if(view == "list"){
-   $("#kanbanDetailBox").addClass("hidden");
-   $("#kanbanMainBox").removeClass("hidden");
-}else if(view == "detail"){
-   $("#kanbanMainBox").addClass("hidden");
-   $("#kanbanDetailBox").removeClass("hidden");
-}else if (view == "edit"){
-   $("#kanbanMainBox").addClass("hidden");
-   $("#kanbanDetailBox").addClass("hidden");	
- }else if (view == "search") {
-   $('#searchBox').removeClass('hidden');
-   $('#searchReturnBtn').removeClass('hidden');		
-   $('#kanbanIn').addClass('hidden');
-   $('#openIssueBtn').addClass('hidden');
-   $('#closeIssueBtn').addClass('hidden');
-   $('#-1Column').addClass('hidden');
-   $('#-99Column').addClass('hidden');
-   $('#addIssuebtn').addClass('hidden'); 
-   $('#addLabelBtn').addClass('hidden'); 
-   $('#addColumnBtn').addClass('hidden'); 
-   $('#confirmIssueBtn').addClass('hidden'); 
- }else if (view == "returnlist") {
-   $('#searchBox').addClass('hidden');
-   $('#searchReturnBtn').addClass('hidden');
-   $('#kanbanIn').removeClass('hidden');
-   $('#-1Column').removeClass('hidden');
-   $('#-99Column').removeClass('hidden');
-   $('#openIssueBtn').removeClass('hidden');
-   $('#closeIssueBtn').removeClass('hidden');	
-   $('#addIssuebtn').removeClass('hidden'); 
-   $('#addLabelBtn').removeClass('hidden'); 
-   $('#addColumnBtn').removeClass('hidden');
-   $('#confirmIssueBtn').removeClass('hidden'); 
- } 
+	if(view == "list"){
+	   $("#kanbanDetailBox").addClass("hidden");
+	   $("#kanbanMainBox").removeClass("hidden");
+	}else if(view == "detail"){
+	   $("#kanbanMainBox").addClass("hidden");
+	   $("#kanbanDetailBox").removeClass("hidden");
+	}else if (view == "edit"){
+	   $("#kanbanMainBox").addClass("hidden");
+	   $("#kanbanDetailBox").addClass("hidden");	
+	 }else if (view == "search") {
+	   $('#searchBox').removeClass('hidden');
+	   $('#searchReturnBtn').removeClass('hidden');		
+	   $('#kanbanIn').addClass('hidden');
+	   $('#openIssueBtn').addClass('hidden');
+	   $('#closeIssueBtn').addClass('hidden');
+	   $('#-1Column').addClass('hidden');
+	   $('#-99Column').addClass('hidden');
+	   $('#addIssuebtn').addClass('hidden'); 
+	   $('#addLabelBtn').addClass('hidden'); 
+	   $('#addColumnBtn').addClass('hidden'); 
+	   $('#confirmIssueBtn').addClass('hidden'); 
+	 }else if (view == "returnlist") {
+	   $('#searchBox').addClass('hidden');
+	   $('#searchReturnBtn').addClass('hidden');
+	   $('#kanbanIn').removeClass('hidden');
+	   $('#-1Column').removeClass('hidden');
+	   $('#-99Column').removeClass('hidden');
+	   $('#openIssueBtn').removeClass('hidden');
+	   $('#closeIssueBtn').removeClass('hidden');	
+	   $('#addIssuebtn').removeClass('hidden'); 
+	   $('#addLabelBtn').removeClass('hidden'); 
+	   $('#addColumnBtn').removeClass('hidden');
+	   $('#confirmIssueBtn').removeClass('hidden'); 
+	 } else if(view == "changeView"){
+		 console.log("changeView");
+		 console.log(kanbanViewType);
+			 if(kanbanViewType == "kanbanTableView"){
+				 $('#kanbanTableViewBox').removeClass('hidden');
+				   $('#kanbanIn').addClass('hidden');
+				   $('#-1Column').addClass('hidden');
+				   $('#-99Column').addClass('hidden');
+				   $('#addIssuebtn').addClass('hidden'); 
+				   $('#addLabelBtn').addClass('hidden'); 
+				   $('#addColumnBtn').addClass('hidden');
+				   $('#confirmIssueBtn').addClass('hidden'); 
+			 }else{
+			 	   $('#kanbanTableViewBox').addClass('hidden');
+				   $('#kanbanIn').removeClass('hidden');
+				   $('#-1Column').removeClass('hidden');
+				   $('#-99Column').removeClass('hidden');
+				   $('#openIssueBtn').removeClass('hidden');
+				   $('#closeIssueBtn').removeClass('hidden');	
+				   $('#addIssuebtn').removeClass('hidden'); 
+				   $('#addLabelBtn').removeClass('hidden'); 
+				   $('#addColumnBtn').removeClass('hidden');
+				   $('#confirmIssueBtn').removeClass('hidden'); 
+			 }
+	 }
 }
 
 
@@ -890,11 +937,11 @@ function editLabel(idx, color, name) {
 
 
 
-	function getLabelList(flagelement,projectIdx) {
+	function getLabelList(flagelement) {
 			
 		  $.ajax({
 				url : 'GetLabelList.do',
-				data : {'projectIdx' : projectIdx},
+				data : {'projectIdx' : currentProjectIdx},
 				success : function(data) {
 					$('#labelList').empty();
 					$('#labelIdx').empty();
@@ -998,11 +1045,11 @@ function editLabel(idx, color, name) {
 	}
 
 
-	function getProjectMemberList(flagelement,projectidx) {
+	function getProjectMemberList(flagelement) {
 		
 		$.ajax({
 			url : "GetProjectMemberList.do",
-			data : {'projectIdx' : projectidx},
+			data : {'projectIdx' : currentProjectIdx},
 			success : function(data) {
 				
 				$('#assignedEdit').empty();
@@ -1119,13 +1166,13 @@ function editLabel(idx, color, name) {
 		
 	}
 	
-function assignListEditview(projectidx){
-		getProjectMemberList("editDetail",projectidx);
+function assignListEditview(){
+		getProjectMemberList("editDetail");
 		
 	}
 	
-	function labelListview(projectidx){
-		getLabelList("editDetail",projectidx);
+	function labelListview(){
+		getLabelList("editDetail");
 	}
 	
 	function deleteIssueFile(fileIdx){
@@ -1154,9 +1201,9 @@ function assignListEditview(projectidx){
 		 $(".editIssueFileBtn").addClass("hidden");
 	}
 	
-	function issueDetailFileEdit(projectIdx) {
+	function issueDetailFileEdit() {
 		let formData = new FormData();
-		formData.append("projectIdx",projectIdx);
+		formData.append("projectIdx",currentProjectIdx);
 	 	formData.append("issueIdx",$("#issueIdxNum").val());
 	   $("#multipartFilesIssueEdit").empty();
 	    
@@ -1188,14 +1235,14 @@ function assignListEditview(projectidx){
 	        }
 	    });
 }
-	function getissueinfo(flagelement, projectidx) {
+	function getissueinfo(flagelement) {
 
 		if(flagelement == "issueModalOpen") {
 			
 		 $.ajax({
 		 		type: "POST",
 	            url: "GetAddIssueForm.do",
-	            data: { projectIdx: projectidx },
+	            data: { projectIdx: currentProjectIdx },
 	            success: function (data) {
 	            	$('#assigned').empty();
 	            	$('#labelIdx').empty();
@@ -1236,9 +1283,9 @@ function assignListEditview(projectidx){
 	}
 	
 
-function mentionSearch(projectIdx) {
+function mentionSearch() {
 
-		 getProjectMemberList("mentionSearch",projectIdx);
+		 getProjectMemberList("mentionSearch");
 		 
     	//멘션
 	  $('.editable').textcomplete([{
@@ -1298,3 +1345,127 @@ function mentionSearch(projectIdx) {
 	      }
 	      changeKanbanView('list');
 	   }
+	
+	function changeKanbanViewType(){
+		$(".kanbanViewBtn").click(function(){
+ 			$(this).attr("disabled", true);
+ 			$(this).addClass("active");
+ 			console.log(this);
+
+ 			kanbanViewType= $(this).attr("id");
+ 			if(kanbanViewType == "kanbanTableView"){
+ 				$("#kanbanIconView").removeClass("active");
+ 				$("#kanbanIconView").attr("disabled", false);
+ 				setKanbanTableView();
+ 			}
+ 			// icon View
+ 			else{
+ 				$("#kanbanTableView").removeClass("active");
+ 				$("#kanbanTableView").attr("disabled", false);
+ 				setKanbanData();
+ 			}
+ 			
+ 			changeKanbanView("changeView");
+ 		})
+	}
+	
+	function setKanbanTable(){
+		$("#kanbanTable").DataTable({
+		 	stateSave: true, // 페이지 상태 저장
+		 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		 	"searching": false,
+	         fixedColumns: true,
+	         autoWidth: false,
+	         columnDefs: [ { targets: 0, className: 'dt-body-left' }]
+		})
+	}
+	
+	function setKanbanTableView(){
+		 $.ajax({
+			 url : 'GetColumn.do',
+			 data : {'projectIdx' :  currentProjectIdx },
+			 success : function(data) {
+				 console.log("in setKanbanTableView success");
+				 console.log(data);
+				 
+			 },
+			 error : function(){
+				 console.log("in setKanbanTableView error");
+			 }
+		 });
+		 
+		 return;
+		$('#kanbanTable').DataTable().row.add( [
+			"<i class='fas fa-file-alt mr-3'></i><span>"+element.fileName+"</span>",
+			element.createDate,
+			element.creatorName,
+			element.fileSize+" KB"
+        ]).node().id = element.driveFileIdx;
+		
+		$('#kanbanTable').DataTable().draw();
+	}
+	
+    function setKanbanData() {
+        $.ajax({
+			 url : 'GetColumn.do',
+			 data : {'projectIdx' :  currentProjectIdx },
+			 success : function(data) {
+				$.each(data,function(index,obj) {
+					if(obj.colIdx != -1 && obj.colIdx != -99){
+						addColumn(obj);
+					}
+				});
+				$( ".sortableCol").sortable({
+			        connectWith: ".connectedSortable",
+			        dropOnEmpty: true,
+			        update: function(event, ui) {
+						let target = $(ui.item).attr("id").replace("Issue","");
+						let columnIdx = $(this).parent().attr("id").replace("Column","");
+						let issues = [];
+						$.each($(this)[0].children, function(){
+							issues.push($(this).attr("id").replace("Issue","").trim())
+						})
+						
+						if(issues.length == 0)
+							return;
+						
+						$.ajaxSettings.traditional = true; 
+						$.ajax({
+							type : "POST",
+							url : "MoveIssue.do",
+							data : { 	projectIdx :  currentProjectIdx
+										, targetIssueIdx : target
+										, columnIdx : columnIdx
+										, issues : issues },
+							success : function(data) {
+								console.log("success move issue");
+							},
+							error: function() {
+								console.log("error move issue");
+							}
+						})
+				        }       
+			     }).disableSelection();
+				setIssueData();
+			},
+			 error : function() {
+				console.log("getColum.do error");
+			}
+		}); 
+    }
+    
+    function setIssueData(){
+		$.ajax({
+			url : "GetIssue.do",
+			data : {'projectIdx' :  currentProjectIdx },
+			success : function(data) {
+				 $.each(data,function(index,obj) {
+					 addKanbanIssue(obj.colIdx, obj); 
+					 wholeProjectChart(currentProjectIdx);
+				});
+			},
+			error: function() {
+				console.log("getIssue.do error");
+			}
+		})
+	}

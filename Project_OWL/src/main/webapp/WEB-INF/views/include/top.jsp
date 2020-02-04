@@ -294,15 +294,15 @@ display: block;
 /* alarm shake */
 #alarmBtn:hover {
 	/* Start the shake animation and make the animation last for 0.5 seconds */
-	animation: shake 3s;
+   /*  animation: shake 3s; */
 	/* When the animation is finished, start again */
-	animation-iteration-count: infinite;
+	/* animation-iteration-count: infinite; */
 }
 
 
 
 
-@keyframes shake  {
+/*@ keyframes shake  {
 	0% { transform: translate(2px, 1px) rotate(0deg) scale(1); }
 	10% { transform: translate(-1px, -2px) rotate(-1deg); }
 	20% { transform: translate(-3px, 0px) rotate(1deg); }
@@ -314,7 +314,7 @@ display: block;
 	80% { transform: translate(-1px, -1px) rotate(1deg); }
 	90% { transform: translate(2px, 2px) rotate(0deg); }
 	100% { transform: translate(1px, -2px) rotate(-1deg) scale(0); }
-}
+} */
 
 .activity {
 	height: 15px;
@@ -357,6 +357,37 @@ display: block;
 .otherBubble {
 	border-radius: 16px 16px 16px 0;
 	background-color: #dbd9d9 !important;
+}
+
+.notiBadge{
+    font-weight: 400;
+    padding: 0.35em 0.45em;
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+    color: black;
+    height: 1.25rem;
+    width: 1.25rem;
+    line-height: 0.875rem;
+    font-size: 0.75rem;
+    position: absolute;
+    right: 4px;
+    top: 10px;
+}
+.notiBadge-pill{
+	padding-right: 0.6em;
+    padding-left: 0.6em;
+    border-radius: 10rem;
+}
+.gradient-1  {
+    /* background-image: linear-gradient(230deg, #759bff, #843cf6); */ 
+   background-color: #e3eefa;
 }
 </style>
 
@@ -440,8 +471,10 @@ display: block;
                 
                 <!-- Alarm Icon -->
                 <li class="nav-item iconMargin">
-                    <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="alarmBtn"> 
+                    <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="alarmBtn" > 
                     	<i class="far fa-bell fa-lg"></i>
+                    	<!-- 알람 숫자 notification badge  -->
+                    	<span class="notiBadge notiBadge-pill gradient-1">3</span>
                     </a>
                 </li>
                 
