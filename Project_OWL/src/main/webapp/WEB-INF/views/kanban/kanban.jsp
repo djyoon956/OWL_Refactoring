@@ -35,13 +35,13 @@
                     </button>
                 </a>
                 <a href="#" data-toggle="modal" data-target="#addLabelModal">
-                    <button class="btn btn-primary" id="addLabelBtn">
+                    <button class="btn btn-primary" >
                         <i class="fas fa-tag"></i>&nbsp;Make Label
                     </button>
                 </a>
                 <!-- --------------------알람 만들면 지울예정 ------------------------ -->
               <a href="#" data-toggle="modal" data-target="#confirmIssueModal">
-                    <button class="btn btn-primary" id="confirmIssueBtn">
+                    <button class="btn btn-primary" id="confirmBtn">
                         <i class="fas fa-tag"></i>&nbsp;Confirm Issue
                     </button>
                 </a>
