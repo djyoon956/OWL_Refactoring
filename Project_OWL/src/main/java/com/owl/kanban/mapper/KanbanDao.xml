@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getIssue" resultType="com.owl.kanban.dto.Issue">
-		SELECT i.PROJECTIDX, i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED, M.NAME, i.ISSUEPROGRESS , i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
+		SELECT i.PROJECTIDX, i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED, M.NAME, i.ISSUEPROGRESS ,i.prioritycode, i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
 		FROM ISSUE I LEFT JOIN label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX 
 					  LEFT JOIN owl.member M ON I.ASSIGNED = M.EMAIL
 		where i.projectidx=#{projectIdx} order by ordernum

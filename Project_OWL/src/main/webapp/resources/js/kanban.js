@@ -668,9 +668,9 @@ function setKanbanDetail(issueIdx){
 				$("#issueIdxNum").val(issueIdx);
 
 				if(data.issueProgress == 'OPEN')
-						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+")");
+						$("#closeIssueDetailBtn").attr("onclick","closeIssue("+issueIdx+",'inDetail')");
 					else if (data.issueProgress == 'CLOSED')
-						$("#closeIssueDetailBtn").attr("onclick","reOpenIssue("+issueIdx+")");
+						$("#closeIssueDetailBtn").attr("onclick","reOpenIssue("+issueIdx+",'inDetail')");
 					
 					$("#issueDetailTitle").text(data.issueTitle);
 					$("#issueDetailContent").html(data.content);
@@ -773,15 +773,18 @@ function setKanbanDetail(issueIdx){
 }
 
 
-function closeIssue(issueIdx) {
-
+function closeIssue(issueIdx,flag) {
 	   $.ajax({
            url:"CloseIssue.do",
            method:"POST",
            data:{issueIdx : issueIdx},
            success:function(data){
+        	if(flag == "inDetail"){
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
+        	} else if(flag == "move"){
+        	setChageView("kanban");
+        	}
            }
         });  		
 }
@@ -1423,9 +1426,13 @@ function mentionSearch() {
 			        connectWith: ".connectedSortable",
 			        dropOnEmpty: true,
 			        update: function(event, ui) {
+			        	console.log("업데이트");
+			        	console.log(event);
+			        	console.log(ui);
 						let target = $(ui.item).attr("id").replace("Issue","");
 						let columnIdx = $(this).parent().attr("id").replace("Column","");
 						let issues = [];
+						console.log(target);
 						$.each($(this)[0].children, function(){
 							issues.push($(this).attr("id").replace("Issue","").trim())
 						})
@@ -1449,9 +1456,9 @@ function mentionSearch() {
 							}
 						})
 						if (columnIdx == '-99'){
-							
+							closeIssue(target,"move");
 						}
-				        }       
+				       }       
 			     }).disableSelection();
 				setIssueData();
 			},
