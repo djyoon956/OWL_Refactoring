@@ -1,8 +1,5 @@
-"use strict";
 
-let noticeProjectIdx;
-function initNotice(projectIdx){
-	noticeProjectIdx = projectIdx;
+function initNotice(){
 	$('#noticeTable').DataTable({
 	 	stateSave: true, // 페이지 상태 저장
 	 	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
@@ -51,7 +48,7 @@ function setDetailData(boardIdx){
 			$("#noticeFiles").empty();
 			$("#noticeFileCount").text("첨부파일 ("+notice.files.length+")");
 			$.each(notice.files, function(){
-				let path = "/upload/"+ noticeProjectIdx +"/file/"+this.fileName;
+				let path = "/upload/"+ currentProjectIdx +"/file/"+this.fileName;
 				console.log(path);
 				let control = "<li class='mb-2' style='font-size: 16px' id=" + this.fileIdx +">"
 								+ "	<a href='"+path+"' download><i class='far fa-save'></i>&nbsp;&nbsp;<span> "+this.fileName+" ("+this.fileSize+" KB)</span></a>"
@@ -68,7 +65,7 @@ function setNoticeData() {
 	 $.ajax({
 		type: "POST",
 		url: "GetNotices.do",
-		data: {projectIdx: noticeProjectIdx},
+		data: {projectIdx: currentProjectIdx},
 		success: function (data) {
 			if(data.length > 0){
 				$('#noticeTable').DataTable().clear();
@@ -111,7 +108,7 @@ function writeNoticeOk(){
 	}
     let formData = new FormData();
 	
-    formData.append("projectIdx", noticeProjectIdx);
+    formData.append("projectIdx", currentProjectIdx);
     formData.append("content",$('#noticeNote').summernote('code'));
     formData.append("title",$("#title").val());
     $.each($("#noticeMultipartFiles")[0].files, function(i, file) {
@@ -131,13 +128,12 @@ function writeNoticeOk(){
         contentType: false,
         cache: false,
         success: function (data) {
-        	console.log(data);
-        	if(data> 0){
+        	if(data >  0){
         		successAlert("공지사항 작성 완료");
+        		pushNotice(currentProjectName, $("#title").val());
         		cancelNotice();
         		setDetailData(data);
-        	}
-        	else
+        	} else
         		writeNoticeError();
         },
         error: function (e) {
@@ -152,7 +148,7 @@ function writeNoticeOk(){
 function writeNoticeError(){
 	errorAlert("공지사항 작성 실패 ");
 	cancelNotice();
-	setNoticeData(noticeProjectIdx);
+	setNoticeData(currentProjectIdx);
 }
 
 function deleteNotice(){

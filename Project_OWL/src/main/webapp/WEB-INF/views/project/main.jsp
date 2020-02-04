@@ -34,6 +34,7 @@
 	<!-- If you use the default popups, use this. -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
+    <script src="resources/js/project.js"></script>
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
     <script src="resources/js/kanban.js"></script>
@@ -41,9 +42,7 @@
     <script type="text/javascript">
         $(function () {			
             setTheme("${setting.themeColor}", "${setting.font}");
-            initNotice("${project.projectIdx}");
-            initKanban("${project.projectIdx}");
-            initDashBoard("${project.projectIdx}", "${project.projectColor}")
+            initProjcet("${project.projectIdx}", "${project.projectName}", "${project.projectColor}");
 
             $.ajax({
         		url:"GetProjectList.do",
@@ -101,17 +100,12 @@
                     url: "GetProjectMember.do",
                     data: { projectIdx: ${project.projectIdx}},
                     success: function (data) {
-                         console.log("GetProjectMember success");
-                        // console.log({memeber});
-                         console.log("${project.authority}");
-	
                         $("#projectMemebersBox").empty();
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
                         $.each(data, function(index, element){
-                     
                             let control = "<li class='mt-3'>"
-		                				+ "	<img class='rounded-circle' width='40' "+error+"  src='upload/memeber/"+element.profilePic+"' alt='user'>"
-		                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
+			                				+ "	<img class='rounded-circle' width='40' src='upload/member/"+element.profilePic+"' "+error+"   alt='user'>"
+			                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
 
                				if(index == 0){
                					control += "<span class='ml-1 roleBadge pm' style='padding-top : 5px;'></span>";

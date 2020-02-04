@@ -99,9 +99,9 @@ public class MemberRestController {
 
 	@RequestMapping("Emailcheck.do")
 	public String emailCheck(String email, Model model) throws Exception {
-		System.out.println("EmailCheck controller in");
+		System.out.println("EmailCheck controller in");		
 		boolean result = service.emailCheck(email);
-
+		System.out.println(result);
 		String data = "";
 		if (result) {
 			System.out.println("we have already this email");
@@ -151,7 +151,6 @@ public class MemberRestController {
 	
 	@RequestMapping("GetMyProfile.do")
 	public Member getMember(Principal principal, Model model) {
-		System.out.println("in GetMyProfile2222 : "+principal.getName());
 		Member member = service.getMember(principal.getName());
 		model.addAttribute("member", member);
 		return member;
