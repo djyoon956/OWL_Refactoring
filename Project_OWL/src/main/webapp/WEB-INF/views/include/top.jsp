@@ -474,7 +474,7 @@ display: block;
                     <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="alarmBtn" > 
                     	<i class="far fa-bell fa-lg"></i>
                     	<!-- 알람 숫자 notification badge  -->
-                    	<span class="notiBadge notiBadge-pill gradient-1">3</span>
+                    	<span id="numOfNotice" class="notiBadge notiBadge-pill gradient-1">0</span>
                     </a>
                 </li>
                 
@@ -691,7 +691,7 @@ display: block;
                                 <div id="accordion-three" class="accordion">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4">공지사항 <i class="fa fa-chevron-right" style="float:right"></i>
+                                            <h5 id="noticeAccordion" class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4">공지사항 <i class="fa fa-chevron-right" style="float:right"></i>
                                             </h5>
                                         </div>
                                         <div id="collapseOne4" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
@@ -1054,7 +1054,7 @@ display: block;
 						  
 						  var userKey;
 						  
-						  
+						  //프로젝트 내에 각 유저별 노티스 정보 파베 저장
 						 var myRootRef = database.ref();
 			        	  myRootRef.child("Emails").orderByChild('email').equalTo(value.email).once('value', function(data){
 			        		  data.forEach(function(childSnapshot) {
@@ -1086,18 +1086,8 @@ display: block;
 			function loadPushNotice(curUserKey){				
 	                                     
 	              var noticesByUserRef = database.ref('NoticesByUser/'+ curUserKey);
-
-	             console.log("curUserKey" + curUserKey);
-
-					noticesByUserRef.once('value', function(data){
-						console.log("data~~~~~~~~~~~~~~~~~~~" + data);
-						console.log("data~~~~~~~~~~~~~~~~~~~" + data.key);
-						console.log("data~~~~~~~~~~~~~~~~~~~" + data.val());
-						
-						
-						});
-	             
-	                 document.getElementById('noticeBoard').innerHTML = ''; //메세지 화면 리셋                 
+             
+	                 document.getElementById('noticeBoard').innerHTML = ''; //공지사항 화면 리셋                 
 	              
 	                 
 	                 noticesByUserRef.off(); 
@@ -1108,13 +1098,13 @@ display: block;
 						var noticeValue = data.val(); 						
 									console.log("노티스 밸류는??" + noticeValue.readOk);
 									console.log(noticeValue.readOk == false);
-									console.log("노티스 밸류는??" + data);
+									console.log("노티스 밸류는??" + data.numChildren());
 									console.log("노티스 밸류는??" + noticeKey);		
 						
-						if(noticeValue.readOk == 'false'){ 
+						
 							noticeListUp(noticeKey, noticeValue.projectName, noticeValue.title)
 								 console.log("I am here~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-								}
+							
 							
 						} 
 					noticesByUserRef.on('child_added', checkRead.bind(this)); 
@@ -1127,9 +1117,75 @@ display: block;
 	 			
 				}
 
+			function deleteNotice(){
+
+				}
+
+
+			function numOfNotread(curUserKey){				
+                
+	              var noticesByUserRef = database.ref('NoticesByUser/'+ curUserKey);
+
+	             console.log("curUserKey" + curUserKey);
+	             
+					noticesByUserRef.orderByChild('readOk').equalTo('false').once('value', function(data){
+						console.log("data~~~~~~~~~~~~~~~~~~~" + data.numChildren());
+						var numOfNotice = data.numChildren(); 
+						$('#numOfNotice').html(numOfNotice);
+						data.forEach(function(childSnapshot) {
+							console.log("data~~~~~~~~~~~~~~~~~~~" + data);
+							console.log("data~~~~~~~~~~~~~~~~~~~" + data.key);
+							console.log("data~~~~~~~~~~~~~~~~~~~" + data.numChildren());
+							           				
+       		 		});
+						
+						
+						});
+
+			}
+
+			function saveReadNotice(){
+				var arrNoticeKey = document.querySelectorAll('div[data-type="notice"]');
+				console.log(arrNoticeKey.length);
+				arrNoticeKey.forEach(function(item, index){
+					var noticeKey = item.getAttribute("data-noticeKey");
+					var projectName = item.getAttribute("data-projectName");
+					var title = item.getAttribute("data-title");
+					console.log("notice key 찍히나요???" + noticeKey);
+					database.ref('NoticesByUser/'+ curUserKey +'/' + noticeKey).update({
+		        	    projectName: projectName,
+		        	    title: title,
+		        	    readOk : 'true'
+		        	  });;
+
+					
+					});
+			
+
+				
+				/* var myRootRef = database.ref();
+	        	  myRootRef.child("Emails").orderByChild('email').equalTo(value.email).once('value', function(data){
+	        		  data.forEach(function(childSnapshot) {
+							userKey = childSnapshot.key;
+							console.log("targetuserkey..." + userKey);
+							//유저별 노티스 저장
+							database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
+				        	    projectName: projectName,
+				        	    title: title,
+				        	    readOk : 'false'
+				        	  });;
+							
+
+							
+     		 		});
+	        	  })		 */
+	        	  numOfNotread(curUserKey);
+				}
+
 			function noticeListUp(noticeKey, projectName, title){
 				var noticeTags;
-	 			noticeTags = '<div id="'+ noticeKey+'" class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
+	 			noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="notice" data-noticeKey="'+ noticeKey+ 
+	 						 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
 	 	                     '<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
 	 	                      + projectName + '</span>'+ title +
 	 	    	              '<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
@@ -1665,7 +1721,7 @@ display: block;
 
 		  //채팅방 만들기 버튼 눌렀을 때 유저 목록 뿌려 주는 함수....	
           var userListUp = function(targetuid, name, userpic, email){
-        	  var userProPic = 	(userpic ? 'resources/images/user/'+ userpic : 'resources/images/user/noprofile.png'); 
+        	  var userProPic = 	(userpic ? 'upload/member/'+ userpic : 'resources/images/login/profile.png'); 
         	  let errorSource = "this.src='resources/images/login/profile.png'";
         	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name+ '" data-useremail="' + email + '" class="collection-item avatar list">' 
         	  				  + '<div class="input-group "><div class="form-control pt-2 pb-2"><img src="' + userProPic + '"  alt="" class="circle mr-3" height="35" width="35" onerror="'+errorSource+'" >'+ name + '('+email+')'+
@@ -1682,7 +1738,7 @@ display: block;
 	
           var messageListUp= function(key, profileImg, timestamp, userName, message, uid){
               var time = timestampToTime(timestamp);            
-			  var userProPic = 	(profileImg ? 'resources/images/user/'+ profileImg : 'resources/images/user/noprofile.png');			 
+			  var userProPic = 	(profileImg ? 'upload/member/'+ profileImg : 'resources/images/login/profile.png');			 
 			  var messageTemplate;	
 			  if(uid == curUserKey) {
 				  messageTemplate = '<li id="li' + key  + '" class="odd chat-item" style="margin-top:10px;" data-key="' + key + '">'+			
@@ -1865,6 +1921,8 @@ display: block;
 
     			//노티스 정보 로드 없
     			loadPushNotice(resolvedData);
+    			//읽지 않은 노티수 숫자 표시 함수
+    			numOfNotread(resolvedData);
                
             }); 
 
@@ -1983,8 +2041,11 @@ display: block;
 		//초대 모달창에서 초대 버튼 클릭시  체크된 인원을 현재 챗방에 추가하는 클릭 리스너
 			$('#onCreateClick').click(onCreateClick);
 
-			console.log("라이트 유저의 실행 시점.. fcm...권한 받아야 하는데...");
+
 			
+			//공지사항 아코디언 오픈시 이벤트 리스너....
+			$('#collapseOne4').on('show.bs.collapse', saveReadNotice); 
+			       
 			
       	});	
           
