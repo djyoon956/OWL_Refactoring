@@ -13,10 +13,8 @@ function initDrive(){
 		$("#driveSearchViewBox").empty();
 		$("#default").removeClass("hidden");
 		$("#allCheck").addClass("hidden");
-		
 		let path = data.instance.get_path(data.node, '<i class="fas fa-angle-right ml-2 mr-2"></i><i class="far fa-folder mr-2"></i>');
 	    $("#driveName").html('<i class="far fa-folder mr-2"></i>'+path);
-	    console.log(data.instance.get_path(data.node, false));
 		callDirectoryData();
 		
     });
@@ -51,10 +49,6 @@ function setTrashData() {
 		url : "GetTrashList.do",
 		data : {'projectIdx' : currentProjectIdx},
 		success : function (data) {
-			console.log('GetTrashList in');
-			console.log(data);
-			console.log('data.folders.length : ' + data.folders.length);
-			console.log('data.files.length : ' +data.files.length);
 			$('#driveSearchBtn').hide();
 			$('#driveUploadBtn').hide();
 			$('#trashName').removeClass("hidden");
@@ -111,9 +105,7 @@ function createStatusbar(obj){
         }
  
         this.filename.html(name);
-        console.log("파일이름: " +this.filename.html(name));
         this.size.html(sizeStr);
-        console.log("파일사이즈: " +this.size.html(sizeStr));
     }
     this.setProgress = function(progress)
     {       
@@ -160,10 +152,8 @@ function ReturnCheck() { //선택 해제
 }
 
 function checkBox(obj) {
-	console.log("여길 탄다");
 	if (obj.checked == true) {
 		$(obj).parent().parent().css('background', 'rgba(161, 163, 166, 0.3)');
-		console.log($("#allCheck").attr("class"));
 		$("#default").addClass("hidden");
 		$("#theCheck").removeClass("hidden");		
 	} else {
@@ -199,8 +189,6 @@ function setDirectoryData(folderIdx, folderName) {
 		url : "GetFolderData.do",
 		data : { folderIdx : folderIdx },
 		success : function(data){
-			console.log("in GetFolderData success");
-			console.log(data);
 
 			if(data.folders.length == 0 && data.files.length == 0){
 				$("#directoryName").text("[ "+folderName+" ] directory.");
@@ -559,14 +547,12 @@ function restoreFileTrash(driveFileIdx) {
 //휴지통에서 폴더 복원 
 function restoreFolderfromTrash(driveFileIdx) {
 	console.log('restoreFolderfromTrash in');
-	console.log(driveFileIdx);
 	
 	$.ajax({
 		url : "RestoreFolder.do",
 		data : {'driveFileIdx' : driveFileIdx},
 		success : function(data) {
 			console.log('restoreFolderfromTrash in');
-			console.log(data);
 			 successAlert("폴더 복원 완료");
 
 			setTrashData(currentProjectIdx);
@@ -611,8 +597,6 @@ function renameCancel(obj, oldText, isFolder){
 function renameFile(driveFileIdx){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
-	console.log(folderIdx);
-	console.log(refs);
 	
 	jQuery.ajaxSettings.traditional = true;
 	$.ajax({
@@ -720,9 +704,7 @@ function downloadFile(fileName){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let ref = $('#jstree').jstree().get_node(folderIdx).parent;
 	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
-	
-	console.log(folderIdx);
-	console.log(refs);
+
 	let path ="/upload/project/"+currentProjectIdx+"/drive/";
 	
 	jQuery.ajaxSettings.traditional = true;
@@ -809,10 +791,9 @@ function handleFileUpload(files, obj){
    for (var i = 0; i < files.length; i++){
         var fd = new FormData();
         fd.append('file', files[i]);
-        console.log(fd);
         var status = new createStatusbar(obj); //Using this we can set progress.
         status.setFileNameSize(files[i].name,files[i].size);
-        console.log(status);
+
         sendFileToServer(fd,status);
    }
 }
