@@ -121,8 +121,7 @@ height: 50px !important;
 						<span style="color:#326295"><i class="fab fa-replyd fa-4x" style="margin-left: 10px; margin-right: 10px"></i></span> 
 			            <p class="lead emoji-picker-container" style="width: 80%">
 			              <input class="form-control textarea-control" id="replycontent" name="replycontent"  placeholder="댓글을 작성해주세요." data-emojiable="true" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}">
-			            </p>
-                
+			            </p>               
                		 <button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px;height: 50px;width: 150px;" onClick="addReply('${member.name}')">Comment</button>
             	</div>
         </div>

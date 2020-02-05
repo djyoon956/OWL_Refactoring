@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +17,7 @@ import com.owl.dashBoard.dto.ProjectMemberProgress;
 import com.owl.dashBoard.dto.ProjectProgress;
 import com.owl.dashBoard.dto.TimeLine;
 import com.owl.dashBoard.service.DashBoardService;
+import com.owl.helper.MemberHelper;
 
 @RestController
 public class DashBoardRestController {
@@ -30,8 +33,8 @@ public class DashBoardRestController {
 	 * @return int
 	 */
 	@RequestMapping("CheckJoinProject.do")
-	public int checkJoinProject(Principal principal) {
-		return service.checkJoinProject(principal.getName());
+	public int checkJoinProject(Principal principal, HttpServletRequest request) {
+		return service.checkJoinProject(MemberHelper.getMemberEmail(principal, request.getSession()));
 	}
 	
 	/**
@@ -42,8 +45,8 @@ public class DashBoardRestController {
 	 * @return List<IssueTask>
 	 */
 	@RequestMapping("GetMyIssueTask.do")
-	public List<IssueTask> getMyIssueTasks(Principal principal) {
-		return service.getMyIssueTasks(principal.getName());
+	public List<IssueTask> getMyIssueTasks(Principal principal, HttpServletRequest request) {
+		return service.getMyIssueTasks(MemberHelper.getMemberEmail(principal, request.getSession()));
 	}
 	
 	/**
@@ -55,8 +58,8 @@ public class DashBoardRestController {
 	 * @return List<IssueTask>
 	 */
 	@RequestMapping("getMyIssueTaskByProject.do")
-	public List<IssueTask> getMyIssueTasksByProject(int projectIdx, Principal principal) {
-		return service.getMyIssueTasksByProject(projectIdx, principal.getName());
+	public List<IssueTask> getMyIssueTasksByProject(int projectIdx, Principal principal, HttpServletRequest request) {
+		return service.getMyIssueTasksByProject(projectIdx, MemberHelper.getMemberEmail(principal, request.getSession()));
 	}
 	
 	/**
@@ -81,8 +84,8 @@ public class DashBoardRestController {
 	 * @return List<ProjectProgress>
 	 */
 	@RequestMapping("MyProgress.do")
-	public List<ProjectProgress> getProgressChart(int projectIdx, Principal principal) {
-		return service.getProgressChart(principal.getName(), projectIdx);
+	public List<ProjectProgress> getProgressChart(int projectIdx, Principal principal, HttpServletRequest request) {
+		return service.getProgressChart(MemberHelper.getMemberEmail(principal, request.getSession()), projectIdx);
 	}
 	
 	@RequestMapping("Progress.do")
@@ -98,8 +101,8 @@ public class DashBoardRestController {
 	 * @return Map<Integer ,List<ProjectProgress>>
 	 */
 	@RequestMapping("MyProjectProgress.do")
-	public Map<Integer ,List<ProjectProgress>> getMyProjectChart(Principal principal) {	
-		return service.getMyProjectChart(principal.getName());
+	public Map<Integer ,List<ProjectProgress>> getMyProjectChart(Principal principal, HttpServletRequest request) {	
+		return service.getMyProjectChart(MemberHelper.getMemberEmail(principal, request.getSession()));
 	}
 	
 	/**
@@ -110,8 +113,8 @@ public class DashBoardRestController {
 	 * @return Map<Integer ,List<ProjectProgress>>
 	 */
 	@RequestMapping("HorizonChart.do")
-	public Map<Integer ,List<ProjectProgress>> getHorizonChart(Principal principal) {	
-		return service.getHorizonChart(principal.getName());
+	public Map<Integer ,List<ProjectProgress>> getHorizonChart(Principal principal, HttpServletRequest request) {	
+		return service.getHorizonChart(MemberHelper.getMemberEmail(principal, request.getSession()));
 	}
 	
 	/**
@@ -134,8 +137,8 @@ public class DashBoardRestController {
 	 * @return
 	 */
 	@RequestMapping("LineChart.do")
-	public Map<Integer, List<LineChart>> getLineChart(Principal principal) {
-		return service.getLineChart(principal.getName());
+	public Map<Integer, List<LineChart>> getLineChart(Principal principal, HttpServletRequest request) {
+		return service.getLineChart(MemberHelper.getMemberEmail(principal, request.getSession()));
 	}
 	
 	/**
@@ -146,8 +149,8 @@ public class DashBoardRestController {
 	 * @return Map<String, List<TimeLine>>
 	 */
 	@RequestMapping("GetMyTimeLine.do")
-	public Map<String, List<TimeLine>> getMyTimeLines(Principal principal) {
-		return service.getMyTimeLines(principal.getName());
+	public Map<String, List<TimeLine>> getMyTimeLines(Principal principal, HttpServletRequest request) {
+		return service.getMyTimeLines(MemberHelper.getMemberEmail(principal, request.getSession()));
 	}
 	
 	/**

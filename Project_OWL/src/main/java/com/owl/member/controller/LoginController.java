@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.owl.helper.MemberHelper;
 import com.owl.helper.UploadHelper;
 import com.owl.member.dto.Member;
 import com.owl.member.service.GoogleService;
@@ -99,9 +100,9 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "Main.do")
 	public String showMainView(HttpServletRequest request, Principal principal, Model model) {
-		Member member = service.getMember(principal.getName());
+		Member member = service.getMember(MemberHelper.getMemberEmail(principal, request.getSession()));
 		request.getSession().setAttribute("member", member);
-		request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
+		request.getSession().setAttribute("setting", service.getSetting(MemberHelper.getMemberEmail(principal, request.getSession())));
 
 		checkJoinProjectMember(request, member.getEmail());
 		List<ProjectList> projectList = null;
@@ -136,8 +137,9 @@ public class LoginController {
 
 		if (member != null && !member.getEmail().isEmpty()) 
 			snsJoinCheck(member);
-		
-		return "member/main";
+			
+		session.setAttribute("memberEmail", member.getEmail());
+		return "redirect:Main.do";
 	}
 
 	/**
@@ -159,7 +161,8 @@ public class LoginController {
 		if (member != null && !member.getEmail().isEmpty()) 
 			snsJoinCheck(member);
 
-		return "member/main";
+		session.setAttribute("memberEmail", member.getEmail());
+		return "redirect:Main.do";
 	}
 
 	/**
@@ -173,13 +176,14 @@ public class LoginController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "GoogleLogin.do")
-    public String doSessionAssignActionPage(String code, HttpServletRequest request, Model model) throws Exception {
+    public String doSessionAssignActionPage(String code, HttpSession session, Model model) throws Exception {
 		Member member= googleService.getMemberInfo(code);
 	
 		if (member != null && !member.getEmail().isEmpty()) 
 			snsJoinCheck(member);
 
-        return "member/main"; 
+		session.setAttribute("memberEmail", member.getEmail());
+		return "redirect:Main.do";
     }
 
 	/**

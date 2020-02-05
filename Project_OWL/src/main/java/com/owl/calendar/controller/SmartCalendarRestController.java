@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.owl.calendar.dto.SmartCalendar;
 import com.owl.calendar.dto.SmartCalendar.CalendarType;
 import com.owl.calendar.service.SmartCalendarService;
+import com.owl.helper.MemberHelper;
 
 @RestController
 public class SmartCalendarRestController {
@@ -45,7 +48,7 @@ public class SmartCalendarRestController {
 												@RequestParam(value = "start",required = false) String startDate,
 												@RequestParam(value = "end",required = false) String endDate,
 												@RequestParam(value = "allDay") boolean allDay,
-												Principal principal) {
+												Principal principal, HttpServletRequest request) {
 		boolean result = false;
 		SmartCalendar calendar = new SmartCalendar();
 		try {
@@ -74,7 +77,7 @@ public class SmartCalendarRestController {
 			calendar.setEndDate(new SimpleDateFormat("E MMM dd yyyy HH:mm:ss 'GMT'z",Locale.ENGLISH).parse(endDate));	
 			calendar.setAllDay(0);
 		}		
-		calendar.setEmail(principal.getName());
+		calendar.setEmail(MemberHelper.getMemberEmail(principal, request.getSession()));
 		result = service.insertCalendar(calendar);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -105,9 +108,9 @@ public class SmartCalendarRestController {
 	 * @return List<SmartCalendar>
 	 */
 	@RequestMapping(value="GetMyAllCalendars.do")
-	public List<SmartCalendar> getMyAllCalendars(Principal principal){
+	public List<SmartCalendar> getMyAllCalendars(Principal principal, HttpServletRequest request){
 		List<SmartCalendar> calendar = null;
-		calendar = service.getMyAllCalendars(principal.getName());		
+		calendar = service.getMyAllCalendars(MemberHelper.getMemberEmail(principal, request.getSession()));		
 		return calendar;
 	}
 	
@@ -147,7 +150,7 @@ public class SmartCalendarRestController {
 												  @RequestParam(value = "start" ,required = false) String startDate,
 												  @RequestParam(value = "end" ,required = false) String endDate,
 												  @RequestParam(value = "allDay" ,required = false) boolean allDay,
-												Principal principal) {
+												Principal principal, HttpServletRequest request) {
 		boolean result = false;
 		SmartCalendar calendar = new SmartCalendar();
 		try {
@@ -182,7 +185,7 @@ public class SmartCalendarRestController {
 				}
 				calendar.setAllDay(0);
 			}
-		calendar.setEmail(principal.getName());
+		calendar.setEmail(MemberHelper.getMemberEmail(principal, request.getSession()));
 		result = service.updateCalendar(calendar);
 		} catch (Exception e) {
 			e.printStackTrace();

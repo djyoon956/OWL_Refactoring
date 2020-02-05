@@ -25,7 +25,6 @@
 											   token-validity-seconds="604800" 
 											   remember-me-parameter="remember-me"
 											   remember-me-cookie="remember-cookie" />	
-											   
  	  <!--  <security:session-management invalid-session-url="/Login.do">
 	      <security:concurrency-control max-sessions="1"
         												  	  expired-url="/Login.do" />

@@ -857,10 +857,14 @@ function setFileUpload(){
 				files.push(element.name);
 			})
 			callDirectoryData();
-			//푸쉬 알람 보내기. 이 함수의 위치는 top.jsp  아래쪽 스크립트에 있음...
-			// currentProjectName, currentProjectIdx, currentProjectName, files
-    	   // sendNoticePushAll("프로젝트 이름 요기", "xx파일이 업로드 되었습니다.", currentProjectIdx); 
-    		//pushNotice(currentProjectIdx,currentProjectName, "xx파일이 업로드 되었습니다." , "drive");
+			
+			files.forEach(function(item, index){
+				//푸쉬 알람 보내기. 이 함수의 위치는 top.jsp  아래쪽 스크립트에 있음...
+				sendNoticePushAll(currentProjectName, item +"파일이 업로드 되었습니다.", currentProjectIdx);
+				pushNoticeToAll(currentProjectIdx,currentProjectName, item +"파일이 업로드 되었습니다." , "drive");
+				
+			});
+			
     		
 		},
 		fail : function(){
