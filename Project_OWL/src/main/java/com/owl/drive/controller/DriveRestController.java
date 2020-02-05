@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.owl.drive.dto.DriveFile;
 import com.owl.drive.dto.DriveFolder;
 import com.owl.drive.service.DriveService;
+import com.owl.helper.MemberHelper;
 import com.owl.helper.UploadHelper;
 
 @RestController
@@ -222,7 +223,7 @@ public class DriveRestController {
 			String uploadPath = request.getServletContext().getRealPath("upload");
 
 			DriveFile driveFile = new DriveFile();
-			driveFile.setCreator(principal.getName());
+			driveFile.setCreator(MemberHelper.getMemberEmail(principal, request.getSession()));
 			driveFile.setDriveIdx(folderIdx);
 			driveFile.setFileName(fileName);
 			driveFile.setFileSize((int) (file.getSize() / 1024));

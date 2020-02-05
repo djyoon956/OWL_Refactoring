@@ -37,36 +37,25 @@ public class KaKaoService {
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        conn.setRequestMethod("POST");
 	        
-	        //    요청에 필요한 Header에 포함될 내용
+	        // 요청에 필요한 Header에 포함될 내용
 	        conn.setRequestProperty("Authorization", "Bearer " + token);
-	        
-	        int responseCode = conn.getResponseCode();
-	        System.out.println("responseCode : " + responseCode);
-	        
-	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	        
+
 	        String line = "";
 	        String result = "";
-	        
+	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 	        while ((line = br.readLine()) != null) {
 	            result += line;
 	        }
 
 	        JSONObject element = new JSONObject(result);
-	        
 			String nickname = (String) ((JSONObject) element.get("properties")).get("nickname");
 			String email = (String) ((JSONObject) element.get("kakao_account")).get("email");
 			
 			member.setName(nickname);
 			member.setEmail(email);
-
-	    } catch (IOException e) {
-	        // TODO Auto-generated catch block
+	    } catch (IOException | JSONException e) {
 	        e.printStackTrace();
-	    }catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    }
 	    
 	    return member;
 	}

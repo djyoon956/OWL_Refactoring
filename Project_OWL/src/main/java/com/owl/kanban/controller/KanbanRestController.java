@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.owl.helper.MemberHelper;
 import com.owl.kanban.dto.Column;
 import com.owl.kanban.dto.Issue;
 import com.owl.kanban.dto.Issue.IssueProgressType;
@@ -30,10 +31,6 @@ import com.owl.project.dto.Label;
 
 @RestController
 public class KanbanRestController {
-	@Autowired
-	private SqlSession sqlSession;
-
-	
 	@Autowired
 	private KanbanService service;
 	
@@ -143,7 +140,7 @@ public class KanbanRestController {
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
 		issue.setContent(content);
-		issue.setCreator(principal.getName());
+		issue.setCreator(MemberHelper.getMemberEmail(principal, request.getSession()));
 		issue.setIssueProgress(IssueProgressType.OPEN);
 		issue.setColIdx(colIdx);
 		issue.setOrderNum(orderNum);
@@ -225,8 +222,8 @@ public class KanbanRestController {
 	
 	
 	@RequestMapping(value = "MoveIssue.do", method = RequestMethod.POST)
-	public boolean moveIssue(int projectIdx, int targetIssueIdx, int columnIdx, int[] issues, Principal principal) {
-		return service.updateMoveIssue(projectIdx, targetIssueIdx, columnIdx, issues, principal.getName());
+	public boolean moveIssue(int projectIdx, int targetIssueIdx, int columnIdx, int[] issues, Principal principal, HttpServletRequest request) {
+		return service.updateMoveIssue(projectIdx, targetIssueIdx, columnIdx, issues, MemberHelper.getMemberEmail(principal, request.getSession()));
 	}
 	
 	
@@ -261,15 +258,15 @@ public class KanbanRestController {
 	}
 	
 	@RequestMapping(value = "CloseIssue.do", method = RequestMethod.POST)
-	public boolean closeIssue(@RequestParam(value = "issueIdx") int issueIdx, Principal principal) {
-		boolean result = service.closeIssue(issueIdx, principal.getName());
+	public boolean closeIssue(@RequestParam(value = "issueIdx") int issueIdx, Principal principal, HttpServletRequest request) {
+		boolean result = service.closeIssue(issueIdx, MemberHelper.getMemberEmail(principal, request.getSession()));
 		return result;
 	}
 	
 	
 	@RequestMapping(value = "ReopenIssue.do", method = RequestMethod.POST)
-	public boolean reopenIssue(@RequestParam(value = "issueIdx") int issueIdx, Principal principal) {
-		boolean result = service.reopenIssue(issueIdx, principal.getName());
+	public boolean reopenIssue(@RequestParam(value = "issueIdx") int issueIdx, Principal principal, HttpServletRequest request) {
+		boolean result = service.reopenIssue(issueIdx, MemberHelper.getMemberEmail(principal, request.getSession()));
 		//result.getIssueProgress(issueIdx);
 		return result;
 	}
@@ -307,31 +304,31 @@ public class KanbanRestController {
 	}
 	
 	@RequestMapping(value="UpdateIssueTitle.do", method = RequestMethod.POST)
-	public boolean updateIssueTitle(Issue issue,Principal principal) {
-		boolean result = service.updateIssueTitile(issue, principal.getName());
+	public boolean updateIssueTitle(Issue issue,Principal principal, HttpServletRequest request) {
+		boolean result = service.updateIssueTitile(issue, MemberHelper.getMemberEmail(principal, request.getSession()));
 		
 		return result;
 	}
 	
 	@RequestMapping(value="UpdateIssueContent.do", method = RequestMethod.POST)
-	public boolean updateIssueContent(Issue issue,Principal principal) {
-		boolean result = service.updateIssueContent(issue, principal.getName());
+	public boolean updateIssueContent(Issue issue,Principal principal, HttpServletRequest request) {
+		boolean result = service.updateIssueContent(issue, MemberHelper.getMemberEmail(principal, request.getSession()));
 		
 		return result;
 	}
 	
 	@RequestMapping(value="UpdateIssuePriority.do", method = RequestMethod.POST)
-	public boolean updateIssuePriority(Issue issue,Principal principal) {
+	public boolean updateIssuePriority(Issue issue,Principal principal, HttpServletRequest request) {
 		System.out.println("updateIssueTitle in");
 		System.out.println(issue);
-		boolean result = service.updateIssuePriority(issue, principal.getName());
+		boolean result = service.updateIssuePriority(issue, MemberHelper.getMemberEmail(principal, request.getSession()));
 		
 		return result;
 	}
 	
 	@RequestMapping(value="UpdateIssueDuedate.do", method = RequestMethod.POST)
 	public boolean updateIssueDuedate(@RequestParam(value = "dueDate", required = false) String dueDate,
-			int issueIdx, Principal principal) {
+			int issueIdx, Principal principal, HttpServletRequest request) {
 		System.out.println("updateIssueDuedate in  듀데이트 ");
 		System.out.println(dueDate);
 		Issue issue = new Issue();
@@ -344,25 +341,25 @@ public class KanbanRestController {
 				e.printStackTrace();
 			}
 		}
-		boolean result = service.updateIssueDuedate(issue, principal.getName());
+		boolean result = service.updateIssueDuedate(issue, MemberHelper.getMemberEmail(principal, request.getSession()));
 		return result;
 	}
 	
 	@RequestMapping(value="UpdateIssueAssgined.do", method = RequestMethod.POST)
-	public boolean updateIssueAssgined(Issue issue,Principal principal) {
-		boolean result = service.updateIssueAssgined(issue, principal.getName());
+	public boolean updateIssueAssgined(Issue issue,Principal principal, HttpServletRequest request) {
+		boolean result = service.updateIssueAssgined(issue, MemberHelper.getMemberEmail(principal, request.getSession()));
 		
 		return result;
 	}
 	
 	@RequestMapping(value="UpdateIssueLabel.do", method = RequestMethod.POST)
-	public boolean updateIssueLabel(@RequestParam(value = "labelIdx", required = false) String labelIdx,int issueIdx,Principal principal) {
+	public boolean updateIssueLabel(@RequestParam(value = "labelIdx", required = false) String labelIdx,int issueIdx,Principal principal, HttpServletRequest request) {
 		Issue issue = new Issue();
 		issue.setIssueIdx(issueIdx);
 		System.out.println("update issue label Idx : " +  labelIdx);
 		if (!labelIdx.isEmpty())
 			issue.setLabelIdx(Integer.parseInt(labelIdx));
-		boolean result = service.updateIssueLabel(issue, principal.getName());
+		boolean result = service.updateIssueLabel(issue, MemberHelper.getMemberEmail(principal, request.getSession()));
 
 		return result;
 	}
@@ -382,7 +379,7 @@ public class KanbanRestController {
 
 		boolean result = false;
 		Issue issue = new Issue();
-		issue.setCreator(principal.getName());
+		issue.setCreator(MemberHelper.getMemberEmail(principal, request.getSession()));
 		issue.setIssueIdx(issueIdx);
 		issue.setProjectIdx(projectIdx);
 		result = service.addIssueFile(issue,multipartFiles, request.getServletContext().getRealPath("upload"));

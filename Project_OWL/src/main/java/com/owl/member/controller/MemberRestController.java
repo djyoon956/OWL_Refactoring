@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.owl.helper.MemberHelper;
 import com.owl.helper.UploadHelper;
 import com.owl.member.dto.Member;
 import com.owl.member.dto.Setting;
@@ -139,19 +140,19 @@ public class MemberRestController {
 	public Setting settingChange(String cmd, String value, HttpServletRequest request, Principal principal) {
 		if(value.equals("rgb(128, 128, 128)"))
 			value = "black";
-		boolean result = service.updateSetting(principal.getName(), cmd.toUpperCase(), value);
+		boolean result = service.updateSetting(MemberHelper.getMemberEmail(principal, request.getSession()), cmd.toUpperCase(), value);
 		Setting setting = null;
 		if (result) {
-			setting = service.getSetting(principal.getName());
-			request.getSession().setAttribute("setting", service.getSetting(principal.getName()));
+			setting = service.getSetting(MemberHelper.getMemberEmail(principal, request.getSession()));
+			request.getSession().setAttribute("setting", service.getSetting(MemberHelper.getMemberEmail(principal, request.getSession())));
 		}
 
 		return setting;
 	}
 	
 	@RequestMapping("GetMyProfile.do")
-	public Member getMember(Principal principal, Model model) {
-		Member member = service.getMember(principal.getName());
+	public Member getMember(Principal principal, Model model, HttpServletRequest request) {
+		Member member = service.getMember(MemberHelper.getMemberEmail(principal, request.getSession()));
 		model.addAttribute("member", member);
 		return member;
 	}
@@ -174,7 +175,7 @@ public class MemberRestController {
 			}				
 			member.setName(name);
 			member.setPassword(bCryptPasswordEncoder.encode(password));
-			member.setEmail(principal.getName());
+			member.setEmail(MemberHelper.getMemberEmail(principal, request.getSession()));
 			service.updateMember(member);
 			request.getSession().setAttribute("member", member);
 			System.out.println(model);

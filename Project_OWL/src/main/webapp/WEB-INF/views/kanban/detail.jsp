@@ -69,7 +69,7 @@ height: 50px !important;
 
                             </ul>
                             <input type="file" name="multipartFiles" id="multipartFilesIssueEdit" multiple="multiple" class="editIssueFileBtn hidden">
-                          	<button class="btn btn-primary editIssueFileBtn hiddenb" onclick="issueDetailFileEdit()" >save</button>
+                          	<button class="btn btn-primary editIssueFileBtn hidden" onclick="issueDetailFileEdit()" >save</button>
                            </div>
                          <div  class="col-1" >
 						 	<span style="margin-left: 22%;"><i class="fas fa-cog font-16 flot-right pr-0 mt-2 ml-1 text-muted"  onclick="editIssueFileView()"style="cursor: pointer"></i>

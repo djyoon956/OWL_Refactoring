@@ -282,12 +282,12 @@ function initKanban(projectIdx){
 		 			        	console.log("event 값은???~~~~~~~~~~~~~~~" + $('#getAuthority').val());
 		 			        	var projectAuth = $('#getAuthority').val();
 		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){
-		 			        		sendNewIssuePush(pmemail, curName, istitle);
-		 			        		pushKanbanIssueToPm(currentProjectIdx,currentProjectName, istitle, "kanbanIssue", pmemail);
+		 			        		sendNoticePushToOne(pmemail, curName, istitle);
+		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, istitle, "kanbanIssue", pmemail);
 		 			        		
 		 			        	}else{
 		 			        		sendNoticePushAll(curName, istitle, currentProjectIdx);
-		 			        		pushKanbanIssue(currentProjectIdx, currentProjectName, istitle, "kanbanIssue");
+		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, istitle, "kanbanIssue");
 		 			        	}
 		 			        	
 	 			        		
@@ -498,9 +498,15 @@ function addReply(creator) {
 							, 'content': $('#replycontent').val()
 							, 'creator' : creator},
 				success : function(data) {
+					arrSelectedUserEmail.forEach(function(item, index){
+						console.log('멘션 파트에서 선택된 유저의 이메일은요???~~~~~' + item );
+						sendNoticePushToOne(item, "<" + curName + "님의 멘션>", $('#replycontent').val());
+			        	pushNoticeToOne(currentProjectIdx,currentProjectName, curName + "언급하였습니다.", "mention", item);
+					})
+
 					$(".emoji-wysiwyg-editor").empty();
-					  $('#replycontent').val("");
-			    		setKanbanDetail(data.issueIdx);
+					$('#replycontent').val("");
+		    		setKanbanDetail(data.issueIdx);
 
 				},error : function() {
 		        	errorAlert("InsertReply error");
@@ -1332,7 +1338,7 @@ function assignListEditview(){
 		}
 	}
 	
-
+var arrSelectedUserEmail =[];
 function mentionSearch() {
 
 		 getProjectMemberList("mentionSearch");
@@ -1354,6 +1360,9 @@ function mentionSearch() {
 			  'textComplete:select': function (e, value) {	
 				  console.log(words.indexOf(value));  // 2
 				  console.log(wordsemail[words.indexOf(value)]); // skisk1124@naver.com
+				  arrSelectedUserEmail.push(wordsemail[words.indexOf(value)]);
+				  
+				  
 			  }
 		  }) ;
 	}
@@ -1390,8 +1399,8 @@ function mentionSearch() {
 	      $("#issueDetailPriority").removeClass("hidden");
 	      }
 	      
-	      if($("#kanbanFileBox").hasClass("hidden")) {
-	      $("#kanbanFileBox").addClass("hidden");
+	      if(!$(".editIssueFileBtn").hasClass("hidden")) {
+	      $(".editIssueFileBtn").addClass("hidden");
 	      }
 	      changeKanbanView('list');
 	   }

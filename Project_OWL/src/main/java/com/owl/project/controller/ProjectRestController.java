@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.owl.drive.dto.DriveFolder;
+import com.owl.helper.MemberHelper;
 import com.owl.member.dto.Member;
 import com.owl.project.dto.Project;
 import com.owl.project.dto.ProjectList;
@@ -51,10 +52,10 @@ public class ProjectRestController {
 	 * @return projectlist
 	 */
 	@RequestMapping("EditMyProject.do")
-	public ProjectList updateProjectList(int projectIdx, int favorite, String projectColor, Principal principal) {
+	public ProjectList updateProjectList(int projectIdx, int favorite, String projectColor, Principal principal, HttpServletRequest request) {
 		ProjectList projectlist = new ProjectList();
 		try {
-			projectlist.setEmail(principal.getName());
+			projectlist.setEmail(MemberHelper.getMemberEmail(principal, request.getSession()));
 			projectlist.setProjectIdx(projectIdx);
 			projectlist.setFavorite(favorite);
 			projectlist.setProjectColor(projectColor);
@@ -90,7 +91,7 @@ public class ProjectRestController {
 			Project project, ProjectList projectlist, Principal principal, DriveFolder drivefolder,
 			HttpServletRequest request) throws Exception {
 		try {
-			projectlist.setEmail(principal.getName());
+			projectlist.setEmail(MemberHelper.getMemberEmail(principal, request.getSession()));
 			project.setProjectName(project.getProjectName());
 			projectlist.setProjectColor(projectlist.getProjectColor());
 			project.setStartDate(startDate);
@@ -118,9 +119,9 @@ public class ProjectRestController {
 	 * @return projectList
 	 */
 	@RequestMapping("GetProjectList.do")
-	public ProjectList getProjectList(int projectIdx, Principal principal, Model model) {
+	public ProjectList getProjectList(int projectIdx, Principal principal, Model model, HttpServletRequest request) {
 		ProjectList projectList = null;
-		projectList = service.getProjectList(projectIdx, principal.getName());
+		projectList = service.getProjectList(projectIdx, MemberHelper.getMemberEmail(principal, request.getSession()));
 		model.addAttribute("projectList", projectList);
 		System.out.println(projectList);
 		return projectList;
@@ -136,16 +137,16 @@ public class ProjectRestController {
 	 * @return projectList
 	 */
 	@RequestMapping("ProjectList.do")
-	public List<ProjectList> getDriveList(Principal principal, Model model) {
+	public List<ProjectList> getDriveList(Principal principal, Model model, HttpServletRequest request) {
 		List<ProjectList> projectList = null;
-		projectList = service.getProjectLists(principal.getName());
+		projectList = service.getProjectLists(MemberHelper.getMemberEmail(principal, request.getSession()));
 		model.addAttribute("projectList", projectList);
 		return projectList;
 	}
 
 	@RequestMapping(value = "AddProjectMember.do", method = RequestMethod.POST)
 	public void AddProjectMember(int projectIdx, String projectName, String pm, String[] addProjectMembers,
-			Principal principal) {
+			Principal principal, HttpServletRequest request) {
 
 		try {
 			MimeMessage content = mailSender.createMimeMessage();
@@ -154,7 +155,7 @@ public class ProjectRestController {
 			models.put("projectName", projectName);
 			models.put("joinProjectIdx", projectIdx);
 			models.put("pm", pm);
-			models.put("pmEamil", principal.getName());
+			models.put("pmEamil", MemberHelper.getMemberEmail(principal, request.getSession()));
 
 			String mailBody = VelocityEngineUtils.mergeTemplateIntoString(
 					velocityEngineFactoryBean.createVelocityEngine(), "joinProjectTemplate.vm", "UTF-8", models);
@@ -175,8 +176,8 @@ public class ProjectRestController {
 	}
 
 	@RequestMapping(value = "OutProject.do", method = RequestMethod.POST)
-	public boolean outProject(int projectIdx, Principal principal) {
-		return service.outProject(projectIdx, principal.getName());
+	public boolean outProject(int projectIdx, Principal principal, HttpServletRequest request) {
+		return service.outProject(projectIdx, MemberHelper.getMemberEmail(principal, request.getSession()));
 	}
 
 	@RequestMapping(value = "ExitMember.do", method = RequestMethod.POST)
@@ -185,7 +186,7 @@ public class ProjectRestController {
 	}
 
 	@RequestMapping(value = "TransferAuthority.do", method = RequestMethod.POST)
-	public boolean transferAuthority(int projectIdx, String email, Principal principal) {
-		return service.transferAuthority(projectIdx, principal.getName(), email);
+	public boolean transferAuthority(int projectIdx, String email, Principal principal, HttpServletRequest request) {
+		return service.transferAuthority(projectIdx, MemberHelper.getMemberEmail(principal, request.getSession()), email);
 	}
 }
