@@ -350,9 +350,11 @@ function initKanban(projectIdx){
 		 	     		$("#-99Column").show();
 		 	          });
 
-		 			
-
 		 	    $("#InsertColumnBtn").on("click", function () {	
+		 	    	if(!$('#colname').val()) {
+		 	    		warningAlert("칼럼 이름을 입력해주세요.");
+		 	    		return;
+		 	    	}
 
 		 	    	$.ajax({
 		 	   				url : 'InsertColumn.do',
