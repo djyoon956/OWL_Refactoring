@@ -677,8 +677,8 @@ function deleteLabel(labelidx) {
            $("#"+labelidx+"Label").remove();
 
       }, error : function() {
-         console.log("deleteLabel error");
-            
+			warningAlert("현재 사용중인 라벨입니다.");
+
          }
       })
    }
