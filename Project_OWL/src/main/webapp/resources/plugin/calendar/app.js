@@ -354,8 +354,6 @@
         }
     }
     function saveNewSchedule(scheduleData) {
-       console.log("몰라");
-       console.log(scheduleData);
         var calendar = scheduleData.calendar || findCalendar(scheduleData.calendarId);
         var schedule = {
             id: String(chance.guid()),

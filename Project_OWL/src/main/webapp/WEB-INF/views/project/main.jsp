@@ -36,6 +36,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- Toast Calendar -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
+	<script src="resources/plugin/calendar/projectCalendars.js"></script>
+    <script src="resources/plugin/calendar/schedules.js"></script>
 	<!-- If you use the default popups, use this. -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
@@ -47,7 +49,7 @@
     <script type="text/javascript">
         $(function () {			
             setTheme("${setting.themeColor}", "${setting.font}");
-            initProjcet("${project.projectIdx}", "${project.projectName}", "${project.projectColor}");
+            initProjcet("${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
             initCalendar("${project.projectIdx}", "${project.projectColor}", "${project.startDate}", "${project.endDate}");
             $(".tui-full-calendar-layout.tui-view-8").addClass("hidden");
             $(".tui-full-calendar-layout.tui-view-8.tui-view-13").removeClass("hidden");

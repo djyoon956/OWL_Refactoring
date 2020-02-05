@@ -31,7 +31,6 @@ function MakeDataSet() {
 		    			if(element.issueProgress == "CLOSED") 
 							closeCount++;
 		    	  })
-			
 		    	 let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
 					  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
 				$("#myProgressChart").append(makeChart);
@@ -226,6 +225,15 @@ function MyLineChart(){
   margin-bottom: 100px;
   height: 400px; 
 }
+#myProgressChart{
+	width: 1260px; 
+	/* width:100vh; */
+	overflow-x: scroll;
+ 	display: flex;
+	flex-direction: row;
+	flex-wrap: nowarp;
+	flex-flow: row; 
+}
 </style>
 <!-- CONTENT MAIN -->
 <div class="container-fluid" style="padding:20px">
@@ -300,11 +308,11 @@ function MyLineChart(){
 	        <!-- // TimeLine -->
 	        
 	        <div class="col-lg-12">
-	            <div class="card dash_shadow dash_radius">
+	            <div class="card dash_shadow dash_radius w-100">
 	                <div class="card-body w-100">
 	                    <h4 class="card-title" style="margin-bottom: 0px;">My Issue Progress Chart</h4>
 	                    <div class="align-items-center">
-	                        <div class="row" id="myProgressChart"> </div>
+	                        <div id="myProgressChart"> </div>
 	                    </div>
 	                </div>
 	            </div>

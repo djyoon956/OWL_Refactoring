@@ -1,16 +1,17 @@
 'use strict';
-'use strict';
+
 function initCalendar(idx, color, start, end){
-console.log("이야~~~~~~~~");
-	console.log(idx);
-	console.log(color);
-	console.log(start);
-	console.log(end);
-	console.log("이야~~~~!!!");
+	let endTime = end.split(" ");
+	let theEnd = endTime[0]+" "+endTime[1]+" "+endTime[2]+" "+endTime[endTime.length-1];
 	
 	var Calendar = tui.Calendar;	
 	var cal, resizeThrottled;
-    var useCreationPopup = true;
+    var useCreationPopup;
+    if(new Date() > new Date(theEnd)){
+    	useCreationPopup = false;
+    }else{
+    	useCreationPopup = true;
+    }
     var useDetailPopup = true;
     var datePicker, selectedCalendar;
     cal = new Calendar('#calendar', {
@@ -45,21 +46,25 @@ console.log("이야~~~~~~~~");
         },
         'beforeCreateSchedule': function(e) {
             console.log('beforeCreateSchedule', e);
-            saveNewSchedule(e);
-            //캘린더 일정 DB Insert
-    		$.ajax({
-        		url:"InsertCalendar.do",
-        		method:"POST",
-        		data:{calendarId: e.calendarId,
-        			       title: e.title,
-        			       location: e.location,
-        			       start: e.start._date,
-        			       end: e.end._date,
-        			       allDay: e.isAllDay
-        			      },
-        		success:function(data){	
-        		}
-    		});
+            if(new Date() > new Date(theEnd)){ 
+            	 callAlert('warning', '이미 완료된 프로젝트입니다.');
+            }else{
+	            saveNewSchedule(e);
+	            //캘린더 일정 DB Insert
+	    		$.ajax({
+	        		url:"InsertCalendar.do",
+	        		method:"POST",
+	        		data:{calendarId: e.calendarId,
+	        			       title: e.title,
+	        			       location: e.location,
+	        			       start: e.start._date,
+	        			       end: e.end._date,
+	        			       allDay: e.isAllDay
+	        			      },
+	        		success:function(data){	
+	        		}
+	    		});
+            }    
         },
         'beforeUpdateSchedule': function(e) {
             var schedule = e.schedule;
