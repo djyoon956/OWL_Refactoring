@@ -750,10 +750,7 @@ function setKanbanDetail(issueIdx){
 					
 					$("#issueDetailComment").empty();
 					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
-					$.each(data.replies, function(index, element){
-					console.log('뭐 찍히니?');
-					console.log(element.profilepic);
-					
+					$.each(data.replies, function(index, element){					
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
 				
                      
@@ -1342,7 +1339,7 @@ var arrSelectedUserEmail =[];
 function mentionSearch() {
 
 		 getProjectMemberList("mentionSearch");
-		 
+		 console.log("memberSearch");
     	//멘션
 	  $('.editable').textcomplete([{
 		  
