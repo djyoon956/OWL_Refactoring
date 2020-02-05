@@ -135,7 +135,7 @@ function writeNoticeOk(){
         		
         		//푸쉬 알람 보내기. 이 함수의 위치는 top.jsp  아래쪽 스크립트에 있음...
         	    sendNoticePushAll($("#title").val(), $('#noticeNote').summernote('code'), currentProjectIdx); 
-        		pushNotice(currentProjectIdx,currentProjectName, $("#title").val(), "notice");
+        	    pushNoticeToAll(currentProjectIdx,currentProjectName, $("#title").val(), "notice");
         		
         		
         		cancelNotice();

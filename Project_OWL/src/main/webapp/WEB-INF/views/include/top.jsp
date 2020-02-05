@@ -721,10 +721,10 @@ display: block;
                                         </div>
                                         <div id="collapseTwo5" class="collapse" data-parent="#accordion-three" data-from="drive" style="line-height:2em;">
                                             <div id="driveBoard" class="card-body pt-3 accordionBody">
-                                            <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <!-- <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
                                             	'file.jpg'파일이 업로드 되었습니다. <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
-                                            </div>
+                                            </div> -->
                                             
                                             </div>
                                         </div>
@@ -754,11 +754,11 @@ display: block;
                                         </div>
                                         <div id="collapseThree7" class="collapse" data-parent="#accordion-three" data-from="mention" style="line-height:2em;">
                                             <div id="mentionBoard"class="card-body pt-3 accordionBody">
-                                             <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                             <!-- <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
                                             	배인영님이 언급하였습니다. 
                                             	<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
-                                            </div>
+                                            </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -996,7 +996,7 @@ display: block;
 
 
 
-		function sendNewIssuePush(email, title, rawMsg) {
+		function sendNoticePushToOne(email, title, rawMsg) {
 				var msg = myConvertMsg(rawMsg);
 				var myRootRef = database.ref();
 				myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
@@ -1017,7 +1017,7 @@ display: block;
 
 
 		//탑 부분 종 누르면...   공지 사항 보이기~~
-		function pushNotice(projectIdx, projectName, title, from) {
+		function pushNoticeToAll(projectIdx, projectName, title, from) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key	
 
@@ -1032,7 +1032,7 @@ display: block;
 			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
 		}
 
-		function pushKanbanIssueToPm(projectIdx, projectName, title, from, pmemail) {
+		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key	
 
@@ -1046,8 +1046,10 @@ display: block;
       	  	//노티즈 정보를 유저별 저장
 			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail);
 		}
-	      	  
-		function pushKanbanIssue(projectIdx, projectName, title, from) {
+
+
+	     //중복 함수 삭제 예정... 누구든 보면 연락죠~~ 	  
+		/* function pushKanbanIssue(projectIdx, projectName, title, from) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key	
 
@@ -1060,7 +1062,7 @@ display: block;
         	  });
       	  	//노티즈 정보를 유저별 저장
 			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
-		}	
+		}	 */
 
 		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email){
 			var myRootRef = database.ref();
