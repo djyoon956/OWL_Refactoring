@@ -85,6 +85,13 @@
 			let pwdCheck = false;
 
 			$("#sendPwd").click(function () {
+				if(!$("#findPwdModal .email").val()){
+					warningAlert("이메일을 입력해주세요.");
+					return;
+				}
+				
+				$("#sendPwd").val("Sending...");
+				
 				$.ajax({
 					url: "ForgotPassword.do",
 					data: {
@@ -94,6 +101,7 @@
 						if (data.result) {
 							successAlert(data.message);
 							$("#findPwdModal").modal("hide");
+							$("#sendPwd").val("SEND");
 						} else {
 							warningAlert(data.message);
 						}

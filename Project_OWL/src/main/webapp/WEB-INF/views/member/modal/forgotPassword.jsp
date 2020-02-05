@@ -14,7 +14,7 @@
             <div class="form-group">
                 <input type="email" name="email" class="form-control email" placeholder="Email">
             </div>
-            <input type="button" class="btn login-form__btn submit w-100" id="sendPwd" value="SEND">
+            <input type="button" class="btn btn loginButton btn-block waves-effect waves-light"  id="sendPwd" value="SEND">
         </div>
       </div>
     </div>
