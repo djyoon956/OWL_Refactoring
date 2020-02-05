@@ -16,15 +16,14 @@
                      <br>                
                      <h5>Favorite</h5>
                      <div style="position:relative;">
-                     <p>해당 프로젝트를 즐겨찾기에 추가하시겠습니까?</p>
-                     
+                     <p>해당 프로젝트를 즐겨찾기에 추가하시겠습니까?</p>                   
 					<div class="favoriteBtn" id="favoriteBtn">
 						  <input type="checkbox" class="favoriteCheckbox">
 						  <div class="knobs"></div>
 						  <div class="layer"></div>
 					</div>
 		             <br>
-                 </div>
+                 </div>                
                  <div class="modal-footer edit">
                  		<input type="hidden" id="realProName" value="">
                      <button type="button" class="btn btn-primary" data-editidx="" data-dismiss="modal" id="editBtn">적용하기</button>
