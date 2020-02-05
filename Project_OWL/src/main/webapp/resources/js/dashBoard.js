@@ -488,10 +488,17 @@ function setProjectMemberProgress(projectIdx){
 				options: {
 					responsive: true,
 					maintainAspectRatio: false,
+					scaleBeginAtZero : true,
 					tooltips: {
 						mode: 'index',
 						intersect: true
-					}
+					},scales: {
+				        yAxes: [{
+				            ticks: {
+				                beginAtZero: true
+				            }
+				        }]
+				    }
 				}
 			});
 		},
