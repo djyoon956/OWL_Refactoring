@@ -12,4 +12,5 @@ function initProjcet(projectIdx, projectName, projectColor,projectStartDate, pro
 	initNotice();
 	initKanban(projectIdx);
     initDashBoard(projectIdx, projectColor);
+    initDrive();
 }

@@ -1,10 +1,7 @@
 let driveViewType ;
-let driveProjectIdx;
 let isTrash = false;  //false : drive , true : trash
 
-function initDrive(projectIdx){	
-	driveProjectIdx = projectIdx;
-	
+function initDrive(){	
 	setFileUpload();
 	setDriveTable();
 	
@@ -52,7 +49,7 @@ function setTrashData() {
 	isTrash = true;
 	$.ajax({
 		url : "GetTrashList.do",
-		data : {'projectIdx' : driveProjectIdx},
+		data : {'projectIdx' : currentProjectIdx},
 		success : function (data) {
 			console.log('GetTrashList in');
 			console.log(data);
@@ -503,7 +500,7 @@ function deleteFilefromTrash(driveFileIdx) {
 	    		data : {'driveFileIdx' : driveFileIdx},
 	    		success : function(data) {
 	    			//console.log('deleteFileFromTrash in');
-	    			setTrashData(driveProjectIdx);
+	    			setTrashData(currentProjectIdx);
 	    			
 	    		},
 	    		error : function() {
@@ -532,7 +529,7 @@ function deleteFolderfromTrash(driveFileIdx) {
 	    		data : {'driveFileIdx' : driveFileIdx},
 	    		success : function(data) {
 	    			console.log('deleteFolderfromTrash in');
-	    			setTrashData(driveProjectIdx);
+	    			setTrashData(currentProjectIdx);
 	    			
 	    		},
 	    		error : function() {
@@ -551,7 +548,7 @@ function restoreFileTrash(driveFileIdx) {
 		data : {'driveFileIdx' : driveFileIdx},
 		success : function(data) {
 			 successAlert("파일 복원 완료");
-			setTrashData(driveProjectIdx);
+			setTrashData(currentProjectIdx);
 		},
 		error : function() {
 			console.log('restorefromTrash ERROR');
@@ -572,7 +569,7 @@ function restoreFolderfromTrash(driveFileIdx) {
 			console.log(data);
 			 successAlert("폴더 복원 완료");
 
-			setTrashData(driveProjectIdx);
+			setTrashData(currentProjectIdx);
 		},
 		error : function() {
 			console.log('restoreFolderfromTrash ERROR');
@@ -620,7 +617,7 @@ function renameFile(driveFileIdx){
 	jQuery.ajaxSettings.traditional = true;
 	$.ajax({
 		 url : "RenameDriveFile.do",
-		 data : { projectIdx : driveProjectIdx
+		 data : { projectIdx : currentProjectIdx
 			 		, refs : refs
 			 		, driveIdx : folderIdx
 			 		, driveFileIdx : driveFileIdx
@@ -726,13 +723,13 @@ function downloadFile(fileName){
 	
 	console.log(folderIdx);
 	console.log(refs);
-	let path ="/upload/project/"+driveProjectIdx+"/drive/";
+	let path ="/upload/project/"+currentProjectIdx+"/drive/";
 	
 	jQuery.ajaxSettings.traditional = true;
 	$.ajax({
 		url : "GetDriveDownloadPath.do",
 		type : "POST",
-		data : { projectIdx : driveProjectIdx
+		data : { projectIdx : currentProjectIdx
 					, folderIdx :folderIdx
 					, refs : refs 
 					, fileName : fileName
@@ -783,7 +780,7 @@ function driveRefresh(){
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
-		data:{projectIdx: driveProjectIdx},
+		data:{projectIdx: currentProjectIdx},
 		success:function(data){
 			let folder;		
 			$.each(data, function(index, element){				
@@ -846,7 +843,7 @@ function setFileUpload(){
 	$("#driveUploadFiles").fileupload({
 		singleFileUploads: false,
 		url : "DriveFileUpload.do",
-		formData : {projectIdx : driveProjectIdx},
+		formData : {projectIdx : currentProjectIdx},
 		add: function(e, data){
 			let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 			$("#driveUploadFiles").fileupload( 'option', 'formData').folderIdx = folderIdx;
@@ -855,12 +852,15 @@ function setFileUpload(){
 		},
 		dropZone: $('#dragandrophandler'),
 		done : function(e, data){
-			console.log("done");
+			let files = [];
+			$.each(data.files, function(index, element){
+				files.push(element.name);
+			})
 			callDirectoryData();
-			
 			//푸쉬 알람 보내기. 이 함수의 위치는 top.jsp  아래쪽 스크립트에 있음...
-    	   // sendNoticePushAll("프로젝트 이름 요기", "xx파일이 업로드 되었습니다.", driveProjectIdx); 
-    		//pushNotice(driveProjectIdx,currentProjectName, "xx파일이 업로드 되었습니다." , "drive");
+			// currentProjectName, currentProjectIdx, currentProjectName, files
+    	   // sendNoticePushAll("프로젝트 이름 요기", "xx파일이 업로드 되었습니다.", currentProjectIdx); 
+    		//pushNotice(currentProjectIdx,currentProjectName, "xx파일이 업로드 되었습니다." , "drive");
     		
 		},
 		fail : function(){
