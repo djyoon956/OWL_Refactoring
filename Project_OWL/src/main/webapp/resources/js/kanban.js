@@ -1399,8 +1399,8 @@ function mentionSearch() {
 	      $("#issueDetailPriority").removeClass("hidden");
 	      }
 	      
-	      if($("#kanbanFileBox").hasClass("hidden")) {
-	      $("#kanbanFileBox").addClass("hidden");
+	      if(!$(".editIssueFileBtn").hasClass("hidden")) {
+	      $(".editIssueFileBtn").addClass("hidden");
 	      }
 	      changeKanbanView('list');
 	   }

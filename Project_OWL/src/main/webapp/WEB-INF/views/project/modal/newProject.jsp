@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
      <div class="modal fade" id="newProject">
          <div class="modal-dialog modal-dialog-centered" role="document">
-             <div class="modal-content">
+             <form class="modal-content insertContent">
 			<div class="modal-header text-center">
 				<h4 class="modal-title">
 					<i class="fas fa-desktop"></i>&nbsp; 프로젝트 생성
@@ -27,6 +27,6 @@
                  <div class="modal-footer">
                      <button type="button" class="btn btn-primary" data-dismiss="modal" id="insertBtn">생성하기</button>
                  </div>
-             </div>
+             </form>
          </div>
      </div>

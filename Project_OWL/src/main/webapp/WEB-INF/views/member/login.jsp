@@ -278,8 +278,8 @@
 										</div>
 										<div class="form-check mb-3" style="padding-left: 0px;">
 											<div class="custom-control custom-checkbox mr-sm-2">
-												<input type="checkbox" class="custom-control-input" id="customControlAutosizing1">
-												<label class="custom-control-label" for="customControlAutosizing1">Remember me</label>
+												<input type="checkbox" class="custom-control-input" id = "remember_me" name ="remember-me">
+												<label class="custom-control-label" for="remember_me">Remember me</label>
 											</div>
 										</div>
 										<input type="submit" class="btn loginButton btn-block waves-effect waves-light" value="LOGIN">

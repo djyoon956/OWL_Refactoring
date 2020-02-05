@@ -114,7 +114,7 @@ function refreshScheduleVisibility() {
                             <h4 class="card-title">Issue Task</h4>
                             <div id="dashBoardPTableEmptyBox" class="emptyBox">
 		                    <div>
-		                    	<h3 class="mb-4">프로젝트 내에서 할당된 이슈가 없습니다.</h3>
+		                    	<h3 class="mb-4">프로젝트 내에 할당된 이슈가 없습니다.</h3>
 		                    </div>
 	                    </div>
 	                    <div id="dashBoardPTableBox" class="hidden">
@@ -157,13 +157,13 @@ function refreshScheduleVisibility() {
                                 <div class="align-items-center">
 									<div class="row">
 									   <div class="col-md-6 hidden" id="OurProgressNone" style="text-align: center; height: 150px;"> 
-												<h4 style="margin-top: 40px;">프로젝트 내에 이슈가</h4>
-												<h4>존재하지 않습니다.</h4>
+												<h4 style="margin-top: 40px;">프로젝트 내에 할당된 </h4>
+												<h4>이슈가 없습니다.</h4>
 										</div>
 										<div class="col-md-6" id="chartProjectProgress"> </div>
 										<div class="col-md-6 hidden" id="MyProgressNone" style="text-align: center; height: 150px;"> 
-												<h4 style="margin-top: 40px;">본인에게 할당된 이슈가</h4>
-												<h4>존재하지 않습니다.</h4>
+												<h4 style="margin-top: 40px;">나에게 할당된</h4>
+												<h4> 이슈가 없습니다.</h4>
 										</div>
 										<div class="col-md-6" id="chartMyProgress"> </div>
 									</div>

@@ -67,6 +67,8 @@ function setNoticeData() {
 		url: "GetNotices.do",
 		data: {projectIdx: currentProjectIdx},
 		success: function (data) {
+			console.log("setNoticeData");
+			console.log(data);
 			if(data.length > 0){
 				$('#noticeTable').DataTable().clear();
 				$.each(data, function (index, element) {

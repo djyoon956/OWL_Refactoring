@@ -171,19 +171,8 @@ display: block;
 	
 	z-index : -20;
 } 
-/*   .toggleOption {
-	margin-right:0px;userEmail
-	background: #326295;
-	height: 100%;
-	width: 310px;
-	position: fixed;
-	right:0;
-	overflow: hidden;
-	z-index : -20;
-} 
- */
 
- 
+
 #userImg, .coloricon {
 	border: 3px solid #fcf9f5;
 	box-shadow: 1px 1px 1px 1px #BDBDBD;
@@ -291,31 +280,6 @@ display: block;
 }
 
 
-/* alarm shake */
-#alarmBtn:hover {
-	/* Start the shake animation and make the animation last for 0.5 seconds */
-   /*  animation: shake 3s; */
-	/* When the animation is finished, start again */
-	/* animation-iteration-count: infinite; */
-}
-
-
-
-
-/*@ keyframes shake  {
-	0% { transform: translate(2px, 1px) rotate(0deg) scale(1); }
-	10% { transform: translate(-1px, -2px) rotate(-1deg); }
-	20% { transform: translate(-3px, 0px) rotate(1deg); }
-	30% { transform: translate(0px, 2px) rotate(0deg); }
-	40% { transform: translate(1px, -1px) rotate(1deg); }
-	50% { transform: translate(-1px, 2px) rotate(-1deg); }
-	60% { transform: translate(-3px, 1px) rotate(0deg) scale(1.5); }
-	70% { transform: translate(2px, 1px) rotate(-1deg); }
-	80% { transform: translate(-1px, -1px) rotate(1deg); }
-	90% { transform: translate(2px, 2px) rotate(0deg); }
-	100% { transform: translate(1px, -2px) rotate(-1deg) scale(0); }
-} */
-
 .activity {
 	height: 15px;
 	width: 15px;
@@ -386,8 +350,8 @@ display: block;
     border-radius: 10rem;
 }
 .gradient-1  {
-    /* background-image: linear-gradient(230deg, #759bff, #843cf6); */ 
-   background-color: #e3eefa;
+   background-color: #5FDC9C;
+   color : white;
 }
 </style>
 
@@ -416,14 +380,7 @@ display: block;
                      <img src="resources/images/OWL_LOGO_BEIGE.png" alt="homepage" class="light-logo" />
                     
                 </span>
-                <!-- Logo icon -->
-                <!-- <b class="logo-icon"> -->
-                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                    <!-- Dark Logo icon -->
-                    <!-- <img src="../../assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
-                    
-                <!-- </b> -->
-                <!--End Logo icon -->
+
             </a>
             <!-- ============================================================== -->
             <!-- End Logo -->
@@ -478,12 +435,7 @@ display: block;
                     </a>
                 </li>
                 
-                <!-- Setting Icon 
-                 <li class="nav-item iconMargin">
-                    <a class="nav-link waves-effect waves-dark" href="javascript:void(0)" id="settingBtn"> 
-                    	<i class="fas fa-cog fa-lg" id="setIcon"></i>
-                    </a>
-                </li>-->
+
             </ul>
             
             
@@ -768,46 +720,13 @@ display: block;
                      </div>	
 				</div>  
 		
-		
-			<!-- Setting toggle 
-			<div class="toggleOption " id="settingToggle"  style="padding-top: 0px; z-index: 20;">
-				<div class="text-center setting-box  mt-5" id="setBackgroundColor">
-					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR BACKGROUND</h5>
-					<hr class="hrGray">
-					<span class="coloricon" style="background-color: white; display: inline-block;"></span>
-					<span class="coloricon" style="background-color: gray; display: inline-block;"></span>
-
-
-				</div>
-				<div class="text-center setting-box mt-5" id="setActiveColor">
-					<h5 class="mt-3 mb-1 whiteColor">SIDEBAR ACTIVE COLOR</h5>
-					<hr class="hrGray">
-					<span class="coloricon " style="background-color: white; display: inline-block;"></span>
-					<span class="coloricon " style="background-color: #f7c9c9;display: inline-block;"></span>
-					<span class=" coloricon " style="background-color: #91a8d1; display: inline-block;"></span>
-					<span class=" coloricon " style="background-color: #c4d7a4; display: inline-block;"></span>
-				</div>
-				<div class="text-center setting-box mt-5">
-					<h5 class="mt-3 mb-1 whiteColor">SELECT FONT</h5>
-					<hr class="hrGray">
-					<div class="col-lg-12">
-						<select class="form-control" id="setFont" name="val-skill">
-							<option value="'Nanum Brush Script', cursive" style="font-family: 'Nanum Brush Script', cursive;">나눔붓체</option>
-                            <option value="'Jua', sans-serif" style="font-family: 'Jua', sans-serif;">주아체</option>
-                            <option value="'Hi Melody', cursive" style="font-family: 'Hi Melody', cursive;">하이멜로디체</option>
-                            <option value="'Gothic A1', sans-serif" style="font-family: 'Gothic A1', sans-serif;">고딕체</option>
-						</select>
-					</div>
-				</div>
-			</div>
-			-->
+	
 			
         </div>
         
     </nav>
 </header>
- <!-- <script type="text/javascript" src="resources/js/jquery-3.2.1.min.js"></script> -->
-    <!--   <script type="text/javascript" src="resources/js/materialize.min.js"></script> -->
+
       <script type="text/javascript" src="resources/js/underscore-min.js"></script>
       
       
@@ -816,8 +735,7 @@ display: block;
       
       <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-	<script
-		src="https://www.gstatic.com/firebasejs/7.6.2/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-analytics.js"></script>
 	<!-- firebase cloud firestore -->
 	<script
 		src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
