@@ -857,6 +857,11 @@ function setFileUpload(){
 		done : function(e, data){
 			console.log("done");
 			callDirectoryData();
+			
+			//푸쉬 알람 보내기. 이 함수의 위치는 top.jsp  아래쪽 스크립트에 있음...
+    	   // sendNoticePushAll("프로젝트 이름 요기", "xx파일이 업로드 되었습니다.", driveProjectIdx); 
+    		//pushNotice(driveProjectIdx,currentProjectName, "xx파일이 업로드 되었습니다." , "drive");
+    		
 		},
 		fail : function(){
 			console.log("driveUploadFiles fail");
