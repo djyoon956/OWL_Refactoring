@@ -60,8 +60,8 @@
         $(function () {			
             setTheme("${setting.themeColor}", "${setting.font}");
             setEmoji();
-            initProjcet("${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
-            initCalendar("${project.projectIdx}", "${project.projectColor}", "${project.startDate}", "${project.endDate}");
+            initProjcet("${member.email}","${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
+            
 
             
             $(".tui-full-calendar-layout.tui-view-8").addClass("hidden");
@@ -202,27 +202,16 @@
         
         function setChageView(target) {
             if (target === "dash")
-                setDashBoardData();
+            	setProjectDashBoard();
             else if (target === "calendar")
-                setCalendarData();
-            else if (target === "kanban"){
+            	refreshScheduleVisibility();
+            else if (target === "kanban")
                 setKanbanData();
-            }
             else if (target === "notice")
                 setNoticeData();
             else if (target === "drive")
                 setDriveData();
         }
-
-        function setDashBoardData() {
-            console.log("in setDashBoardData");
-        }
-
-        function setCalendarData() {
-            console.log("in setCalendarData");           
-            refreshScheduleVisibility();
-        }
-
 
         function setDriveData() {
             console.log("in setDriveData");

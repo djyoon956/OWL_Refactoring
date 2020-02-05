@@ -78,13 +78,20 @@
 		};
 
 		$(function () {
-
+			checkError();
 			//flag 
 			let nameCheck = false;
 			let emailCheck = false;
 			let pwdCheck = false;
 
 			$("#sendPwd").click(function () {
+				if(!$("#findPwdModal .email").val()){
+					warningAlert("이메일을 입력해주세요.");
+					return;
+				}
+				
+				$("#sendPwd").val("Sending...");
+				
 				$.ajax({
 					url: "ForgotPassword.do",
 					data: {
@@ -94,6 +101,7 @@
 						if (data.result) {
 							successAlert(data.message);
 							$("#findPwdModal").modal("hide");
+							$("#sendPwd").val("SEND");
 						} else {
 							warningAlert(data.message);
 						}
@@ -238,11 +246,14 @@
 			console.log("check error");
 
 			let error = "${errorMessage}";
-
+			
 			if (!error)
 				return;
-			else
-				errorAlert(error);
+			else {
+				Swal.fire( '로그인 실패'
+								, error
+								, 'error')
+			}
 		}
 	</script>
 </head>
@@ -278,8 +289,8 @@
 										</div>
 										<div class="form-check mb-3" style="padding-left: 0px;">
 											<div class="custom-control custom-checkbox mr-sm-2">
-												<input type="checkbox" class="custom-control-input" id="customControlAutosizing1">
-												<label class="custom-control-label" for="customControlAutosizing1">Remember me</label>
+												<input type="checkbox" class="custom-control-input" id = "remember_me" name ="remember-me">
+												<label class="custom-control-label" for="remember_me">Remember me</label>
 											</div>
 										</div>
 										<input type="submit" class="btn loginButton btn-block waves-effect waves-light" value="LOGIN">

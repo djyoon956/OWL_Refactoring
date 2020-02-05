@@ -282,12 +282,12 @@ function initKanban(projectIdx){
 		 			        	console.log("event 값은???~~~~~~~~~~~~~~~" + $('#getAuthority').val());
 		 			        	var projectAuth = $('#getAuthority').val();
 		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){
-		 			        		sendNoticePushToOne(pmemail, curName, istitle);
-		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, istitle, "kanbanIssue", pmemail);
+		 			        		sendNoticePushToOne(pmemail, curName+"님이 이슈 생성", istitle);
+		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssue", pmemail);
 		 			        		
 		 			        	}else{
-		 			        		sendNoticePushAll(curName, istitle, currentProjectIdx);
-		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, istitle, "kanbanIssue");
+		 			        		sendNoticePushAll(curName + "님이 이슈 생성", istitle, currentProjectIdx);
+		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle, "kanbanIssue");
 		 			        	}
 		 			        	
 	 			        		
@@ -495,11 +495,9 @@ function addReply(creator) {
 		 		type :"POST",
 				url : "InsertReply.do",
 				data : { 'issueIdx' : $('#issueIdxNum').val()
-							, 'content': $('#replycontent').val()
-							, 'creator' : creator},
+							, 'content': $('#replycontent').val()},
 				success : function(data) {
 					arrSelectedUserEmail.forEach(function(item, index){
-						console.log('멘션 파트에서 선택된 유저의 이메일은요???~~~~~' + item );
 						sendNoticePushToOne(item, "<" + curName + "님의 멘션>", $('#replycontent').val());
 			        	pushNoticeToOne(currentProjectIdx,currentProjectName, curName + "언급하였습니다.", "mention", item);
 					})
@@ -749,28 +747,32 @@ function setKanbanDetail(issueIdx){
 					});
 					
 					$("#issueDetailComment").empty();
-					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
-					$.each(data.replies, function(index, element){					
+					$("#issueDetailCommentCount").text(data.replies.length);
+					$.each(data.replies, function(index, element){
+						console.log(element);
+						console.log(loginUser);
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
-				
                      
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
-										+ '<img class="rounded-circle" width="40" src="upload/memeber/'+element.profilepic+'" alt="user" >'
+										+ '<img class="rounded-circle" width="40" src="upload/member/'+element.profilepic+'" alt="user" onerror="this.src=\'resources/images/login/profile.png\'">'
 										+ '	</div>'
 										+ '	 <div class="comment-text w-100">'
-										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creator
+										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creatorName
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
-										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}"></textarea>'
-										+ '		<div class="comment-footer float-right">'
+										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}"></textarea>';
+						if(element.creator == loginUser){
+							control += '		<div class="comment-footer float-right">'
 										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
 										+ '		<button type="button" class="btn btn-info btn-sm hidden" id="'+element.issueRlyIdx+'editChangeBtn">SaveChange</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm hidden replyCcBtn" id="'+element.issueRlyIdx+'editCancelBtn">Cancel</button>'
-										+ '		</div>'
-										+ '	</div>'
-										+ '</div>';
+										+ '		</div>';
+						}
+						
+						control += '	</div></div>';
+						
 						$("#issueDetailComment").prepend(control);
 					});
 
@@ -896,8 +898,8 @@ function changeKanbanView(view){
 				   $('#kanbanIn').addClass('hidden');
 				   $('#-1Column').addClass('hidden');
 				   $('#-99Column').addClass('hidden');
-				   $('#addIssuebtn').addClass('hidden'); 
-				   $('#addLabelBtn').addClass('hidden'); 
+				   $('#openIssueBtn').addClass('hidden');
+				   $('#closeIssueBtn').addClass('hidden');	
 				   $('#addColumnBtn').addClass('hidden');
 				   $('#confirmIssueBtn').addClass('hidden'); 
 			 }else{
@@ -935,17 +937,17 @@ function editLabel(idx, color, name) {
 	
 	
 	function deleteReply(replyIdx) {
-		
 		   $.ajax ({
 		      url : "DeleteReply.do",
 		      method : "POST",
 		      data : {'issuerlyidx' : replyIdx},
 		      success: function(data) {
-		         
-		           $("#"+replyIdx+"Reply").remove();
-  
-		      }, error : function() {
-		         console.log("deleteLabel error"); 
+		    	  let count = Number($("#issueDetailCommentCount").text());
+		    	  $("#issueDetailCommentCount").text(--count);
+		          $("#"+replyIdx+"Reply").remove();
+		      }, 
+		      error : function() {
+		         console.log("deleteReply error"); 
 		         }
 		      })
 		   }	
@@ -1337,9 +1339,9 @@ function assignListEditview(){
 	
 var arrSelectedUserEmail =[];
 function mentionSearch() {
-
+	console.log("멘션 서치");
 		 getProjectMemberList("mentionSearch");
-		 console.log("memberSearch");
+		 
     	//멘션
 	  $('.editable').textcomplete([{
 		  

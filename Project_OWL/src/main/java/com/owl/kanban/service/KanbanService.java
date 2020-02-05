@@ -404,9 +404,6 @@ public class KanbanService {
 	
 	
 	public Reply insertReply(Reply reply) {
-		System.out.println("insertReply Service in");
-		System.out.println(reply);		
-
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		Reply re = new Reply();

@@ -271,16 +271,12 @@ public class KanbanRestController {
 		return result;
 	}
 	
-	
 	@RequestMapping(value="InsertReply.do",method = RequestMethod.POST)
-	public Reply insertReply(Reply reply) {
-		
-		Reply re = null;
-		re = service.insertReply(reply);
-
+	public Reply insertReply(Reply reply, Principal principal, HttpServletRequest request) {
+		reply.setCreator(MemberHelper.getMemberEmail(principal, request.getSession()));
+		Reply re =  service.insertReply(reply);
 		return re;
 	}
-	
 	
 	@RequestMapping(value="DeleteReply.do", method = RequestMethod.POST)
 	public boolean deleteReply(@RequestParam(value = "issuerlyidx") int issuerlyidx) {
