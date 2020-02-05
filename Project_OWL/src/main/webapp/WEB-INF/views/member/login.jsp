@@ -78,7 +78,7 @@
 		};
 
 		$(function () {
-
+			checkError();
 			//flag 
 			let nameCheck = false;
 			let emailCheck = false;
@@ -246,11 +246,14 @@
 			console.log("check error");
 
 			let error = "${errorMessage}";
-
+			
 			if (!error)
 				return;
-			else
-				errorAlert(error);
+			else {
+				Swal.fire( '로그인 실패'
+								, error
+								, 'error')
+			}
 		}
 	</script>
 </head>
