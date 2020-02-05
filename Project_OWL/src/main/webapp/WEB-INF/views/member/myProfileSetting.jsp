@@ -7,13 +7,18 @@
     }
 </style>
 <script>
-    /* $("#deleteMemberBtn").click(function() { */
     $(function () {
         let agreeChk = false;
         let pwdChk = true;
 		let font = "{setting.font}";
 		$('#setFont option[value=\"'+font+'\"]').attr("selected", "selected");
-		
+		$("#settingTabs li a").on("click", function(){
+			if(($(this).attr("href").replace("#","").trim()=="deleteAccount" || $(this).attr("href").replace("#","").trim()=="themeSetting") && !$("#twopage").hasClass("hidden")){
+				 $("#firstpage").removeClass("hidden");
+				 $("#twopage").addClass("hidden");
+			}
+		})
+
 		$('#myProfileSetModal').on('hidden.bs.modal', function(event){
 			$('#myPassword').val("");
 			$("#twopage").addClass("hidden");
@@ -49,20 +54,7 @@
                 });
             }
         });
-/* 
-        $(".nav-link").attr("href", "#deleteAccount"){
-				console.log("나야!!");
-            }
 
-		
-        $("#deleteAccount div").click(function () {
-            console.log("이거 누름");
-			if(!$("#twopage").hasClass("hidden")){
-					$("#twopage").addClass("hidden");	
-				}
-        		   
-   		 });   
-         */
         $("#editButton").click(function () {
 	            $("#firstpage").addClass("hidden");
 	            $("#twopage").removeClass("hidden");	            
@@ -193,7 +185,7 @@
             </div> 
             <div class="modal-body">
                 <div class="default-tab">
-                    <ul class="nav nav-tabs mb-3" role="tablist">
+                    <ul class="nav nav-tabs mb-3" role="tablist" id="settingTabs">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#profile">My Profile</a> </li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#deleteAccount">Delete Account</a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#themeSetting">Theme Setting</a></li>
