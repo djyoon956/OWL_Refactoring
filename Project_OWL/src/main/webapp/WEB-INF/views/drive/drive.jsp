@@ -11,9 +11,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.ui.position.js"></script>
 
-<link href="resources/css/drive.css" rel="stylesheet">
-<script src="resources/js/drive.js"></script>
-
 <style>
 .btn-link1 {
 	display: inline-block;
@@ -53,8 +50,6 @@ function addFolder(folder) {
 }
 
 $(function(){
-	initDrive("${project.projectIdx}");
-
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
