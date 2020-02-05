@@ -20,12 +20,12 @@
 .labelList {
 	margin-bottom: 5px;
 }
-
+/* 
 .labelListSection {
 	padding-left: 50px;
 	padding-right: 10px;
 	overflow: auto;
-}
+} */
 
 .badgeIconinList {
 	display: inline-block;
@@ -38,7 +38,9 @@
 }
 
 #labelList {
-	overflow-y : auto;
+ padding : 10px 60px 10px 50px;
+ 	overflow-y : auto;
+	max-height: 300px;
 }
 </style>
 
@@ -74,33 +76,9 @@
 							
 
 						</div>
-						<!-- label list section -->
+
 						<div class="col-lg-6 labelListSection" id="labelList">
 							
-<!-- 								<div class="row labelList">
-									<div class="col-lg-8">
-										<span class="badgeIconinList" style="background-color: #F4D452">test</span>
-									</div>
-									<div class="col-lg-2">
-										<a>Edit</a>
-									</div>
-									<div class="col-lg-2">
-										<a>Delete</a>
-									</div>
-								</div>
-								<hr>
-								<div class="row labelList">
-									<div class="col-lg-8">
-										<span class="badgeIconinList" style="background-color: #f0f3f7">test</span>
-									</div>
-									<div class="col-lg-2">
-										<a>Edit</a>
-									</div>
-									<div class="col-lg-2">
-										<a>Delete</a>
-									</div>
-								</div>
-								<hr> -->
 						</div>
 
 					</div>
