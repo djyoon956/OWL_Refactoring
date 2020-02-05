@@ -60,8 +60,8 @@
         $(function () {			
             setTheme("${setting.themeColor}", "${setting.font}");
             setEmoji();
-            initProjcet("${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
-            initCalendar("${project.projectIdx}", "${project.projectColor}", "${project.startDate}", "${project.endDate}");
+            initProjcet("${member.email}","${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
+            
 
             
             $(".tui-full-calendar-layout.tui-view-8").addClass("hidden");

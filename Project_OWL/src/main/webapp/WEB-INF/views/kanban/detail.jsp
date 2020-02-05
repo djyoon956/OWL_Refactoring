@@ -103,7 +103,7 @@ height: 50px !important;
                             <a data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanCommentBox" aria-expanded="true" aria-controls="kanbanCommentBox">
                                 <h5 class="mb-0">
                                     <i class="fas fa-comments mr-2" aria-hidden="true"></i>
-                                    <span id=issueDetailCommentCount>Comments (10)</span>
+                                    <span >Comments (<span id="issueDetailCommentCount"></span>)</span>
                                 </h5>
                             </a>
                         </div>

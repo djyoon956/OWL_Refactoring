@@ -495,11 +495,9 @@ function addReply(creator) {
 		 		type :"POST",
 				url : "InsertReply.do",
 				data : { 'issueIdx' : $('#issueIdxNum').val()
-							, 'content': $('#replycontent').val()
-							, 'creator' : creator},
+							, 'content': $('#replycontent').val()},
 				success : function(data) {
 					arrSelectedUserEmail.forEach(function(item, index){
-						console.log('멘션 파트에서 선택된 유저의 이메일은요???~~~~~' + item );
 						sendNoticePushToOne(item, "<" + curName + "님의 멘션>", $('#replycontent').val());
 			        	pushNoticeToOne(currentProjectIdx,currentProjectName, curName + "언급하였습니다.", "mention", item);
 					})
@@ -749,31 +747,32 @@ function setKanbanDetail(issueIdx){
 					});
 					
 					$("#issueDetailComment").empty();
-					$("#issueDetailCommentCount").text("Comment ("+data.replies.length+") ");
+					$("#issueDetailCommentCount").text(data.replies.length);
 					$.each(data.replies, function(index, element){
-					console.log('뭐 찍히니?');
-					console.log(element.profilepic);
-					
+						console.log(element);
+						console.log(loginUser);
                         let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
-				
                      
 						let control = '<div class="d-flex flex-row comment-row m-0 mb-1" id="'+element.issueRlyIdx+'Reply">'
 										+ '	<div class="p-2">'
-										+ '<img class="rounded-circle" width="40" src="upload/memeber/'+element.profilepic+'" alt="user" >'
+										+ '<img class="rounded-circle" width="40" src="upload/member/'+element.profilepic+'" alt="user" onerror="this.src=\'resources/images/login/profile.png\'">'
 										+ '	</div>'
 										+ '	 <div class="comment-text w-100">'
-										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creator
+										+ '		<h6 class="font-medium mb-2 mt-2">'+element.creatorName
 										+ '		<span class="text-muted float-right">'+element.createDate+'</span></h6>'
 										+ '		<div class="mb-1" id="'+element.issueRlyIdx+'recontent">'+element.content+'</div>'
-										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}"></textarea>'
-										+ '		<div class="comment-footer float-right">'
+										+ '		<textarea class="hidden inputBox editable" id="'+element.issueRlyIdx+'editContent" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}"></textarea>';
+						if(element.creator == loginUser){
+							control += '		<div class="comment-footer float-right">'
 										+ '		<button type="button" class="btn btn-info btn-sm" id="'+element.issueRlyIdx+'reEditBtn" onclick="editReply('+element.issueRlyIdx+', '+element.issueIdx+')">Edit</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm" id="'+element.issueRlyIdx+'reDeleteBtn" onclick="deleteReply('+element.issueRlyIdx+')">Delete</button>'
 										+ '		<button type="button" class="btn btn-info btn-sm hidden" id="'+element.issueRlyIdx+'editChangeBtn">SaveChange</button>'
 										+ '		<button type="button" class="btn btn-secondary btn-sm hidden replyCcBtn" id="'+element.issueRlyIdx+'editCancelBtn">Cancel</button>'
-										+ '		</div>'
-										+ '	</div>'
-										+ '</div>';
+										+ '		</div>';
+						}
+						
+						control += '	</div></div>';
+						
 						$("#issueDetailComment").prepend(control);
 					});
 
@@ -938,17 +937,17 @@ function editLabel(idx, color, name) {
 	
 	
 	function deleteReply(replyIdx) {
-		
 		   $.ajax ({
 		      url : "DeleteReply.do",
 		      method : "POST",
 		      data : {'issuerlyidx' : replyIdx},
 		      success: function(data) {
-		         
-		           $("#"+replyIdx+"Reply").remove();
-  
-		      }, error : function() {
-		         console.log("deleteLabel error"); 
+		    	  let count = Number($("#issueDetailCommentCount").text());
+		    	  $("#issueDetailCommentCount").text(--count);
+		          $("#"+replyIdx+"Reply").remove();
+		      }, 
+		      error : function() {
+		         console.log("deleteReply error"); 
 		         }
 		      })
 		   }	

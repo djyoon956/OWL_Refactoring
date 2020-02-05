@@ -99,8 +99,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getIssueReplies" resultType="com.owl.kanban.dto.Reply">
-		SELECT R.ISSUEIDX, R.ISSUERLYIDX, R.CREATEDATE, R.CREATOR, R.CONTENT, M.profilepic
-		FROM owl.ISSUERLY R LEFT JOIN owl.member M on R.creator = M.name
+		SELECT R.ISSUEIDX, R.ISSUERLYIDX, R.CREATEDATE, M.name as 'CREATORNAME', R.CREATOR, R.CONTENT, M.profilepic
+			FROM owl.ISSUERLY R LEFT JOIN owl.member M on R.creator = M.email
 		WHERE R.ISSUEIDX = #{issueIdx}
 	</select>
 
