@@ -28,8 +28,13 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
  	
- 
- 
+ 	 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="resources/plugin/emoji/css/emoji.css" rel="stylesheet">
+	<script src="resources/plugin/emoji/js/config.js"></script>
+	<script src="resources/plugin/emoji/js/util.js"></script>
+	<script src="resources/plugin/emoji/js/jquery.emojiarea.js"></script>
+	<script src="resources/plugin/emoji/js/emoji-picker.js"></script>
+	
     <!-- SummerNote -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
@@ -49,6 +54,7 @@
     <script type="text/javascript">
         $(function () {			
             setTheme("${setting.themeColor}", "${setting.font}");
+            setEmoji();
             initProjcet("${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
             initCalendar("${project.projectIdx}", "${project.projectColor}", "${project.startDate}", "${project.endDate}");
             $(".tui-full-calendar-layout.tui-view-8").addClass("hidden");

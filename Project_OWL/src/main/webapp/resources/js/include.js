@@ -66,3 +66,13 @@ function hexColorToG(hexColor){
 function hexColorToB(hexColor){
 	return parseInt(hexColor.substring( 5, 7 ), 16 ) ;
 }
+
+function setEmoji(){
+    window.emojiPicker = new EmojiPicker({
+        emojiable_selector: '[data-emojiable=true]',
+        assetsPath: 'resources/plugin/emoji/img/',
+        popupButtonClasses: 'fa fa-smile-o'
+      });
+
+      window.emojiPicker.discover();
+}

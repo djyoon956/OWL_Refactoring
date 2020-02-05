@@ -290,14 +290,6 @@ function initKanban(projectIdx){
 		 			        		pushKanbanIssue(currentProjectIdx, currentProjectName, istitle, "kanbanIssue");
 		 			        	}
 		 			        	
-	 			        		console.log("pm email ????????????????????????" + pmemail);
-	 			        		//푸시 알람 함수...
-	 			 				var sender = curName;
-	 			 				//console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
-	 			 				//console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + $('#pmemail').val());
-	 			 				sendNewIssuePush(pmemail, curName, istitle);//푸시 알람 보내기
-	 			 				console.log(currentProjectIdx+"/"+currentProjectName+"/"+ istitle);
-	 			 				pushKanbanIssue(currentProjectIdx,currentProjectName, istitle, "kanbanIssue", pmemail);
 	 			        		
 	 			        		
 	 			        		
@@ -350,9 +342,11 @@ function initKanban(projectIdx){
 		 	     		$("#-99Column").show();
 		 	          });
 
-		 			
-
 		 	    $("#InsertColumnBtn").on("click", function () {	
+		 	    	if(!$('#colname').val()) {
+		 	    		warningAlert("칼럼 이름을 입력해주세요.");
+		 	    		return;
+		 	    	}
 
 		 	    	$.ajax({
 		 	   				url : 'InsertColumn.do',
@@ -504,7 +498,7 @@ function addReply(creator) {
 							, 'content': $('#replycontent').val()
 							, 'creator' : creator},
 				success : function(data) {
-					
+					$(".emoji-wysiwyg-editor").empty();
 					  $('#replycontent').val("");
 			    		setKanbanDetail(data.issueIdx);
 

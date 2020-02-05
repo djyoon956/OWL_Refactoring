@@ -14,15 +14,15 @@
 		let font = "{setting.font}";
 		$('#setFont option[value=\"'+font+'\"]').attr("selected", "selected");
 		
-        $("#delPwd").keyup(function () {
-            if ($("#delPwd").val() == "" || $("#delPwd").val() == null) {
-                $("#delPwd").focus();
+        $("#delPwdOut").keyup(function () {
+            if ($("#delPwdOut").val() == "" || $("#delPwdOut").val() == null) {
+                $("#delPwdOut").focus();
             } else {
                 $.ajax({
                     url: "chkDelPwd.do",
                     data: {
                         email: $("#email").val(),
-                        password: $("#delPwd").val()
+                        password: $("#delPwdOut").val()
                     },
                     type: "post",
                     dataType: "html",
@@ -298,7 +298,7 @@
 
                                                 <c:if test="${member.signFrom == '홈페이지'}">
                                                     <div class="form-group">
-                                                        <input type="password" id="" name="password"
+                                                        <input type="password" id="delPwdOut" name="password"
                                                             class="form-control pwd" placeholder="비밀번호를 입력해주세요.">
                                                     </div>
                                                 </c:if>
