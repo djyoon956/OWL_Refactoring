@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <link href="resources/css/include.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.1.114/styles/kendo.default-v2.min.css"/>
-    <script src="https://kendo.cdn.telerik.com/2020.1.114/js/kendo.all.min.js"></script>
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.1.114/styles/kendo.default-v2.min.css"/>
+<script src="https://kendo.cdn.telerik.com/2020.1.114/js/kendo.all.min.js"></script>
 
 <style>
 .asColorPicker-wrap {
@@ -57,12 +57,11 @@ var theName;
  $(function(){
 	 $(".complex-colorpicker").asColorPicker({
 	        mode: 'complex'
-    });
+    }); 
 	 $("#daterangepicker").kendoDateRangePicker({
 		 format: "yyyy/MM/dd",
 		 parseFormats: ["yyyy-MM-dd"]
 	});
-		
 	 $(".k-textbox-container").eq(1).addClass("endDatePicker");
 	 $(".k-textbox").eq(0).attr("id", "setStart");
 	 $(".k-textbox").eq(1).attr("id", "setEnd");
@@ -87,7 +86,7 @@ var theName;
 	} 
 	
 	 let thisLi ="";
-$.ajax({
+ $.ajax({
 	        url:"InsertNewProject.do",
 	        type: "POST",
 	        data: {projectName: 	$("#projectTitle").val(),
@@ -103,6 +102,7 @@ $.ajax({
         				+ "<a type='button' id='sidebarTools' data-projectidx='"+idx+"' data-toggle='modal' data-target='#editProject'>"
         				+ "<i class='far fa-sun'></i></a></li>"; 	         	      
 	         	$("#projectlist").append(thisLi);	 
+	         	
 	       },error:function(request,status,error){
 	           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	       }
