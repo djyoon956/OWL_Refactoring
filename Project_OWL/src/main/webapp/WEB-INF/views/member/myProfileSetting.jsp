@@ -14,6 +14,12 @@
 		let font = "{setting.font}";
 		$('#setFont option[value=\"'+font+'\"]').attr("selected", "selected");
 		
+		$('#myProfileSetModal').on('hidden.bs.modal', function(event){
+			$('#myPassword').val("");
+			$("#twopage").addClass("hidden");
+			$("#firstpage").removeClass("hidden");
+		});
+		
         $("#delPwdOut").keyup(function () {
             if ($("#delPwdOut").val() == "" || $("#delPwdOut").val() == null) {
                 $("#delPwdOut").focus();
@@ -43,13 +49,26 @@
                 });
             }
         });
-		
+/* 
+        $(".nav-link").attr("href", "#deleteAccount"){
+				console.log("나야!!");
+            }
 
+		
+        $("#deleteAccount div").click(function () {
+            console.log("이거 누름");
+			if(!$("#twopage").hasClass("hidden")){
+					$("#twopage").addClass("hidden");	
+				}
+        		   
+   		 });   
+         */
         $("#editButton").click(function () {
 	            $("#firstpage").addClass("hidden");
-	            $("#twopage").removeClass("hidden");
+	            $("#twopage").removeClass("hidden");	            
         });   
-        
+
+
         $("#deleteChk").change(function () {
             if ($("input:checkbox[id='deleteChk']").is(":checked") == true) {
                 $("#deleteChk").siblings(".text-danger").css("display", "none");
@@ -113,7 +132,10 @@
     });
     
 	function updateMyProfile(){
-		
+		 if(!$("#myPassword").val()){
+				warningAlert("비밀번호를 입력해주세요.");
+				 return false;
+			} 
 		let formData = new FormData();
 		
 	    formData.append("password", $("#myPassword").val());
@@ -165,7 +187,7 @@
                 <h4 class="modal-title boldselect">
                     <i class="far fa-sticky-note"></i> &nbsp;&nbsp;My Profile Setting
                 </h4>
-                <button type="button" class="close" data-dismiss="modal">
+                <button type="button" class="close" id="closing" data-dismiss="modal">                
                     <span>&times;</span>
                 </button>
             </div> 
@@ -208,7 +230,7 @@
                         <div class="hidden" id="twopage">
                             <div class="card">
                                 <div class="card-body" style="padding-top: 20px;">
-                                    <div class="basic-form">
+                                    <div class="basic-form" id="changeSet">
                                             <div class="text-center mb-3" id="changeImg">
                                                 <img id="profileImage" src="upload/member/${member.profilePic}"
                                                     onerror="this.src='resources/images/login/profile.png'"
@@ -334,8 +356,14 @@
                                                     style="font-family: 'Jua', sans-serif;">주아체</option>
                                                 <option value="'Hi Melody', cursive"
                                                     style="font-family: 'Hi Melody', cursive;">하이멜로디체</option>
+                                                <option value="'Yeon Sung', cursive"
+                                                    style="font-family: 'Yeon Sung', cursive;">연성체</option>
+                                                <option value="'East Sea Dokdo', cursive"
+                                                    style="font-family: 'East Sea Dokdo', cursive;">독도체</option>   
+                                                 <option value="''Gamja Flower', cursive"
+                                                    style="font-family: 'Gamja Flower', cursive;">감자꽃체</option>    
                                                 <option value="'Gothic A1', sans-serif"
-                                                    style="font-family: 'Gothic A1', sans-serif;">고딕체</option>
+                                                    style="font-family: 'Gothic A1', sans-serif;">고딕체</option>                                                      
                                             </select>
                                         </div>
                                     </div>

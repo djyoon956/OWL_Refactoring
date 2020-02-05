@@ -258,7 +258,7 @@ function MyLineChart(){
 	    <div id="myDashBoardBox" class="row">
 	         <!-- IssueTask -->
 	        <div class="col-lg-6">
-	            <div class="card dash_shadow dash_radius" style="height: 450px">
+	            <div class="card dash_shadow dash_radius" style="height: 480px;">
 	                <div class="card-body">
 	                    <h4 class="card-title">Issue Task</h4>
 	                    <div id="dashBoardTableEmptyBox" class="emptyBox">
@@ -287,7 +287,7 @@ function MyLineChart(){
 	        
 	        <!-- TimeLine -->
 	        <div class="col-lg-6">
-	            <div class="card dash_shadow dash_radius" style="height: 450px">
+	            <div class="card dash_shadow dash_radius"  style="height: 480px;">
 	                <div class="card-body h-100">
 	                    <h4 class="card-title">Timeline</h4>
 	                    <h6 id="timeLineDate"></h6>
@@ -297,7 +297,7 @@ function MyLineChart(){
 		                    	<h4 class="mt-1"> (2020-01-29 ~ 2020-02-07)</h4>
 		                    </div>
 	                    </div>
-	                    <div style="height: 350px; overflow: auto">
+	                    <div style="height: 380px; overflow: auto">
 	                    <div class="d-md-flex align-items-center" id="dashboardTimeLine"  >
 	                        <ul class="timeline w-100" >
 	                        </ul>

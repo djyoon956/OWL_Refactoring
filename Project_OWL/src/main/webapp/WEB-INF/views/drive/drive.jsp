@@ -50,6 +50,11 @@ function addFolder(folder) {
 }
 
 $(function(){
+$("#driveSearchBtn").click(function(){
+	$("#default").addClass("hidden");
+	$("#searchFile").removeClass("hidden");
+});
+	
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
