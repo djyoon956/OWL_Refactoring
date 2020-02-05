@@ -498,7 +498,7 @@ function addReply(creator) {
 							, 'content': $('#replycontent').val()
 							, 'creator' : creator},
 				success : function(data) {
-					
+					$(".emoji-wysiwyg-editor").empty();
 					  $('#replycontent').val("");
 			    		setKanbanDetail(data.issueIdx);
 
