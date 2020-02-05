@@ -84,8 +84,10 @@ var theName;
 		warningAlert("모든 내용을 입력해주세요.");
 		 return false;
 	} 
-	
+
 	 let thisLi ="";
+	 let theStartDate = new Date($("#setStart").val()).toString();
+	 let theEndDate = new Date($("#setEnd").val()).toString();
  $.ajax({
 	        url:"InsertNewProject.do",
 	        type: "POST",
@@ -102,14 +104,16 @@ var theName;
         				+ "<a type='button' id='sidebarTools' data-projectidx='"+idx+"' data-toggle='modal' data-target='#editProject'>"
         				+ "<i class='far fa-sun'></i></a></li>"; 	         	      
 	         	$("#projectlist").append(thisLi);	 
-	         	
-	       },error:function(request,status,error){
-	           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	         	makeStart(idx, theStartDate);
+	         	makeEnd(idx, theEndDate);	         	
 	       }
-
 	   }); 
 	 });    
-
+ $("#newProject").on('hidden.bs.modal', function (event) {
+	  $(this).find('.modal-content.insertContent')[0].reset();
+	  $(".asColorPicker-trigger").children('span').css("background", "#326295");
+	}); 
+		 
  $("#editProject").on('show.bs.modal', function (event) {
 		let proIdx = $(event.relatedTarget).data('projectidx');
 		$("#editBtn").attr("data-editidx", proIdx);
@@ -164,6 +168,36 @@ var theName;
 	   });
 	 });	
  });	
+ function makeStart(idx, theStartDate){
+	 $.ajax({
+ 		url:"InsertCalendar.do",
+ 		method:"POST",
+ 		data:{calendarId: idx,
+ 			       title: '🚩 프로젝트 시작',
+     			   location: null,
+ 			       start: theStartDate,
+ 			       end: theStartDate,
+ 			       allDay: true
+ 			      },
+ 		success:function(data){	
+ 		}
+	});
+}
+function makeEnd(idx, theEndDate){
+	$.ajax({
+		url:"InsertCalendar.do",
+		method:"POST",
+		data:{calendarId: idx,
+			       title: '프로젝트 종료 🚩',
+    			   location: null,
+			       start: theEndDate,
+			       end: theEndDate,
+			       allDay: true
+			      },
+		success:function(data){	
+		}
+	});
+}
 </script>
 <aside class="left-sidebar mySetting" data-sidebarbg="skin5">
     <div class="scroll-sidebar mySetting">

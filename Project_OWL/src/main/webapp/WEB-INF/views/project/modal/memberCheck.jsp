@@ -24,7 +24,7 @@
                 <div>
                    <ul class="list-style-none assignedto text-center" id="projectInfoBox">
 	                     <li>
-	                        <h5 id="theInfo" style="background-color : ${project.projectColor};">
+	                        <h5 id="theInfo" style="background-color : #326295;">
 	                        	<b>📅  ${project.startDate} ~ ${project.endDate}</b>
 	                        </h5>
                        </li>
