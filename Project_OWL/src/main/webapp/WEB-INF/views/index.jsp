@@ -27,7 +27,7 @@ background-color:#326295;
 }
 
 .introIcon {
- 	border-radius:50%; 
+ /* 	border-radius:50%;  */
  	margin-bottom: 20px;
 }
 
@@ -480,7 +480,7 @@ font-family: 'Montserrat', sans-serif;
 	<div class="page-wrapper sectionPart w-100 ml-0" style="height:470px;" >
 		<div class="row" style="padding-left: 100px; padding-right: 100px;">
 			<div class="col-7">
-			<img src="resources/images/indexImage/DriveEx.JPG" height="410px" width="730px"  style="padding:4px; padding-left:8px;padding-right:10px;"  data-aos="fade-right" data-aos-duration="1500">
+			<img src="resources/images/indexImage/DriveEx3.JPG" height="410px" width="730px"  style="padding:4px; padding-left:8px;padding-right:10px;"  data-aos="fade-right" data-aos-duration="1500">
 			</div>
 			<div class="col-5" style="margin-top:120px; padding-left :10px">
 			<h2>Drive를 통한 효율적인 문서 공유 및 관리</h2> <br><br>
@@ -501,25 +501,25 @@ font-family: 'Montserrat', sans-serif;
 	
 	<div class="row text-center" style="padding-left: 200px; padding-right:200px; margin-bottom: 30px;">
 	<div class="col-3">
-		<img class="introIcon" src="resources/images/indexIcon/global.png"  height="220" width="220" data-aos="fade-up" data-aos-duration="1500" >
+		<img class="introIcon" src="resources/images/indexIcon/global.png"  height="200" width="200" data-aos="fade-up" data-aos-duration="1500" >
 		<h2>Team Work</h2>
 		<span class="subfont">OWL을 사용하면 팀 구성이 쉽고 </span><br>
 		<span class="subfont">어디서든 팀원간의 소통이 가능합니다</span>
 	</div>
 	<div class="col-3">
-		<img class="introIcon" src="resources/images/indexIcon/team.png"  height="220" width="220" data-aos="fade-up" data-aos-duration="1500" >
+		<img class="introIcon" src="resources/images/indexIcon/customizing.png"  height="200" width="200"  data-aos="fade-up" data-aos-duration="1500" >
 		<h2>Customizing</h2>
 		<span class="subfont">개인별 혹은 프로젝트별로 </span><br>
 		<span class="subfont">커스터마이징이 가능합니다</span>
 	</div>
 	<div class="col-3">
-		  <img class="introIcon" src="resources/images/indexIcon/chat.png"  height="220" width="220" data-aos="fade-up" data-aos-duration="1500" >
+		  <img class="introIcon" src="resources/images/indexIcon/chatting.png"  height="200" width="200"  data-aos="fade-up" data-aos-duration="1500" >
 		<h2>Chatting</h2>
 		<span class="subfont">일대일, 프로젝트별, 다수의 사람들과</span><br>
 		<span class="subfont">다양한 채팅을 즐겨보세요</span>
 	</div>
 	<div class="col-3">
-		 <img class="introIcon" src="resources/images/indexIcon/idea.png" height="220" width="220" data-aos="fade-up" data-aos-duration="1500" >
+		 <img class="introIcon" src="resources/images/indexIcon/alarm.png"height="200" width="200" data-aos="fade-up" data-aos-duration="1500" >
 		<h2>Alarm</h2>
 		<span class="subfont">알람을 통해서 프로젝트내에서 </span><br>
 		<span class="subfont">업무효율을 높여보세요</span>

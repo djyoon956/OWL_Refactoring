@@ -868,6 +868,9 @@ function changeKanbanView(view){
 	   $('#addLabelBtn').addClass('hidden'); 
 	   $('#addColumnBtn').addClass('hidden'); 
 	   $('#confirmIssueBtn').addClass('hidden'); 
+	   $('#kanbanTableView').addClass('hidden'); 
+	   $('#kanbanIconView').addClass('hidden');
+	   $('#kanbanTableViewBox').addClass('hidden'); 
 	 }else if (view == "returnlist") {
 	   $('#searchBox').addClass('hidden');
 	   $('#searchReturnBtn').addClass('hidden');
@@ -880,6 +883,8 @@ function changeKanbanView(view){
 	   $('#addLabelBtn').removeClass('hidden'); 
 	   $('#addColumnBtn').removeClass('hidden');
 	   $('#confirmIssueBtn').removeClass('hidden'); 
+	   $('#kanbanTableView').removeClass('hidden'); 
+	   $('#kanbanIconView').removeClass('hidden'); 
 	 } else if(view == "changeView"){
 			 if(kanbanViewType == "kanbanTableView"){
 				 $('#kanbanTableViewBox').removeClass('hidden');
