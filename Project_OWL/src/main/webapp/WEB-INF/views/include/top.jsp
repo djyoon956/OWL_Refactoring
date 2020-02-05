@@ -643,7 +643,7 @@ display: block;
                                 <div id="accordion-three" class="accordion">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 id="noticeAccordion" class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4">공지사항 <i class="fa fa-chevron-right" style="float:right"></i>
+                                            <h5 id="noticeAccordion" class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4">공지사항 <span id="numOfNoticeBoard" class="notiBadge notiBadge-pill gradient-1">0</span><i class="fa fa-chevron-right" style="float:right"></i>
                                             </h5>
                                         </div>
                                         <div id="collapseOne4" class="collapse" data-parent="#accordion-three" data-from="notice" style="line-height:2em;">
@@ -669,7 +669,7 @@ display: block;
                                     </div>
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5">드라이브<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5">드라이브 <span id="numOfDriveBoard" class="notiBadge notiBadge-pill gradient-1">0</span><i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseTwo5" class="collapse" data-parent="#accordion-three" data-from="drive" style="line-height:2em;">
                                             <div id="driveBoard" class="card-body pt-3 accordionBody">
@@ -683,7 +683,7 @@ display: block;
                                     </div>
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">이슈<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">이슈 <span id="numOfIssueBoard" class="notiBadge notiBadge-pill gradient-1">0</span><i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree6" class="collapse" data-parent="#accordion-three" data-from="KanbanIssue" style="line-height:2em;">
                                             <div id="issueBoard" class="card-body pt-3 accordionBody">
@@ -702,7 +702,7 @@ display: block;
                                     </div>
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7">멘션<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7">멘션 <span id="numOfMentionBoard" class="notiBadge notiBadge-pill gradient-1">0</span><i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree7" class="collapse" data-parent="#accordion-three" data-from="mention" style="line-height:2em;">
                                             <div id="mentionBoard"class="card-body pt-3 accordionBody">
@@ -926,7 +926,7 @@ display: block;
 							const mytoken = fcmSnapshot.val();
 							console.log("title: " + title);
 							console.log("msg: " + msg);
-							sendNotification(mytoken, "새로운 이슈 생성 by " +title, msg);
+							sendNotification(mytoken, title, msg);
 						});
 			       });
 				})		      
@@ -1116,6 +1116,60 @@ display: block;
 						
 						});
 
+					
+					noticesByUserRef.orderByChild('creatFrom').equalTo('notice').once('value', function(data){					
+						var numOfUnread = 0;						
+						data.forEach(function(childsnapshot){
+							var childVal = childsnapshot.val();                               
+                                if(childVal.readOk == 'false'){
+                                	numOfUnread++;
+                                    }
+							})
+						 console.log("않읽은 노티스 갯스 나오나요?? " + numOfUnread );
+						$('#numOfNoticeBoard').html(numOfUnread);
+						});
+					
+					noticesByUserRef.orderByChild('creatFrom').equalTo('kanbanIssue').once('value', function(data){
+						console.log("data~~~~~~~~~~~~~~~~~~~" + data.numChildren());
+						var numOfUnread = 0;						
+						data.forEach(function(childsnapshot){ 
+							var childVal = childsnapshot.val();                                
+                                if(childVal.readOk == 'false'){
+                                	numOfUnread++;
+                                    }
+							})
+						 console.log("않읽은 노티스 갯스 나오나요?? " + numOfUnread );
+						$('#numOfIssueBoard').html(numOfUnread);											
+						});
+
+					
+					noticesByUserRef.orderByChild('creatFrom').equalTo('drive').once('value', function(data){
+						var numOfUnread = 0;						
+						data.forEach(function(childsnapshot){ 
+							var childVal = childsnapshot.val();                                
+                                if(childVal.readOk == 'false'){
+                                	numOfUnread++;
+                                    }
+							})
+						 console.log("않읽은 노티스 갯스 나오나요?? " + numOfUnread );
+						$('#numOfDriveBoard').html(numOfUnread);											
+						});
+					
+					noticesByUserRef.orderByChild('creatFrom').equalTo('mention').once('value', function(data){
+						var numOfUnread = 0;						
+						data.forEach(function(childsnapshot){  
+							var childVal = childsnapshot.val();                               
+                                if(childVal.readOk == 'false'){
+                                	numOfUnread++;
+                                    }
+							})
+						 console.log("않읽은 노티스 갯스 나오나요?? " + numOfUnread );
+						$('#numOfMentionBoard').html(numOfUnread);
+						
+						
+						});
+					
+
 			}
 
 			function saveReadNotice(){
@@ -1130,6 +1184,7 @@ display: block;
 					var title = item.getAttribute("data-title");
 					console.log("notice key 찍히나요???" + noticeKey);
 					database.ref('NoticesByUser/'+ curUserKey +'/' + noticeKey).update({
+						creatFrom : name,
 		        	    projectName: projectName,
 		        	    title: title,
 		        	    readOk : 'true'

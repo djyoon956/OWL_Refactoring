@@ -282,12 +282,12 @@ function initKanban(projectIdx){
 		 			        	console.log("event 값은???~~~~~~~~~~~~~~~" + $('#getAuthority').val());
 		 			        	var projectAuth = $('#getAuthority').val();
 		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){
-		 			        		sendNoticePushToOne(pmemail, curName, istitle);
-		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, istitle, "kanbanIssue", pmemail);
+		 			        		sendNoticePushToOne(pmemail, curName+"님이 이슈 생성", istitle);
+		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssue", pmemail);
 		 			        		
 		 			        	}else{
-		 			        		sendNoticePushAll(curName, istitle, currentProjectIdx);
-		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, istitle, "kanbanIssue");
+		 			        		sendNoticePushAll(curName + "님이 이슈 생성", istitle, currentProjectIdx);
+		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle, "kanbanIssue");
 		 			        	}
 		 			        	
 	 			        		
@@ -1340,7 +1340,7 @@ function assignListEditview(){
 	
 var arrSelectedUserEmail =[];
 function mentionSearch() {
-
+	console.log("멘션 서치");
 		 getProjectMemberList("mentionSearch");
 		 
     	//멘션
