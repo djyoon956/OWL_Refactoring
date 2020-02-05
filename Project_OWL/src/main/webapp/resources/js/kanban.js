@@ -898,8 +898,8 @@ function changeKanbanView(view){
 				   $('#kanbanIn').addClass('hidden');
 				   $('#-1Column').addClass('hidden');
 				   $('#-99Column').addClass('hidden');
-				   $('#addIssuebtn').addClass('hidden'); 
-				   $('#addLabelBtn').addClass('hidden'); 
+				   $('#openIssueBtn').addClass('hidden');
+				   $('#closeIssueBtn').addClass('hidden');	
 				   $('#addColumnBtn').addClass('hidden');
 				   $('#confirmIssueBtn').addClass('hidden'); 
 			 }else{
