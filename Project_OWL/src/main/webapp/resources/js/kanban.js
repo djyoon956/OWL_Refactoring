@@ -1340,7 +1340,7 @@ function assignListEditview(){
 	
 var arrSelectedUserEmail =[];
 function mentionSearch() {
-
+	console.log("멘션 서치");
 		 getProjectMemberList("mentionSearch");
 		 
     	//멘션
