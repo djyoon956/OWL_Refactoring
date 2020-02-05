@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
+<link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Gamja+Flower|Yeon+Sung&display=swap" rel="stylesheet">
  <link rel="manifest" href="manifest.json"/>
 
 
@@ -117,7 +117,6 @@
 		$('.ChatList').append(plus);
 	}
 
-	
 </script>
 <style>
 
@@ -473,53 +472,11 @@ display: block;
 				</div>
 				<hr>
 					 <ul class="list-group" id="ulRoomList">
-                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start chatList"  style="height: 106px;">
-                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
-                               <div class="media">
-                               <img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">
-                               <h5 style="margin-top: 18px; color: #ffb1b9">Project 1</h5>
-                               </div>
-                                <small style="float:right;">AM 12:00</small>
-                           </div>
-                           <ul>
-		                      	<li class="d-flex justify-content-between align-items-center">
-		                      			진성씨 시말서 제출하세요.
-		                        <span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>
-		                        </li>
-                           </ul>             
+                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start chatList"  style="height: 106px;">           
                        </li>
-						<li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start"  style="height: 106px;">
-                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
-                               <div class="media">
-                               <img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">
-                               <h5 style="margin-top: 18px; color: #ccccff">Family_c</h5>
-                               </div>
-                                <small style="float:right;">2020-01-05</small>
-                           </div>
-                           <ul>
-		                      	<li class="d-flex justify-content-between align-items-center">
-		                      			2/13일 화이팅
-		                        	<span class="badge badge-primary badge-pill" style="background-color: #ccccff">2</span>
-		                        </li>
-                           </ul>             
+						<li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start"  style="height: 106px;">                                
                        </li>
-                       <li class="chat_list-group-item chat_list-group-item-action flex-column" style="height: 106px;" id="chatroom" >					                   
-                           <div class="d-flex w-100 justify-content-between" id="chatTitle">
-                               <div class="media">
-                               <div class="user-img c-pointer position-relative">
-                               <span class="activity"></span>
-                               <img src="resources/images/member/4.jpg" class="rounded-circle chat_img" alt="" id="userImg">   
-                               </div>                            
-                               <h5 style="margin-top: 18px;">윤다정</h5>
-                               </div>
-                                <small style="float:right;">AM 11:11</small>
-                           </div>
-                           <ul>
-		                      	<li class="d-flex justify-content-between align-items-center">
-		                      			샐러드 사왔어?
-		                        		<span class="badge badge-primary badge-pill">1</span>
-		                        </li>
-                           </ul>             
+                       <li class="chat_list-group-item chat_list-group-item-action flex-column" style="height: 106px;" id="chatroom" >					                                             
                        </li> 	       
                     </ul>
                     <!-- 채팅 유정 목록 유엘 끝 -->

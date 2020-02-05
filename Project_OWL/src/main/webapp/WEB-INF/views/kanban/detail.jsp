@@ -1,12 +1,6 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <style>
-.emoji-wysiwyg-editor{
-height: 50px !important;
-}
-</style>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <div class="container-fluid mt-2 hidden" style="padding: 25px;" id="kanbanDetailBox" >	
 	<input type="hidden" id="issueIdxNum">
 	
@@ -103,7 +97,7 @@ height: 50px !important;
                             <a data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanCommentBox" aria-expanded="true" aria-controls="kanbanCommentBox">
                                 <h5 class="mb-0">
                                     <i class="fas fa-comments mr-2" aria-hidden="true"></i>
-                                    <span id=issueDetailCommentCount>Comments (10)</span>
+                                    <span >Comments (<span id="issueDetailCommentCount"></span>)</span>
                                 </h5>
                             </a>
                         </div>
@@ -119,10 +113,8 @@ height: 50px !important;
                 </div>
                   <div style="display: flex;">
 						<span style="color:#326295"><i class="fab fa-replyd fa-4x" style="margin-left: 10px; margin-right: 10px"></i></span> 
-			            <p class="lead emoji-picker-container" style="width: 80%">
-			              <input class="form-control textarea-control" id="replycontent" name="replycontent"  placeholder="댓글을 작성해주세요." data-emojiable="true" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}">
-			            </p>               
-               		 <button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px;height: 50px;width: 150px;" onClick="addReply('${member.name}')">Comment</button>
+						    <input type="text" id="replycontent" class="editable" name="replycontent" style="resize: none; width:80%; height: 50px !important;" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}">              
+               		 <button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px;height: 50px;width: 150px;" onclick="addReply('${member.name}')">Comment</button>
             	</div>
         </div>
         

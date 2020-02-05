@@ -85,14 +85,14 @@
 }
 
 /* Sweet Alert */
-.swal2-icon.swal2-warning,.swal2-icon.swal2-success,.swal2-icon.swal2-error,.swal2-icon.swal2-success.swal2-success-line-tip,.swal2-icon.swal2-success.swal2-success-line-long {
+.swal2-icon.swal2-warning,.swal2-icon.swal2-success,.swal2-icon.swal2-error,.swal2-icon.swal2-success.swal2-success-line-tip,.swal2-icon.swal2-success.swal2-success-line-long{
     border-color: #326295 !important;
     color: #326295 !important;
 }
 .swal2-icon.swal2-success .swal2-success-ring{
 	border: .25em solid rgba(50,98,149,.3) !important;
 }
-.swal2-icon.swal2-success [class^=swal2-success-line] {
+.swal2-icon.swal2-success [class^=swal2-success-line], .swal2-x-mark-line-left, .swal2-x-mark-line-right  {
     background-color: #326295 !important;
 }
 .swal2-styled.swal2-confirm{

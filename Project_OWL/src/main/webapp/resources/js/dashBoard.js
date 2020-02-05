@@ -1,11 +1,13 @@
-function initDashBoard(projectIdx, projectColor){
+function initDashBoard(projectIdx){
 	 $("#dashCalendar").tuiCalendar({
 		  defaultView: 'month',
 		  taskView: true
 	}); 
 	 
-	if(projectIdx > 0)
-		setProjectDashBoard(projectIdx, projectColor);
+	if(projectIdx > 0){
+		initProjectDashBoard();		
+		setProjectDashBoard();
+	}
 	else
 		setMainDashBoard();
 }
@@ -42,8 +44,7 @@ function setMainDashBoard(){
 		 }
 	 })
 }
-
-function setProjectDashBoard(projectIdx, projectColor){
+function initProjectDashBoard(){
 	$("#dashboardPTable").DataTable({
 		"pageLength": 5,
          fixedColumns: true,
@@ -57,12 +58,13 @@ function setProjectDashBoard(projectIdx, projectColor){
              "targets": 0
          } ],
 	});
-	
-	
-	wholeProjectChart(projectIdx);
-	setMyIssueTaskByProject(projectIdx);
-	setTimeLineByProject(projectIdx, projectColor);
-	setProjectMemberProgress(projectIdx);
+}
+
+function setProjectDashBoard(){	
+	wholeProjectChart(currentProjectIdx);
+	setMyIssueTaskByProject(currentProjectIdx);
+	setTimeLineByProject(currentProjectIdx, currentProjectColor);
+	setProjectMemberProgress(currentProjectIdx);
 }
 
 function setMyIssueTask(){

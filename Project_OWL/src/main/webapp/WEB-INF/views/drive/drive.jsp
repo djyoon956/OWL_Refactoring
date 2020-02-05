@@ -50,6 +50,11 @@ function addFolder(folder) {
 }
 
 $(function(){
+$("#driveSearchBtn").click(function(){
+	$("#default").addClass("hidden");
+	$("#searchFile").removeClass("hidden");
+});
+	
 	$.ajax({
 		url:"DriveList.do",
 		dataType:"json",
@@ -364,10 +369,10 @@ let Stringfile = goTrashFile.join(',');
                             <table id="driveTable" class="table table-hover table-bordered text-center">
                                 <thead>
                                     <tr>
-                                        <th width="45">file name</th>
-                                        <th width="30%">create date</th>
-                                        <th width="15%">creator</th>
-                                        <th width="10%">size</th>
+                                        <th width="45">파일 명</th>
+                                        <th width="30%">생성일</th>
+                                        <th width="15%">생성자</th>
+                                        <th width="10%">파일 크기</th>
                                     </tr>
                                 </thead>
 
