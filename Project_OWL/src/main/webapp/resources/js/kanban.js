@@ -282,12 +282,12 @@ function initKanban(projectIdx){
 		 			        	console.log("event 값은???~~~~~~~~~~~~~~~" + $('#getAuthority').val());
 		 			        	var projectAuth = $('#getAuthority').val();
 		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){
-		 			        		sendNewIssuePush(pmemail, curName, istitle);
-		 			        		pushKanbanIssueToPm(currentProjectIdx,currentProjectName, istitle, "kanbanIssue", pmemail);
+		 			        		sendNoticePushToOne(pmemail, curName, istitle);
+		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, istitle, "kanbanIssue", pmemail);
 		 			        		
 		 			        	}else{
 		 			        		sendNoticePushAll(curName, istitle, currentProjectIdx);
-		 			        		pushKanbanIssue(currentProjectIdx, currentProjectName, istitle, "kanbanIssue");
+		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, istitle, "kanbanIssue");
 		 			        	}
 		 			        	
 	 			        		
@@ -498,6 +498,19 @@ function addReply(creator) {
 							, 'content': $('#replycontent').val()
 							, 'creator' : creator},
 				success : function(data) {
+					
+					//푸쉬 알람 보내기. 이 함수의 위치는 top.jsp  아래쪽 스크립트에 있음...	        	    	
+					console.log("arrSelectedUserEmail 요값이 찍하나??" + arrSelectedUserEmail);
+	        		
+					arrSelectedUserEmail.forEach(function(item, index){
+						console.log('멘션 파트에서 선택된 유저의 이메일은요???~~~~~' + item );
+						sendNoticePushToOne(item, "<" + curName + "님의 멘션>", $('#replycontent').val());
+			        	pushNoticeToOne(currentProjectIdx,currentProjectName, curName + "언급하였습니다.", "mention", item);
+					})
+					
+	        		
+		        		
+	        		
 					
 					  $('#replycontent').val("");
 			    		setKanbanDetail(data.issueIdx);
@@ -1332,7 +1345,7 @@ function assignListEditview(){
 		}
 	}
 	
-
+var arrSelectedUserEmail =[];
 function mentionSearch() {
 
 		 getProjectMemberList("mentionSearch");
@@ -1354,6 +1367,9 @@ function mentionSearch() {
 			  'textComplete:select': function (e, value) {	
 				  console.log(words.indexOf(value));  // 2
 				  console.log(wordsemail[words.indexOf(value)]); // skisk1124@naver.com
+				  arrSelectedUserEmail.push(wordsemail[words.indexOf(value)]);
+				  
+				  
 			  }
 		  }) ;
 	}
