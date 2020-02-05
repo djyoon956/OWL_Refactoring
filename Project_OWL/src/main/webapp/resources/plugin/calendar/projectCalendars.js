@@ -1,24 +1,17 @@
 'use strict';
 
 function initCalendar(idx, color, start, end){
-	console.log(idx);
-	console.log(color);
-	console.log(start);
-	console.log(end);
-	let timei = new Date();
-	let time = new Date(start);
-	
-	
-	let test = end.split(" ");
-	let test2 = test[0]+" "+test[1]+" "+test[2]+" "+test[test.length-1];
-	console.log("---------------------------");
-	console.log(test2);
-	console.log(new Date() > new Date(test2)  ? "크다 얍" : "작다 얍" );
-
+	let endTime = end.split(" ");
+	let theEnd = endTime[0]+" "+endTime[1]+" "+endTime[2]+" "+endTime[endTime.length-1];
 	
 	var Calendar = tui.Calendar;	
 	var cal, resizeThrottled;
-    var useCreationPopup = true;
+    var useCreationPopup;
+    if(new Date() > new Date(theEnd)){
+    	useCreationPopup = false;
+    }else{
+    	useCreationPopup = true;
+    }
     var useDetailPopup = true;
     var datePicker, selectedCalendar;
     cal = new Calendar('#calendar', {
@@ -53,21 +46,25 @@ function initCalendar(idx, color, start, end){
         },
         'beforeCreateSchedule': function(e) {
             console.log('beforeCreateSchedule', e);
-            saveNewSchedule(e);
-            //캘린더 일정 DB Insert
-    		$.ajax({
-        		url:"InsertCalendar.do",
-        		method:"POST",
-        		data:{calendarId: e.calendarId,
-        			       title: e.title,
-        			       location: e.location,
-        			       start: e.start._date,
-        			       end: e.end._date,
-        			       allDay: e.isAllDay
-        			      },
-        		success:function(data){	
-        		}
-    		});
+            if(new Date() > new Date(theEnd)){ 
+            	 callAlert('warning', '이미 완료된 프로젝트입니다.');
+            }else{
+	            saveNewSchedule(e);
+	            //캘린더 일정 DB Insert
+	    		$.ajax({
+	        		url:"InsertCalendar.do",
+	        		method:"POST",
+	        		data:{calendarId: e.calendarId,
+	        			       title: e.title,
+	        			       location: e.location,
+	        			       start: e.start._date,
+	        			       end: e.end._date,
+	        			       allDay: e.isAllDay
+	        			      },
+	        		success:function(data){	
+	        		}
+	    		});
+            }    
         },
         'beforeUpdateSchedule': function(e) {
             var schedule = e.schedule;
