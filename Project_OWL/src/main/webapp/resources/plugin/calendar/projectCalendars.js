@@ -1,13 +1,12 @@
 'use strict';
 
 function initCalendar(idx, color, start, end){
-	let endTime = end.split(" ");
-	let theEnd = endTime[0]+" "+endTime[1]+" "+endTime[2]+" "+endTime[endTime.length-1];
-	
+	/*let endTime = end.split(" ");
+	 * let theEnd = endTime[0]+" "+endTime[1]+" "+endTime[2]+" "+endTime[endTime.length-1];*/
 	var Calendar = tui.Calendar;	
 	var cal, resizeThrottled;
     var useCreationPopup;
-    if(new Date() > new Date(theEnd)){
+    if(new Date() > new Date(end)){
     	useCreationPopup = false;
     }else{
     	useCreationPopup = true;
@@ -46,7 +45,7 @@ function initCalendar(idx, color, start, end){
         },
         'beforeCreateSchedule': function(e) {
             console.log('beforeCreateSchedule', e);
-            if(new Date() > new Date(theEnd)){ 
+            if(new Date() > new Date(end)){ 
             	 callAlert('warning', '이미 완료된 프로젝트입니다.');
             }else{
 	            saveNewSchedule(e);
