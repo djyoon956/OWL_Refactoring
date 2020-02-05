@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.owl.helper.MemberHelper;
 import com.owl.project.dto.ProjectList;
 import com.owl.project.service.ProjectService;
 
@@ -22,9 +23,9 @@ public class ProjectController {
 	private ProjectService service;
 
 	@RequestMapping("Project.do")
-	public String showProject(int projectIdx, Principal	principal, Model model) {
+	public String showProject(int projectIdx, Principal	principal, Model model, HttpServletRequest request) {
 		List<ProjectList> projectList  = null;
-		projectList = service.getProjectLists(principal.getName());
+		projectList = service.getProjectLists(MemberHelper.getMemberEmail(principal, request.getSession()));
 		model.addAttribute("projectList", projectList);
 		
 		ProjectList project = projectList.stream().filter(x -> x.getProjectIdx() == projectIdx).findFirst().get();

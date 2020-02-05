@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.owl.helper.MemberHelper;
 import com.owl.notice.dto.Notice;
 import com.owl.notice.service.NoticeService;
 
@@ -30,7 +31,6 @@ public class NoticeRestController {
 		return notices;
 	}
 
-
 	@RequestMapping(value = "WriteNotice.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public int insertNotice(@RequestParam(value = "projectIdx") int projectIdx
 			, @RequestParam(value = "content") String content
@@ -42,7 +42,7 @@ public class NoticeRestController {
 		notice.setProjectIdx(projectIdx);
 		notice.setContent(content);
 		notice.setTitle(title);
-		notice.setEmail(principal.getName());
+		notice.setEmail(MemberHelper.getMemberEmail(principal, request.getSession()));
 		System.out.println(multipartFiles.size());
 		
 		boolean result= false;
@@ -80,7 +80,7 @@ public class NoticeRestController {
 		notice.setBoardIdx(boardIdx);
 		notice.setContent(content);
 		notice.setTitle(title);
-		notice.setEmail(principal.getName());
+		notice.setEmail(MemberHelper.getMemberEmail(principal, request.getSession()));
 		System.out.println(multipartFiles.size());
 		
 		boolean result= false;
