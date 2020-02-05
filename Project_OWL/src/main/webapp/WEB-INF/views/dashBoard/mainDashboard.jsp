@@ -292,7 +292,7 @@ function MyLineChart(){
 	                    <h6 id="timeLineDate"></h6>
 	                    <div id="dashboardTimeLineEmptyBox" class="emptyBox hidden">
 		                    <div>
-		                    	<h3 class="mb-4">이번주 일정이 존재하지않습니다.</h3>
+		                    	<h3 class="mb-4 mt-4">이번주 일정이 존재하지않습니다.</h3>
 		                    	<h4 class="mt-1"> (2020-01-29 ~ 2020-02-07)</h4>
 		                    </div>
 	                    </div>
