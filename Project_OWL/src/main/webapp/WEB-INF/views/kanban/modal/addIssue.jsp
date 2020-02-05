@@ -76,11 +76,11 @@
 			</div> 
 					<div class="modal-footer text-right">
 					<c:if test="${project.authority eq 'ROLE_PM'}">
-					<input type="button" class="btn btn-primary InsertIssueBtn" value="Save changes">
+					<input type="button" class="btn btn-primary InsertIssueBtn" data-type="sendToAll" value="Save changes">
 					</c:if>
 					
 					<c:if test="${project.authority eq 'ROLE_PROJECTMEMBER'}">
-					<input type="button" class="btn btn-primary InsertIssueBtn" value="Send PM">
+					<input type="button" class="btn btn-primary InsertIssueBtn" data-type="sendPm" value="Send PM">
 					</c:if>
 					
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

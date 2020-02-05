@@ -232,8 +232,8 @@ function initKanban(projectIdx){
 
 
 		 		 
-		 			$(".InsertIssueBtn").on("click", function () {
-
+		 			$(".InsertIssueBtn").on("click", function (event) {		 							 				
+		 				
 		 				if($('#issueTitle').val() == ""){
 		 					warningAlert("제목을 작성해주십시오");
 		 					return; 
@@ -243,11 +243,7 @@ function initKanban(projectIdx){
 		 					return; 
 		 				}	
 		 				
-		 				//푸시 알람 함수...
-		 				//var sender = curName;
-		 				//console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
-		 				//console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + $('#pmemail').val());
-		 				//sendNewIssuePush($('#pmemail').val(), sender, $('#issueTitle').val());
+		 				
 		 				
 		 				
 		 			    let formData = new FormData();
@@ -281,7 +277,30 @@ function initKanban(projectIdx){
 		 			        timeout: 600000,
 		 			        success: function (data) {
 		 			        	//
+		 			        	
+		 			        	
+		 			        	console.log("event 값은???~~~~~~~~~~~~~~~" + $('#getAuthority').val());
+		 			        	var projectAuth = $('#getAuthority').val();
+		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){
+		 			        		sendNewIssuePush(pmemail, curName, istitle);
+		 			        		pushKanbanIssueToPm(currentProjectIdx,currentProjectName, istitle, "kanbanIssue", pmemail);
+		 			        		
+		 			        	}else{
+		 			        		sendNoticePushAll(curName, istitle, currentProjectIdx);
+		 			        		pushKanbanIssue(currentProjectIdx, currentProjectName, istitle, "kanbanIssue");
+		 			        	}
+		 			        	
 	 			        		console.log("pm email ????????????????????????" + pmemail);
+	 			        		//푸시 알람 함수...
+	 			 				var sender = curName;
+	 			 				//console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + sender);
+	 			 				//console.log("여기서 현재 접속한 유저의 이름 찍히나요??" + $('#pmemail').val());
+	 			 				sendNewIssuePush(pmemail, curName, istitle);//푸시 알람 보내기
+	 			 				console.log(currentProjectIdx+"/"+currentProjectName+"/"+ istitle);
+	 			 				pushKanbanIssue(currentProjectIdx,currentProjectName, istitle, "kanbanIssue", pmemail);
+	 			        		
+	 			        		
+	 			        		
 		 	 		        	if(data != null){
 		 			        		successAlert("Issue 추가 완료");
 		 			        		addKanbanIssue('-1', data);

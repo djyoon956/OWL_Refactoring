@@ -734,8 +734,8 @@ display: block;
                                             <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">이슈<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree6" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
-                                            <div class="card-body pt-3 accordionBody">
-                                            <div class="mt-2 col-md-12"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <div id="issueBoard" class="card-body pt-3 accordionBody">
+                                            <!-- <div class="mt-2 col-md-12"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
                                             	'[view]로그인 view 구현' 이슈가 등록되었습니다.<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
                                             </div>
@@ -743,7 +743,7 @@ display: block;
                                              <span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
                                             	칸반보드 view 구현'이슈가 승인 요청을 있습니다. <span class="ml-1"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
-                                             </div>
+                                             </div> -->
                                  
                                             </div>
                                         </div>
@@ -942,7 +942,8 @@ display: block;
 			}
 
 			
-		function sendNoticePushAll(title, msg, currentProjectIdx) {
+		function sendNoticePushAll(title, rawMsg, currentProjectIdx) {
+			var msg = myConvertMsg(rawMsg);
 			$.ajax({
 					url: "MyProjectsMatesFull.do",
 					type: "POST",
@@ -994,7 +995,8 @@ display: block;
 
 
 
-		function sendNewIssuePush(email, title, msg) {
+		function sendNewIssuePush(email, title, rawMsg) {
+				var msg = myConvertMsg(rawMsg);
 				var myRootRef = database.ref();
 				myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
 				data.forEach(function(childSnapshot) {
@@ -1014,7 +1016,7 @@ display: block;
 
 
 		//탑 부분 종 누르면...   공지 사항 보이기~~
-		function pushNotice(projectIdx, projectName, title) {
+		function pushNotice(projectIdx, projectName, title, from) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key	
 
@@ -1022,15 +1024,65 @@ display: block;
 			//노티스 정보 파베 저장	
 			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
         	    projectName: projectName,
-        	    title: title
+        	    title: title,
+        	    creatFrom: from
         	  });
       	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx);
+			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
+		}
+
+		function pushKanbanIssueToPm(projectIdx, projectName, title, from, pmemail) {
+			var noticeRef = database.ref('Notices/'+ projectIdx);
+			var noticeRefKey = noticeRef.push().key	
+
+
+			//노티스 정보 파베 저장	
+			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
+        	    projectName: projectName,
+        	    title: title,
+        	    creatFrom: from
+        	  });
+      	  	//노티즈 정보를 유저별 저장
+			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail);
 		}
 	      	  
-			
+		function pushKanbanIssue(projectIdx, projectName, title, from) {
+			var noticeRef = database.ref('Notices/'+ projectIdx);
+			var noticeRefKey = noticeRef.push().key	
 
-		function saveNoticeByUser(noticeRefKey, projectName, title,projectIdx) {
+
+			//노티스 정보 파베 저장	
+			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
+        	    projectName: projectName,
+        	    title: title,
+        	    creatFrom: from
+        	  });
+      	  	//노티즈 정보를 유저별 저장
+			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
+		}	
+
+		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email){
+			var myRootRef = database.ref();
+      	    myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
+      		  data.forEach(function(childSnapshot) {
+						userKey = childSnapshot.key;
+						console.log("targetuserkey..." + userKey);
+						//유저별 노티스 저장
+						database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
+			        	    projectName: projectName,
+			        	    title: title,
+			        	    readOk : 'false',
+			        	    creatFrom: from
+			        	  });;
+						
+
+						
+ 		 		});
+      	      })
+
+			}
+
+		function saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from) {
 			console.log("세이브 노티스 바이 유저 타나요??~~~~");
 			$.ajax({
 				url: "MyProjectsMatesFull.do",
@@ -1056,6 +1108,7 @@ display: block;
 						  
 						  //프로젝트 내에 각 유저별 노티스 정보 파베 저장
 						 var myRootRef = database.ref();
+						 
 			        	  myRootRef.child("Emails").orderByChild('email').equalTo(value.email).once('value', function(data){
 			        		  data.forEach(function(childSnapshot) {
 									userKey = childSnapshot.key;
@@ -1064,7 +1117,8 @@ display: block;
 									database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
 						        	    projectName: projectName,
 						        	    title: title,
-						        	    readOk : 'false'
+						        	    readOk : 'false',
+						        	    creatFrom: from
 						        	  });;
 									
 
@@ -1084,11 +1138,11 @@ display: block;
 			}
 
 			function loadPushNotice(curUserKey){				
-	                                     
+	                      console.log("loadPushNotice 요함 수 왜 안타는 거야~~~~~~~~~~~");               
 	              var noticesByUserRef = database.ref('NoticesByUser/'+ curUserKey);
              
 	                 document.getElementById('noticeBoard').innerHTML = ''; //공지사항 화면 리셋                 
-	              
+	                 document.getElementById('issueBoard').innerHTML = ''; //공지사항 화면 리셋 
 	                 
 	                 noticesByUserRef.off(); 
 	                 
@@ -1102,7 +1156,7 @@ display: block;
 									console.log("노티스 밸류는??" + noticeKey);		
 						
 						
-							noticeListUp(noticeKey, noticeValue.projectName, noticeValue.title)
+							noticeListUp(noticeKey, noticeValue.projectName, noticeValue.title, noticeValue.creatFrom);
 								 console.log("I am here~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 							
 							
@@ -1188,7 +1242,10 @@ display: block;
 	        	  numOfNotread(curUserKey);
 				}
 
-			function noticeListUp(noticeKey, projectName, title){
+
+
+			
+			function noticeListUp(noticeKey, projectName, title, from){
 				var noticeTags;
 	 			noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="notice" data-noticeKey="'+ noticeKey+ 
 	 						 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
@@ -1197,9 +1254,34 @@ display: block;
 	 	    	              '<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
 	 	                      '</div>';
 
-	 	         $("#noticeBoard").append(noticeTags);
+
+				
+
+
+                 if(from == 'notice'){
+                	 $("#noticeBoard").append(noticeTags);
+                     }else if(from == 'kanbanIssue'){
+							
+                    	 $("#issueBoard").append(noticeTags);
+                         }
 
 				}
+
+			function pmNoticeListUp(){
+				var pmNoticeTags ='<div id="'+ noticeKey+'" class="mt-2" data-type="notice" data-noticeKey="'+ noticeKey+ 
+				 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
+				 +'<span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>'
+	           '<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
+	            + projectName + '</span>'+ title +
+	             '<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
+	            '</div>';
+
+				$("#issueBoard").append(pmNoticeTags);
+				
+				}
+			
+			
+			
 		
 			
 	      //유저가 채팅기능 버튼을 눌렀을 때 작동하는 콜백 함수... 목적은.. firebase database 유저 정보저장(메세지 읽기, 쓰기를 위해 특정키 부여 누군인지 구분하기 위해 필요)

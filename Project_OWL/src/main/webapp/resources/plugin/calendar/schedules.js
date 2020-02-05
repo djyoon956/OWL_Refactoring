@@ -54,13 +54,7 @@ function ScheduleInfo() {
 
 function generateTime(schedule, start, end) {
 	var startDate = moment(start.getTime());
-	console.log(start);
-	console.log(startDate);
-	console.log("시작시점");
     var endDate = moment(end.getTime());
-    console.log(end);
-    console.log(endDate);
-    console.log("종료시점");
     var diffDate = endDate.diff(startDate, 'days');
     
     schedule.isAllday = chance.bool({likelihood: 30});
