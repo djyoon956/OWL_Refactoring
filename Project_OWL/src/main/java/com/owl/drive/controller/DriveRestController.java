@@ -261,7 +261,6 @@ public class DriveRestController {
 	 */
 	@RequestMapping(value = "GetTrashList.do")
 	public Map<String, Object> getTrashList(int projectIdx) {
-		System.out.println("in getTrashList");
 		return service.getTrashList(projectIdx);
 	}
 

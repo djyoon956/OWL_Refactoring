@@ -13,8 +13,10 @@ function initDrive(){
 		$("#driveSearchViewBox").empty();
 		$("#default").removeClass("hidden");
 		$("#allCheck").addClass("hidden");
+		
 		let path = data.instance.get_path(data.node, '<i class="fas fa-angle-right ml-2 mr-2"></i><i class="far fa-folder mr-2"></i>');
 	    $("#driveName").html('<i class="far fa-folder mr-2"></i>'+path);
+	    console.log(data.instance.get_path(data.node, false));
 		callDirectoryData();
 		
     });
@@ -53,7 +55,6 @@ function setTrashData() {
 			$('#driveUploadBtn').hide();
 			$('#trashName').removeClass("hidden");
 			
-
 			if (data.folders.length == 0 && data.files.length == 0) {
 				$("#emptyDriveBox").removeClass("hidden");
 				$('#emptyDriveBox').find('h4').hide();
@@ -65,14 +66,11 @@ function setTrashData() {
 			$("#emptyDriveBox").addClass("hidden");
 			$('#driveTable').DataTable().clear();
 			$("#driveIconViewBox").empty();
-			//$('#perDeleteBtn').removeClass("hidden");
 
-			if(driveViewType =="tableView"){
-				console.log('tableView select');
+			if(driveViewType =="tableView")
 				setTableView(data);
-			}else{
-				console.log('IconView select');   //언제 ? 기본값인가?
-				setIconView(data);}
+			else
+				setIconView(data);
 		},
 			error : function() {
 					console.log('GetTrashList error');
@@ -105,7 +103,9 @@ function createStatusbar(obj){
         }
  
         this.filename.html(name);
+        console.log("파일이름: " +this.filename.html(name));
         this.size.html(sizeStr);
+        console.log("파일사이즈: " +this.size.html(sizeStr));
     }
     this.setProgress = function(progress)
     {       
@@ -152,8 +152,10 @@ function ReturnCheck() { //선택 해제
 }
 
 function checkBox(obj) {
+	console.log("여길 탄다");
 	if (obj.checked == true) {
 		$(obj).parent().parent().css('background', 'rgba(161, 163, 166, 0.3)');
+		console.log($("#allCheck").attr("class"));
 		$("#default").addClass("hidden");
 		$("#theCheck").removeClass("hidden");		
 	} else {
@@ -189,6 +191,8 @@ function setDirectoryData(folderIdx, folderName) {
 		url : "GetFolderData.do",
 		data : { folderIdx : folderIdx },
 		success : function(data){
+			console.log("in GetFolderData success");
+			console.log(data);
 
 			if(data.folders.length == 0 && data.files.length == 0){
 				$("#directoryName").text("[ "+folderName+" ] directory.");
@@ -248,7 +252,6 @@ function setIconView(data){
 	let control ="";
 	let line = 4;
 	$.each(data.folders, function(index, element) {
-		console.log("in folder");
 		control += '<div class="col-sm-3">'
 					+ 	'<div class="card driveCard dropdown folder" id="'+element.driveIdx+'" style="cursor:pointer;" ondblclick="changeSelectedFolder('+element.driveIdx+',\''+element.folderName+'\')">'
 					+ 		'<div class="more"  style="margin-top: 15px; padding-right:10px;">&nbsp;&nbsp;&nbsp;&nbsp;'
@@ -257,11 +260,17 @@ function setIconView(data){
 					+					'<i class="fas fa-ellipsis-v fa-lg"></i>'
 					+				'</a>'
 					+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
-					+				'<ul class="list-style-none">'
-					+					'<li class="pl-2"><a href="#"  onclick="setRenameIconView(this,'+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
-					+					'<li class="pl-2"><a href="#"  onclick="driveDetail(true,'+element.driveIdx+')"><i class="fas fa-info-circle"></i>&nbsp; 상세 정보</a></li>'
-					+					'<li class="pl-2"><a href="#" onclick="deleteDriveFolder('+element.driveIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>'
-					+				'</ul>'                                                                                                                                                         
+					+				'<ul class="list-style-none">';
+		if(isTrash) {
+			control += '<li class="pl-2"><a href="#" onclick="restoreFolderfromTrash('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
+						+  '<li class="pl-2"><a href="#" onclick="deleteFolderfromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
+		}else {downloadFile
+			control += '<li class="pl-2"><a href="#"  onclick="setRenameIconView(this,'+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
+						+	'<li class="pl-2"><a href="#"  onclick="driveDetail(true,'+element.driveIdx+')"><i class="fas fa-info-circle"></i>&nbsp; 상세 정보</a></li>'
+						+	'<li class="pl-2"><a href="#" onclick="deleteDriveFolder('+element.driveIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 삭제</a></li>'
+		}
+					
+		control +=				'</ul>'                                                                                                                                                         
 					+			'</div>'                                                                                                                                                        
 					+		'</div>'                                                                                                                                                            
 					+		'<div class="card-body text-center">'                                                                                                                               
@@ -278,8 +287,6 @@ function setIconView(data){
 			row.append(control);
 			$("#driveIconViewBox").append(row);
 		}
-		
-		/*nameList.push(element.folderName);*/
 	});
 
 	control ="";
@@ -317,6 +324,7 @@ function setIconView(data){
 					+				'<input class="fileSize" type="hidden" value="'+element.fileSize+'">'
 					+				'<input class="fileCreator" type="hidden" value="'+element.creator+'">'
 					+				'<input class="fileCreateDate" type="hidden" value="'+element.createDate+'">'
+					+				'<input class="fileCreatorName" type="hidden" value="'+element.creatorName+'">'
 					+			'</div>'    
 					+		'</div>'
 					+	 '</div>'
@@ -471,8 +479,6 @@ function deleteDriveFolder(driveIdx, parentIdx){
 
 //휴지통에서 영구 삭제 함수 
 function deleteFilefromTrash(driveFileIdx) {
-	console.log('여긴 휴지통에서 파일 삭제 함수');
-
 	Swal.fire({
 	    title: '완전히 삭제 하시겠습니까?',
 	    text: '완전히 삭제하면 복구 하실 수 없습니다.',
@@ -480,7 +486,8 @@ function deleteFilefromTrash(driveFileIdx) {
 	    showCancelButton: true,
 	    confirmButtonColor: '#3085d6',
 	    cancelButtonColor: '#d33',
-	    confirmButtonText: 'Yes'
+	    confirmButtonText: '삭제',
+	    cancelButtonText: '취소'
 	  }).then((result) => {
 	    if (result.value) {
 	    	$.ajax({
@@ -509,7 +516,8 @@ function deleteFolderfromTrash(driveFileIdx) {
 	    showCancelButton: true,
 	    confirmButtonColor: '#3085d6',
 	    cancelButtonColor: '#d33',
-	    confirmButtonText: 'Yes'
+	    confirmButtonText: '삭제',
+	    cancelButtonText: '취소'
 	  }).then((result) => {
 	    if (result.value) {
 	    	$.ajax({
@@ -530,7 +538,6 @@ function deleteFolderfromTrash(driveFileIdx) {
 
 //휴지통에서 파일  복원 함수 
 function restoreFileTrash(driveFileIdx) {
-		
 	$.ajax({
 		url : "RestoreFile.do",
 		data : {'driveFileIdx' : driveFileIdx},
@@ -546,13 +553,12 @@ function restoreFileTrash(driveFileIdx) {
 
 //휴지통에서 폴더 복원 
 function restoreFolderfromTrash(driveFileIdx) {
-	console.log('restoreFolderfromTrash in');
-	
 	$.ajax({
 		url : "RestoreFolder.do",
 		data : {'driveFileIdx' : driveFileIdx},
 		success : function(data) {
 			console.log('restoreFolderfromTrash in');
+			console.log(data);
 			 successAlert("폴더 복원 완료");
 
 			setTrashData(currentProjectIdx);
@@ -569,7 +575,7 @@ function setRenameIconView(obj, idx){
 	let oldText ="";
 	let isFolder = element.hasClass("folder");
 	if(isFolder)
-		oldText = renameElement.find("h4:first").text();
+		oldText = renameElement.find("h5:first").text();
 	else
 		oldText = renameElement.find("input:first").val();
 	
@@ -597,6 +603,8 @@ function renameCancel(obj, oldText, isFolder){
 function renameFile(driveFileIdx){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
+	console.log(folderIdx);
+	console.log(refs);
 	
 	jQuery.ajaxSettings.traditional = true;
 	$.ajax({
@@ -665,7 +673,7 @@ function driveDetail(isFolder, idx) {
 		if(!isFolder){	
 			extension = name.substr(name.lastIndexOf(".")+1);
 			createDate = element.find(".driveCardContent>input.fileCreateDate").first().val();
-			creator = element.find(".driveCardContent>input.fileCreator").first().val();
+			creator = element.find(".driveCardContent>input.fileCreatorName").first().val();
 			size = element.find(".driveCardContent>input.fileSize").first().val() + " KB";
 		}
 	}
@@ -673,23 +681,23 @@ function driveDetail(isFolder, idx) {
 	let html =	"<h4 class='mt-3 mb-4'>"
 					+'<img class=" mr-3" style="height : 40px;" onerror="this.onerror=null; this.src=\'resources/images/drive/file.png\';" src="resources/images/drive/'+extension+'.png" >'
 					+ name +"  </h4>" 
-					+ "<div class='row mb-3'>"
+					+ "<div class='row mb-3' style='font-size: medium;'>"
 					+ "	<div class='col-sm-6'>유형</div>"
 					+ "	<div class='col-sm-6 text-left'>"+extension+"</div>"
 					+ "</div>"
-					+ "<div class='row mb-3'>"
+					+ "<div class='row mb-3' style='font-size: medium;'>"
 					+ "	<div class='col-sm-6'>용량</div>"
 					+ "	<div class='col-sm-6 text-left'>"+size+"</div>"
 					+ "</div>"
-					+ "<div class='row mb-3'>"
+					+ "<div class='row mb-3' style='font-size: medium;'>"
 					+ "	<div class='col-sm-6'>위치</div>"
 					+ "	<div class='col-sm-6 text-left'>"+$("#driveName").html()+"<i class='fas fa-angle-right ml-2'></i></div>"
 					+ "</div>"
-					+ "<div class='row mb-3'>"
+					+ "<div class='row mb-3' style='font-size: medium;'>"
 					+ "	<div class='col-sm-6'>소유자</div>"
 					+ "	<div class='col-sm-6 text-left'>"+creator+"</div>"
 					+ "</div>"
-					+ "<div class='row mb-3'>"
+					+ "<div class='row mb-3' style='font-size: medium;'>"
 					+ "	<div class='col-sm-6'>생성일</div>"
 					+ "	<div class='col-sm-6 text-left'>"+createDate+"</div>"
 					+ "</div>"
@@ -704,7 +712,9 @@ function downloadFile(fileName){
 	let folderIdx = $('#jstree').jstree('get_selected')[$('#jstree').jstree('get_selected').length-1];
 	let ref = $('#jstree').jstree().get_node(folderIdx).parent;
 	let refs = $('#jstree').jstree().get_node(folderIdx).parents;
-
+	
+	console.log(folderIdx);
+	console.log(refs);
 	let path ="/upload/project/"+currentProjectIdx+"/drive/";
 	
 	jQuery.ajaxSettings.traditional = true;
@@ -791,9 +801,10 @@ function handleFileUpload(files, obj){
    for (var i = 0; i < files.length; i++){
         var fd = new FormData();
         fd.append('file', files[i]);
+        console.log(fd);
         var status = new createStatusbar(obj); //Using this we can set progress.
         status.setFileNameSize(files[i].name,files[i].size);
-
+        console.log(status);
         sendFileToServer(fd,status);
    }
 }
