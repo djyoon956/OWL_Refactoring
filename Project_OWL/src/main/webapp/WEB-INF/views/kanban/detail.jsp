@@ -115,7 +115,7 @@
                 </div>
                   <div class="row container-fluid">
 						<span style="color:#326295"><i class="fab fa-replyd fa-5x" style="margin-left: 10px; margin-right: 10px"></i></span>
-						<input type="text" id="replycontent" class="editable" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}">
+						<input type="text" id="replycontent" class="editable" data-emojiable="true" name="replycontent" style="resize: none; width:75%" onKeypress="javascript:if(event.keyCode==64 || event.keyCode==50) {mentionSearch()}">
 						<button class="btn btn-secondary " id="replyBtn" style="margin-left: 15px" onClick="addReply('${member.name}')">Comment</button>
             </div>
         </div>
