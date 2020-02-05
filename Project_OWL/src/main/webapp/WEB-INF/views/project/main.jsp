@@ -202,27 +202,16 @@
         
         function setChageView(target) {
             if (target === "dash")
-                setDashBoardData();
+            	setProjectDashBoard();
             else if (target === "calendar")
-                setCalendarData();
-            else if (target === "kanban"){
+            	refreshScheduleVisibility();
+            else if (target === "kanban")
                 setKanbanData();
-            }
             else if (target === "notice")
                 setNoticeData();
             else if (target === "drive")
                 setDriveData();
         }
-
-        function setDashBoardData() {
-            console.log("in setDashBoardData");
-        }
-
-        function setCalendarData() {
-            console.log("in setCalendarData");           
-            refreshScheduleVisibility();
-        }
-
 
         function setDriveData() {
             console.log("in setDriveData");
