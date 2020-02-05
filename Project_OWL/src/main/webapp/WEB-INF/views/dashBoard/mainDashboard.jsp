@@ -228,11 +228,12 @@ function MyLineChart(){
 #myProgressChart{
 	width: 1260px; 
 	/* width:100vh; */
-	overflow-x: scroll;
+	overflow-x: auto;
  	display: flex;
 	flex-direction: row;
 	flex-wrap: nowarp;
 	flex-flow: row; 
+	padding-bottom:10px;
 }
 </style>
 <!-- CONTENT MAIN -->

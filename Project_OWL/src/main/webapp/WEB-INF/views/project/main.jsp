@@ -28,8 +28,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
  	
- 	<!-- Emoji Picker -->
-<!-- 	 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"> -->
+ 	 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="resources/plugin/emoji/css/emoji.css" rel="stylesheet">
 	<script src="resources/plugin/emoji/js/config.js"></script>
 	<script src="resources/plugin/emoji/js/util.js"></script>
@@ -47,16 +46,24 @@
 	<!-- If you use the default popups, use this. -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
-    <script src="resources/js/project.js"></script>
+    
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
     <script src="resources/js/kanban.js"></script>
+    <script src="resources/js/drive.js"></script>
+    
+    <script src="resources/js/project.js"></script>
+    
+    <link href="resources/css/drive.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="resources/css/kanban.css" />
     <script type="text/javascript">
         $(function () {			
             setTheme("${setting.themeColor}", "${setting.font}");
+            setEmoji();
             initProjcet("${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
             initCalendar("${project.projectIdx}", "${project.projectColor}", "${project.startDate}", "${project.endDate}");
+
+            
             $(".tui-full-calendar-layout.tui-view-8").addClass("hidden");
             $(".tui-full-calendar-layout.tui-view-8.tui-view-13").removeClass("hidden");
             $.ajax({
