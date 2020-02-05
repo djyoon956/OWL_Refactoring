@@ -694,7 +694,7 @@ display: block;
                                             <h5 id="noticeAccordion" class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="false" aria-controls="collapseOne4">공지사항 <i class="fa fa-chevron-right" style="float:right"></i>
                                             </h5>
                                         </div>
-                                        <div id="collapseOne4" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                        <div id="collapseOne4" class="collapse" data-parent="#accordion-three" data-from="notice" style="line-height:2em;">
                                             <div class="card-body pt-3 accordionBody" id="noticeBoard">
                                             <!-- <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
@@ -719,8 +719,8 @@ display: block;
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5">드라이브<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
-                                        <div id="collapseTwo5" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
-                                            <div class="card-body pt-3 accordionBody">
+                                        <div id="collapseTwo5" class="collapse" data-parent="#accordion-three" data-from="drive" style="line-height:2em;">
+                                            <div id="driveBoard" class="card-body pt-3 accordionBody">
                                             <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
                                             	'file.jpg'파일이 업로드 되었습니다. <span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
@@ -733,7 +733,7 @@ display: block;
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6">이슈<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
-                                        <div id="collapseThree6" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
+                                        <div id="collapseThree6" class="collapse" data-parent="#accordion-three" data-from="KanbanIssue" style="line-height:2em;">
                                             <div id="issueBoard" class="card-body pt-3 accordionBody">
                                             <!-- <div class="mt-2 col-md-12"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
@@ -752,8 +752,8 @@ display: block;
                                         <div class="card-header">
                                             <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree7" aria-expanded="false" aria-controls="collapseThree7">멘션<i class="fa fa-chevron-right clickIcon" style="float:right"></i></h5>
                                         </div>
-                                        <div id="collapseThree7" class="collapse" data-parent="#accordion-three" style="line-height:2em;">
-                                            <div class="card-body pt-3 accordionBody">
+                                        <div id="collapseThree7" class="collapse" data-parent="#accordion-three" data-from="mention" style="line-height:2em;">
+                                            <div id="mentionBoard"class="card-body pt-3 accordionBody">
                                              <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
                                             	배인영님이 언급하였습니다. 
@@ -942,8 +942,9 @@ display: block;
 			}
 
 			
-		function sendNoticePushAll(title, rawMsg, currentProjectIdx) {
+		function sendNoticePushAll(rawtitle, rawMsg, currentProjectIdx) {
 			var msg = myConvertMsg(rawMsg);
+			var title = "<공지사항>" + rawtitle;
 			$.ajax({
 					url: "MyProjectsMatesFull.do",
 					type: "POST",
@@ -974,7 +975,7 @@ display: block;
 										console.log("targetuserkey..." + userKey);
 										database.ref("FcmId/"+userKey).once('value',fcmSnapshot => { 
 											console.log('FCM Token : ', fcmSnapshot.val()); 
-											const mytoken = fcmSnapshot.val();
+											var mytoken = fcmSnapshot.val();
 											console.log("title: " + title);
 											console.log("msg: " + msg);
 											sendNotification(mytoken, title, msg);
@@ -1038,7 +1039,7 @@ display: block;
 
 			//노티스 정보 파베 저장	
 			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
-        	    projectName: projectName,
+        	    projectName: "<pm>" + projectName,
         	    title: title,
         	    creatFrom: from
         	  });
@@ -1152,8 +1153,7 @@ display: block;
 						var noticeValue = data.val(); 						
 									console.log("노티스 밸류는??" + noticeValue.readOk);
 									console.log(noticeValue.readOk == false);
-									console.log("노티스 밸류는??" + data.numChildren());
-									console.log("노티스 밸류는??" + noticeKey);		
+									
 						
 						
 							noticeListUp(noticeKey, noticeValue.projectName, noticeValue.title, noticeValue.creatFrom);
@@ -1162,7 +1162,7 @@ display: block;
 							
 						} 
 					noticesByUserRef.on('child_added', checkRead.bind(this)); 
-					noticesByUserRef.on('child_changed', checkRead.bind(this)); 
+					//noticesByUserRef.on('child_changed', checkRead.bind(this)); 
 
 
 
@@ -1192,12 +1192,6 @@ display: block;
 						console.log("data~~~~~~~~~~~~~~~~~~~" + data.numChildren());
 						var numOfNotice = data.numChildren(); 
 						$('#numOfNotice').html(numOfNotice);
-						data.forEach(function(childSnapshot) {
-							console.log("data~~~~~~~~~~~~~~~~~~~" + data);
-							console.log("data~~~~~~~~~~~~~~~~~~~" + data.key);
-							console.log("data~~~~~~~~~~~~~~~~~~~" + data.numChildren());
-							           				
-       		 		});
 						
 						
 						});
@@ -1205,7 +1199,10 @@ display: block;
 			}
 
 			function saveReadNotice(){
-				var arrNoticeKey = document.querySelectorAll('div[data-type="notice"]');
+				
+				console.log("this 값은...." + this +'/' + this.getAttribute("data-from"));
+				var name = this.getAttribute("data-from")
+				var arrNoticeKey = document.querySelectorAll('div[data-type="'+name+'"]');
 				console.log(arrNoticeKey.length);
 				arrNoticeKey.forEach(function(item, index){
 					var noticeKey = item.getAttribute("data-noticeKey");
@@ -1223,22 +1220,6 @@ display: block;
 			
 
 				
-				/* var myRootRef = database.ref();
-	        	  myRootRef.child("Emails").orderByChild('email').equalTo(value.email).once('value', function(data){
-	        		  data.forEach(function(childSnapshot) {
-							userKey = childSnapshot.key;
-							console.log("targetuserkey..." + userKey);
-							//유저별 노티스 저장
-							database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
-				        	    projectName: projectName,
-				        	    title: title,
-				        	    readOk : 'false'
-				        	  });;
-							
-
-							
-     		 		});
-	        	  })		 */
 	        	  numOfNotread(curUserKey);
 				}
 
@@ -1247,7 +1228,7 @@ display: block;
 			
 			function noticeListUp(noticeKey, projectName, title, from){
 				var noticeTags;
-	 			noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="notice" data-noticeKey="'+ noticeKey+ 
+	 			noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ from+'" data-noticeKey="'+ noticeKey+ 
 	 						 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
 	 	                     '<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
 	 	                      + projectName + '</span>'+ title +
@@ -1263,12 +1244,17 @@ display: block;
                      }else if(from == 'kanbanIssue'){
 							
                     	 $("#issueBoard").append(noticeTags);
-                         }
+                     }else if(from == 'drive'){
+                    	 $("#driveBoard").append(noticeTags);
+                         }else if( from== 'mention'){
+                        	 
+                        	 $("#mentionBoard").append(noticeTags);
+                             }
 
 				}
 
 			function pmNoticeListUp(){
-				var pmNoticeTags ='<div id="'+ noticeKey+'" class="mt-2" data-type="notice" data-noticeKey="'+ noticeKey+ 
+				var pmNoticeTags ='<div id="'+ noticeKey+'" class="mt-2" data-type="KanbanIssue" data-noticeKey="'+ noticeKey+ 
 				 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
 				 +'<span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>'
 	           '<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
@@ -2011,6 +1997,12 @@ display: block;
     			loadPushNotice(resolvedData);
     			//읽지 않은 노티수 숫자 표시 함수
     			numOfNotread(resolvedData);
+
+    			//공지사항 아코디언 오픈시 이벤트 리스너....
+    			$('#collapseOne4').on('shown.bs.collapse', saveReadNotice);
+    			$('#collapseTwo5').on('shown.bs.collapse', saveReadNotice);
+    			$('#collapseThree6').on('show.bs.collapse', saveReadNotice);
+    			$('#collapseThree7').on('show.bs.collapse', saveReadNotice);
                
             }); 
 
@@ -2131,8 +2123,7 @@ display: block;
 
 
 			
-			//공지사항 아코디언 오픈시 이벤트 리스너....
-			$('#collapseOne4').on('show.bs.collapse', saveReadNotice); 
+			
 			       
 			
       	});	
