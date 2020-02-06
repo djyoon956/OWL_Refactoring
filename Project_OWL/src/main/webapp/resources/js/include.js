@@ -86,8 +86,13 @@ function setEmoji(){
       window.emojiPicker.discover();
 }
 
-function goDetailFromAlarm(view, projectIdx, targetIdx){
+function goDetailFromAlarm(form){
+
 	console.log("in go Notice");
+	console.log($(form).parent());
+
+	$(form).parent().submit();
+	return;
 	console.log(view);
 	console.log(projectIdx);
 	console.log(targetIdx);

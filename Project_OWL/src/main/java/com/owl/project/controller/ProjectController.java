@@ -28,10 +28,12 @@ public class ProjectController {
 		System.out.println("projectIdx : "+projectIdx);
 		System.out.println(request.getParameter("isAlarm"));
 		if(request.getParameter("isAlarm") != null) {
-			String view = request.getParameter("view");
-			int targetIdx = Integer.parseInt(request.getParameter("targetIdx"));
-		}
-		
+			model.addAttribute("isAlarm", true);
+			model.addAttribute("view", request.getParameter("view"));
+			model.addAttribute("targetIdx", Integer.parseInt(request.getParameter("targetIdx")));
+		}else 
+			model.addAttribute("isAlarm", false);
+		System.out.println("여기");
 		List<ProjectList> projectList  = service.getProjectLists(MemberHelper.getMemberEmail(principal, request.getSession()));
 		model.addAttribute("projectList", projectList);
 		
