@@ -85,3 +85,13 @@ function setEmoji(){
 
       window.emojiPicker.discover();
 }
+
+function goDetailFromAlarm(cmd, projectIdx, boardIdx){
+	console.log("in go Notice");
+	console.log(cmd);
+	console.log(projectIdx);
+	console.log(boardIdx);
+	if(cmd == "notice"){
+
+	}
+}

@@ -276,8 +276,3 @@ function setReadNum(boardIdx){
 	})
 }
 
-function goNotice(projectIdx, boardIdx){
-	console.log("in go Notice");
-	console.log(projectIdx);
-	console.log(boardIdx);
-}

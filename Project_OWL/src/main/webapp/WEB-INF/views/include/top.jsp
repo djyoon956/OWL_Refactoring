@@ -1159,7 +1159,7 @@ display: block;
 				let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + 'gray' +'; font-size:13px; color: black;">' +noticeValue.projectName+ '</span>'+ noticeValue.title ; 					
 
 				if(noticeValue.creatFrom == 'notice'){			
-					noticeTags	 += "<a href='javascript:void(0);' onclick=''>" +linkElement+ "</a>"
+					noticeTags	 += "<a href='javascript:void(0);' onclick='goDetailFromAlarm(\"notice\","+noticeValue.projectIdx+","+noticeValue.targetIdx+")'>" +linkElement+ "</a>"
 										+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
 										+  '</div>';
 					$("#noticeBoard").append(noticeTags);
