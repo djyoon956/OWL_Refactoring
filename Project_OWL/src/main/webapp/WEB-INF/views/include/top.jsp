@@ -3,13 +3,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Gamja+Flower|Yeon+Sung&display=swap" rel="stylesheet">
  <link rel="manifest" href="manifest.json"/>
-
+ <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="resources/plugin/emoji/css/emoji.css" rel="stylesheet">
+<script src="resources/plugin/emoji/js/config.js"></script>
+<script src="resources/plugin/emoji/js/util.js"></script>
+<script src="resources/plugin/emoji/js/jquery.emojiarea.js"></script>
+<script src="resources/plugin/emoji/js/emoji-picker.js"></script>
 
 <script>
     //const userEmail = "${member.email}";
     //const userName = "${member.name}";
     //console.log(userEmail + "/" + userName);
     $(function () {
+    	setEmoji();
 		$('#userImgTop').attr("src","upload/member/${member.profilePic}");
 		$('#userImgToggle').attr("src","upload/member/${member.profilePic}");
 		$("#userNameToggle").text("${member.name}");
@@ -153,6 +159,16 @@
 	
 	}); // $function () 끝
 
+	function setEmoji(){
+	    window.emojiPicker = new EmojiPicker({
+	        emojiable_selector: '[data-emojiable=true]',
+	        assetsPath: 'resources/plugin/emoji/img/',
+	        popupButtonClasses: 'fa fa-smile-o'
+	      });
+
+	      window.emojiPicker.discover();
+	}
+	
 	function Search(){
 		$('.ChatList').empty();   
 		var plus = "";
@@ -437,6 +453,9 @@ display: block;
    background-color: #a5c5e8;
    color : white;
 }
+.emoji-wysiwyg-editor{
+	height: 50px !important;
+}
 </style>
 
 
@@ -662,11 +681,13 @@ display: block;
                                 <div class="row">
                                     <div class="col-9">
                                         <div class="input-field m-t-0 m-b-0" >
-                                            <textarea id="textarea1" placeholder="메시지를 입력해주세요" class="form-control border-0 mb-0"></textarea>
+	                                         <p class="lead emoji-picker-container mt-0">
+	                                        	<textarea class="form-control border-0 mb-0 mt-2" id="textarea1"  data-emojiable="true"  placeholder="메시지를 입력해주세요"></textarea>
+	                  						 </p>
                                         </div>
                                     </div>
                                     <div class="col-3">
-                                        <a class="btn-circle btn-md btn-cyan float-right text-white chatbg mt-2" href="javascript:void(0)"><i class="fas fa-paper-plane"></i></a>
+                                        <a class="btn-circle btn-md btn-cyan float-right text-white chatbg mt-2" href="javascript:void(0)" onclick="saveMessages()"><i class="fas fa-paper-plane"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -1495,12 +1516,9 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
           
 
 		  function pressEnter(ev) {
-			  
 				if(ev.keyCode === 13){ //엔터키 키코드가 입력이 되면 
 					ev.preventDefault();
-					 
-					saveMessages(); 
-
+					saveMessages($("#chattingRoomIn .emoji-wysiwyg-editor:first").text()); 
 			  }
 		  }
 		
@@ -1712,14 +1730,18 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 	  			return tmp.textContent || tmp.innerText || ""; 
 		 	}
 			
-			function saveMessages(inviteMessage) {				
+			function saveMessages(inviteMessage) {	
+				console.log("in saveMessages");			
 				var msgDiv = $('#textarea1');				
-				var msg = inviteMessage ? inviteMessage : $('#textarea1').val().trim(); 										
+				var msg = inviteMessage ? inviteMessage : $('#textarea1').val().trim();
+								console.log($('#textarea1').val());					
+								console.log(msg);					
 				var curUserProfilePic = curProfilePic;
 				var convertMsg = myConvertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
 				if(msg.length > 0){ 
 					msgDiv.focus(); 
 					msgDiv.val(""); 
+					$("#chattingRoomIn .emoji-wysiwyg-editor:first").empty();
 					var multiUpdates = {}; 
 					var messageRef = database.ref('Messages/'+ roomId);
 					var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
@@ -2005,7 +2027,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			// 초기화 를 위한 온로드 함수... 같은 프로제트에 있는 유저목록과 프로젝트 채팅방을 만들기 위한 정보를 디비에서 뽑아낸다.	
           $(function(){            
 			var curUserKey;
-			
+
+			$("#chattingRoomIn .emoji-wysiwyg-editor:first").keydown(pressEnter);
 			//setCloudMessaging();
 			
             writeUserData(curName, curEmail, curProfilePic).then(function(resolvedData){
