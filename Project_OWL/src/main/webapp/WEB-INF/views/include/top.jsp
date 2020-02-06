@@ -99,15 +99,14 @@
 		$("#chatNotideAside").addClass("hidden");
 		});
 
+ 	//이슈 컨펌할때, comfirmOk버튼 클릭시
 
  	$('#comfirmBtn').click(function() {
-	console.log($('#comfirmissueIdx').val());
 		$.ajax({
 			url:"IssueComfirmfromPM.do",
 			data : {issueIdx : $('#comfirmissueIdx').val()},
 			success : function(data) {
-				console.log('IssueComfirmfromPM in');
-				console.log(data);
+
 	        	successAlert("Issue가 추가되었습니다.");
 	        	$('#confirmIssueModal').modal("hide"); //닫기 
 				
@@ -118,18 +117,15 @@
 			})
 		});
 
+
+ 	//이슈 컨펌할때, reject버튼 클릭시
 	$('#rejectBtn').click(function() {
-		console.log('여기오나요?');
-		console.log($('#comfirmCreator').text());
-	console.log('----------------');
-console.log($('#comfirmissueIdx').val());
-console.log($('#rejectreason').val())
+
 		$.ajax({
 			url : "IssueRejectfromPM.do",
-			data : {'issueIdx' : $('#comfirmissueIdx').val(), 'rejectReason' : $('#rejectreason').val()},
+			data : {'rejectReason' : $('#rejectreason').val(), 'issueIdx' : $('#comfirmissueIdx').val()},
 			success : function(data) {
-				console.log('IssueRejectfromPM in');
-				console.log(data);
+
 				successAlert("Issue가 반려되었습니다.");
 	        	$('#confirmIssueModal').modal("hide");
 
@@ -153,7 +149,7 @@ console.log($('#rejectreason').val())
 	});
 	
 	
-	}); 
+	}); // $function () 끝
 
 	function Search(){
 		$('.ChatList').empty();   
@@ -171,7 +167,8 @@ console.log($('#rejectreason').val())
 		$('.ChatList').append(plus);
 	}
 
-
+	
+	//알람 이슈체크 이슈 컨펌할때 모달창 띄우는 함수 
 	function comfirmIssueModal(data) {
 
 		$.ajax({
@@ -179,23 +176,20 @@ console.log($('#rejectreason').val())
 			type: "POST",
 			data : {issueIdx : data},
 			success : function(data) {
-
+				
+				let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
 				let files = "  ";
+				
  				$.each (data.files, function(index, element) {
+					files += element.fileName + "  ";
+				}); 
 				
-						files += element.fileName + "  ";
-					}); 
-				
-				console.log('----------------');
- 				console.log(data.issueIdx);
 				$('#comfirmTitle').text(data.issueTitle);
 				$('#comfirmIdx').html('<input type="hidden" id="comfirmissueIdx" value="'+data.issueIdx+'">');		
 				$('#comfirmTitle').text(data.issueTitle);
-				
 				$('#comfirmContent').html(data.content);
 				$('#comfirmCreator').text(data.creator);
 				$('#comfirmAssignee').text(data.assigned);
-				let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
 				$('#comfirmFilename').html(files);
 				$('#comfirmLabel').html(labelname);
 				$('#comfirmPriority').text(data.priorityCode);
@@ -257,7 +251,6 @@ display: block;
 	width: 310px;
 	position: absolute;
 	right:0;
-	
 	z-index : -20;
 } 
 
