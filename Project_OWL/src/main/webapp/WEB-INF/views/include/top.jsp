@@ -723,18 +723,13 @@ display: block;
     </nav>
 </header>
 
-      <script type="text/javascript" src="resources/js/underscore-min.js"></script>
       
-      
+      <!-- <script type="text/javascript" src="resources/js/underscore-min.js"></script> 언더스코어 제이에스는 태그정보를 뷰단에 어펜드할 때 편리하다-->          
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
-	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
-      
+	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>     
       <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-analytics.js"></script>
-	<!-- firebase cloud firestore -->
-	<script
-		src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-analytics.js"></script>	
 	<!-- firebase database -->
 	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-database.js"></script>
 	<!-- firebase cloud store... for uploading and downloading large object -->
@@ -742,20 +737,42 @@ display: block;
 	<!-- firebase cloud messaging... for sending notification -->
 	<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-messaging.js"></script>
  <script>
- 		
-      console.log("value : " + '${member.name}');
+//Your web app's Firebase configuration
+ var firebaseConfig = {
+   apiKey: "AIzaSyCUWhwHawfZnngksqB7RstHZJVC_fQloeg",
+   authDomain: "owl-chat-c27f1.firebaseapp.com",
+   databaseURL: "https://owl-chat-c27f1.firebaseio.com",
+   projectId: "owl-chat-c27f1",
+   storageBucket: "owl-chat-c27f1.appspot.com",
+   messagingSenderId: "626219367568",
+   appId: "1:626219367568:web:84d90164e32b237822ac15",
+   measurementId: "G-7FX553N3RH"
+ };
+ // Initialize Firebase
+ firebase.initializeApp(firebaseConfig);
+ firebase.analytics();
+ 
+//Get a reference to the database service
+ const database = firebase.database();
+//푸시 알람을 위한 변수 설정..
+const messaging = firebase.messaging();
+
+messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-SY8pdtyT6NREqxgdSRR44x_SWjZYTZNEWY8n0");
+
+
+	
+      //채팅기능을 위한 유저 기본 정보(이름,이메일,프로필사진) 글로벌 변수에 저장
       const curName = "${member.name}";
       const curEmail = "${member.email}"; 
       const curProfilePic = "${member.profilePic}";
-	  $('#curUserEmail').val(curEmail);
-	  console.log($('#curUserEmail').val());
-      
-      const SPLIT_CHAR = '@spl@';
-      var roomFlag;
+	  
+      //파이어베이스에 데이터 저장을 위한 글로벌 변수 초기화
+      const SPLIT_CHAR = '@spl@'; //채팅방에 여러 유저의 이름 혹은 유저 키값을 저장할 대 사용되는 구분자.
+      var roomFlag; //유저가 참여하고 있는 채팅방의 상태를 저장하긴 위한 플래그
 		var roomUserList; // 챗방 유저리스트  			
 		var roomUserName; // 챗방 유저 이름 
-		var roomId;		
-		var roomTitle; 	
+		var roomId;		//채팅방에 부여되는 아이디
+		var roomTitle; 	//채팅방 제목
     	  
       console.log("현재 접속중인 유저 정보" + curName+"/"+curEmail+"/"+curProfilePic);
 
@@ -763,28 +780,7 @@ display: block;
    
           
         
-          // Your web app's Firebase configuration
-          var firebaseConfig = {
-            apiKey: "AIzaSyCUWhwHawfZnngksqB7RstHZJVC_fQloeg",
-            authDomain: "owl-chat-c27f1.firebaseapp.com",
-            databaseURL: "https://owl-chat-c27f1.firebaseio.com",
-            projectId: "owl-chat-c27f1",
-            storageBucket: "owl-chat-c27f1.appspot.com",
-            messagingSenderId: "626219367568",
-            appId: "1:626219367568:web:84d90164e32b237822ac15",
-            measurementId: "G-7FX553N3RH"
-          };
-          // Initialize Firebase
-          firebase.initializeApp(firebaseConfig);
-          firebase.analytics();
           
-        //Get a reference to the database service
-          const database = firebase.database();
-		//푸시 알람을 위한 변수 설정..
-		const messaging = firebase.messaging();
-
-		messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-SY8pdtyT6NREqxgdSRR44x_SWjZYTZNEWY8n0");
-
 		 
         //웹의 경우 firebase messaging 을 이용한 푸시 알람을 이용할 경우.. 먼저 유저의 권한을 얻어야 한다. 권한을 얻기 위한 함수..
 		var setCloudMessaging = function () { 
