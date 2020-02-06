@@ -1236,10 +1236,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 					url : "GetProjectList.do",
 					data : {projectIdx : noticeValue.projectIdx},
 					success : function(data){
-						let noticeTags;
-						/* 프로젝트 컬러 */
-						noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectIdx="'+ data.projectIdx+ '" data-targetIdx="'+ noticeValue.targetIdx+ '" data-title="'+ noticeValue.title+'" style="display: flex;">'
-										+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
+						let noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectIdx="'+ data.projectIdx+ '" data-targetIdx="'+ noticeValue.targetIdx+ '" data-title="'+ noticeValue.title+'" style="display: flex;">'
+												+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
 						let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + data.projectColor +'; font-size:13px; color: '+getTextColorFromBg(data.projectColor)+'">' +data.projectName+ '</span>'+ noticeValue.title ; 					
 
 						if(noticeValue.creatFrom == 'notice'){	
