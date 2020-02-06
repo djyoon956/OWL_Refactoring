@@ -162,14 +162,20 @@
 				__proto__: Object
 				*/
 				console.log(data.files);
+
+				let files;
+/* 				$.each (data.files, function(index, element) {
+				console.log(element.fileName);
+						files += element.fileName + ", ";
+					}); */
 				$('#comfirmTitle').text(data.issueTitle);
 				$('#comfirmContent').text(data.content);
-				$('#comfirmCreator').text(data.creator);
+				$('#comfirmCreator').html(data.creator);
 				$('#comfirmAssignee').text(data.assigned);
 				let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
-				$('#comfirmLabel').text(labelname);
+				$('#comfirmLabel').html(labelname);
 				$('#comfirmPriority').text(data.priorityCode);
-				$('#comfirmDuedate').text(data.dueDate); */
+				$('#comfirmDuedate').text(data.dueDate); 
 				
 				
 				}
