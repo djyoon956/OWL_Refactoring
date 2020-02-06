@@ -1,5 +1,7 @@
 package com.owl.member.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,10 @@ public class MemberController {
 	private MemberService service;
 
 	@RequestMapping(value = "DeleteAccount.do")
-	public String deleteMember(HttpServletRequest request,String email, Model model) {
+	public String deleteMember(HttpServletRequest request, Principal principal, Model model) {
 		// 테스트 데이터
-		boolean result = service.deleteMember(email);
+		System.out.println(principal.getName() + "delete 멤버");
+		boolean result = service.deleteMember(principal.getName());
 		request.getSession().removeAttribute("member");
 		request.getSession().removeAttribute("setting");
 		System.out.println("멤버 delete");
