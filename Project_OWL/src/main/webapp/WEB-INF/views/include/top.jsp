@@ -1609,8 +1609,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
                      	var msgKey = data.val();                    	
            			 	messageListUp(data.key, msgKey.profileImg, msgKey.timestamp, msgKey.userName, msgKey.message, msgKey.uid);              				
 
-           			//채팅창 자동 스크롤 다운...  
-           			 document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
+	           			//채팅창 자동 스크롤 다운...  
+	           			 document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
 							
                      }); 
              }else{
@@ -1861,9 +1861,18 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
           
 	
           var messageListUp= function(key, profileImg, timestamp, userName, message, uid){
-              var time = timestampToTime(timestamp);            
-			  var userProPic = 	(profileImg ? 'upload/member/'+ profileImg : 'resources/images/login/profile.png');			 
-			  var messageTemplate;	
+              let time = timestampToTime(timestamp);        
+              let userProPic = 	(profileImg ? 'upload/member/'+ profileImg : 'resources/images/login/profile.png');			 
+              let messageTemplate;
+			  if(message.lastIndexOf("님이 초대되었습니다.")>0){
+
+				  messageTemplate = '<li  class="text-center chat-item mt-2 mb-3" data-key="' + key + '">'
+				  								+ '<b>'+ message+'</b>'
+				  								+ '</li>';
+
+				  $('#ulMessageList').append(messageTemplate);
+				  return;
+			  }	
 			  if(uid == curUserKey) {
 				  messageTemplate = '<li id="li' + key  + '" class="odd chat-item" style="margin-top:10px;" data-key="' + key + '">'+			
 					'<div class="chat-content">'+			
@@ -1875,7 +1884,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
 				  }else{
 					  messageTemplate = '<li id="li' + key  + '" class="chat-item" style="margin-top:10px;" data-key="' + key + '">'+
-						'<div class="chat-img"><img src="'+ userProPic +'" alt="user" class="chatImgBorder"></div>'+
+						'<div class="chat-img"><img src="'+ userProPic +'" alt="user" class="chatImgBorder" onerror="this.src=\'resources/images/login/profile.png\'"></div>'+
 						'<div class="chat-content pl-2 ">'+
 						'<h6 class="font-medium">'+ userName + '</h6>'+
 						'<div class="box bg-light-info otherBubble">'+ message + '</div>'+
@@ -2155,9 +2164,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
       		
 		//온로드 뒤에 백 버튼 리스너 달기
     		$('#aBackBtn').click(onBackBtnClick);
-
-      	//메세지 입력창 키다운 이벤트 달기
-			document.getElementById('textarea1').addEventListener('keydown', pressEnter);
 
 		//채팅 초대창 모달 띄우기
 			 //FirebaseChat 클래스 초기화
