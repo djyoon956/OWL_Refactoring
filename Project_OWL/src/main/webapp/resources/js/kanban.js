@@ -281,7 +281,7 @@ function initKanban(projectIdx){
 		 			        	var projectAuth = $('#getAuthority').val();
 		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){ // 이슈 컨펌. pm 에게 보내는 경우...
 		 			        		sendNoticePushToOne(pmemail, curName+"님이 이슈 생성", istitle);
-		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssue", pmemail, data);
+		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssueToPm", pmemail, data);
 		 			      
 
 		 			        	}else{// 이슈 생성 알림
