@@ -411,7 +411,7 @@
  	 	 		
  	 	 		if(view == "issueMention")
 					$("#kanbanAccordion>a[href='#kanbanCommentBox']]").click();
- 	 	}
+	 		}
  	 	}
  	}
     </script>
