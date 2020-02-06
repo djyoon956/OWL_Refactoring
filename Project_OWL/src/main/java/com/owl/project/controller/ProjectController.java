@@ -24,13 +24,20 @@ public class ProjectController {
 
 	@RequestMapping("Project.do")
 	public String showProject(int projectIdx, Principal	principal, Model model, HttpServletRequest request) {
-		List<ProjectList> projectList  = null;
-		projectList = service.getProjectLists(MemberHelper.getMemberEmail(principal, request.getSession()));
+		System.out.println("in showProject");
+		System.out.println("projectIdx : "+projectIdx);
+		System.out.println(request.getParameter("isAlarm"));
+		if(request.getParameter("isAlarm") != null) {
+			String view = request.getParameter("view");
+			int targetIdx = Integer.parseInt(request.getParameter("targetIdx"));
+		}
+		
+		List<ProjectList> projectList  = service.getProjectLists(MemberHelper.getMemberEmail(principal, request.getSession()));
 		model.addAttribute("projectList", projectList);
 		
 		ProjectList project = projectList.stream().filter(x -> x.getProjectIdx() == projectIdx).findFirst().get();
-		System.out.println(project);
 		model.addAttribute("project", project);
+		
 		return "project/main";
 	}
 
@@ -52,5 +59,10 @@ public class ProjectController {
 		request.getSession().setAttribute("joinProjectPm", joinProjectPm);
 
 		return "member/joinProject";
+	}
+	
+	@RequestMapping("ProjectFromAlarm.do")
+	public void projectFromAlarm(String view, int projectIdx, int targetIdx) {
+		
 	}
 }

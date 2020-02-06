@@ -86,12 +86,24 @@ function setEmoji(){
       window.emojiPicker.discover();
 }
 
-function goDetailFromAlarm(cmd, projectIdx, boardIdx){
+function goDetailFromAlarm(view, projectIdx, targetIdx){
 	console.log("in go Notice");
-	console.log(cmd);
+	console.log(view);
 	console.log(projectIdx);
-	console.log(boardIdx);
-	if(cmd == "notice"){
-
+	console.log(targetIdx);
+	if(view == "notice"){
+		$.ajax({
+			url : "Project.do",
+			data : {projectIdx : projectIdx
+						, isAlarm : true
+						, view : view
+						, targetIdx : targetIdx },
+			success : function(data){
+				console.log("in goDetailFromAlarm success");
+			},
+			error : function(){
+				console.log("in goDetailFromAlarm error");
+			}
+		})
 	}
 }

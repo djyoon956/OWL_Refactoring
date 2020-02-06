@@ -1179,15 +1179,9 @@ display: block;
 									+  '</div>';                	 
 					$("#mentionBoard").append(noticeTags);
 				}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
-					var pmNoticeTags ='<div id="'+ noticeKey+'" class="mt-2" data-type="KanbanIssue" data-noticeKey="'+ noticeKey+ 
-					 '" data-projectName="'+ noticeValue.projectName+ '" data-title="'+ noticeValue.title+'"><a href="#" data-toggle="modal" data-target="#confirmIssueModal"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
-					 +'<span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>'
-					'<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
-					+ noticeValue.projectName + '</span>'+ noticeValue.title +
-					 '<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span></a>'+
-					'</div>';
-
-					$("#issueCheckBoard").append(pmNoticeTags);			
+					noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal'>" +linkElement+ "</a>"
+									+  '</div>';  
+					$("#issueCheckBoard").append(noticeTags);			
 				}
 			}
 
