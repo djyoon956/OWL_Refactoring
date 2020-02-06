@@ -667,7 +667,7 @@ display: block;
                                             <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree8" aria-expanded="false" aria-controls="collapseThree7">이슈체크 <span id="numOfMentionBoard" class="badge badge-pill gradient-1">0</span><i class="fa fa-chevron-right chevronIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree8" class="collapse" data-parent="#accordion-three" data-from="mention" style="line-height:2em;">
-                                            <div id="issueCheck"class="card-body pt-3 accordionBody">
+                                            <div id="issueCheckBoard" class="card-body pt-3 accordionBody">
                                              <!-- <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
                                             <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
                                             	배인영님이 언급하였습니다. 
@@ -1194,7 +1194,10 @@ display: block;
 
 				}
 
-			function pmNoticeListUp(){
+
+			
+			//멤버가 피엠에게 이슈를 보내면   화면 처리 함수..
+			function pmNoticeListUp(noticeKey, projectName, title, from){
 				var pmNoticeTags ='<div id="'+ noticeKey+'" class="mt-2" data-type="KanbanIssue" data-noticeKey="'+ noticeKey+ 
 				 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
 				 +'<span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>'
@@ -1203,7 +1206,7 @@ display: block;
 	             '<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
 	            '</div>';
 
-				$("#issueBoard").append(pmNoticeTags);
+				$("#issueCheckBoard").append(pmNoticeTags);
 				
 				}
 			
