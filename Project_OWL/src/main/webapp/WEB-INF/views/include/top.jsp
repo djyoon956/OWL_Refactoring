@@ -439,7 +439,7 @@ display: block;
     border-radius: 10rem;
 }
 .gradient-1  {
-   background-color: #5FDC9C;
+   background-color: #a5c5e8;
    color : white;
 }
 </style>
@@ -1241,38 +1241,46 @@ display: block;
 	        	  numOfNotread(curUserKey);
 				}
 
-			function noticeListUp(noticeKey, noticeValue){
-				
+			function noticeListUp(noticeKey, noticeValue) {
+				$.ajax({
+					url : "GetProjectList.do",
+					data : {projectIdx : noticeValue.projectIdx},
+					success : function(data){
+						let noticeTags;
+						/* 프로젝트 컬러 */
+						noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectName="'+ data.projectName+ '" data-title="'+ noticeValue.title+'" style="display: flex;">'
+										+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
+						let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + data.projectColor +'; font-size:13px; color: '+getTextColorFromBg(data.projectColor)+'">' +data.projectName+ '</span>'+ noticeValue.title ; 					
 
-				let noticeTags;
-				/* 프로젝트 컬러 */
-				noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectName="'+ noticeValue.projectName+ '" data-title="'+ noticeValue.title+'" style="display: flex;">'
-								+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
-				let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + 'gray' +'; font-size:13px; color: black;">' +noticeValue.projectName+ '</span>'+ noticeValue.title ; 					
+						if(noticeValue.creatFrom == 'notice'){	
+							noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "notice");	
+							$("#noticeBoard").append(noticeTags);
+						}else if(noticeValue.creatFrom == 'kanbanIssue'){
+							noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issue");	
+							$("#issueBoard").append(noticeTags);
+						}else if(noticeValue.creatFrom == 'drive'){
+							noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "drive");	
+							$("#driveBoard").append(noticeTags);
+						}else if( noticeValue.creatFrom== 'mention'){      
+							noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issueMention");	              	 
+							$("#mentionBoard").append(noticeTags);
+						}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
+							console.log('!!!!!!!!!!!!!!!!!!!');
+							console.log(noticeKey);
+							console.log(noticeValue);
+							console.log('!!!!!!!!!!!!!!!!!!!');
+							console.log("noticeValue",noticeValue);
+							console.log("?????????" +noticeValue.targetIdx);
+							noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+")'>" +linkElement+ "</a>"
+											+  '</div>';  
+							$("#issueCheckBoard").append(noticeTags);			
+						}
+					},
+					error : function(){
+						console.log("in noticeListUp error");
+					}
+				});
 
-				if(noticeValue.creatFrom == 'notice'){	
-					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "notice");	
-					$("#noticeBoard").append(noticeTags);
-				}else if(noticeValue.creatFrom == 'kanbanIssue'){
-					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issue");	
-					$("#issueBoard").append(noticeTags);
-				}else if(noticeValue.creatFrom == 'drive'){
-					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "drive");	
-					$("#driveBoard").append(noticeTags);
-				}else if( noticeValue.creatFrom== 'mention'){      
-					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issueMention");	              	 
-					$("#mentionBoard").append(noticeTags);
-				}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
-					console.log('!!!!!!!!!!!!!!!!!!!');
-					console.log(noticeKey);
-					console.log(noticeValue);
-					console.log('!!!!!!!!!!!!!!!!!!!');
-					console.log("noticeValue",noticeValue);
-					console.log("?????????" +noticeValue.targetIdx);
-					noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+")'>" +linkElement+ "</a>"
-									+  '</div>';  
-					$("#issueCheckBoard").append(noticeTags);			
-				}
 			}
 
 

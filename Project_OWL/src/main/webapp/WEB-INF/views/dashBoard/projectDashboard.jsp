@@ -185,7 +185,7 @@ function refreshScheduleVisibility() {
                  <!-- timeline  -->
                   <!-- <div class="col-lg-6"> -->
                         <div class="card dash_shadow dash_radius">
-                            <div class="card-body">
+                            <div class="card-body" style="height: 470px;">
                            	  <h4 class="card-title">Timeline</h4> 
                            	  <h6 id="timeLinePDate"></h6>
 			                    <div id="dashboardPTimeLineEmptyBox" class="emptyBox hidden">
