@@ -779,8 +779,7 @@ display: block;
 			//로그인 후에 fcm 정보를 검색하여 저장 
 			console.log("token 파베 디비 저장 함수.....");
 			var cbGetToekn = function(token){ 
-				console.log('setLogin fcmId get : ', token);
-				sendNotification(token,"Team--1", "오늘도 열심히~~"); 
+				console.log('setLogin fcmId get : ', token);				
 				var userUid = curUserKey; 
 				var fcmIdRef= database.ref('FcmId/' +userUid); 
 				fcmIdRef.set(token); 
