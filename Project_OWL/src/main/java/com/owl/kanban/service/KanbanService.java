@@ -661,13 +661,13 @@ public class KanbanService {
 	
 	
 	
-	public boolean IssueRejectfromPM(int issueIdx, String rejectReason){
+	public boolean IssueRejectfromPM(String rejectReason,int issueIdx){
 		KanbanDao dao = getKanbanDao();
 
 		System.out.println("IssueRejectfromPM in service");
 		boolean check = false;
 		try {
-			check = dao.IssueRejectfromPM(issueIdx, rejectReason)> 0 ? true : false;
+			check = dao.IssueRejectfromPM(rejectReason, issueIdx)> 0 ? true : false;
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

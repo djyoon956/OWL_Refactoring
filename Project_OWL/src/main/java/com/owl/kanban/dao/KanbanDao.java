@@ -99,6 +99,6 @@ public interface KanbanDao {
 
 	public int IssueComfirmfromPM(int issueIdx) throws ClassNotFoundException, SQLException;
 
-	public int IssueRejectfromPM(int issueIdx, String rejectReason) throws ClassNotFoundException, SQLException;
+	public int IssueRejectfromPM(String rejectReason, int issueIdx) throws ClassNotFoundException, SQLException;
 
 }

@@ -467,10 +467,10 @@ public class KanbanRestController {
 	
 	
 	@RequestMapping("IssueRejectfromPM.do")	
-	public boolean IssueRejectfromPM(int issueIdx, String rejectReason){
+	public boolean IssueRejectfromPM(String rejectReason, int issueIdx){
 		
 		System.out.println("IssueRejectfromPM in controller");
-		boolean check = service.IssueRejectfromPM(issueIdx, rejectReason);
+		boolean check = service.IssueRejectfromPM(rejectReason, issueIdx);
 		
 		return check;
 	}
