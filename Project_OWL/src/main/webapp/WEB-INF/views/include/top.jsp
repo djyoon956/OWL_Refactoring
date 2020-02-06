@@ -117,6 +117,67 @@
 		$('.ChatList').append(plus);
 	}
 
+
+	function comfirmIssueModal(data) {
+		console.log('comfirmIssueModal in');
+		console.log(data);
+/* 		$('#comfirmTitle').remove();
+		$('#comfirmContent').remove();
+		$('#comfirmCreator').remove();
+		$('#comfirmAssignee').remove();
+		let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
+		$('#comfirmLabel').remove();
+		$('#comfirmPriority').remove();
+		$('#comfirmDuedate').remove(); */
+		
+		$.ajax({
+			url : "GetIssueDetail.do",
+			type: "POST",
+			data : {issueIdx : data},
+			success : function(data) {
+				console.log('GetcomfirmIssue in');
+				console.log(data);
+
+				
+				/*
+				issueIdx: 45
+				issueTitle: "플리즈!!!!!!!!!!!!!!!!"
+				content: "<p>플리즈!!!!!!!!!!!!!!!!<br></p>"
+				startDate: null
+				dueDate: null
+				issueProgress: "OPEN"
+				projectIdx: 1
+				priorityCode: null
+				assigned: "nyangkk@naver.com"
+				name: "배인영"
+				creator: "perhaps824@hanmail.net"
+				labelIdx: 0
+				orderNum: 1
+				colIdx: -1
+				files: []
+				logs: [{…}]
+				replies: []
+				labelName: null
+				labelColor: null
+				__proto__: Object
+				*/
+				console.log(data.files);
+				$('#comfirmTitle').text(data.issueTitle);
+				$('#comfirmContent').text(data.content);
+				$('#comfirmCreator').text(data.creator);
+				$('#comfirmAssignee').text(data.assigned);
+				let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
+				$('#comfirmLabel').text(labelname);
+				$('#comfirmPriority').text(data.priorityCode);
+				$('#comfirmDuedate').text(data.dueDate); */
+				
+				
+				}
+			})
+		
+		};
+	
+
 </script>
 <style>
 
@@ -1151,7 +1212,8 @@ display: block;
 				}
 
 			function noticeListUp(noticeKey, noticeValue){
-				console.log("noticeValue",noticeValue);
+				
+
 				let noticeTags;
 				/* 프로젝트 컬러 */
 				noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectName="'+ noticeValue.projectName+ '" data-title="'+ noticeValue.title+'">'
@@ -1179,7 +1241,13 @@ display: block;
 									+  '</div>';                	 
 					$("#mentionBoard").append(noticeTags);
 				}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
-					noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal'>" +linkElement+ "</a>"
+					console.log('!!!!!!!!!!!!!!!!!!!');
+					console.log(noticeKey);
+					console.log(noticeValue);
+					console.log('!!!!!!!!!!!!!!!!!!!');
+					console.log("noticeValue",noticeValue);
+					console.log("?????????" +noticeValue.targetIdx);
+					noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+")'>" +linkElement+ "</a>"
 									+  '</div>';  
 					$("#issueCheckBoard").append(noticeTags);			
 				}
@@ -2068,3 +2136,4 @@ display: block;
 	<!-- MyProfile Modal -->
 	<jsp:include page="../member/myProfileSetting.jsp" />
 	<jsp:include page="../chat/newChat.jsp" />
+	<jsp:include page="../kanban/modal/comfirmIssue.jsp" />
