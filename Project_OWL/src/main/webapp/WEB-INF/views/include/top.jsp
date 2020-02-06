@@ -380,7 +380,7 @@ display: block;
     border-radius: 10rem;
 }
 .gradient-1  {
-   background-color: #5FDC9C;
+   background-color: #a5c5e8;
    color : white;
 }
 </style>
