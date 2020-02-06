@@ -136,7 +136,8 @@ console.log($('#rejectreason').val())
 	    		console.log($('#comfirmCreator').text());//이슈생성원하는 member 
 	    		console.log(curEmail);//pm메일주소 
 	    		console.log($('#comfirmTitle').text());  // title 
-	    		
+	    		pushNoticeToOne(currentProjectIdx, currentProjectName, title, "issueCheckBoard", $('#comfirmCreator').text(), $('#comfirmissueIdx').val());
+	    		sendNotification($('#comfirmCreator').text(), currentProjectName,   +"님이 생성한 이슈 거절")
 	        	
 			},error : function() {
 				console.log('IssueRejectfromPM error');
