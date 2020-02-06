@@ -906,6 +906,7 @@ display: block;
 			// 수정중
 			//노티스 정보 파베 저장	
 			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
+				projectIdx: projectIdx,
         	    projectName: projectName,
         	    title: title,
         	    creatFrom: from,
@@ -996,6 +997,7 @@ display: block;
 									console.log("targetuserkey..." + userKey);
 									//유저별 노티스 저장
 									database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
+										projectIdx: projectIdx,
 						        	    projectName: projectName,
 						        	    title: title,
 						        	    readOk : 'false',
@@ -1030,7 +1032,7 @@ display: block;
 						var noticeKey =data.key;						
 						var noticeValue = data.val(); 		
 
-						noticeListUp(noticeKey, noticeValue.projectName, noticeValue.title, noticeValue.creatFrom, noticeValue.targetIdx);
+						noticeListUp(noticeKey, noticeValue);
 						} 
 					noticesByUserRef.on('child_added', checkRead.bind(this)); 
 					//noticesByUserRef.on('child_changed', checkRead.bind(this)); 
@@ -1149,39 +1151,40 @@ display: block;
 	        	  numOfNotread(curUserKey);
 				}
 
-			function noticeListUp(noticeKey, projectName, title, from, targetIdx){
+			function noticeListUp(noticeKey, noticeValue){
+				console.log("noticeValue",noticeValue);
 				let noticeTags;
 				/* 프로젝트 컬러 */
-				noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ from+'" data-noticeKey="'+ noticeKey+ '" data-projectName="'+ projectName+ '" data-title="'+ title+'">'
+				noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectName="'+ noticeValue.projectName+ '" data-title="'+ noticeValue.title+'">'
 								+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
-				let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + 'gray' +'; font-size:13px; color: black;">' +projectName+ '</span>'+ title ; 					
+				let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + 'gray' +'; font-size:13px; color: black;">' +noticeValue.projectName+ '</span>'+ noticeValue.title ; 					
 
-				if(from == 'notice'){			
+				if(noticeValue.creatFrom == 'notice'){			
 					noticeTags	 += "<a href='javascript:void(0);' onclick=''>" +linkElement+ "</a>"
 										+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
 										+  '</div>';
 					$("#noticeBoard").append(noticeTags);
-				}else if(from == 'kanbanIssue'){
+				}else if(noticeValue.creatFrom == 'kanbanIssue'){
 					noticeTags	 += "<a href='javascript:void(0);' onclick=''>" +linkElement+ "</a>"
 										+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
 										+  '</div>';
 					$("#issueBoard").append(noticeTags);
-				}else if(from == 'drive'){
+				}else if(noticeValue.creatFrom == 'drive'){
 					noticeTags	 += linkElement
 									+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
 									+  '</div>';
 					$("#driveBoard").append(noticeTags);
-				}else if( from== 'mention'){      
+				}else if( noticeValue.creatFrom== 'mention'){      
 					noticeTags	 += "<a href='javascript:void(0);' onclick=''>" +linkElement+ "</a>"
 									+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
 									+  '</div>';                	 
 					$("#mentionBoard").append(noticeTags);
-				}else if(from == 'kanbanIssueToPm'){
+				}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
 					var pmNoticeTags ='<div id="'+ noticeKey+'" class="mt-2" data-type="KanbanIssue" data-noticeKey="'+ noticeKey+ 
-					 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><a href="#" data-toggle="modal" data-target="#confirmIssueModal"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
+					 '" data-projectName="'+ noticeValue.projectName+ '" data-title="'+ noticeValue.title+'"><a href="#" data-toggle="modal" data-target="#confirmIssueModal"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
 					 +'<span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>'
 					'<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
-					+ projectName + '</span>'+ title +
+					+ noticeValue.projectName + '</span>'+ noticeValue.title +
 					 '<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span></a>'+
 					'</div>';
 
