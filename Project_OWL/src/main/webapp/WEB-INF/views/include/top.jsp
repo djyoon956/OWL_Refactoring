@@ -99,7 +99,61 @@
 		$("#chatNotideAside").addClass("hidden");
 		});
 
+
+ 	$('#comfirmBtn').click(function() {
+	console.log($('#comfirmissueIdx').val());
+		$.ajax({
+			url:"IssueComfirmfromPM.do",
+			data : {issueIdx : $('#comfirmissueIdx').val()},
+			success : function(data) {
+				console.log('IssueComfirmfromPM in');
+				console.log(data);
+	        	successAlert("Issue가 추가되었습니다.");
+	        	$('#confirmIssueModal').modal("hide"); //닫기 
+				
+			},error : function() {
+				console.log('error');
+
+			}
+			})
+		});
+
+	$('#rejectBtn').click(function() {
+		console.log('여기오나요?');
+		console.log($('#comfirmCreator').text());
+	console.log('----------------');
+console.log($('#comfirmissueIdx').val());
+console.log($('#rejectreason').val())
+		$.ajax({
+			url : "IssueRejectfromPM.do",
+			data : {'issueIdx' : $('#comfirmissueIdx').val(), 'rejectReason' : $('#rejectreason').val()},
+			success : function(data) {
+				console.log('IssueRejectfromPM in');
+				console.log(data);
+				successAlert("Issue가 반려되었습니다.");
+	        	$('#confirmIssueModal').modal("hide");
+
+	    		console.log($('#comfirmCreator').text());//이슈생성원하는 member 
+	    		console.log(curEmail);//pm메일주소 
+	    		console.log($('#comfirmTitle').text());  // title 
+	    		
+	        	
+			},error : function() {
+				console.log('IssueRejectfromPM error');
+				}
+			});
+	
+		});
+	
+
+
+
+	$('#confirmIssueModal').on('hidden.bs.modal', function(e){
+		$('#rejectreason').val("");
 	});
+	
+	
+	}); 
 
 	function Search(){
 		$('.ChatList').empty();   
@@ -131,8 +185,13 @@
 				
 						files += element.fileName + "  ";
 					}); 
-
+				
+				console.log('----------------');
+ 				console.log(data.issueIdx);
 				$('#comfirmTitle').text(data.issueTitle);
+				$('#comfirmIdx').html('<input type="hidden" id="comfirmissueIdx" value="'+data.issueIdx+'">');		
+				$('#comfirmTitle').text(data.issueTitle);
+				
 				$('#comfirmContent').html(data.content);
 				$('#comfirmCreator').text(data.creator);
 				$('#comfirmAssignee').text(data.assigned);

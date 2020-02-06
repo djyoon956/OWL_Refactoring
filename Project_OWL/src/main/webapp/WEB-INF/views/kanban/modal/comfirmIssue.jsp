@@ -14,6 +14,7 @@
 			<!-- <form action="InsertIssue.do" method="post" enctype="multipart/form-data" id="addIssueForm">--> 				
 			<div class="row">
 					<div class="col-8">
+					<div id="comfirmIdx"></div>
 						<div class="form-group" id="comfirmTitle">
 							
 						</div>
@@ -69,10 +70,14 @@
 					</div>
 					</div>
 				</div>
-			</div> 
+				<br><br>
+				<div>
+					<i class="fas fa-stamp fa-2x"></i> <b>이슈사유</b>
+						<input type="text" style=" min-height: 60px; max-width: 600px; min-width: 600px;" id="rejectreason"></div>
+				</div> 
 					<div class="modal-footer text-right">
-					<input type="button" class="btn btn-primary" id="ComfirmBtn" value="Comfirm">
-					<input type="button" class="btn btn-primary" id="RejectBtn" value="Reject">
+					<input type="button" class="btn btn-primary" id="comfirmBtn" value="Comfirm">
+					<input type="button" class="btn btn-primary" id="rejectBtn" value="Reject">
 					
 					<!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> -->
 				</div>
