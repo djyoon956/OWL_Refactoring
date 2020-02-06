@@ -148,7 +148,7 @@ function ProjectMyChart(idx, totalSum, closeSum, projectName, color){
             }],
             labels: [
             	'Open : ' + totalSum,
-                'CLose : ' + closeSum                
+                'Close : ' + closeSum                
             ]
         },
         options: {
