@@ -1156,23 +1156,25 @@ display: block;
 								+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
 				let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + 'gray' +'; font-size:13px; color: black;">' +projectName+ '</span>'+ title ; 					
 
-				if(from != 'drive'){
-					linkElement = "<a href='javascript:void(0);' onclick=''>"
-											+ linkElement
-										+ "</a>";	
-				}
-				
-				noticeTags	 += linkElement 
-									+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
-									+  '</div>';
-
-				if(from == 'notice'){
+				if(from == 'notice'){			
+					noticeTags	 += "<a href='javascript:void(0);' onclick=''>" +linkElement+ "</a>"
+										+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
+										+  '</div>';
 					$("#noticeBoard").append(noticeTags);
 				}else if(from == 'kanbanIssue'){
+					noticeTags	 += "<a href='javascript:void(0);' onclick=''>" +linkElement+ "</a>"
+										+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
+										+  '</div>';
 					$("#issueBoard").append(noticeTags);
 				}else if(from == 'drive'){
+					noticeTags	 += linkElement
+									+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
+									+  '</div>';
 					$("#driveBoard").append(noticeTags);
-				}else if( from== 'mention'){                      	 
+				}else if( from== 'mention'){      
+					noticeTags	 += "<a href='javascript:void(0);' onclick=''>" +linkElement+ "</a>"
+									+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
+									+  '</div>';                	 
 					$("#mentionBoard").append(noticeTags);
 				}else if(from == 'kanbanIssueToPm'){
 					var pmNoticeTags ='<div id="'+ noticeKey+'" class="mt-2" data-type="KanbanIssue" data-noticeKey="'+ noticeKey+ 
