@@ -276,12 +276,14 @@ function initKanban(projectIdx){
 		 			        cache: false,
 		 			        timeout: 600000,
 		 			        success: function (data) {
+		 			        	
 		 			        	console.log("event 값은???~~~~~~~~~~~~~~~" + $('#getAuthority').val());
 		 			        	var projectAuth = $('#getAuthority').val();
-		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){ // 이슈 컨펌
+		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){ // 이슈 컨펌. pm 에게 보내는 경우...
 		 			        		sendNoticePushToOne(pmemail, curName+"님이 이슈 생성", istitle);
-		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssue", pmemail);
-		 			        		
+		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssue", pmemail, data);
+		 			      
+
 		 			        	}else{// 이슈 생성 알림
 		 			        		sendNoticePushAll(curName + "님이 이슈 생성", istitle, currentProjectIdx);
 		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle, "kanbanIssue", data.issueIdx);
