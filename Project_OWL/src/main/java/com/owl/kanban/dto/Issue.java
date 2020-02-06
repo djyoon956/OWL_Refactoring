@@ -25,6 +25,7 @@ public class Issue {
 	private PriorityType priorityCode;
 	private String assigned;
 	private String name;  //assignee 이름 (UI)
+	private String rejectreason;
 	private String creator;
 	private int labelIdx;
 	private int orderNum;
