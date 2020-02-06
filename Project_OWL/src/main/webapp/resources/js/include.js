@@ -87,3 +87,30 @@ function setEmoji(){
 
       window.emojiPicker.discover();
 }
+
+function goDetailFromAlarm(form){
+
+	console.log("in go Notice");
+	console.log($(form).parent());
+
+	$(form).parent().submit();
+	return;
+	console.log(view);
+	console.log(projectIdx);
+	console.log(targetIdx);
+	if(view == "notice"){
+		$.ajax({
+			url : "Project.do",
+			data : {projectIdx : projectIdx
+						, isAlarm : true
+						, view : view
+						, targetIdx : targetIdx },
+			success : function(data){
+				console.log("in goDetailFromAlarm success");
+			},
+			error : function(){
+				console.log("in goDetailFromAlarm error");
+			}
+		})
+	}
+}

@@ -117,6 +117,73 @@
 		$('.ChatList').append(plus);
 	}
 
+
+	function comfirmIssueModal(data) {
+		console.log('comfirmIssueModal in');
+		console.log(data);
+/* 		$('#comfirmTitle').remove();
+		$('#comfirmContent').remove();
+		$('#comfirmCreator').remove();
+		$('#comfirmAssignee').remove();
+		let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
+		$('#comfirmLabel').remove();
+		$('#comfirmPriority').remove();
+		$('#comfirmDuedate').remove(); */
+		
+		$.ajax({
+			url : "GetIssueDetail.do",
+			type: "POST",
+			data : {issueIdx : data},
+			success : function(data) {
+				console.log('GetcomfirmIssue in');
+				console.log(data);
+
+				
+				/*
+				issueIdx: 45
+				issueTitle: "플리즈!!!!!!!!!!!!!!!!"
+				content: "<p>플리즈!!!!!!!!!!!!!!!!<br></p>"
+				startDate: null
+				dueDate: null
+				issueProgress: "OPEN"
+				projectIdx: 1
+				priorityCode: null
+				assigned: "nyangkk@naver.com"
+				name: "배인영"
+				creator: "perhaps824@hanmail.net"
+				labelIdx: 0
+				orderNum: 1
+				colIdx: -1
+				files: []
+				logs: [{…}]
+				replies: []
+				labelName: null
+				labelColor: null
+				__proto__: Object
+				*/
+				console.log(data.files);
+
+				let files;
+/* 				$.each (data.files, function(index, element) {
+				console.log(element.fileName);
+						files += element.fileName + ", ";
+					}); */
+				$('#comfirmTitle').text(data.issueTitle);
+				$('#comfirmContent').text(data.content);
+				$('#comfirmCreator').html(data.creator);
+				$('#comfirmAssignee').text(data.assigned);
+				let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
+				$('#comfirmLabel').html(labelname);
+				$('#comfirmPriority').text(data.priorityCode);
+				$('#comfirmDuedate').text(data.dueDate); 
+				
+				
+				}
+			})
+		
+		};
+	
+
 </script>
 <style>
 
@@ -661,6 +728,24 @@ display: block;
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                   <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree8" aria-expanded="false" aria-controls="collapseThree7">이슈체크 <span id="numOfMentionBoard" class="badge badge-pill gradient-1">0</span><i class="fa fa-chevron-right chevronIcon" style="float:right"></i></h5>
+                                        </div>
+                                        <div id="collapseThree8" class="collapse" data-parent="#accordion-three" data-from="mention" style="line-height:2em;">
+                                            <div id="issueCheckBoard" class="card-body pt-3 accordionBody">
+                                             <!-- <div class="mt-2"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>
+                                            <span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">구매계획</span>
+                                            	배인영님이 언급하였습니다. 
+                                            	<span class="ml-1" ><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>
+                                            </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
@@ -761,8 +846,7 @@ display: block;
 			//로그인 후에 fcm 정보를 검색하여 저장 
 			console.log("token 파베 디비 저장 함수.....");
 			var cbGetToekn = function(token){ 
-				console.log('setLogin fcmId get : ', token);
-				sendNotification(token,"Team--1", "오늘도 열심히~~"); 
+				console.log('setLogin fcmId get : ', token);				
 				var userUid = curUserKey; 
 				var fcmIdRef= database.ref('FcmId/' +userUid); 
 				fcmIdRef.set(token); 
@@ -882,34 +966,36 @@ display: block;
 
 
 		//탑 부분 종 누르면...   공지 사항 보이기~~
-		function pushNoticeToAll(projectIdx, projectName, title, from) {
+		function pushNoticeToAll(projectIdx, projectName, title, from, targetIdx) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key	
-
-
+			// 수정중
 			//노티스 정보 파베 저장	
 			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
+				projectIdx: projectIdx,
         	    projectName: projectName,
         	    title: title,
-        	    creatFrom: from
+        	    creatFrom: from,
+        	    targetIdx : targetIdx
         	  });
       	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
+			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from, targetIdx);
 		}
 
-		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail) {
+		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail, targetIdx) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
-			var noticeRefKey = noticeRef.push().key	
-
+			var noticeRefKey = noticeRef.push().key;	
 
 			//노티스 정보 파베 저장	
 			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
-        	    projectName: "<pm>" + projectName,
+				projectIdx: projectIdx,
+        	    projectName: projectName,
         	    title: title,
-        	    creatFrom: from
+        	    creatFrom: from,
+        	    targetIdx : targetIdx
         	  });
       	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail);
+			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail, targetIdx);
 		}
 
 
@@ -929,7 +1015,7 @@ display: block;
 			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
 		}	 */
 
-		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email){
+		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email, targetIdx){
 			var myRootRef = database.ref();
       	    myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
       		  data.forEach(function(childSnapshot) {
@@ -937,30 +1023,25 @@ display: block;
 						console.log("targetuserkey..." + userKey);
 						//유저별 노티스 저장
 						database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
+							projectIdx: projectIdx,
 			        	    projectName: projectName,
 			        	    title: title,
 			        	    readOk : 'false',
-			        	    creatFrom: from
+			        	    creatFrom: from,
+			        	    targetIdx : targetIdx
 			        	  });;
-						
-
-						
  		 		});
       	      })
 
 			}
 
-		function saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from) {
-			console.log("세이브 노티스 바이 유저 타나요??~~~~");
+		function saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from, targetIdx) {
 			$.ajax({
 				url: "MyProjectsMatesFull.do",
 				type: "POST",
 				dataType: 'json',
-				data : { email : curEmail
-					      }, 
+				data : { email : curEmail }, 
 				success: function (data) {
-					console.log("뷰단으로 데이터 들어 오나요?? >" + data);
-
 				    var projectIdxGrouped = new Set();
 				    
 					$.each(data, function(index, value) {          				
@@ -983,14 +1064,13 @@ display: block;
 									console.log("targetuserkey..." + userKey);
 									//유저별 노티스 저장
 									database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
+										projectIdx: projectIdx,
 						        	    projectName: projectName,
 						        	    title: title,
 						        	    readOk : 'false',
-						        	    creatFrom: from
-						        	  });;
-									
-
-									
+						        	    creatFrom: from,
+						        	    targetIdx : targetIdx
+						        	  });
 		       		 		});
 			        	  })		      
 					  }	
@@ -1006,7 +1086,7 @@ display: block;
 			}
 
 			function loadPushNotice(curUserKey){				
-	                      console.log("loadPushNotice 요함 수 왜 안타는 거야~~~~~~~~~~~");               
+                   console.log("loadPushNotice 요함 수 왜 안타는 거야~~~~~~~~~~~");               
 	              var noticesByUserRef = database.ref('NoticesByUser/'+ curUserKey);
              
 	                 document.getElementById('noticeBoard').innerHTML = ''; //공지사항 화면 리셋                 
@@ -1015,18 +1095,11 @@ display: block;
 	                 noticesByUserRef.off(); 
 	                 
 					var checkRead = function(data){
-						console.log("노티스 밸류는??" + data);
+						console.log("노티스 밸류는??", data);
 						var noticeKey =data.key;						
-						var noticeValue = data.val(); 						
-									console.log("노티스 밸류는??" + noticeValue.readOk);
-									console.log(noticeValue.readOk == false);
-									
-						
-						
-							noticeListUp(noticeKey, noticeValue.projectName, noticeValue.title, noticeValue.creatFrom);
-								 console.log("I am here~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-							
-							
+						var noticeValue = data.val(); 		
+
+						noticeListUp(noticeKey, noticeValue);
 						} 
 					noticesByUserRef.on('child_added', checkRead.bind(this)); 
 					//noticesByUserRef.on('child_changed', checkRead.bind(this)); 
@@ -1145,47 +1218,53 @@ display: block;
 	        	  numOfNotread(curUserKey);
 				}
 
+			function noticeListUp(noticeKey, noticeValue){
+				
+
+				let noticeTags;
+				/* 프로젝트 컬러 */
+				noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectName="'+ noticeValue.projectName+ '" data-title="'+ noticeValue.title+'" style="display: flex;">'
+								+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
+				let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + 'gray' +'; font-size:13px; color: black;">' +noticeValue.projectName+ '</span>'+ noticeValue.title ; 					
+
+				if(noticeValue.creatFrom == 'notice'){	
+					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "notice");	
+					$("#noticeBoard").append(noticeTags);
+				}else if(noticeValue.creatFrom == 'kanbanIssue'){
+					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issue");	
+					$("#issueBoard").append(noticeTags);
+				}else if(noticeValue.creatFrom == 'drive'){
+					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "drive");	
+					$("#driveBoard").append(noticeTags);
+				}else if( noticeValue.creatFrom== 'mention'){      
+					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issueMention");	              	 
+					$("#mentionBoard").append(noticeTags);
+				}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
+					console.log('!!!!!!!!!!!!!!!!!!!');
+					console.log(noticeKey);
+					console.log(noticeValue);
+					console.log('!!!!!!!!!!!!!!!!!!!');
+					console.log("noticeValue",noticeValue);
+					console.log("?????????" +noticeValue.targetIdx);
+					noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+")'>" +linkElement+ "</a>"
+									+  '</div>';  
+					$("#issueCheckBoard").append(noticeTags);			
+				}
+			}
 
 
 			
-			function noticeListUp(noticeKey, projectName, title, from ){
-				var noticeTags;
-				/* 프로젝트 컬러 */
-	 			noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ from+'" data-noticeKey="'+ noticeKey+ 
-	 						 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
-	 	                     '<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + 'gray' +'; font-size:13px; color: black;">' 
-	 	                      + projectName + '</span>'+ title +
-	 	    	              '<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
-	 	                      '</div>';
-
-
-				
-
-
-                 if(from == 'notice'){
-                	 $("#noticeBoard").append(noticeTags);
-                     }else if(from == 'kanbanIssue'){
-							
-                    	 $("#issueBoard").append(noticeTags);
-                     }else if(from == 'drive'){
-                    	 $("#driveBoard").append(noticeTags);
-                         }else if( from== 'mention'){
-                        	 
-                        	 $("#mentionBoard").append(noticeTags);
-                             }
-
-				}
-
-			function pmNoticeListUp(){
+			//멤버가 피엠에게 이슈를 보내면   화면 처리 함수..
+			function pmNoticeListUp(noticeKey, projectName, title, from){
 				var pmNoticeTags ='<div id="'+ noticeKey+'" class="mt-2" data-type="KanbanIssue" data-noticeKey="'+ noticeKey+ 
-				 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
+				 '" data-projectName="'+ projectName+ '" data-title="'+ title+'"><a href="#" data-toggle="modal" data-target="#confirmIssueModal"><span class="mr-1"><i class="far fa-bell fa-lg"></i></span>'+
 				 +'<span class="badge badge-primary badge-pill mr-1" style="background-color: red; font-size:13px; color: black;">PM</span>'
 	           '<span class="badge badge-primary badge-pill mr-1" style="background-color: #ccccff; font-size:13px; color: black;">' 
 	            + projectName + '</span>'+ title +
-	             '<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'+
+	             '<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span></a>'+
 	            '</div>';
 
-				$("#issueBoard").append(pmNoticeTags);
+				$("#issueCheckBoard").append(pmNoticeTags);
 				
 				}
 			
@@ -1228,6 +1307,18 @@ display: block;
 			         
 			     });
         	}
+
+        	function getNoticeFormTag(projectIdx, targetIdx, linkElement, view){
+            	let action = view != "drive" ? "Project.do?projectIdx="+projectIdx:"#";
+				return "<form action='"+action+"' method='post'>"
+						+ "	<input type='hidden' value='true' name='isAlarm'>"
+						+ "	<input type='hidden' value='"+view+"' name='view'>"
+						+ "	<input type='hidden' value='"+targetIdx+"' name='targetIdx'>"
+						+ "	<a href='javascript:void(0);' onclick='goDetailFromAlarm(this)'>" +linkElement+ "</a>"
+						+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
+						+ "</form>"		
+						+  '</div>';
+           	}
        
 				function writeProjectRoomData(name, email, imageUrl) {
 					
@@ -2056,3 +2147,4 @@ display: block;
 	<!-- MyProfile Modal -->
 	<jsp:include page="../member/myProfileSetting.jsp" />
 	<jsp:include page="../chat/newChat.jsp" />
+	<jsp:include page="../kanban/modal/comfirmIssue.jsp" />

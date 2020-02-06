@@ -276,18 +276,17 @@ function initKanban(projectIdx){
 		 			        cache: false,
 		 			        timeout: 600000,
 		 			        success: function (data) {
-		 			        	//
-		 			        	
 		 			        	
 		 			        	console.log("event 값은???~~~~~~~~~~~~~~~" + $('#getAuthority').val());
 		 			        	var projectAuth = $('#getAuthority').val();
-		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){
+		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){ // 이슈 컨펌. pm 에게 보내는 경우...
 		 			        		sendNoticePushToOne(pmemail, curName+"님이 이슈 생성", istitle);
-		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssue", pmemail);
-		 			        		
-		 			        	}else{
+		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssueToPm", pmemail, data.issueIdx);
+		 			      
+
+		 			        	}else{// 이슈 생성 알림
 		 			        		sendNoticePushAll(curName + "님이 이슈 생성", istitle, currentProjectIdx);
-		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle, "kanbanIssue");
+		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle, "kanbanIssue", data.issueIdx);
 		 			        	}
 		 			        	
 	 			        		
@@ -499,7 +498,7 @@ function addReply(creator) {
 				success : function(data) {
 					arrSelectedUserEmail.forEach(function(item, index){
 						sendNoticePushToOne(item, "<" + curName + "님의 멘션>", $('#replycontent').val());
-			        	pushNoticeToOne(currentProjectIdx,currentProjectName, curName + "언급하였습니다.", "mention", item);
+			        	pushNoticeToOne(currentProjectIdx,currentProjectName, curName + "언급하였습니다.", "mention", item, $('#issueIdxNum').val());
 					})
 
 					$(".emoji-wysiwyg-editor").empty();

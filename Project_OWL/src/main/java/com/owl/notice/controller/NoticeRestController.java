@@ -33,11 +33,10 @@ public class NoticeRestController {
 
 	@RequestMapping(value = "WriteNotice.do", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public int insertNotice(@RequestParam(value = "projectIdx") int projectIdx
-			, @RequestParam(value = "content") String content
-			, @RequestParam(value = "title") String title
-			, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
-			, Principal principal, HttpServletRequest request) {		
-		System.out.println("insert notice222");
+									, @RequestParam(value = "content") String content
+									, @RequestParam(value = "title") String title
+									, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
+									, Principal principal, HttpServletRequest request) {		
 		Notice notice = new Notice();
 		notice.setProjectIdx(projectIdx);
 		notice.setContent(content);
