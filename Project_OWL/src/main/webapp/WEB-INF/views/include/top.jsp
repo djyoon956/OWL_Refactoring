@@ -912,7 +912,7 @@ display: block;
         	    targetIdx : targetIdx
         	  });
       	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
+			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from, targetIdx);
 		}
 
 		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail, targetIdx) {
@@ -1001,7 +1001,7 @@ display: block;
 						        	    readOk : 'false',
 						        	    creatFrom: from,
 						        	    targetIdx : targetIdx
-						        	  });;
+						        	  });
 		       		 		});
 			        	  })		      
 					  }	
@@ -1017,7 +1017,7 @@ display: block;
 			}
 
 			function loadPushNotice(curUserKey){				
-	                      console.log("loadPushNotice 요함 수 왜 안타는 거야~~~~~~~~~~~");               
+                   console.log("loadPushNotice 요함 수 왜 안타는 거야~~~~~~~~~~~");               
 	              var noticesByUserRef = database.ref('NoticesByUser/'+ curUserKey);
              
 	                 document.getElementById('noticeBoard').innerHTML = ''; //공지사항 화면 리셋                 
@@ -1026,18 +1026,11 @@ display: block;
 	                 noticesByUserRef.off(); 
 	                 
 					var checkRead = function(data){
-						console.log("노티스 밸류는??" + data);
+						console.log("노티스 밸류는??", data);
 						var noticeKey =data.key;						
-						var noticeValue = data.val(); 						
-									console.log("노티스 밸류는??" + noticeValue.readOk);
-									console.log(noticeValue.readOk == false);
-									
-						
-						
-							noticeListUp(noticeKey, noticeValue.projectName, noticeValue.title, noticeValue.creatFrom);
-								 console.log("I am here~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-							
-							
+						var noticeValue = data.val(); 		
+
+						noticeListUp(noticeKey, noticeValue.projectName, noticeValue.title, noticeValue.creatFrom, noticeValue.targetIdx);
 						} 
 					noticesByUserRef.on('child_added', checkRead.bind(this)); 
 					//noticesByUserRef.on('child_changed', checkRead.bind(this)); 
@@ -1159,7 +1152,10 @@ display: block;
 
 
 			
-			function noticeListUp(noticeKey, projectName, title, from ){
+			function noticeListUp(noticeKey, projectName, title, from, targetIdx){
+				console.log("in noticeListUp");
+				console.log("from",from);
+				console.log("targetIdx",targetIdx);
 				var noticeTags;
 				/* 프로젝트 컬러 */
 	 			noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ from+'" data-noticeKey="'+ noticeKey+ 
