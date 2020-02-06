@@ -270,9 +270,9 @@ function MyLineChart(){
 		                    <table class="table table-hover table-bordered text-center w-100" id="dashboardTable">
 		                        <thead>
 		                            <tr>
-		                                <th width="30%">Project</th>
+		                                <th width="25%">Project</th>
 		                                <th width="40%">Subject</th>
-		                                <th width="20%">Due Date</th>
+		                                <th width="25%">Due Date</th>
 		                                <th width="10%">Priority</th>
 		                            </tr>
 		                        </thead>
