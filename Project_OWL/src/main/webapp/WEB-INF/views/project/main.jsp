@@ -57,13 +57,11 @@
     <link href="resources/css/drive.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="resources/css/kanban.css" />
     <script type="text/javascript">
-        $(function () {			
+        $(function () {	
             setTheme("${setting.themeColor}", "${setting.font}");
             setEmoji();
             initProjcet("${member.email}","${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
-            
 
-            
             $(".tui-full-calendar-layout.tui-view-8").addClass("hidden");
             $(".tui-full-calendar-layout.tui-view-8.tui-view-13").removeClass("hidden");
             $.ajax({
@@ -100,6 +98,7 @@
             
             let oldMenu = $("#projectMenu li:nth-child(2)");
             $("#projectMenu li").on("click", function () {
+                console.log("click!!!!");
                 if($(this).children(".nav-link").attr("href") == "#project")
 					return;
 				
@@ -197,7 +196,9 @@
                         console.log("addMemberOk error");
                     }
                 });
-            })           
+            })    
+            
+            checkAlarmView();  
         }); 
         
         function setChageView(target) {
@@ -395,6 +396,24 @@
 	 	    }
  	   })
  	}	   
+
+ 	function checkAlarmView(){
+ 	 	if(${isAlarm}){
+ 	 	 	let view = "${view}";
+ 	 	 	let targetIdx = "${targetIdx}";
+
+ 	 	 	if(view == "notice"){
+ 	 	 		$("#projectMenu li a[href='#notice']").click();
+ 	 	 		setDetailData(targetIdx);
+ 	 	 	}else if(view.startsWith("issue")){
+ 	 	 		$("#projectMenu li a[href='#kanban']").click();
+ 	 	 		setKanbanDetail(targetIdx);
+ 	 	 		
+ 	 	 		if(view == "issueMention")
+					$("#kanbanAccordion>a[href='#kanbanCommentBox']]").click();
+ 	 	}
+ 	 	}
+ 	}
     </script>
     <style type="text/css">
         .iconSizeBig {

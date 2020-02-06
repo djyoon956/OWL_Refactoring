@@ -1154,29 +1154,21 @@ display: block;
 				console.log("noticeValue",noticeValue);
 				let noticeTags;
 				/* 프로젝트 컬러 */
-				noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectName="'+ noticeValue.projectName+ '" data-title="'+ noticeValue.title+'">'
+				noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectName="'+ noticeValue.projectName+ '" data-title="'+ noticeValue.title+'" style="display: flex;">'
 								+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
 				let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + 'gray' +'; font-size:13px; color: black;">' +noticeValue.projectName+ '</span>'+ noticeValue.title ; 					
 
-				if(noticeValue.creatFrom == 'notice'){			
-					noticeTags	 += "<a href='javascript:void(0);' onclick='goDetailFromAlarm(\"notice\","+noticeValue.projectIdx+","+noticeValue.targetIdx+")'>" +linkElement+ "</a>"
-										+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
-										+  '</div>';
+				if(noticeValue.creatFrom == 'notice'){	
+					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "notice");	
 					$("#noticeBoard").append(noticeTags);
 				}else if(noticeValue.creatFrom == 'kanbanIssue'){
-					noticeTags	 += "<a href='javascript:void(0);' onclick=''>" +linkElement+ "</a>"
-										+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
-										+  '</div>';
+					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issue");	
 					$("#issueBoard").append(noticeTags);
 				}else if(noticeValue.creatFrom == 'drive'){
-					noticeTags	 += linkElement
-									+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
-									+  '</div>';
+					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "drive");	
 					$("#driveBoard").append(noticeTags);
 				}else if( noticeValue.creatFrom== 'mention'){      
-					noticeTags	 += "<a href='javascript:void(0);' onclick=''>" +linkElement+ "</a>"
-									+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
-									+  '</div>';                	 
+					noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issueMention");	              	 
 					$("#mentionBoard").append(noticeTags);
 				}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
 					noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal'>" +linkElement+ "</a>"
@@ -1240,6 +1232,18 @@ display: block;
 			         
 			     });
         	}
+
+        	function getNoticeFormTag(projectIdx, targetIdx, linkElement, view){
+            	let action = view != "drive" ? "Project.do?projectIdx="+projectIdx:"#";
+				return "<form action='"+action+"' method='post'>"
+						+ "	<input type='hidden' value='true' name='isAlarm'>"
+						+ "	<input type='hidden' value='"+view+"' name='view'>"
+						+ "	<input type='hidden' value='"+targetIdx+"' name='targetIdx'>"
+						+ "	<a href='javascript:void(0);' onclick='goDetailFromAlarm(this)'>" +linkElement+ "</a>"
+						+ '	<span class="ml-1" onclick="deleteNotice(this)"><i class="fas fa-times-circle" style="font-size: 1.2em"></i></span>'
+						+ "</form>"		
+						+  '</div>';
+           	}
        
 				function writeProjectRoomData(name, email, imageUrl) {
 					
