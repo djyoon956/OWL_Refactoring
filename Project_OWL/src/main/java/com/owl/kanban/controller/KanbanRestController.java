@@ -454,4 +454,26 @@ public class KanbanRestController {
 		return email;
 	}
 	
-}
+	
+	
+	@RequestMapping("IssueComfirmfromPM.do")	
+	public boolean IssueComfirmfromPM(int issueIdx){
+		
+		System.out.println("IssueComfirmfromPM in controller");
+		boolean check = service.IssueComfirmfromPM(issueIdx);
+		
+		return check;
+	}
+	
+	
+	@RequestMapping("IssueRejectfromPM.do")	
+	public boolean IssueRejectfromPM(int issueIdx, String rejectReason){
+		
+		System.out.println("IssueRejectfromPM in controller");
+		boolean check = service.IssueRejectfromPM(issueIdx, rejectReason);
+		
+		return check;
+	}
+	
+	
+};

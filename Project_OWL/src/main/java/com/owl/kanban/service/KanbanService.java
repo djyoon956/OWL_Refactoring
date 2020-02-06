@@ -642,6 +642,45 @@ public class KanbanService {
 	
 	
 	
+	public boolean IssueComfirmfromPM(int issueIdx){
+		KanbanDao dao = getKanbanDao();
+		boolean check = false;
+		
+		try {
+			check = dao.IssueComfirmfromPM(issueIdx) > 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return check;
+	}
+	
+	
+	
+	public boolean IssueRejectfromPM(int issueIdx, String rejectReason){
+		KanbanDao dao = getKanbanDao();
+
+		System.out.println("IssueRejectfromPM in service");
+		boolean check = false;
+		try {
+			check = dao.IssueRejectfromPM(issueIdx, rejectReason)> 0 ? true : false;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return check;
+	}
+	
+	
+	
 	/**
 	 * KanbanDao 구하기
 	 * @author 윤다정
