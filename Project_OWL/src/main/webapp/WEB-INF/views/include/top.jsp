@@ -99,15 +99,14 @@
 		$("#chatNotideAside").addClass("hidden");
 		});
 
+ 	//이슈 컨펌할때, comfirmOk버튼 클릭시
 
  	$('#comfirmBtn').click(function() {
-	console.log($('#comfirmissueIdx').val());
 		$.ajax({
 			url:"IssueComfirmfromPM.do",
 			data : {issueIdx : $('#comfirmissueIdx').val()},
 			success : function(data) {
-				console.log('IssueComfirmfromPM in');
-				console.log(data);
+
 	        	successAlert("Issue가 추가되었습니다.");
 	        	$('#confirmIssueModal').modal("hide"); //닫기 
 				
@@ -118,26 +117,25 @@
 			})
 		});
 
+
+ 	//이슈 컨펌할때, reject버튼 클릭시
 	$('#rejectBtn').click(function() {
-		console.log('여기오나요?');
-		console.log($('#comfirmCreator').text());
-	console.log('----------------');
-console.log($('#comfirmissueIdx').val());
-console.log($('#rejectreason').val())
+
 		$.ajax({
 			url : "IssueRejectfromPM.do",
-			data : {'issueIdx' : $('#comfirmissueIdx').val(), 'rejectReason' : $('#rejectreason').val()},
+			data : {'rejectReason' : $('#rejectreason').val(), 'issueIdx' : $('#comfirmissueIdx').val()},
 			success : function(data) {
-				console.log('IssueRejectfromPM in');
-				console.log(data);
+
 				successAlert("Issue가 반려되었습니다.");
 	        	$('#confirmIssueModal').modal("hide");
 
-	    		console.log($('#comfirmCreator').text());//이슈생성원하는 member 
+	    		console.log($('#comfirmCreator').text());//이슈생성원하는 member email
 	    		console.log(curEmail);//pm메일주소 
 	    		console.log($('#comfirmTitle').text());  // title 
+
 	    		
-	        	
+        	    sendNoticePushToOne($('#comfirmCreator').text(), $('#comfirmTitle').text()+ "이슈생성은", "PM이 거절 하였습니다.")
+	        	pushNoticeToOne(currentProjectIdx,currentProjectName, $('#comfirmTitle').text(), "issueCheckBoard", $('#comfirmCreator').text(), $('#comfirmissueIdx').val())
 			},error : function() {
 				console.log('IssueRejectfromPM error');
 				}
@@ -153,7 +151,7 @@ console.log($('#rejectreason').val())
 	});
 	
 	
-	}); 
+	}); // $function () 끝
 
 	function Search(){
 		$('.ChatList').empty();   
@@ -171,7 +169,8 @@ console.log($('#rejectreason').val())
 		$('.ChatList').append(plus);
 	}
 
-
+	
+	//알람 이슈체크 이슈 컨펌할때 모달창 띄우는 함수 
 	function comfirmIssueModal(data) {
 
 		$.ajax({
@@ -179,23 +178,20 @@ console.log($('#rejectreason').val())
 			type: "POST",
 			data : {issueIdx : data},
 			success : function(data) {
-
+				
+				let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
 				let files = "  ";
+				
  				$.each (data.files, function(index, element) {
+					files += element.fileName + "  ";
+				}); 
 				
-						files += element.fileName + "  ";
-					}); 
-				
-				console.log('----------------');
- 				console.log(data.issueIdx);
 				$('#comfirmTitle').text(data.issueTitle);
 				$('#comfirmIdx').html('<input type="hidden" id="comfirmissueIdx" value="'+data.issueIdx+'">');		
 				$('#comfirmTitle').text(data.issueTitle);
-				
 				$('#comfirmContent').html(data.content);
 				$('#comfirmCreator').text(data.creator);
 				$('#comfirmAssignee').text(data.assigned);
-				let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
 				$('#comfirmFilename').html(files);
 				$('#comfirmLabel').html(labelname);
 				$('#comfirmPriority').text(data.priorityCode);
@@ -257,7 +253,6 @@ display: block;
 	width: 310px;
 	position: absolute;
 	right:0;
-	
 	z-index : -20;
 } 
 
@@ -1008,7 +1003,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			//노티스 정보 파베 저장	
 			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
 				projectIdx: projectIdx,
-        	    projectName: projectName,
         	    title: title,
         	    creatFrom: from,
         	    targetIdx : targetIdx
@@ -1043,7 +1037,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						//유저별 노티스 저장
 						database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
 							projectIdx: projectIdx,
-			        	    projectName: projectName,
 			        	    title: title,
 			        	    readOk : 'false',
 			        	    creatFrom: from,
@@ -1084,7 +1077,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 									//유저별 노티스 저장
 									database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
 										projectIdx: projectIdx,
-						        	    projectName: projectName,
 						        	    title: title,
 						        	    readOk : 'false',
 						        	    creatFrom: from,
@@ -1212,40 +1204,35 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			}
 
 			function saveReadNotice(){
-				
-				console.log("this 값은...." + this +'/' + this.getAttribute("data-from"));
-				var name = this.getAttribute("data-from")
-				var arrNoticeKey = document.querySelectorAll('div[data-type="'+name+'"]');
-				console.log(arrNoticeKey.length);
+				let name = this.getAttribute("data-from")
+				let arrNoticeKey = document.querySelectorAll('div[data-type="'+name+'"]');
+
 				arrNoticeKey.forEach(function(item, index){
-					var noticeKey = item.getAttribute("data-noticeKey");
-					var projectName = item.getAttribute("data-projectName");
-					var title = item.getAttribute("data-title");
+					let noticeKey = item.getAttribute("data-noticeKey");
+					let projectIdx = item.getAttribute("data-projectIdx");
+					let targetIdx = item.getAttribute("data-targetIdx");
+					let title = item.getAttribute("data-title");
 					console.log("notice key 찍히나요???" + noticeKey);
 					database.ref('NoticesByUser/'+ curUserKey +'/' + noticeKey).update({
 						creatFrom : name,
-		        	    projectName: projectName,
+		        	    projectIdx: projectIdx,
 		        	    title: title,
-		        	    readOk : 'true'
-		        	  });;
+		        	    readOk : 'true',
+		        	    title: title,
+		        	    targetIdx : targetIdx
+		        	  });
+				});
 
-					
-					});
-			
-
-				
-	        	  numOfNotread(curUserKey);
-				}
+        	  numOfNotread(curUserKey);
+			}
 
 			function noticeListUp(noticeKey, noticeValue) {
 				$.ajax({
 					url : "GetProjectList.do",
 					data : {projectIdx : noticeValue.projectIdx},
 					success : function(data){
-						let noticeTags;
-						/* 프로젝트 컬러 */
-						noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectName="'+ data.projectName+ '" data-title="'+ noticeValue.title+'" style="display: flex;">'
-										+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
+						let noticeTags = '<div id="'+ noticeKey+'" class="mt-2" data-type="'+ noticeValue.creatFrom+'" data-noticeKey="'+ noticeKey+ '" data-projectIdx="'+ data.projectIdx+ '" data-targetIdx="'+ noticeValue.targetIdx+ '" data-title="'+ noticeValue.title+'" style="display: flex;">'
+												+ '	<span class="mr-1"><i class="far fa-bell fa-lg"></i></span>';
 						let linkElement = '	<span class="badge badge-primary badge-pill mr-1" style="background-color: ' + data.projectColor +'; font-size:13px; color: '+getTextColorFromBg(data.projectColor)+'">' +data.projectName+ '</span>'+ noticeValue.title ; 					
 
 						if(noticeValue.creatFrom == 'notice'){	
