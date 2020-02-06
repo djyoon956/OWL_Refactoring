@@ -8,8 +8,9 @@
 </style>
 <script>
     $(function () {
-        let agreeChk = false;
-        let pwdChk = true;
+		let agreeChk = false;
+		let pwdChk = false;
+		
 		let font = "{setting.font}";
 		$('#setFont option[value=\"'+font+'\"]').attr("selected", "selected");
 		$("#settingTabs li a").on("click", function(){
@@ -25,9 +26,10 @@
 			$("#firstpage").removeClass("hidden");
 		});
 		
-        $("#delPwdOut").keyup(function () {
+        $("#deleteMemberBtn").click(function () {
             if ($("#delPwdOut").val() == "" || $("#delPwdOut").val() == null) {
                 $("#delPwdOut").focus();
+                return;
             } else {
                 $.ajax({
                     url: "chkDelPwd.do",
@@ -39,13 +41,14 @@
                     dataType: "html",
                     success: function (responsedata) {
                         console.log("받는 데이터 >" + responsedata + "<");
-
+				
                         if (responsedata == "true") {
                             console.log("참");
-                            pwdChk = true;
+                            pwdChk = true; 
+                            if(pwdChk && agreeChk)
+                            location.href="DeleteAccount.do";
                         } else {
-                            console.log("거짓");
-                            pwdChk = false;
+                        	 warningAlert("약관에 동의하고 비밀번호를 알맞게 입력해주십시오");
                         }
                     },
                     error: function () {
@@ -71,6 +74,7 @@
                 agreeChk = false;
             }
         });
+       /*  
         $('#deleteMemberBtn').click(function () {
 
             if (agreeChk && pwdChk) {
@@ -88,7 +92,7 @@
                 warningAlert("약관에 동의해주시기바랍니다. 비밀번호가 일치하지 않습니다.");
                 return false;
             }
-        });
+        });  */
 
         $("#multipartFile").change(function () {
             
@@ -316,9 +320,10 @@
                                                             class="form-control pwd" placeholder="비밀번호를 입력해주세요.">
                                                     </div>
                                                 </c:if>
-                                                <button type="submit" class="btn btn-dark w-100"
-                                                    id="deleteMemberBtn">Close Account</button>
+                                               
                                             </form>
+                                             <button class="btn btn-dark w-100"
+                                                    id="deleteMemberBtn">Close Account</button>
                                         </div>
                                     </div>
                                 </div>
