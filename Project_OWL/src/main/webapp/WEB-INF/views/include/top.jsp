@@ -1779,14 +1779,14 @@ display: block;
 	            					+'<div class="d-flex w-100 justify-content-between" id="chatTitle">'+
 	            		                '<div class="media">'+
 	            		                  '<img src="resources/images/user/group.png" class="rounded-circle chat_img" alt="" id="userImg">'+
-	            		                  '<h5 style="margin-top: 18px; color: #ffb1b9">'+roomTitle+'</h5>'+
+	            		                  '<h5 style="margin-top: 18px;">'+roomTitle+'</h5>'+
 	            		                '</div>'+
 	            		                '<small style="float:right;">'+datetime+'</small>'+
 	            		             '</div>'+
 	            		              '<ul>'+
              								'<li class="d-flex justify-content-between align-items-center">'+
              			                                                      lastMessage+ 
-               									'<span class="badge badge-primary badge-pill" style="background-color: #ffb1b9">2</span>'+
+               									'<span class="badge badge-primary badge-pill" style="background-color: #326295">2</span>'+
                								'</li>'+
           								'</ul>'+
           							'</li>';	  
