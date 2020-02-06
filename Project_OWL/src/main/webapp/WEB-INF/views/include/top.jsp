@@ -119,65 +119,29 @@
 
 
 	function comfirmIssueModal(data) {
-		console.log('comfirmIssueModal in');
-		console.log(data);
-/* 		$('#comfirmTitle').remove();
-		$('#comfirmContent').remove();
-		$('#comfirmCreator').remove();
-		$('#comfirmAssignee').remove();
-		let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
-		$('#comfirmLabel').remove();
-		$('#comfirmPriority').remove();
-		$('#comfirmDuedate').remove(); */
-		
+
 		$.ajax({
 			url : "GetIssueDetail.do",
 			type: "POST",
 			data : {issueIdx : data},
 			success : function(data) {
-				console.log('GetcomfirmIssue in');
-				console.log(data);
 
+				let files = "  ";
+ 				$.each (data.files, function(index, element) {
 				
-				/*
-				issueIdx: 45
-				issueTitle: "플리즈!!!!!!!!!!!!!!!!"
-				content: "<p>플리즈!!!!!!!!!!!!!!!!<br></p>"
-				startDate: null
-				dueDate: null
-				issueProgress: "OPEN"
-				projectIdx: 1
-				priorityCode: null
-				assigned: "nyangkk@naver.com"
-				name: "배인영"
-				creator: "perhaps824@hanmail.net"
-				labelIdx: 0
-				orderNum: 1
-				colIdx: -1
-				files: []
-				logs: [{…}]
-				replies: []
-				labelName: null
-				labelColor: null
-				__proto__: Object
-				*/
-				console.log(data.files);
+						files += element.fileName + "  ";
+					}); 
 
-				let files;
-/* 				$.each (data.files, function(index, element) {
-				console.log(element.fileName);
-						files += element.fileName + ", ";
-					}); */
 				$('#comfirmTitle').text(data.issueTitle);
-				$('#comfirmContent').text(data.content);
-				$('#comfirmCreator').html(data.creator);
+				$('#comfirmContent').html(data.content);
+				$('#comfirmCreator').text(data.creator);
 				$('#comfirmAssignee').text(data.assigned);
 				let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
+				$('#comfirmFilename').html(files);
 				$('#comfirmLabel').html(labelname);
 				$('#comfirmPriority').text(data.priorityCode);
 				$('#comfirmDuedate').text(data.dueDate); 
-				
-				
+
 				}
 			})
 		
