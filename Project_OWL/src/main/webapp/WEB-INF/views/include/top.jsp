@@ -1227,7 +1227,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						creatFrom : name,
 		        	    projectName: projectName,
 		        	    title: title,
-		        	    readOk : 'true'
+		        	    readOk :  'true'
 		        	  });;
 
 					
