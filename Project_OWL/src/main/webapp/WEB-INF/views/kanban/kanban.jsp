@@ -57,11 +57,6 @@
                         <i class="fas fa-tag"></i>&nbsp;Confirm Issue
                     </button>
                 </a>
-              <a href="#" data-toggle="modal" data-target="#confirmIssueModal">
-                    
-                        <i class="fas fa-tag"></i>&nbsp;Confirm Issue
-                   
-                </a>
               <!-- ------------------------------------------------------------- -->
              </c:if>
             
