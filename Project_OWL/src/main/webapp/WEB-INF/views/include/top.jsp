@@ -129,24 +129,23 @@
 
 		$.ajax({
 			url : "IssueRejectfromPM.do",
-			data : {'rejectReason' : $('#rejectreason').val(), 'issueIdx' : $('#comfirmissueIdx').val()},
+			data : {'rejectreason' : $('#rejectreason').val(), 'issueIdx' : $('#comfirmissueIdx').val()},
 			success : function(data) {
 
 				successAlert("Issue가 반려되었습니다.");
 	        	$('#confirmIssueModal').modal("hide");
-
+	        	console.log($('#projectissueIdx').text());
 	    		console.log($('#comfirmCreator').text());//이슈생성원하는 member email
 	    		console.log(curEmail);//pm메일주소 
 	    		console.log($('#comfirmTitle').text());  // title 
 
 	    		
         	    sendNoticePushToOne($('#comfirmCreator').text(), $('#comfirmTitle').text()+ "이슈생성은", "PM이 거절 하였습니다.")
-	        	pushNoticeToOne(currentProjectIdx,currentProjectName, $('#comfirmTitle').text(), "issueCheckBoard", $('#comfirmCreator').text(), $('#comfirmissueIdx').val())
+	        	pushNoticeToOne($('#projectissueIdx').text(),$('#projectName').text(), $('#comfirmTitle').text(), "issueCheckBoard", $('#comfirmCreator').text(), $('#comfirmissueIdx').val())
 			},error : function() {
 				console.log('IssueRejectfromPM error');
 				}
 			});
-	
 		});
 	
 
@@ -187,14 +186,16 @@
 
 	
 	//알람 이슈체크 이슈 컨펌할때 모달창 띄우는 함수 
-	function comfirmIssueModal(data) {
-
+	function comfirmIssueModal(issueidx, projectName) {
+console.log('뭐니?');
+console.log(projectName);
 		$.ajax({
 			url : "GetIssueDetail.do",
 			type: "POST",
-			data : {issueIdx : data},
+			data : {issueIdx : issueidx},
 			success : function(data) {
-				
+				console.log('!!!!!!!!!!!!!!!!!');
+				console.log(data);
 				let labelname = '<span class="badgeIcon float-left" style="background-color: '+data.labelColor+'">'+data.labelName+'</span>';
 				let files = "  ";
 				
@@ -203,7 +204,7 @@
 				}); 
 				
 				$('#comfirmTitle').text(data.issueTitle);
-				$('#comfirmIdx').html('<input type="hidden" id="comfirmissueIdx" value="'+data.issueIdx+'">');		
+				$('#comfirmIdx').html('<input type="hidden" id="comfirmissueIdx" value="'+data.issueIdx+'"><input type="hidden" id="projectissueIdx" value="'+data.projectIdx+'"><input type="hidden" id="projectName" value="'+projectName+'">');		
 				$('#comfirmTitle').text(data.issueTitle);
 				$('#comfirmContent').html(data.content);
 				$('#comfirmCreator').text(data.creator);
@@ -1269,13 +1270,12 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 							noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issueMention");	              	 
 							$("#mentionBoard").append(noticeTags);
 						}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
-							console.log('!!!!!!!!!!!!!!!!!!!');
-							console.log(noticeKey);
-							console.log(noticeValue);
-							console.log('!!!!!!!!!!!!!!!!!!!');
-							console.log("noticeValue",noticeValue);
-							console.log("?????????" +noticeValue.targetIdx);
-							noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+")'>" +linkElement+ "</a>"
+							console.log('----------------------1');
+							
+							console.log(data.projectName);
+
+							console.log('-----------------------2');
+							noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+", \""+data.projectName+"\")'>" +linkElement+ "</a>"
 											+  '</div>';  
 							$("#issueCheckBoard").append(noticeTags);			
 						}

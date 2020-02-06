@@ -217,12 +217,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
    <update id="IssueComfirmfromPM" parameterType="int">
-      update issue a set issueprogress = "OPEN" where issueIdx = #{issueIdx}
+      update issue set issueprogress = "OPEN" where issueIdx = #{issueIdx}
    </update>
    
    
-   <update id="IssueRejectfromPM" parameterType="int">
-      update issue a set issueprogress = "REQUESTED", rejectreason=#{param2} where issueIdx = #{param1}
+ <update id="IssueRejectfromPM" parameterType="com.owl.kanban.dto.Issue">
+      update issue set issueprogress = "REQUESTED", rejectreason = #{rejectreason} where issueIdx = #{issueIdx}
    </update> 
 	
 </mapper>
