@@ -2,6 +2,7 @@
 
 function setTheme(theme, font){
 	let subColor;
+	let otherColor;
 	if(theme == "black"){
 		subColor = "white";		
 		$(".sidebar-item > a").css("color", subColor);
@@ -10,16 +11,17 @@ function setTheme(theme, font){
 		$(".modal-content").css("background-color", "#666666");
 		$(".modal-title").css("color", subColor);
 		$(".default-tab > .nav > .nav-item > .nav-link").css("color", "#fff");
-		Chart.defaults.global.defaultFontColor = subColor;
+/*		Chart.defaults.global.defaultFontColor = subColor;*/
 	}else{
 		subColor = "#326295";
+		otherColor = "black";
 		$(".sidebar-item > a").css("color", "#464a53");
 		$(".card-body").css("color", "#000000");
 		$(".card-body").css("background-color", "#fff");
 		$(".modal-content").css("background-color", "#fff");
 		$(".modal-title").css("color", subColor);
 		$(".default-tab > .nav > .nav-item > .nav-link").css("color", "black");
-		Chart.defaults.global.defaultFontColor = "#000000";
+/*		Chart.defaults.global.defaultFontColor = otherColor;*/
 	}
 	console.log("in set Theme");
 	$(".mySetting").each(function(){

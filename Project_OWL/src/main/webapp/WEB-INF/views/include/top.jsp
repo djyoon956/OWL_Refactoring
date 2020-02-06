@@ -948,11 +948,11 @@ display: block;
 
 		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail, targetIdx) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
-			var noticeRefKey = noticeRef.push().key	
-
+			var noticeRefKey = noticeRef.push().key;	
 
 			//노티스 정보 파베 저장	
 			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
+				projectIdx: projectIdx,
         	    projectName: projectName,
         	    title: title,
         	    creatFrom: from,
@@ -987,6 +987,7 @@ display: block;
 						console.log("targetuserkey..." + userKey);
 						//유저별 노티스 저장
 						database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
+							projectIdx: projectIdx,
 			        	    projectName: projectName,
 			        	    title: title,
 			        	    readOk : 'false',
