@@ -27,16 +27,14 @@ public class NoticeService {
 	public boolean insertNotice(Notice notice, List<MultipartFile> multipartFiles, String uploadPath) throws Exception{
 		NoticeDao dao = getNoticeDao();
 		boolean result = false;
-		System.out.println(notice.getEmail());
+		
 		try {
 			result = dao.insertNotice(notice) > 0 ? true : false;
 
-			System.out.println(multipartFiles.size());
 			if (multipartFiles.size() > 0) 
 				notice.setFiles(insertNoticeFiles(dao, notice.getEmail(),notice.getProjectIdx(),notice.getBoardIdx(), multipartFiles, uploadPath));
 
 		} catch (Exception e) {
-			System.out.println("Trans 예외 발생 : " + e.getMessage());
 			throw e; 
 		}
 

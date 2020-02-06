@@ -882,7 +882,22 @@ display: block;
 
 
 		//탑 부분 종 누르면...   공지 사항 보이기~~
-		function pushNoticeToAll(projectIdx, projectName, title, from) {
+		function pushNoticeToAll(projectIdx, projectName, title, from, targetIdx) {
+			var noticeRef = database.ref('Notices/'+ projectIdx);
+			var noticeRefKey = noticeRef.push().key	
+			// 수정중
+			//노티스 정보 파베 저장	
+			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
+        	    projectName: projectName,
+        	    title: title,
+        	    creatFrom: from,
+        	    targetIdx : targetIdx
+        	  });
+      	  	//노티즈 정보를 유저별 저장
+			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
+		}
+
+		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail, targetIdx) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key	
 
@@ -891,25 +906,11 @@ display: block;
 			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
         	    projectName: projectName,
         	    title: title,
-        	    creatFrom: from
+        	    creatFrom: from,
+        	    targetIdx : targetIdx
         	  });
       	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
-		}
-
-		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail) {
-			var noticeRef = database.ref('Notices/'+ projectIdx);
-			var noticeRefKey = noticeRef.push().key	
-
-
-			//노티스 정보 파베 저장	
-			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
-        	    projectName: "<pm>" + projectName,
-        	    title: title,
-        	    creatFrom: from
-        	  });
-      	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail);
+			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail, targetIdx);
 		}
 
 
@@ -929,7 +930,7 @@ display: block;
 			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
 		}	 */
 
-		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email){
+		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email, targetIdx){
 			var myRootRef = database.ref();
       	    myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
       		  data.forEach(function(childSnapshot) {
@@ -940,27 +941,21 @@ display: block;
 			        	    projectName: projectName,
 			        	    title: title,
 			        	    readOk : 'false',
-			        	    creatFrom: from
+			        	    creatFrom: from,
+			        	    targetIdx : targetIdx
 			        	  });;
-						
-
-						
  		 		});
       	      })
 
 			}
 
-		function saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from) {
-			console.log("세이브 노티스 바이 유저 타나요??~~~~");
+		function saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from, targetIdx) {
 			$.ajax({
 				url: "MyProjectsMatesFull.do",
 				type: "POST",
 				dataType: 'json',
-				data : { email : curEmail
-					      }, 
+				data : { email : curEmail }, 
 				success: function (data) {
-					console.log("뷰단으로 데이터 들어 오나요?? >" + data);
-
 				    var projectIdxGrouped = new Set();
 				    
 					$.each(data, function(index, value) {          				
@@ -986,11 +981,9 @@ display: block;
 						        	    projectName: projectName,
 						        	    title: title,
 						        	    readOk : 'false',
-						        	    creatFrom: from
+						        	    creatFrom: from,
+						        	    targetIdx : targetIdx
 						        	  });;
-									
-
-									
 		       		 		});
 			        	  })		      
 					  }	
