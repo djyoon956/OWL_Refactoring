@@ -142,6 +142,8 @@ public class KanbanRestController {
 		issue.setContent(content);
 		issue.setCreator(MemberHelper.getMemberEmail(principal, request.getSession()));
 		issue.setIssueProgress(IssueProgressType.OPEN);
+		//issue.setIssueProgress(IssueProgressType.REQUESTED);
+		
 		issue.setColIdx(colIdx);
 		issue.setOrderNum(orderNum);
 		if(!priorityCode.isEmpty())

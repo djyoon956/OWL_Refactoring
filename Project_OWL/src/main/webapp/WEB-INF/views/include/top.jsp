@@ -134,14 +134,9 @@
 
 				successAlert("Issue가 반려되었습니다.");
 	        	$('#confirmIssueModal').modal("hide");
-	        	console.log($('#projectissueIdx').text());
-	    		console.log($('#comfirmCreator').text());//이슈생성원하는 member email
-	    		console.log(curEmail);//pm메일주소 
-	    		console.log($('#comfirmTitle').text());  // title 
 
-	    		
         	    sendNoticePushToOne($('#comfirmCreator').text(), $('#comfirmTitle').text()+ "이슈생성은", "PM이 거절 하였습니다.")
-	        	pushNoticeToOne($('#projectissueIdx').text(),$('#projectName').text(), $('#comfirmTitle').text(), "issueCheckBoard", $('#comfirmCreator').text(), $('#comfirmissueIdx').val())
+	        	pushNoticeToOne($('#projectissueIdx').val(),$('#projectName').val(), $('#comfirmTitle').text(), "kanbanIssueToPm", $('#comfirmCreator').text(), $('#comfirmissueIdx').val());
 			},error : function() {
 				console.log('IssueRejectfromPM error');
 				}
