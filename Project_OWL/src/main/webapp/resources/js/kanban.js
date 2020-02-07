@@ -824,7 +824,7 @@ function closeIssue(issueIdx,flag) {
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
         	} else if(flag == "move"){
-        	setChageView("kanban");
+        	//setChageView("kanban");
         	}
            }
         });  		
@@ -840,8 +840,8 @@ function reOpenIssue(issueIdx,target) {
 			if(target == 'inDetail'){
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
-			} else if(target == 'move')
-			setChageView("kanban");
+			} else if(target == 'move'){}
+				//setChageView("kanban");
 		},error :function() {
 			
 			console.log("ReopenIssue error");
@@ -1547,7 +1547,8 @@ function mentionSearch() {
 						$.each($(this)[0].children, function(){
 							issues.push($(this).attr("id").replace("Issue","").trim())
 						})
-						
+						console.log("columnIdx");
+						console.log(columnIdx);
 						if(issues.length == 0)
 							return;
 						
@@ -1569,9 +1570,9 @@ function mentionSearch() {
 						if (columnIdx == '-99'){
 							closeIssue(target,"move");
 						}
-						if (columnIdx == '-1')
-							reOpenIssue(target,"move");
-				       }       
+						/*if (columnIdx == '-1')
+							reOpenIssue(target,"move");*/
+				       }        
 			     }).disableSelection();
 				setIssueData();
 			},
