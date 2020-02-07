@@ -23,6 +23,9 @@
 	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
 	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
 	
+	<link href="resources/css/member.css" rel="stylesheet">
+	<script src="resources/js/member.js"></script>
+	
 	<!-- Chart.js -->
 	 <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>    
 	 <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
@@ -30,6 +33,8 @@
 	<!--  dashboard css -->
 	<link href="resources/css/dashBoard.css" rel="stylesheet">
 	<script src="resources/js/dashBoard.js"></script>
+	
+
 	 	
 <script type="text/javascript">
 	$(function(){
