@@ -33,44 +33,55 @@ public class KanbanService {
 	@Autowired
 	private SqlSession sqlSession;
 
+	/**
+	 * issue, issue file insert
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param issue
+	 * @param multipartFiles
+	 * @param uploadPath
+	 * @return Issue
+	 */
 	@Transactional
 	public Issue insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
-		System.out.println("insertIssue service in");
-		System.out.println(issue.getDueDate());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		Issue colList = null;
 		try {
-		
 			result = dao.insertIssue(issue) > 0 ? true : false;
-			//System.out.println(multipartFiles.size());
-			
-			if (multipartFiles.size() > 0) 
+			if (multipartFiles.size() > 0)
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
-						
+
 			dao.updateAllIncrease(issue.getIssueIdx(), issue.getProjectIdx());
 
-			if(result) {
+			if (result)
 				colList = dao.getIssuebyIssueIdx(issue.getIssueIdx());
-				
-			}
 
 			insertLog(issue.getIssueIdx(), "Opened this issue", issue.getCreator(), dao);
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
-		} 
-		
-		System.out.println("service colist : " + colList);
-		
+		}
+
 		return colList;
 	}
 
+	/**
+	 * issue file insert, 실 업로드
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param dao
+	 * @param email
+	 * @param projectIdx
+	 * @param issueIdx
+	 * @param multipartFiles
+	 * @param uploadPath
+	 * @return List<File>
+	 */
 	private List<File> insertIssueFiles(KanbanDao dao, String email, int projectIdx, int issueIdx, List<MultipartFile> multipartFiles, String uploadPath) {
 		List<File> files = new ArrayList<File>();
 
 		multipartFiles.forEach(multipartFile -> {
 			String fileName = multipartFile.getOriginalFilename();
-			System.out.println(fileName);
 			try {
 				UploadHelper.uploadFileByProject(uploadPath, "file", projectIdx, fileName, multipartFile.getBytes());
 			} catch (IOException e) {
@@ -82,7 +93,7 @@ public class KanbanService {
 			file.setFileName(fileName);
 			file.setWriter(email);
 			file.setFileSize(String.valueOf(multipartFile.getSize()/1024));
-			System.out.println("file값" +file.toString());
+
 			try {
 				dao.insertIssueFile(file);
 			} catch (Exception e) {
