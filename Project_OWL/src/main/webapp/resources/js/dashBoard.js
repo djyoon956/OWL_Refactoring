@@ -4,6 +4,10 @@ function initDashBoard(projectIdx){
 		  taskView: true
 	}); 
 	 
+	 MyProjectProgress();
+	 HorizonChart();
+	 LineChart();
+	 
 	if(projectIdx > 0){
 		initProjectDashBoard();		
 		setProjectDashBoard();
@@ -44,6 +48,8 @@ function setMainDashBoard(){
 		 }
 	 })
 }
+
+
 function initProjectDashBoard(){
 	$("#dashboardPTable").DataTable({
 		"pageLength": 5,
@@ -148,7 +154,6 @@ function setTimeLine(){
 				$("#dashboardTimeLineEmptyBox").removeClass("hidden");
 				$("#dashboardTimeLine").addClass("hidden");
 			}else{
-			
 				$("#dashboardTimeLineEmptyBox").addClass("hidden");
 				$("#dashboardTimeLine").removeClass("hidden");
 			}
@@ -416,12 +421,11 @@ function getTimeLineDateFormat(date){
 }
 
 function setMyIssueTaskByProject(projectIdx){
+	$('#dashboardPTable').DataTable().clear();
 	$.ajax({
 		url : "getMyIssueTaskByProject.do",
 		data : {projectIdx : projectIdx},
 		success : function(data){
-			console.log("in GetMyIssueTaskByProject success");
-			console.log(data);
 			if(data.length > 0){
 				$("#dashBoardPTableEmptyBox").addClass("hidden");
 				$("#dashBoardPTableBox").removeClass("hidden");
@@ -508,4 +512,210 @@ function setProjectMemberProgress(projectIdx){
 			console.log("in setProjectMemberProgress error");
 		}
 	})
+}
+
+function MyHorizonChart(theData, name, color){  
+	var chart = new Chart(document.getElementById('myHorizon').getContext('2d'), {
+	    // The type of chart we want to create
+	    type: 'horizontalBar',
+	    // The data for our dataset
+	    data: {
+	        labels: name,
+	        datasets: [{
+	            label: '내가 속한 프로젝트 전체 진행률(%)',
+	            data: theData,
+	            backgroundColor: color,
+	            borderColor: color,
+	            borderWidth: 1
+	        }]
+	    },	
+	    // Configuration options go here
+	    options: {
+	        scales: {
+	            xAxes: [{
+	                ticks: {
+	                    beginAtZero: true,
+	                    max: 100,
+	                }
+	            }]
+	        }
+	    }
+	});
+}
+
+function ProjectMyChart(idx, totalSum, closeSum, projectName, color){  
+    window.myDoughnut = new Chart(document.getElementById('chartProject'+idx).getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [
+                	Math.round((totalSum - closeSum)/totalSum*100),
+                	Math.round((closeSum)/totalSum*100)               	
+                ],
+                backgroundColor: [
+                	"#d9d9d9",
+                	color                	
+                ],
+                label: projectName
+            }],
+            labels: [
+            	'Open : ' + totalSum,
+                'Close : ' + closeSum                
+            ]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: projectName
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            tooltips: {
+				mode: 'index',
+				intersect: false,
+				callbacks: {
+					label: function(tooltipItem, data) {
+				          return data['datasets'][0]['data'][tooltipItem['index']] + '%';
+				        },
+				}
+			}
+        }
+    });	
+}
+
+var LineData = [];
+
+function MakeDataSet() {
+    this.label = null;
+    this.borderColor = null;
+    this.backgroundColor = null;
+    this.fill = false;
+    this.data = [];
+    this.yAxisID = 'y-axis-1';
+}
+function MyProjectProgress(){
+	$.ajax({
+        url:"MyProjectProgress.do",
+        dataType: "json",
+        success:function(data){	   
+        $("#myProgressChart").empty();   
+	     $.each(data, function(key, value){
+	    	  let idx = key;
+		      let name = value[0].projectName;
+		      let color = value[0].projectColor;
+	    	  let totalCount=value.length;
+	    	  let closeCount=0;
+	    	  $.each(value, function(index, element){
+	    			if(element.issueProgress == "CLOSED") 
+						closeCount++;
+	    	  })
+	    	 let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
+				  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
+			$("#myProgressChart").append(makeChart);
+			ProjectMyChart(idx, totalCount, closeCount, name, color);		    	
+	     });
+	     
+       }
+   }); 
+}
+
+function HorizonChart(){
+	$.ajax({
+        url:"HorizonChart.do",
+        dataType: "json",
+        success:function(data){		     
+			let name = [];
+			let theData = [];
+			let color = [];	        
+	     $.each(data, function(key, value){
+		      name.push(value[0].projectName);
+		      color.push(value[0].projectColor);
+	    	  let totalCount=value.length;
+	    	  let closeCount=0;
+	    	  $.each(value, function(index, element){
+	    			if(element.issueProgress == "CLOSED") 
+						closeCount++;
+	    	  });
+	    	  theData.push(Math.round((closeCount/totalCount)*100));				    	
+	     });
+	    	 MyHorizonChart(theData, name, color);	
+       }
+   });
+}
+
+function LineChart(){
+	let week = new Array('SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'); 
+	let dayCount = [0, 0, 0, 0, 0, 0, 0];
+	let dayName = week[new Date().getDay()];
+	$.ajax({
+		url : "LineChart.do",
+		success : function(data){ 			
+			let group;
+			$.each(data, function(key, value) {
+					group = value.reduce((r, a) => {
+																 r[a.logTime] = [...r[a.logTime] || [], a];
+																 return r;
+															}, {});
+
+					let theData;			
+				    theData = new MakeDataSet();
+					theData.label = value[0].projectName;
+					theData.borderColor = value[0].projectColor;
+					theData.backgroundColor = value[0].projectColor;
+					theData.fill = false;   							
+					theData.yAxisID = 'y-axis-1';
+					
+					dayCount = [0, 0, 0, 0, 0, 0, 0];		
+					$.each(group, function(key2, value2){   
+    					console.log(value2.length);
+    					dayCount[new Date(key2).getDay()] = value2.length;			  					
+					}) 
+					theData.data=dayCount;	
+					LineData.push(theData);
+			});
+			
+			MyLineChart();
+		},
+		error : function(){
+			console.log("in setTimeLine error");
+		}
+	});
+}
+function MyLineChart(){
+    window.myLine = Chart.Line(document.getElementById('myLine').getContext('2d'), {
+        data: {
+            labels: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+            datasets: LineData,
+        },
+        options: {
+            responsive: true,
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: true,
+                text: '나의 프로젝트 활동 빈도(일주일 단위)'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                    // grid line settings
+                    gridLines: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },	
+                    ticks: {
+	                    beginAtZero: true,
+	                },
+                }],
+            }
+        }
+    });        
 }
