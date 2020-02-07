@@ -193,7 +193,6 @@ function initKanban(projectIdx){
 
 
 		$('.editViewBtn').on('click', function(e){
-			    console.log($(this).parent().siblings().find(".row"));
 			    if( $(this).parent().siblings().find(".row").hasClass("hidden")){
 				    $(this).parent().siblings().find(".row").removeClass("hidden");
 				    $(this).parent().siblings().find("span").addClass("hidden");
@@ -230,7 +229,6 @@ function initKanban(projectIdx){
 
 		 		 
 		 			$(".InsertIssueBtn").on("click", function (event) {
-		 				
  			        	var projectAuth = $('#getAuthority').val();
 		 				
  			        	if($('#issueTitle').val() == ""){
@@ -242,7 +240,6 @@ function initKanban(projectIdx){
 		 					warningAlert("내용을 작성해주십시오");
 		 					return; 
 		 				}	
-		 				
 		 				
 		 			    let formData = new FormData();
 		 			    formData.append("projectIdx",projectIdx);
@@ -261,7 +258,6 @@ function initKanban(projectIdx){
 		 			    	formData.append('multipartFiles', file);
 		 			    }); 
 
-
 		 				let istitle = $('#issueTitle').val();
 		 				let isassignee = $('#assigned').val();
 		 				
@@ -275,30 +271,25 @@ function initKanban(projectIdx){
 		 			        cache: false,
 		 			        timeout: 600000,
 		 			        success: function (data) {
+
+		 			        if(projectAuth == 'ROLE_PROJECTMEMBER'){ // 이슈, 컨펌, pm에게 보내는 경우
+		 			        	sendNoticePushToOne(pmemail, curName+"님이 이슈 생성", istitle);
+		 			        	pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssueToPm", pmemail, data.issueIdx, "topm");
+		 			        }else{ // 이슈 생성 알림
+		 			        	sendNoticePushAll(curName + "님이 이슈 생성", istitle, currentProjectIdx);
+		 			        	pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle, "kanbanIssue", data.issueIdx);
+		 			        }
 		 			        	
+		 	 		        if(data != null){
+		 			        	successAlert("Issue 추가 완료");
+		 			 			setKanbanData();
+		 			 			setChageView("kanban");
 
-		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){ // 이슈, 컨펌, pm에게 보내는 경우
+		 			        	$('#addIssueModal').modal("hide");
 
-		 			        		sendNoticePushToOne(pmemail, curName+"님이 이슈 생성", istitle);
-		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssueToPm", pmemail, data.issueIdx, "topm");
-		 			      
-
-		 			        	}else{// 이슈 생성 알림
-		 			        		sendNoticePushAll(curName + "님이 이슈 생성", istitle, currentProjectIdx);
-		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle, "kanbanIssue", data.issueIdx);
-		 			        	}
-		 			        	
-
-		 	 		        	if(data != null){
-		 			        		successAlert("Issue 추가 완료");
-		 			 				setKanbanData();
-		 			 				setChageView("kanban");
-
-		 			        		$('#addIssueModal').modal("hide");
-
-		 			        	}else{
-		 			        		errorAlert("Issue 추가 실패");
-		 			        	}
+		 			        }else{
+		 			        	errorAlert("Issue 추가 실패");
+		 			        }
 
 		 	 		       	$( ".sortableCol").sortable({
 		 				        connectWith: ".connectedSortable",
@@ -331,6 +322,7 @@ function initKanban(projectIdx){
 		 	     		$("#-99Column").hide();
 		 	     		$("#-1Column").show();
 		 	          });
+		 	         
 		 	         
 		 	         $("#closeIssueBtn").click(function() {
 		 	         	$("#-99Column").removeClass("d-none");
@@ -494,6 +486,7 @@ function addReply(creator) {
 				data : { 'issueIdx' : $('#issueIdxNum').val()
 							, 'content': $('#replycontent').val()},
 				success : function(data) {
+					
 					arrSelectedUserEmail.forEach(function(item, index){
 						sendNoticePushToOne(item, "<" + curName + "님의 멘션>", $('#replycontent').val());
 			        	pushNoticeToOne(currentProjectIdx,currentProjectName, curName + "언급하였습니다.", "mention", item, $('#issueIdxNum').val(), "");
