@@ -593,9 +593,11 @@ display: block;
     									</i>
     								</a>
     							</div>
-    							<div class="offset-3">
+    							<div class="col-10">
+    								<div class="text-center">
     								<h5 id="roomTitle" class="d-inline">Family_c</h5>
     								<h4 class="text-muted d-inline ml-2">(5)</h4>
+    								</div>
     							</div>
     							<i class="mdi mdi-menu font-24 mt-1" style="right:12px;top:0px; position: absolute;"></i>
    							</div>
