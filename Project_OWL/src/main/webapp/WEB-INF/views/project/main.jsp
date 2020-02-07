@@ -27,28 +27,26 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
- 
+ 	
+
+	
     <!-- SummerNote -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
 	<!-- Toast Calendar -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
 	<script src="resources/plugin/calendar/projectCalendars.js"></script>
     <script src="resources/plugin/calendar/schedules.js"></script>
-    
 	<!-- If you use the default popups, use this. -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
     
-   	<link href="resources/css/member.css" rel="stylesheet">
-	<script src="resources/js/member.js"></script>
-	
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
     <script src="resources/js/kanban.js"></script>
     <script src="resources/js/drive.js"></script>
+    
     <script src="resources/js/project.js"></script>
     
     <link href="resources/css/drive.css" rel="stylesheet">
@@ -72,10 +70,130 @@
         			    calendar.bgColor = data.projectColor;
         			    calendar.dragBgColor = data.projectColor;
         			    calendar.borderColor = data.projectColor;
-        			    addCalendar(calendar);						
-        		    	setSchedules();
+        			    addCalendar(calendar);		    						
+        		    setSchedules();
         		}
             });
+    		
+			$.ajax({
+				url : "GetIssue.do",
+				data : {'projectIdx' :  ${project.projectIdx} },
+				success : function(data) {
+					var openCount = 0;
+					var closeCount = 0;
+					 $.each(data, function(index,element) {
+							if(element.issueProgress== "OPEN"){
+								openCount ++;		
+							}else if(element.issueProgress == "CLOSED"){
+								closeCount ++;
+							}				
+					});
+				}
+			});
+            
+            let oldMenu = $("#projectMenu li:nth-child(2)");
+            $("#projectMenu li").on("click", function () {
+                console.log("click!!!!");
+                if($(this).children(".nav-link").attr("href") == "#project")
+					return;
+				
+                let oldTab = $(oldMenu.children(".nav-link").attr("href"));
+                oldMenu.removeClass("active");
+                oldTab.removeClass("active show");
+
+                $(this).addClass("active");
+                let currentTab = $($(this).children(".nav-link").attr("href"));
+                currentTab.addClass("active show");
+                oldMenu = $(this);
+
+                setChageView(currentTab.attr("id"));
+            });
+	
+            $('#memberCheckModal').on('show.bs.modal', function(){
+				$("#projectMemebers").empty();
+			 	$.ajax({
+			 		type: "POST",
+                    url: "GetProjectMember.do",
+                    data: { projectIdx: ${project.projectIdx}},
+                    success: function (data) {
+                        $("#projectMemebersBox").empty();
+                        let error = "onerror='this.src=\"resources/images/login/profile.png\"'";
+                        $.each(data, function(index, element){
+                            let control = "<li class='mt-3'>"
+			                				+ "	<img class='rounded-circle' width='40' src='upload/member/"+element.profilePic+"' "+error+"   alt='user'>"
+			                				+ " 	<label class='ml-3 text-left' style='width: 250px'> "+element.name+" ( "+element.email+" ) </label>";
+
+               				if(index == 0){
+               					control += "<span class='ml-1 roleBadge pm' style='padding-top : 5px;'></span>";
+               				}else{
+            					control += "<span class='ml-1 roleBadge member' style='padding-top : 5px;'></span>";		
+               				}	
+               				
+               				
+               				if("${project.authority}" == 'ROLE_PM'){
+               					if(index != 0){
+               				control += "<a href='javascript:void(0)' data-toggle='dropdown' id = 'dropdownBtn' aria-haspopup='true' aria-expanded='false' style='float: right'>"; 
+               				control +=  "<i class='fas fa-ellipsis-v'></i></a>";
+               				control +=  "<div class='dropdown-menu' aria-labelledby='dropdownBtn'>";
+               				control +=  "<ul class='list-style-none'>";
+               				control +=  "<li class='pl-3'><a href='#' onclick='deleteMember( " +'"'+ element.email+'"'+")'>멤버 퇴출</a></li>";
+               				control +=  "<li class='pl-3'><a href='#' onclick='transferAuthority(" +'"'+ element.email +'"'+")'>PM 양도</a></li>";
+               				control +=  "</ul>";
+               				control += "</div>";
+               					}
+               				}	 
+               				control+= "</li>";
+           					$("#projectMemebersBox").append(control);
+                         }) 
+                    },
+                    error: function () {
+                        console.log("GetProjectMember error");
+                    }
+				}) 
+              });
+
+            $('#memberEditModal').on('hidden.bs.modal', function(){
+                $("#addMemberBox").empty();
+               $("#addMemberOk").val("초대 메일 전송");
+               $("#addMemberCount").text("0명");
+             });
+            
+            $("#addMemberOk").click(function () {
+                let addProjectMembers = [];
+                $('.addProjectMembers').each(function(){
+                	addProjectMembers.push($(this).val());
+                  })
+
+                if(addProjectMembers.length < 1) return;
+
+                $.ajaxSettings.traditional = true;
+                $(this).val("초대 메일 전송중...");
+                $.ajax({
+                    type: "POST",
+                    url: "AddProjectMember.do",
+                    data: {
+                        projectIdx: ${project.projectIdx},
+                        projectName: "${project.projectName}",
+                        pm : "${member.name}",
+                        addProjectMembers: addProjectMembers
+                    },
+                    success: function (data) {
+                        console.log("addMemberOk success");
+                        $("#memberEditModal").modal("hide");
+                        $("#sendMemberCount").text(addProjectMembers.length);
+                        $("#sendMembers").empty();
+                        $.each(addProjectMembers, function(){
+	                        $("#sendMembers").append("<h5> - "+this+"</h5>")
+                         })
+                        $("#openJoinProjectMemberModal").click();
+                    },
+                    error: function () {
+                        console.log("addMemberOk error");
+                    }
+                });
+            })    
+            
+            checkAlarmView();  
         }); 
         
         function setChageView(target) {

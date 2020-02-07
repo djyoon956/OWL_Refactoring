@@ -90,6 +90,3 @@ ul.timeline > li:before {
 	flex-flow: row; 
 	padding-bottom:10px;
 }
-#dashCalendar > .tui-full-calendar-layout.tui-view-8.tui-view-13{
-	display: none !important;
-}

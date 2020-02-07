@@ -23,9 +23,6 @@
 	<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"></script>
 	<script src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"></script>
 	
-	<link href="resources/css/member.css" rel="stylesheet">
-	<script src="resources/js/member.js"></script>
-	
 	<!-- Chart.js -->
 	 <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>    
 	 <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
@@ -33,9 +30,12 @@
 	<!--  dashboard css -->
 	<link href="resources/css/dashBoard.css" rel="stylesheet">
 	<script src="resources/js/dashBoard.js"></script>
-	
 
-	 	
+	<style>
+	#dashCalendar > .tui-full-calendar-layout.tui-view-8.tui-view-13{
+	display: none !important;
+	}
+</style>	 	
 <script type="text/javascript">
 	$(function(){
 		 setTheme("${setting.themeColor}", "${setting.font}");
@@ -45,30 +45,30 @@
 </head>
 
 <body class="mainBody">
-    <!-- LOADER -->
+	<!-- LOADER -->
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
     </div>
-
+   
     <div id="main-wrapper">
-
-        <!-- TOP -->
-        <jsp:include page="../include/top.jsp" />
-
+        
+		<!-- TOP -->
+        <jsp:include page="../include/top.jsp"/>
+       
         <!-- SIDE BAR -->
-        <jsp:include page="../include/sideBar.jsp" />
+        <jsp:include page="../include/sideBar.jsp"/>
 
-        <!-- CONTENT BOX -->
+		<!-- CONTENT BOX -->
         <div class="page-wrapper">
-
-            <!-- DASHBOARD  -->
-            <jsp:include page="../dashBoard/mainDashboard.jsp" />
-
-            <!-- BOTTOM -->
-            <jsp:include page="../include/bottom.jsp" />
-        </div>
+        
+		<!-- DASHBOARD  -->
+		<jsp:include page="../dashBoard/mainDashboard.jsp"/>
+		
+		<!-- BOTTOM -->
+        <jsp:include page="../include/bottom.jsp"/>
     </div>
+ </div>
 </body>

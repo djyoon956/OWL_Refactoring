@@ -8,8 +8,173 @@
 </style>
 <script>
     $(function () {
-		initMyProfileSettingController("{setting.font}");
+		let agreeChk = false;
+		let pwdChk = false;
+		
+		let font = "{setting.font}";
+		$('#setFont option[value=\"'+font+'\"]').attr("selected", "selected");
+		$("#settingTabs li a").on("click", function(){
+			if(($(this).attr("href").replace("#","").trim()=="deleteAccount" || $(this).attr("href").replace("#","").trim()=="themeSetting") && !$("#twopage").hasClass("hidden")){
+				 $("#firstpage").removeClass("hidden");
+				 $("#twopage").addClass("hidden");
+			}
+		})
+
+		$('#myProfileSetModal').on('hidden.bs.modal', function(event){
+			$('#myPassword').val("");
+			$("#twopage").addClass("hidden");
+			$("#firstpage").removeClass("hidden");
+		});
+		
+        $("#deleteMemberBtn").click(function () {
+            if ($("#delPwdOut").val() == "" || $("#delPwdOut").val() == null) {
+                $("#delPwdOut").focus();
+                return;
+            } else {
+                $.ajax({
+                    url: "chkDelPwd.do",
+                    data: {
+                        email: $("#email").val(),
+                        password: $("#delPwdOut").val()
+                    },
+                    type: "post",
+                    dataType: "html",
+                    success: function (responsedata) {
+                        console.log("받는 데이터 >" + responsedata + "<");
+				
+                        if (responsedata == "true") {
+                            console.log("참");
+                            pwdChk = true; 
+                            if(pwdChk && agreeChk)
+                            location.href="DeleteAccount.do";
+                        } else {
+                        	 warningAlert("약관에 동의하고 비밀번호를 알맞게 입력해주십시오");
+                        }
+                    },
+                    error: function () {
+                        console.log("에러");
+                    }
+                });
+            }
+        });
+
+        $("#editButton").click(function () {
+	            $("#firstpage").addClass("hidden");
+	            $("#twopage").removeClass("hidden");	            
+        });   
+
+
+        $("#deleteChk").change(function () {
+            if ($("input:checkbox[id='deleteChk']").is(":checked") == true) {
+                $("#deleteChk").siblings(".text-danger").css("display", "none");
+                agreeChk = true;
+
+            } else {
+                $("#deleteChk").siblings(".text-danger").css("display", "block");
+                agreeChk = false;
+            }
+        });
+       /*  
+        $('#deleteMemberBtn').click(function () {
+
+            if (agreeChk && pwdChk) {
+
+            } else if (agreeChk && pwdChk == false) {
+
+                warningAlert("비밀번호가 일치하지 않습니다");
+                return false;
+            } else if (agreeChk == false && pwdChk) {
+                warningAlert("약관에 동의해주시기 바랍니다.");
+                return false;
+
+            } else {
+
+                warningAlert("약관에 동의해주시기바랍니다. 비밀번호가 일치하지 않습니다.");
+                return false;
+            }
+        });  */
+
+        $("#multipartFile").change(function () {
+            
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                // get loaded data and render thumbnail.
+                document.getElementById("profileImage").src = e.target.result;
+                console.log($("#multipartFile").val());
+            };
+            // read the image file as a data URL.
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        $("#profileImage").click(function () {
+            $("#multipartFile").click();
+        });
+
+        $("#cancelButton").click(function () {
+            $("#firstpage").removeClass("hidden");
+            $("#twopage").addClass("hidden");
+        });
+
+		$("#setBackgroundColor span").click(function(data){
+			console.log("in span");
+			let color = $(data.target).css("background-color");
+			chageSetting("themecolor", color);
+		})
+
+		$("#setFont").change(function() {
+			console.log("in setFont");
+			chageSetting("font", $("#setFont").val());
+      	});
     });
+    
+	function updateMyProfile(){
+		 if(!$("#myPassword").val()){
+				warningAlert("비밀번호를 입력해주세요.");
+				 return false;
+			} 
+		let formData = new FormData();
+		
+	    formData.append("password", $("#myPassword").val());
+	    formData.append("name", $("#myName").val());
+	    formData.append('profilePic', $("#multipartFile")[0].files[0]);
+
+	    $.ajax({
+	        type: "POST",
+	        enctype: 'multipart/form-data',
+	        url: "UpdateMember.do",
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        cache: false,
+	        success: function (data) {
+	        	$('#myPicture').attr("src","upload/member/"+data.profilePic+"");
+	      		$("#name").val(data.name);
+	      		$('#userImgTop').attr("src","upload/member/"+data.profilePic+"");
+	      		$('#userImgToggle').attr("src","upload/member/"+data.profilePic+"");
+	      		$("#userNameToggle").text(data.name);
+	      		$("#userEmailToggle").text(data.email);
+    	        $("#twopage").addClass("hidden");
+    	        $("#firstpage").removeClass("hidden");
+	        }
+	    });
+	}
+    
+	function chageSetting(cmd, value){
+		$.ajax({
+			url: "SettingChange.do",
+			type: "POST",
+			dataType: 'json',
+			data : { cmd : cmd , value :value}, 
+			success: function (data) {
+				console.log(data);
+				if(data){
+					setTheme(data.themeColor, data.font);
+				}
+			}
+		});
+	}
+	
+
 </script>
 <div id="myProfileSetModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-md">

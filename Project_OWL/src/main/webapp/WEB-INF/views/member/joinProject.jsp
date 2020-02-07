@@ -7,13 +7,57 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<meta name="google-signin-client_id" content="266293759218-1i2o19cvv8p80i4q4a9q94d1dner0ksg.apps.googleusercontent.com.apps.googleusercontent.com">
+	<meta name="google-signin-client_id"
+		content="266293759218-1i2o19cvv8p80i4q4a9q94d1dner0ksg.apps.googleusercontent.com.apps.googleusercontent.com">
 	<title>OWL</title>
 	<jsp:include page="../include/headTag.jsp" />
-    <link href="resources/css/member.css" rel="stylesheet">
+	<style type="text/css">
+		.snsLoginButton {
+			background-color: transparent;
+			border: none;
+			width: 50px;
+			height: 50px;
+			cursor: pointer;
+		}
+
+		.vertical-center {
+			min-height: 100%;
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+		}
+
+		body {
+			background-color: #326295;
+			overflow-y: hidden;
+		}
+
+		.roundBox {
+			background-color: white;
+			border-radius: 15px;
+		}
+
+		.loginButton {
+			padding: 15px 40px;
+			background: #326295;
+			font-weight: 700;
+			color: white;
+		}
+
+		#loginBox input[type=text],
+		#loginBox input[type=email],
+		#loginBox input[type=password],
+		#joinBox input[type=text],
+		#joinBox input[type=email],
+		#joinBox input[type=password] {
+			border-top-width: 0px;
+			border-left-width: 0px;
+			border-right-width: 0px;
+		}
+	</style>
 </head>
 
-<body class="max">
+<body>
 	<div id="main-wrapper">
 		<div class="text-center mt-5">
 			<a href="Index.do"><img src="resources/images/owl_plz_beige.png" alt=""></a>
