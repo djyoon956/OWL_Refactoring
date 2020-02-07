@@ -712,6 +712,26 @@ public class KanbanService {
 		return check;
 	}
 	
+	public String GetcomfirmReason(int issueIdx){
+		KanbanDao dao = getKanbanDao();
+
+		
+		System.out.println("GetcomfirmReason in controller");
+		String check = null;
+		try {
+			check = dao.GetcomfirmReason(issueIdx);
+			System.out.println("뭐죠????????????????");
+			System.out.println(check);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return check;
+	}
 	
 	
 	/**
