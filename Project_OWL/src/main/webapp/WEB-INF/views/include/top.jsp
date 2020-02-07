@@ -1518,13 +1518,14 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 		  }
 		
 
-          function openChatRoom(roomTitle) {
+          function openChatRoom(roomTitle, roomLength) {
              
         	  //loadRoomList(roomId); 
         	  window.isOpenRoom = true; // 방이 열린 상태인지 확인하는 플래그 값 
         	  if(roomTitle){ //상단 타이틀 변경 
             	  document.getElementById('roomTitle').innerHTML = roomTitle; 
-            	  }  
+            	  $("#roomTitle").siblings().eq(0).text(" ("+roomLength+") ");
+           	  }  
         	  loadMessageList(); //메세지 로드 
               $('#tabMessageList').click();
             
@@ -1667,7 +1668,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
   	  		}
 
   		function onRoomListClick(event){			
-  				
   				$("#chattingRoomIn").removeClass("hidden");
   				$("#chattingList").addClass("hidden");
   			
@@ -1681,7 +1681,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
   			roomTitle = event.getAttribute('data-roomTitle'); 
   			roomUserList = event.getAttribute('data-roomUserList').split('@spl@'); // 챗방 유저리스트  			
   			roomUserName = event.getAttribute('data-roomUserName').split('@spl@'); // 챗방 유저 이름 
-  			openChatRoom(roomTitle);   
+  			openChatRoom(roomTitle, roomUserList.length);   
 
           
   			// 메세지 화면 이동 
