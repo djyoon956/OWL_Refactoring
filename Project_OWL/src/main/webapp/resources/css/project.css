@@ -68,3 +68,14 @@
 .member:after {
 	content: "Member";
 }
+.memberDeleteButton{
+	cursor: pointer;
+}
+
+#theInfo{
+   color:#fff; 
+   height: 50px;
+   padding-top: 17px;
+   padding-bottom: 3px;
+   margin-bottom: 0px;
+}

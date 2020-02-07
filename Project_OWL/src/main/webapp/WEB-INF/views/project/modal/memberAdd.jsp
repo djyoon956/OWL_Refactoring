@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<style>
-	.memberDeleteButton{
-		cursor: pointer;
-	}
-</style>
 
 <div id="memberEditModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
