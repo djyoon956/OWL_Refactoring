@@ -625,7 +625,6 @@ display: block;
     							<div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownChatButton">
 						       	<ul class="list-style-none">
 								     <li class="pl-3"><a href="#">나가기</a></li>
-							         <li class="pl-3"><a href="#">검색하기</a></li>
 								</ul>
 								</div>
 								 </div> 
