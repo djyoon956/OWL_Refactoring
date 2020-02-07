@@ -619,9 +619,10 @@ function deleteColumn(obj){
 
 function addKanbanIssue(colIdx,obj){
 
-	let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;				
+	//let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;	
+	let letterLength = obj.issueTitle.length + obj.labelName.length;
+	let issueTitle = letterLength > 15 ? obj.issueTitle.substr(0, 15 - obj.labelName.length)+ ".." : obj.issueTitle;
 
-	
 	if(obj.labelName == null) {
 		obj.labelName = "";
 		obj.labelColor = "";
@@ -708,6 +709,8 @@ function setKanbanDetail(issueIdx){
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
+				console.log("디테일");
+				console.log(data);
 				$("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
 				$("#issueDetailLabel").removeAttr("style");
@@ -781,7 +784,7 @@ function setKanbanDetail(issueIdx){
 						data.assigned = "none";
 					}
 					
-					$("#issueDetailAssignees").text(data.assigned);
+					$("#issueDetailAssignees").text(data.name);
 					
 					if(data.labelIdx > 0){
 						$("#issueDetailLabel").text(data.labelName);
@@ -802,6 +805,7 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailDueDate").text(data.dueDate);
 					else
 						$("#issueDetailDueDate").text("none");
+					console.log("data.issueProgress",data.issueProgress);
 					if(data.issueProgress == 'CLOSED')
 						$("#issueClosedChk").text('Reopen issue');
 					else 
@@ -817,6 +821,7 @@ function setKanbanDetail(issueIdx){
 
 
 function closeIssue(issueIdx,flag) {
+	 console.log("in closeIssue");
 	   $.ajax({
            url:"CloseIssue.do",
            method:"POST",
@@ -826,8 +831,10 @@ function closeIssue(issueIdx,flag) {
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
         	} else if(flag == "move"){
-        	setChageView("kanban");
+        	//setChageView("kanban");
         	}
+           }, error : function(){
+        	   console.log("close issue error");
            }
         });  		
 }
@@ -842,8 +849,8 @@ function reOpenIssue(issueIdx,target) {
 			if(target == 'inDetail'){
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
-			} else if(target == 'move')
-			setChageView("kanban");
+			} else if(target == 'move'){}
+				//setChageView("kanban");
 		},error :function() {
 			
 			console.log("ReopenIssue error");
@@ -855,9 +862,31 @@ function reOpenIssue(issueIdx,target) {
 
 
 function changeKanbanView(view){
+	console.log("칸반  뷰 는 ");
+	console.log(view);
 	if(view == "list"){
-	   $("#kanbanDetailBox").addClass("hidden");
-	   $("#kanbanMainBox").removeClass("hidden");
+	  $("#kanbanDetailBox").addClass("hidden");
+	  $("#kanbanMainBox").removeClass("hidden");
+	  /* 추가 서치박스 히든 */
+	   $('#searchBox').addClass('hidden');
+	   $('#searchReturnBtn').addClass('hidden');
+	   $('#kanbanIn').removeClass('hidden');
+	   $('#-1Column').removeClass('hidden');
+	   $('#-99Column').removeClass('hidden');
+	   $('#openIssueBtn').removeClass('hidden');
+	   $('#closeIssueBtn').removeClass('hidden');	
+	   $('#addIssuebtn').removeClass('hidden'); 
+	   $('#addLabelBtn').removeClass('hidden'); 
+	   $('#addColumnBtn').removeClass('hidden');
+	   $('#confirmIssueBtn').removeClass('hidden'); 
+	   $('#kanbanTableView').removeClass('hidden'); 
+	   $('#kanbanIconView').removeClass('hidden'); 
+	   /* 추가 데이터 테이블 히든 */
+	   $('#kanbanTableViewBox').addClass('hidden');
+	   
+	   $("#kanbanTableView").removeClass("active");
+	   $("#kanbanTableView").attr("disabled", false);
+	   $("#kanbanIconView").addClass("active");
 	}else if(view == "detail"){
 	   $("#kanbanMainBox").addClass("hidden");
 	   $("#kanbanDetailBox").removeClass("hidden");
@@ -1204,8 +1233,6 @@ function editLabel(idx, color, name) {
 	}
 	
 	function editIssueLabelOk() {
-		console.log("라벨 idx ");
-		console.log( $('#labelIdxEdit').val());
 		$.ajax({
 			url : "UpdateIssueLabel.do",
 		    method : "POST",
@@ -1448,7 +1475,7 @@ function mentionSearch() {
             buttons: [
                 { extend :'excel',
                 	autoFilter : true,
-                    sheetName : '다정이가 최고다',
+                    sheetName : 'OWL',
 	                className : 'btn hidden kanbanExportButton',
 	                title: 'OWL - '+currentProjectName,
 	                exportOptions : {
@@ -1544,20 +1571,20 @@ function mentionSearch() {
 			        	console.log(ui);
 						let target = $(ui.item).attr("id").replace("Issue","");
 						let columnIdx = $(this).parent().attr("id").replace("Column","");
+						
 						let issues = [];
-						console.log(target);
 						$.each($(this)[0].children, function(){
 							issues.push($(this).attr("id").replace("Issue","").trim())
 						})
-						
+
 						if(issues.length == 0)
 							return;
-						
+
 						$.ajaxSettings.traditional = true; 
 						$.ajax({
 							type : "POST",
 							url : "MoveIssue.do",
-							data : { 	projectIdx :  currentProjectIdx
+							data : { projectIdx :  currentProjectIdx
 										, targetIssueIdx : target
 										, columnIdx : columnIdx
 										, issues : issues },
@@ -1568,12 +1595,7 @@ function mentionSearch() {
 								console.log("error move issue");
 							}
 						})
-						if (columnIdx == '-99'){
-							closeIssue(target,"move");
-						}
-						if (columnIdx == '-1')
-							reOpenIssue(target,"move");
-				       }       
+				       }        
 			     }).disableSelection();
 				setIssueData();
 			},

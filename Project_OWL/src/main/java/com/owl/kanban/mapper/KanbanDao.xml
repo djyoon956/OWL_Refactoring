@@ -138,7 +138,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<update id="reopenIssue" >
-		update issue set colidx = -1 , issueprogress='OPEN' where issueidx = #{issueIdx}
+		update issue set colidx = #{param2} , issueprogress='OPEN' where issueidx = #{param1}
 	</update>
 	
 	<select id="getColumnName" resultType="String">
