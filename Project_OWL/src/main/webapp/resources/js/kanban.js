@@ -605,9 +605,10 @@ function deleteColumn(obj){
 
 
 function addKanbanIssue(colIdx,obj){
-
-	let letterLength = obj.issueTitle.length + obj.labelName.length;
-	let issueTitle = letterLength > 15 ? obj.issueTitle.substr(0, 15 - obj.labelName.length)+ ".." : obj.issueTitle;
+	
+	let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;   
+	//let letterLength = obj.issueTitle.length + obj.labelName.length;
+	//let issueTitle = letterLength > 15 ? obj.issueTitle.substr(0, 15 - obj.labelName.length)+ ".." : obj.issueTitle;
 
 	if(obj.labelName == null) {
 		obj.labelName = "";
