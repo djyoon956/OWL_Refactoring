@@ -706,6 +706,8 @@ function setKanbanDetail(issueIdx){
 		    url: "GetIssueDetail.do",
 			data : { issueIdx : issueIdx},
 			success : function (data) {
+				console.log("디테일");
+				console.log(data);
 				$("#multipartFilesIssueEdit").empty();
 				$("#issueIdxNum").val(issueIdx);
 				$("#issueDetailLabel").removeAttr("style");
@@ -779,7 +781,7 @@ function setKanbanDetail(issueIdx){
 						data.assigned = "none";
 					}
 					
-					$("#issueDetailAssignees").text(data.assigned);
+					$("#issueDetailAssignees").text(data.name);
 					
 					if(data.labelIdx > 0){
 						$("#issueDetailLabel").text(data.labelName);
@@ -824,7 +826,7 @@ function closeIssue(issueIdx,flag) {
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
         	} else if(flag == "move"){
-        	setChageView("kanban");
+        	//setChageView("kanban");
         	}
            }
         });  		
@@ -840,8 +842,8 @@ function reOpenIssue(issueIdx,target) {
 			if(target == 'inDetail'){
         	setKanbanDetail(issueIdx);
         	setChageView("kanban");
-			} else if(target == 'move')
-			setChageView("kanban");
+			} else if(target == 'move'){}
+				//setChageView("kanban");
 		},error :function() {
 			
 			console.log("ReopenIssue error");
@@ -1547,7 +1549,8 @@ function mentionSearch() {
 						$.each($(this)[0].children, function(){
 							issues.push($(this).attr("id").replace("Issue","").trim())
 						})
-						
+						console.log("columnIdx");
+						console.log(columnIdx);
 						if(issues.length == 0)
 							return;
 						
@@ -1569,9 +1572,9 @@ function mentionSearch() {
 						if (columnIdx == '-99'){
 							closeIssue(target,"move");
 						}
-						if (columnIdx == '-1')
-							reOpenIssue(target,"move");
-				       }       
+						/*if (columnIdx == '-1')
+							reOpenIssue(target,"move");*/
+				       }        
 			     }).disableSelection();
 				setIssueData();
 			},

@@ -201,8 +201,10 @@
             	setProjectDashBoard();
             else if (target === "calendar")
             	refreshScheduleVisibility();
-            else if (target === "kanban")
+            else if (target === "kanban"){
+            	changeKanbanView("list");
                 setKanbanData();
+            }   
             else if (target === "notice")
                 setNoticeData();
             else if (target === "drive")
