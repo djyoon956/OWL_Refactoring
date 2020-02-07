@@ -604,7 +604,7 @@ display: block;
 				<!--  채팅방 view -->	
 			<div class="setting-box hidden" id="chattingRoomIn">
 					 <ul class="list-group">
-                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start" style="height: 650px;">
+                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start" style="height: 665px;">
              				<div class="row">
              					<div class="text-left">
              						<a class="" href="javascript:void(0)" id="chatBackBtn"> 
@@ -618,7 +618,16 @@ display: block;
     								<h4 class="text-muted d-inline ml-2">(5)</h4>
     								</div>
     							</div>
-    							<i class="mdi mdi-menu font-24 mt-1" style="right:12px;top:0px; position: absolute;"></i>
+    							<!-- style="right:12px;top:0px; position: absolute;"  -->
+    							<div class="dropdown" style="right:12px;top:0px; position: absolute;"> 
+    							<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownChatButton" aria-haspopup="true" aria-expanded="false" style="float:right">
+    							<i class="mdi mdi-menu font-24 mt-1" style="right:0px;top:0px; position: absolute;"></i></a>
+    							<div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownChatButton">
+						       	<ul class="list-style-none">
+								     <li class="pl-3"><a href="#">나가기</a></li>
+								</ul>
+								</div>
+								 </div> 
    							</div>
    								<hr>
                                 <div id="chatBox" class="chat-box scrollable" style="height:510px;">
