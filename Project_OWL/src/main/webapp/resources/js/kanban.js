@@ -617,9 +617,10 @@ function deleteColumn(obj){
 
 function addKanbanIssue(colIdx,obj){
 
-	let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;				
+	//let issueTitle = obj.issueTitle.length > 12 ? obj.issueTitle.substr(0, 12)+ ".." : obj.issueTitle;	
+	let letterLength = obj.issueTitle.length + obj.labelName.length;
+	let issueTitle = letterLength > 15 ? obj.issueTitle.substr(0, 15 - obj.labelName.length)+ ".." : obj.issueTitle;
 
-	
 	if(obj.labelName == null) {
 		obj.labelName = "";
 		obj.labelColor = "";
@@ -855,9 +856,31 @@ function reOpenIssue(issueIdx,target) {
 
 
 function changeKanbanView(view){
+	console.log("칸반  뷰 는 ");
+	console.log(view);
 	if(view == "list"){
-	   $("#kanbanDetailBox").addClass("hidden");
-	   $("#kanbanMainBox").removeClass("hidden");
+	  $("#kanbanDetailBox").addClass("hidden");
+	  $("#kanbanMainBox").removeClass("hidden");
+	  /* 추가 서치박스 히든 */
+	   $('#searchBox').addClass('hidden');
+	   $('#searchReturnBtn').addClass('hidden');
+	   $('#kanbanIn').removeClass('hidden');
+	   $('#-1Column').removeClass('hidden');
+	   $('#-99Column').removeClass('hidden');
+	   $('#openIssueBtn').removeClass('hidden');
+	   $('#closeIssueBtn').removeClass('hidden');	
+	   $('#addIssuebtn').removeClass('hidden'); 
+	   $('#addLabelBtn').removeClass('hidden'); 
+	   $('#addColumnBtn').removeClass('hidden');
+	   $('#confirmIssueBtn').removeClass('hidden'); 
+	   $('#kanbanTableView').removeClass('hidden'); 
+	   $('#kanbanIconView').removeClass('hidden'); 
+	   /* 추가 데이터 테이블 히든 */
+	   $('#kanbanTableViewBox').addClass('hidden');
+	   
+	   $("#kanbanTableView").removeClass("active");
+	   $("#kanbanTableView").attr("disabled", false);
+	   $("#kanbanIconView").addClass("active");
 	}else if(view == "detail"){
 	   $("#kanbanMainBox").addClass("hidden");
 	   $("#kanbanDetailBox").removeClass("hidden");
@@ -1204,8 +1227,6 @@ function editLabel(idx, color, name) {
 	}
 	
 	function editIssueLabelOk() {
-		console.log("라벨 idx ");
-		console.log( $('#labelIdxEdit').val());
 		$.ajax({
 			url : "UpdateIssueLabel.do",
 		    method : "POST",
@@ -1448,7 +1469,7 @@ function mentionSearch() {
             buttons: [
                 { extend :'excel',
                 	autoFilter : true,
-                    sheetName : '다정이가 최고다',
+                    sheetName : 'OWL',
 	                className : 'btn hidden kanbanExportButton',
 	                title: 'OWL - '+currentProjectName,
 	                exportOptions : {
