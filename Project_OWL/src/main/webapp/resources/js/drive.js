@@ -256,8 +256,8 @@ function setIconView(data){
 					+			'<div class="dropdown-menu" aria-labelledby="dropdownIssueButton">'
 					+				'<ul class="list-style-none">';
 		if(isTrash) {
-			control += '<li class="pl-2"><a href="#" onclick="restoreFolderfromTrash('+element.driveFileIdx+')"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
-						+  '<li class="pl-2"><a href="#" onclick="deleteFolderfromTrash('+element.driveFileIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
+			control += '<li class="pl-2"><a href="#" onclick="restoreFolderfromTrash('+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 복원</a></li>'
+						+  '<li class="pl-2"><a href="#" onclick="deleteFolderfromTrash('+element.driveIdx+')"><i class="fas fa-trash-alt"></i>&nbsp; 영구삭제</a></li>';
 		}else {downloadFile
 			control += '<li class="pl-2"><a href="#"  onclick="setRenameIconView(this,'+element.driveIdx+')"><i class="fas fa-undo"></i>&nbsp; 이름 변경</a></li>'
 						+	'<li class="pl-2"><a href="#"  onclick="driveDetail(true,'+element.driveIdx+')"><i class="fas fa-info-circle"></i>&nbsp; 상세 정보</a></li>'
@@ -280,6 +280,7 @@ function setIconView(data){
 			let row = $("<div class='row'></div>");
 			row.append(control);
 			$("#driveIconViewBox").append(row);
+			control ="";
 		}
 	});
 
@@ -423,7 +424,7 @@ function deleteDriveFile(driveFileIdx){
 	   		 data : {driveFileIdx : driveFileIdx},
 	   		 success : function(data){
 	   			 if(data){
-	   				 callDirectoryData();
+	   				driveRefresh();
 	   			 }else{
 	   				 errorAlert("파일 삭제 실패");
 	   			 }
@@ -456,8 +457,7 @@ function deleteDriveFolder(driveIdx, parentIdx){
 	    		data : {driveIdx : driveIdx},
 	    		success : function(data){
 	    			if(data){
-	    				callDirectoryData();
-	    				changeSelectedFolder(parentIdx);
+	    				driveRefresh();
 	    			}else{
 	    				errorAlert("폴더 삭제 실패");
 	    			}
@@ -537,7 +537,7 @@ function restoreFileTrash(driveFileIdx) {
 		data : {'driveFileIdx' : driveFileIdx},
 		success : function(data) {
 			 successAlert("파일 복원 완료");
-			setTrashData(currentProjectIdx);
+			 driveRefresh();
 		},
 		error : function() {
 			console.log('restorefromTrash ERROR');
@@ -551,10 +551,7 @@ function restoreFolderfromTrash(driveFileIdx) {
 		url : "RestoreFolder.do",
 		data : {'driveFileIdx' : driveFileIdx},
 		success : function(data) {
-			console.log('restoreFolderfromTrash in');
-			 successAlert("폴더 복원 완료");
-
-			setTrashData(currentProjectIdx);
+			driveRefresh();
 		},
 		error : function() {
 			console.log('restoreFolderfromTrash ERROR');
