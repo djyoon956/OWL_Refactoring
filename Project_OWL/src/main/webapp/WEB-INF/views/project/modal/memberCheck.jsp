@@ -1,14 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<style>
-#theInfo{
-   color:#fff; 
-   height: 50px;
-   padding-top: 17px;
-   padding-bottom: 3px;
-   margin-bottom: 0px;
-}
-</style>
+
 <div id="memberCheckModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -22,17 +14,16 @@
             </div>
             <div class="modal-body modal-scroll mx-3 mb-3">
                 <div>
-                   <ul class="list-style-none assignedto text-center" id="projectInfoBox">
-	                     <li>
-	                        <h5 id="theInfo" style="background-color : #326295;">
-	                        	<b>📅  ${project.startDate} ~ ${project.endDate}</b>
-	                        </h5>
-                       </li>
-                      </ul>
-                      <hr>
-                    <!-- <button class="btn btn-primary float-right offset-10">권한 양도</button> -->
-                    <ul class="list-style-none assignedto text-center" id="projectMemebersBox">
+                    <ul class="list-style-none assignedto text-center" id="projectInfoBox">
+                        <li>
+                            <h5 id="theInfo" style="background-color : #326295;">
+                                <b>📅 ${project.startDate} ~ ${project.endDate}</b>
+                            </h5>
+                        </li>
+                    </ul>
+                    <hr>
 
+                    <ul class="list-style-none assignedto text-center" id="projectMemebersBox">
                     </ul>
                 </div>
             </div>

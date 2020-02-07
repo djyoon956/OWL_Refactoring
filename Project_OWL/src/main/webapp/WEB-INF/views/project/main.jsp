@@ -27,26 +27,28 @@
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
- 	
-
-	
+ 
     <!-- SummerNote -->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
 	<!-- Toast Calendar -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css" />
 	<script src="resources/plugin/calendar/projectCalendars.js"></script>
     <script src="resources/plugin/calendar/schedules.js"></script>
+    
 	<!-- If you use the default popups, use this. -->
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
 	<link rel="stylesheet" type="text/css" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css" />
     
+   	<link href="resources/css/member.css" rel="stylesheet">
+	<script src="resources/js/member.js"></script>
+	
     <script src="resources/js/notice.js"></script>
     <script src="resources/js/dashBoard.js"></script>
     <script src="resources/js/kanban.js"></script>
     <script src="resources/js/drive.js"></script>
-    
     <script src="resources/js/project.js"></script>
     
     <link href="resources/css/drive.css" rel="stylesheet">
