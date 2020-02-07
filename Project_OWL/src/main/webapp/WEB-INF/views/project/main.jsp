@@ -202,6 +202,7 @@
             else if (target === "calendar")
             	refreshScheduleVisibility();
             else if (target === "kanban"){
+                console.log("-----------------칸반 뷰 전환 -------------------");
             	changeKanbanView("list");
                 setKanbanData();
             }   
