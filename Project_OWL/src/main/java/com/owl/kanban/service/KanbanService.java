@@ -566,7 +566,6 @@ public class KanbanService {
 	}
 	public boolean deleteIssueFile(int fileIdx) {
 		KanbanDao dao = getKanbanDao();
-		System.out.println("DeleteIssueFile service in ");
 		boolean result = false;
 		try {
 			result = dao.deleteIssueFile(fileIdx)> 0 ? true : false;
@@ -582,7 +581,6 @@ public class KanbanService {
 		System.out.println("addIssueFile service in ");
 		boolean result = false;
 		List<File> files = new ArrayList<File>();
-		//	result = dao.deleteIssueFile(fileIdx)> 0 ? true : false;
 		if (multipartFiles.size() > 0) 
 			files = insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath);
 			result = files.size() > 0 ? true : false;
@@ -636,7 +634,6 @@ public class KanbanService {
 	
 	public List<Member> getProjectMemberList(int projectIdx){
 		
-		System.out.println("getProjectMemberList in service");
 		ProjectDao daop = getProjectDao();
 		List<Member> member = null;
 		try {
@@ -652,8 +649,6 @@ public class KanbanService {
 	
 	public String getPMemail(int projectIdx){
 		KanbanDao dao = getKanbanDao();
-
-		System.out.println("getPMemail in service");
 		
 		String email = null;
 		try {
@@ -691,16 +686,10 @@ public class KanbanService {
 	public boolean IssueRejectfromPM(Issue issue){
 		KanbanDao dao = getKanbanDao();
 
-		System.out.println("IssueRejectfromPM in service");
-		System.out.println(issue);
 		boolean check = false;
 		try {
-			
-
 			check = dao.IssueRejectfromPM(issue)> 0 ? true : false;
-			System.out.println("나오니?????????????");
-			System.out.println(issue.getProjectIdx());
-			
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -720,8 +709,7 @@ public class KanbanService {
 		String check = null;
 		try {
 			check = dao.GetcomfirmReason(issueIdx);
-			System.out.println("뭐죠????????????????");
-			System.out.println(check);
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
