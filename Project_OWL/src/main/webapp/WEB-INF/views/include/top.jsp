@@ -618,7 +618,17 @@ display: block;
     								<h4 class="text-muted d-inline ml-2">(5)</h4>
     								</div>
     							</div>
-    							<i class="mdi mdi-menu font-24 mt-1" style="right:12px;top:0px; position: absolute;"></i>
+    							<!-- style="right:12px;top:0px; position: absolute;"  -->
+    							<div class="dropdown" style="right:12px;top:0px; position: absolute;"> 
+    							<a href="javascript:void(0)" data-toggle="dropdown" id="dropdownChatButton" aria-haspopup="true" aria-expanded="false" style="float:right">
+    							<i class="mdi mdi-menu font-24 mt-1" style="right:0px;top:0px; position: absolute;"></i></a>
+    							<div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownChatButton">
+						       	<ul class="list-style-none">
+								     <li class="pl-3"><a href="#">나가기</a></li>
+							         <li class="pl-3"><a href="#">검색하기</a></li>
+								</ul>
+								</div>
+								 </div> 
    							</div>
    								<hr>
                                 <div id="chatBox" class="chat-box scrollable" style="height:510px;">
