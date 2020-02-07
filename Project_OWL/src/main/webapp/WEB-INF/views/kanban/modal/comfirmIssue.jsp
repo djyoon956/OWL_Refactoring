@@ -11,7 +11,6 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			<!-- <form action="InsertIssue.do" method="post" enctype="multipart/form-data" id="addIssueForm">--> 				
 			<div class="row">
 					<div class="col-8">
 					<div id="comfirmIdx"></div>
@@ -49,8 +48,7 @@
 						<div class="row">
 						<div class="col-4">Label</div>	
 						<div class="col-8" id="comfirmLabel">
-<!-- 						<span class="badgeIcon float-left" style="background-color: yellow">view</span>
- -->						</div>									
+ 						</div>									
 					</div>
 						</div>
 						<hr>
@@ -82,9 +80,7 @@
 					<input type="button" class="btn btn-primary" id="comfirmBtn" value="Comfirm">
 					<input type="button" class="btn btn-primary" id="rejectBtn" value="Reject">
 					
-					<!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> -->
 				</div>
-			<!-- </form> -->
 		</div>
 	</div>
 </div>

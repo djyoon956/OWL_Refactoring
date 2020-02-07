@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<style>
+<!-- <style>
 
 .link-gray {
     color: #586069!important;
@@ -20,12 +20,7 @@
 .labelList {
 	margin-bottom: 5px;
 }
-/* 
-.labelListSection {
-	padding-left: 50px;
-	padding-right: 10px;
-	overflow: auto;
-} */
+
 
 .badgeIconinList {
 	display: inline-block;
@@ -42,7 +37,7 @@
  	overflow-y : auto;
 	max-height: 300px;
 }
-</style>
+</style> -->
 
 
 
