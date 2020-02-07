@@ -70,11 +70,14 @@
 					</div>
 					</div>
 				</div>
-				<br><br>
-				<div>
+				<br><br><br>
+				<div class="mt-3">
 					<i class="fas fa-stamp fa-2x"></i> <b>이슈사유</b>
 						<input type="text" style=" min-height: 60px; max-width: 600px; min-width: 600px;" id="rejectreason"></div>
 				</div> 
+				<br>
+					<div id="rejectreasonadd"></div>
+				
 					<div class="modal-footer text-right">
 					<input type="button" class="btn btn-primary" id="comfirmBtn" value="Comfirm">
 					<input type="button" class="btn btn-primary" id="rejectBtn" value="Reject">
