@@ -8,82 +8,11 @@
     <title>OWL</title>
     <jsp:include page="../include/headTag.jsp" />
     <link href="resources/css/style.css" rel="stylesheet">
-    <style type="text/css">
-        #forgotPwdBody {
-            background-color: #326295;
-            overflow-y: hidden;
-            height: 100vh !important;
-        }
-
-        .forgotBox {
-            border-radius: 15px;
-        }
-
-        .forgotButton {
-            padding: 10px;
-        }
-    </style>
+	<script type="text/javascript" src="resources/js/member.js"></script>
+    <link href="resources/css/member.css" rel="stylesheet">
     <script type="text/javascript">
         $(function () {
-            $("#resetBox  .pwd1").keyup(
-                function (event) {
-                    if ($("#resetBox  .pwd1").val().length < 8) {
-                        $("#resetBox  .pwd1").siblings(".text-danger").css("display", "block");
-                        $("#resetBox .successletter").css("display", "none");
-                        $("#resetBox .failletter").css("display", "none");
-
-                    } else if ($("#resetBox  .pwd1").val() == null && $("#resetBox  .pwd2").val() == null) {
-                        $("#resetBox .successletter").css("display", "none");
-                        $("#resetBox .failletter").css("display", "none");
-
-                    } else {
-                        $("#resetBox  .pwd1").siblings(".text-danger").css("display", "none");
-                        $("#resetBox  .pwd2").keyup(
-                            function (event) {
-                                if ($("#resetBox  .pwd1").val() == $("#resetBox  .pwd2").val()) {
-                                    $("#resetBox .successletter").css("display", "block");
-                                    $("#resetBox .failletter").css("display", "none");
-                                } else {
-                                    $("#resetBox .failletter").css("display", "block");
-                                    $("#resetBox .successletter").css("display", "none");
-                                }
-                            }
-                         )
-                    }
-                })
-
-            $("#changeButton").click(function () {
-                if($("#resetBox  .pwd1").val().length < 8){
-                	warningAlert("비밀번호는 8자리 이상입력해주세요.");
-					return;
-               } else if($("#resetBox  .pwd1").val() != $("#resetBox  .pwd2").val()){
-            	   warningAlert("비밀번호가 일치하지 않습니다.");
-					return;
-                }
-                
-                $.ajax({
-                    method: "POST",
-                    url: "ResetPassword.do",
-                    data: {
-                        email: $("#email").val(),
-                        password: $("#pwd").val()
-                    },
-                    success: function (result) {
-                        Swal.fire({
-                            title: '비밀번호 변경 완료\n로그인 화면으로 이동합니다.',
-                            icon: "success",
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then((result) => {
-                            window.location.href = "Login.do";
-                        })
-                    },
-                    error: function () {
-                        errorAlert("비밀번호 변경에 실패했습니다.");
-                    }
-                })
-
-            })
+        	initResetPasswordController();
         })
     </script>
 </head>
