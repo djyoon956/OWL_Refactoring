@@ -604,7 +604,7 @@ display: block;
 				<!--  채팅방 view -->	
 			<div class="setting-box hidden" id="chattingRoomIn">
 					 <ul class="list-group">
-                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start" style="height: 650px;">
+                         <li class="chat_list-group-item chat_list-group-item-action flex-column align-items-start" style="height: 665px;">
              				<div class="row">
              					<div class="text-left">
              						<a class="" href="javascript:void(0)" id="chatBackBtn"> 
