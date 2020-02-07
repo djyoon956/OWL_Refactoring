@@ -11,7 +11,6 @@
 				</button>
 			</div>
 			<div class="modal-body">
-			<!-- <form action="InsertIssue.do" method="post" enctype="multipart/form-data" id="addIssueForm">--> 				
 			<div class="row">
 					<div class="col-8">
 					<div id="comfirmIdx"></div>
@@ -49,8 +48,7 @@
 						<div class="row">
 						<div class="col-4">Label</div>	
 						<div class="col-8" id="comfirmLabel">
-<!-- 						<span class="badgeIcon float-left" style="background-color: yellow">view</span>
- -->						</div>									
+ 						</div>									
 					</div>
 						</div>
 						<hr>
@@ -70,18 +68,19 @@
 					</div>
 					</div>
 				</div>
-				<br><br>
-				<div>
+				<br><br><br>
+				<div class="mt-3">
 					<i class="fas fa-stamp fa-2x"></i> <b>이슈사유</b>
 						<input type="text" style=" min-height: 60px; max-width: 600px; min-width: 600px;" id="rejectreason"></div>
 				</div> 
+				<br>
+					<div id="rejectreasonadd"></div>
+				
 					<div class="modal-footer text-right">
 					<input type="button" class="btn btn-primary" id="comfirmBtn" value="Comfirm">
 					<input type="button" class="btn btn-primary" id="rejectBtn" value="Reject">
 					
-					<!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> -->
 				</div>
-			<!-- </form> -->
 		</div>
 	</div>
 </div>

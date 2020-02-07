@@ -32,7 +32,7 @@
                         </div>
                         <div id="kanbanEditFileBox" class="collapse multi-collapse">
                             <ul class=" m-4 list-style-none" id="issueDetailEditFiles">
-                                <li class="mb-2" style="font-size: 16px">
+<!--                                 <li class="mb-2" style="font-size: 16px">
                                     <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
                                 </li>
                                 <li class="mb-2" style="font-size: 16px">
@@ -40,7 +40,7 @@
                                 </li>
                                 <li class="mb-2" style="font-size: 16px">
                                     <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>

@@ -100,5 +100,7 @@ public interface KanbanDao {
 	public int IssueComfirmfromPM(int issueIdx) throws ClassNotFoundException, SQLException;
 
 	public int IssueRejectfromPM(Issue issue) throws ClassNotFoundException, SQLException;
+	
+	public String GetcomfirmReason(int issueIdx) throws ClassNotFoundException, SQLException;
 
 }

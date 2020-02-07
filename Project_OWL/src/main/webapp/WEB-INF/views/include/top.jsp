@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Gamja+Flower|Yeon+Sung&display=swap" rel="stylesheet">
@@ -136,7 +136,8 @@
 	        	$('#confirmIssueModal').modal("hide");
 
         	    sendNoticePushToOne($('#comfirmCreator').text(), $('#comfirmTitle').text()+ "이슈생성은", "PM이 거절 하였습니다.")
-	        	pushNoticeToOne($('#projectissueIdx').val(),$('#projectName').val(), $('#comfirmTitle').text(), "kanbanIssueToPm", $('#comfirmCreator').text(), $('#comfirmissueIdx').val());
+	        	pushNoticeToOne($('#projectissueIdx').val(),$('#projectName').val(), $('#comfirmTitle').text()+ " 이슈가 반려되었습니다.", "kanbanIssueToPm", $('#comfirmCreator').text(), $('#comfirmissueIdx').val(), "tomember");
+
 			},error : function() {
 				console.log('IssueRejectfromPM error');
 				}
@@ -181,9 +182,8 @@
 
 	
 	//알람 이슈체크 이슈 컨펌할때 모달창 띄우는 함수 
-	function comfirmIssueModal(issueidx, projectName) {
-console.log('뭐니?');
-console.log(projectName);
+	function comfirmIssueModal(issueidx, projectName, flag) {
+
 		$.ajax({
 			url : "GetIssueDetail.do",
 			type: "POST",
@@ -197,7 +197,7 @@ console.log(projectName);
  				$.each (data.files, function(index, element) {
 					files += element.fileName + "  ";
 				}); 
-				
+
 				$('#comfirmTitle').text(data.issueTitle);
 				$('#comfirmIdx').html('<input type="hidden" id="comfirmissueIdx" value="'+data.issueIdx+'"><input type="hidden" id="projectissueIdx" value="'+data.projectIdx+'"><input type="hidden" id="projectName" value="'+projectName+'">');		
 				$('#comfirmTitle').text(data.issueTitle);
@@ -208,13 +208,32 @@ console.log(projectName);
 				$('#comfirmLabel').html(labelname);
 				$('#comfirmPriority').text(data.priorityCode);
 				$('#comfirmDuedate').text(data.dueDate); 
+				
+ 				if(flag == "tomember") {
+					$('#rejectreason').addClass("hidden");
 
-				}
-			})
+					$.ajax({
+						url : "GetcomfirmReason.do",
+						data : {issueIdx : $('#comfirmissueIdx').val()},
+						success : function(data) {
+							console.log('GetcomfirmReason in');
+							console.log(data);
+						$('#rejectreasonadd').text(data);
+						$('#comfirmBtn').hide();
+						$('#rejectBtn').hide();
+						
+						},error : function() {
+						console.log('error in');
+						
+						}
+						
+					});
+				};
+			}
 		
-		};
+		});
 	
-
+	}
 </script>
 <style>
 
@@ -768,7 +787,7 @@ display: block;
                                     
                                    <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree8" aria-expanded="false" aria-controls="collapseThree7">이슈체크 <span id="numOfMentionBoard" class="badge badge-pill gradient-1">0</span><i class="fa fa-chevron-right chevronIcon" style="float:right"></i></h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree8" aria-expanded="false" aria-controls="collapseThree7">이슈체크 <span id="numOfCheckBoard" class="badge badge-pill gradient-1">0</span><i class="fa fa-chevron-right chevronIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree8" class="collapse" data-parent="#accordion-three" data-from="mention" style="line-height:2em;">
                                             <div id="issueCheckBoard" class="card-body pt-3 accordionBody">
@@ -1005,7 +1024,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from, targetIdx);
 		}
 
-		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail, targetIdx) {
+		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail, targetIdx, msg) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key;	
 
@@ -1014,10 +1033,11 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				projectIdx: projectIdx,
         	    title: title,
         	    creatFrom: from,
-        	    targetIdx : targetIdx
+        	    targetIdx : targetIdx,
+        	    msg : msg
         	  });
       	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail, targetIdx);
+			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail, targetIdx, msg);
 		}
 
 
@@ -1037,7 +1057,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
 		}	 */
 
-		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email, targetIdx){
+		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email, targetIdx, msg){
 			var myRootRef = database.ref();
       	    myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
       		  data.forEach(function(childSnapshot) {
@@ -1049,7 +1069,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			        	    title: title,
 			        	    readOk : 'false',
 			        	    creatFrom: from,
-			        	    targetIdx : targetIdx
+			        	    targetIdx : targetIdx,
+			        	    msg : msg
 			        	  });;
  		 		});
       	      })
@@ -1137,7 +1158,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				}
 
 
-			function numOfNotread(curUserKey){				
+			function numOfNotreadNotices(curUserKey){				
                 
 	              var noticesByUserRef = database.ref('NoticesByUser/'+ curUserKey);
 
@@ -1197,10 +1218,42 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						
 						
 						});
+
+					noticesByUserRef.orderByChild('creatFrom').equalTo('kanbanIssueToPm').once('value', function(data){
+						var numOfUnread = 0;						
+						data.forEach(function(childsnapshot){  
+							var childVal = childsnapshot.val();                               
+                                if(childVal.readOk == 'false'){
+                                	numOfUnread++;
+                                    }
+							})
+						$('#numOfCheckBoard').html(numOfUnread);
+						
+						
+						});
 					
 
 			}
 
+
+			 function numOfNotreadMessages(roomId){								
+                
+	              var MessagesByUser = database.ref('MessagesByUser/'+ curUserKey + '/' + roomId);
+	              var numOfMessages=10000;
+	             console.log("curUserKey" + curUserKey);
+	             
+	             MessagesByUser.orderByChild('readOk').equalTo('false').once('value', function(data){
+	            	 numOfMessages = data.numChildren(); 
+						console.log("numOfMessages~~~~~~~~~~" + numOfMessages);
+						var roomSelector = roomId;
+						document.getElementById(roomId).innerHTML = numOfMessages;
+						
+						
+				    });	  	
+			    }
+ 
+			
+			
 			function saveReadNotice(){
 				let name = this.getAttribute("data-from")
 				let arrNoticeKey = document.querySelectorAll('div[data-type="'+name+'"]');
@@ -1221,7 +1274,17 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 		        	  });
 				});
 
-        	  numOfNotread(curUserKey);
+        	  numOfNotreadNotices(curUserKey);
+			}
+
+			function saveReadMessage(messageRefKey){
+				console.log("saveReadMessage 함수... 작동하나???")											
+					database.ref('MessagesByUser/'+ curUserKey +'/' + roomId+'/' + messageRefKey).update({
+						readOk : 'true'
+		        	  });
+				
+
+					//numOfNotreadMessages();
 			}
 
 			function noticeListUp(noticeKey, noticeValue) {
@@ -1246,12 +1309,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 							noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issueMention");	              	 
 							$("#mentionBoard").append(noticeTags);
 						}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
-							console.log('----------------------1');
-							
-							console.log(data.projectName);
 
-							console.log('-----------------------2');
-							noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+", \""+data.projectName+"\")'>" +linkElement+ "</a>"
+							noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+", \""+data.projectName+"\", \""+noticeValue.msg+"\")'>" +linkElement+ "</a>"
 											+  '</div>';  
 							$("#issueCheckBoard").append(noticeTags);			
 						}
@@ -1331,82 +1390,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						+  '</div>';
            	}
        
-				function writeProjectRoomData(name, email, imageUrl) {
-					
-					var roomListTarget = document.querySelectorAll('[data-roomType="MULTI"][data-roomOneVSOneTarget="'
-							+ targetUserUid +'"]')[0]; 
-					
-					if(roomListTarget){ // null 이 아니면 여기가 핵심이다.  룰리스트 타겟있으면 새로운 방 아이디를 만들지 않는다.
-						roomListTarget.click(); 
-						}else{ // 메세지 로드 
-							//roomTitle = targetUserName+'님 과의 대화'; 
-							roomUserList = [targetUserUid, curUserKey]; // 챗방 유저리스트  			
-							roomUserName = [targetUserName, curName] // 챗방 유저 이름 
-							roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss(); 
-							//console.log("새로운 상대와의 채팅이 시작 되면 룸 아이디 생성.. 그 값은요??>>>>>>>>>>>>" +roomId);
-							openChatRoom(); // 파라미터 추가
-							}
-
-
-
-									
-					var multiUpdates = {}; 
-					var messageRef = database.ref('Messages/'+ roomId);
-					var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
-					//var convertMsg = convertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
-
-					//UsersInRoom 데이터 저장
-					if(document.getElementById('ulMessageList').getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
-						var roomUserListLength = roomUserList.length; 
-						for(var i=0; i < roomUserListLength; i++){ 
-							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true; 
-						} 
-						//firebase.database().ref('usersInRoom/' + roomId);
-						database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
-						loadMessageList(); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
-					} 
-					
-					multiUpdates ={}; // 변수 초기화 
-
-					//메세지 저장 
-					multiUpdates['Messages/' + roomId + '/' + messageRefKey] = { 
-							uid: curUserKey, 
-							userName: curName, 
-							message: convertMsg, // 태그 입력 방지
-							profileImg: curProfilePic ? curProfilePic : 'noprofile.png', 
-							timestamp: firebase.database.ServerValue.TIMESTAMP //서버시간 등록하기 
-					} 
-
-					//유저별 룸리스트 저장 
-					var roomUserListLength = roomUserList.length;
-					 
-					if(roomUserList && roomUserListLength > 0){ 
-						for(var i = 0; i < roomUserListLength ; i++){ 
-							multiUpdates['RoomsByUser/'+ roomUserList[i] +'/'+ roomId] = { 
-								roomId : roomId, 
-								roomUserName : roomUserName.join('@spl@'), 
-								roomUserList : roomUserList.join('@spl@'), 
-								roomType : 'MULTI', 
-								roomOneVSOneTarget : roomUserListLength == 2 && i == 0 ? roomUserList[1] : // 1대 1 대화이고 i 값이 0 이면 
-									roomUserListLength == 2 && i == 1 ? roomUserList[0] // 1대 1 대화 이고 i값이 1이면 
-									: '', // 나머지 
-								lastMessage : convertMsg, 
-								profileImg : curProfilePic ? curProfilePic : 'noprofile.png', 
-								timestamp: firebase.database.ServerValue.TIMESTAMP 
-
-							}; 
-						} 
-					} 
-					database.ref().update(multiUpdates);
-
-					//RoomsByUser 디비 업데이트 후 다시 챗방 리스트 다시 로드
-					loadRoomList(curUserKey);
-
-
-					//프로젝트 룸 리스트 업 하는 것이 이 함수의 목적이고 아래와 같은 파라미터가 필요하다. 룸리스트 업 함수는 태그를 리턴하다.. 그래서 포쿤을 돌려서 붙이던가 해야 함...
-					var roomListTag = roomListUp(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserList, lastMessage, datetime);
-					
-		        	}
+				
 
 
 				
@@ -1509,18 +1493,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
            	  }  
         	  loadMessageList(); //메세지 로드 
               $('#tabMessageList').click();
-            
-			
-
-			//아래 코드는 온로드 뒤에 실행 되게 위치 이동해야 함... 일단은 다른게 급하니... 남겨두고...
-			/* document.getElementById('iBtnSend').addEventListener('click', function(){
-				saveMessages();
-				}); */
-
-			
-
-        	
-              }
+            		      	
+           }
 
 
 			//챗방 초대를 위한 모달 창 세팅을 위한 함수
@@ -1581,7 +1555,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
 	           			//채팅창 자동 스크롤 다운...  
 	           			 document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
-							
+
+	           			//로드 되서 읽은 메세지 처리 함수 
+							saveReadMessage(data.key);
+							numOfNotreadMessages(roomId);
                      }); 
              }else{
            	  messageRef.limitToLast(50).on('child_added', function(data){
@@ -1626,7 +1603,15 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						roomOneVSOneTarget = val.roomOneVSOneTarget, 
 						datetime = timestampToTimeForRoomList(val.timestamp); 
 
+						//유저가 참여 하고 있는 룸정보를 불러 올때 읽지 않은 메세지가 있으면 그 수를 카운트 하는 함수
+						numOfNotreadMessages(roomId);
+
+						
+
 						arrRoomListHtml.push(roomListUp(roomId, roomTitle, roomUserName,roomType, roomOneVSOneTarget, roomUserList, lastMessage, datetime));
+
+						
+
 					}); 
 		
 				var reversedRoomList = arrRoomListHtml.reverse();				
@@ -1712,18 +1697,35 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 					var multiUpdates = {}; 
 					var messageRef = database.ref('Messages/'+ roomId);
 					var messageRefKey = messageRef.push().key	; // 메세지 키값 구하기 
-					//var convertMsg = convertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
-
+					var roomUserListLength = roomUserList.length; 
 					//UsersInRoom 데이터 저장
 					if(document.getElementById('ulMessageList').getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
 						var roomUserListLength = roomUserList.length; 
 						for(var i=0; i < roomUserListLength; i++){ 
-							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true; 
+							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true;							
+							
 						} 
 						//firebase.database().ref('usersInRoom/' + roomId);
 						database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
 						loadMessageList(); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
 					} 
+					
+					multiUpdates ={}; // 변수 초기화 
+
+					//유저별 안 읽은 메세지 숫자 표시를 위한 파베 디비 저장 쿼리..
+					if(roomUserListLength>1){
+						for(var i=0; i < roomUserListLength; i++){ 							
+							multiUpdates['MessagesByUser/' +roomUserList[i]+'/' + roomId+'/' + messageRefKey] = {
+									readOk : 'false'								
+									};  
+							
+					} 
+					//firebase.database().ref('usersInRoom/' + roomId);
+					database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
+					
+					}	
+					
+					
 					
 					multiUpdates ={}; // 변수 초기화 
 
@@ -1889,7 +1891,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 	            		              '<ul>'+
              								'<li class="d-flex justify-content-between align-items-center">'+
              			                                                      lastMessage+ 
-               									'<span class="badge badge-primary badge-pill" style="background-color: #326295">2</span>'+
+               									'<span id="'+ roomId +'" class="badge badge-primary badge-pill" style="background-color: #326295"></span>'+
                								'</li>'+
           								'</ul>'+
           							'</li>';	  
@@ -1956,7 +1958,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
       	  });
 
       	    database.ref().update(updates); //초대 메세지 
-            saveMessages(arrInviteUserName.join() + '이 초대되었습니다.');
+      	    arrInviteUserName.forEach(function(item, index){
+      	    	saveMessages(item + '이 초대되었습니다.');
+          	    });
+            
         	  
 
            }
@@ -1993,7 +1998,30 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
           
 
 
-			
+			//채팅 및 푸시 알람 기능 초기화
+			function owlInit(curUserKey){
+				//채팅방 룸 정보 로딩
+				loadRoomList(curUserKey);
+                //유저 접속 상태 저장 체크...
+                checkOnline();	
+                //fcm 토큰은 미리 받아 올수 있는데... 현재 유저의 uid 를 fb db 에서 가져 와야 해서.. 위치가..여기..이 함수는 fb db 에 fcm token wjwkd gksms gkatn
+    			saveFCMToken();
+    			//노티스 정보 로드 없
+    			loadPushNotice(curUserKey);
+    			//읽지 않은 노티수 숫자 표시 함수
+    			numOfNotreadNotices(curUserKey);
+    			 //온로드 뒤에 백 버튼 리스너 달기
+        		$('#aBackBtn').click(onBackBtnClick);
+        		 //채팅 초대창 모달 띄우기
+    		    $('#dnModal').modal(); 				 
+    			//채팅방 초대 modal 설정 
+    			$('#dvAddUser').modal();  
+    		    //초대 모달창에서 초대 버튼 클릭시  체크된 인원을 현재 챗방에 추가하는 클릭 리스너
+    			$('#onCreateClick').click(onCreateClick);       			
+    			//공지사항 아코디언 오픈시 이벤트 리스너....
+    			$('#collapseOne4, #collapseTwo5, #collapseThree6, #collapseThree7').on('shown.bs.collapse', saveReadNotice);
+
+				}
 
 
             
@@ -2001,35 +2029,19 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
           
 
 			// 초기화 를 위한 온로드 함수... 같은 프로제트에 있는 유저목록과 프로젝트 채팅방을 만들기 위한 정보를 디비에서 뽑아낸다.	
-          $(function(){            
+          $(function(){           
 			var curUserKey;
 
 			$("#chattingRoomIn .emoji-wysiwyg-editor:first").keydown(pressEnter);
-			//setCloudMessaging();
+		
 			
             writeUserData(curName, curEmail, curProfilePic).then(function(resolvedData){
 				console.log("현재 사용자의 user 키는용???>>" + resolvedData + "<<<<<");
                 $('#curUserKey').val(resolvedData);
                 curUserKey = $('#curUserKey').val();
                 window.curUserKey = resolvedData;
-                loadRoomList(resolvedData);
-
-                //유저 접속 상태 저장 체크...
-                checkOnline();	
-
-              //fcm 토큰은 미리 받아 올수 있는데... 현재 유저의 uid 를 fb db 에서 가져 와야 해서.. 위치가..여기..이 함수는 fb db 에 fcm token wjwkd gksms gkatn
-    			saveFCMToken();
-
-    			//노티스 정보 로드 없
-    			loadPushNotice(resolvedData);
-    			//읽지 않은 노티수 숫자 표시 함수
-    			numOfNotread(resolvedData);
-
-    			//공지사항 아코디언 오픈시 이벤트 리스너....
-    			$('#collapseOne4').on('shown.bs.collapse', saveReadNotice);
-    			$('#collapseTwo5').on('shown.bs.collapse', saveReadNotice);
-    			$('#collapseThree6').on('show.bs.collapse', saveReadNotice);
-    			$('#collapseThree7').on('show.bs.collapse', saveReadNotice);
+                owlInit(resolvedData);
+    
                
             }); 
 
@@ -2046,13 +2058,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
       				
       				$.each(data, function(index, value) {          				    				  
       				  console.log(value.name + " / " + value.email + " / " + value.profilePic);
-      				  //var myResult = writeUserData(value.name, value.email, value.profilePic);
-      				  //console.log("유저 디비 저장 하는 펑션 실행 한뒤 리턴 값은?? 키여야 하는데>>>>>>>>>" + myResult);
-
-				
+      				
       				writeUserData(value.name, value.email, value.profilePic).then(function(resolvedData){          				    					
-    					//목록을 뿌리기위한 태크 뭉치들이 들어 있는 함수 콜
-    					userListUp(resolvedData, value.name, value.profilePic, value.email);
+    				//목록을 뿌리기위한 태크 뭉치들이 들어 있는 함수 콜
+    				userListUp(resolvedData, value.name, value.profilePic, value.email);
 						
       					});
 
@@ -2067,84 +2076,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
       		         alert('Error - ' + errorMessage);
       		     }
       		});
-
-			//같은 프로젝트에 있는 유저들끼리의 챗방을 만들기 위한 아젝스.... 요게 가능 한가... 아....
-      		/* $.ajax({
-      			url: "MyProjectsMatesFull.do",
-      			type: "POST",
-      			dataType: 'json',
-      			data : { email : curEmail,
-      				     name : curName }, 
-      			success: function (data) {
-      				console.log("뷰단으로 데이터 들어 오나요?? >" + data);
-
-      			    var projectIdxGrouped = new Set();
-      			    
-      				$.each(data, function(index, value) {          				
-      				  console.log(value);
-      				  console.log("풀리스트" +value.name + " / " + value.email + " / " + value.profilePic + " / " + value.projectIdx);
-      				projectIdxGrouped.add(value.projectIdx);
-      				  
-      				  //var myResult = writeUserData(value.name, value.email, value.profilePic);
-      				  //console.log("유저 디비 저장 하는 펑션 실행 한뒤 리턴 값은?? 키여야 하는데>>>>>>>>>" + myResult);
-
-      				  //같은 프로젝트에 속해 있는 유저들간의  챗방을 만들기 위해서 우선 디비에서 같은 프로젝트에 속해 있는 유저 정보 뽑아 오고.. 
-      				  // 요 데이타를 그룹핑 하고... 함수에 태워서.... 채팅방을 만든다....
-						
-      				
-      				
-
-      				});
-	
-      				console.log("너의 프로젝트 아이디엑스는>>>>>>>>>>>>>>>>>>>>>>>" + projectIdxGrouped);
-      				
-      				var arrIdx = [...projectIdxGrouped];
-      				console.log("어레이로 바뀌었을까????????????????????????" + arrIdx);
-      				console.log(arrIdx.length);
-      				console.log(arrIdx[0]);
-                   
-      				$.each(data, function(index, value) {          				
-        				  
-      					for(var i=0; i<arrIdx.length; i++){
-                            if(arrIdx[i] == value.projectIdx){
-                                
-
-                                }
-    						}
-		
-
-        				});
-
-
-      				
-      				//바로 아래 함수는 위 아젝스에 받은 데이터..... 콜렉션을.. 그룹핑해서... 그 데이터를 가지고... 파이어 베이스에 데이터 저장을 위한 함수...
-      				//writeProjectRoomData(value.name, value.email, value.profilePic); 
-      				
-      			},
-      			error: function(xhr, status, error){
-          			console.log("풀리스트 불러오는 아잭스 에러 터짐 ㅠㅠ");
-      		         var errorMessage = xhr.status + ': ' + xhr.statusText
-      		         alert('Error - ' + errorMessage);
-      		     } 
-      		});*/
+			
 
       		
-		//온로드 뒤에 백 버튼 리스너 달기
-    		$('#aBackBtn').click(onBackBtnClick);
-
-		//채팅 초대창 모달 띄우기
-			 //FirebaseChat 클래스 초기화
-				 //다운로드 프로그레스 팝업 modal 설정 
-				 $('#dnModal').modal(); 
-				 
-				 //채팅방 초대 modal 설정 
-				 $('#dvAddUser').modal(); 
-			
-				
-
-		//초대 모달창에서 초대 버튼 클릭시  체크된 인원을 현재 챗방에 추가하는 클릭 리스너
-			$('#onCreateClick').click(onCreateClick);
-
+		   
 
 			
 			

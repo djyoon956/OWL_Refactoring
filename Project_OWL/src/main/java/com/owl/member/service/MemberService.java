@@ -17,26 +17,6 @@ public class MemberService {
 	@Autowired
 	private SqlSession sqlSession;
 
-	// ******************************************************
-	// DB TEST 용입니다.
-	// 삭제 예정
-	// ******************************************************
-	public boolean test() {
-		MemberDao userDao = getMemberDao();
-		boolean result = false;
-
-		try {
-			userDao.getMembers();
-			result = true;
-		} catch (ClassNotFoundException e) {
-			result = false;
-		} catch (SQLException e) {
-			result = false;
-		}
-
-		return result;
-	}
-
 	/**
 	 * 이메일 인증 거치기 전 회원 가입
 	 * @author 윤다정
