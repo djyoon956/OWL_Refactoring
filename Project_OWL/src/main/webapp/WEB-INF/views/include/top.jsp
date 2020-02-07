@@ -932,15 +932,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 					data : { email : curEmail
 						      }, 
 					success: function (data) {
-						console.log("뷰단으로 데이터 들어 오나요?? >" + data);
-
 					    var projectIdxGrouped = new Set();
 					    
 						$.each(data, function(index, value) {          				
-						  console.log(value);
-						  console.log("풀리스트" +value.name + " / " + value.email + " / " + value.profilePic + " / " + value.projectIdx);
-						  console.log(value.projectIdx);
-						  console.log(currentProjectIdx);
+						
 						  if(value.projectIdx == currentProjectIdx){
 							  console.log("noticeProjectIdx : " +currentProjectIdx);
 							  console.log("noticeProjectIdx : " + value.email);
@@ -966,7 +961,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						});				
 					},
 					error: function(xhr, status, error){
-		  			console.log("풀리스트 불러오는 아잭스 에러 터짐 ㅠㅠ");
 				         var errorMessage = xhr.status + ': ' + xhr.statusText
 				         alert('Error - ' + errorMessage);
 				     } 
@@ -982,12 +976,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
 				data.forEach(function(childSnapshot) {
 					userKey = childSnapshot.key;
-					console.log("targetuserkey..." + userKey);
 					database.ref("FcmId/"+userKey).once('value',fcmSnapshot => { 
-							console.log('FCM Token : ', fcmSnapshot.val()); 
 							const mytoken = fcmSnapshot.val();
-							console.log("title: " + title);
-							console.log("msg: " + msg);
 							sendNotification(mytoken, title, msg);
 						});
 			       });
@@ -1079,9 +1069,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 					  console.log(value.projectIdx);
 					  console.log(projectIdx);
 					  if(value.projectIdx == projectIdx){
-						  console.log("noticeProjectIdx : " +projectIdx);
-						  console.log("noticeProjectIdx : " + value.email);
-						  
+
 						  var userKey;
 						  
 						  //프로젝트 내에 각 유저별 노티스 정보 파베 저장
@@ -1090,7 +1078,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			        	  myRootRef.child("Emails").orderByChild('email').equalTo(value.email).once('value', function(data){
 			        		  data.forEach(function(childSnapshot) {
 									userKey = childSnapshot.key;
-									console.log("targetuserkey..." + userKey);
 									//유저별 노티스 저장
 									database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
 										projectIdx: projectIdx,
@@ -1105,7 +1092,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 					});				
 				},
 				error: function(xhr, status, error){
-	  			console.log("풀리스트 불러오는 아잭스 에러 터짐 ㅠㅠ");
 			         var errorMessage = xhr.status + ': ' + xhr.statusText
 			         alert('Error - ' + errorMessage);
 			     } 
@@ -1113,8 +1099,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
 			}
 
-			function loadPushNotice(curUserKey){				
-                   console.log("loadPushNotice 요함 수 왜 안타는 거야~~~~~~~~~~~");               
+			function loadPushNotice(curUserKey){				        
 	              var noticesByUserRef = database.ref('NoticesByUser/'+ curUserKey);
              
 	                 document.getElementById('noticeBoard').innerHTML = ''; //공지사항 화면 리셋                 
@@ -1157,7 +1142,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 	             console.log("curUserKey" + curUserKey);
 	             
 					noticesByUserRef.orderByChild('readOk').equalTo('false').once('value', function(data){
-						console.log("data~~~~~~~~~~~~~~~~~~~" + data.numChildren());
 						var numOfNotice = data.numChildren(); 
 						$('#numOfNotice').html(numOfNotice);
 						
@@ -1173,12 +1157,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
                                 	numOfUnread++;
                                     }
 							})
-						 console.log("않읽은 노티스 갯스 나오나요?? " + numOfUnread );
 						$('#numOfNoticeBoard').html(numOfUnread);
 						});
 					
 					noticesByUserRef.orderByChild('creatFrom').equalTo('kanbanIssue').once('value', function(data){
-						console.log("data~~~~~~~~~~~~~~~~~~~" + data.numChildren());
 						var numOfUnread = 0;						
 						data.forEach(function(childsnapshot){ 
 							var childVal = childsnapshot.val();                                
@@ -1186,7 +1168,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
                                 	numOfUnread++;
                                     }
 							})
-						 console.log("않읽은 노티스 갯스 나오나요?? " + numOfUnread );
 						$('#numOfIssueBoard').html(numOfUnread);											
 						});
 
@@ -1199,7 +1180,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
                                 	numOfUnread++;
                                     }
 							})
-						 console.log("않읽은 노티스 갯스 나오나요?? " + numOfUnread );
 						$('#numOfDriveBoard').html(numOfUnread);											
 						});
 					
@@ -1211,7 +1191,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
                                 	numOfUnread++;
                                     }
 							})
-						 console.log("않읽은 노티스 갯스 나오나요?? " + numOfUnread );
 						$('#numOfMentionBoard').html(numOfUnread);
 						
 						
@@ -1518,13 +1497,14 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 		  }
 		
 
-          function openChatRoom(roomTitle) {
+          function openChatRoom(roomTitle, roomLength) {
              
         	  //loadRoomList(roomId); 
         	  window.isOpenRoom = true; // 방이 열린 상태인지 확인하는 플래그 값 
         	  if(roomTitle){ //상단 타이틀 변경 
             	  document.getElementById('roomTitle').innerHTML = roomTitle; 
-            	  }  
+            	  $("#roomTitle").siblings().eq(0).text(" ("+roomLength+") ");
+           	  }  
         	  loadMessageList(); //메세지 로드 
               $('#tabMessageList').click();
             
@@ -1549,14 +1529,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
               
         	  curUserKey= window.curUserKey;
 			  roomUserList = [window.curUserKey]; // 챗방 유저리스트  	
-			  console.log("챗방 추가 버튼 눌렀을 때.... 룸 유저 리스트 값은??" + roomUserList);		
 			  roomUserName = [curName]; // 챗방 유저 이름 
 			  roomId = '@make@' + curUserKey +'@time@' + yyyyMMddHHmmsss();
         	 
-        	  var arrAddUserList = Array.prototype.slice.call($('#ulUserList li'));
-        	 
-        	  console.log("챗방 생성시...잡히는 유저의 수는??" + arrAddUserList.length);
-				        	 
+        	  var arrAddUserList = Array.prototype.slice.call($('#ulUserList li'));	 
         	  arrAddUserList.forEach(cbArrayForEach);
            }
 
@@ -1567,13 +1543,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
         	  //체크 표시 제거 하기
             	 $(item).find("#userChecked").addClass("hidden"); 
         	  	item.addEventListener('click',userSelected); 
-        	 
     	  } 		
 
 
           function userSelected(){
-        	 
-      	  	console.log("click 펑션 타나요??");
       	  if(Array.prototype.slice.call(this.classList).indexOf('user-selected') == -1){ 
           	 
           	  this.classList.add('user-selected'); 
@@ -1624,8 +1597,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
           /** * 두번째 탭 채팅방 목록리스트 호출 */
   		function loadRoomList(uid) {
-  	  		console.log
-  			
 			var ulRoomList = document.getElementById('ulRoomList');
 			//var curUserKey = $('#curUserKey').val();			
 			var roomRef = database.ref('RoomsByUser/'+ uid);	
@@ -1667,7 +1638,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
   	  		}
 
   		function onRoomListClick(event){			
-  				
   				$("#chattingRoomIn").removeClass("hidden");
   				$("#chattingList").addClass("hidden");
   			
@@ -1681,7 +1651,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
   			roomTitle = event.getAttribute('data-roomTitle'); 
   			roomUserList = event.getAttribute('data-roomUserList').split('@spl@'); // 챗방 유저리스트  			
   			roomUserName = event.getAttribute('data-roomUserName').split('@spl@'); // 챗방 유저 이름 
-  			openChatRoom(roomTitle);   
+  			openChatRoom(roomTitle, roomUserList.length);   
 
           
   			// 메세지 화면 이동 
