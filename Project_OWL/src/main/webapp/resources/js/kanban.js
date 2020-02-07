@@ -232,9 +232,11 @@ function initKanban(projectIdx){
 
 
 		 		 
-		 			$(".InsertIssueBtn").on("click", function (event) {		 							 				
+		 			$(".InsertIssueBtn").on("click", function (event) {
 		 				
-		 				if($('#issueTitle').val() == ""){
+ 			        	var projectAuth = $('#getAuthority').val();
+		 				
+ 			        	if($('#issueTitle').val() == ""){
 		 					warningAlert("제목을 작성해주십시오");
 		 					return; 
 		 				}
@@ -242,8 +244,6 @@ function initKanban(projectIdx){
 		 					warningAlert("내용을 작성해주십시오");
 		 					return; 
 		 				}	
-		 				
-		 				
 		 				
 		 				
 		 			    let formData = new FormData();
@@ -257,7 +257,8 @@ function initKanban(projectIdx){
 		 			    formData.append('labelIdx', $('#labelIdx').val());
 		 			    formData.append('dueDate', $('#datepicker-autoclose').val());
 		 			    formData.append('colIdx', '-1');
-		 			    
+		 			    formData.append('authority', projectAuth);
+
 		 			    $.each($("#multipartFiles")[0].files, function(i, file) {
 		 			    	formData.append('multipartFiles', file);
 		 			    }); 
@@ -278,10 +279,10 @@ function initKanban(projectIdx){
 		 			        success: function (data) {
 		 			        	
 		 			        	console.log("event 값은???~~~~~~~~~~~~~~~" + $('#getAuthority').val());
-		 			        	var projectAuth = $('#getAuthority').val();
+
 		 			        	if(projectAuth == 'ROLE_PROJECTMEMBER'){ // 이슈 컨펌. pm 에게 보내는 경우...
 		 			        		sendNoticePushToOne(pmemail, curName+"님이 이슈 생성", istitle);
-		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssueToPm", pmemail, data.issueIdx);
+		 			        		pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssueToPm", pmemail, data.issueIdx, "topm");
 		 			      
 
 		 			        	}else{// 이슈 생성 알림
@@ -289,16 +290,17 @@ function initKanban(projectIdx){
 		 			        		pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle, "kanbanIssue", data.issueIdx);
 		 			        	}
 		 			        	
-	 			        		
-	 			        		
-	 			        		
+
 		 	 		        	if(data != null){
 		 			        		successAlert("Issue 추가 완료");
-		 			        		addKanbanIssue('-1', data);
+		 			        		//addKanbanIssue('-1', data);
+		 			 				setKanbanData();
+		 			 				setChageView("kanban");
+
+		 			        		
+		 			        		
 		 			        		$('#addIssueModal').modal("hide");
-		 			        		
-		 			        		
-		 			        		
+
 		 			        	}else{
 		 			        		errorAlert("Issue 추가 실패");
 		 			        	}
@@ -498,7 +500,7 @@ function addReply(creator) {
 				success : function(data) {
 					arrSelectedUserEmail.forEach(function(item, index){
 						sendNoticePushToOne(item, "<" + curName + "님의 멘션>", $('#replycontent').val());
-			        	pushNoticeToOne(currentProjectIdx,currentProjectName, curName + "언급하였습니다.", "mention", item, $('#issueIdxNum').val());
+			        	pushNoticeToOne(currentProjectIdx,currentProjectName, curName + "언급하였습니다.", "mention", item, $('#issueIdxNum').val(), "");
 					})
 
 					$(".emoji-wysiwyg-editor").empty();

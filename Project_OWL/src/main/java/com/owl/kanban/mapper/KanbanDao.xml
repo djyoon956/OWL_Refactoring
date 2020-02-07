@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT i.PROJECTIDX, i.ISSUETITLE, i.ISSUEIDX, i.ASSIGNED, M.NAME, i.ISSUEPROGRESS,i.duedate ,i.prioritycode, i.colidx, i.labelidx, L.LABELNAME, L.LABELCOLOR
 		FROM ISSUE I LEFT JOIN label l on i.projectidx = l.projectidx and I.LABELIDX = L.LABELIDX 
 					  LEFT JOIN owl.member M ON I.ASSIGNED = M.EMAIL
-		where i.projectidx=#{projectIdx} order by ordernum
+		where i.projectidx=#{projectIdx} AND (I.ISSUEPROGRESS = "OPEN" OR I.ISSUEPROGRESS = "CLOSED") order by ordernum
 	</select>
 	
 	<select id="getIssuebyIssueIdx" resultType="com.owl.kanban.dto.Issue">
@@ -224,5 +224,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <update id="IssueRejectfromPM" parameterType="com.owl.kanban.dto.Issue">
       update issue set issueprogress = "REQUESTED", rejectreason = #{rejectreason} where issueIdx = #{issueIdx}
    </update> 
+   
+   
+   	<select id="GetcomfirmReason" resultType="String">
+		select rejectreason from issue where issueIdx=#{issueIdx}
+	</select>
+   
 	
 </mapper>

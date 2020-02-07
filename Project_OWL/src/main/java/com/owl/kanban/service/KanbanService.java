@@ -35,15 +35,13 @@ public class KanbanService {
 
 	@Transactional
 	public Issue insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
-		System.out.println("insertIssue service in");
-		System.out.println(issue.getDueDate());
+
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		Issue colList = null;
 		try {
 		
 			result = dao.insertIssue(issue) > 0 ? true : false;
-			//System.out.println(multipartFiles.size());
 			
 			if (multipartFiles.size() > 0) 
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
@@ -60,7 +58,6 @@ public class KanbanService {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
 		} 
 		
-		System.out.println("service colist : " + colList);
 		
 		return colList;
 	}
@@ -674,6 +671,29 @@ public class KanbanService {
 			System.out.println("나오니?????????????");
 			System.out.println(issue.getProjectIdx());
 			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return check;
+	}
+	
+	
+	
+	public String GetcomfirmReason(int issueIdx){
+		KanbanDao dao = getKanbanDao();
+
+		
+		System.out.println("GetcomfirmReason in controller");
+		String check = null;
+		try {
+			check = dao.GetcomfirmReason(issueIdx);
+			System.out.println("뭐죠????????????????");
+			System.out.println(check);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
