@@ -53,13 +53,13 @@
                          <div class="row">
                            <div class="col-11">
                             <ul class="m-4 list-style-none" id="issueDetailFiles">
-                              <li class="mb-2" style="font-size: 16px">
-                                <!--   <i class="far fa-save"></i><a href="#" class="d-inline-block">&nbsp;&nbsp;<span> 어쩌구.txt</span></a> -->
-                                <!--  <i class='far fa-times-circle font-weight-bold ml-1' style='cursor: pointer;' onclick= 'deleteIssueFile()'></i> -->
+<!--                               <li class="mb-2" style="font-size: 16px">
+                                  <i class="far fa-save"></i><a href="#" class="d-inline-block">&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
+                                 <i class='far fa-times-circle font-weight-bold ml-1' style='cursor: pointer;' onclick= 'deleteIssueFile()'></i>
                                </li>
                                <li class="mb-2" style="font-size: 16px">
                                   <a href="#"><i class="far fa-save"></i>&nbsp;&nbsp;<span> 어쩌구.txt</span></a>
-                               </li>
+                               </li> -->
 
                             </ul>
                             <input type="file" name="multipartFiles" id="multipartFilesIssueEdit" multiple="multiple" class="editIssueFileBtn hidden">
@@ -78,15 +78,15 @@
                             <a data-toggle="collapse" data-parent="#kanbanAccordion" href="#kanbanActivityBox" aria-expanded="true" aria-controls="kanbanActivityBox">
                                 <h5 class="mb-0">
                                     <i class="fas fa-bars mr-2" aria-hidden="true"></i>
-                                    <span id="issueDetailActivityCount">Activity (4)</span>
+                                    <span id="issueDetailActivityCount"><!-- Activity (4) --></span>
                                 </h5>
                             </a>
                         </div>
                         <div id="kanbanActivityBox" class=" collapse multi-collapse" >
                             <ul class="timeline w-100" id="issueDetailActivity">
-                                <li>
+<!--                                 <li>
                                     <p> Crystal opened this issue 1/11</p>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
 							   		<button class="btn btn-primary" onclick="editIssueAssignedOk()">save</button>
 							    </div>
 							</div>
-							<span id="issueDetailAssignees">Chloe</span>
+							<span id="issueDetailAssignees"><!-- Chloe --></span>
 							</div>
 							<div class="col-2">
 								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="assignListEditview()"></i>
@@ -160,7 +160,7 @@
 							   		<button class="btn btn-primary" onclick="editIssueLabelOk()">save</button>
 							    </div>
 							</div>
-							<span id="issueDetailLabel"  style="padding-right:7px; padding-left:7px; " class="badgeIcon">Dev</span>
+							<span id="issueDetailLabel"  style="padding-right:7px; padding-left:7px; " class="badgeIcon"><!-- Dev --></span>
 							</div>
 							<div class="col-2">
 								<i class="fas fa-cog font-16 flot-right ml-1 editViewBtn text-muted" style="cursor: pointer" onclick="labelListview()"></i>
@@ -190,7 +190,7 @@
 							   		<button class="btn btn-primary" onclick="editIssuePriorityOk()">save</button>
 							    </div>
 							</div>
-							<span id="issueDetailPriority">high</span>
+							<span id="issueDetailPriority"><!-- high --></span>
 							
 							</div>
 							<div class="col-2">
@@ -215,7 +215,7 @@
 							   		<button class="btn btn-primary" onclick="editIssueDueDateOk()">save</button>
 							    </div>
 							</div>
-							<span id="issueDetailDueDate">2020-01-02</span>
+							<span id="issueDetailDueDate"><!-- 2020-01-02 --></span>
 							
 							</div>
 							<div class="col-2">

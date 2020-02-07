@@ -134,18 +134,22 @@ public class KanbanRestController {
 							, @RequestParam(value = "dueDate", required = false) String dueDate
 							, @RequestParam(value = "multipartFiles", required = false) List<MultipartFile> multipartFiles
 							, @RequestParam(value = "colIdx") int colIdx
+							, @RequestParam(value = "authority") String authority
 							, Principal principal, HttpServletRequest request) {	
-
+		
 		Issue issue = new Issue();
 		issue.setProjectIdx(projectIdx);
 		issue.setIssueTitle(issueTitle);
 		issue.setContent(content);
 		issue.setCreator(MemberHelper.getMemberEmail(principal, request.getSession()));
-		issue.setIssueProgress(IssueProgressType.OPEN);
-		//issue.setIssueProgress(IssueProgressType.REQUESTED);
-		
 		issue.setColIdx(colIdx);
 		issue.setOrderNum(orderNum);
+		
+		if(authority.equals("ROLE_PM")) {
+			issue.setIssueProgress(IssueProgressType.OPEN);
+		}else {
+			issue.setIssueProgress(IssueProgressType.REQUESTED);
+		}
 		if(!priorityCode.isEmpty())
 			issue.setPriorityCode(PriorityType.valueOf(priorityCode));
 		if(!assigned.isEmpty())
@@ -478,6 +482,17 @@ public class KanbanRestController {
 		System.out.println("IssueRejectfromPM in controller");
 		boolean check = service.IssueRejectfromPM(is);
 		
+		return check;
+	}
+	
+	
+	@RequestMapping("GetcomfirmReason.do")	
+	public String GetcomfirmReason(int issueIdx){
+		
+		String check = service.GetcomfirmReason(issueIdx);
+		System.out.println("IssueRejectfromPM in controller");
+
+		System.out.println(check);
 		return check;
 	}
 	

@@ -37,6 +37,7 @@ public class Issue {
 	//ui용 
 	private String labelName;
 	private String labelColor;
+	private String authority; //권한
 	
 	public String getDueDate() {
 		if (dueDate == null)

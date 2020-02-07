@@ -77,8 +77,8 @@
 }
 
 .issueTitle {
-	font-family: "Nunito Sans", sans-serif;
-	font-size: 16px;
+	font-family: "Gothic A1", sans-serif;
+	font-size: 14px;
 	font-weight: 500;
 }
 
@@ -163,4 +163,47 @@
 .kanbanViewBtn.active {
 	background: #326295;
 	color: white;
+}
+
+
+
+
+
+
+
+
+
+.link-gray {
+    color: #586069!important;
+}
+
+.link-gray:hover {
+    color: #326295!important;
+}
+
+.newLabelSection {
+	padding: 10px;
+	background-color: #ebedf0;
+	border: 1px solid #dcdee0;
+}
+
+.labelList {
+	margin-bottom: 5px;
+}
+
+
+.badgeIconinList {
+	display: inline-block;
+	font-size: large;
+	font-weight: bold;
+	padding: 3px;
+	color: black;
+	margin-right: 7px;
+	border-radius: 2px;
+}
+
+#labelList {
+ padding : 10px 60px 10px 50px;
+ 	overflow-y : auto;
+	max-height: 300px;
 }

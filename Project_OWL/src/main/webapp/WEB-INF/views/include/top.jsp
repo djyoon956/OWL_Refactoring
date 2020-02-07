@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" 	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo|Gamja+Flower|Yeon+Sung&display=swap" rel="stylesheet">
@@ -136,7 +136,8 @@
 	        	$('#confirmIssueModal').modal("hide");
 
         	    sendNoticePushToOne($('#comfirmCreator').text(), $('#comfirmTitle').text()+ "이슈생성은", "PM이 거절 하였습니다.")
-	        	pushNoticeToOne($('#projectissueIdx').val(),$('#projectName').val(), $('#comfirmTitle').text(), "kanbanIssueToPm", $('#comfirmCreator').text(), $('#comfirmissueIdx').val());
+	        	pushNoticeToOne($('#projectissueIdx').val(),$('#projectName').val(), $('#comfirmTitle').text()+ " 이슈가 반려되었습니다.", "kanbanIssueToPm", $('#comfirmCreator').text(), $('#comfirmissueIdx').val(), "tomember");
+
 			},error : function() {
 				console.log('IssueRejectfromPM error');
 				}
@@ -181,9 +182,8 @@
 
 	
 	//알람 이슈체크 이슈 컨펌할때 모달창 띄우는 함수 
-	function comfirmIssueModal(issueidx, projectName) {
-console.log('뭐니?');
-console.log(projectName);
+	function comfirmIssueModal(issueidx, projectName, flag) {
+
 		$.ajax({
 			url : "GetIssueDetail.do",
 			type: "POST",
@@ -197,7 +197,7 @@ console.log(projectName);
  				$.each (data.files, function(index, element) {
 					files += element.fileName + "  ";
 				}); 
-				
+
 				$('#comfirmTitle').text(data.issueTitle);
 				$('#comfirmIdx').html('<input type="hidden" id="comfirmissueIdx" value="'+data.issueIdx+'"><input type="hidden" id="projectissueIdx" value="'+data.projectIdx+'"><input type="hidden" id="projectName" value="'+projectName+'">');		
 				$('#comfirmTitle').text(data.issueTitle);
@@ -208,13 +208,32 @@ console.log(projectName);
 				$('#comfirmLabel').html(labelname);
 				$('#comfirmPriority').text(data.priorityCode);
 				$('#comfirmDuedate').text(data.dueDate); 
+				
+ 				if(flag == "tomember") {
+					$('#rejectreason').addClass("hidden");
 
-				}
-			})
+					$.ajax({
+						url : "GetcomfirmReason.do",
+						data : {issueIdx : $('#comfirmissueIdx').val()},
+						success : function(data) {
+							console.log('GetcomfirmReason in');
+							console.log(data);
+						$('#rejectreasonadd').text(data);
+						$('#comfirmBtn').hide();
+						$('#rejectBtn').hide();
+						
+						},error : function() {
+						console.log('error in');
+						
+						}
+						
+					});
+				};
+			}
 		
-		};
+		});
 	
-
+	}
 </script>
 <style>
 
@@ -766,7 +785,7 @@ display: block;
                                     
                                    <div class="card">
                                         <div class="card-header">
-                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree8" aria-expanded="false" aria-controls="collapseThree7">이슈체크 <span id="numOfMentionBoard" class="badge badge-pill gradient-1">0</span><i class="fa fa-chevron-right chevronIcon" style="float:right"></i></h5>
+                                            <h5 class="mb-0 collapsed clickIcon" data-toggle="collapse" data-target="#collapseThree8" aria-expanded="false" aria-controls="collapseThree7">이슈체크 <span id="numOfCheckBoard" class="badge badge-pill gradient-1">0</span><i class="fa fa-chevron-right chevronIcon" style="float:right"></i></h5>
                                         </div>
                                         <div id="collapseThree8" class="collapse" data-parent="#accordion-three" data-from="mention" style="line-height:2em;">
                                             <div id="issueCheckBoard" class="card-body pt-3 accordionBody">
@@ -1003,7 +1022,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from, targetIdx);
 		}
 
-		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail, targetIdx) {
+		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail, targetIdx, msg) {
 			var noticeRef = database.ref('Notices/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key;	
 
@@ -1012,10 +1031,11 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				projectIdx: projectIdx,
         	    title: title,
         	    creatFrom: from,
-        	    targetIdx : targetIdx
+        	    targetIdx : targetIdx,
+        	    msg : msg
         	  });
       	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail, targetIdx);
+			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail, targetIdx, msg);
 		}
 
 
@@ -1035,7 +1055,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
 		}	 */
 
-		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email, targetIdx){
+		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email, targetIdx, msg){
 			var myRootRef = database.ref();
       	    myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
       		  data.forEach(function(childSnapshot) {
@@ -1047,7 +1067,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			        	    title: title,
 			        	    readOk : 'false',
 			        	    creatFrom: from,
-			        	    targetIdx : targetIdx
+			        	    targetIdx : targetIdx,
+			        	    msg : msg
 			        	  });;
  		 		});
       	      })
@@ -1195,6 +1216,19 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						
 						
 						});
+
+					noticesByUserRef.orderByChild('creatFrom').equalTo('kanbanIssueToPm').once('value', function(data){
+						var numOfUnread = 0;						
+						data.forEach(function(childsnapshot){  
+							var childVal = childsnapshot.val();                               
+                                if(childVal.readOk == 'false'){
+                                	numOfUnread++;
+                                    }
+							})
+						$('#numOfCheckBoard').html(numOfUnread);
+						
+						
+						});
 					
 
 			}
@@ -1273,12 +1307,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 							noticeTags	 += getNoticeFormTag(noticeValue.projectIdx, noticeValue.targetIdx, linkElement, "issueMention");	              	 
 							$("#mentionBoard").append(noticeTags);
 						}else if(noticeValue.creatFrom == 'kanbanIssueToPm'){
-							console.log('----------------------1');
-							
-							console.log(data.projectName);
 
-							console.log('-----------------------2');
-							noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+", \""+data.projectName+"\")'>" +linkElement+ "</a>"
+							noticeTags	 += "<a href='#' data-toggle='modal' data-target='#confirmIssueModal' onclick='comfirmIssueModal("+noticeValue.targetIdx+", \""+data.projectName+"\", \""+noticeValue.msg+"\")'>" +linkElement+ "</a>"
 											+  '</div>';  
 							$("#issueCheckBoard").append(noticeTags);			
 						}
