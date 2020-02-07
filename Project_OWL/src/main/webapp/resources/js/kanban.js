@@ -803,6 +803,7 @@ function setKanbanDetail(issueIdx){
 						$("#issueDetailDueDate").text(data.dueDate);
 					else
 						$("#issueDetailDueDate").text("none");
+					console.log("data.issueProgress",data.issueProgress);
 					if(data.issueProgress == 'CLOSED')
 						$("#issueClosedChk").text('Reopen issue');
 					else 
@@ -818,6 +819,7 @@ function setKanbanDetail(issueIdx){
 
 
 function closeIssue(issueIdx,flag) {
+	 console.log("in closeIssue");
 	   $.ajax({
            url:"CloseIssue.do",
            method:"POST",
@@ -829,6 +831,8 @@ function closeIssue(issueIdx,flag) {
         	} else if(flag == "move"){
         	//setChageView("kanban");
         	}
+           }, error : function(){
+        	   console.log("close issue error");
            }
         });  		
 }
@@ -1565,21 +1569,20 @@ function mentionSearch() {
 			        	console.log(ui);
 						let target = $(ui.item).attr("id").replace("Issue","");
 						let columnIdx = $(this).parent().attr("id").replace("Column","");
+						
 						let issues = [];
-						console.log(target);
 						$.each($(this)[0].children, function(){
 							issues.push($(this).attr("id").replace("Issue","").trim())
 						})
-						console.log("columnIdx");
-						console.log(columnIdx);
+
 						if(issues.length == 0)
 							return;
-						
+
 						$.ajaxSettings.traditional = true; 
 						$.ajax({
 							type : "POST",
 							url : "MoveIssue.do",
-							data : { 	projectIdx :  currentProjectIdx
+							data : { projectIdx :  currentProjectIdx
 										, targetIssueIdx : target
 										, columnIdx : columnIdx
 										, issues : issues },
@@ -1590,11 +1593,6 @@ function mentionSearch() {
 								console.log("error move issue");
 							}
 						})
-						if (columnIdx == '-99'){
-							closeIssue(target,"move");
-						}
-						/*if (columnIdx == '-1')
-							reOpenIssue(target,"move");*/
 				       }        
 			     }).disableSelection();
 				setIssueData();

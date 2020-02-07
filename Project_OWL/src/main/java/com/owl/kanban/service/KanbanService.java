@@ -33,44 +33,55 @@ public class KanbanService {
 	@Autowired
 	private SqlSession sqlSession;
 
+	/**
+	 * issue, issue file insert
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param issue
+	 * @param multipartFiles
+	 * @param uploadPath
+	 * @return Issue
+	 */
 	@Transactional
 	public Issue insertIssue(Issue issue, List<MultipartFile> multipartFiles, String uploadPath) {
-		System.out.println("insertIssue service in");
-		System.out.println(issue.getDueDate());
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		Issue colList = null;
 		try {
-		
 			result = dao.insertIssue(issue) > 0 ? true : false;
-			//System.out.println(multipartFiles.size());
-			
-			if (multipartFiles.size() > 0) 
+			if (multipartFiles.size() > 0)
 				issue.setFiles(insertIssueFiles(dao, issue.getCreator(), issue.getProjectIdx(), issue.getIssueIdx(), multipartFiles, uploadPath));
-						
+
 			dao.updateAllIncrease(issue.getIssueIdx(), issue.getProjectIdx());
 
-			if(result) {
+			if (result)
 				colList = dao.getIssuebyIssueIdx(issue.getIssueIdx());
-				
-			}
 
 			insertLog(issue.getIssueIdx(), "Opened this issue", issue.getCreator(), dao);
 		} catch (Exception e) {
 			System.out.println("Trans 예외 발생 : " + e.getMessage());
-		} 
-		
-		System.out.println("service colist : " + colList);
-		
+		}
+
 		return colList;
 	}
 
+	/**
+	 * issue file insert, 실 업로드
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param dao
+	 * @param email
+	 * @param projectIdx
+	 * @param issueIdx
+	 * @param multipartFiles
+	 * @param uploadPath
+	 * @return List<File>
+	 */
 	private List<File> insertIssueFiles(KanbanDao dao, String email, int projectIdx, int issueIdx, List<MultipartFile> multipartFiles, String uploadPath) {
 		List<File> files = new ArrayList<File>();
 
 		multipartFiles.forEach(multipartFile -> {
 			String fileName = multipartFile.getOriginalFilename();
-			System.out.println(fileName);
 			try {
 				UploadHelper.uploadFileByProject(uploadPath, "file", projectIdx, fileName, multipartFile.getBytes());
 			} catch (IOException e) {
@@ -82,7 +93,7 @@ public class KanbanService {
 			file.setFileName(fileName);
 			file.setWriter(email);
 			file.setFileSize(String.valueOf(multipartFile.getSize()/1024));
-			System.out.println("file값" +file.toString());
+
 			try {
 				dao.insertIssueFile(file);
 			} catch (Exception e) {
@@ -311,8 +322,18 @@ public class KanbanService {
 		return issue;
 	}
 	
+	/**
+	 * 칸반보드 내에서 이슈 이동할 때 orderNum,  move, reopen, close 구분 하여 업데이트
+	 * @author 윤다정
+	 * @since 2020/02/07
+	 * @param projectIdx
+	 * @param targetIssueIdx
+	 * @param columnIdx
+	 * @param issues
+	 * @param email
+	 * @return boolean
+	 */
 	public boolean updateMoveIssue(int projectIdx, int targetIssueIdx, int columnIdx, int[] issues, String email) {
-		System.out.println("in service updateMoveIssue");
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		
@@ -322,22 +343,26 @@ public class KanbanService {
 			for (int i = 0; i < issues.length; i++) {
 				Map<String, Object> parameters = new HashMap<>();
 				parameters.put("colIdx", columnIdx);
-				System.out.println("colIdx : "+ columnIdx);
-				System.out.println("index : "+ i);
 				parameters.put("index", i);
-				System.out.println("issueIdx : "+ issues[i]);
 				parameters.put("issueIdx", issues[i]);
-	
 				dao.updateMoveIssue(parameters);
 			}
 			
 			if (oldColIdx != columnIdx) {
-				System.out.println("-------------------------");
-				String log = "Moved this from " + dao.getColumnName(projectIdx, oldColIdx) + " to " + dao.getColumnName(projectIdx, columnIdx);
-				System.out.println(log);
+				String log = "";
+				if (oldColIdx == -99) { // reopen
+					dao.reopenIssue(issue.getIssueIdx(), columnIdx);
+					log = "ReOpen to " + dao.getColumnName(projectIdx, columnIdx);
+				} else if (columnIdx == -99) { // close
+					dao.closeIssue(issue.getIssueIdx());
+					log = "Close this ";
+				} else { // move
+					log = "Moved this from " + dao.getColumnName(projectIdx, oldColIdx) + " to " + dao.getColumnName(projectIdx, columnIdx);
+				}
 				insertLog(targetIssueIdx, log, email, dao);
 			}
-			result=true;
+
+			result = true;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -369,55 +394,58 @@ public class KanbanService {
 	public boolean closeIssue(int issueIdx, String email) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-			try {
-				result = dao.closeIssue(issueIdx) > 0 ? true : false;
-				
-				insertLog(issueIdx, "Closed this", email, dao);
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+		try {
+			result = dao.closeIssue(issueIdx) > 0 ? true : false;
+
+			insertLog(issueIdx, "Closed this", email, dao);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 
 		return result;
 	}
-	
 	
 	public boolean reopenIssue(int issueIdx, String email) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
-			try {
-				result = dao.reopenIssue(issueIdx) > 0 ? true : false;
-				
-				insertLog(issueIdx, "Reopen this", email, dao);
-				System.out.println("reopenIssue in");
-				System.out.println("result" + result);
-
-			} catch (ClassNotFoundException | SQLException e) {
-				e.printStackTrace();
-			}
+		try {
+			result = dao.reopenIssue(issueIdx, -1) > 0 ? true : false;
+			insertLog(issueIdx, "Reopen this", email, dao);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 
 		return result;
 	}
 	
+	/**
+	 * IssueLog 테이블 insert
+	 * @author 윤다정
+	 * @since 2020/01/29
+	 * @param issueIdx
+	 * @param log
+	 * @param email
+	 * @param dao
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	private void insertLog(int issueIdx, String log, String email, KanbanDao dao) throws ClassNotFoundException, SQLException {
 		dao.insertIssueLog(issueIdx, log, email);
 	}
-	
-	
+
 	public Reply insertReply(Reply reply) {
 		KanbanDao dao = getKanbanDao();
 		boolean result = false;
 		Reply re = new Reply();
-		
+
 		try {
 			result = dao.insertReply(reply) > 0 ? true : false;
 			System.out.println(reply.getIssueRlyIdx());
-			
-			if(result) {
+
+			if (result) {
 				re = dao.getReply(reply.getIssueRlyIdx());
 				re.setIssueRlyIdx(reply.getIssueRlyIdx());
 			}
-			
-			System.out.println("date ?" + re);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -427,7 +455,6 @@ public class KanbanService {
 	}
 	
 	public boolean deleteReply(int issuerlyidx) {
-
 		boolean result = false;
 		KanbanDao dao = getKanbanDao();
 		try {
