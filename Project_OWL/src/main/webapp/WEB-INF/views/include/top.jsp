@@ -1345,36 +1345,27 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 	      //유저가 채팅기능 버튼을 눌렀을 때 작동하는 콜백 함수... 목적은.. firebase database 유저 정보저장(메세지 읽기, 쓰기를 위해 특정키 부여 누군인지 구분하기 위해 필요)
 		  //그리고 이미 디비에 있으면...키 값을 불러서 해당 유저와 관련된 정보를 보여 주는 데 활용 할 수 있다...    
           function writeUserData(name, email, imageUrl) {
-		       return new Promise(function(resolve){
-
+		       return new Promise(function(resolve){//유저의 채팅방 설정에 유저키가 필요하므로 프라미스를 이용해서 먼저 유저키를 가져 오고 then 을 이용 유저의 채팅방 설정.
 		        	  var myRootRef = database.ref();
-		        	  myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
-		          	    //console.log('현재 접속한 유저는 채팅 경험이 있나요??	 :' +email+ " / "+ data.key + " / " + data.val() + " / " +data.numChildren());		          	    
+		        	  //SQL에서 where 조건을 줘서 select 하는 것이랑 비슷한 파이어베이스 쿼리 쿼리
+		        	  myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){		          	   		          	    
 						var myResult = data.val();
 						var userKey;
-						if(myResult == null){
-							//console.log("신규회원 이메일 등록을 통한 유아디 생성과.. 유저 데이터 등록 필요");
-							
-							var newUser = database.ref('Emails/').push({email :email});
-							 userKey = newUser.key;
-							//console.log("새로 들어온 유저의 키 값은 ??"  + userKey);
-							database.ref('Users/' + newUser.key).set({
+						if(myResult == null){//신규회원 이메일 등록을 통한 유아디 생성과.. 유저 데이터 등록 필요														
+							var newUser = database.ref('Emails/').push({email :email});//push를 하면 해당 트리에 unique key 자동 생성
+							 userKey = newUser.key;							
+							database.ref('Users/' + newUser.key).set({//위에서 생성 된 키를 이용해서 Users 에 개별 유저 정보 저장
 				        	    userName: name,
 				        	    email: email,
 				        	    profile_picture : imageUrl
-				        	  });
-				        	 
-							}else{
-								//console.log("이미디비에 있는 회원이므로 키값을 뽑아내서... 채팅에 활용");
+				        	  });				        	 
+							}else{//이미 파이어베이스 디비에 있는 회원이므로 키값을 뽑아내서... 채팅 정보 저장에 활용								
 								data.forEach(function(childSnapshot) {
-									userKey = childSnapshot.key;
-		              				//console.log("이미 있는 회원의 키 값 뽑아 보자 " + userKey);	              				
+									userKey = childSnapshot.key;		              				            				
 		         		 		});
-							}
-						//console.log("라이트유저 데이타 펑션에서 유저 키 함 찍어 볼까??>>>"+userKey);
+							}						
 						resolve(userKey);
-		          	});
-			         
+		          	});			         
 			     });
         	}
 
@@ -2020,7 +2011,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
     			$('#onCreateClick').click(onCreateClick);       			
     			//공지사항 아코디언 오픈시 이벤트 리스너....
     			$('#collapseOne4, #collapseTwo5, #collapseThree6, #collapseThree7').on('shown.bs.collapse', saveReadNotice);
-
+    			//채팅방 메세지 입력창 엔터를 누를 경우 메세지 저장 함수 리스너 달기
+    			$("#chattingRoomIn .emoji-wysiwyg-editor:first").keydown(pressEnter);
 				}
 
 
@@ -2028,22 +2020,18 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
           
 
-			// 초기화 를 위한 온로드 함수... 같은 프로제트에 있는 유저목록과 프로젝트 채팅방을 만들기 위한 정보를 디비에서 뽑아낸다.	
+		  // 초기화 를 위한 온로드 함수... 같은 프로제트에 있는 유저목록과 프로젝트 채팅방을 만들기 위한 정보를 디비에서 뽑아낸다.	
           $(function(){           
 			var curUserKey;
-
-			$("#chattingRoomIn .emoji-wysiwyg-editor:first").keydown(pressEnter);
-		
-			
+			//현재 접속한 유저의 파이어베이스 유저키 값을 불러와 채팅방 기본정보 설정..					
             writeUserData(curName, curEmail, curProfilePic).then(function(resolvedData){
 				console.log("현재 사용자의 user 키는용???>>" + resolvedData + "<<<<<");
-                $('#curUserKey').val(resolvedData);
-                curUserKey = $('#curUserKey').val();
-                window.curUserKey = resolvedData;
+                $('#curUserKey').val(resolvedData);//html 태그에 
+                curUserKey = $('#curUserKey').val();//요 함수 내에세 활용하기 위한 변수 정의
+                window.curUserKey = resolvedData;//윈도우 객체에 담아 다른 함수에서 활욜
                 owlInit(resolvedData);
-    
-               
-            }); 
+                  
+              }); 
 
             //같은 프로젝트에 있는 유저 정보를 뽑아오는 아젝스...요걸로 채팅 가능한 유저들 리스트 화면 뿌려 준다.
       		$.ajax({
