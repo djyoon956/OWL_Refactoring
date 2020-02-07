@@ -13,6 +13,8 @@ function initProjcet(email, projectIdx, projectName, projectColor,projectStartDa
 	currentProjectStartDate = projectStartDate;
 	currentProjectEndDate = projectEndDate;
 	
+	initProjectController();
+	
 	initNotice();
 	initKanban(projectIdx);
     initDashBoard(currentProjectIdx);
