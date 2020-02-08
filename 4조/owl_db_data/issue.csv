@@ -1,0 +1,104 @@
+"issueidx";"issuetitle";"content";"startdate";"duedate";"issueprogress";"prioritycode";"assigned";"creator";"ordernum";"labelidx";"colidx";"projectidx"
+1;"시나리오 작성";"아이디어 회의에 따른 시나리오 작성";"2020-02-06 19:13:01";"2019-12-31";"CLOSED";"HIGH";"jelee1223@naver.com";"jelee1223@naver.com";3;4;2;1
+4;"PPT OUTLINE 설정";"<p>PPT 템플릿 작성</p>";"2020-02-06 19:15:41";"2020-01-02";"CLOSED";"LOW";"nyangkk@naver.com";"jelee1223@naver.com";1;4;2;1
+5;"로그인 구현";"<p>로그인 Security</p>";"2020-02-06 19:16:58";"2020-01-06";"CLOSED";"HIGH";"skisk1124@naver.com";"jelee1223@naver.com";9;1;-99;1
+6;"회원가입 구현";"<p>회원가입 Security</p>";"2020-02-06 19:17:27";"2020-01-07";"CLOSED";"HIGH";"djyoon956@gmail.com";"jelee1223@naver.com";3;1;-99;1
+7;"클래스 다이어그램 작성";"클래스 다이어그램";"2020-02-06 19:19:30";"2020-01-03";"CLOSED";"LOW";"nyangkk@naver.com";"djyoon956@gmail.com";10;4;-99;1
+8;"웹소켓 설정";"<p>Websocket 설정 &amp; maven 추가</p>";"2020-02-06 19:21:29";"2020-01-10";"OPEN";"MEDIUM";"djyoon956@gmail.com";"djyoon956@gmail.com";1;1;3;1
+9;"아이디 & 비밀번호 찾기";"아이디 저장까지 완료해야 함";"2020-02-06 19:23:41";"2020-01-08";"CLOSED";"LOW";"skisk1124@naver.com";"djyoon956@gmail.com";7;1;-99;1
+10;"웹소켓 채팅 목록 구현";"<p>채팅 멤버 목록을 위한 기능 구현</p>";"2020-02-06 19:26:55";"2020-01-12";"CLOSED";"MEDIUM";"djyoon956@gmail.com";"nyangkk@naver.com";6;1;-99;1
+11;"웹소켓 채팅방 구현";"<p>채팅방 view &amp; 기능 구현</p>";"2020-02-06 19:27:51";"2020-01-16";"CLOSED";"HIGH";"nyangkk@naver.com";"nyangkk@naver.com";2;1;-99;1
+12;"웹소켓 PPT 작성";"기존 템플릿에 내용 추가";"2020-02-06 19:28:42";"2020-01-15";"CLOSED";"URGENT";"djyoon956@gmail.com";"nyangkk@naver.com";8;4;-99;1
+13;"웹소켓 알람 구현";"알람 기능 구현";"2020-02-06 19:30:24";"2020-01-14";"CLOSED";"MEDIUM";"jelee1223@naver.com";"skisk1124@naver.com";1;1;-99;1
+14;"공모전 1차 발표";"<p>PPT 제출</p>";"2020-02-06 19:31:37";"2020-01-18";"CLOSED";"URGENT";"nyangkk@naver.com";"skisk1124@naver.com";11;3;-99;1
+15;"파이어베이스 개념 정리";"팀원들이 쉽게 이해할 수 있도록 문서 정리";"2020-02-06 19:36:24";"2020-01-29";"OPEN";"URGENT";"jelee1223@naver.com";"nyangkk@naver.com";4;4;-99;1
+16;"어플 화면 VIEW 수정";"<p>파이어베이스 적용을 위한 VIEW단 수정</p>";"2020-02-06 19:37:17";"2020-01-31";"CLOSED";"LOW";"skisk1124@naver.com";"nyangkk@naver.com";2;2;2;1
+17;"파이어베이스 채팅 목록 구현";"<p>채팅 목록 구현</p>";"2020-02-07 09:41:17";"2020-02-03";"CLOSED";"MEDIUM";"jelee1223@naver.com";"jelee1223@naver.com";5;2;-99;1
+19;"파이어베이스 채팅방 구현";"<p>채팅방 기술 구현</p>";"2020-02-07 09:42:27";"2020-02-08";"OPEN";"HIGH";"nyangkk@naver.com";"jelee1223@naver.com";1;2;4;1
+20;"채팅방 내 검색창 구현";"<p>검색창 기능 구현</p>";"2020-02-07 09:43:25";"2020-02-08";"OPEN";"LOW";"skisk1124@naver.com";"jelee1223@naver.com";4;2;4;1
+21;"채팅방 내 공지사항 구현";"<p>공지사항 기능 구현</p>";"2020-02-07 09:44:03";"2020-02-08";"OPEN";"LOW";"djyoon956@gmail.com";"jelee1223@naver.com";3;2;4;1
+22;"채팅방 내 드라이브 구현";"사진, 문서, 링크 저장 기능 구현";"2020-02-07 09:46:09";"2020-02-07";"OPEN";"MEDIUM";"jelee1223@naver.com";"jelee1223@naver.com";2;2;4;1
+23;"파이어베이스 알람 구현";"<p>채팅 알람 구현</p>";"2020-02-07 09:46:38";"2020-02-10";"OPEN";"HIGH";"nyangkk@naver.com";"jelee1223@naver.com";5;2;2;1
+24;"파이어베이스 미확인 알람 누적 구현";"<p>알람 카운트 기능 구현</p>";"2020-02-07 09:48:00";"2020-02-13";"OPEN";"MEDIUM";"skisk1124@naver.com";"jelee1223@naver.com";6;2;2;1
+25;"제출할 최종 서류 제작";"<p>서류 제작</p>";"2020-02-07 09:48:41";"2020-02-19";"OPEN";"URGENT";"djyoon956@gmail.com";"jelee1223@naver.com";2;4;3;1
+26;"공모전 최종 발표";"<p>최종 발표 D-DAY</p><p><br></p>";"2020-02-07 09:49:33";"2020-02-22";"OPEN";"HIGH";"nyangkk@naver.com";"jelee1223@naver.com";3;3;3;1
+27;"파이어베이스 오류 수정";"코드 오류 수정";"2020-02-07 10:05:31";"2020-02-12";"OPEN";"URGENT";"jelee1223@naver.com";"djyoon956@gmail.com";4;2;2;1
+28;"아이디어 회의";"<p>주제 선정</p>";"2020-02-07 12:10:16";"2019-10-02";"CLOSED";"URGENT";"skisk1124@naver.com";"skisk1124@naver.com";8;5;-99;2
+29;"요구사항 명세서 작성";"<p>요구사항 명세서 작성<br></p>";"2020-02-07 12:10:54";"2019-10-04";"CLOSED";"LOW";"jelee1223@naver.com";"skisk1124@naver.com";9;5;-99;2
+30;"요구사항 정의서 작성";"<p>요구사항 정의서 작성<br></p>";"2020-02-07 12:11:26";"2019-10-04";"CLOSED";"MEDIUM";"skisk1124@naver.com";"skisk1124@naver.com";26;5;-99;2
+31;"시나리오 작성";"<p>시나리오 설정 및 서류 작성</p>";"2020-02-07 12:12:03";"2019-10-02";"CLOSED";"HIGH";"nyangkk@naver.com";"skisk1124@naver.com";11;5;-99;2
+32;"사용할 기술 정리";"<p>기술 정리 문서</p>";"2020-02-07 12:13:04";"2019-10-05";"CLOSED";"HIGH";"jelee1223@naver.com";"skisk1124@naver.com";1;5;-99;2
+33;"실시간 날씨 API 가공";"<p>날씨 API 가공<br></p>";"2020-02-07 12:13:40";"2019-10-07";"CLOSED";"HIGH";"4transparency@naver.com";"skisk1124@naver.com";12;6;-99;2
+34;"실시간 교통 API 가공";"<p>교통 API 가공<br></p>";"2020-02-07 12:14:09";"2019-10-09";"CLOSED";"HIGH";"djyoon956@gmail.com";"skisk1124@naver.com";13;6;-99;2
+35;"실시간 위치 API & 카카오맵 가공";"<p>위치 API &amp; 카카오맵 가공<br></p>";"2020-02-07 12:15:13";"2019-10-10";"CLOSED";"HIGH";"skisk1124@naver.com";"skisk1124@naver.com";2;6;-99;2
+36;"실시간 여행 정보 API 가공";"<p>여행 정보 API 가공<br></p>";"2020-02-07 12:16:04";"2019-10-11";"CLOSED";"URGENT";"nyangkk@naver.com";"skisk1124@naver.com";14;6;-99;2
+37;"공공데이터 맛집, 볼거리 API 가공";"<p>맛집, 볼거리 API 가공<br></p>";"2020-02-07 12:16:34";"2019-10-08";"CLOSED";"MEDIUM";"4transparency@naver.com";"skisk1124@naver.com";36;6;-99;2
+38;"DB 설계";"<p>ORACLE로 DB 설계</p>";"2020-02-07 12:18:48";"2019-10-05";"CLOSED";"HIGH";"jelee1223@naver.com";"skisk1124@naver.com";27;5;-99;2
+39;"부트스트랩 CSS 정리";"<p>여행에 빠지다 화면단</p>";"2020-02-07 12:19:42";"2019-10-16";"CLOSED";"MEDIUM";"4transparency@naver.com";"skisk1124@naver.com";29;7;-99;2
+40;"부트스트랩 JS 정리";"<p>자바스크립트 정리</p>";"2020-02-07 12:20:14";"2019-10-14";"CLOSED";"HIGH";"djyoon956@gmail.com";"skisk1124@naver.com";28;7;-99;2
+41;"부트스트랩 및 사용할 UI 선정";"<p>부트스트랩, TOAST UI</p>";"2020-02-07 12:21:40";"2019-10-14";"CLOSED";"URGENT";"4transparency@naver.com";"skisk1124@naver.com";38;7;-99;2
+42;"부트스트랩에 JQUERY UI 추가";"<p>AUTO COMPLETE</p>";"2020-02-07 12:28:44";"2019-10-15";"CLOSED";"LOW";"djyoon956@gmail.com";"skisk1124@naver.com";4;7;-99;2
+43;"COLOR, DATE PICKER 추가";"<p>홈페이지 구성 요소 넣기</p>";"2020-02-07 12:29:51";"2019-10-21";"CLOSED";"LOW";"nyangkk@naver.com";"skisk1124@naver.com";5;7;-99;2
+44;"10.05 회의 보고서";"<p>주제 정리에 따른 아이디어 보고서 작성</p><p>요구사항 명세서</p><p>요구사항 정의서</p>";"2020-02-07 12:32:07";"2019-10-05";"CLOSED";"LOW";"skisk1124@naver.com";"skisk1124@naver.com";6;8;-99;2
+45;"10.02 졸업 작품 프로젝트 첫 회의 보고서";"<p>졸작 프로젝트 시작 보고서</p>";"2020-02-07 12:33:29";"2019-10-02";"CLOSED";"LOW";"skisk1124@naver.com";"skisk1124@naver.com";19;8;-99;2
+46;"여행에 빠지다 홈페이지 반응형, REACT 추가";"<p>반응형, REACT 추가<br></p>";"2020-02-07 13:16:41";"2019-10-22";"CLOSED";"URGENT";"skisk1124@naver.com";"skisk1124@naver.com";35;7;-99;2
+47;"10.23 회의 보고서";"<p>BACK단 시작</p>";"2020-02-07 13:25:43";"2019-10-23";"CLOSED";"";"4transparency@naver.com";"skisk1124@naver.com";16;8;-99;2
+48;"11.01 졸업 작품 중간 발표";"<p>VIEW단 위주로 발표하기</p>";"2020-02-07 14:45:16";"2019-11-01";"CLOSED";"MEDIUM";"4transparency@naver.com";"skisk1124@naver.com";3;8;-99;2
+49;"여행 지도 표시 기능";"<p>루트 표시 기능</p>";"2020-02-07 14:46:01";"2019-10-30";"CLOSED";"LOW";"djyoon956@gmail.com";"skisk1124@naver.com";32;6;-99;2
+50;"지하철 노선도 제공 기능";"<p>급행 / 일반 CHECKBOX 기능 추가</p>";"2020-02-07 14:50:33";"2019-10-29";"CLOSED";"MEDIUM";"jelee1223@naver.com";"djyoon956@gmail.com";33;6;-99;2
+51;"버스 노선도 보기 기능 추가";"<p>전국 버스 노선도 보기 가능</p>";"2020-02-07 14:51:26";"2019-10-31";"CLOSED";"LOW";"4transparency@naver.com";"djyoon956@gmail.com";21;6;-99;2
+52;"여행 장소 공연 정보 테이블";"<p>공연 정보 데이터 제공</p>";"2020-02-07 15:08:03";"2019-11-07";"CLOSED";"MEDIUM";"djyoon956@gmail.com";"skisk1124@naver.com";10;6;-99;2
+53;"여행 장소 맛집 정보";"<p>별 4~5개 정보 및 후기 제공</p>";"2020-02-07 15:11:55";"2019-11-07";"CLOSED";"HIGH";"skisk1124@naver.com";"skisk1124@naver.com";18;6;-99;2
+54;"날씨 정보에 따른 여행 추천지 기능 구현";"ex) 비올 때 야외 수영장은 추천 리스트에서 제외";"2020-02-07 15:26:09";"2019-11-11";"CLOSED";"HIGH";"jelee1223@naver.com";"skisk1124@naver.com";40;6;-99;2
+55;"날씨에 따른 화면 변화 ";"<p>비내리면 웹 페이지도 비내림</p>";"2020-02-07 15:26:53";"2019-11-14";"CLOSED";"LOW";"nyangkk@naver.com";"skisk1124@naver.com";30;7;-99;2
+56;"일주일 날씨 정보 제공";"<p>일주일 날씨 정보</p>";"2020-02-07 15:28:02";"2019-11-15";"CLOSED";"LOW";"skisk1124@naver.com";"skisk1124@naver.com";22;6;-99;2
+57;"타임라인 기능";"<p>타임라인 추가 삭제 가능</p>";"2020-02-07 15:28:33";"2019-11-18";"CLOSED";"HIGH";"jelee1223@naver.com";"skisk1124@naver.com";23;6;-99;2
+58;"나만의 여행 루트 계획 페이지";"<p>view와 기능 구현 함께</p>";"2020-02-07 15:29:39";"2019-11-20";"CLOSED";"URGENT";"djyoon956@gmail.com";"skisk1124@naver.com";24;7;-99;2
+59;"여행 상품 결제 시스템 기능 추가";"<p>결제 시스템</p>";"2020-02-07 15:30:11";"2019-11-26";"CLOSED";"MEDIUM";"jelee1223@naver.com";"skisk1124@naver.com";39;6;-99;2
+60;"제휴사의 여행 상품 추천 제공";"<p>추천 상품 제공</p>";"2020-02-07 15:31:27";"2019-11-25";"CLOSED";"MEDIUM";"4transparency@naver.com";"skisk1124@naver.com";15;7;-99;2
+61;"해외 상품 검색 기능";"사진 확대 및 검색 기능";"2020-02-07 15:32:07";"2019-11-28";"CLOSED";"LOW";"nyangkk@naver.com";"skisk1124@naver.com";25;6;-99;2
+62;"나만의 여행 지도 만들기 기능";"카카오맵 이용하기";"2020-02-07 15:41:57";"2019-11-21";"CLOSED";"LOW";"jelee1223@naver.com";"skisk1124@naver.com";20;7;-99;2
+63;"홈페이지 전체 기획서 작성";"<p>- 홈페이지 전반적인 구조기획&nbsp;</p><p>- 기획서 작성</p>";"2020-02-07 15:44:25";"2020-01-28";"OPEN";"LOW";"perhaps824@hanmail.net";"perhaps824@hanmail.net";7;12;9;3
+64;"11.06 회의 보고서";"BACK단 위주 구현 시작";"2020-02-07 15:45:09";"2019-11-06";"CLOSED";"LOW";"djyoon956@gmail.com";"skisk1124@naver.com";31;8;-99;2
+65;"11.22 회의 보고서";"<p>--</p>";"2020-02-07 15:46:14";"2019-11-22";"CLOSED";"LOW";"djyoon956@gmail.com";"skisk1124@naver.com";17;8;-99;2
+66;"Chart.js로 차트 작성";"차트 작성";"2020-02-07 15:48:07";"2019-12-03";"CLOSED";"HIGH";"skisk1124@naver.com";"skisk1124@naver.com";7;7;-99;2
+67;"Toast Chart 작성";"<p>차트 작성</p>";"2020-02-07 15:48:32";"2019-12-05";"CLOSED";"HIGH";"jelee1223@naver.com";"skisk1124@naver.com";37;7;-99;2
+68;"홈페이지 개발 기획서 작성";"<p>홈페이지 개발 기획서 작성</p>";"2020-02-07 15:49:23";"2020-01-29";"CLOSED";"LOW";"djyoon956@gmail.com";"perhaps824@hanmail.net";10;12;-99;3
+69;"Toast Chart 작성";"<p>차트 작성</p>";"2020-02-07 15:49:38";"2019-12-05";"CLOSED";"HIGH";"jelee1223@naver.com";"skisk1124@naver.com";34;6;-99;2
+70;"홈페이지 디자인 기획서 작성";"<p>홈페이지 디자인 기획서 작성</p>";"2020-02-07 15:49:51";"2020-01-29";"CLOSED";"LOW";"jelee1223@hanmail.net";"perhaps824@hanmail.net";16;12;-99;3
+71;"홈페이지 계획서 작성";"계획서 작성 및 배포시작";"2020-02-07 15:50:33";"2020-01-28";"OPEN";"LOW";"perhaps824@hanmail.net";"perhaps824@hanmail.net";4;12;9;3
+72;"화면 정리";"<p>화면 정리</p>";"2020-02-07 15:51:41";"2019-12-09";"CLOSED";"LOW";"skisk1124@naver.com";"skisk1124@naver.com";1;9;-99;2
+73;"코드 정리";"<p>코드 정리<br></p>";"2020-02-07 15:52:17";"2019-12-10";"CLOSED";"HIGH";"nyangkk@naver.com";"skisk1124@naver.com";2;9;-99;2
+74;"12.12 마지막 회의 보고서";"<p>회의 보고서 작성</p>";"2020-02-07 16:07:07";"2019-12-12";"REQUESTED";"LOW";"skisk1124@naver.com";"jelee1223@naver.com";1;8;-1;2
+75;"dddd";"<p>dddddd</p>";"2020-02-07 16:16:06";"2020-02-14";"OPEN";"MEDIUM";"nyangkk@naver.com";"perhaps824@hanmail.net";1;0;-1;4
+76;"팀장님";"<p>팀장님<br></p>";"2020-02-07 16:17:41";"";"OPEN";"";"nyangkk@naver.com";"perhaps824@hanmail.net";1;0;-1;4
+77;"ㅇㅇㅇㅇ";"<p>ㅇㅇㅇㅇㅇ</p>";"2020-02-07 16:18:29";"";"OPEN";"";"";"nyangkk@naver.com";1;0;-1;4
+78;"야~길게하라구임마아아아아아아앙아";"<p>야~<br></p>";"2020-02-07 16:23:33";"";"OPEN";"";"nyangkk@naver.com";"perhaps824@hanmail.net";1;0;-1;4
+79;"개발 DB설계";"<p>개발 DB설계<br></p>";"2020-02-07 16:33:08";"2020-01-31";"OPEN";"LOW";"djyoon956@gmail.com";"all4transparency@naver.com";14;12;9;3
+80;"개발 클래스 다이어그램 작성 ";"개발 클래스 다이어그램 작성&nbsp;";"2020-02-07 16:35:28";"2020-01-31";"OPEN";"LOW";"all4transparency@naver.com";"all4transparency@naver.com";1;12;9;3
+81;"메인페이지 스토리보드 작성 ";"<p>카카오오븐으로 사용해주세요</p>";"2020-02-07 16:40:58";"2020-01-31";"OPEN";"LOW";"skisk1124@hanmail.net";"jelee1223@hanmail.net";6;12;9;3
+82;"서브페이지 스토리보드작성 ";"마찬가지로 카카오오븐 사용해서 드라이브에 올려주세요";"2020-02-07 16:43:14";"2020-01-31";"CLOSED";"LOW";"jelee1223@hanmail.net";"jelee1223@hanmail.net";14;12;-99;3
+83;"메인 레이아웃 작성";"<p><span style=""font-size: 0.875rem;"">사이트맵 보고 </span></p><p><span style=""font-size: 0.875rem;"">전체 사이트 레이아웃 작성</span><br></p>";"2020-02-07 16:44:44";"2020-02-04";"OPEN";"LOW";"jelee1223@hanmail.net";"jelee1223@hanmail.net";16;12;9;3
+84;"서브 레이아웃 구현";"<p>서브 레이아웃 틀 구현</p>";"2020-02-07 16:47:09";"2020-02-05";"OPEN";"MEDIUM";"perhaps824@hanmail.net";"jelee1223@hanmail.net";2;12;9;3
+85;"로고 수정";"<p>기존 로고 시안 드라이브에서 참고하세요</p>";"2020-02-07 16:47:47";"2020-02-04";"OPEN";"LOW";"jelee1223@hanmail.net";"jelee1223@hanmail.net";13;13;9;3
+86;"메인페이지 구현";"<p>메인페이지 구현&nbsp;</p>";"2020-02-07 16:49:01";"2020-02-18";"OPEN";"";"jelee1223@hanmail.net";"jelee1223@hanmail.net";15;13;9;3
+87;"공지사항 페이지 구현";"<p>공지사항 페이지 구현<br></p>";"2020-02-07 16:50:22";"2020-02-20";"OPEN";"LOW";"skisk1124@hanmail.net";"jelee1223@hanmail.net";8;13;9;3
+89;"서브페이지 구현";"<p>서브페이지 구현 - 공지사항과 같게 가주세요<br></p>";"2020-02-07 17:06:29";"2020-02-21";"OPEN";"MEDIUM";"perhaps824@hanmail.net";"jelee1223@hanmail.net";3;13;9;3
+90;"모의 발표";"<p>발표 연습</p>";"2020-02-07 17:08:32";"2020-02-13";"OPEN";"LOW";"jelee1223@naver.com";"jelee1223@naver.com";1;3;-1;1
+91;"기존 서류 수정";"<p>서류 수정</p>";"2020-02-07 17:09:46";"2020-02-11";"OPEN";"LOW";"jelee1223@naver.com";"jelee1223@naver.com";2;4;-1;1
+92;"메인디자인 수정 ";"<p>메인디자인 수정&nbsp;</p><p>- 로고수정&nbsp;</p><p>- A부분 레이아웃변경</p><p>- B부분 하단 더 밝게</p><p>- C부분 컨셉 더 밝게</p>";"2020-02-07 17:13:00";"2020-02-26";"OPEN";"LOW";"jelee1223@hanmail.net";"perhaps824@hanmail.net";9;12;9;3
+93;"메인디자인 코딩 ";"<p>VIEW단은 jQuery 사용</p>";"2020-02-07 17:14:01";"2020-02-21";"CLOSED";"";"skisk1124@hanmail.net";"perhaps824@hanmail.net";4;13;-99;3
+94;"공지사항 view단 코딩";"<p>VIEW단은 jQuery 사용<br></p>";"2020-02-07 17:14:36";"2020-02-28";"OPEN";"MEDIUM";"skisk1124@hanmail.net";"perhaps824@hanmail.net";5;13;9;3
+95;"개발 DB 수정";"<p>- 개발 DB 관계설정 수정</p>";"2020-02-07 17:18:55";"2020-02-13";"OPEN";"MEDIUM";"djyoon956@gmail.com";"djyoon956@gmail.com";10;14;9;3
+96;"자바단 설정";"<p>- Security적용&nbsp;</p><p>- Velocity 적용</p>";"2020-02-07 17:19:55";"2020-02-12";"OPEN";"MEDIUM";"djyoon956@gmail.com";"djyoon956@gmail.com";12;14;9;3
+97;"공지사항 개발 구현";"<p>- CRUD 구현</p>";"2020-02-07 17:20:24";"2020-02-14";"OPEN";"MEDIUM";"djyoon956@gmail.com";"djyoon956@gmail.com";11;14;9;3
+98;"2020-01-28 (화) 회의록 ";"<p>새 홈페이지 리뉴얼 시작&nbsp;</p><p>- 정려원 PM 중심으로 개발팀 디자인팀 구성&nbsp;</p><p>- PC 리뉴얼 오픈날짜 : 3월 11일&nbsp;</p><p>- 새로운 인턴교육 진행예정자 : 공효진, 유인나</p>";"2020-02-07 17:26:33";"2020-02-27";"CLOSED";"LOW";"skisk1124@hanmail.net";"skisk1124@hanmail.net";1;15;-99;3
+99;"로그인/회원가입 구현";"<p>로그인/ 회원가입</p><p>이전 버전과 같은 버전으로 진행</p>";"2020-02-07 17:33:05";"2020-02-11";"OPEN";"MEDIUM";"djyoon956@gmail.com";"all4transparency@naver.com";2;14;-1;3
+100;"전체적인 틀 구현";"<p>top/bottom/side 구분 후 구현&nbsp;</p>";"2020-02-07 17:33:52";"2020-02-12";"OPEN";"MEDIUM";"all4transparency@naver.com";"all4transparency@naver.com";1;14;-1;3
+101;"2020-02-05 (수) 회의록";"<p>디자인팀 회의&nbsp;</p><p>- 려원님이 올린 계획서 확인&nbsp;</p><p>- 메인, 서브, 홍보책자 만드는 팀 나눔&nbsp;</p><p><br></p>";"2020-02-07 17:39:36";"2020-02-05";"CLOSED";"LOW";"jelee1223@hanmail.net";"jelee1223@hanmail.net";1;15;-99;3
+102;"기존 디자인 설계 코드 해석";"<p>설계 코드 해석</p>";"2020-02-07 19:47:27";"2020-01-28";"CLOSED";"MEDIUM";"jelee1223@naver.com";"perhaps824@hanmail.net";1;13;-99;3
+103;"사이드바 구성하기";"<p>사이드 메뉴 구성하기<br></p>";"2020-02-07 19:48:27";"2020-02-11";"OPEN";"HIGH";"jelee1223@naver.com";"perhaps824@hanmail.net";2;13;-1;3
+113;"모의 발표 준비";"<p>발표 준비<br></p>";"2020-02-08 13:30:20";"2020-02-21";"REQUESTED";"LOW";"djyoon956@gmail.com";"djyoon956@gmail.com";1;3;-1;1
+114;"이슈";"<p>1</p>";"2020-02-08 13:30:58";"2020-02-05";"REQUESTED";"HIGH";"djyoon956@gmail.com";"djyoon956@gmail.com";1;3;-1;1
+115;"dddd";"<p>dddd</p>";"2020-02-08 14:31:18";"";"REQUESTED";"";"";"perhaps824@hanmail.net";1;0;-1;3
+116;"tt";"<p>tt</p>";"2020-02-08 14:34:15";"";"REQUESTED";"";"";"perhaps824@hanmail.net";1;0;-1;3

@@ -1156,7 +1156,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 	 			
 				}
 
-			function deleteNotice(event){
+			function deleteNoticeTop(event){
 				console.log("sdfsdfsdfsdf" + event.parentElement.getAttribute("data-noticeKey"));
 				var noticeKey = event.parentElement.getAttribute("data-noticeKey");
 				
