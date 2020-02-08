@@ -283,7 +283,7 @@ function initKanban(projectIdx){
 		 	 		        if(data != null){
 		 			        	successAlert("Issue 추가 완료");
 		 			 			setKanbanData();
-		 			 			setChageView("kanban");
+		 			 			//setChageView("kanban");
 
 		 			        	$('#addIssueModal').modal("hide");
 
