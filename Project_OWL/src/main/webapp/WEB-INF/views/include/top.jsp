@@ -624,7 +624,7 @@ display: block;
     							<i class="mdi mdi-menu font-24 mt-1" style="right:0px;top:0px; position: absolute;"></i></a>
     							<div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownChatButton">
 						       	<ul class="list-style-none">
-								     <li class="pl-3"><a href="#">나가기</a></li>
+								     <li class="pl-3"><a href="#" onclick="leaveRoom()">나가기</a></li>
 								</ul>
 								</div>
 								 </div> 
@@ -1483,9 +1483,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 		  }
 		
 
-          function openChatRoom(roomTitle, roomLength) {
-             
-        	  //loadRoomList(roomId); 
+          function openChatRoom(roomTitle, roomLength) {                    	 
         	  window.isOpenRoom = true; // 방이 열린 상태인지 확인하는 플래그 값 
         	  if(roomTitle){ //상단 타이틀 변경 
             	  document.getElementById('roomTitle').innerHTML = roomTitle; 
@@ -1685,9 +1683,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			function saveMessages(inviteMessage) {	
 				console.log("in saveMessages");			
 				var msgDiv = $('#textarea1');				
-				var msg = inviteMessage ? inviteMessage : $('#textarea1').val().trim();
-								console.log($('#textarea1').val());					
-								console.log(msg);					
+				var msg = inviteMessage ? inviteMessage : $('#textarea1').val().trim();													
 				var curUserProfilePic = curProfilePic;
 				var convertMsg = myConvertMsg(msg); //메세지 창에 에이치티엠엘 태그 입력 방지 코드.. 태그를 입력하면 대 공황 발생.. 그래서
 				if(msg.length > 0){ 
@@ -1704,8 +1700,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						for(var i=0; i < roomUserListLength; i++){ 
 							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true;							
 							
-						} 
-						//firebase.database().ref('usersInRoom/' + roomId);
+						} 						
 						database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
 						loadMessageList(); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
 					} 
@@ -1719,8 +1714,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 									readOk : 'false'								
 									};  
 							
-					} 
-					//firebase.database().ref('usersInRoom/' + roomId);
+					         } 					
 					database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
 					
 					}	
@@ -1841,7 +1835,19 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
 				  $('#ulMessageList').append(messageTemplate);
 				  return;
+			  }
+
+			  if(message.lastIndexOf("님이 나가셨습니다.")>0){
+
+				  messageTemplate = '<li  class="text-center chat-item mt-2 mb-3" data-key="' + key + '">'
+				  								+ '<b>'+ message+'</b>'
+				  								+ '</li>';
+
+				  $('#ulMessageList').append(messageTemplate);
+				  return;
 			  }	
+
+			  	
 			  if(uid == curUserKey) {
 				  messageTemplate = '<li id="li' + key  + '" class="odd chat-item" style="margin-top:10px;" data-key="' + key + '">'+			
 					'<div class="chat-content">'+			
@@ -1945,25 +1951,16 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				        	 
       	      arrRoomList.forEach(function(item, index){
 				var aroomUserList = item.getAttribute('data-roomUserList').split('@spl@');
-      	        if(JSON.stringify(roomUserList)==JSON.stringify(aroomUserList)){
-      	    	 console.log("True");
-      	    	 console.log(item.getAttribute('data-roomId')); 
-      	    	 //같은방이 있는 경우 얼럿 창 띄우고.. 오케이 하면 해당 방으로 이동....
-      	    	 isRoom(item);
-          	    }else{
-          	      
-              	       
-              	 } 
+      	        if(JSON.stringify(roomUserList)==JSON.stringify(aroomUserList)){     	    	      	    	 
+      	    	 isRoom(item);//같은방이 있는 경우 얼럿 창 띄우고.. 오케이 하면 해당 방으로 이동하는 함수....
+          	     }
       		
-      	  });
+      	      });
 
       	    database.ref().update(updates); //초대 메세지 
       	    arrInviteUserName.forEach(function(item, index){
       	    	saveMessages(item + '이 초대되었습니다.');
           	    });
-            
-        	  
-
            }
 
           function isRoom(item) {
@@ -2025,7 +2022,17 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				}
 
 
-            
+            function leaveRoom(){
+            	//var roomRef = database.ref('RoomsByUser/'+ uid +'/'+roomId).remove();
+				console.log("나가는 액션이 들어 갈 때 룸 아이디... 필수 정보" + roomId + "/" + curUserKey);
+
+				saveMessages(curName + "님이 나가셨습니다.");
+				$("#chattingList").removeClass("hidden");
+        		$("#chattingRoomIn").addClass("hidden");
+				database.ref('RoomsByUser/'+ curUserKey +'/'+roomId).remove();
+				//채팅룸에서 나가서 채팅룸 리스트 보여주기...
+            	
+                }
 
           
 
