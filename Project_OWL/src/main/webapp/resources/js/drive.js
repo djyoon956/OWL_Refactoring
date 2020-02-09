@@ -679,7 +679,7 @@ function driveDetail(isFolder, idx) {
 					+ "</div>"
 					+ "<div class='row mb-3' style='font-size: medium;'>"
 					+ "	<div class='col-sm-6'>위치</div>"
-					+ "	<div class='col-sm-6 text-left'>"+$("#driveName").html()+"<i class='fas fa-angle-right ml-2'></i></div>"
+					+ "	<div class='col-sm-6 text-left' style='font-size : small;'>"+$("#driveName").html()+"<i class='fas fa-angle-right ml-2'></i></div>"
 					+ "</div>"
 					+ "<div class='row mb-3' style='font-size: medium;'>"
 					+ "	<div class='col-sm-6'>소유자</div>"

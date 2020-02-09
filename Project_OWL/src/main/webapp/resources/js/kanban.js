@@ -273,15 +273,15 @@ function initKanban(projectIdx){
 		 			        success: function (data) {
 
 		 			        if(projectAuth == 'ROLE_PROJECTMEMBER'){ // 이슈, 컨펌, pm에게 보내는 경우
-		 			        	sendNoticePushToOne(pmemail, curName+"님이 이슈 생성", istitle);
-		 			        	pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle , "kanbanIssueToPm", pmemail, data.issueIdx, "topm");
+		 			        	sendNoticePushToOne(pmemail, loginUserName+"님이 이슈 생성", istitle);
+		 			        	pushNoticeToOne(currentProjectIdx,currentProjectName, "["+ loginUserName+"]님이 이슈 생성:" + istitle , "kanbanIssueToPm", pmemail, data.issueIdx, "topm");
 		 			        }else{ // 이슈 생성 알림
-		 			        	sendNoticePushAll(curName + "님이 이슈 생성", istitle, currentProjectIdx);
-		 			        	pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ curName+"]님이 이슈 생성:" + istitle, "kanbanIssue", data.issueIdx);
+		 			        	sendNoticePushAll(loginUserName + "님이 이슈 생성", istitle, currentProjectIdx);
+		 			        	pushNoticeToAll(currentProjectIdx, currentProjectName, "["+ loginUserName+"]님이 이슈 생성:" + istitle, "kanbanIssue", data.issueIdx);
 		 			        }
 		 			        	
 		 	 		        if(data != null){
-		 			        	successAlert("Issue 추가 완료");
+		 			        	successAlert("PM에게 issue전달 완료");
 		 			 			setKanbanData();
 		 			 			//setChageView("kanban");
 

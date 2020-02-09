@@ -4,9 +4,11 @@ let currentProjectColor;
 let currentProjectStartDate;
 let currentProjectEndDate;
 let loginUser;
+let loginUserName;
 
-function initProjcet(email, projectIdx, projectName, projectColor,projectStartDate, projectEndDate){
+function initProjcet(email,name, projectIdx, projectName, projectColor,projectStartDate, projectEndDate){
 	loginUser = email;
+	loginUserName = name;
 	currentProjectIdx  = projectIdx;
 	currentProjectName = projectName;
 	currentProjectColor = projectColor;

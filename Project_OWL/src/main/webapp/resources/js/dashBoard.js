@@ -614,7 +614,7 @@ function MyProjectProgress(){
 	    	  $.each(value, function(index, element){
 	    			if(element.issueProgress == "CLOSED") 
 						closeCount++;
-	    	  })
+	    	  }) 
 	    	 let makeChart = '<div class="col-md-4"><div id="canvas-holder">'
 				  +'<canvas id="chartProject'+idx+'"></canvas></div></div>';
 			$("#myProgressChart").append(makeChart);
