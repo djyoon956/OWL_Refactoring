@@ -624,7 +624,7 @@ display: block;
     							<i class="mdi mdi-menu font-24 mt-1" style="right:0px;top:0px; position: absolute;"></i></a>
     							<div class="dropdown-menu  dropdown-menu-right" aria-labelledby="dropdownChatButton">
 						       	<ul class="list-style-none">
-								     <li class="pl-3"><a href="#">나가기</a></li>
+								     <li class="pl-3"><a href="#" onclick="leaveRoom()">나가기</a></li>
 								</ul>
 								</div>
 								 </div> 
@@ -1788,13 +1788,17 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
           var userListUp = function(targetuid, name, userpic, email){
         	  var userProPic = 	(userpic ? 'upload/member/'+ userpic : 'resources/images/login/profile.png'); 
         	  let errorSource = "this.src='resources/images/login/profile.png'";
-        	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name+ '" data-useremail="' + email + '" class="collection-item avatar list">' 
-        	  				  + '<div class="input-group "><div class="form-control pt-2 pb-2"><img src="' + userProPic + '"  alt="" class="circle mr-3" height="35" width="35" onerror="'+errorSource+'" >'+ name + '('+email+')'+
-        	  				  '<i class="fas fa-globe font-20 ml-3 mt-1 mr-1 userOnline"></i>'+
-        	  				  '<i id ="userChecked" class="fas fa-check float-right font-20 mt-1 mr-1 hidden" style="color:red"></i>'+
-
-        	  				  '</div>'                      
-        	  				  + '</div></li>'; 
+        	  var userTemplate = '<li id="li' + targetuid +'" data-targetUserUid="' +targetuid + '" data-username="' + name+ 
+        	          	  					  '" data-useremail="' + email + '" class="collection-item avatar list">'+ 
+        	          	  				  		'<div class="input-group ">'+
+        	          	  				  			'<div class="form-control pt-2 pb-2">'+
+        	          	  				  				'<img src="' + userProPic + '" alt="" class="circle mr-3" height="35" width="35" onerror="'+errorSource+'">'+ 
+        	          	  				  				 name + '('+email+')'+
+        	          	  				  				'<i class="fas fa-globe font-20 mt-1 mr-1 userOnline"></i>'+
+        	          	  				  				'<i id ="userChecked" class="fas fa-check float-right font-20 mt-1 mr-1 hidden" style="color:red"></i>'+
+        	          	  				  			'</div>'+                      
+        	          	  				   		'</div>'+
+        	          	  				   	'</li>';  
 
         	  $('#ulUserList').append(userTemplate);
 
@@ -1814,6 +1818,17 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				  $('#ulMessageList').append(messageTemplate);
 				  return;
 			  }	
+
+			  if(message.lastIndexOf("님이 나가셨습니다.")>0){
+				  
+				 				  messageTemplate = '<li  class="text-center chat-item mt-2 mb-3" data-key="' + key + '">'
+				  			  								+ '<b>'+ message+'</b>'
+				  			  								+ '</li>';
+				  
+				  				  $('#ulMessageList').append(messageTemplate);
+				  				  return;
+				   			  }		
+			  
 			  if(uid == curUserKey) {
 				  messageTemplate = '<li id="li' + key  + '" class="odd chat-item" style="margin-top:10px;" data-key="' + key + '">'+			
 					'<div class="chat-content">'+			
@@ -1841,7 +1856,17 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
          
 
-          
+          function leaveRoom(){
+        	              	//var roomRef = database.ref('RoomsByUser/'+ uid +'/'+roomId).remove();
+        	  				console.log("나가는 액션이 들어 갈 때 룸 아이디... 필수 정보" + roomId + "/" + curUserKey);
+        	  
+        	  				saveMessages(curName + "님이 나가셨습니다.");
+        	  				$("#chattingList").removeClass("hidden");
+        	          		$("#chattingRoomIn").addClass("hidden");
+        	  				database.ref('RoomsByUser/'+ curUserKey +'/'+roomId).remove();
+        	  				//채팅룸에서 나가서 채팅룸 리스트 보여주기...
+        	              	
+        	               }
 
           
 
@@ -1919,7 +1944,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
           	    });
             
-        	  
+      	  //새로생성된 방으로 이동하기 처리
+      	         	    var justCreatedRoom = document.getElementById('liRoom' + roomId);     	    
+      	          	    onRoomListClick(justCreatedRoom);
+      	                
 
            }
 
