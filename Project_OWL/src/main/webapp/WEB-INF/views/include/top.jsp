@@ -1615,23 +1615,14 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
   		function onRoomListClick(event){			
   				$("#chattingRoomIn").removeClass("hidden");
-  				$("#chattingList").addClass("hidden");
-  			
- 	  		 	  		
-  	  		roomFlag = 'tabRoomList'; //채팅방을 클릭했다는 것을 알기 위한 플래그
-  	  		//document.getElementById('aBackBtn').classList.remove('hiddendiv'); 
-  	  		//document.getElementById('aInvite').classList.remove('hiddendiv'); 
-
+  				$("#chattingList").addClass("hidden");				  		 	  		
+  	  		roomFlag = 'tabRoomList'; //채팅방을 클릭했다는 것을 알기 위한 플래그 	  		
   			// 메세지 로드 
   			roomId = event.getAttribute('data-roomId'); 
   			roomTitle = event.getAttribute('data-roomTitle'); 
   			roomUserList = event.getAttribute('data-roomUserList').split('@spl@'); // 챗방 유저리스트  			
   			roomUserName = event.getAttribute('data-roomUserName').split('@spl@'); // 챗방 유저 이름 
-  			openChatRoom(roomTitle, roomUserList.length);   
-
-          
-  			// 메세지 화면 이동 
-  			// $('#tabMessageList').click();
+  			openChatRoom(roomTitle, roomUserList.length);          			
   	  		}
 
   		/** * RoomList 화면 시간변환 */ 
@@ -1690,15 +1681,9 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 					if(document.getElementById('ulMessageList').getElementsByTagName('li').length === 0){ //메세지 처음 입력 하는 경우 
 						var roomUserListLength = roomUserList.length; 
 						for(var i=0; i < roomUserListLength; i++){ 
-<<<<<<< HEAD
 							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true;														
 						} 						
-=======
-							multiUpdates['UsersInRoom/' +roomId+'/' + roomUserList[i]] = true;							
-							
-						} 
-						//firebase.database().ref('usersInRoom/' + roomId);
->>>>>>> aa6f709ae2865c88032ad4e18c1ab18a4d466868
+
 						database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
 						loadMessageList(); //방에 메세지를 처음 입력하는 경우 권한때문에 다시 메세지를 로드 해주어야함 
 					} 
@@ -1710,15 +1695,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						for(var i=0; i < roomUserListLength; i++){ 							
 							multiUpdates['MessagesByUser/' +roomUserList[i]+'/' + roomId+'/' + messageRefKey] = {
 									readOk : 'false'								
-<<<<<<< HEAD
 									};  							
 					         } 					
-=======
-									};  
-							
-					} 
-					//firebase.database().ref('usersInRoom/' + roomId);
->>>>>>> aa6f709ae2865c88032ad4e18c1ab18a4d466868
 					database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
 					
 					}	
@@ -1909,19 +1887,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
 			
           function onCreateClick(){
-<<<<<<< HEAD
+
         	  roomTitle = $('#chatRoomTitle').val(); 			  
         	  var arrInviteUserList = Array.prototype.slice.call($('.user-selected'));        	 
         	  var arrInviteUserListLength = arrInviteUserList.length;       	 
-=======
-        	  roomTitle = $('#chatRoomTitle').val(); 
-			  console.log("룸 타이틀은요???" + roomTitle);
-
-        	  var arrInviteUserList = Array.prototype.slice.call($('.user-selected'));
-        	  console.log("arrInviteUserList 요거 값 들어 오나요???" + arrInviteUserList);
-        	  var arrInviteUserListLength = arrInviteUserList.length;
-        	  console.log("렝스는~~~~~~~~~~~~~~~~~~~~~~~~~~~" + arrInviteUserListLength); 
->>>>>>> aa6f709ae2865c88032ad4e18c1ab18a4d466868
         	  var arrInviteUserName = []; 
         	  var updates = {}; 
         	  for(var i=0; i < arrInviteUserListLength; i++){ 
@@ -1933,7 +1902,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
             	  roomUserName.push(inviteUserName); 
             	  arrInviteUserName.push(inviteUserName); 
             	  } 
-<<<<<<< HEAD
+
         	  roomUserList.sort(); 			 
 			  var arrRoomList = Array.prototype.slice.call($('#ulRoomList > li'));       	          	     
 				//이미 같은 멤버로 만들어진 채팅방이 있는지 확인하고 있으면 해당 방으로 이동하는 기능        	 
@@ -1947,35 +1916,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
       	      //초대 메세지 
       	      arrInviteUserName.forEach(function(item, index){
       	     	  saveMessages(item + '이 초대되었습니다.');     	    	
-=======
-        	  roomUserList.sort(); 
 
-
-
-        	  
-			  console.log("roomUserList" + roomUserList);
-			  var arrRoomList = Array.prototype.slice.call($('#ulRoomList > li'));
-       	    
-      	      console.log("챗방 생성시...잡히는 내가 참여하고 있는 방의수는 수는??" + arrRoomList.length);
-				        	 
-      	      arrRoomList.forEach(function(item, index){
-				var aroomUserList = item.getAttribute('data-roomUserList').split('@spl@');
-      	        if(JSON.stringify(roomUserList)==JSON.stringify(aroomUserList)){
-      	    	 console.log("True");
-      	    	 console.log(item.getAttribute('data-roomId')); 
-      	    	 //같은방이 있는 경우 얼럿 창 띄우고.. 오케이 하면 해당 방으로 이동....
-      	    	 isRoom(item);
-          	    }else{
-          	      
-              	       
-              	 } 
-      		
-      	  });
-
-      	    database.ref().update(updates); //초대 메세지 
-      	    arrInviteUserName.forEach(function(item, index){
-      	    	saveMessages(item + '이 초대되었습니다.');
->>>>>>> aa6f709ae2865c88032ad4e18c1ab18a4d466868
           	    });
             
         	  
