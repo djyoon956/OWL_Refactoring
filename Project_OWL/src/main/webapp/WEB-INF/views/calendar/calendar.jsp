@@ -178,7 +178,6 @@ function generateSchedule(viewName) {
 		    	GetCalendar(calendar, element);				
 			});
 	    }
-
     });
 }
 
