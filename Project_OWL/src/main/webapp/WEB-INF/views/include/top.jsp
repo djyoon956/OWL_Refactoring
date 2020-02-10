@@ -1245,19 +1245,11 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			}
 
 
-			 function numOfNotreadMessages(roomId){								
-                
-	              var MessagesByUser = database.ref('MessagesByUser/'+ curUserKey + '/' + roomId);
-	              var numOfMessages=10000;
-	             console.log("curUserKey" + curUserKey);
-	             
-	             MessagesByUser.orderByChild('readOk').equalTo('false').once('value', function(data){
-	            	 numOfMessages = data.numChildren(); 
-						console.log("numOfMessages~~~~~~~~~~" + numOfMessages);
-						var roomSelector = roomId;
-						document.getElementById(roomId).innerHTML = numOfMessages;
-						
-						
+			 function numOfNotreadMessages(roomId){								              
+	              var MessagesByUser = database.ref('MessagesByUser/'+ curUserKey + '/' + roomId);	            	             	             
+	              MessagesByUser.orderByChild('readOk').equalTo('false').once('value', function(data){
+	            	 numOfMessages = data.numChildren(); 												
+						document.getElementById(roomId).innerHTML = numOfMessages;												
 				    });	  	
 			    }
  
@@ -1266,7 +1258,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 			function saveReadNotice(){
 				let name = this.getAttribute("data-from")
 				let arrNoticeKey = document.querySelectorAll('div[data-type="'+name+'"]');
-
 				arrNoticeKey.forEach(function(item, index){
 					let noticeKey = item.getAttribute("data-noticeKey");
 					let projectIdx = item.getAttribute("data-projectIdx");
@@ -1282,18 +1273,14 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 		        	    targetIdx : targetIdx
 		        	  });
 				});
-
         	  numOfNotreadNotices(curUserKey);
 			}
 
-			function saveReadMessage(messageRefKey){
-				console.log("saveReadMessage 함수... 작동하나???")											
-					database.ref('MessagesByUser/'+ curUserKey +'/' + roomId+'/' + messageRefKey).update({
+			//읽은 메세지 처리
+			function saveReadMessage(messageRefKey){															
+				database.ref('MessagesByUser/'+ curUserKey +'/' + roomId+'/' + messageRefKey).update({
 						readOk : 'true'
-		        	  });
-				
-
-					//numOfNotreadMessages();
+		        	  });									
 			}
 
 			function noticeListUp(noticeKey, noticeValue) {
@@ -1540,28 +1527,21 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
           function loadMessageList(){                          
               var myKey = $('#curUserKey').val();                           
               var messageRef = database.ref('Messages/'+roomId);
-
-             if(roomId){ 
-                 document.getElementById('ulMessageList').innerHTML = ''; //메세지 화면 리셋                 
-              
-                 
-                 messageRef.off();
-
-                 
-             	  
+              if(roomId){ 
+                 document.getElementById('ulMessageList').innerHTML = ''; //메세지 화면 리셋                                               
+                 messageRef.off();//메세지에 달려 있는 파이어베이스 이벤트 제거. 이렇게 하지 않으면 이벤트가 중복되어 트리거 된다.                           	  
                  messageRef.limitToLast(50).on('child_added', function(data){                    	
                      	var msgKey = data.val();                    	
            			 	messageListUp(data.key, msgKey.profileImg, msgKey.timestamp, msgKey.userName, msgKey.message, msgKey.uid);              				
-
 	           			//채팅창 자동 스크롤 다운...  
 	           			 document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
-
 	           			//로드 되서 읽은 메세지 처리 함수 
-							saveReadMessage(data.key);
-							numOfNotreadMessages(roomId);
+						saveReadMessage(data.key);
+						//읽지 않은 메세지 숫자 정보 리드
+						numOfNotreadMessages(roomId);
                      }); 
-             }else{
-           	  messageRef.limitToLast(50).on('child_added', function(data){
+              }else{
+           	      messageRef.limitToLast(50).on('child_added', function(data){
                    
              	  data.forEach(function(childSnapshot) {
 							var msgKey = childSnapshot.key;        				
@@ -1583,13 +1563,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				document.getElementById('ulRoomList').innerHTML='';				
 				var arrRoomListHtml = [];
 				snapshot.forEach(function(data){
-																												
-						/* var arrRoomUserName = val.roomUserName.split('@spl@');					
-						arrRoomUserName.splice(arrRoomUserName.indexOf(curName), 1); // 방 제목 타이틀에서는 자신의 이름을 제외합니다. 
-						var eachRoomTitle = arrRoomUserName.length > 1 ? arrRoomUserName[0] + " 외 " + (arrRoomUserName.length - 1) + "명 참여중" : arrRoomUserName[0] +'님과의 대화'; 
-						if(data.key === roomId && window.isOpenRoom){ //데이터 키가 현재 방ID와 같고 채팅방이 열려있는 경우에 현재 메세지 상단 제목을 갱신해줍니다. 
-							document.getElementById('spTitle').innerHTML = eachRoomTitle; 
-						  }  */
 						var val = data.val();  
 						var roomId = data.key,
 						lastMessage = val.lastMessage, 
@@ -1697,12 +1670,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 									readOk : 'false'								
 									};  							
 					         } 					
-					database.ref().update(multiUpdates); // 권한 때문에 먼저 저장해야함 
+					database.ref().update(multiUpdates); 
 					
 					}	
-					
-					
-					
+															
 					multiUpdates ={}; // 변수 초기화 
 
 					//메세지 저장 
@@ -1809,16 +1780,15 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
               let time = timestampToTime(timestamp);        
               let userProPic = 	(profileImg ? 'upload/member/'+ profileImg : 'resources/images/login/profile.png');			 
               let messageTemplate;
+              //초대메세지 처리
 			  if(message.lastIndexOf("님이 초대되었습니다.")>0){
-
 				  messageTemplate = '<li  class="text-center chat-item mt-2 mb-3" data-key="' + key + '">'
 				  								+ '<b>'+ message+'</b>'
 				  								+ '</li>';
-
 				  $('#ulMessageList').append(messageTemplate);
 				  return;
 			  }	
-
+			  //퇴장 메세지 처리
 			  if(message.lastIndexOf("님이 나가셨습니다.")>0){
 				  
 				 				  messageTemplate = '<li  class="text-center chat-item mt-2 mb-3" data-key="' + key + '">'
@@ -1827,8 +1797,8 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				  
 				  				  $('#ulMessageList').append(messageTemplate);
 				  				  return;
-				   			  }		
-			  
+				   			  }	
+   			  //채팅방에서 상대방은 왼쪽 나의 메세지는 오른 쪽으로.				  
 			  if(uid == curUserKey) {
 				  messageTemplate = '<li id="li' + key  + '" class="odd chat-item" style="margin-top:10px;" data-key="' + key + '">'+			
 					'<div class="chat-content">'+			
@@ -1846,27 +1816,19 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 						'<div class="box bg-light-info otherBubble">'+ message + '</div>'+
 						'<div class="chat-time">'+ time + '</div>'+
 						'</li>';
-					  }
-        	   									 
-          
-        	  $('#ulMessageList').append(messageTemplate);
-        	       	  
+					  }        	   									          
+        	  $('#ulMessageList').append(messageTemplate);       	       	  
           } 
 
 
          
 
-          function leaveRoom(){
-        	              	//var roomRef = database.ref('RoomsByUser/'+ uid +'/'+roomId).remove();
-        	  				console.log("나가는 액션이 들어 갈 때 룸 아이디... 필수 정보" + roomId + "/" + curUserKey);
-        	  
-        	  				saveMessages(curName + "님이 나가셨습니다.");
+          function leaveRoom(){       	              
+        	  				saveMessages(curName + "님이 나가셨습니다.");//나가기 채팅방에 메세지 처리
         	  				$("#chattingList").removeClass("hidden");
         	          		$("#chattingRoomIn").addClass("hidden");
-        	  				database.ref('RoomsByUser/'+ curUserKey +'/'+roomId).remove();
-        	  				//채팅룸에서 나가서 채팅룸 리스트 보여주기...
-        	              	
-        	               }
+        	  				database.ref('RoomsByUser/'+ curUserKey +'/'+roomId).remove();        	  				        	              	
+        	          }
 
           
 
@@ -1912,7 +1874,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
 			
           function onCreateClick(){
-
         	  roomTitle = $('#chatRoomTitle').val(); 			  
         	  var arrInviteUserList = Array.prototype.slice.call($('.user-selected'));        	 
         	  var arrInviteUserListLength = arrInviteUserList.length;       	 
@@ -1941,12 +1902,10 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
       	      //초대 메세지 
       	      arrInviteUserName.forEach(function(item, index){
       	     	  saveMessages(item + '이 초대되었습니다.');     	    	
-
-          	    });
-            
-      	  //새로생성된 방으로 이동하기 처리
-      	         	    var justCreatedRoom = document.getElementById('liRoom' + roomId);     	    
-      	          	    onRoomListClick(justCreatedRoom);
+          	    });           
+      	      //새로생성된 방으로 이동하기 처리
+      	      var justCreatedRoom = document.getElementById('liRoom' + roomId);     	    
+      	          onRoomListClick(justCreatedRoom);
       	                
 
            }
