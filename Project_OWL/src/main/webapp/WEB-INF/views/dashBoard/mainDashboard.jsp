@@ -87,7 +87,7 @@
 	                <div class="card-body w-100">
 	                    <h4 class="card-title" style="margin-bottom: 0px;">My Issue Progress Chart</h4>
 	                    <div class="align-items-center">
-	                        <div id="myProgressChart"> </div>
+	                        <div><div class="row" id="myProgressChart"></div> </div>
 	                    </div>
 	                </div>
 	            </div>

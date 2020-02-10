@@ -55,7 +55,7 @@
         $(function () {	
             setTheme("${setting.themeColor}", "${setting.font}");
             setEmoji();
-            initProjcet("${member.email}","${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
+            initProjcet("${member.email}","${member.name}","${project.projectIdx}", "${project.projectName}", "${project.projectColor}","${project.startDate}", "${project.endDate}");
 
             $(".tui-full-calendar-layout.tui-view-8").addClass("hidden");
             $(".tui-full-calendar-layout.tui-view-8.tui-view-13").removeClass("hidden");
