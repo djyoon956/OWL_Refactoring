@@ -918,8 +918,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 				console.log('fcmId 확인 중 에러 저장실패... : ', e); 
 				}) 
 			}
-
-
 		messaging.onMessage((payload) => {
 			  console.log('Message received. ', payload);
 		});
@@ -934,9 +932,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 
         
 		
-		function sendNotification(msgTo, title, msg){
-			
-
+		function sendNotification(msgTo, title, msg){			
 		        $.ajax({
 		                 type : 'POST',
 		                 url : "https://fcm.googleapis.com/fcm/send",
@@ -946,7 +942,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 		                 contentType : 'application/json',
 		                 dataType: 'json',
 		                 data: JSON.stringify({"to": msgTo,  "priority" : "high", "notification": {"title": title,"body":msg}}),
-		                 success : console.log("sendNotification Success")            ,
+		                 success : console.log("sendNotification Success"),
 		                 error : console.log("sendNotification Fail") 
 		             }) ;
 			}
@@ -962,27 +958,16 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 					data : { email : curEmail
 						      }, 
 					success: function (data) {
-					    var projectIdxGrouped = new Set();
-					    
-						$.each(data, function(index, value) {          				
-						
-						  if(value.projectIdx == currentProjectIdx){
-							  console.log("noticeProjectIdx : " +currentProjectIdx);
-							  console.log("noticeProjectIdx : " + value.email);
-							  
-							  var userKey;
-							  
-							  
+					    var projectIdxGrouped = new Set();				    
+						$.each(data, function(index, value) {          									
+						  if(value.projectIdx == currentProjectIdx){							 					  
+							  var userKey;							  							  
 							 var myRootRef = database.ref();
 				        	  myRootRef.child("Emails").orderByChild('email').equalTo(value.email).once('value', function(data){
 				        		  data.forEach(function(childSnapshot) {
-										userKey = childSnapshot.key;
-										console.log("targetuserkey..." + userKey);
-										database.ref("FcmId/"+userKey).once('value',fcmSnapshot => { 
-											console.log('FCM Token : ', fcmSnapshot.val()); 
-											var mytoken = fcmSnapshot.val();
-											console.log("title: " + title);
-											console.log("msg: " + msg);
+										userKey = childSnapshot.key;										
+										database.ref("FcmId/"+userKey).once('value',fcmSnapshot => { 											
+											var mytoken = fcmSnapshot.val();											
 											sendNotification(mytoken, title, msg);
 										});
 			       		 		});
@@ -1011,14 +996,13 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 							sendNotification(mytoken, title, msg);
 						});
 			       });
-				})		      
-					
-		}
+				})		      					
+		   }
 
 
 		//탑 부분 종 누르면...   공지 사항 보이기~~
 		function pushNoticeToAll(projectIdx, projectName, title, from, targetIdx) {
-			var noticeRef = database.ref('Notices/'+ projectIdx);
+			var noticeRef = database.ref('Notice/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key	
 			// 수정중
 			//노티스 정보 파베 저장	
@@ -1034,7 +1018,7 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 		}
 
 		function pushNoticeToOne(projectIdx, projectName, title, from, pmemail, targetIdx, msg) {
-			var noticeRef = database.ref('Notices/'+ projectIdx);
+			var noticeRef = database.ref('Notice/'+ projectIdx);
 			var noticeRefKey = noticeRef.push().key;	
 
 			//노티스 정보 파베 저장	
@@ -1046,32 +1030,15 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
         	    msg : msg
         	  });
       	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, pmemail, targetIdx, msg);
+			saveNoticeByUserForOne(noticeRefKey, projectName, title, projectIdx, from, pmemail, targetIdx, msg);
 		}
 
 
-	     //중복 함수 삭제 예정... 누구든 보면 연락죠~~ 	  
-		/* function pushKanbanIssue(projectIdx, projectName, title, from) {
-			var noticeRef = database.ref('Notices/'+ projectIdx);
-			var noticeRefKey = noticeRef.push().key	
-
-
-			//노티스 정보 파베 저장	
-			database.ref('Notice/' + projectIdx+'/'+ noticeRefKey).update({
-        	    projectName: projectName,
-        	    title: title,
-        	    creatFrom: from
-        	  });
-      	  	//노티즈 정보를 유저별 저장
-			saveNoticeByUser(noticeRefKey, projectName, title, projectIdx, from);
-		}	 */
-
-		function saveNoticeByUserFonOne(noticeRefKey, projectName, title, projectIdx, from, email, targetIdx, msg){
+		function saveNoticeByUserForOne(noticeRefKey, projectName, title, projectIdx, from, email, targetIdx, msg){
 			var myRootRef = database.ref();
       	    myRootRef.child("Emails").orderByChild('email').equalTo(email).once('value', function(data){
       		  data.forEach(function(childSnapshot) {
-						userKey = childSnapshot.key;
-						console.log("targetuserkey..." + userKey);
+						userKey = childSnapshot.key;						
 						//유저별 노티스 저장
 						database.ref('NoticesByUser/'+ userKey +'/' + noticeRefKey).update({
 							projectIdx: projectIdx,
@@ -1135,7 +1102,12 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 	              var noticesByUserRef = database.ref('NoticesByUser/'+ curUserKey);
              
 	                 document.getElementById('noticeBoard').innerHTML = ''; //공지사항 화면 리셋                 
-	                 document.getElementById('issueBoard').innerHTML = ''; //공지사항 화면 리셋 
+	                 document.getElementById('issueBoard').innerHTML = ''; //이슈 화면 리셋 
+	                 document.getElementById('driveBoard').innerHTML = ''; //드라이브 화면 리셋
+	                 document.getElementById('mentionBoard').innerHTML = '';//멘션 화면 리셋
+	                 document.getElementById('issueCheckBoard').innerHTML = '';//이슈체크 화면 리셋
+
+
 	                 
 	                 noticesByUserRef.off(); 
 	                 
@@ -1149,11 +1121,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
 					noticesByUserRef.on('child_added', checkRead.bind(this)); 
 					//noticesByUserRef.on('child_changed', checkRead.bind(this)); 
 
-
-
-	             
-	 	        
-	 			
 				}
 
 			function deleteNoticeTop(event){
@@ -1920,7 +1887,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
         	}	
 
 
-          
 			
           console.log("널인가???" + curName + " / " + curEmail);
 
@@ -1938,9 +1904,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
                       } 
                   }); 
               }
-
-          
-
 
 			//채팅 및 푸시 알람 기능 초기화
 			function owlInit(curUserKey){
@@ -1968,11 +1931,6 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
     			$("#chattingRoomIn .emoji-wysiwyg-editor:first").keydown(pressEnter);
 				}
 
-
-            
-
-          
-
 		  // 초기화 를 위한 온로드 함수... 같은 프로제트에 있는 유저목록과 프로젝트 채팅방을 만들기 위한 정보를 디비에서 뽑아낸다.	
           $(function(){           
 			var curUserKey;
@@ -1994,38 +1952,21 @@ messaging.usePublicVapidKey("BFnhctOfkdVv_GNMgVeHgA0C2n1-wJTGCLV_GlZDhpTMNvqAE-S
       			data : { email : curEmail,
       				     name : curName }, 
       			success: function (data) {
-      				console.log("뷰단으로 데이터 들어 오나요?? >" + data);
-
-      				
+      				console.log("뷰단으로 데이터 들어 오나요?? >" + data);   				
       				$.each(data, function(index, value) {          				    				  
-      				  console.log(value.name + " / " + value.email + " / " + value.profilePic);
-      				
+      				  console.log(value.name + " / " + value.email + " / " + value.profilePic);    				
       				writeUserData(value.name, value.email, value.profilePic).then(function(resolvedData){          				    					
     				//목록을 뿌리기위한 태크 뭉치들이 들어 있는 함수 콜
-    				userListUp(resolvedData, value.name, value.profilePic, value.email);
-						
+    				userListUp(resolvedData, value.name, value.profilePic, value.email);						
       					});
-
-      				});
-			
-      				
-      				
+      				});	
       			},
       			error: function(xhr, status, error){
           			console.log("아잭스 에러 터짐 ㅠㅠ");
       		         var errorMessage = xhr.status + ': ' + xhr.statusText
       		         alert('Error - ' + errorMessage);
       		     }
-      		});
-			
-
-      		
-		   
-
-			
-			
-			       
-			
+      		});			
       	});	
           
       </script>
