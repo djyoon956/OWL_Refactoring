@@ -50,6 +50,10 @@ color:#326295 !important;
     color: black !important;
     background-color: white !important;
 }
+
+.sidebar-nav ul .sidebar-item .sidebar-link>span{
+	font-weight: bold !important;
+}
 </style>
 <script>
 var theName;
